@@ -1,0 +1,9 @@
+{
+  "schema": "ai-tool-registry/v2",
+  "workflows": [
+    {"id": "hello-world", "current": "hello-world/current.json", "enabled": true}
+  ],
+  "packs": [],
+  "skills": []
+}
+

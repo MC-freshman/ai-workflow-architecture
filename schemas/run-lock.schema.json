@@ -1,0 +1,27 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/ai-run-lock-v1.schema.json",
+  "title": "AI run lock",
+  "type": "object",
+  "required": ["schema", "architectureVersion", "runId", "mode", "resource", "status", "resolvedAt"],
+  "properties": {
+    "schema": {"const": "ai-run-lock/v1"},
+    "architectureVersion": {"const": "1.0.0"},
+    "runId": {"type": "string"},
+    "mode": {"enum": ["wf", "wfa"]},
+    "resource": {
+      "type": "object",
+      "required": ["id", "version", "source"],
+      "properties": {
+        "id": {"type": "string"},
+        "version": {"type": "string"},
+        "source": {"type": "string"}
+      }
+    },
+    "workflow": {"type": ["object", "null"]},
+    "status": {"enum": ["prepared", "completed", "failed"]},
+    "resolvedAt": {"type": "string"}
+  },
+  "additionalProperties": true
+}
+

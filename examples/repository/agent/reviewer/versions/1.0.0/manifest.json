@@ -1,0 +1,9 @@
+{
+  "schema": "ai-agent/v2",
+  "id": "reviewer",
+  "version": "1.0.0",
+  "prompt": "prompt.md",
+  "toolLock": "tool-lock.json",
+  "parallel": true
+}
+
