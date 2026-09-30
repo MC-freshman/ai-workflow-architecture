@@ -1,0 +1,51 @@
+{
+ "schema": "ai-platform-ops-provenance/v1",
+ "file": "qoder/bridge/ops/invocation_matrix.py",
+ "role": "thin launcher - the logic is the shared asset, not a platform copy",
+ "delegateTo": "tool/architecture-ops/versions/<current>/architecture_ops/invocation_matrix.py",
+ "currentPointerAtWriteTime": "1.1.0",
+ "sharedHarnessDigest": "8ea873f8f28420771c67fe882f835cb9b2085f5d6ec3e34957d1cb21bb67fe5d",
+ "launcherSha256": "e0297a78334f5358348d763f84d61a95af6625c495108ef382791bf0d1fd5215",
+ "replacedWorkingCopy": {
+  "sha256": "9285ffbf81b01ef185e8d4b7684dcce43ca8549cee97ce1a16f98fc0090026be",
+  "bytes": 20034,
+  "archivedAt": "E:/ai/qoder/runtime/maintenance/2.0-X/retired-platform-copy/invocation_matrix.20260919-200549.copy"
+ },
+ "history": {
+  "schema": "qoder-platform-ops-provenance/v1",
+  "file": "qoder/bridge/ops/invocation_matrix.py",
+  "copiedFrom": {
+   "path": "zcode/bridge/ops/invocation_matrix.py",
+   "sha256": "55f20420ebcae1f318e8e808eae27d3e29184f08002ecc9da35cdfbc2a285cdd",
+   "statedProvenance": "zcode/runtime/maintenance/20260917-reconnect/matrix-source.json"
+  },
+  "upstreamCodexCopy": {
+   "path": "codex/workspaces/agentic-workflow-implementation/ops/invocation_matrix.py",
+   "sha256": "537dcfb7ce5256398e601780a49deb9c905817315c8fc76c9bb2ee237a7f2ad2"
+  },
+  "provenanceDrift": "zcode 的 matrix-source.json 记 sha256=537dcfb7… 且 unchanged:true，但 zcode 副本实际为 55f20420…（比 codex 副本多 672 B）。逐行 diff 显示差异只是 C6/ENTRY-04「不可调用资源按类型退出分母」的通用规则，不含 zcode 专有常量 ⇒ 本平台沿用该变体。漂移本身登记为 D-18（判据 harness 无共享版本锚，副本可静默漂移）。",
+  "platformLocalPatch": {
+   "sha256": "9285ffbf81b01ef185e8d4b7684dcce43ca8549cee97ce1a16f98fc0090026be",
+   "change": "exchange(): 子进程 env 加 PYTHONUTF8=1/PYTHONIOENCODING=utf-8；subprocess.run 显式 encoding='utf-8' errors='replace'；解析失败时回带 diagnosticRef。",
+   "why": "共享侧 D-15（cli.py 以宿主代码页打印非 ASCII JSON）/D-16（UnicodeEncodeError⊂ValueError 被误报为 INVALID_REQUEST 且事务已提交）的本平台绕过；不动引擎、不动共享仓。",
+   "evidence": "qoder/runtime/maintenance/2.0-G/baseline/G1-three-cells.json"
+  },
+  "recordedAt": "2026-09-19T08:17:33Z",
+  "ancestorRecoveredFromGit": {
+   "how": "根级白名单仓提交 e0123229（\"接入面文本层入仓\"）本就跟踪 `qoder/bridge/ops/invocation_matrix.py` ⇒ `git show HEAD:…` 可直接取回本平台灭失前那份字节，**不必借 zcode 目录**。",
+   "path": "qoder/runtime/maintenance/2.0-G/baseline/G4-harness-from-HEAD.py",
+   "sha256": "55f20420ebcae1f318e8e808eae27d3e29184f08002ecc9da35cdfbc2a285cdd",
+   "equalsZcodeCopy": true,
+   "deltaVsAncestor": "20\t2\tqoder/bridge/ops/invocation_matrix.py",
+   "note": "所以本文件的 `copiedFrom` 只是取回途径的记录；真正的字节祖先 = HEAD 那份，且与 zcode 副本逐字节相同（⇒ D-18 的漂移发生在更上游）。同时给 D-13 加一条正面事实：入仓后**接入面文本层**已有第 4 个恢复源，本轮灭失前的 config/ops 件也据此可核。"
+  }
+ },
+ "closedDefects": [
+  "D-10 judge not shared",
+  "D-14 provenance drift between copies",
+  "D-17 --out parent not created",
+  "D-18 diagnosticRef not read back",
+  "D-15/D-16 engine-side fix landed in wf-runner 0.7.9; the UTF-8 pin inside the shared harness stays as defence in depth for platforms pinned to older engines"
+ ],
+ "note": "The archived copy is what qoder was measured by on 2026-09-19 (2.0-G); it is kept so the older readings stay attributable to specific bytes."
+}

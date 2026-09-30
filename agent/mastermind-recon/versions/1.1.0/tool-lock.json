@@ -1,0 +1,11 @@
+{
+  "schema": "ai-tool-lock/v1",
+  "workflows": {
+    "mastermind-peer-task": "1.0.0"
+  },
+  "tools": [
+    "hub_scope_read",
+    "hub_file_list",
+    "hub_file_read"
+  ]
+}

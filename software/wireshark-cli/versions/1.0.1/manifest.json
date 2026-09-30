@@ -1,0 +1,386 @@
+{
+ "schema": "ai-software/v1",
+ "id": "wireshark-cli",
+ "version": "1.0.1",
+ "displayName": "Wireshark CLI (tshark, editcap, mergecap)",
+ "upstreamVersion": "4.2.6",
+ "kind": "cli-wrapper",
+ "transport": {
+  "command": "${softwareRoot}/tshark.exe",
+  "argsStyle": "declarative-argv"
+ },
+ "capabilities": [
+  {
+   "name": "version",
+   "nativeName": "tshark --version",
+   "inputSchemaRef": "schemas/empty.input.json",
+   "outputSchemaRef": "schemas/version.output.json",
+   "sideEffects": "none",
+   "permissionRequests": {
+    "filesystem": "none",
+    "network": "none",
+    "process": "self",
+    "credentials": "none"
+   },
+   "consent": "auto",
+   "idempotent": true,
+   "safeForSelftest": true,
+   "invocation": {
+    "executable": "tshark.exe",
+    "baseArgv": [
+     "--version"
+    ],
+    "argMapping": [],
+    "outputCapture": "stdout",
+    "outputFormat": "text",
+    "timeout": 15,
+    "successExitCodes": [
+     0
+    ]
+   }
+  },
+  {
+   "name": "readCapture",
+   "nativeName": "tshark -r <file> -T json [options]",
+   "inputSchemaRef": "schemas/readCapture.input.json",
+   "outputSchemaRef": "schemas/readCapture.output.json",
+   "sideEffects": "local-write",
+   "permissionRequests": {
+    "filesystem": "workspace",
+    "network": "none",
+    "process": "self",
+    "credentials": "none"
+   },
+   "consent": "auto",
+   "idempotent": true,
+   "safeForSelftest": false,
+   "invocation": {
+    "executable": "tshark.exe",
+    "baseArgv": [],
+    "argMapping": [
+     {
+      "param": "inputFile",
+      "flag": "-r",
+      "required": true
+     },
+     {
+      "param": "displayFilter",
+      "flag": "-Y"
+     },
+     {
+      "param": "readFilter",
+      "flag": "-R"
+     },
+     {
+      "param": "protocolFilterTop",
+      "flag": "-J",
+      "appliesWhen": {
+       "outputFormat": [
+        "json",
+        "pdml",
+        "ek"
+       ]
+      }
+     },
+     {
+      "param": "protocolFilterAll",
+      "flag": "-j",
+      "appliesWhen": {
+       "outputFormat": [
+        "json",
+        "pdml",
+        "ek"
+       ]
+      }
+     },
+     {
+      "param": "packetCount",
+      "flag": "-c"
+     },
+     {
+      "param": "packetDetails",
+      "flag": "-V",
+      "style": "boolean"
+     },
+     {
+      "param": "hexBytes",
+      "flag": "-x",
+      "style": "boolean"
+     },
+     {
+      "param": "twoPass",
+      "flag": "-2",
+      "style": "boolean"
+     },
+     {
+      "param": "noDuplicateKeys",
+      "flag": "--no-duplicate-keys",
+      "style": "boolean"
+     },
+     {
+      "param": "outputFormat",
+      "flag": "-T",
+      "default": "json",
+      "enum": [
+       "json",
+       "jsonraw",
+       "pdml",
+       "psml",
+       "fields",
+       "tabs",
+       "text",
+       "ek"
+      ]
+     },
+     {
+      "param": "fields",
+      "flag": "-e",
+      "style": "repeat",
+      "appliesWhen": {
+       "outputFormat": [
+        "fields"
+       ]
+      }
+     },
+     {
+      "param": "fieldSeparator",
+      "flag": "-E",
+      "prefix": "separator=",
+      "appliesWhen": {
+       "outputFormat": [
+        "fields"
+       ]
+      }
+     }
+    ],
+    "outputCapture": "stdout",
+    "outputFormat": "json",
+    "outputNote": "默认 -T json 输出包数组 JSON；-T fields 输出制表符分隔文本；不发起网络连接，仅读本地捕获文件",
+    "timeout": 300,
+    "successExitCodes": [
+     0
+    ]
+   }
+  },
+  {
+   "name": "filterCapture",
+   "nativeName": "tshark -r <file> -Y <filter> -T json",
+   "inputSchemaRef": "schemas/filterCapture.input.json",
+   "outputSchemaRef": "schemas/readCapture.output.json",
+   "sideEffects": "local-write",
+   "permissionRequests": {
+    "filesystem": "workspace",
+    "network": "none",
+    "process": "self",
+    "credentials": "none"
+   },
+   "consent": "auto",
+   "idempotent": true,
+   "safeForSelftest": false,
+   "invocation": {
+    "executable": "tshark.exe",
+    "baseArgv": [
+     "-T",
+     "json"
+    ],
+    "argMapping": [
+     {
+      "param": "inputFile",
+      "flag": "-r",
+      "required": true
+     },
+     {
+      "param": "displayFilter",
+      "flag": "-Y",
+      "required": true
+     },
+     {
+      "param": "protocolFilterTop",
+      "flag": "-J"
+     },
+     {
+      "param": "packetCount",
+      "flag": "-c"
+     },
+     {
+      "param": "packetDetails",
+      "flag": "-V",
+      "style": "boolean"
+     },
+     {
+      "param": "hexBytes",
+      "flag": "-x",
+      "style": "boolean"
+     },
+     {
+      "param": "twoPass",
+      "flag": "-2",
+      "style": "boolean"
+     },
+     {
+      "param": "outputFile",
+      "flag": "-w"
+     }
+    ],
+    "outputCapture": "stdout",
+    "outputFormat": "json",
+    "timeout": 300,
+    "successExitCodes": [
+     0
+    ]
+   }
+  },
+  {
+   "name": "convertCapture",
+   "nativeName": "editcap [options] <infile> <outfile>",
+   "inputSchemaRef": "schemas/convertCapture.input.json",
+   "outputSchemaRef": "schemas/convertCapture.output.json",
+   "sideEffects": "local-write",
+   "permissionRequests": {
+    "filesystem": "workspace",
+    "network": "none",
+    "process": "self",
+    "credentials": "none"
+   },
+   "consent": "auto",
+   "idempotent": true,
+   "safeForSelftest": false,
+   "invocation": {
+    "executable": "editcap.exe",
+    "baseArgv": [],
+    "argMapping": [
+     {
+      "param": "startTime",
+      "flag": "-A"
+     },
+     {
+      "param": "stopTime",
+      "flag": "-B"
+     },
+     {
+      "param": "keepSelected",
+      "flag": "-r",
+      "style": "boolean"
+     },
+     {
+      "param": "dedup",
+      "flag": "-d",
+      "style": "boolean"
+     },
+     {
+      "param": "dedupWindow",
+      "flag": "-D"
+     },
+     {
+      "param": "snaplen",
+      "flag": "-s"
+     },
+     {
+      "param": "chopBytes",
+      "flag": "-C"
+     },
+     {
+      "param": "timeAdjust",
+      "flag": "-t"
+     },
+     {
+      "param": "splitByPackets",
+      "flag": "-c"
+     },
+     {
+      "param": "splitBySeconds",
+      "flag": "-i"
+     },
+     {
+      "param": "outputFormat",
+      "flag": "-F"
+     },
+     {
+      "param": "inputFile",
+      "style": "positional",
+      "required": true,
+      "position": 0
+     },
+     {
+      "param": "outputFile",
+      "style": "positional",
+      "required": true,
+      "position": 1
+     }
+    ],
+    "outputCapture": "stdout",
+    "outputFormat": "text",
+    "outputNote": "editcap 成功时 stdout 通常为空或仅警告；结果以 outputFile 存在性与退出码判定",
+    "timeout": 300,
+    "successExitCodes": [
+     0
+    ]
+   }
+  },
+  {
+   "name": "mergeCapture",
+   "nativeName": "mergecap -w <outfile> <infile1> <infile2> ...",
+   "inputSchemaRef": "schemas/mergeCapture.input.json",
+   "outputSchemaRef": "schemas/convertCapture.output.json",
+   "sideEffects": "local-write",
+   "permissionRequests": {
+    "filesystem": "workspace",
+    "network": "none",
+    "process": "self",
+    "credentials": "none"
+   },
+   "consent": "auto",
+   "idempotent": true,
+   "safeForSelftest": false,
+   "invocation": {
+    "executable": "mergecap.exe",
+    "baseArgv": [],
+    "argMapping": [
+     {
+      "param": "outputFile",
+      "flag": "-w",
+      "required": true
+     },
+     {
+      "param": "outputFormat",
+      "flag": "-F"
+     },
+     {
+      "param": "snapshotLength",
+      "flag": "-s"
+     },
+     {
+      "param": "inputFiles",
+      "style": "positional",
+      "required": true,
+      "position": 0,
+      "repeating": true
+     }
+    ],
+    "outputCapture": "stdout",
+    "outputFormat": "text",
+    "timeout": 300,
+    "successExitCodes": [
+     0
+    ]
+   }
+  }
+ ],
+ "concurrency": {
+  "instanceMode": "per-run",
+  "poolSize": null,
+  "exclusiveResources": [],
+  "whenBusy": "reject-retryable"
+ },
+ "platformSupport": {
+  "windows": "supported",
+  "linux": "supported",
+  "macos": "supported"
+ },
+ "requiredProfiles": [],
+ "snapshot": "capabilities.snapshot.json",
+ "integrity": {
+  "sha256Manifest": "SHA256SUMS"
+ },
+ "docs": "README.md"
+}

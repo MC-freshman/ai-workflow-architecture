@@ -1,0 +1,605 @@
+{
+ "schema": "ai-software-capability-snapshot/v1",
+ "softwareId": "burp-suite",
+ "softwareVersion": "1.0.1",
+ "upstreamVersion": "2024.5.1",
+ "generatedAt": "2026-09-25T00:00:00Z",
+ "generationMethod": "live-sse-readonly-probe",
+ "frozen": true,
+ "capabilities": [
+  {
+   "name": "mcpListTools",
+   "nativeName": "JSON-RPC tools/list over MCP SSE",
+   "frozen": true,
+   "sideEffects": "none",
+   "consent": "auto",
+   "idempotent": true,
+   "safeForSelftest": true,
+   "inputSchemaRef": "schemas/empty.input.json",
+   "outputSchemaRef": "schemas/mcpTools.output.json",
+   "liveToolNames": [
+    "send_http1_request",
+    "send_http2_request",
+    "create_repeater_tab",
+    "create_repeater_tab_http2",
+    "send_to_intruder",
+    "url_encode",
+    "url_decode",
+    "base64_encode",
+    "base64_decode",
+    "generate_random_string",
+    "output_project_options",
+    "output_user_options",
+    "set_project_options",
+    "set_user_options",
+    "get_scanner_issues",
+    "generate_collaborator_payload",
+    "get_collaborator_interactions",
+    "get_proxy_http_history",
+    "get_proxy_http_history_regex",
+    "get_proxy_websocket_history",
+    "get_proxy_websocket_history_regex",
+    "set_task_execution_engine_state",
+    "set_proxy_intercept_state",
+    "get_active_editor_contents",
+    "set_active_editor_contents"
+   ]
+  },
+  {
+   "name": "mcpCallTool",
+   "nativeName": "JSON-RPC tools/call over MCP SSE",
+   "frozen": true,
+   "sideEffects": "external",
+   "consent": "confirm-stage",
+   "idempotent": false,
+   "safeForSelftest": false,
+   "inputSchemaRef": "schemas/mcpCall.input.json",
+   "outputSchemaRef": "schemas/mcpCall.output.json",
+   "liveToolNames": [
+    "send_http1_request",
+    "send_http2_request",
+    "create_repeater_tab",
+    "create_repeater_tab_http2",
+    "send_to_intruder",
+    "url_encode",
+    "url_decode",
+    "base64_encode",
+    "base64_decode",
+    "generate_random_string",
+    "output_project_options",
+    "output_user_options",
+    "set_project_options",
+    "set_user_options",
+    "get_scanner_issues",
+    "generate_collaborator_payload",
+    "get_collaborator_interactions",
+    "get_proxy_http_history",
+    "get_proxy_http_history_regex",
+    "get_proxy_websocket_history",
+    "get_proxy_websocket_history_regex",
+    "set_task_execution_engine_state",
+    "set_proxy_intercept_state",
+    "get_active_editor_contents",
+    "set_active_editor_contents"
+   ]
+  },
+  {
+   "name": "proxyHistory",
+   "nativeName": "tools/call（Proxy 类别，语义映射待补）",
+   "frozen": false,
+   "frozenToolName": null,
+   "category": "Proxy（代理历史 / 拦截控制）",
+   "sideEffects": "external",
+   "consent": "confirm-stage",
+   "idempotent": true,
+   "safeForSelftest": false,
+   "inputSchemaRef": "schemas/proxyIntercept.input.json",
+   "outputSchemaRef": "schemas/proxyIntercept.output.json"
+  },
+  {
+   "name": "scannerScan",
+   "nativeName": "tools/call（主动扫描类别，live 清单没有启动扫描工具）",
+   "frozen": false,
+   "frozenToolName": null,
+   "category": "Scanner（主动/被动扫描；完整扫描 API 仅 Pro）",
+   "sideEffects": "external",
+   "consent": "confirm-stage",
+   "idempotent": false,
+   "safeForSelftest": false,
+   "inputSchemaRef": "schemas/scannerScan.input.json",
+   "outputSchemaRef": "schemas/scannerScan.output.json"
+  }
+ ],
+ "upstreamDocs": "https://github.com/PortSwigger/mcp-server",
+ "runtime": {
+  "transport": "mcp-sse",
+  "protocolVersion": "2024-11-05",
+  "serverInfo": {
+   "name": "burp-suite",
+   "version": "1.1.2"
+  },
+  "toolsSha256": "8baf895ec1abe513ff30e5b2614340f3f5d050dd2ffd1adc6030600790ba7a79",
+  "tools": [
+   {
+    "name": "send_http1_request",
+    "description": "Issues an HTTP/1.1 request and returns the response.",
+    "inputSchema": {
+     "properties": {
+      "content": {
+       "type": "string"
+      },
+      "targetHostname": {
+       "type": "string"
+      },
+      "targetPort": {
+       "type": "integer"
+      },
+      "usesHttps": {
+       "type": "boolean"
+      }
+     },
+     "required": [
+      "content",
+      "targetHostname",
+      "targetPort",
+      "usesHttps"
+     ],
+     "type": "object"
+    }
+   },
+   {
+    "name": "send_http2_request",
+    "description": "Issues an HTTP/2 request and returns the response. Do NOT pass headers to the body parameter.",
+    "inputSchema": {
+     "properties": {
+      "headers": {
+       "type": "object",
+       "additionalProperties": {
+        "type": "string"
+       }
+      },
+      "pseudoHeaders": {
+       "type": "object",
+       "additionalProperties": {
+        "type": "string"
+       }
+      },
+      "requestBody": {
+       "type": "string"
+      },
+      "targetHostname": {
+       "type": "string"
+      },
+      "targetPort": {
+       "type": "integer"
+      },
+      "usesHttps": {
+       "type": "boolean"
+      }
+     },
+     "required": [
+      "headers",
+      "pseudoHeaders",
+      "requestBody",
+      "targetHostname",
+      "targetPort",
+      "usesHttps"
+     ],
+     "type": "object"
+    }
+   },
+   {
+    "name": "create_repeater_tab",
+    "description": "Creates an HTTP/1.1 Repeater tab with the specified raw HTTP request and optional tab name. Make sure to use carriage returns appropriately. Prefer create_repeater_tab_http2 for modern web targets that speak HTTP/2.",
+    "inputSchema": {
+     "properties": {
+      "content": {
+       "type": "string"
+      },
+      "tabName": {
+       "type": "string"
+      },
+      "targetHostname": {
+       "type": "string"
+      },
+      "targetPort": {
+       "type": "integer"
+      },
+      "usesHttps": {
+       "type": "boolean"
+      }
+     },
+     "required": [
+      "content",
+      "targetHostname",
+      "targetPort",
+      "usesHttps"
+     ],
+     "type": "object"
+    }
+   },
+   {
+    "name": "create_repeater_tab_http2",
+    "description": "Creates an HTTP/2 Repeater tab with the specified HTTP/2 request and optional tab name. Use this by default for modern web targets. Do NOT pass headers to the body parameter.",
+    "inputSchema": {
+     "properties": {
+      "headers": {
+       "type": "object",
+       "additionalProperties": {
+        "type": "string"
+       }
+      },
+      "pseudoHeaders": {
+       "type": "object",
+       "additionalProperties": {
+        "type": "string"
+       }
+      },
+      "requestBody": {
+       "type": "string"
+      },
+      "tabName": {
+       "type": "string"
+      },
+      "targetHostname": {
+       "type": "string"
+      },
+      "targetPort": {
+       "type": "integer"
+      },
+      "usesHttps": {
+       "type": "boolean"
+      }
+     },
+     "required": [
+      "headers",
+      "pseudoHeaders",
+      "requestBody",
+      "targetHostname",
+      "targetPort",
+      "usesHttps"
+     ],
+     "type": "object"
+    }
+   },
+   {
+    "name": "send_to_intruder",
+    "description": "Sends an HTTP request to Intruder with the specified HTTP request and optional tab name. Make sure to use carriage returns appropriately.",
+    "inputSchema": {
+     "properties": {
+      "content": {
+       "type": "string"
+      },
+      "tabName": {
+       "type": "string"
+      },
+      "targetHostname": {
+       "type": "string"
+      },
+      "targetPort": {
+       "type": "integer"
+      },
+      "usesHttps": {
+       "type": "boolean"
+      }
+     },
+     "required": [
+      "content",
+      "targetHostname",
+      "targetPort",
+      "usesHttps"
+     ],
+     "type": "object"
+    }
+   },
+   {
+    "name": "url_encode",
+    "description": "URL encodes the input string",
+    "inputSchema": {
+     "properties": {
+      "content": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "content"
+     ],
+     "type": "object"
+    }
+   },
+   {
+    "name": "url_decode",
+    "description": "URL decodes the input string",
+    "inputSchema": {
+     "properties": {
+      "content": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "content"
+     ],
+     "type": "object"
+    }
+   },
+   {
+    "name": "base64_encode",
+    "description": "Base64 encodes the input string",
+    "inputSchema": {
+     "properties": {
+      "content": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "content"
+     ],
+     "type": "object"
+    }
+   },
+   {
+    "name": "base64_decode",
+    "description": "Base64 decodes the input string",
+    "inputSchema": {
+     "properties": {
+      "content": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "content"
+     ],
+     "type": "object"
+    }
+   },
+   {
+    "name": "generate_random_string",
+    "description": "Generates a random string of specified length and character set",
+    "inputSchema": {
+     "properties": {
+      "characterSet": {
+       "type": "string"
+      },
+      "length": {
+       "type": "integer"
+      }
+     },
+     "required": [
+      "characterSet",
+      "length"
+     ],
+     "type": "object"
+    }
+   },
+   {
+    "name": "output_project_options",
+    "description": "Outputs current project-level configuration in JSON format. You can use this to determine the schema for available config options.",
+    "inputSchema": {
+     "properties": {},
+     "type": "object"
+    }
+   },
+   {
+    "name": "output_user_options",
+    "description": "Outputs current user-level configuration in JSON format. You can use this to determine the schema for available config options.",
+    "inputSchema": {
+     "properties": {},
+     "type": "object"
+    }
+   },
+   {
+    "name": "set_project_options",
+    "description": "Sets project-level configuration in JSON format. This will be merged with existing configuration. Make sure to export before doing this, so you know what the schema is. Make sure the JSON has a top level 'user_options' object!",
+    "inputSchema": {
+     "properties": {
+      "json": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "json"
+     ],
+     "type": "object"
+    }
+   },
+   {
+    "name": "set_user_options",
+    "description": "Sets user-level configuration in JSON format. This will be merged with existing configuration. Make sure to export before doing this, so you know what the schema is. Make sure the JSON has a top level 'project_options' object!",
+    "inputSchema": {
+     "properties": {
+      "json": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "json"
+     ],
+     "type": "object"
+    }
+   },
+   {
+    "name": "get_scanner_issues",
+    "description": "Displays information about issues identified by the scanner",
+    "inputSchema": {
+     "properties": {
+      "count": {
+       "type": "integer"
+      },
+      "offset": {
+       "type": "integer"
+      }
+     },
+     "required": [
+      "count",
+      "offset"
+     ],
+     "type": "object"
+    }
+   },
+   {
+    "name": "generate_collaborator_payload",
+    "description": "Generates a Burp Collaborator payload URL for out-of-band (OOB) testing. Inject this payload into requests to detect server-side interactions (DNS lookups, HTTP requests, SMTP). Use get_collaborator_interactions with the returned payloadId to check for interactions.",
+    "inputSchema": {
+     "properties": {
+      "customData": {
+       "type": "string"
+      }
+     },
+     "required": [],
+     "type": "object"
+    }
+   },
+   {
+    "name": "get_collaborator_interactions",
+    "description": "Polls Burp Collaborator for out-of-band interactions (DNS, HTTP, SMTP). Optionally filter by payloadId from generate_collaborator_payload. Returns interaction details including type, timestamp, client IP, and protocol-specific data.",
+    "inputSchema": {
+     "properties": {
+      "payloadId": {
+       "type": "string"
+      }
+     },
+     "required": [],
+     "type": "object"
+    }
+   },
+   {
+    "name": "get_proxy_http_history",
+    "description": "Displays items within the proxy HTTP history",
+    "inputSchema": {
+     "properties": {
+      "count": {
+       "type": "integer"
+      },
+      "offset": {
+       "type": "integer"
+      }
+     },
+     "required": [
+      "count",
+      "offset"
+     ],
+     "type": "object"
+    }
+   },
+   {
+    "name": "get_proxy_http_history_regex",
+    "description": "Displays items matching a specified regex within the proxy HTTP history",
+    "inputSchema": {
+     "properties": {
+      "count": {
+       "type": "integer"
+      },
+      "offset": {
+       "type": "integer"
+      },
+      "regex": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "count",
+      "offset",
+      "regex"
+     ],
+     "type": "object"
+    }
+   },
+   {
+    "name": "get_proxy_websocket_history",
+    "description": "Displays items within the proxy WebSocket history",
+    "inputSchema": {
+     "properties": {
+      "count": {
+       "type": "integer"
+      },
+      "offset": {
+       "type": "integer"
+      }
+     },
+     "required": [
+      "count",
+      "offset"
+     ],
+     "type": "object"
+    }
+   },
+   {
+    "name": "get_proxy_websocket_history_regex",
+    "description": "Displays items matching a specified regex within the proxy WebSocket history",
+    "inputSchema": {
+     "properties": {
+      "count": {
+       "type": "integer"
+      },
+      "offset": {
+       "type": "integer"
+      },
+      "regex": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "count",
+      "offset",
+      "regex"
+     ],
+     "type": "object"
+    }
+   },
+   {
+    "name": "set_task_execution_engine_state",
+    "description": "Sets the state of Burp's task execution engine (paused or unpaused)",
+    "inputSchema": {
+     "properties": {
+      "running": {
+       "type": "boolean"
+      }
+     },
+     "required": [
+      "running"
+     ],
+     "type": "object"
+    }
+   },
+   {
+    "name": "set_proxy_intercept_state",
+    "description": "Enables or disables Burp Proxy Intercept",
+    "inputSchema": {
+     "properties": {
+      "intercepting": {
+       "type": "boolean"
+      }
+     },
+     "required": [
+      "intercepting"
+     ],
+     "type": "object"
+    }
+   },
+   {
+    "name": "get_active_editor_contents",
+    "description": "Outputs the contents of the user's active message editor",
+    "inputSchema": {
+     "properties": {},
+     "type": "object"
+    }
+   },
+   {
+    "name": "set_active_editor_contents",
+    "description": "Sets the content of the user's active message editor",
+    "inputSchema": {
+     "properties": {
+      "text": {
+       "type": "string"
+      }
+     },
+     "required": [
+      "text"
+     ],
+     "type": "object"
+    }
+   }
+  ],
+  "attestation": "tools/list from a real SSE session; the endpoint is queried again before each connector call"
+ }
+}

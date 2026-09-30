@@ -1,0 +1,38 @@
+{
+  "schema": "ai-governance-tool/v1",
+  "id": "platform-conformance",
+  "displayName": "Platform Conformance Suite",
+  "version": "1.4.1",
+  "kind": "governance-tool",
+  "invocable": false,
+  "runtime": {
+    "type": "python-cli",
+    "entry": "conformance",
+    "python": ">=3.9",
+    "testFramework": "stdlib unittest"
+  },
+  "run": "set PCONF_CONFIG=<platform config>; python -B -m unittest discover -s conformance -t . -p 'test_*.py'",
+  "coversGates": [
+    "ENTRY-04",
+    "CON-01",
+    "CON-02",
+    "CON-03",
+    "ADR-2 format",
+    "F03 decoupling",
+    "CON-04 declared-evidence read-back (D-11)",
+    "CON-05 capability union and conformance floor (2.1.0 §3.3/§3.5)",
+    "3.0 S-P5: conform --only <softwareId>",
+    "D-27: positive and negative cases for legal unsealed v1.2/v1.3 run-locks",
+    "D-35: declared script support requires an explicit scriptEnvironmentRungs entry"
+  ],
+  "depends": {
+    "contracts": {
+      "runtime-contracts": "1.4.1"
+    }
+  },
+  "integrity": {
+    "sha256Manifest": "SHA256SUMS"
+  },
+  "conform": "python -B -m conformance.conform --config \"$PCONF_CONFIG\" --out floor.json   # single-cell re-check: add --only <softwareId>",
+  "releaseScope": "D-27: adds a positive/negative conformance regression for the legal no-sealed-environment run-lock shape in v1.2 and v1.3. D-35: conform marks a declared script action unverified unless the platform config explicitly declares a structurally usable scriptEnvironmentRungs entry. Declared-absent platforms remain declaredAbsent. No execution policy is inferred from the legacy executionBackend field."
+}

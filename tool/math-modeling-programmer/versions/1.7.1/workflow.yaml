@@ -1,0 +1,249 @@
+{
+  "schema": "ai-workflow-definition/v2",
+  "id": "math-modeling-programmer",
+  "version": "1.7.1",
+  "mode": "pipeline",
+  "maxParallel": 1,
+  "roles": [
+    "modeler"
+  ],
+  "requires": {
+    "skills": {
+      "visualization-layout": "1.1.0"
+    },
+    "workflows": {
+      "visualization-qa": "1.2.0"
+    },
+    "packs": {}
+  },
+  "stages": [
+    {
+      "id": "INIT",
+      "action": "script",
+      "worker": "modeler",
+      "dependsOn": [],
+      "outputs": "schemas/phase1-output.json",
+      "script": "scripts/phase1_adapter.py",
+      "arguments": {
+        "argv": [
+          "INIT"
+        ],
+        "timeoutSeconds": 180
+      },
+      "gates": [
+        "domain"
+      ]
+    },
+    {
+      "id": "AUDIT",
+      "action": "script",
+      "worker": "modeler",
+      "dependsOn": [
+        "INIT"
+      ],
+      "outputs": "schemas/phase1-output.json",
+      "script": "scripts/phase1_adapter.py",
+      "arguments": {
+        "argv": [
+          "AUDIT"
+        ],
+        "timeoutSeconds": 180
+      },
+      "gates": [
+        "domain"
+      ]
+    },
+    {
+      "id": "SPEC",
+      "action": "prompt",
+      "worker": "modeler",
+      "dependsOn": [
+        "AUDIT"
+      ],
+      "outputs": "schemas/phase1-output.json",
+      "script": "scripts/phase1_adapter.py",
+      "arguments": {
+        "argv": [
+          "SPEC"
+        ],
+        "timeoutSeconds": 180
+      },
+      "gates": [
+        "domain"
+      ],
+      "promptRef": "phase1-prompts.md#stage:SPEC"
+    },
+    {
+      "id": "BASELINE",
+      "action": "prompt",
+      "worker": "modeler",
+      "dependsOn": [
+        "SPEC"
+      ],
+      "outputs": "schemas/phase1-output.json",
+      "script": "scripts/phase1_adapter.py",
+      "arguments": {
+        "argv": [
+          "BASELINE"
+        ],
+        "timeoutSeconds": 180
+      },
+      "gates": [
+        "domain"
+      ],
+      "promptRef": "phase1-prompts.md#stage:BASELINE"
+    },
+    {
+      "id": "SOLVE",
+      "action": "prompt",
+      "worker": "modeler",
+      "dependsOn": [
+        "BASELINE"
+      ],
+      "outputs": "schemas/phase1-output.json",
+      "script": "scripts/phase1_adapter.py",
+      "arguments": {
+        "argv": [
+          "SOLVE"
+        ],
+        "timeoutSeconds": 180
+      },
+      "gates": [
+        "domain"
+      ],
+      "promptRef": "phase1-prompts.md#stage:SOLVE"
+    },
+    {
+      "id": "EXPERIMENT",
+      "action": "script",
+      "worker": "modeler",
+      "dependsOn": [
+        "SOLVE"
+      ],
+      "outputs": "schemas/phase1-output.json",
+      "script": "scripts/phase1_adapter.py",
+      "arguments": {
+        "argv": [
+          "EXPERIMENT"
+        ],
+        "timeoutSeconds": 180
+      },
+      "gates": [
+        "domain"
+      ]
+    },
+    {
+      "id": "VALIDATE",
+      "action": "prompt",
+      "worker": "modeler",
+      "dependsOn": [
+        "EXPERIMENT"
+      ],
+      "outputs": "schemas/phase1-output.json",
+      "script": "scripts/phase1_adapter.py",
+      "arguments": {
+        "argv": [
+          "VALIDATE"
+        ],
+        "timeoutSeconds": 180
+      },
+      "gates": [
+        "domain"
+      ],
+      "promptRef": "phase1-prompts.md#stage:VALIDATE"
+    },
+    {
+      "id": "FIGURES",
+      "action": "prompt",
+      "worker": "modeler",
+      "dependsOn": [
+        "VALIDATE"
+      ],
+      "outputs": "schemas/phase1-output.json",
+      "script": "scripts/phase1_adapter.py",
+      "arguments": {
+        "argv": [
+          "FIGURES"
+        ],
+        "timeoutSeconds": 180
+      },
+      "gates": [
+        "domain",
+        "figure_contract",
+        "source_preflight",
+        "render_preview",
+        "layout_bbox_qa",
+        "composition_efficiency",
+        "panel_alignment",
+        "pdf_collision",
+        "visual_review"
+      ],
+      "promptRef": "phase1-prompts.md#stage:FIGURES"
+    },
+    {
+      "id": "FREEZE",
+      "action": "script",
+      "worker": "modeler",
+      "dependsOn": [
+        "FIGURES"
+      ],
+      "outputs": "schemas/phase1-output.json",
+      "script": "scripts/phase1_adapter.py",
+      "arguments": {
+        "argv": [
+          "FREEZE"
+        ],
+        "timeoutSeconds": 180
+      },
+      "gates": [
+        "domain",
+        "figure_contract",
+        "source_preflight",
+        "render_preview",
+        "layout_bbox_qa",
+        "composition_efficiency",
+        "panel_alignment",
+        "pdf_collision",
+        "visual_review"
+      ]
+    }
+  ],
+  "gateDefinitions": {
+    "domain": {
+      "type": "math-stage",
+      "check": "domain"
+    },
+    "figure_contract": {
+      "type": "math-stage",
+      "check": "figure_contract"
+    },
+    "source_preflight": {
+      "type": "math-stage",
+      "check": "source_preflight"
+    },
+    "render_preview": {
+      "type": "math-stage",
+      "check": "render_preview"
+    },
+    "layout_bbox_qa": {
+      "type": "math-stage",
+      "check": "layout_bbox_qa"
+    },
+    "composition_efficiency": {
+      "type": "math-stage",
+      "check": "composition_efficiency"
+    },
+    "panel_alignment": {
+      "type": "math-stage",
+      "check": "panel_alignment"
+    },
+    "pdf_collision": {
+      "type": "math-stage",
+      "check": "pdf_collision"
+    },
+    "visual_review": {
+      "type": "math-stage",
+      "check": "visual_review"
+    }
+  }
+}

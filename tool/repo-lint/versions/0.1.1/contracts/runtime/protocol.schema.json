@@ -1,0 +1,88 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://contracts.local/runtime/1.1/protocol.schema.json",
+  "type": "object", "additionalProperties": false,
+  "required": ["schemaVersion", "kind", "requestId", "operation", "runId"],
+  "properties": {
+    "schemaVersion": {"const": "ai-run-protocol/v1.1"}, "kind": {"enum": ["request", "response"]},
+    "requestId": {"$ref": "common.schema.json#/$defs/id"}, "runId": {"$ref": "common.schema.json#/$defs/id"},
+    "operation": {"enum": ["prepare", "next", "submit", "status", "stop"]},
+    "idempotencyKey": {"$ref": "common.schema.json#/$defs/id"}, "expectedStateRevision": {"type": "integer", "minimum": 0},
+    "payload": {"type": "object"}, "ok": {"type": "boolean"}, "result": {"type": "object"},
+    "error": {"$ref": "common.schema.json#/$defs/error"}
+  },
+  "allOf": [
+    {
+      "if": {"properties": {"kind": {"const": "request"}}},
+      "then": {
+        "required": ["payload"], "not": {"anyOf": [{"required": ["ok"]}, {"required": ["result"]}, {"required": ["error"]}]},
+        "allOf": [
+          {"if": {"properties": {"operation": {"const": "status"}}}, "then": {"not": {"anyOf": [{"required": ["idempotencyKey"]}, {"required": ["expectedStateRevision"]}]}}, "else": {"required": ["idempotencyKey"]}},
+          {"if": {"properties": {"operation": {"enum": ["next", "submit", "stop"]}}}, "then": {"required": ["expectedStateRevision"]}, "else": {"not": {"required": ["expectedStateRevision"]}}},
+          {"if": {"properties": {"operation": {"const": "prepare"}}}, "then": {"properties": {"payload": {"$ref": "#/$defs/prepare"}}}},
+          {"if": {"properties": {"operation": {"enum": ["next", "status"]}}}, "then": {"properties": {"payload": {"maxProperties": 0}}}},
+          {"if": {"properties": {"operation": {"const": "submit"}}}, "then": {"properties": {"payload": {"$ref": "common.schema.json#/$defs/completion"}}}},
+          {"if": {"properties": {"operation": {"const": "stop"}}}, "then": {"properties": {"payload": {"type": "object", "additionalProperties": false, "required": ["reason"], "properties": {"reason": {"type": "string", "minLength": 1}}}}}}
+        ]
+      },
+      "else": {
+        "required": ["ok"], "not": {"anyOf": [{"required": ["payload"]}, {"required": ["idempotencyKey"]}, {"required": ["expectedStateRevision"]}]},
+        "allOf": [
+          {"if": {"properties": {"ok": {"const": true}}}, "then": {"required": ["result"], "not": {"required": ["error"]}, "properties": {"result": {"$ref": "#/$defs/result"}}}, "else": {"required": ["error"], "not": {"required": ["result"]}}},
+          {"if": {"properties": {"ok": {"const": true}, "operation": {"const": "next"}}}, "then": {"properties": {"result": {"required": ["task", "reason"]}}}},
+          {"if": {"properties": {"ok": {"const": true}, "operation": {"const": "submit"}}}, "then": {"properties": {"result": {"required": ["accepted"], "properties": {"accepted": {"const": true}}}}}},
+          {"if": {"properties": {"operation": {"not": {"const": "next"}}}}, "then": {"properties": {"result": {"not": {"anyOf": [{"required": ["task"]}, {"required": ["reason"]}]}}}}},
+          {"if": {"properties": {"operation": {"not": {"const": "submit"}}}}, "then": {"properties": {"result": {"not": {"required": ["accepted"]}}}}}
+        ]
+      }
+    }
+  ],
+  "$defs": {
+    "prepare": {
+      "type": "object", "additionalProperties": false,
+      "required": ["platform", "parentRunId", "target", "parameters", "inputSources"],
+      "properties": {
+        "platform": {"enum": ["codex", "dsh", "workbuddy", "zcode", "doubao"]},
+        "parentRunId": {"oneOf": [{"type": "null"}, {"$ref": "common.schema.json#/$defs/id"}]},
+        "target": {
+          "type": "object", "additionalProperties": false, "required": ["mode", "id", "version"],
+          "properties": {"mode": {"enum": ["workflow", "agent"]}, "id": {"$ref": "common.schema.json#/$defs/id"}, "version": {"$ref": "common.schema.json#/$defs/version"}}
+        },
+        "parameters": {"type": "object"},
+        "inputSources": {
+          "type": "array", "items": {
+            "type": "object", "additionalProperties": false, "required": ["sourcePath", "snapshotPath"],
+            "properties": {"sourcePath": {"$ref": "common.schema.json#/$defs/absolutePath"}, "snapshotPath": {"$ref": "common.schema.json#/$defs/path"}}
+          }
+        }
+      }
+    },
+    "result": {
+      "type": "object", "additionalProperties": false, "required": ["lockSha256", "state"],
+      "properties": {
+        "lockSha256": {"$ref": "common.schema.json#/$defs/hash"}, "state": {"$ref": "state.schema.json"},
+        "accepted": {"type": "boolean"},
+        "reason": {"enum": ["claimed", "waiting", "blocked", "terminal", "stop-requested"]},
+        "task": {"oneOf": [{"type": "null"}, {"$ref": "#/$defs/task"}]}
+      }
+    },
+    "task": {
+      "type": "object", "additionalProperties": false,
+      "required": ["stageId", "attempt", "action", "initialInputSha256", "inputSha256", "artifacts", "allowedTools"],
+      "properties": {
+        "stageId": {"$ref": "common.schema.json#/$defs/id"}, "attempt": {"type": "integer", "minimum": 1},
+        "action": {"enum": ["prompt", "script"]}, "initialInputSha256": {"$ref": "common.schema.json#/$defs/hash"},
+        "inputSha256": {"$ref": "common.schema.json#/$defs/hash"}, "artifacts": {"type": "array", "items": {"$ref": "common.schema.json#/$defs/file"}},
+        "allowedTools": {"type": "array", "uniqueItems": true, "items": {"type": "string", "minLength": 1}},
+        "prompt": {"type": "string", "minLength": 1},
+        "script": {
+          "type": "object", "additionalProperties": false, "required": ["resourceKey", "entry", "argv", "timeoutSeconds"],
+          "properties": {"resourceKey": {"$ref": "common.schema.json#/$defs/id"}, "entry": {"$ref": "common.schema.json#/$defs/path"}, "argv": {"type": "array", "items": {"type": "string"}}, "timeoutSeconds": {"type": "integer", "minimum": 1}}
+        }
+      },
+      "allOf": [
+        {"if": {"properties": {"action": {"const": "prompt"}}}, "then": {"required": ["prompt"], "not": {"required": ["script"]}}, "else": {"required": ["script"], "not": {"required": ["prompt"]}}}
+      ]
+    }
+  }
+}

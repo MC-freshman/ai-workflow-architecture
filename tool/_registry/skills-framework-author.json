@@ -1,0 +1,61 @@
+{
+  "schema": "ai-skill-catalog/v1",
+  "skills": [
+    {
+      "id": "framework-scenario-adoption-wave",
+      "version": "1.0.0",
+      "sourceId": "governance:agents.md",
+      "sourcePath": "versions/1.0.0/SKILL.md",
+      "category": "framework-author"
+    },
+    {
+      "id": "framework-scenario-conform-gate",
+      "version": "1.0.0",
+      "sourceId": "governance:agents.md",
+      "sourcePath": "versions/1.0.0/SKILL.md",
+      "category": "framework-author"
+    },
+    {
+      "id": "framework-scenario-context-budget",
+      "version": "1.0.0",
+      "sourceId": "governance:agents.md",
+      "sourcePath": "versions/1.0.0/SKILL.md",
+      "category": "framework-author"
+    },
+    {
+      "id": "framework-scenario-defect-register",
+      "version": "1.0.0",
+      "sourceId": "governance:agents.md",
+      "sourcePath": "versions/1.0.0/SKILL.md",
+      "category": "framework-author"
+    },
+    {
+      "id": "framework-scenario-governance-edit",
+      "version": "1.0.0",
+      "sourceId": "governance:agents.md",
+      "sourcePath": "versions/1.0.0/SKILL.md",
+      "category": "framework-author"
+    },
+    {
+      "id": "framework-scenario-resource-audit",
+      "version": "1.0.0",
+      "sourceId": "governance:agents.md",
+      "sourcePath": "versions/1.0.0/SKILL.md",
+      "category": "framework-author"
+    },
+    {
+      "id": "framework-scenario-resource-author",
+      "version": "1.0.0",
+      "sourceId": "governance:agents.md",
+      "sourcePath": "versions/1.0.0/SKILL.md",
+      "category": "framework-author"
+    },
+    {
+      "id": "framework-scenario-run-discipline",
+      "version": "1.0.0",
+      "sourceId": "governance:agents.md",
+      "sourcePath": "versions/1.0.0/SKILL.md",
+      "category": "framework-author"
+    }
+  ]
+}

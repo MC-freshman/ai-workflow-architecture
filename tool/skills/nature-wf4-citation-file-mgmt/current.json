@@ -1,0 +1,6 @@
+{
+  "schema": "ai-skill-pointer/v1",
+  "id": "nature-wf4-citation-file-mgmt",
+  "version": "1.0.0",
+  "hashManifest": "SHA256SUMS"
+}

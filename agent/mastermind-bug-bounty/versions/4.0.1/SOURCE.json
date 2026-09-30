@@ -1,0 +1,20 @@
+{
+  "schema": "ai-governance-source/v1",
+  "authorSession": "codex",
+  "derivedFrom": "mastermind-bug-bounty@4.0.0",
+  "supersedes": "4.0.0",
+  "releaseScope": "P1 current-closure repair: the expert tool-lock pins mastermind-bug-bounty@3.0.1; the immutable 3.0.0 release remains available for historical pinned runs.",
+  "replacesExperts": [
+    "mastermind-recon",
+    "mastermind-triage",
+    "mastermind-api-validation",
+    "mastermind-js-analysis",
+    "mastermind-crypto-analysis",
+    "mastermind-reporting",
+    "security-researcher"
+  ],
+  "openDeferred": [
+    "runner process-gate idempotency is handled by the separate P2 release",
+    "software connector/MCP dispatch remains outside this repair round"
+  ]
+}

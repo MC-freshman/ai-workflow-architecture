@@ -1,0 +1,21 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "scanId": { "type": "string" },
+    "status": { "type": "string", "enum": ["created", "running", "paused", "completed", "failed"] },
+    "issues": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "name": { "type": "string" },
+          "severity": { "type": "string", "enum": ["information", "low", "medium", "high", "critical"] },
+          "url": { "type": "string" },
+          "detail": { "type": "string" }
+        }
+      }
+    }
+  },
+  "notes": "结构为预期形态，最终以冻结快照中该工具的输出定义为准"
+}

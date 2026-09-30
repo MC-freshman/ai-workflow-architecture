@@ -1,0 +1,16 @@
+{
+  "schema": "ai-tool-lock/v2",
+  "skills": {
+    "visualization-layout": "1.0.0"
+  },
+  "workflows": {
+    "math-modeling-programmer": "1.2.0",
+    "visualization-qa": "1.0.0"
+  },
+  "packs": {
+    "visualization-quality": "1.1.0"
+  },
+  "profiles": {
+    "renderer": "matplotlib-adapter-first"
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "schema": "ai-workflow-definition/v2",
+  "id": "expert-task",
+  "version": "1.0.0",
+  "mode": "pipeline",
+  "maxParallel": 1,
+  "roles": [
+    "expert"
+  ],
+  "outputWorker": "expert",
+  "gateDefinitions": {
+    "report-complete": {
+      "type": "output-schema"
+    }
+  },
+  "stages": [
+    {
+      "id": "INTAKE",
+      "action": "prompt",
+      "worker": "expert",
+      "dependsOn": [],
+      "promptRef": "workflow.md#stage:INTAKE",
+      "outputs": "schemas/intake.schema.json"
+    },
+    {
+      "id": "WORK",
+      "action": "prompt",
+      "worker": "expert",
+      "dependsOn": [
+        "INTAKE"
+      ],
+      "promptRef": "workflow.md#stage:WORK",
+      "outputs": "schemas/work.schema.json",
+      "onFail": "repair",
+      "maxIterations": 2,
+      "repairPromptRef": "workflow.md#stage:repair"
+    },
+    {
+      "id": "REPORT",
+      "action": "prompt",
+      "worker": "expert",
+      "dependsOn": [
+        "WORK"
+      ],
+      "promptRef": "workflow.md#stage:REPORT",
+      "outputs": "schemas/report.schema.json",
+      "gates": [
+        "report-complete"
+      ]
+    }
+  ]
+}

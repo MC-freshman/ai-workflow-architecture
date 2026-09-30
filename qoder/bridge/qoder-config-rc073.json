@@ -1,0 +1,17 @@
+{
+  "platform": "qoder",
+  "contracts": "E:\\ai\\tool\\repo-lint\\versions\\0.2.1",
+  "toolRoot": "E:\\ai\\tool",
+  "agentRoot": "E:\\ai\\agent",
+  "bridge": "E:\\ai\\qoder\\bridge.json",
+  "runner": "E:\\ai\\tool\\wf-runner\\versions\\0.7.3",
+  "environmentManifest": "E:\\ai\\qoder\\bridge\\script-environment.json",
+  "capabilities": "E:\\ai\\qoder\\bridge\\capabilities.json",
+  "runsRoot": "E:\\ai\\qoder\\runtime\\runs",
+  "platformRoot": "E:\\ai\\qoder",
+  "inputRoots": [
+    "E:\\ai"
+  ],
+  "notes": "架构 2.0 **候选**试点配置（2026-09-17，qoder 会话）。与生产配置 qoder-config.json 的唯一差别是 runner 从 0.6.0 改指 0.7.3（项目锁原语 + 0.7.0 错误信封 + 0.7.1 能力分面 + 0.7.2 delegate 路由）。contracts 仍指 repo-lint 0.2.1：0.7.3 的 runtime_core.py:26-36 仍以 config['contracts'] 加载 repo_lint.Scanner 做包完整性，runtime-contracts/1.0.0 目录下没有 scripts/repo_lint.py，改指会直接 HASH_MISMATCH——该解耦（F03 引擎侧）在 0.7.3 的 SOURCE.json:18/23 明列 openDeferred，故本试点不尝试。生产配置 qoder-config.json 仍钉 0.6.0，与 zcode「0.7.x 为候选、正式选版在 V7 复认证后」同口径；本文件不动任何共享 current.json。",
+  "scriptEnvironment": "E:\\ai\\qoder\\runtime\\wsl-py-env"
+}

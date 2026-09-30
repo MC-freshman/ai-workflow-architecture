@@ -1,0 +1,35 @@
+{
+  "schema": "ai-workflow/v2.1",
+  "id": "se-pipeline",
+  "displayName": "Software Engineering Pipeline (scenarios)",
+  "version": "1.1.0",
+  "mode": "pipeline",
+  "entry": "workflow.yaml",
+  "inputSchema": "schemas/input.schema.json",
+  "outputSchema": "schemas/output.schema.json",
+  "permissions": {
+    "network": "deny",
+    "process": "allowlisted-only",
+    "filesystem": "project-scoped"
+  },
+  "dependencies": {
+    "skills": {
+      "coding-api-design": "1.0.0",
+      "coding-ci-cd-pipeline": "1.0.0",
+      "coding-code-review-self": "1.0.0",
+      "coding-core-discipline": "1.0.0",
+      "coding-frontend-best-practices": "1.0.0",
+      "coding-python-idioms": "1.0.0",
+      "coding-requirement-delivery": "1.0.0",
+      "coding-security-review": "1.0.0",
+      "coding-systematic-debugging": "1.0.0",
+      "coding-test-driven": "1.0.0",
+      "coding-writing-docs": "1.0.0"
+    },
+    "workflows": {},
+    "packs": {}
+  },
+  "integrity": {
+    "sha256Manifest": "SHA256SUMS"
+  }
+}

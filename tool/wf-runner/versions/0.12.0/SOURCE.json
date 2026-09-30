@@ -1,0 +1,12 @@
+{
+  "schema": "ai-governance-source/v1",
+  "authorSession": "codex",
+  "derivedFrom": "wf-runner@0.10.0",
+  "supersedes": "0.10.0",
+  "releaseScope": "Maintenance repair round M-P1 (D-45/D-46): a discarded uncommitted run directory is first moved into the platform diagnostic layer (logs/wf-runner/rejected/<run>-<ts>, DISCARDED.txt note) so prepare-stage trails survive; the discard invariant (no half-committed dir in runs/) is kept and wins if the move fails. cli.py sets sys.dont_write_bytecode before any import so a driver without -B can no longer pollute the published tree. No protocol or behavior change.",
+  "openDeferred": [
+    "adoption is a separate, per-platform act: no current.json was flipped here and no platform config was touched (发布 ≠ 采纳, BP-2)"
+  ],
+  "previousSource": "tool/wf-runner/versions/0.10.0/SOURCE.json",
+  "version": "0.12.0"
+}

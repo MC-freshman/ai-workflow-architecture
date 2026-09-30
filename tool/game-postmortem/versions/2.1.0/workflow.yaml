@@ -1,0 +1,39 @@
+schema: ai-workflow-definition/v2
+id: game-postmortem
+version: 2.1.0
+mode: pipeline
+maxParallel: 1
+roles: [facilitator]
+outputWorker: facilitator
+stages:
+  - id: intake
+    action: prompt
+    worker: facilitator
+    promptRef: workflow.md#stage:intake
+    outputs: schemas/intake.schema.json
+  - id: analysis
+    action: prompt
+    worker: facilitator
+    dependsOn: [intake]
+    promptRef: workflow.md#stage:analysis
+    outputs: schemas/analysis.schema.json
+    onFail: repair
+    maxIterations: 2
+    repairPromptRef: workflow.md#stage:repair
+    gates: [postmortem-integrity]
+  - id: report
+    action: prompt
+    worker: facilitator
+    dependsOn: [analysis]
+    promptRef: workflow.md#stage:report
+    outputs: schemas/output.schema.json
+gateDefinitions:
+  postmortem-integrity:
+    type: process
+    cwd: evidence
+    argv: ["workflow:scripts/validate_postmortem.py"]
+    expectExit: [0]
+    expectArtifacts:
+      - target: "evidence:postmortem-check.json"
+        minBytes: 2
+    reasonFrom: "evidence:postmortem-check.json"

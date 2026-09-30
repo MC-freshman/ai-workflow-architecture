@@ -1,0 +1,54 @@
+{
+ "schema": "ai-workflow-source/v1",
+ "authorSession": "qoder",
+ "derivedFrom": "dirsearch@1.0.0",
+ "supersedes": "1.0.0",
+ "releaseScope": "3.0-Q Q-P3 (qoder platform-side adoption): dirsearch has its capability snapshot frozen from a live read-only inquiry of an installed body, so the eight-step software gate can judge membership (C-4) and this platform can answer with a measurement. No capability, schema, recipe or selftest changed.",
+ "changes": [
+  "capabilities.snapshot.json: frozen=true, generationMethod=live-readonly-probe, liveInquiry.perExecutable names the argv actually asked and the digest of each answer, and every capability carries liveConfirmation with the option tokens seen in it.",
+  "manifest.json: the version field only - the shape is closed, so \"nothing else changed\" is stated here rather than written into the manifest.",
+  "SOURCE.json: added, as every new release must carry (SW3).",
+  "SHA256SUMS: regenerated, both directions."
+ ],
+ "unchanged": [
+  "capability names, their schemas, sideEffects / consent / idempotent flags",
+  "recipes/, schemas/, selftest/, README.md - byte for byte from 1.0.0"
+ ],
+ "evidence": {
+  "askedAt": "2026-09-21T07:11:19Z",
+  "perExecutable": {
+   "dirsearch": {
+    "asked": [
+     {
+      "argv": [
+       "D:\\Various_programming_languages\\pycharm\\python3.9\\python.exe",
+       "D:/Various_programming_languages/PPython/dirsearch-master/dirsearch-master/dirsearch.py",
+       "--version"
+      ],
+      "exitCode": 0,
+      "seconds": 0.5,
+      "sha256": "2d32a6973b3c48de77d54431cc141d38297fab90ff4dfa6f53e4e16bf207ba60",
+      "bytes": 18
+     },
+     {
+      "argv": [
+       "D:\\Various_programming_languages\\pycharm\\python3.9\\python.exe",
+       "D:/Various_programming_languages/PPython/dirsearch-master/dirsearch-master/dirsearch.py",
+       "--help"
+      ],
+      "exitCode": 0,
+      "seconds": 0.51,
+      "sha256": "63617eff54c71028b6626f537ed1d1e5c070d3042babb88fdc08f70c448a701c",
+      "bytes": 7474
+     }
+    ],
+    "liveTextSha256": "dfc52c1c711d996549312c3da532fa913a57fb786b206cc65f5733ef124fa2b2"
+   }
+  },
+  "rawAnswersKeptOnThisPlatform": "qoder/runtime/maintenance/3.0-Q/runs/q3-freeze/live-text.json - a platform fact, so the bytes stay on the platform and only their digests are shared"
+ },
+ "crossPlatformNote": "The body that answered is one platform install at the pinned upstream version. Another platform asks its own body: if the live list differs, the gateway answers SOFTWARE_DRIFT, which is what a frozen baseline exists for (BP-2: conclusions are not copied between platforms).",
+ "releaseStatus": "published",
+ "publishedAt": "2026-09-21",
+ "publishedBy": "qoder, architecture 3.0 platform-side round 3.0-Q, step Q-P3"
+}

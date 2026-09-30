@@ -1,0 +1,345 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://contracts.local/runtime/1.1/common.schema.json",
+  "$defs": {
+    "id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+    },
+    "hash": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "version": {
+      "type": "string",
+      "pattern": "^(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)(-[0-9A-Za-z.-]+)?(\\+[0-9A-Za-z.-]+)?$"
+    },
+    "path": {
+      "type": "string",
+      "pattern": "^(?!/)(?!.*\\\\)(?!.*:)(?!.*(?:^|/)\\.\\.?(?:/|$))(?!.*//)(?!.*[. ](?:/|$))[^\\u0000-\\u001f]+(?<!/)$"
+    },
+    "absolutePath": {
+      "type": "string",
+      "pattern": "^[A-Za-z]:[\\\\/][^\\u0000-\\u001f]+$"
+    },
+    "time": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "status": {
+      "enum": [
+        "prepared",
+        "running",
+        "waiting-for-input",
+        "blocked",
+        "failed",
+        "succeeded",
+        "stopped"
+      ]
+    },
+    "file": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "path",
+        "sha256",
+        "size"
+      ],
+      "properties": {
+        "path": {
+          "$ref": "#/$defs/path"
+        },
+        "sha256": {
+          "$ref": "#/$defs/hash"
+        },
+        "size": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 9007199254740991
+        }
+      },
+      "patternProperties": {
+        "^x-": true
+      }
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "path",
+        "sha256"
+      ],
+      "properties": {
+        "kind": {
+          "enum": [
+            "explicit",
+            "shared-current",
+            "platform-default",
+            "tool-lock",
+            "dependency-lock",
+            "environment-snapshot"
+          ]
+        },
+        "path": {
+          "$ref": "#/$defs/absolutePath"
+        },
+        "sha256": {
+          "$ref": "#/$defs/hash"
+        }
+      },
+      "patternProperties": {
+        "^x-": true
+      }
+    },
+    "edge": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "key",
+        "version",
+        "source"
+      ],
+      "properties": {
+        "key": {
+          "$ref": "#/$defs/id"
+        },
+        "version": {
+          "$ref": "#/$defs/version"
+        },
+        "source": {
+          "$ref": "#/$defs/source"
+        }
+      },
+      "patternProperties": {
+        "^x-": true
+      }
+    },
+    "resource": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "key",
+        "kind",
+        "id",
+        "version",
+        "path",
+        "manifestSha256",
+        "contentManifestSha256",
+        "resolvedFrom",
+        "dependencies"
+      ],
+      "properties": {
+        "key": {
+          "$ref": "#/$defs/id"
+        },
+        "kind": {
+          "enum": [
+            "agent",
+            "workflow",
+            "runner",
+            "skill",
+            "pack",
+            "interpreter",
+            "library",
+            "renderer"
+          ]
+        },
+        "id": {
+          "$ref": "#/$defs/id"
+        },
+        "version": {
+          "$ref": "#/$defs/version"
+        },
+        "path": {
+          "$ref": "#/$defs/absolutePath"
+        },
+        "manifestSha256": {
+          "$ref": "#/$defs/hash"
+        },
+        "contentManifestSha256": {
+          "$ref": "#/$defs/hash"
+        },
+        "resolvedFrom": {
+          "$ref": "#/$defs/source"
+        },
+        "dependencies": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/edge"
+          }
+        }
+      },
+      "patternProperties": {
+        "^x-": true
+      }
+    },
+    "error": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "code",
+        "message",
+        "retryable"
+      ],
+      "properties": {
+        "code": {
+          "enum": [
+            "INVALID_REQUEST",
+            "UNSUPPORTED_SCHEMA",
+            "REVISION_CONFLICT",
+            "IDEMPOTENCY_CONFLICT",
+            "STALE_ATTEMPT",
+            "INPUT_MISMATCH",
+            "HASH_MISMATCH",
+            "INTEGRITY_MISMATCH",
+            "CONTEXT_UNRESOLVED",
+            "HANDOFF_VERSION_MISMATCH",
+            "INTEGRITY_MISMATCH",
+            "CONTEXT_UNRESOLVED",
+            "HANDOFF_VERSION_MISMATCH",
+            "REQUIRED_GATE_MISSING",
+            "CAPABILITY_UNAVAILABLE",
+            "UNAUTHORIZED",
+            "TERMINAL_RUN",
+            "STOP_REQUESTED",
+            "UNKNOWN_OUTCOME",
+            "PERSISTENCE_ERROR",
+            "EXECUTION_FAILED",
+            "GATE_FAILED",
+            "TIMEOUT"
+          ]
+        },
+        "message": {
+          "type": "string",
+          "minLength": 1
+        },
+        "retryable": {
+          "type": "boolean"
+        }
+      },
+      "patternProperties": {
+        "^x-": true
+      }
+    },
+    "gate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "gateId",
+        "status",
+        "inputSha256",
+        "outputManifestSha256",
+        "evidence"
+      ],
+      "properties": {
+        "gateId": {
+          "$ref": "#/$defs/id"
+        },
+        "status": {
+          "enum": [
+            "pass",
+            "fail",
+            "blocked"
+          ]
+        },
+        "inputSha256": {
+          "$ref": "#/$defs/hash"
+        },
+        "outputManifestSha256": {
+          "$ref": "#/$defs/hash"
+        },
+        "evidence": {
+          "$ref": "#/$defs/file"
+        }
+      },
+      "patternProperties": {
+        "^x-": true
+      }
+    },
+    "attempt": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "stageId",
+        "attempt",
+        "action",
+        "inputSha256",
+        "artifacts"
+      ],
+      "properties": {
+        "stageId": {
+          "$ref": "#/$defs/id"
+        },
+        "attempt": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "action": {
+          "enum": [
+            "prompt",
+            "script",
+            "software-call"
+          ]
+        },
+        "inputSha256": {
+          "$ref": "#/$defs/hash"
+        },
+        "artifacts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/file"
+          }
+        }
+      },
+      "patternProperties": {
+        "^x-": true
+      }
+    },
+    "completion": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "stageId",
+        "attempt",
+        "inputSha256",
+        "artifacts",
+        "outputs",
+        "gates"
+      ],
+      "properties": {
+        "stageId": {
+          "$ref": "#/$defs/id"
+        },
+        "attempt": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "inputSha256": {
+          "$ref": "#/$defs/hash"
+        },
+        "artifacts": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/file"
+          }
+        },
+        "outputs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/file"
+          }
+        },
+        "gates": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/gate"
+          }
+        }
+      },
+      "patternProperties": {
+        "^x-": true
+      }
+    }
+  }
+}

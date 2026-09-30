@@ -1,0 +1,16 @@
+{
+  "schema": "wf-runner-execution-backend/v1",
+  "kind": "wsl2",
+  "comment": "OPTIONAL reference declaration for the historical shared host. The engine ships no default backend; a platform copies or authors this document and points config['executionBackend'] at it. All host literals (launcher, distro, interpreter, drive) intentionally live ONLY in such platform-owned declarations.",
+  "wslExecutable": "C:/WINDOWS/system32/wsl.exe",
+  "distro": "Ubuntu2204",
+  "interpreter": "/usr/bin/python3",
+  "pathMap": [
+    {
+      "windows": "E:/",
+      "linux": "/mnt/e/"
+    }
+  ],
+  "sharedReadOnlyBinds": [],
+  "verifyTimeoutSeconds": 120
+}

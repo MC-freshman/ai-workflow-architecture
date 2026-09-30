@@ -1,0 +1,15 @@
+{
+  "schema": "ai-workflow/v2.1",
+  "id": "repo-lint",
+  "displayName": "Shared Repository Lint",
+  "version": "0.1.1",
+  "mode": "pipeline",
+  "entry": "workflow.yaml",
+  "inputSchema": "schemas/input.schema.json",
+  "outputSchema": "schemas/output.schema.json",
+  "permissions": {"filesystem": "shared-read-only-platform-report-write", "network": "deny", "process": "none"},
+  "dependencies": {"skills": {}, "workflows": {}, "packs": {}},
+  "runtime": {"type": "python-cli", "entry": "scripts/repo_lint.py", "python": ">=3.9", "environmentLock": "requirements.lock.txt"},
+  "interface": {"transport": "cli-json-report", "execution": "static-analysis-only"},
+  "integrity": {"sha256Manifest": "SHA256SUMS"}
+}

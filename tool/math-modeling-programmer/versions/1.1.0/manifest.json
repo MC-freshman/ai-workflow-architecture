@@ -1,0 +1,28 @@
+{
+  "schema": "ai-workflow/v1",
+  "id": "math-modeling-programmer",
+  "displayName": "\u6570\u5b66\u5efa\u6a21\u7f16\u7a0b\u5de5\u4f5c\u6d41",
+  "version": "1.1.0",
+  "entry": "workflow.yaml",
+  "inputSchema": "schemas/input.schema.json",
+  "outputSchema": "schemas/output.schema.json",
+  "permissions": {
+    "filesystem": "project-scoped",
+    "network": "deny",
+    "process": "allowlisted-only"
+  },
+  "runtime": {
+    "type": "python-mcp",
+    "entry": "scripts/mcp_server.py",
+    "python": ">=3.9"
+  },
+  "dependencies": [
+    "matplotlib>=3.7",
+    "numpy>=1.24",
+    "Pillow>=9",
+    "PyMuPDF>=1.24,<2 (strict figure QA)"
+  ],
+  "integrity": {
+    "sha256Manifest": "SHA256SUMS"
+  }
+}

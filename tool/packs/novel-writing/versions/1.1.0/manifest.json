@@ -1,0 +1,29 @@
+{
+  "schema": "ai-pack/v1",
+  "id": "novel-writing",
+  "version": "1.1.0",
+  "displayName": "小说与中文创作能力",
+  "skillIds": [
+    "novel-story-cover-chinese",
+    "novel-story-deslop-chinese",
+    "novel-story-import-chinese",
+    "novel-story-long-analyze-chinese",
+    "novel-story-long-scan-chinese",
+    "novel-story-long-write-chinese",
+    "novel-story-review-chinese",
+    "novel-story-setup-chinese",
+    "novel-story-short-analyze-chinese",
+    "novel-story-short-scan-chinese",
+    "novel-story-short-write-chinese",
+    "novel-story-chinese",
+    "novel-avoid-ai-writing-writing"
+  ],
+  "conflicts": [],
+  "source": {
+    "snapshot": "snapshot-2026.08.31",
+    "derivedFrom": "novelhub"
+  },
+  "integrity": {
+    "sha256Manifest": "SHA256SUMS"
+  }
+}

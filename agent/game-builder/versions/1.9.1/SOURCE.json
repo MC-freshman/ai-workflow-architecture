@@ -1,0 +1,36 @@
+{
+  "schema": "ai-governance-source/v1",
+  "authorSession": "qoder",
+  "derivedFrom": "game-builder@1.9.0",
+  "supersedes": "1.9.0",
+  "releaseScope": "Architecture 3.1.0 step T-P7: the game expert re-pinned onto game-pipeline with eleven scenario skills. The eight workflows that were not collapsed stay pinned; runs pinned to game-builder@1.9.0 keep resolving because that release was not touched. Hash/metadata repair release: the previous release carried stale id/version metadata; published bytes remain immutable.",
+  "collapsedWorkflows": [
+    "game-brainstorm",
+    "game-gdd-author",
+    "game-prototype",
+    "game-playtest",
+    "game-balance-check",
+    "game-code-review",
+    "game-ci-pipeline",
+    "game-launch",
+    "game-localization-manager",
+    "game-team-orchestrator",
+    "game-reverse-document"
+  ],
+  "keptWorkflows": [
+    "game-analytics-setup",
+    "game-design-review",
+    "game-jam-mode",
+    "game-market-research",
+    "game-pipeline",
+    "game-postmortem",
+    "game-retrospective",
+    "game-scope-check",
+    "game-sprint-plan",
+    "game-start"
+  ],
+  "openDeferred": [
+    "game-sprint-plan stays an independent workflow (four lowercase stages, planner worker)"
+  ],
+  "repairOf": "1.9.0"
+}

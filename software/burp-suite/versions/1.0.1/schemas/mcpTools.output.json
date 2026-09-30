@@ -1,0 +1,20 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "description": "MCP tools/list 响应（JSON-RPC result）",
+  "required": ["tools"],
+  "properties": {
+    "tools": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name"],
+        "properties": {
+          "name": { "type": "string", "description": "MCP 工具名，tools/call 时原样回填" },
+          "description": { "type": "string" },
+          "inputSchema": { "type": "object", "description": "该工具的 JSON Schema" }
+        }
+      }
+    }
+  }
+}

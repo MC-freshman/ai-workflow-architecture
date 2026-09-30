@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "ai-workflow/math-modeling-programmer/figure-qa/v1",
+  "type": "object",
+  "required": ["schema", "figure_id", "iteration", "status", "source_sha256", "stages", "artifacts", "visual_review"],
+  "properties": {
+    "schema": {"const": "ai-figure-qa/v1"},
+    "figure_id": {"type": "string"},
+    "iteration": {"type": "string"},
+    "status": {"enum": ["PASS", "PARTIAL", "BLOCKED", "FAILED", "NOT_RUN"]},
+    "source_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "contract_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "stages": {"type": "object"},
+    "artifacts": {"type": "object"},
+    "visual_review": {"type": "object"}
+  }
+}

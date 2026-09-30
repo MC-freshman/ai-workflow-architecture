@@ -1,0 +1,40 @@
+{
+  "manifest_id": "EDA-Q1",
+  "entrypoint": "src/task_entrypoint.py",
+  "base_args": [],
+  "shared_inputs": ["data/raw/input.csv"],
+  "output_root": "experiments/tasks",
+  "continue_on_error": true,
+  "tasks": [
+    {
+      "task_id": "EDA-Q1-001",
+      "parent_question": "Q1",
+      "kind": "eda",
+      "title": "数值字段分布摘要",
+      "objective": "检查关键字段的缺失、分位数和极端值",
+      "args": ["--operation", "describe_numeric", "--column", "value"],
+      "inputs": ["data/raw/input.csv"],
+      "outputs": ["results/eda/EDA-Q1-001/summary.json"],
+      "dependencies": [],
+      "acceptance": ["报告缺失值和分位数", "异常值规则已记录"],
+      "priority": "P1",
+      "claim": "",
+      "paper_candidate": false
+    },
+    {
+      "task_id": "EDA-Q1-002",
+      "parent_question": "Q1",
+      "kind": "eda",
+      "title": "分组差异图",
+      "objective": "比较不同组别的目标指标差异",
+      "args": ["--operation", "group_compare", "--group", "category"],
+      "inputs": ["data/raw/input.csv"],
+      "outputs": ["figures/eda/EDA-Q1-002_group_compare.png"],
+      "dependencies": ["EDA-Q1-001"],
+      "acceptance": ["坐标轴、单位和样本量完整"],
+      "priority": "P2",
+      "claim": "",
+      "paper_candidate": false
+    }
+  ]
+}

@@ -1,0 +1,23 @@
+{
+  "schema": "ai-workflow/v2.1",
+  "id": "game-sprint-plan",
+  "displayName": "game-sprint-plan",
+  "version": "2.1.0",
+  "mode": "pipeline",
+  "entry": "workflow.yaml",
+  "inputSchema": "schemas/input.schema.json",
+  "outputSchema": "schemas/output.schema.json",
+  "permissions": {
+    "process": "allowlisted-only",
+    "network": "deny",
+    "filesystem": "project-scoped"
+  },
+  "dependencies": {
+    "workflows": {},
+    "skills": {},
+    "packs": {}
+  },
+  "integrity": {
+    "sha256Manifest": "SHA256SUMS"
+  }
+}

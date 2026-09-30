@@ -1,0 +1,26 @@
+schema: ai-workflow-definition/v2
+id: repo-lint
+version: 0.5.1
+mode: pipeline
+maxParallel: 1
+stages:
+  - id: inspect
+    action: script
+    worker: none
+    script: scripts/repo_lint.py
+    arguments:
+      toolRoot: --tool-root
+      agentRoot: --agent-root
+      report: --report
+      markdown: --markdown
+      select: --select
+      bridge: --bridge
+      scope: --scope
+      softwareRoot: --software-root
+      governanceRoot: --governance-root
+      softwareNewRelease: --software-new-release
+      newRelease: --new-release
+      timeoutSeconds: 3600
+    inputs: schemas/input.schema.json
+    outputs: schemas/output.schema.json
+    onFail: stop

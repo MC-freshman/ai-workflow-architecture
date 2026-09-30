@@ -1,0 +1,24 @@
+{
+  "schema": "ai-software-source/v1",
+  "authorSession": "zcode",
+  "derivedFrom": "software/nmap/versions/1.0.0 (capability flag fix + live-measured recipe hashes + frozen snapshot; everything else byte-identical)",
+  "supersedes": "1.0.0",
+  "releaseScope": "X-P4 (D-61 closure): scan/serviceScan run `-oX -` because nmap 7.95 has no -oJ flag (live --help probed 2026-09-27); recipe verify.files carry live-measured hashes - the 1.0.0 nmap.exe entry differed from the on-disk binary by one hex digit; the snapshot is frozen from a live read-only inquiry (nmap --version exit 0, Nmap version 7.95). 1.0.0 bytes untouched.",
+  "changes": [
+    "manifest.json: scan/serviceScan baseArgv -oJ -> -oX, outputFormat json -> text, version 1.0.1",
+    "schemas/scan.output.json + schemas/serviceScan.output.json: rawOutput convention with the D-61 rationale",
+    "recipes/windows.json: verify.files = live-measured hashes; expectedVersionOutput pinned to the live inquiry",
+    "capabilities.snapshot.json: frozen=true from live inquiry"
+  ],
+  "unchanged": [
+    "1.0.0 published and immutable; all other capability declarations, recipes structure, selftest"
+  ],
+  "openDeferred": [
+    "a real scan dispatch still needs per-call consent (external side effects) and is not exercised by this release"
+  ],
+  "releaseStatus": "published",
+  "publishedAt": "2026-09-27",
+  "publishedBy": "zcode session (R-P6/X-P4 of the 3.x repair round)",
+  "pointerPolicy": "nmap/current.json raised 1.0.0 -> 1.0.1 with pre/post hashes in the round ledger",
+  "version": "1.0.1"
+}

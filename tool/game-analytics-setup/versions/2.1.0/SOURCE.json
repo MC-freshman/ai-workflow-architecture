@@ -1,0 +1,15 @@
+{
+  "schema": "ai-workflow-source/v1",
+  "legacy": {
+    "path": "skills/workflows/game-analytics-setup/SKILL.md",
+    "license": "MIT",
+    "sourceId": "gameforge",
+    "repository": "https://github.com/AlterLab-IEU/AlterLab_GameForge",
+    "snapshot": "snapshot-2026.08.31"
+  },
+  "migratedFrom": "game-analytics-setup@2.0.1",
+  "migratedTo": "game-analytics-setup@2.1.0",
+  "migration": "Z10 §6.2 批 C1：mode: prompt -> v2 pipeline（EXECUTE + 脚本门禁 + SELFCHECK），结构化 schema 取代占位 schema，process 门禁 + 有界修复（maxIterations 2），不可用能力在提示词内固化为 NOT_RUN。",
+  "authorSession": "zcode",
+  "createdAt": "2026-09-14"
+}

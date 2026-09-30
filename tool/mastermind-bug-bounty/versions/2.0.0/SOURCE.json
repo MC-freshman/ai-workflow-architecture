@@ -1,0 +1,6 @@
+{
+  "schema": "ai-workflow-source/v1",
+  "derivedFrom": "tool/mastermind-bug-bounty 1.0.0 (legacy v1 definition, workers)",
+  "rewrite": "U6: v2 runner-compilable pipeline; peer duty stated in stage prompts; delegation via platform peerDispatch",
+  "contractBoundary": "peer-agent workflow syntax still rejected by frozen repo-lint 0.1.1 R7 (needs contracts 0.2.x / U3)"
+}

@@ -1,0 +1,111 @@
+{
+  "schema": "ai-workflow-definition/v3",
+  "id": "novel-pipeline",
+  "version": "1.0.0",
+  "mode": "pipeline",
+  "maxParallel": 1,
+  "roles": [
+    "expert"
+  ],
+  "outputWorker": "expert",
+  "gateDefinitions": {
+    "report-complete": {
+      "type": "output-schema"
+    },
+    "work-integrity": {
+      "type": "process",
+      "cwd": "evidence",
+      "argv": [
+        "workflow:scripts/validate_expert_work.py"
+      ],
+      "expectExit": [
+        0
+      ],
+      "expectArtifacts": [
+        {
+          "target": "evidence:expert-work-check.json",
+          "minBytes": 2
+        }
+      ],
+      "reasonFrom": "evidence:expert-work-check.json"
+    }
+  },
+  "stages": [
+    {
+      "id": "INTAKE",
+      "action": "prompt",
+      "worker": "expert",
+      "dependsOn": [],
+      "promptRef": "workflow.md#stage:INTAKE",
+      "outputs": "schemas/intake.schema.json"
+    },
+    {
+      "id": "WORK",
+      "action": "prompt",
+      "worker": "expert",
+      "dependsOn": [
+        "INTAKE"
+      ],
+      "promptRef": "workflow.md#stage:WORK",
+      "outputs": "schemas/work.schema.json",
+      "onFail": "repair",
+      "maxIterations": 2,
+      "repairPromptRef": "workflow.md#stage:repair",
+      "gates": [
+        "work-integrity"
+      ]
+    },
+    {
+      "id": "REPORT",
+      "action": "prompt",
+      "worker": "expert",
+      "dependsOn": [
+        "WORK"
+      ],
+      "promptRef": "workflow.md#stage:REPORT",
+      "outputs": "schemas/report.schema.json",
+      "gates": [
+        "report-complete"
+      ]
+    }
+  ],
+  "defaultScenario": "standard",
+  "requiredStages": [
+    "INTAKE",
+    "REPORT"
+  ],
+  "scenarios": {
+    "standard": {
+      "summary": "不指定场景时的通用执行：接题 → 做事 → 交报告，不注入额外上下文。"
+    },
+    "consistency": {
+      "summary": "人物一致性：设定、称谓、时间线与已发布正文对齐，冲突项列证据。",
+      "skills": [
+        "novel-story-long-analyze-chinese@1.0.0",
+        "novel-story-import-chinese@1.0.0"
+      ]
+    },
+    "hook": {
+      "summary": "断章钩子：章末悬置要由已埋的因果产生，不得靠巧合吊读者。",
+      "skills": [
+        "novel-story-short-write-chinese@1.0.0",
+        "novel-avoid-ai-writing-writing@1.0.0"
+      ]
+    },
+    "outline": {
+      "summary": "大纲与卷结构：先立世界规则、卷目标与伏笔清单，再动笔。",
+      "skills": [
+        "novel-story-setup-chinese@1.0.0",
+        "novel-story-long-analyze-chinese@1.0.0"
+      ]
+    },
+    "pacing-proofread": {
+      "summary": "节奏与校对：删冗、去 AI 腔、统一口吻，改动逐条可回读。",
+      "skills": [
+        "novel-story-review-chinese@1.0.0",
+        "novel-story-deslop-chinese@1.0.0",
+        "novel-avoid-ai-writing-writing@1.0.0"
+      ]
+    }
+  }
+}

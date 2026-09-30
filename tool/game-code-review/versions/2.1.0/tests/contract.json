@@ -1,0 +1,29 @@
+{
+  "schema": "ai-workflow-contract-test/v1",
+  "id": "game-code-review",
+  "version": "2.1.0",
+  "expect": {
+    "manifestMode": "pipeline",
+    "definitionSchema": "ai-workflow-definition/v2",
+    "stages": [
+      "EXECUTE"
+    ],
+    "gate": "review-integrity (process)",
+    "gateScript": "scripts/validate_game_code_review.py",
+    "gateArtifact": "game-code-review-check.json",
+    "repair": "EXECUTE onFail=repair maxIterations=2",
+    "inputSchemaReal": true,
+    "outputSchemaReal": true,
+    "expectedVerdicts": {
+      "positive": "pass",
+      "negative": "violations",
+      "missingInfo": "missing-info"
+    },
+    "unavailableCapabilitiesMarked": [
+      "Engine",
+      "GitHub",
+      "Context7",
+      "implicit-commands"
+    ]
+  }
+}

@@ -1,0 +1,3 @@
+- project-scoped
+- no-credentials
+- no-destructive-default

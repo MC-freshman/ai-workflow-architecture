@@ -1,0 +1,245 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:ai:software-recipe:v1",
+  "title": "ai-software-recipe/v1 - one OS section of how a platform obtains and verifies a body",
+  "description": "Key names are taken from the six published windows.json files (C-1's rule: the published bytes define the schema, and all six must validate unchanged). A recipe declares; it never executes, and it never carries a credential - the body itself stays out of the repository (BP-1).",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "platform",
+    "softwareId",
+    "softwareVersion",
+    "acquire",
+    "install",
+    "launch",
+    "verify"
+  ],
+  "properties": {
+    "schema": {
+      "const": "ai-software-recipe/v1"
+    },
+    "platform": {
+      "enum": [
+        "windows",
+        "linux",
+        "macos"
+      ]
+    },
+    "softwareId": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9._-]*$"
+    },
+    "softwareVersion": {
+      "type": "string",
+      "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"
+    },
+    "acquire": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "source",
+        "version",
+        "license",
+        "redistributable"
+      ],
+      "properties": {
+        "kind": {
+          "enum": [
+            "download",
+            "package-manager",
+            "container-image",
+            "local-install",
+            "build"
+          ]
+        },
+        "source": {
+          "type": "string",
+          "minLength": 1
+        },
+        "officialUrl": {
+          "type": "string",
+          "minLength": 1
+        },
+        "version": {
+          "type": "string",
+          "minLength": 1
+        },
+        "sha256": {
+          "type": [
+            "string",
+            "null"
+          ],
+          "pattern": "^([0-9a-fA-F]{64})?$"
+        },
+        "license": {
+          "type": "string",
+          "minLength": 1
+        },
+        "redistributable": {
+          "type": "boolean"
+        },
+        "packageManager": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "mcpExtensionUrl": {
+          "type": "string",
+          "minLength": 1
+        },
+        "notes": {
+          "type": "string"
+        }
+      }
+    },
+    "install": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "location"
+      ],
+      "properties": {
+        "location": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^[^A-Za-z]:[\\\\/].*$|^\\$\\{[^}]+\\}.*$"
+        },
+        "detectedPath": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "stepsRef": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "pythonPath": {
+          "type": "string",
+          "minLength": 1
+        },
+        "pythonVersion": {
+          "type": "string",
+          "minLength": 1
+        },
+        "notes": {
+          "type": "string"
+        }
+      }
+    },
+    "launch": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "kind"
+      ],
+      "properties": {
+        "kind": {
+          "enum": [
+            "cli-wrapper",
+            "mcp-http",
+            "mcp-stdio",
+            "http-api",
+            "local-process"
+          ]
+        },
+        "entrypoint": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "endpoint": {
+          "type": "string",
+          "minLength": 1
+        },
+        "interpreter": {
+          "type": "string",
+          "minLength": 1
+        },
+        "environment": {
+          "type": "object"
+        },
+        "pathDependencies": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "startup": {},
+        "readyProbe": {},
+        "postStartupManualSteps": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "privilege": {
+          "type": "string"
+        },
+        "notes": {
+          "type": "string"
+        }
+      }
+    },
+    "verify": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "versionCall",
+        "selftestRef",
+        "files"
+      ],
+      "properties": {
+        "versionCall": {
+          "type": [
+            "array",
+            "null"
+          ],
+          "minItems": 1,
+          "items": {
+            "type": "string"
+          }
+        },
+        "expectedVersionOutput": {
+          "type": "string"
+        },
+        "versionProbe": {},
+        "selftestRef": {
+          "type": "string",
+          "pattern": "^\\.\\./selftest/[A-Za-z0-9._-]+\\.json$"
+        },
+        "files": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "path",
+              "sha256"
+            ],
+            "properties": {
+              "path": {
+                "type": "string",
+                "minLength": 1
+              },
+              "role": {
+                "type": "string"
+              },
+              "sha256": {
+                "type": "string",
+                "pattern": "^[0-9a-fA-F]+$",
+                "description": "Type only. The 64-character rule is enforced as a lint finding, because one published recipe carries a 65-character digest and a schema written after a published byte cannot refuse it (C-1)."
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

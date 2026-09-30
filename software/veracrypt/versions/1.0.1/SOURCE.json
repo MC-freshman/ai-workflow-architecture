@@ -1,0 +1,23 @@
+{
+  "schema": "ai-software-source/v1",
+  "authorSession": "zcode",
+  "derivedFrom": "software/veracrypt/versions/1.0.0 (+ connector.json; manifest version bump; everything else byte-identical)",
+  "supersedes": "1.0.0",
+  "releaseScope": "X-P5 (D-84/D-90 context): the release gains a published connector.json declaring the desktop-session transport, singleton session model, per-call consent and the D-84 bits (attestation, sessionGuidance, per-operation network). The snapshot stays honestly unfrozen - a GUI has no stdout contract to inquire - so the row remains not dispatchable and says so. 1.0.0 bytes untouched.",
+  "changes": [
+    "connector.json added (desktop-session declaration)",
+    "manifest.json: version 1.0.1",
+    "capabilities.snapshot.json: generationMethod note"
+  ],
+  "unchanged": [
+    "1.0.0 published and immutable; manifest capability declarations; recipes"
+  ],
+  "openDeferred": [
+    "a real session open needs the user to raise the window under per-call consent (red line 5)"
+  ],
+  "releaseStatus": "published",
+  "publishedAt": "2026-09-27",
+  "publishedBy": "zcode session (R-P6/X-P5 of the 3.x repair round)",
+  "pointerPolicy": "veracrypt/current.json raised 1.0.0 -> 1.0.1 with pre/post hashes in the round ledger",
+  "version": "1.0.1"
+}

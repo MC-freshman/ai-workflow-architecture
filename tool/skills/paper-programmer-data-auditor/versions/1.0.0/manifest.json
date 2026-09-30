@@ -1,0 +1,31 @@
+{
+  "schema": "ai-skill/v1",
+  "id": "paper-programmer-data-auditor",
+  "version": "1.0.0",
+  "kind": "atomic",
+  "category": "role-source",
+  "entry": "SKILL.md",
+  "input": {
+    "type": "text",
+    "contract": "task plus project context"
+  },
+  "output": {
+    "type": "text",
+    "contract": "advice, edits, or named artifacts"
+  },
+  "permissions": [
+    "read-project"
+  ],
+  "requires": [],
+  "conflicts": [],
+  "source": {
+    "path": "agents/data-auditor/SKILL.md",
+    "license": "user-confirmed-open-source",
+    "sourceId": "math-modeling-programmer",
+    "repository": "math-modeling-programmer",
+    "snapshot": "snapshot-2026.08.31"
+  },
+  "integrity": {
+    "sha256Manifest": "SHA256SUMS"
+  }
+}

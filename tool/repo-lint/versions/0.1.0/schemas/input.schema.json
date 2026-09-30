@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": ["toolRoot", "agentRoot", "report"],
+  "properties": {
+    "toolRoot": {"type": "string", "minLength": 1},
+    "agentRoot": {"type": "string", "minLength": 1},
+    "report": {"type": "string", "minLength": 1},
+    "markdown": {"type": "string", "minLength": 1},
+    "bridge": {"type": "string", "minLength": 1},
+    "select": {"type": "string", "pattern": "^(workflow|agent|skill|pack):[a-z0-9][a-z0-9._-]*@.+$"}
+  },
+  "additionalProperties": false
+}

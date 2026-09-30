@@ -1,0 +1,33 @@
+{
+  "schema": "ai-software-capability-snapshot/v1",
+  "softwareId": "dirsearch",
+  "softwareVersion": "1.0.0",
+  "upstreamVersion": "0.4.3",
+  "generatedAt": "2026-09-18",
+  "generationMethod": "manual-from-cli-help",
+  "upstreamHelpSource": "python dirsearch.py -h",
+  "runtime": { "interpreter": "PPython", "pythonVersion": "3.12.4", "invocation": "python.exe dirsearch.py" },
+  "capabilities": [
+    {
+      "name": "version",
+      "nativeName": "python dirsearch.py --version",
+      "sideEffects": "none",
+      "consent": "auto",
+      "idempotent": true,
+      "safeForSelftest": true,
+      "inputSchemaRef": "schemas/empty.input.json",
+      "outputSchemaRef": "schemas/version.output.json"
+    },
+    {
+      "name": "scan",
+      "nativeName": "python dirsearch.py -u <url> [options]",
+      "sideEffects": "external",
+      "consent": "confirm-stage",
+      "idempotent": false,
+      "safeForSelftest": false,
+      "inputSchemaRef": "schemas/scan.input.json",
+      "outputSchemaRef": "schemas/scan.output.json",
+      "argvSummary": "--full-url -q -u url [-w list] [-e ext] [-t N] [-R depth] [-x codes] [-m method] [--random-agent] [--timeout N] [--delay S] [--proxy url] [-o file --format json]"
+    }
+  ]
+}

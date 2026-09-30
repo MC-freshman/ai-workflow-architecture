@@ -1,0 +1,19 @@
+{
+  "schema": "ai-tool-lock/v2",
+  "workflows": {
+    "framework-pipeline": "1.0.0",
+    "expert-task": "1.1.0"
+  },
+  "skills": {
+    "framework-scenario-resource-author": "1.0.0",
+    "framework-scenario-resource-audit": "1.0.0",
+    "framework-scenario-governance-edit": "1.0.0",
+    "framework-scenario-conform-gate": "1.0.0",
+    "framework-scenario-adoption-wave": "1.0.0",
+    "framework-scenario-run-discipline": "1.0.0",
+    "framework-scenario-defect-register": "1.0.0",
+    "framework-scenario-context-budget": "1.0.0"
+  },
+  "packs": {},
+  "profiles": {}
+}

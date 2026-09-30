@@ -1,0 +1,17 @@
+{
+  "schema": "ai-governance-source/v1",
+  "authorSession": "qoder",
+  "derivedFrom": "skill:nature-evidence-and-provenance@1.0.0+nature-multipanel-evidence-architecture@1.0.0+nature-corpus-pair-audit@1.0.0",
+  "supersedes": null,
+  "releaseScope": "3.3.0 P6 scenario card for paper-author. Every quoted block is the referenced skill's own description copied verbatim with its language and byte size recorded; new writing is limited to step order, the one-line stance and the refusal gates.",
+  "verbatimFrom": {
+    "nature-evidence-and-provenance@1.0.0": "SKILL.md#frontmatter.description",
+    "nature-multipanel-evidence-architecture@1.0.0": "SKILL.md#frontmatter.description",
+    "nature-corpus-pair-audit@1.0.0": "SKILL.md#frontmatter.description"
+  },
+  "bodySha256": "bbcc888914a58d277c2e439b204e98db2c062f1e808c3cac34db45793a74e713",
+  "openDeferred": [
+    "The numbered spine cards (nature-00-scope, -01-research-canon, -02-evidence-table, -04-section-contracts) are 192-339 B stubs; this card quotes the substantive cards instead and records that the spine is thin.",
+    "No current pointer moved (red line 5)."
+  ]
+}

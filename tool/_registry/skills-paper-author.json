@@ -1,0 +1,96 @@
+{
+  "schema": "ai-skill-catalog/v1",
+  "skills": [
+    {
+      "id": "paper-scenario-argument-design",
+      "version": "1.0.0",
+      "sourceId": "catalog:skills-nature-skills.json",
+      "sourcePath": "versions/1.0.0/SKILL.md",
+      "category": "paper-author"
+    },
+    {
+      "id": "paper-scenario-chinese-mode",
+      "version": "1.0.0",
+      "sourceId": "catalog:skills-nature-skills.json",
+      "sourcePath": "versions/1.0.0/SKILL.md",
+      "category": "paper-author"
+    },
+    {
+      "id": "paper-scenario-data-report",
+      "version": "1.0.0",
+      "sourceId": "catalog:skills-nature-skills.json",
+      "sourcePath": "versions/1.0.0/SKILL.md",
+      "category": "paper-author"
+    },
+    {
+      "id": "paper-scenario-evidence-mapping",
+      "version": "1.0.0",
+      "sourceId": "catalog:skills-nature-skills.json",
+      "sourcePath": "versions/1.0.0/SKILL.md",
+      "category": "paper-author"
+    },
+    {
+      "id": "paper-scenario-experiment-plan",
+      "version": "1.0.0",
+      "sourceId": "catalog:skills-nature-skills.json",
+      "sourcePath": "versions/1.0.0/SKILL.md",
+      "category": "paper-author"
+    },
+    {
+      "id": "paper-scenario-figure-contract",
+      "version": "1.0.0",
+      "sourceId": "catalog:skills-nature-skills.json",
+      "sourcePath": "versions/1.0.0/SKILL.md",
+      "category": "paper-author"
+    },
+    {
+      "id": "paper-scenario-integrity-check",
+      "version": "1.0.0",
+      "sourceId": "catalog:skills-nature-skills.json",
+      "sourcePath": "versions/1.0.0/SKILL.md",
+      "category": "paper-author"
+    },
+    {
+      "id": "paper-scenario-literature-canon",
+      "version": "1.0.0",
+      "sourceId": "catalog:skills-nature-skills.json",
+      "sourcePath": "versions/1.0.0/SKILL.md",
+      "category": "paper-author"
+    },
+    {
+      "id": "paper-scenario-proposal-assignment",
+      "version": "1.0.0",
+      "sourceId": "catalog:skills-nature-skills.json",
+      "sourcePath": "versions/1.0.0/SKILL.md",
+      "category": "paper-author"
+    },
+    {
+      "id": "paper-scenario-reviewer-response",
+      "version": "1.0.0",
+      "sourceId": "catalog:skills-nature-skills.json",
+      "sourcePath": "versions/1.0.0/SKILL.md",
+      "category": "paper-author"
+    },
+    {
+      "id": "paper-scenario-scope-mapping",
+      "version": "1.0.0",
+      "sourceId": "catalog:skills-nature-skills.json",
+      "sourcePath": "versions/1.0.0/SKILL.md",
+      "category": "paper-author"
+    },
+    {
+      "id": "paper-scenario-section-draft",
+      "version": "1.0.0",
+      "sourceId": "catalog:skills-nature-skills.json",
+      "sourcePath": "versions/1.0.0/SKILL.md",
+      "category": "paper-author"
+    },
+    {
+      "id": "paper-scenario-style-polish",
+      "version": "1.0.0",
+      "sourceId": "catalog:skills-nature-skills.json",
+      "sourcePath": "versions/1.0.0/SKILL.md",
+      "category": "paper-author"
+    }
+  ]
+}

@@ -1,0 +1,65 @@
+# qoder 平台仓库 = 只跟踪本平台的接入资产与留证。
+# E:\ai\qoder 同时是 Qoder 客户端的安装位置（Qoder.exe / resources/ / locales/ / *.dll），
+# 那一部分默认全部排除，否则会把约 324MB 应用二进制纳入版本历史。
+
+/*
+!.gitignore
+!.gitattributes
+
+# 忽略策略本身要入库（否则上面的 /* 把它们自己也排除了）
+!.gitignore
+!.gitattributes
+
+# 允许：平台接入面
+!/bridge.json
+!/bridge/
+!/plugins/
+!/runtime/
+
+# 运行面只留证据目录
+/runtime/*
+!/runtime/runs/
+!/runtime/probes/
+!/runtime/reports/
+!/runtime/entries/
+!/runtime/maintenance/
+!/runtime/backups/
+!/runtime/tools/
+!/runtime/staging/
+!/runtime/software/
+!/runtime/jail-selftest/
+!/runtime/matrix-smoke/
+
+# 密封脚本环境本体（约 219MB 第三方 wheel 解包内容）不入库；
+# 它的真相在 bridge/script-environment.json 逐文件快照里，重建见 runtime/tools/make-script-environment.py
+/runtime/wsl-py-env/
+
+# 矩阵每轮生成的 run 树体量大且可由 --out 报告复现；只留报告 JSON
+/runtime/matrix-smoke/*/
+
+# 自测产生的渲染产物与字节码缓存
+/runtime/jail-selftest/work/
+**/__pycache__/
+*.pyc
+
+# 判据电池的 scratch 副本树（可从电池重跑再生）不入仓，避免与共享仓释放版混淆
+**/runs/*/lint-root/
+
+# ── 2026-09-23 平台目录收口轮：机器产物一律不入仓，runtime 只留文本台账与读数 ──
+# 缘由：根 .gitignore 第 29 行声明"runtime 与本体仍整体排除"，而本文件上面放行了 11 个
+# runtime 证据目录，两条口径叠加的结果是 qoder 成为六平台里唯一把 runtime 灌进治理仓的
+# （跟踪 17,379 个 runtime 文件 / 125MB，其余五家各 4–17 个文件）。
+# 现在的切法：文本台账与读数继续跟踪（作为 bridge 灭失时的恢复源，见根 .gitignore 第 33–36 行），
+# run 树与环境快照这类"重跑即出、体量大"的机器产物摘出跟踪。摘出＝不再进版本历史，盘上一字不动。
+/runtime/**/runs/
+/runtime/**/env7100/
+/runtime/**/env7100-manifest.json
+/runtime/**/env7100-manifest-swapped.json
+/runtime/**/staging/
+/runtime/**/reruns/
+/runtime/**/ladder-rerun/
+/runtime/**/work/
+/runtime/**/edge-profile/
+/runtime/**/preview/
+/runtime/maintenance/20260923-optimization/baseline.json
+/runtime/maintenance/20260923-optimization/baseline.pre.json

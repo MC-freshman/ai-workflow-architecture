@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Mastermind Bug Bounty Workflow · SCOPE · 授权与范围核对",
+  "type": "object",
+  "required": [
+    "stage",
+    "status",
+    "summary"
+  ],
+  "properties": {
+    "stage": {
+      "type": "string",
+      "minLength": 1
+    },
+    "status": {
+      "enum": [
+        "pass",
+        "partial",
+        "blocked"
+      ]
+    },
+    "summary": {
+      "type": "string",
+      "minLength": 1
+    },
+    "unavailableChecks": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "authorizedScope": {
+      "type": "string"
+    },
+    "prohibited": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "engagementId": {
+      "type": "string"
+    }
+  },
+  "additionalProperties": true
+}

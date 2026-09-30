@@ -1,0 +1,30 @@
+{
+  "schema": "ai-governance-source/v1",
+  "authorSession": "qoder",
+  "derivedFrom": "expert-task@1.1.0",
+  "supersedes": null,
+  "releaseScope": "Architecture 3.1.0 step T-P8: a domain pipeline for novel-writer built by scenario-selecting the skills the expert already pins. The stage graph is expert-task@1.1.0 copied byte for byte (INTAKE/WORK/REPORT, schemas, prompt anchors); only the three v3 keys are new.",
+  "scenarios": {
+    "consistency": [
+      "novel-story-long-analyze-chinese",
+      "novel-story-import-chinese"
+    ],
+    "hook": [
+      "novel-story-short-write-chinese",
+      "novel-avoid-ai-writing-writing"
+    ],
+    "outline": [
+      "novel-story-setup-chinese",
+      "novel-story-long-analyze-chinese"
+    ],
+    "pacing-proofread": [
+      "novel-story-review-chinese",
+      "novel-story-deslop-chinese",
+      "novel-avoid-ai-writing-writing"
+    ]
+  },
+  "packReference": "the domain pack stays in the expert tool-lock (it is where these skills come from); it is deliberately not a workflow context dependency, because a declared pack would inject all of its members into every prompt",
+  "openDeferred": [
+    "stage bodies stay generic: the domain content arrives through the selected skills"
+  ]
+}

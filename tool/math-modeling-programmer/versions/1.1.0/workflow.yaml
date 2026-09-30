@@ -1,0 +1,49 @@
+schema: ai-workflow-definition/v1
+id: math-modeling-programmer
+version: 1.1.0
+maxParallel: 1
+stages:
+  - id: INIT
+    mode: serial
+    workers: []
+  - id: AUDIT
+    mode: serial
+    workers: []
+    dependsOn: [INIT]
+  - id: SPEC
+    mode: serial
+    workers: []
+    dependsOn: [AUDIT]
+  - id: BASELINE
+    mode: serial
+    workers: []
+    dependsOn: [SPEC]
+  - id: SOLVE
+    mode: serial
+    workers: []
+    dependsOn: [BASELINE]
+  - id: EXPERIMENT
+    mode: serial
+    workers: []
+    dependsOn: [SOLVE]
+  - id: VALIDATE
+    mode: serial
+    workers: []
+    dependsOn: [EXPERIMENT]
+  - id: FIGURES
+    mode: serial
+    workers: []
+    dependsOn: [VALIDATE]
+    gates:
+      - figure_contract
+      - source_preflight
+      - render_preview
+      - layout_bbox_qa
+      - panel_alignment
+      - pdf_collision
+      - visual_review
+  - id: FREEZE
+    mode: serial
+    workers: []
+    dependsOn: [FIGURES]
+outputWorker: math-modeling-programmer

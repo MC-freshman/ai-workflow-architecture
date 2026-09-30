@@ -1,0 +1,27 @@
+{
+  "schema": "ai-governance-tool-source/v1",
+  "authorSession": "qoder",
+  "derivedFrom": "platform-conformance@1.3.0",
+  "supersedes": "1.3.0",
+  "releaseScope": "Architecture 3.1.0 (framework side), step T-P5 judgement 1 and 2: --only takes a comma list, each id is judged and answered separately (perOnlyId), and an id that carries no row or an empty row set exits non-zero regardless of --strict (D-32). The platform-independent union and its digest are computed before any narrowing, so they stay byte-identical.",
+  "changes": [
+    "--only parses a comma list and reports perOnlyId / unknownOnlyIds",
+    "floorReached also refuses unknownOnlyIds",
+    "exit code: empty or unknown narrowing returns 1 without --strict"
+  ],
+  "unchanged": [
+    "compute_union, union_body, classify and every item id: the shared-side union is computed exactly once and exactly as before, which is what makes unionSha256 comparable across platforms",
+    "the four test modules and env_config.py: byte-identical to 1.2.0"
+  ],
+  "openDeferred": [
+    "per-capability rows for a software release (the union currently carries the profiles and permissions a recipe requires, not each capability it offers)",
+    "a machine-readable schema for the report itself"
+  ],
+  "releaseStatus": "published",
+  "publishedAt": "2026-09-21",
+  "publishedBy": "qoder, architecture 3.0 round 3.0-A, step S-P9",
+  "publicationChanges": [
+    "none - the bytes are the staged bytes"
+  ],
+  "pointerPolicy": "published, not adopted: no shared current.json was flipped for this generation by this step (S-P9 judgement: 发布 is not 采纳)"
+}

@@ -1,0 +1,39 @@
+{
+  "schema": "ai-software-recipe/v1",
+  "platform": "windows",
+  "softwareId": "dirsearch",
+  "softwareVersion": "1.0.0",
+  "acquire": {
+    "kind": "package-manager",
+    "source": "GitHub 源码（本机以源码目录形式存在于 PPython 下）",
+    "officialUrl": "https://github.com/maurosoria/dirsearch",
+    "version": "0.4.3",
+    "license": "GPL-2.0",
+    "redistributable": true,
+    "packageManager": "pip install dirsearch 或 git clone（需 Python>=3.8）"
+  },
+  "install": {
+    "location": "${platformRuntime}/software/dirsearch",
+    "detectedPath": "D:\\Various_programming_languages\\PPython\\dirsearch-master\\dirsearch-master",
+    "pythonPath": "D:\\Various_programming_languages\\PPython",
+    "pythonVersion": "3.12.4",
+    "stepsRef": null,
+    "notes": "通过 PPython 解释器运行源码目录下 dirsearch.py。Scripts\\dirsearch.exe 入口存在但 shebang 指向失效路径（failed to create process），禁止使用该 exe；另在 Lib\\site-packages\\dirsearch-0.4.3-py3.12.egg 有一份已安装副本，本配方固定使用源码目录副本"
+  },
+  "launch": {
+    "kind": "cli-wrapper",
+    "entrypoint": "dirsearch.py",
+    "interpreter": "${pythonPath}/python.exe",
+    "environment": {},
+    "pathDependencies": ["db\\", "lib\\", "thirdparty\\", "reports\\"]
+  },
+  "verify": {
+    "versionCall": ["${pythonPath}/python.exe", "dirsearch.py", "--version"],
+    "expectedVersionOutput": "dirsearch v0.4.3",
+    "selftestRef": "../selftest/readonly.json",
+    "files": [
+      { "path": "dirsearch.py", "role": "程序入口（相对 detectedPath）", "sha256": "7bd588252f0724d8a6af21fd39585621547300cf4fbb1851301a28c4c2b1e011" },
+      { "path": "${pythonPath}/python.exe", "role": "PPython 解释器 3.12.4（绝对路径）", "sha256": "fd5c46d73d29ba21b04c844bbaf9096066136526911230645a2a040d23fb612b" }
+    ]
+  }
+}

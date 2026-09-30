@@ -1,0 +1,57 @@
+{
+  "schema": "ai-workflow-definition/v2",
+  "id": "game-start",
+  "version": "2.2.0",
+  "mode": "pipeline",
+  "maxParallel": 1,
+  "roles": [
+    "builder"
+  ],
+  "outputWorker": "builder",
+  "gateDefinitions": {
+    "start-integrity": {
+      "type": "process",
+      "cwd": "evidence",
+      "argv": [
+        "workflow:scripts/validate_game_start.py"
+      ],
+      "expectExit": [
+        0
+      ],
+      "expectArtifacts": [
+        {
+          "target": "evidence:game-start-check.json",
+          "minBytes": 2
+        }
+      ],
+      "reasonFrom": "evidence:game-start-check.json"
+    }
+  },
+  "stages": [
+    {
+      "id": "EXECUTE",
+      "action": "prompt",
+      "worker": "builder",
+      "dependsOn": [],
+      "promptRef": "workflow.md#stage:EXECUTE",
+      "inputs": "schemas/input.schema.json",
+      "outputs": "schemas/execute.schema.json",
+      "gates": [
+        "start-integrity"
+      ],
+      "onFail": "repair",
+      "maxIterations": 2,
+      "repairPromptRef": "workflow.md#stage:repair"
+    },
+    {
+      "id": "SELFCHECK",
+      "action": "prompt",
+      "worker": "builder",
+      "dependsOn": [
+        "EXECUTE"
+      ],
+      "promptRef": "workflow.md#stage:SELFCHECK",
+      "outputs": "schemas/selfcheck.schema.json"
+    }
+  ]
+}

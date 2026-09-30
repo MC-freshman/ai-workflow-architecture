@@ -1,0 +1,16 @@
+{
+  "schema": "ai-workflow-source/v1",
+  "legacy": {
+    "path": "skills/workflows/game-start/SKILL.md",
+    "license": "MIT",
+    "sourceId": "gameforge",
+    "repository": "https://github.com/AlterLab-IEU/AlterLab_GameForge",
+    "snapshot": "snapshot-2026.08.31"
+  },
+  "migratedFrom": "game-start@2.0.1",
+  "migratedTo": "game-start@2.2.0",
+  "supersedes": "game-start@2.1.0（同批候选：门禁类型为 output-schema，引擎不会把其失败转入 repair，已弃用）",
+  "migration": "Z10 §6.2 批 A：mode: prompt -> v2 pipeline（EXECUTE + 机械门禁 + SELFCHECK），结构化 schema 取代占位 schema，脚本门禁（process）+ 有界修复（maxIterations 2），不可用能力在提示词内固化为 NOT_RUN。",
+  "authorSession": "zcode",
+  "createdAt": "2026-09-14"
+}

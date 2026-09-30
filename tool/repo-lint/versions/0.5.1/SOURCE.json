@@ -1,0 +1,11 @@
+{
+  "schema": "ai-governance-source/v1",
+  "authorSession": "qoder",
+  "derivedFrom": "repo-lint@0.5.0",
+  "supersedes": "0.5.0",
+  "releaseScope": "Architecture 3.1.0 step T-P4: ships workflow-definition-v3.schema.json (derived from the v2 file, stage item byte-identical), removes 0.5.0's interim strip-and-relabel for v3 definitions (D-71), tightens the stage conditionals that fired on partial objects (D-79), and carries the same validate_contracts.py bytes as runtime-contracts 1.4.0 (D-75).",
+  "openDeferred": [
+    "adoption is a separate, per-platform act: no current.json was flipped here and no platform config was touched (发布 ≠ 采纳, BP-2)"
+  ],
+  "previousSource": "tool/repo-lint/versions/0.5.0/SOURCE.json"
+}

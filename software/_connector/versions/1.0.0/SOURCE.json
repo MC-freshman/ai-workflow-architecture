@@ -1,0 +1,37 @@
+{
+ "schema": "ai-software-connector-source/v1",
+ "authorSession": "qoder",
+ "derivedFrom": "software/_gateway/versions/1.0.0/gateway.py (version resolution, snapshot gate, locks, evidence) + versions/架构3.2.0-定稿实施表-20260923.md P3 + versions/架构3.2.0-裁定记录-20260924.md + the P2 candidate contract in qoder/runtime/maintenance/20260923-3.2.0/P2-contract/",
+ "supersedes": null,
+ "releaseScope": "Architecture 3.2 (framework side), step P3: one shared connector that drives the six published recipes through four adapters, answering the three engine-facing shapes unchanged plus the 3.2 session shape and the five read entries. Staged and published in the same step because nothing else can import it; no platform config points at it yet.",
+ "changes": [
+  "connector.py: the eight-step refusal-before-dispatch chain (declared -> snapshot -> profile -> boundary -> consent -> arguments -> idempotency -> dispatch), four adapters, the platform-internal lock table with sessions holding their key, a connector-side idempotency index that answers `replayed`, artifact capture per call, and the seven entries software.list/describe/health/call/session/artifact/evidence.",
+  "D-60, in code: no body is ever asked `--tools`. Availability is `snapshot-only` unless a native MCP release declares otherwise, and every answer reports which attestation it used, so a green row cannot be read as \"the body advertised this tool\".",
+  "schemas/software-admin-v1.schema.json: one new envelope for the five read entries. It $refs the published error-code enum, so this release adds no error code and no new failure word.",
+  "Resolution rules the reference gateway left implicit: only the pinned release is served; `${softwareRoot}` means the install directory (D-48) and `${recipeRoot}` the shared release; a bare program name resolves against the install dir or config.tools and never PATH; the connector's runtime and the body's interpreter are two fields and a mismatch is SOFTWARE_DRIFT; arguments are validated against their own input schema so a refusal names a JSON pointer."
+ ],
+ "unchanged": [
+  "no engine byte, no contract byte, no repo-lint schema: the three published shapes are answered as they are, and the responses are validated against repo-lint 0.5.2's published adapter schema by the selftest",
+  "the six published recipes: zero bytes written; they carry no connector.json, so the connector derives the overlay from manifest plus snapshot and reports `declaration: derived`",
+  "software/_gateway 1.0.0: left in place and readable; this release is a candidate, not a replacement, and no pointer or platform config was switched to it",
+  "the five shared current.json pointers: untouched (发布 is not 采纳)"
+ ],
+ "openDeferred": [
+  "D-85: ai-software-inventory/v1's response is additionalProperties:false without `frozen`, yet ai-run-lock/v1.3 records inventory.frozen and wf-runner 0.10.1 reads it (engine.py:660) - so the published gateway answer was never schema-valid. The connector keeps the key for interoperability and the selftest asserts it is the only excess key. Fix belongs to the next contract generation.",
+  "D-84: the 3.2 declaration schema (ai-software-connector/v1) has no axis for attestation policy, session instructions, or per-operation network/filesystem words, so those live in the connector and in platform config instead of a declaration. Widening it is a contract step, not a connector step.",
+  "real dispatch against the six bodies (dirsearch/mysql-cli/wireshark-cli first) is P4; this release was exercised only against fake bodies and read-only against the real recipes",
+  "mcp-proxy and desktop-session were exercised only through fixtures; the native MCP live attestation has not met a running MCP server (P5)",
+  "the reference gateway's --listen mock mode was not carried over: serving a mock endpoint is a fixture concern, not a connector duty",
+  "cross-platform arbitration: the lock table is platform-internal, which BP-4 1.3 now states as the intended scope rather than a gap"
+ ],
+ "releaseStatus": "published",
+ "publishedAt": "2026-09-24",
+ "publishedBy": "qoder, architecture 3.2 round, step P3",
+ "pointerPolicy": "published, not adopted: software/_connector/current.json names 1.0.0 as this resource's own pointer (a new resource has no prior default), and no platform's config.softwareGateway was repointed at it",
+ "selftest": {
+  "harness": "qoder/runtime/maintenance/20260923-3.2.0/P3-connector/p3-selftest.py",
+  "readback": "qoder/runtime/maintenance/20260923-3.2.0/P3-connector/P3-readback.json",
+  "cells": "96/96 pass",
+  "fixtures": "fake bodies only; no installed software was started by this step"
+ }
+}

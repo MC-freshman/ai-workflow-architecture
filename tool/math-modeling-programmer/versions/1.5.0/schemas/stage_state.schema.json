@@ -1,0 +1,14 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": ["project_id", "stage", "status", "history"],
+  "properties": {
+    "project_id": {"type": "string"},
+    "stage": {"type": "string", "enum": ["INIT", "AUDIT", "SPEC", "BASELINE", "SOLVE", "EXPERIMENT", "VALIDATE", "FIGURES", "FREEZE"]},
+    "status": {"type": "string", "enum": ["READY", "BLOCKED"]},
+    "history": {"type": "array"},
+    "missing_items": {"type": "array", "items": {"type": "string"}},
+    "block_reason": {"type": ["string", "null"]}
+  },
+  "additionalProperties": true
+}

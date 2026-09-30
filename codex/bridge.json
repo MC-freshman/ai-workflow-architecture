@@ -1,0 +1,39 @@
+{
+  "schema": "ai-platform-bridge/v1",
+  "platform": "codex",
+  "shared": {
+    "agentRegistry": "E:\\ai\\agent\\registry.json",
+    "toolRegistry": "E:\\ai\\tool\\registry.json",
+    "architecturePrompt": "E:\\ai\\AI_ARCHITECTURE_SYSTEM_PROMPT.md",
+    "readOnly": true
+  },
+  "runtimeRoot": "E:\\ai\\codex\\runtime",
+  "server": {
+    "transport": "stdio",
+    "command": "E:\\ai\\codex\\chatgpt\\app\\resources\\cua_node\\bin\\node.exe",
+    "args": [
+      "E:\\ai\\codex\\bridge\\server.mjs"
+    ],
+    "cwd": "E:\\ai\\codex\\bridge"
+  },
+  "defaults": {
+    "workflowVersions": {
+      "game-sprint-plan": "2.1.1",
+      "repo-lint": "0.5.1"
+    },
+    "agentVersions": {
+      "visualization-engineer": "1.6.0"
+    }
+  },
+  "modes": [
+    "workflow",
+    "agent-workflow"
+  ],
+  "runner": {
+    "enabled": true,
+    "version": "0.10.0",
+    "python": "E:\\ai\\codex\\workspaces\\agentic-workflow-implementation\\.venv\\Scripts\\python.exe",
+    "adapter": "E:/ai/codex/bridge/runner_adapter.py",
+    "config": "E:/ai/codex/bridge/runner-config.json"
+  }
+}

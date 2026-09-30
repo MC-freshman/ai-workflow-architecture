@@ -1,0 +1,11 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "required": ["version", "platform"],
+  "properties": {
+    "version": { "type": "string", "description": "版本号", "examples": ["7.95"] },
+    "platform": { "type": "string", "examples": ["i686-pc-windows-windows"] },
+    "compiledWith": { "type": "string", "description": "编译依赖信息（可选）" },
+    "rawOutput": { "type": "string", "description": "完整 --version stdout" }
+  }
+}

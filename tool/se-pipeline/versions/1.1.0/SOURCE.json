@@ -1,0 +1,11 @@
+{
+  "schema": "ai-governance-source/v1",
+  "authorSession": "qoder",
+  "derivedFrom": "se-pipeline@1.0.1",
+  "supersedes": "1.0.1",
+  "releaseScope": "3.3.0 P2: `standard` names its two backbone Skills; the pointable pool gains the two locked Skills (coding-frontend-best-practices, coding-python-idioms) that only reached a run through the Pack.",
+  "openDeferred": [
+    "No current pointer moved; adoption stays a per-platform act (BP-2, red line 5)."
+  ],
+  "previousSource": "tool/se-pipeline/versions/1.0.1/SOURCE.json"
+}

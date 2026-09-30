@@ -1,0 +1,16 @@
+{
+  "schema": "ai-workflow-source/v1",
+  "id": "math-modeling-programmer",
+  "version": "1.7.1",
+  "derivedFrom": "tool/math-modeling-programmer/versions/1.6.0（逐字节复制 1139 文件）",
+  "changes": [
+    "manifest.json：version 1.6.0 -> 1.7.1",
+    "manifest.json：dependencies.workflows.visualization-qa 1.1.0 -> 1.2.0",
+    "workflow.yaml：version 与 requires.workflows.visualization-qa 同步对齐",
+    "新增 tests/contract.json（形状与依赖契约，供 lint 0.2.1 的 gate-execution-evidenced 规则识别）"
+  ],
+  "why": "Z10 §11 G4：只改专家锁会造成闭包版本冲突（主工作流自身也钉 visualization-qa 1.1.0）。",
+  "contractNote": "manifest 是封闭契约（additionalProperties=false），故溯源信息放在本文件而非 manifest。",
+  "authorSession": "zcode",
+  "createdAt": "2026-09-14"
+}

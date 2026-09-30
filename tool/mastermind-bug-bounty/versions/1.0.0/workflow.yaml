@@ -1,0 +1,25 @@
+schema: ai-workflow-definition/v1
+id: mastermind-bug-bounty
+version: 1.0.0
+maxParallel: 3
+stages:
+  - id: discovery
+    mode: parallel
+    workers:
+      - mastermind-recon
+      - mastermind-js-analysis
+  - id: analysis
+    mode: parallel
+    workers:
+      - mastermind-api-validation
+      - mastermind-crypto-analysis
+    dependsOn: [discovery]
+  - id: triage
+    mode: serial
+    workers: [mastermind-triage]
+    dependsOn: [analysis]
+  - id: report
+    mode: serial
+    workers: [mastermind-reporting]
+    dependsOn: [triage]
+outputWorker: mastermind-reporting

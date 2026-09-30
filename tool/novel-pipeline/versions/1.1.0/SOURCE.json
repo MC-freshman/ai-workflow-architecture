@@ -1,0 +1,12 @@
+{
+  "schema": "ai-governance-source/v1",
+  "authorSession": "qoder",
+  "derivedFrom": "novel-pipeline@1.0.0",
+  "supersedes": "1.0.0",
+  "releaseScope": "3.3.0 P3: `standard` names the long-form backbone (setup + long-write) instead of falling back to the whole declaration; the pointable pool grows 7 -> 13 so the six Skills the Agent already locks but no scenario could reach become selectable — including novel-story-long-write-chinese, the long-form writing method card. Declaring a Skill does not deliver it.",
+  "openDeferred": [
+    "No current pointer moved (adoption is per-platform, BP-2).",
+    "pool expansion is declaration-only; no scenario other than standard was re-tuned."
+  ],
+  "previousSource": "tool/novel-pipeline/versions/1.0.0/SOURCE.json"
+}

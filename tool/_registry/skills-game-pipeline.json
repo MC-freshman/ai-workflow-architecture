@@ -1,0 +1,82 @@
+{
+  "schema": "ai-skill-catalog/v1",
+  "skills": [
+    {
+      "id": "game-scenario-brainstorm",
+      "version": "1.0.0",
+      "sourceId": "workflow:game-brainstorm",
+      "sourcePath": "tool/game-brainstorm/versions/2.2.0/workflow.md",
+      "category": "game-mastermind"
+    },
+    {
+      "id": "game-scenario-gdd",
+      "version": "1.0.0",
+      "sourceId": "workflow:game-gdd-author",
+      "sourcePath": "tool/game-gdd-author/versions/2.2.0/workflow.md",
+      "category": "game-mastermind"
+    },
+    {
+      "id": "game-scenario-prototype",
+      "version": "1.0.0",
+      "sourceId": "workflow:game-prototype",
+      "sourcePath": "tool/game-prototype/versions/2.2.0/workflow.md",
+      "category": "game-mastermind"
+    },
+    {
+      "id": "game-scenario-playtest",
+      "version": "1.0.0",
+      "sourceId": "workflow:game-playtest",
+      "sourcePath": "tool/game-playtest/versions/2.1.0/workflow.md",
+      "category": "game-mastermind"
+    },
+    {
+      "id": "game-scenario-balance",
+      "version": "1.0.0",
+      "sourceId": "workflow:game-balance-check",
+      "sourcePath": "tool/game-balance-check/versions/2.1.0/workflow.md",
+      "category": "game-mastermind"
+    },
+    {
+      "id": "game-scenario-code-review",
+      "version": "1.0.0",
+      "sourceId": "workflow:game-code-review",
+      "sourcePath": "tool/game-code-review/versions/2.1.0/workflow.md",
+      "category": "game-mastermind"
+    },
+    {
+      "id": "game-scenario-ci",
+      "version": "1.0.0",
+      "sourceId": "workflow:game-ci-pipeline",
+      "sourcePath": "tool/game-ci-pipeline/versions/2.1.0/workflow.md",
+      "category": "game-mastermind"
+    },
+    {
+      "id": "game-scenario-launch",
+      "version": "1.0.0",
+      "sourceId": "workflow:game-launch",
+      "sourcePath": "tool/game-launch/versions/2.1.0/workflow.md",
+      "category": "game-mastermind"
+    },
+    {
+      "id": "game-scenario-localization",
+      "version": "1.0.0",
+      "sourceId": "workflow:game-localization-manager",
+      "sourcePath": "tool/game-localization-manager/versions/2.1.0/workflow.md",
+      "category": "game-mastermind"
+    },
+    {
+      "id": "game-scenario-orchestrator",
+      "version": "1.0.0",
+      "sourceId": "workflow:game-team-orchestrator",
+      "sourcePath": "tool/game-team-orchestrator/versions/2.1.0/workflow.md",
+      "category": "game-mastermind"
+    },
+    {
+      "id": "game-scenario-reverse-doc",
+      "version": "1.0.0",
+      "sourceId": "workflow:game-reverse-document",
+      "sourcePath": "tool/game-reverse-document/versions/2.1.0/workflow.md",
+      "category": "game-mastermind"
+    }
+  ]
+}

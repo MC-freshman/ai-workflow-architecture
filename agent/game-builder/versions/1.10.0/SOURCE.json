@@ -1,0 +1,12 @@
+{
+  "schema": "ai-governance-source/v1",
+  "authorSession": "qoder",
+  "derivedFrom": "game-builder@1.9.1",
+  "supersedes": "1.9.1",
+  "releaseScope": "3.3.0 P2: the Agent stops pinning the 'game-core' Pack. Every member it contributed was already locked by name, so no authorisation is lost — but while the Pack was pinned, engine.declared_context folded all of its member documents into every prompt stage of every scenario, which is what made this Agent's deliveries cross the R17 budget. The 'game-pipeline' pin moves to 1.1.0, the release whose default scenario names its own Skills.",
+  "openDeferred": [
+    "The Pack itself is unchanged and stays published; it is simply no longer pinned here (BP-1 shape intact).",
+    "No shared current pointer and no platform default moved (red line 5)."
+  ],
+  "previousSource": "agent/game-builder/versions/1.9.1/SOURCE.json"
+}

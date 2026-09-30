@@ -1,0 +1,41 @@
+{
+  "schema": "ai-workflow-definition/v2",
+  "id": "mastermind-peer-task",
+  "version": "1.0.0",
+  "mode": "pipeline",
+  "maxParallel": 1,
+  "roles": [
+    "peer"
+  ],
+  "outputWorker": "peer",
+  "stages": [
+    {
+      "id": "BRIEF",
+      "action": "prompt",
+      "worker": "peer",
+      "dependsOn": [],
+      "promptRef": "workflow.md#stage:BRIEF",
+      "outputs": "schemas/brief.schema.json"
+    },
+    {
+      "id": "EXECUTE",
+      "action": "prompt",
+      "worker": "peer",
+      "dependsOn": [
+        "BRIEF"
+      ],
+      "promptRef": "workflow.md#stage:EXECUTE",
+      "outputs": "schemas/execute.schema.json"
+    },
+    {
+      "id": "DELIVER",
+      "action": "prompt",
+      "worker": "peer",
+      "dependsOn": [
+        "EXECUTE"
+      ],
+      "promptRef": "workflow.md#stage:DELIVER",
+      "outputs": "schemas/deliver.schema.json"
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "schema": "ai-platform-bridge/v1.1",
+  "platform": "doubao",
+  "shared": {
+    "agentRegistry": "E:\\ai\\agent\\registry.json",
+    "toolRegistry": "E:\\ai\\tool\\registry.json",
+    "architecturePrompt": "E:\\ai\\AI_ARCHITECTURE_SYSTEM_PROMPT.md",
+    "readOnly": true
+  },
+  "runtimeRoot": "E:\\ai\\doubao\\runtime",
+  "runner": "E:\\ai\\tool\\wf-runner",
+  "modes": ["workflow", "agent-workflow"]
+}

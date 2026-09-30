@@ -1,0 +1,106 @@
+{
+  "schema": "ai-software/v1",
+  "id": "burp-suite",
+  "version": "1.0.0",
+  "displayName": "Burp Suite Pro (MCP Server)",
+  "upstreamVersion": "2024.5.1",
+  "kind": "mcp-http",
+  "transport": {
+    "protocol": "mcp-streamable-http",
+    "baseUrl": "http://127.0.0.1:9876",
+    "headers": {},
+    "auth": { "type": "none", "notes": "loopback 端点，扩展默认不启用鉴权；如扩展配置了 token，改为 reference:burp-mcp-token" }
+  },
+  "capabilities": [
+    {
+      "name": "mcpListTools",
+      "nativeName": "JSON-RPC tools/list",
+      "inputSchemaRef": "schemas/empty.input.json",
+      "outputSchemaRef": "schemas/mcpTools.output.json",
+      "sideEffects": "none",
+      "permissionRequests": { "filesystem": "none", "network": "loopback", "process": "none", "credentials": "none" },
+      "consent": "auto",
+      "idempotent": true,
+      "safeForSelftest": true,
+      "invocation": {
+        "transport": "mcp-http",
+        "endpoint": "http://127.0.0.1:9876",
+        "mcpMethod": "tools/list",
+        "healthCheck": true,
+        "timeout": 15,
+        "successCondition": "JSON-RPC result.tools is an array"
+      }
+    },
+    {
+      "name": "mcpCallTool",
+      "nativeName": "JSON-RPC tools/call",
+      "inputSchemaRef": "schemas/mcpCall.input.json",
+      "outputSchemaRef": "schemas/mcpCall.output.json",
+      "sideEffects": "external",
+      "permissionRequests": { "filesystem": "workspace", "network": "scoped", "process": "none", "credentials": "none" },
+      "consent": "confirm-stage",
+      "idempotent": false,
+      "safeForSelftest": false,
+      "invocation": {
+        "transport": "mcp-http",
+        "endpoint": "http://127.0.0.1:9876",
+        "mcpMethod": "tools/call",
+        "toolNameParam": "params.name",
+        "argumentsParam": "params.arguments",
+        "timeout": 900,
+        "notes": "通用 MCP 调用入口；具体 Burp 工具名（proxy_history/scan_create/repeater_send 等）以首次连通后冻结的 tools/list 为准"
+      }
+    },
+    {
+      "name": "proxyHistory",
+      "nativeName": "burp.proxy.history（工具名待 live tools/list 冻结）",
+      "inputSchemaRef": "schemas/proxyIntercept.input.json",
+      "outputSchemaRef": "schemas/proxyIntercept.output.json",
+      "sideEffects": "external",
+      "permissionRequests": { "filesystem": "workspace", "network": "scoped", "process": "none", "credentials": "none" },
+      "consent": "confirm-stage",
+      "idempotent": true,
+      "safeForSelftest": false,
+      "invocation": {
+        "transport": "mcp-http",
+        "endpoint": "http://127.0.0.1:9876",
+        "mcpMethod": "tools/call",
+        "toolNameParam": "params.name",
+        "frozenToolName": null,
+        "timeout": 120,
+        "notes": "预期能力类别（代理历史/拦截）；frozenToolName 必须在首次连通后由实际 tools/list 回填并发布新版本，未回填前该能力标记为 pending、不可自动调用"
+      }
+    },
+    {
+      "name": "scannerScan",
+      "nativeName": "burp.scanner.scan（工具名待 live tools/list 冻结）",
+      "inputSchemaRef": "schemas/scannerScan.input.json",
+      "outputSchemaRef": "schemas/scannerScan.output.json",
+      "sideEffects": "external",
+      "permissionRequests": { "filesystem": "workspace", "network": "scoped", "process": "none", "credentials": "none" },
+      "consent": "confirm-stage",
+      "idempotent": false,
+      "safeForSelftest": false,
+      "invocation": {
+        "transport": "mcp-http",
+        "endpoint": "http://127.0.0.1:9876",
+        "mcpMethod": "tools/call",
+        "toolNameParam": "params.name",
+        "frozenToolName": null,
+        "timeout": 1800,
+        "notes": "预期能力类别（主动扫描）；主动扫描耗时长、请求量大；frozenToolName 回填规则同 proxyHistory"
+      }
+    }
+  ],
+  "concurrency": {
+    "instanceMode": "singleton",
+    "poolSize": 1,
+    "exclusiveResources": ["tcp:127.0.0.1:9876", "burp-project-file", "license-seat:1"],
+    "whenBusy": "queue"
+  },
+  "platformSupport": { "windows": "supported", "linux": "supported", "macos": "supported" },
+  "requiredProfiles": [],
+  "snapshot": "capabilities.snapshot.json",
+  "integrity": { "sha256Manifest": "SHA256SUMS" },
+  "docs": "README.md"
+}

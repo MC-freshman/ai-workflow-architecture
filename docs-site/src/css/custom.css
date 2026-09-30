@@ -1,0 +1,255 @@
+/**
+ * E:\ai 架构文档站样式
+ * 只加不拆：配色与间距全部走 Docusaurus 的 CSS 变量，深浅色自动跟随。
+ */
+
+:root {
+  --eai-accent: #2f6feb;
+  --eai-ok: #1a7f37;
+  --eai-info: #0b6bcb;
+  --eai-warn: #9a6700;
+  --eai-danger: #b3261e;
+  --eai-muted: #57606a;
+  --ifm-font-size-base: 15px;
+  --ifm-toc-border-color: var(--ifm-color-emphasis-200);
+  --ifm-heading-margin-bottom: 0.6rem;
+  --ifm-paragraph-margin-bottom: 0.85rem;
+}
+
+html[data-theme='dark'] {
+  --eai-accent: #7aa2f7;
+  --eai-ok: #4ac26b;
+  --eai-info: #6cb6ff;
+  --eai-warn: #e3b341;
+  --eai-danger: #ff7b72;
+  --eai-muted: #9aa4b2;
+}
+
+/* —— 页首来源横幅 —— */
+.doc-meta {
+  margin: 0 0 1.5rem;
+  padding: 0.75rem 1rem;
+  border: 1px solid var(--ifm-color-emphasis-300);
+  border-left: 4px solid var(--eai-accent);
+  border-radius: 6px;
+  background: var(--ifm-color-emphasis-100);
+  font-size: 0.85rem;
+}
+
+.doc-meta table {
+  width: 100%;
+  margin: 0;
+  display: table;
+  background: transparent;
+}
+
+.doc-meta th,
+.doc-meta td {
+  border: none;
+  padding: 0.15rem 0.5rem 0.15rem 0;
+  vertical-align: top;
+  background: transparent;
+}
+
+.doc-meta th {
+  width: 8.5em;
+  text-align: left;
+  font-weight: 600;
+  color: var(--ifm-color-emphasis-700);
+  white-space: nowrap;
+}
+
+.doc-meta code {
+  background: var(--ifm-color-emphasis-200);
+  padding: 0.05rem 0.3rem;
+  font-size: 0.8rem;
+}
+
+.doc-meta__note {
+  margin: 0.5rem 0 0;
+  color: var(--ifm-color-emphasis-600);
+  font-size: 0.78rem;
+}
+
+/* —— 状态徽章 —— */
+.pill {
+  display: inline-block;
+  padding: 0.05rem 0.5rem;
+  border-radius: 999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  line-height: 1.5;
+  border: 1px solid currentColor;
+  background: transparent;
+  white-space: nowrap;
+}
+
+.pill--ok { color: var(--eai-ok); }
+.pill--info { color: var(--eai-info); }
+.pill--warn { color: var(--eai-warn); }
+.pill--danger { color: var(--eai-danger); }
+.pill--muted { color: var(--eai-muted); }
+
+/* —— 左侧栏：让长标题可读，分类不折叠过深 —— */
+.theme-doc-sidebar-menu {
+  font-size: 0.875rem;
+}
+
+.theme-doc-sidebar-menu .menu__link--sublist {
+  font-weight: 600;
+}
+
+.theme-doc-sidebar-item-link-level-1 > .menu__link {
+  border-left: 3px solid transparent;
+}
+
+/* 生成物页与原文页在侧栏里可区分 */
+.menu__link[href^='/reference'] {
+  border-left: 3px solid var(--ifm-color-emphasis-300);
+}
+
+/* —— 正文排版：治理文本以表格与长段落为主 —— */
+.markdown > h2 {
+  margin-top: 2.2rem;
+  padding-bottom: 0.3rem;
+  border-bottom: 1px solid var(--ifm-toc-border-color);
+}
+
+.markdown table {
+  font-size: 0.85rem;
+  display: table;
+  width: 100%;
+}
+
+.markdown table th {
+  white-space: nowrap;
+}
+
+.markdown code {
+  word-break: break-all;
+}
+
+/* —— 列表排版：治理条文的每个要点必须有可见的呼吸间距 —— */
+.markdown > ul > li + li,
+.markdown > ol > li + li,
+.markdown li > ul > li + li,
+.markdown li > ol > li + li {
+  margin-top: 0.45rem;
+}
+
+.markdown li > p:last-child {
+  margin-bottom: 0;
+}
+
+.markdown li > ul,
+.markdown li > ol {
+  margin-top: 0.45rem;
+}
+
+.markdown li > ul:last-child,
+.markdown li > ol:last-child {
+  margin-bottom: 0.35rem;
+}
+
+/* 治理文本里大量出现 E:\ai 这种含反斜杠的行内代码 */
+.markdown pre code {
+  white-space: pre;
+  word-break: normal;
+}
+
+/* —— 首页 —— */
+.hero--eai {
+  background: linear-gradient(180deg, var(--ifm-color-emphasis-100), var(--ifm-background-color));
+  padding: 3.5rem 0 2rem;
+}
+
+.hero--eai h1 {
+  font-size: 2.1rem;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+}
+
+.hero--eai p.lede {
+  max-width: 52em;
+  font-size: 1.02rem;
+  color: var(--ifm-color-emphasis-700);
+}
+
+.eai-cards {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(15.5rem, 1fr));
+  gap: 1rem;
+  margin: 1.5rem 0 2.5rem;
+}
+
+.eai-card {
+  display: block;
+  padding: 1rem 1.1rem;
+  border: 1px solid var(--ifm-color-emphasis-300);
+  border-radius: 10px;
+  color: inherit;
+  transition: border-color 0.15s ease, transform 0.15s ease;
+  background: var(--ifm-background-surface-color);
+}
+
+.eai-card:hover {
+  border-color: var(--eai-accent);
+  color: inherit;
+  transform: translateY(-2px);
+}
+
+.eai-card h3 {
+  margin: 0 0 0.35rem;
+  font-size: 1rem;
+}
+
+.eai-card p {
+  margin: 0;
+  font-size: 0.84rem;
+  color: var(--ifm-color-emphasis-700);
+  line-height: 1.55;
+}
+
+.eai-card .kicker {
+  display: block;
+  font-size: 0.72rem;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--eai-accent);
+  margin-bottom: 0.4rem;
+}
+
+.eai-facts {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
+  gap: 0.75rem;
+  margin: 0 0 2rem;
+}
+
+.eai-fact {
+  padding: 0.8rem 1rem;
+  border-radius: 8px;
+  background: var(--ifm-color-emphasis-100);
+  border: 1px solid var(--ifm-color-emphasis-200);
+}
+
+.eai-fact b {
+  display: block;
+  font-size: 1.3rem;
+}
+
+.eai-fact span {
+  font-size: 0.78rem;
+  color: var(--ifm-color-emphasis-700);
+}
+
+/* —— 打印与内网投屏 —— */
+@media print {
+  .theme-doc-sidebar-container,
+  .navbar,
+  .col--secondary,
+  .theme-doc-breadcrumbs,
+  .doc-meta__note {
+    display: none !important;
+  }
+}

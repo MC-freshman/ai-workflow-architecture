@@ -1,0 +1,7 @@
+{
+  "validation_id": "VAL-001",
+  "checks": [
+    {"id": "files", "type": "file_exists", "path": "results/result_registry.csv"},
+    {"id": "numeric_example", "type": "numeric_close", "observed": 1.0, "expected": 1.0, "tolerance": 0.000001}
+  ]
+}

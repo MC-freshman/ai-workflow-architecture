@@ -1,0 +1,14 @@
+{
+  "schema": "ai-governance-source/v1",
+  "authorSession": "qoder",
+  "derivedFrom": "repo-lint@0.5.2",
+  "supersedes": "0.5.2",
+  "releaseScope": "Architecture 3.x repair round R-P2/R-P3 (D-84/85/86/87/88/90/95): inventoryResponse.frozen required (D-85); callRequest declares engine-added consented/holder (D-86); software-manifest gains credentialInjection (D-87); software-connector-v1 published with attestation/sessionGuidance/per-op network (D-84); software-session-v1 published with attachPid (D-90); software-component-v1 published and software_lint now traverses software/_* components (D-88). workflow.yaml self-version kept in lockstep with the manifest so the R2 definition-mismatch class (D-70/D-95) cannot recur.",
+  "openDeferred": [
+    "Publication is not adoption: no current pointer, platform configuration or platform default is changed by this release (BP-2, red line 5).",
+    "The measured context ceiling of each platform is not proven by this release; windowProfile is read from the Agent manifest and defaults to 256k, and the qoder platform attestation is recorded separately in qoder/bridge/capabilities.json.",
+    "The token figure is a declared formula (1.1 per CJK character, 1 per 3.6 other characters), not a claim about any model's real tokenizer; no tokenizer is installed on this host."
+  ],
+  "previousSource": "tool/repo-lint/versions/0.5.2/SOURCE.json",
+  "version": "0.6.1"
+}

@@ -1,0 +1,6 @@
+{
+  "schema": "ai-skill-pointer/v1",
+  "id": "novel-todoist-due-drafts-productivity",
+  "version": "1.0.0",
+  "hashManifest": "SHA256SUMS"
+}

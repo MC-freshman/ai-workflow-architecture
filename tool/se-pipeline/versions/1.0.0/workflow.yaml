@@ -1,0 +1,111 @@
+{
+  "schema": "ai-workflow-definition/v3",
+  "id": "se-pipeline",
+  "version": "1.0.0",
+  "mode": "pipeline",
+  "maxParallel": 1,
+  "roles": [
+    "expert"
+  ],
+  "outputWorker": "expert",
+  "gateDefinitions": {
+    "report-complete": {
+      "type": "output-schema"
+    },
+    "work-integrity": {
+      "type": "process",
+      "cwd": "evidence",
+      "argv": [
+        "workflow:scripts/validate_expert_work.py"
+      ],
+      "expectExit": [
+        0
+      ],
+      "expectArtifacts": [
+        {
+          "target": "evidence:expert-work-check.json",
+          "minBytes": 2
+        }
+      ],
+      "reasonFrom": "evidence:expert-work-check.json"
+    }
+  },
+  "stages": [
+    {
+      "id": "INTAKE",
+      "action": "prompt",
+      "worker": "expert",
+      "dependsOn": [],
+      "promptRef": "workflow.md#stage:INTAKE",
+      "outputs": "schemas/intake.schema.json"
+    },
+    {
+      "id": "WORK",
+      "action": "prompt",
+      "worker": "expert",
+      "dependsOn": [
+        "INTAKE"
+      ],
+      "promptRef": "workflow.md#stage:WORK",
+      "outputs": "schemas/work.schema.json",
+      "onFail": "repair",
+      "maxIterations": 2,
+      "repairPromptRef": "workflow.md#stage:repair",
+      "gates": [
+        "work-integrity"
+      ]
+    },
+    {
+      "id": "REPORT",
+      "action": "prompt",
+      "worker": "expert",
+      "dependsOn": [
+        "WORK"
+      ],
+      "promptRef": "workflow.md#stage:REPORT",
+      "outputs": "schemas/report.schema.json",
+      "gates": [
+        "report-complete"
+      ]
+    }
+  ],
+  "defaultScenario": "standard",
+  "requiredStages": [
+    "INTAKE",
+    "REPORT"
+  ],
+  "scenarios": {
+    "standard": {
+      "summary": "不指定场景时的通用执行：接题 → 做事 → 交报告，不注入额外上下文。"
+    },
+    "refactor": {
+      "summary": "重构：行为不变是前提，先补 characterization 再动手。",
+      "skills": [
+        "coding-core-discipline@1.0.0",
+        "coding-api-design@1.0.0"
+      ]
+    },
+    "release": {
+      "summary": "发布：变更集、回滚路径与对外文档一起交。",
+      "skills": [
+        "coding-ci-cd-pipeline@1.0.0",
+        "coding-requirement-delivery@1.0.0",
+        "coding-writing-docs@1.0.0"
+      ]
+    },
+    "review": {
+      "summary": "评审：先说可合并性与风险，再逐条给行号级依据。",
+      "skills": [
+        "coding-code-review-self@1.0.0",
+        "coding-security-review@1.0.0"
+      ]
+    },
+    "test": {
+      "summary": "测试：红-绿-重构循环；失败要先复现再谈修。",
+      "skills": [
+        "coding-test-driven@1.0.0",
+        "coding-systematic-debugging@1.0.0"
+      ]
+    }
+  }
+}

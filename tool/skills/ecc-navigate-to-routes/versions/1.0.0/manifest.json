@@ -1,0 +1,31 @@
+{
+  "schema": "ai-skill/v1",
+  "id": "ecc-navigate-to-routes",
+  "version": "1.0.0",
+  "kind": "atomic",
+  "category": "skill",
+  "entry": "SKILL.md",
+  "input": {
+    "type": "text",
+    "contract": "task plus project context"
+  },
+  "output": {
+    "type": "text",
+    "contract": "advice, edits, or named artifacts"
+  },
+  "permissions": [
+    "read-project"
+  ],
+  "requires": [],
+  "conflicts": [],
+  "source": {
+    "path": "skills/angular-developer/references/navigate-to-routes.md",
+    "license": "repository-LICENSE",
+    "sourceId": "ecc",
+    "repository": "ECC-main",
+    "snapshot": "snapshot-2026.08.31"
+  },
+  "integrity": {
+    "sha256Manifest": "SHA256SUMS"
+  }
+}

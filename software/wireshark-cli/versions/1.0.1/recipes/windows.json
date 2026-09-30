@@ -1,0 +1,39 @@
+{
+  "schema": "ai-software-recipe/v1",
+  "platform": "windows",
+  "softwareId": "wireshark-cli",
+  "softwareVersion": "1.0.0",
+  "acquire": {
+    "kind": "local-install",
+    "source": "便携版（本机已存在）",
+    "officialUrl": "https://www.wireshark.org/download.html",
+    "version": "4.2.6",
+    "license": "GPL-2.0-or-later",
+    "redistributable": true,
+    "packageManager": null
+  },
+  "install": {
+    "location": "${platformRuntime}/software/wireshark-cli",
+    "detectedPath": "<local-tool-body-path>",
+    "stepsRef": null,
+    "notes": "便携版目录，CLI 工具依赖同目录 Qt/GLib DLL，必须保持目录完整；Wireshark.exe GUI 不在编排范围内；实时抓包（-i 网卡）需要 Npcap/USBPcap 驱动，本配方仅做离线文件分析，不需要驱动"
+  },
+  "launch": {
+    "kind": "cli-wrapper",
+    "entrypoint": "tshark.exe",
+    "environment": {},
+    "pathDependencies": ["editcap.exe", "mergecap.exe", "capinfos.exe", "text2pcap.exe", "randpkt.exe", "*.dll", "profiles\\"]
+  },
+  "verify": {
+    "versionCall": ["tshark.exe", "--version"],
+    "expectedVersionOutput": "TShark (Wireshark) 4.2.6",
+    "selftestRef": "../selftest/readonly.json",
+    "files": [
+      { "path": "tshark.exe", "role": "主 CLI（读取/过滤/分析）", "sha256": "c0e4998ae62e1abe6582de27916756ece1edcee1b4b4ddb63d54d607524aa7f5" },
+      { "path": "editcap.exe", "role": "编辑/转换/裁剪/去重", "sha256": "308d39d3b59336b28b64e201fcf0e5ccabf1a194c11b1b7a40499ed546bd3e26" },
+      { "path": "mergecap.exe", "role": "合并捕获", "sha256": "920fde18d268eeea4c9e5e710f9937e43b7cd50895622c80254f98b1a573f619" },
+      { "path": "capinfos.exe", "role": "捕获元信息", "sha256": "b18878847f6b7942127fff96ae8f583b2267c8b5e9cdbb66c765d210e97d2553" },
+      { "path": "text2pcap.exe", "role": "hex 文本转 pcap", "sha256": "673b3e0c16afcd46cc78d9499758244ca2830ec7fbde0a905ee22b3db5b0eb9e" }
+    ]
+  }
+}

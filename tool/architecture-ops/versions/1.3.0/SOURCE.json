@@ -1,0 +1,28 @@
+{
+  "schema": "ai-governance-source/v1",
+  "authorSession": "qoder",
+  "derivedFrom": "architecture-ops@1.2.0",
+  "supersedes": "1.2.0",
+  "releaseScope": "Architecture 3.1.0 (framework side), step T-P5 judgement 1 and 3: --only accepts a comma list and a token that judges nothing becomes a FAIL row (D-32 zero-row false green); the software rows resolve their interpreter through runner config -> gateway config -> the harness interpreter and record which level answered (D-59).",
+  "changes": [
+    "selection: wanted/matched set with FAIL rows for unmatched tokens",
+    "gateway_interpreter(): three-level fallback with the answering level named",
+    "software row gains interpreterFrom"
+  ],
+  "unchanged": [
+    "invocation_matrix.py (byte-identical to 1.1.0; the 3.0 software rows join this generation at S-P5/S-P7, before publication)",
+    "version_impact.py",
+    "__init__.py"
+  ],
+  "openDeferred": [
+    "cross-platform arbitration stays with 2.1-A/HANDOFF-P8b (C-8): this command switches one platform own bridge and never another platform s",
+    "D-31: there is still no shared-side tool that switches current.json with a checkpoint; this release does not change that"
+  ],
+  "releaseStatus": "published",
+  "publishedAt": "2026-09-21",
+  "publishedBy": "qoder, architecture 3.0 round 3.0-A, step S-P9",
+  "publicationChanges": [
+    "none - the bytes are the staged bytes"
+  ],
+  "pointerPolicy": "published, not adopted: no shared current.json was flipped for this generation by this step (S-P9 judgement: 发布 is not 采纳)"
+}

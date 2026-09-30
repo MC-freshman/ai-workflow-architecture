@@ -1,0 +1,56 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": ["sprint", "tasks"],
+  "properties": {
+    "sprint": {
+      "type": "object",
+      "required": ["goal", "durationDays"],
+      "additionalProperties": false,
+      "properties": {
+        "number": { "type": "integer", "minimum": 1 },
+        "dates": { "type": "string" },
+        "durationDays": { "type": "integer", "minimum": 1 },
+        "goal": { "type": "string", "minLength": 10 },
+        "milestone": { "type": "string" }
+      }
+    },
+    "tasks": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["id", "title", "estimateHours", "discipline", "dependsOn", "tier"],
+        "additionalProperties": false,
+        "properties": {
+          "id": { "type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9_-]*$" },
+          "title": { "type": "string", "minLength": 3 },
+          "description": { "type": "string" },
+          "estimateHours": { "type": "number", "exclusiveMinimum": 0, "maximum": 8 },
+          "owner": { "type": "string" },
+          "discipline": { "enum": ["code", "art", "audio", "design", "qa", "business"] },
+          "dependsOn": { "type": "array", "items": { "type": "string" }, "uniqueItems": true },
+          "tier": { "enum": ["must", "should", "could"] }
+        }
+      }
+    },
+    "risks": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["description", "probability", "impact", "mitigation"],
+        "additionalProperties": false,
+        "properties": {
+          "description": { "type": "string", "minLength": 3 },
+          "probability": { "enum": ["H", "M", "L"] },
+          "impact": { "enum": ["H", "M", "L"] },
+          "mitigation": { "type": "string" },
+          "trigger": { "type": "string" }
+        }
+      }
+    },
+    "missing": { "type": "array", "items": { "type": "string" } },
+    "backlogSource": { "type": "string" }
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,27 @@
+{
+  "schema": "ai-workflow/v2",
+  "id": "game-launch",
+  "displayName": "game-launch",
+  "version": "2.0.1",
+  "entry": "workflow.yaml",
+  "inputSchema": "schemas/input.schema.json",
+  "outputSchema": "schemas/output.schema.json",
+  "permissions": {
+    "process": "allowlisted-only",
+    "network": "deny",
+    "filesystem": "project-scoped"
+  },
+  "dependencies": {
+    "skills": []
+  },
+  "source": {
+    "path": "skills/workflows/game-launch/SKILL.md",
+    "license": "MIT",
+    "sourceId": "gameforge",
+    "repository": "https://github.com/AlterLab-IEU/AlterLab_GameForge",
+    "snapshot": "snapshot-2026.08.31"
+  },
+  "integrity": {
+    "sha256Manifest": "SHA256SUMS"
+  }
+}

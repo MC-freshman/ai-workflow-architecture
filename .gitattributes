@@ -1,0 +1,17 @@
+# 字节稳定优先于一切便利
+#
+# 实测依据：候选面 44,079 个文本文件里 **11,674 个含 CRLF**（含 AGENTS.md、总手册），
+# 工作区换行符是混合的。git 若做 EOL 归一化（text=auto / autocrlf），
+# add 或 checkout 任一侧都会改写工作区字节 —— 而 tool/agent/software 每个已发布版本目录
+# 自带 SHA256SUMS 密封清单，字节一变就会大面积校验失配，看起来像"发布目录被篡改"，
+# 且违反"已发布版本只读、不可变"红线。
+#
+# 所以这里对**所有**文件关闭换行转换。
+#
+# 实测更正（2026-09-18，`git diff` 对 versions/*.md 的改动）：`-text` 只关闭 EOL 转换，
+# **不影响 diff 的文本渲染**——行级 hunk 与 numstat 都正常（二进制判定走内容嗅探，未设 binary 属性）。
+# 即本条没有"用 diff 换字节稳定"的取舍，两样都保住。
+#
+# 配套：本仓库 core.autocrlf=false、core.safecrlf=false（--local，未动全局配置）。
+
+* -text

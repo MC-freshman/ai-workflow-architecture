@@ -1,0 +1,44 @@
+{
+  "softwareRoot": "E:/ai/software",
+  "lockRoot": "E:/ai/zcode/runtime/software/locks",
+  "evidenceRoot": "E:/ai/zcode/runtime/software/evidence",
+  "sessionRoot": "E:/ai/zcode/runtime/software/sessions",
+  "bodies": {
+    "burp-suite": "<local-tool-body-path> V2024.5.1/BurpSuite V2024.5.1/BurpSuite/burpsuite_pro_org.jar",
+    "dirsearch": "D:/Various_programming_languages/PPython/dirsearch-master/dirsearch-master/dirsearch.py",
+    "mysql-cli": "<local-tool-body-path>",
+    "nmap": "<local-tool-body-path>",
+    "veracrypt": "<local-tool-body-path>",
+    "wireshark-cli": "<local-tool-body-path>"
+  },
+  "interpreters": {
+    ".py": "E:/ai/zcode/runtime/py-env/Scripts/python.exe"
+  },
+  "interpreterAliases": {
+    "PPython": "D:/Various_programming_languages/PPython/python.exe"
+  },
+  "allowedHosts": [
+    "127.0.0.1",
+    "localhost"
+  ],
+  "allowGuiLaunch": false,
+  "note": "P7 (zcode, 2026-09-26): software dispatch goes through the shared connector _connector/1.0.7. Bodies are this platform's own survey (Z3/body-survey.json): every file hashed on this machine and compared to the published recipe verify.files — dirsearch/mysql-cli/wireshark-cli/burp-suite/veracrypt match; nmap.exe carries a one-hex-digit digest mismatch against its own recipe and its snapshot is unfrozen (D-61), so it is registered as drift evidence, not as callable. The interpreter alias comes from each release's frozen snapshot. No credentialProvider is declared yet: credential-requiring calls answer CAPABILITY_UNAVAILABLE with a structured reason until the platform registers its own provider (fill path in the round ledger). Session providers are now declared (zcode-owned session-process-windows.py): the D-90 attach path is live - launch stays consent-gated (allowGuiLaunch=false): every desktop-session software is unfrozen on this platform and the honest answer for a session request is CAPABILITY_UNAVAILABLE / INTERACTIVE_REQUIRED, never a launched window. allowedHosts is the standing ruling that a mediated scan may only reach the loopback; allowGuiLaunch stays off: opening a desktop window is a per-call decision.",
+  "sessionLaunch": [
+    "E:/ai/zcode/runtime/py-env/Scripts/python.exe",
+    "-B",
+    "E:/ai/zcode/runtime/software/session-process-windows.py",
+    "--launch"
+  ],
+  "sessionLiveness": [
+    "E:/ai/zcode/runtime/py-env/Scripts/python.exe",
+    "-B",
+    "E:/ai/zcode/runtime/software/session-process-windows.py",
+    "--alive"
+  ],
+  "sessionTerminate": [
+    "E:/ai/zcode/runtime/py-env/Scripts/python.exe",
+    "-B",
+    "E:/ai/zcode/runtime/software/session-process-windows.py",
+    "--terminate"
+  ]
+}

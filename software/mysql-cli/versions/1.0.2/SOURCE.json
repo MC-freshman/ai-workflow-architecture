@@ -1,0 +1,28 @@
+{
+ "schema": "ai-workflow-source/v1",
+ "authorSession": "qoder",
+ "derivedFrom": "mysql-cli@1.0.1 plus the P2 contract candidate in qoder/runtime/maintenance/20260923-3.2.0/P2-contract/candidates/mysql-cli-1.0.2/",
+ "supersedes": "1.0.1",
+ "releaseScope": "Architecture 3.2, step P4a: one credential entry point instead of two. 1.0.1 required a passwordRef input property that has no argMapping row, so it can never reach argv, while the same capability already declared permissionRequests.credentials=reference:db-credentials - the same fact with two doors (P2 judgement D4). 1.0.2 keeps the recipe half, drops the parameter half, and adds the overlay that tells a connector how to inject it.",
+ "changes": [
+  "schemas/query.input.json and schemas/dump.input.json: passwordRef removed from properties and required; empty.input.json and both output schemas are inherited byte for byte",
+  "manifest.json: the version field, and the query/dump credentialHandling notes now name credentialReferences as the only entry point (mechanism unchanged: defaults-extra-file, temp file owner-only, deleted after the call)",
+  "connector.json: new - this release’s own ai-software-connector/v1 declaration, including credentialInjection (ini, [client] section, user and password keys, one argv slot pointing at the file)",
+  "README.md: the parameter table and the credential section no longer name passwordRef",
+  "SOURCE.json added and SHA256SUMS regenerated, both directions"
+ ],
+ "unchanged": [
+  "capabilities.snapshot.json, recipes/windows.json, selftest/readonly.json and the four untouched schemas - byte for byte from 1.0.1",
+  "capability names, consent (query/dump remain confirm-stage), sideEffects, idempotent flags, argMapping",
+  "1.0.0 and 1.0.1 remain published and immutable; a run locked to either still reads those bytes"
+ ],
+ "evidence": {
+  "whyThisVersionNow": "P4 needs one successful credentialed call through the connector, and 1.0.1 cannot express it without a second door for the same secret",
+  "credentialEntry": "reference:db-credentials - a Windows credential-manager generic target on qoder; the value was never written into this repository, an evidence file or a lock"
+ },
+ "releaseStatus": "published",
+ "publishedAt": "2026-09-24",
+ "publishedBy": "qoder, architecture 3.2 round, step P4a",
+ "pointerPolicy": "published, not adopted: software/mysql-cli/current.json still pins 1.0.1. Flipping it is a cross-platform move (every platform resolves recipes through this pointer, and the connector serves only the pinned release), so it is left as one checkpointed switch_current command.",
+ "migration": "a caller that passed passwordRef now passes credentialReferences [\"reference:db-credentials\"]; the 1.0.1 bytes answer only the old shape and are unchanged"
+}

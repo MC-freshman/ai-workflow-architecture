@@ -1,0 +1,25 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "required": ["volumePath", "driveLetter", "passwordRef"],
+  "properties": {
+    "volumePath": { "type": "string", "description": "加密卷文件或分区路径（/v）" },
+    "driveLetter": { "type": "string", "pattern": "^[A-Za-z]$", "description": "挂载到的盘符（/l），如 X" },
+    "passwordRef": { "type": "string", "description": "平台密钥位中卷密码的引用名（/p）；不接受明文密码" },
+    "keyfiles": { "type": "array", "items": { "type": "string" }, "description": "密钥文件路径（/k，分号连接）" },
+    "readOnly": { "type": "boolean", "default": false, "description": "/m ro 只读挂载" },
+    "removable": { "type": "boolean", "default": false, "description": "/m rm 作为可移动介质挂载" },
+    "autoMount": { "type": "boolean", "default": false, "description": "/a 收藏卷自动挂载" },
+    "backgroundCache": { "type": "boolean", "default": false, "description": "/b 后台缓存密码" },
+    "extraArgs": { "type": "array", "items": { "type": "string" } }
+  },
+  "not": {
+    "description": "readOnly(/m ro) 与 removable(/m rm) 互斥，不能同时为 true",
+    "properties": {
+      "readOnly": { "const": true },
+      "removable": { "const": true }
+    },
+    "required": ["readOnly", "removable"]
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,15 @@
+{
+  "schema": "ai-tool-lock/v2",
+  "skills": {
+    "coding-security-review": "1.0.0",
+    "coding-input-validation": "1.0.0",
+    "coding-secrets-handling": "1.0.0"
+  },
+  "workflows": {
+    "expert-task": "1.1.0"
+  },
+  "packs": {
+    "security-audit": "1.2.0"
+  },
+  "profiles": {}
+}

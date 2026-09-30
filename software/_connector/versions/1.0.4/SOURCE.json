@@ -1,0 +1,29 @@
+{
+ "schema": "ai-software-connector-source/v1",
+ "authorSession": "qoder",
+ "derivedFrom": "software/_connector/versions/1.0.3",
+ "supersedes": "1.0.3",
+ "releaseScope": "Architecture 3.2 P5: implement the native MCP SSE adapter required to call the real Burp MCP Server without treating its GUI JAR as a CLI.",
+ "changes": [
+  "declaration derives mcp-proxy and native-tools-list from manifest.transport.protocol/capabilityAttestation without widening the published connector/v1 overlay schema.",
+  "mcp-sse opens a fresh same-origin SSE session, performs initialize/initialized, and dispatches tools/list/tools/call; session tokens stay in memory.",
+  "native tool names and per-tool input schemas are checked against the frozen recipe runtime.tools list; pending capabilities refuse before dispatch.",
+  "MCP results use the existing ai-software-call/v1 response, evidence, idempotency and platform-local lock machinery."
+ ],
+ "unchanged": [
+  "1.0.0, 1.0.1, 1.0.2 and 1.0.3 remain immutable.",
+  "No engine contract, error code, software body or credential provider shape changes."
+ ],
+ "evidence": {
+  "burpRecipe": "qoder/runtime/maintenance/20260923-3.2.0/P5/candidates/burp-suite-1.0.1",
+  "connectorSmoke": "qoder/runtime/maintenance/20260923-3.2.0/P5/live-connector-sse-readback.json",
+  "toolCount": 25,
+  "safeCall": "url_encode -> P5-CONNECTOR-OK",
+  "replay": "same idempotency key -> replayed=true"
+ },
+ "releaseStatus": "published",
+ "publishedAt": "2026-09-25",
+ "publishedBy": "qoder, architecture 3.2 P5 Burp native MCP closure",
+ "pointerPolicy": "_connector 1.0.4 can be selected by its own current pointer; the Burp software pointer remains 1.0.0 until separately authorized.",
+ "migration": "The platform connector must use 1.0.4 or newer to dispatch a recipe whose transport.protocol is mcp-sse; existing CLI and credential calls remain wire-compatible."
+}

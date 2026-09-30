@@ -1,0 +1,11 @@
+{
+  "schema": "ai-governance-source/v1",
+  "authorSession": "qoder",
+  "derivedFrom": "wf-runner@0.9.0",
+  "supersedes": "0.9.0",
+  "releaseScope": "Architecture 3.1.0 step T-P3 + T-P3b + T-P4, one generation: F-1 reads the run's declared skill/pack documents into every prompt (fail-closed CONTEXT_UNRESOLVED before the lock commits), F-2 expands a scenario into the stage graph and freezes expandedGraphSha256 in the lock (resume compares it and refuses silently-changed graphs), and the six execution-face fixes D-53/D-56/D-51/D-64/D-34/D-62.",
+  "openDeferred": [
+    "adoption is a separate, per-platform act: no current.json was flipped here and no platform config was touched (发布 ≠ 采纳, BP-2)"
+  ],
+  "previousSource": "tool/wf-runner/versions/0.9.0/SOURCE.json"
+}

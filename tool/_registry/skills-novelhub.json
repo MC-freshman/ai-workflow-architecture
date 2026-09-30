@@ -1,0 +1,1113 @@
+{
+  "schema": "ai-skill-catalog/v1",
+  "sourceId": "novelhub",
+  "snapshot": "snapshot-2026.08.31",
+  "skills": [
+    {
+      "id": "novel-browser-cdp",
+      "version": "1.0.0",
+      "sourceId": "novelhub",
+      "sourcePath": "plugins/chinese-creator-skills/skills/browser-cdp.md",
+      "category": "skill"
+    },
+    {
+      "id": "novel-guizang-ppt",
+      "version": "1.0.0",
+      "sourceId": "novelhub",
+      "sourcePath": "plugins/chinese-creator-skills/skills/guizang-ppt.md",
+      "category": "skill"
+    },
+    {
+      "id": "novel-story-cover",
+      "version": "1.0.0",
+      "sourceId": "novelhub",
+      "sourcePath": "plugins/chinese-creator-skills/skills/story-cover.md",
+      "category": "skill"
+    },
+    {
+      "id": "novel-story-deslop",
+      "version": "1.0.0",
+      "sourceId": "novelhub",
+      "sourcePath": "plugins/chinese-creator-skills/skills/story-deslop.md",
+      "category": "skill"
+    },
+    {
+      "id": "novel-story-import",
+      "version": "1.0.0",
+      "sourceId": "novelhub",
+      "sourcePath": "plugins/chinese-creator-skills/skills/story-import.md",
+      "category": "skill"
+    },
+    {
+      "id": "novel-story-long-analyze",
+      "version": "1.0.0",
+      "sourceId": "novelhub",
+      "sourcePath": "plugins/chinese-creator-skills/skills/story-long-analyze.md",
+      "category": "skill"
+    },
+    {
+      "id": "novel-story-long-scan",
+      "version": "1.0.0",
+      "sourceId": "novelhub",
+      "sourcePath": "plugins/chinese-creator-skills/skills/story-long-scan.md",
+      "category": "skill"
+    },
+    {
+      "id": "novel-story-long-write",
+      "version": "1.0.0",
+      "sourceId": "novelhub",
+      "sourcePath": "plugins/chinese-creator-skills/skills/story-long-write.md",
+      "category": "skill"
+    },
+    {
+      "id": "novel-story-review",
+      "version": "1.0.0",
+      "sourceId": "novelhub",
+      "sourcePath": "plugins/chinese-creator-skills/skills/story-review.md",
+      "category": "skill"
+    },
+    {
+      "id": "novel-story-setup",
+      "version": "1.0.0",
+      "sourceId": "novelhub",
+      "sourcePath": "plugins/chinese-creator-skills/skills/story-setup.md",
+      "category": "skill"
+    },
+    {
+      "id": "novel-story-short-analyze",
+      "version": "1.0.0",
+      "sourceId": "novelhub",
+      "sourcePath": "plugins/chinese-creator-skills/skills/story-short-analyze.md",
+      "category": "skill"
+    },
+    {
+      "id": "novel-story-short-scan",
+      "version": "1.0.0",
+      "sourceId": "novelhub",
+      "sourcePath": "plugins/chinese-creator-skills/skills/story-short-scan.md",
+      "category": "skill"
+    },
+    {
+      "id": "novel-story-short-write",
+      "version": "1.0.0",
+      "sourceId": "novelhub",
+      "sourcePath": "plugins/chinese-creator-skills/skills/story-short-write.md",
+      "category": "skill"
+    },
+    {
+      "id": "novel-story",
+      "version": "1.0.0",
+      "sourceId": "novelhub",
+      "sourcePath": "plugins/chinese-creator-skills/skills/story.md",
+      "category": "skill"
+    },
+    {
+      "id": "novel-douyin-video-puller",
+      "version": "1.0.0",
+      "sourceId": "novelhub",
+      "sourcePath": "plugins/chinese-creator-skills/skills/douyin-video-puller/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "novel-output-schema",
+      "version": "1.0.0",
+      "sourceId": "novelhub",
+      "sourcePath": "plugins/chinese-creator-skills/skills/douyin-video-puller/references/output-schema.md",
+      "category": "skill"
+    },
+    {
+      "id": "novel-design-brief-generator",
+      "version": "1.0.0",
+      "sourceId": "novelhub",
+      "sourcePath": "plugins/design-skills/skills/design-brief-generator.md",
+      "category": "skill"
+    },
+    {
+      "id": "novel-design-system-builder",
+      "version": "1.0.0",
+      "sourceId": "novelhub",
+      "sourcePath": "plugins/design-skills/skills/design-system-builder.md",
+      "category": "skill"
+    },
+    {
+      "id": "novel-frontend-ui-design",
+      "version": "1.0.0",
+      "sourceId": "novelhub",
+      "sourcePath": "plugins/design-skills/skills/frontend-ui-design.md",
+      "category": "skill"
+    },
+    {
+      "id": "novel-mobile-ui-design",
+      "version": "1.0.0",
+      "sourceId": "novelhub",
+      "sourcePath": "plugins/design-skills/skills/mobile-ui-design.md",
+      "category": "skill"
+    },
+    {
+      "id": "novel-saas-dashboard-design",
+      "version": "1.0.0",
+      "sourceId": "novelhub",
+      "sourcePath": "plugins/design-skills/skills/saas-dashboard-design.md",
+      "category": "skill"
+    },
+    {
+      "id": "novel-ui-design-review",
+      "version": "1.0.0",
+      "sourceId": "novelhub",
+      "sourcePath": "plugins/design-skills/skills/ui-design-review.md",
+      "category": "skill"
+    },
+    {
+      "id": "novel-website-generator",
+      "version": "1.0.0",
+      "sourceId": "novelhub",
+      "sourcePath": "plugins/design-skills/skills/website-generator.md",
+      "category": "skill"
+    },
+    {
+      "id": "novel-agent-patterns",
+      "version": "1.0.0",
+      "sourceId": "novelhub",
+      "sourcePath": "plugins/developer-skills/skills/agent-patterns.md",
+      "category": "skill"
+    },
+    {
+      "id": "novel-api-contract",
+      "version": "1.0.0",
+      "sourceId": "novelhub",
+      "sourcePath": "plugins/developer-skills/skills/api-contract.md",
+      "category": "skill"
+    },
+    {
+      "id": "novel-building-cicd-pipelines",
+      "version": "1.0.0",
+      "sourceId": "novelhub",
+      "sourcePath": "plugins/developer-skills/skills/building-cicd-pipelines.md",
+      "category": "skill"
+    },
+    {
+      "id": "novel-building-terraform-modules",
+      "version": "1.0.0",
+      "sourceId": "novelhub",
+      "sourcePath": "plugins/developer-skills/skills/building-terraform-modules.md",
+      "category": "skill"
+    },
+    {
+      "id": "novel-cleanup-code",
+      "version": "1.0.0",
+      "sourceId": "novelhub",
+      "sourcePath": "plugins/developer-skills/skills/cleanup-code.md",
+      "category": "skill"
+    },
+    {
+      "id": "novel-generating-docker-compose-files",
+      "version": "1.0.0",
+      "sourceId": "novelhub",
+      "sourcePath": "plugins/developer-skills/skills/generating-docker-compose-files.md",
+      "category": "skill"
+    },
+    {
+      "id": "novel-generating-rest-apis",
+      "version": "1.0.0",
+      "sourceId": "novelhub",
+      "sourcePath": "plugins/developer-skills/skills/generating-rest-apis.md",
+      "category": "skill"
+    },
+    {
+      "id": "novel-generating-unit-tests",
+      "version": "1.0.0",
+      "sourceId": "novelhub",
+      "sourcePath": "plugins/developer-skills/skills/generating-unit-tests.md",
+      "category": "skill"
+    },
+    {
+      "id": "novel-running-e2e-tests",
+      "version": "1.0.0",
+      "sourceId": "novelhub",
+      "sourcePath": "plugins/developer-skills/skills/running-e2e-tests.md",
+      "category": "skill"
+    },
+    {
+      "id": "novel-spec-writing",
+      "version": "1.0.0",
+      "sourceId": "novelhub",
+      "sourcePath": "plugins/developer-skills/skills/spec-writing.md",
+      "category": "skill"
+    },
+    {
+      "id": "novel-sprint-workflow",
+      "version": "1.0.0",
+      "sourceId": "novelhub",
+      "sourcePath": "plugins/developer-skills/skills/sprint-workflow.md",
+      "category": "skill"
+    },
+    {
+      "id": "novel-supabase-postgres-best-practices",
+      "version": "1.0.0",
+      "sourceId": "novelhub",
+      "sourcePath": "plugins/developer-skills/skills/supabase-postgres-best-practices.md",
+      "category": "skill"
+    },
+    {
+      "id": "novel-supabase",
+      "version": "1.0.0",
+      "sourceId": "novelhub",
+      "sourcePath": "plugins/developer-skills/skills/supabase.md",
+      "category": "skill"
+    },
+    {
+      "id": "novel-codex-skill-authoring",
+      "version": "1.0.0",
+      "sourceId": "novelhub",
+      "sourcePath": "plugins/openai-skills/skills/codex-skill-authoring.md",
+      "category": "skill"
+    },
+    {
+      "id": "novel-codex-skill-distribution",
+      "version": "1.0.0",
+      "sourceId": "novelhub",
+      "sourcePath": "plugins/openai-skills/skills/codex-skill-distribution.md",
+      "category": "skill"
+    },
+    {
+      "id": "novel-openai-api-skill-packaging",
+      "version": "1.0.0",
+      "sourceId": "novelhub",
+      "sourcePath": "plugins/openai-skills/skills/openai-api-skill-packaging.md",
+      "category": "skill"
+    },
+    {
+      "id": "novel-openai-skill-evals",
+      "version": "1.0.0",
+      "sourceId": "novelhub",
+      "sourcePath": "plugins/openai-skills/skills/openai-skill-evals.md",
+      "category": "skill"
+    },
+    {
+      "id": "novel-analyzing-tls-config",
+      "version": "1.0.0",
+      "sourceId": "novelhub",
+      "sourcePath": "plugins/security-skills/skills/analyzing-tls-config.md",
+      "category": "skill"
+    },
+    {
+      "id": "novel-auditing-cors-policy",
+      "version": "1.0.0",
+      "sourceId": "novelhub",
+      "sourcePath": "plugins/security-skills/skills/auditing-cors-policy.md",
+      "category": "skill"
+    },
+    {
+      "id": "novel-auditing-npm-dependencies",
+      "version": "1.0.0",
+      "sourceId": "novelhub",
+      "sourcePath": "plugins/security-skills/skills/auditing-npm-dependencies.md",
+      "category": "skill"
+    },
+    {
+      "id": "novel-auditing-python-dependencies",
+      "version": "1.0.0",
+      "sourceId": "novelhub",
+      "sourcePath": "plugins/security-skills/skills/auditing-python-dependencies.md",
+      "category": "skill"
+    },
+    {
+      "id": "novel-checking-http-security-headers",
+      "version": "1.0.0",
+      "sourceId": "novelhub",
+      "sourcePath": "plugins/security-skills/skills/checking-http-security-headers.md",
+      "category": "skill"
+    },
+    {
+      "id": "novel-checking-license-compliance",
+      "version": "1.0.0",
+      "sourceId": "novelhub",
+      "sourcePath": "plugins/security-skills/skills/checking-license-compliance.md",
+      "category": "skill"
+    },
+    {
+      "id": "novel-composing-vulnerability-report",
+      "version": "1.0.0",
+      "sourceId": "novelhub",
+      "sourcePath": "plugins/security-skills/skills/composing-vulnerability-report.md",
+      "category": "skill"
+    },
+    {
+      "id": "novel-confirming-pentest-authorization",
+      "version": "1.0.0",
+      "sourceId": "novelhub",
+      "sourcePath": "plugins/security-skills/skills/confirming-pentest-authorization.md",
+      "category": "skill"
+    },
+    {
+      "id": "novel-defining-pentest-scope",
+      "version": "1.0.0",
+      "sourceId": "novelhub",
+      "sourcePath": "plugins/security-skills/skills/defining-pentest-scope.md",
+      "category": "skill"
+    },
+    {
+      "id": "novel-detecting-command-injection-patterns",
+      "version": "1.0.0",
+      "sourceId": "novelhub",
+      "sourcePath": "plugins/security-skills/skills/detecting-command-injection-patterns.md",
+      "category": "skill"
+    },
+    {
+      "id": "novel-detecting-debug-endpoints",
+      "version": "1.0.0",
+      "sourceId": "novelhub",
+      "sourcePath": "plugins/security-skills/skills/detecting-debug-endpoints.md",
+      "category": "skill"
+    },
+    {
+      "id": "novel-detecting-directory-listing",
+      "version": "1.0.0",
+      "sourceId": "novelhub",
+      "sourcePath": "plugins/security-skills/skills/detecting-directory-listing.md",
+      "category": "skill"
+    },
+    {
+      "id": "novel-detecting-eval-exec-usage",
+      "version": "1.0.0",
+      "sourceId": "novelhub",
+      "sourcePath": "plugins/security-skills/skills/detecting-eval-exec-usage.md",
+      "category": "skill"
+    },
+    {
+      "id": "novel-detecting-exposed-secrets-files",
+      "version": "1.0.0",
+      "sourceId": "novelhub",
+      "sourcePath": "plugins/security-skills/skills/detecting-exposed-secrets-files.md",
+      "category": "skill"
+    },
+    {
+      "id": "novel-detecting-insecure-deserialization",
+      "version": "1.0.0",
+      "sourceId": "novelhub",
+      "sourcePath": "plugins/security-skills/skills/detecting-insecure-deserialization.md",
+      "category": "skill"
+    },
+    {
+      "id": "novel-detecting-sql-injection-patterns",
+      "version": "1.0.0",
+      "sourceId": "novelhub",
+      "sourcePath": "plugins/security-skills/skills/detecting-sql-injection-patterns.md",
+      "category": "skill"
+    },
+    {
+      "id": "novel-detecting-ssl-cert-issues",
+      "version": "1.0.0",
+      "sourceId": "novelhub",
+      "sourcePath": "plugins/security-skills/skills/detecting-ssl-cert-issues.md",
+      "category": "skill"
+    },
+    {
+      "id": "novel-detecting-weak-cryptography",
+      "version": "1.0.0",
+      "sourceId": "novelhub",
+      "sourcePath": "plugins/security-skills/skills/detecting-weak-cryptography.md",
+      "category": "skill"
+    },
+    {
+      "id": "novel-fingerprinting-server-software",
+      "version": "1.0.0",
+      "sourceId": "novelhub",
+      "sourcePath": "plugins/security-skills/skills/fingerprinting-server-software.md",
+      "category": "skill"
+    },
+    {
+      "id": "novel-generating-executive-summary",
+      "version": "1.0.0",
+      "sourceId": "novelhub",
+      "sourcePath": "plugins/security-skills/skills/generating-executive-summary.md",
+      "category": "skill"
+    },
+    {
+      "id": "novel-mapping-findings-to-owasp-top10",
+      "version": "1.0.0",
+      "sourceId": "novelhub",
+      "sourcePath": "plugins/security-skills/skills/mapping-findings-to-owasp-top10.md",
+      "category": "skill"
+    },
+    {
+      "id": "novel-performing-penetration-testing",
+      "version": "1.0.0",
+      "sourceId": "novelhub",
+      "sourcePath": "plugins/security-skills/skills/performing-penetration-testing.md",
+      "category": "skill"
+    },
+    {
+      "id": "novel-performing-security-code-review",
+      "version": "1.0.0",
+      "sourceId": "novelhub",
+      "sourcePath": "plugins/security-skills/skills/performing-security-code-review.md",
+      "category": "skill"
+    },
+    {
+      "id": "novel-probing-dangerous-http-methods",
+      "version": "1.0.0",
+      "sourceId": "novelhub",
+      "sourcePath": "plugins/security-skills/skills/probing-dangerous-http-methods.md",
+      "category": "skill"
+    },
+    {
+      "id": "novel-recording-pentest-engagement",
+      "version": "1.0.0",
+      "sourceId": "novelhub",
+      "sourcePath": "plugins/security-skills/skills/recording-pentest-engagement.md",
+      "category": "skill"
+    },
+    {
+      "id": "novel-scanning-for-hardcoded-secrets",
+      "version": "1.0.0",
+      "sourceId": "novelhub",
+      "sourcePath": "plugins/security-skills/skills/scanning-for-hardcoded-secrets.md",
+      "category": "skill"
+    },
+    {
+      "id": "novel-tracing-transitive-vulnerabilities",
+      "version": "1.0.0",
+      "sourceId": "novelhub",
+      "sourcePath": "plugins/security-skills/skills/tracing-transitive-vulnerabilities.md",
+      "category": "skill"
+    },
+    {
+      "id": "novel-action-items-todoist",
+      "version": "1.0.0",
+      "sourceId": "novelhub",
+      "sourcePath": "plugins/writing-skills/skills/action-items-todoist.md",
+      "category": "skill"
+    },
+    {
+      "id": "novel-avoid-ai-writing",
+      "version": "1.0.0",
+      "sourceId": "novelhub",
+      "sourcePath": "plugins/writing-skills/skills/avoid-ai-writing.md",
+      "category": "skill"
+    },
+    {
+      "id": "novel-blog-editorial-calendar",
+      "version": "1.0.0",
+      "sourceId": "novelhub",
+      "sourcePath": "plugins/writing-skills/skills/blog-editorial-calendar.md",
+      "category": "skill"
+    },
+    {
+      "id": "novel-blog-figure-svg",
+      "version": "1.0.0",
+      "sourceId": "novelhub",
+      "sourcePath": "plugins/writing-skills/skills/blog-figure-svg.md",
+      "category": "skill"
+    },
+    {
+      "id": "novel-blog-topic-research",
+      "version": "1.0.0",
+      "sourceId": "novelhub",
+      "sourcePath": "plugins/writing-skills/skills/blog-topic-research.md",
+      "category": "skill"
+    },
+    {
+      "id": "novel-email-drafting",
+      "version": "1.0.0",
+      "sourceId": "novelhub",
+      "sourcePath": "plugins/writing-skills/skills/email-drafting.md",
+      "category": "skill"
+    },
+    {
+      "id": "novel-executive-digest",
+      "version": "1.0.0",
+      "sourceId": "novelhub",
+      "sourcePath": "plugins/writing-skills/skills/executive-digest.md",
+      "category": "skill"
+    },
+    {
+      "id": "novel-generating-api-docs",
+      "version": "1.0.0",
+      "sourceId": "novelhub",
+      "sourcePath": "plugins/writing-skills/skills/generating-api-docs.md",
+      "category": "skill"
+    },
+    {
+      "id": "novel-generating-smart-commits",
+      "version": "1.0.0",
+      "sourceId": "novelhub",
+      "sourcePath": "plugins/writing-skills/skills/generating-smart-commits.md",
+      "category": "skill"
+    },
+    {
+      "id": "novel-meeting-prep",
+      "version": "1.0.0",
+      "sourceId": "novelhub",
+      "sourcePath": "plugins/writing-skills/skills/meeting-prep.md",
+      "category": "skill"
+    },
+    {
+      "id": "novel-seo-blog-writer",
+      "version": "1.0.0",
+      "sourceId": "novelhub",
+      "sourcePath": "plugins/writing-skills/skills/seo-blog-writer.md",
+      "category": "skill"
+    },
+    {
+      "id": "novel-todoist-due-drafts",
+      "version": "1.0.0",
+      "sourceId": "novelhub",
+      "sourcePath": "plugins/writing-skills/skills/todoist-due-drafts.md",
+      "category": "skill"
+    },
+    {
+      "id": "novel-browser-cdp-chinese",
+      "version": "1.0.0",
+      "sourceId": "novelhub",
+      "sourcePath": "skills/chinese/browser-cdp.md",
+      "category": "skill"
+    },
+    {
+      "id": "novel-guizang-ppt-chinese",
+      "version": "1.0.0",
+      "sourceId": "novelhub",
+      "sourcePath": "skills/chinese/guizang-ppt.md",
+      "category": "skill"
+    },
+    {
+      "id": "novel-story-cover-chinese",
+      "version": "1.0.0",
+      "sourceId": "novelhub",
+      "sourcePath": "skills/chinese/story-cover.md",
+      "category": "skill"
+    },
+    {
+      "id": "novel-story-deslop-chinese",
+      "version": "1.0.0",
+      "sourceId": "novelhub",
+      "sourcePath": "skills/chinese/story-deslop.md",
+      "category": "skill"
+    },
+    {
+      "id": "novel-story-import-chinese",
+      "version": "1.0.0",
+      "sourceId": "novelhub",
+      "sourcePath": "skills/chinese/story-import.md",
+      "category": "skill"
+    },
+    {
+      "id": "novel-story-long-analyze-chinese",
+      "version": "1.0.0",
+      "sourceId": "novelhub",
+      "sourcePath": "skills/chinese/story-long-analyze.md",
+      "category": "skill"
+    },
+    {
+      "id": "novel-story-long-scan-chinese",
+      "version": "1.0.0",
+      "sourceId": "novelhub",
+      "sourcePath": "skills/chinese/story-long-scan.md",
+      "category": "skill"
+    },
+    {
+      "id": "novel-story-long-write-chinese",
+      "version": "1.0.0",
+      "sourceId": "novelhub",
+      "sourcePath": "skills/chinese/story-long-write.md",
+      "category": "skill"
+    },
+    {
+      "id": "novel-story-review-chinese",
+      "version": "1.0.0",
+      "sourceId": "novelhub",
+      "sourcePath": "skills/chinese/story-review.md",
+      "category": "skill"
+    },
+    {
+      "id": "novel-story-setup-chinese",
+      "version": "1.0.0",
+      "sourceId": "novelhub",
+      "sourcePath": "skills/chinese/story-setup.md",
+      "category": "skill"
+    },
+    {
+      "id": "novel-story-short-analyze-chinese",
+      "version": "1.0.0",
+      "sourceId": "novelhub",
+      "sourcePath": "skills/chinese/story-short-analyze.md",
+      "category": "skill"
+    },
+    {
+      "id": "novel-story-short-scan-chinese",
+      "version": "1.0.0",
+      "sourceId": "novelhub",
+      "sourcePath": "skills/chinese/story-short-scan.md",
+      "category": "skill"
+    },
+    {
+      "id": "novel-story-short-write-chinese",
+      "version": "1.0.0",
+      "sourceId": "novelhub",
+      "sourcePath": "skills/chinese/story-short-write.md",
+      "category": "skill"
+    },
+    {
+      "id": "novel-story-chinese",
+      "version": "1.0.0",
+      "sourceId": "novelhub",
+      "sourcePath": "skills/chinese/story.md",
+      "category": "skill"
+    },
+    {
+      "id": "novel-douyin-video-puller-chinese",
+      "version": "1.0.0",
+      "sourceId": "novelhub",
+      "sourcePath": "skills/chinese/douyin-video-puller/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "novel-output-schema-references",
+      "version": "1.0.0",
+      "sourceId": "novelhub",
+      "sourcePath": "skills/chinese/douyin-video-puller/references/output-schema.md",
+      "category": "skill"
+    },
+    {
+      "id": "novel-design-brief-generator-design",
+      "version": "1.0.0",
+      "sourceId": "novelhub",
+      "sourcePath": "skills/design/design-brief-generator.md",
+      "category": "skill"
+    },
+    {
+      "id": "novel-design-system-builder-design",
+      "version": "1.0.0",
+      "sourceId": "novelhub",
+      "sourcePath": "skills/design/design-system-builder.md",
+      "category": "skill"
+    },
+    {
+      "id": "novel-frontend-ui-design-design",
+      "version": "1.0.0",
+      "sourceId": "novelhub",
+      "sourcePath": "skills/design/frontend-ui-design.md",
+      "category": "skill"
+    },
+    {
+      "id": "novel-mobile-ui-design-design",
+      "version": "1.0.0",
+      "sourceId": "novelhub",
+      "sourcePath": "skills/design/mobile-ui-design.md",
+      "category": "skill"
+    },
+    {
+      "id": "novel-saas-dashboard-design-design",
+      "version": "1.0.0",
+      "sourceId": "novelhub",
+      "sourcePath": "skills/design/saas-dashboard-design.md",
+      "category": "skill"
+    },
+    {
+      "id": "novel-ui-design-review-design",
+      "version": "1.0.0",
+      "sourceId": "novelhub",
+      "sourcePath": "skills/design/ui-design-review.md",
+      "category": "skill"
+    },
+    {
+      "id": "novel-website-generator-design",
+      "version": "1.0.0",
+      "sourceId": "novelhub",
+      "sourcePath": "skills/design/website-generator.md",
+      "category": "skill"
+    },
+    {
+      "id": "novel-agent-patterns-development",
+      "version": "1.0.0",
+      "sourceId": "novelhub",
+      "sourcePath": "skills/development/agent-patterns.md",
+      "category": "skill"
+    },
+    {
+      "id": "novel-api-contract-development",
+      "version": "1.0.0",
+      "sourceId": "novelhub",
+      "sourcePath": "skills/development/api-contract.md",
+      "category": "skill"
+    },
+    {
+      "id": "novel-cleanup-code-development",
+      "version": "1.0.0",
+      "sourceId": "novelhub",
+      "sourcePath": "skills/development/cleanup-code.md",
+      "category": "skill"
+    },
+    {
+      "id": "novel-generating-rest-apis-development",
+      "version": "1.0.0",
+      "sourceId": "novelhub",
+      "sourcePath": "skills/development/generating-rest-apis.md",
+      "category": "skill"
+    },
+    {
+      "id": "novel-spec-writing-development",
+      "version": "1.0.0",
+      "sourceId": "novelhub",
+      "sourcePath": "skills/development/spec-writing.md",
+      "category": "skill"
+    },
+    {
+      "id": "novel-sprint-workflow-development",
+      "version": "1.0.0",
+      "sourceId": "novelhub",
+      "sourcePath": "skills/development/sprint-workflow.md",
+      "category": "skill"
+    },
+    {
+      "id": "novel-building-cicd-pipelines-devops",
+      "version": "1.0.0",
+      "sourceId": "novelhub",
+      "sourcePath": "skills/devops/building-cicd-pipelines.md",
+      "category": "skill"
+    },
+    {
+      "id": "novel-building-terraform-modules-devops",
+      "version": "1.0.0",
+      "sourceId": "novelhub",
+      "sourcePath": "skills/devops/building-terraform-modules.md",
+      "category": "skill"
+    },
+    {
+      "id": "novel-generating-docker-compose-files-devops",
+      "version": "1.0.0",
+      "sourceId": "novelhub",
+      "sourcePath": "skills/devops/generating-docker-compose-files.md",
+      "category": "skill"
+    },
+    {
+      "id": "novel-codex-skill-authoring-openai",
+      "version": "1.0.0",
+      "sourceId": "novelhub",
+      "sourcePath": "skills/openai/codex-skill-authoring.md",
+      "category": "skill"
+    },
+    {
+      "id": "novel-codex-skill-distribution-openai",
+      "version": "1.0.0",
+      "sourceId": "novelhub",
+      "sourcePath": "skills/openai/codex-skill-distribution.md",
+      "category": "skill"
+    },
+    {
+      "id": "novel-openai-api-skill-packaging-openai",
+      "version": "1.0.0",
+      "sourceId": "novelhub",
+      "sourcePath": "skills/openai/openai-api-skill-packaging.md",
+      "category": "skill"
+    },
+    {
+      "id": "novel-openai-skill-evals-openai",
+      "version": "1.0.0",
+      "sourceId": "novelhub",
+      "sourcePath": "skills/openai/openai-skill-evals.md",
+      "category": "skill"
+    },
+    {
+      "id": "novel-action-items-todoist-productivity",
+      "version": "1.0.0",
+      "sourceId": "novelhub",
+      "sourcePath": "skills/productivity/action-items-todoist.md",
+      "category": "skill"
+    },
+    {
+      "id": "novel-email-drafting-productivity",
+      "version": "1.0.0",
+      "sourceId": "novelhub",
+      "sourcePath": "skills/productivity/email-drafting.md",
+      "category": "skill"
+    },
+    {
+      "id": "novel-executive-digest-productivity",
+      "version": "1.0.0",
+      "sourceId": "novelhub",
+      "sourcePath": "skills/productivity/executive-digest.md",
+      "category": "skill"
+    },
+    {
+      "id": "novel-generating-smart-commits-productivity",
+      "version": "1.0.0",
+      "sourceId": "novelhub",
+      "sourcePath": "skills/productivity/generating-smart-commits.md",
+      "category": "skill"
+    },
+    {
+      "id": "novel-meeting-prep-productivity",
+      "version": "1.0.0",
+      "sourceId": "novelhub",
+      "sourcePath": "skills/productivity/meeting-prep.md",
+      "category": "skill"
+    },
+    {
+      "id": "novel-todoist-due-drafts-productivity",
+      "version": "1.0.0",
+      "sourceId": "novelhub",
+      "sourcePath": "skills/productivity/todoist-due-drafts.md",
+      "category": "skill"
+    },
+    {
+      "id": "novel-analyzing-tls-config-security",
+      "version": "1.0.0",
+      "sourceId": "novelhub",
+      "sourcePath": "skills/security/analyzing-tls-config.md",
+      "category": "skill"
+    },
+    {
+      "id": "novel-auditing-cors-policy-security",
+      "version": "1.0.0",
+      "sourceId": "novelhub",
+      "sourcePath": "skills/security/auditing-cors-policy.md",
+      "category": "skill"
+    },
+    {
+      "id": "novel-auditing-npm-dependencies-security",
+      "version": "1.0.0",
+      "sourceId": "novelhub",
+      "sourcePath": "skills/security/auditing-npm-dependencies.md",
+      "category": "skill"
+    },
+    {
+      "id": "novel-auditing-python-dependencies-security",
+      "version": "1.0.0",
+      "sourceId": "novelhub",
+      "sourcePath": "skills/security/auditing-python-dependencies.md",
+      "category": "skill"
+    },
+    {
+      "id": "novel-checking-http-security-headers-security",
+      "version": "1.0.0",
+      "sourceId": "novelhub",
+      "sourcePath": "skills/security/checking-http-security-headers.md",
+      "category": "skill"
+    },
+    {
+      "id": "novel-checking-license-compliance-security",
+      "version": "1.0.0",
+      "sourceId": "novelhub",
+      "sourcePath": "skills/security/checking-license-compliance.md",
+      "category": "skill"
+    },
+    {
+      "id": "novel-composing-vulnerability-report-security",
+      "version": "1.0.0",
+      "sourceId": "novelhub",
+      "sourcePath": "skills/security/composing-vulnerability-report.md",
+      "category": "skill"
+    },
+    {
+      "id": "novel-confirming-pentest-authorization-security",
+      "version": "1.0.0",
+      "sourceId": "novelhub",
+      "sourcePath": "skills/security/confirming-pentest-authorization.md",
+      "category": "skill"
+    },
+    {
+      "id": "novel-defining-pentest-scope-security",
+      "version": "1.0.0",
+      "sourceId": "novelhub",
+      "sourcePath": "skills/security/defining-pentest-scope.md",
+      "category": "skill"
+    },
+    {
+      "id": "novel-detecting-command-injection-patterns-security",
+      "version": "1.0.0",
+      "sourceId": "novelhub",
+      "sourcePath": "skills/security/detecting-command-injection-patterns.md",
+      "category": "skill"
+    },
+    {
+      "id": "novel-detecting-debug-endpoints-security",
+      "version": "1.0.0",
+      "sourceId": "novelhub",
+      "sourcePath": "skills/security/detecting-debug-endpoints.md",
+      "category": "skill"
+    },
+    {
+      "id": "novel-detecting-directory-listing-security",
+      "version": "1.0.0",
+      "sourceId": "novelhub",
+      "sourcePath": "skills/security/detecting-directory-listing.md",
+      "category": "skill"
+    },
+    {
+      "id": "novel-detecting-eval-exec-usage-security",
+      "version": "1.0.0",
+      "sourceId": "novelhub",
+      "sourcePath": "skills/security/detecting-eval-exec-usage.md",
+      "category": "skill"
+    },
+    {
+      "id": "novel-detecting-exposed-secrets-files-security",
+      "version": "1.0.0",
+      "sourceId": "novelhub",
+      "sourcePath": "skills/security/detecting-exposed-secrets-files.md",
+      "category": "skill"
+    },
+    {
+      "id": "novel-detecting-insecure-deserialization-security",
+      "version": "1.0.0",
+      "sourceId": "novelhub",
+      "sourcePath": "skills/security/detecting-insecure-deserialization.md",
+      "category": "skill"
+    },
+    {
+      "id": "novel-detecting-sql-injection-patterns-security",
+      "version": "1.0.0",
+      "sourceId": "novelhub",
+      "sourcePath": "skills/security/detecting-sql-injection-patterns.md",
+      "category": "skill"
+    },
+    {
+      "id": "novel-detecting-ssl-cert-issues-security",
+      "version": "1.0.0",
+      "sourceId": "novelhub",
+      "sourcePath": "skills/security/detecting-ssl-cert-issues.md",
+      "category": "skill"
+    },
+    {
+      "id": "novel-detecting-weak-cryptography-security",
+      "version": "1.0.0",
+      "sourceId": "novelhub",
+      "sourcePath": "skills/security/detecting-weak-cryptography.md",
+      "category": "skill"
+    },
+    {
+      "id": "novel-fingerprinting-server-software-security",
+      "version": "1.0.0",
+      "sourceId": "novelhub",
+      "sourcePath": "skills/security/fingerprinting-server-software.md",
+      "category": "skill"
+    },
+    {
+      "id": "novel-generating-executive-summary-security",
+      "version": "1.0.0",
+      "sourceId": "novelhub",
+      "sourcePath": "skills/security/generating-executive-summary.md",
+      "category": "skill"
+    },
+    {
+      "id": "novel-mapping-findings-to-owasp-top10-security",
+      "version": "1.0.0",
+      "sourceId": "novelhub",
+      "sourcePath": "skills/security/mapping-findings-to-owasp-top10.md",
+      "category": "skill"
+    },
+    {
+      "id": "novel-performing-penetration-testing-security",
+      "version": "1.0.0",
+      "sourceId": "novelhub",
+      "sourcePath": "skills/security/performing-penetration-testing.md",
+      "category": "skill"
+    },
+    {
+      "id": "novel-performing-security-code-review-security",
+      "version": "1.0.0",
+      "sourceId": "novelhub",
+      "sourcePath": "skills/security/performing-security-code-review.md",
+      "category": "skill"
+    },
+    {
+      "id": "novel-probing-dangerous-http-methods-security",
+      "version": "1.0.0",
+      "sourceId": "novelhub",
+      "sourcePath": "skills/security/probing-dangerous-http-methods.md",
+      "category": "skill"
+    },
+    {
+      "id": "novel-recording-pentest-engagement-security",
+      "version": "1.0.0",
+      "sourceId": "novelhub",
+      "sourcePath": "skills/security/recording-pentest-engagement.md",
+      "category": "skill"
+    },
+    {
+      "id": "novel-scanning-for-hardcoded-secrets-security",
+      "version": "1.0.0",
+      "sourceId": "novelhub",
+      "sourcePath": "skills/security/scanning-for-hardcoded-secrets.md",
+      "category": "skill"
+    },
+    {
+      "id": "novel-tracing-transitive-vulnerabilities-security",
+      "version": "1.0.0",
+      "sourceId": "novelhub",
+      "sourcePath": "skills/security/tracing-transitive-vulnerabilities.md",
+      "category": "skill"
+    },
+    {
+      "id": "novel-supabase-postgres-best-practices-supabase",
+      "version": "1.0.0",
+      "sourceId": "novelhub",
+      "sourcePath": "skills/supabase/supabase-postgres-best-practices.md",
+      "category": "skill"
+    },
+    {
+      "id": "novel-supabase-supabase",
+      "version": "1.0.0",
+      "sourceId": "novelhub",
+      "sourcePath": "skills/supabase/supabase.md",
+      "category": "skill"
+    },
+    {
+      "id": "novel-generating-unit-tests-testing",
+      "version": "1.0.0",
+      "sourceId": "novelhub",
+      "sourcePath": "skills/testing/generating-unit-tests.md",
+      "category": "skill"
+    },
+    {
+      "id": "novel-running-e2e-tests-testing",
+      "version": "1.0.0",
+      "sourceId": "novelhub",
+      "sourcePath": "skills/testing/running-e2e-tests.md",
+      "category": "skill"
+    },
+    {
+      "id": "novel-avoid-ai-writing-writing",
+      "version": "1.0.0",
+      "sourceId": "novelhub",
+      "sourcePath": "skills/writing/avoid-ai-writing.md",
+      "category": "skill"
+    },
+    {
+      "id": "novel-blog-editorial-calendar-writing",
+      "version": "1.0.0",
+      "sourceId": "novelhub",
+      "sourcePath": "skills/writing/blog-editorial-calendar.md",
+      "category": "skill"
+    },
+    {
+      "id": "novel-blog-figure-svg-writing",
+      "version": "1.0.0",
+      "sourceId": "novelhub",
+      "sourcePath": "skills/writing/blog-figure-svg.md",
+      "category": "skill"
+    },
+    {
+      "id": "novel-blog-topic-research-writing",
+      "version": "1.0.0",
+      "sourceId": "novelhub",
+      "sourcePath": "skills/writing/blog-topic-research.md",
+      "category": "skill"
+    },
+    {
+      "id": "novel-generating-api-docs-writing",
+      "version": "1.0.0",
+      "sourceId": "novelhub",
+      "sourcePath": "skills/writing/generating-api-docs.md",
+      "category": "skill"
+    },
+    {
+      "id": "novel-seo-blog-writer-writing",
+      "version": "1.0.0",
+      "sourceId": "novelhub",
+      "sourcePath": "skills/writing/seo-blog-writer.md",
+      "category": "skill"
+    }
+  ]
+}

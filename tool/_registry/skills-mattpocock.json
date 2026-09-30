@@ -1,0 +1,420 @@
+{
+  "schema": "ai-skill-catalog/v1",
+  "sourceId": "mattpocock",
+  "snapshot": "snapshot-2026.08.31",
+  "skills": [
+    {
+      "id": "matt-phase-boundaries",
+      "version": "1.0.0",
+      "sourceId": "mattpocock",
+      "sourcePath": "skills/engineering/ask-matt/PHASE-BOUNDARIES.md",
+      "category": "skill"
+    },
+    {
+      "id": "matt-ask-matt",
+      "version": "1.0.0",
+      "sourceId": "mattpocock",
+      "sourcePath": "skills/engineering/ask-matt/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "matt-code-review",
+      "version": "1.0.0",
+      "sourceId": "mattpocock",
+      "sourcePath": "skills/engineering/code-review/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "matt-deepening",
+      "version": "1.0.0",
+      "sourceId": "mattpocock",
+      "sourcePath": "skills/engineering/codebase-design/DEEPENING.md",
+      "category": "skill"
+    },
+    {
+      "id": "matt-design-it-twice",
+      "version": "1.0.0",
+      "sourceId": "mattpocock",
+      "sourcePath": "skills/engineering/codebase-design/DESIGN-IT-TWICE.md",
+      "category": "skill"
+    },
+    {
+      "id": "matt-codebase-design",
+      "version": "1.0.0",
+      "sourceId": "mattpocock",
+      "sourcePath": "skills/engineering/codebase-design/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "matt-diagnosing-bugs",
+      "version": "1.0.0",
+      "sourceId": "mattpocock",
+      "sourcePath": "skills/engineering/diagnosing-bugs/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "matt-adr-format",
+      "version": "1.0.0",
+      "sourceId": "mattpocock",
+      "sourcePath": "skills/engineering/domain-modeling/ADR-FORMAT.md",
+      "category": "skill"
+    },
+    {
+      "id": "matt-context-format",
+      "version": "1.0.0",
+      "sourceId": "mattpocock",
+      "sourcePath": "skills/engineering/domain-modeling/CONTEXT-FORMAT.md",
+      "category": "skill"
+    },
+    {
+      "id": "matt-domain-modeling",
+      "version": "1.0.0",
+      "sourceId": "mattpocock",
+      "sourcePath": "skills/engineering/domain-modeling/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "matt-grill-with-docs",
+      "version": "1.0.0",
+      "sourceId": "mattpocock",
+      "sourcePath": "skills/engineering/grill-with-docs/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "matt-implement",
+      "version": "1.0.0",
+      "sourceId": "mattpocock",
+      "sourcePath": "skills/engineering/implement/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "matt-html-report",
+      "version": "1.0.0",
+      "sourceId": "mattpocock",
+      "sourcePath": "skills/engineering/improve-codebase-architecture/HTML-REPORT.md",
+      "category": "skill"
+    },
+    {
+      "id": "matt-improve-codebase-architecture",
+      "version": "1.0.0",
+      "sourceId": "mattpocock",
+      "sourcePath": "skills/engineering/improve-codebase-architecture/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "matt-logic",
+      "version": "1.0.0",
+      "sourceId": "mattpocock",
+      "sourcePath": "skills/engineering/prototype/LOGIC.md",
+      "category": "skill"
+    },
+    {
+      "id": "matt-prototype",
+      "version": "1.0.0",
+      "sourceId": "mattpocock",
+      "sourcePath": "skills/engineering/prototype/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "matt-ui",
+      "version": "1.0.0",
+      "sourceId": "mattpocock",
+      "sourcePath": "skills/engineering/prototype/UI.md",
+      "category": "skill"
+    },
+    {
+      "id": "matt-research",
+      "version": "1.0.0",
+      "sourceId": "mattpocock",
+      "sourcePath": "skills/engineering/research/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "matt-resolving-merge-conflicts",
+      "version": "1.0.0",
+      "sourceId": "mattpocock",
+      "sourcePath": "skills/engineering/resolving-merge-conflicts/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "matt-domain",
+      "version": "1.0.0",
+      "sourceId": "mattpocock",
+      "sourcePath": "skills/engineering/setup-matt-pocock-skills/domain.md",
+      "category": "skill"
+    },
+    {
+      "id": "matt-issue-tracker-github",
+      "version": "1.0.0",
+      "sourceId": "mattpocock",
+      "sourcePath": "skills/engineering/setup-matt-pocock-skills/issue-tracker-github.md",
+      "category": "skill"
+    },
+    {
+      "id": "matt-issue-tracker-gitlab",
+      "version": "1.0.0",
+      "sourceId": "mattpocock",
+      "sourcePath": "skills/engineering/setup-matt-pocock-skills/issue-tracker-gitlab.md",
+      "category": "skill"
+    },
+    {
+      "id": "matt-issue-tracker-local",
+      "version": "1.0.0",
+      "sourceId": "mattpocock",
+      "sourcePath": "skills/engineering/setup-matt-pocock-skills/issue-tracker-local.md",
+      "category": "skill"
+    },
+    {
+      "id": "matt-setup-matt-pocock-skills",
+      "version": "1.0.0",
+      "sourceId": "mattpocock",
+      "sourcePath": "skills/engineering/setup-matt-pocock-skills/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "matt-triage-labels",
+      "version": "1.0.0",
+      "sourceId": "mattpocock",
+      "sourcePath": "skills/engineering/setup-matt-pocock-skills/triage-labels.md",
+      "category": "skill"
+    },
+    {
+      "id": "matt-mocking",
+      "version": "1.0.0",
+      "sourceId": "mattpocock",
+      "sourcePath": "skills/engineering/tdd/mocking.md",
+      "category": "skill"
+    },
+    {
+      "id": "matt-tdd",
+      "version": "1.0.0",
+      "sourceId": "mattpocock",
+      "sourcePath": "skills/engineering/tdd/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "matt-tests",
+      "version": "1.0.0",
+      "sourceId": "mattpocock",
+      "sourcePath": "skills/engineering/tdd/tests.md",
+      "category": "skill"
+    },
+    {
+      "id": "matt-to-spec",
+      "version": "1.0.0",
+      "sourceId": "mattpocock",
+      "sourcePath": "skills/engineering/to-spec/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "matt-to-tickets",
+      "version": "1.0.0",
+      "sourceId": "mattpocock",
+      "sourcePath": "skills/engineering/to-tickets/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "matt-agent-brief",
+      "version": "1.0.0",
+      "sourceId": "mattpocock",
+      "sourcePath": "skills/engineering/triage/AGENT-BRIEF.md",
+      "category": "skill"
+    },
+    {
+      "id": "matt-out-of-scope",
+      "version": "1.0.0",
+      "sourceId": "mattpocock",
+      "sourcePath": "skills/engineering/triage/OUT-OF-SCOPE.md",
+      "category": "skill"
+    },
+    {
+      "id": "matt-triage",
+      "version": "1.0.0",
+      "sourceId": "mattpocock",
+      "sourcePath": "skills/engineering/triage/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "matt-wayfinder",
+      "version": "1.0.0",
+      "sourceId": "mattpocock",
+      "sourcePath": "skills/engineering/wayfinder/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "matt-wizard",
+      "version": "1.0.0",
+      "sourceId": "mattpocock",
+      "sourcePath": "skills/engineering/wizard/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "matt-claude-handoff",
+      "version": "1.0.0",
+      "sourceId": "mattpocock",
+      "sourcePath": "skills/in-progress/claude-handoff/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "matt-implement-spec",
+      "version": "1.0.0",
+      "sourceId": "mattpocock",
+      "sourcePath": "skills/in-progress/implement-spec/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "matt-loop-me",
+      "version": "1.0.0",
+      "sourceId": "mattpocock",
+      "sourcePath": "skills/in-progress/loop-me/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "matt-retro",
+      "version": "1.0.0",
+      "sourceId": "mattpocock",
+      "sourcePath": "skills/in-progress/retro/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "matt-setup-ts-deep-modules",
+      "version": "1.0.0",
+      "sourceId": "mattpocock",
+      "sourcePath": "skills/in-progress/setup-ts-deep-modules/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "matt-writing-beats",
+      "version": "1.0.0",
+      "sourceId": "mattpocock",
+      "sourcePath": "skills/in-progress/writing-beats/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "matt-writing-fragments",
+      "version": "1.0.0",
+      "sourceId": "mattpocock",
+      "sourcePath": "skills/in-progress/writing-fragments/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "matt-writing-shape",
+      "version": "1.0.0",
+      "sourceId": "mattpocock",
+      "sourcePath": "skills/in-progress/writing-shape/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "matt-git-guardrails-claude-code",
+      "version": "1.0.0",
+      "sourceId": "mattpocock",
+      "sourcePath": "skills/misc/git-guardrails-claude-code/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "matt-migrate-to-shoehorn",
+      "version": "1.0.0",
+      "sourceId": "mattpocock",
+      "sourcePath": "skills/misc/migrate-to-shoehorn/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "matt-scaffold-exercises",
+      "version": "1.0.0",
+      "sourceId": "mattpocock",
+      "sourcePath": "skills/misc/scaffold-exercises/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "matt-setup-pre-commit",
+      "version": "1.0.0",
+      "sourceId": "mattpocock",
+      "sourcePath": "skills/misc/setup-pre-commit/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "matt-grill-me",
+      "version": "1.0.0",
+      "sourceId": "mattpocock",
+      "sourcePath": "skills/productivity/grill-me/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "matt-grilling",
+      "version": "1.0.0",
+      "sourceId": "mattpocock",
+      "sourcePath": "skills/productivity/grilling/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "matt-handoff",
+      "version": "1.0.0",
+      "sourceId": "mattpocock",
+      "sourcePath": "skills/productivity/handoff/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "matt-glossary-format",
+      "version": "1.0.0",
+      "sourceId": "mattpocock",
+      "sourcePath": "skills/productivity/teach/GLOSSARY-FORMAT.md",
+      "category": "skill"
+    },
+    {
+      "id": "matt-learning-record-format",
+      "version": "1.0.0",
+      "sourceId": "mattpocock",
+      "sourcePath": "skills/productivity/teach/LEARNING-RECORD-FORMAT.md",
+      "category": "skill"
+    },
+    {
+      "id": "matt-mission-format",
+      "version": "1.0.0",
+      "sourceId": "mattpocock",
+      "sourcePath": "skills/productivity/teach/MISSION-FORMAT.md",
+      "category": "skill"
+    },
+    {
+      "id": "matt-resources-format",
+      "version": "1.0.0",
+      "sourceId": "mattpocock",
+      "sourcePath": "skills/productivity/teach/RESOURCES-FORMAT.md",
+      "category": "skill"
+    },
+    {
+      "id": "matt-teach",
+      "version": "1.0.0",
+      "sourceId": "mattpocock",
+      "sourcePath": "skills/productivity/teach/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "matt-to-questionnaire",
+      "version": "1.0.0",
+      "sourceId": "mattpocock",
+      "sourcePath": "skills/productivity/to-questionnaire/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "matt-wait-what",
+      "version": "1.0.0",
+      "sourceId": "mattpocock",
+      "sourcePath": "skills/productivity/wait-what/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "matt-skill-mechanics",
+      "version": "1.0.0",
+      "sourceId": "mattpocock",
+      "sourcePath": "skills/productivity/writing-for-agents/SKILL-MECHANICS.md",
+      "category": "skill"
+    },
+    {
+      "id": "matt-writing-for-agents",
+      "version": "1.0.0",
+      "sourceId": "mattpocock",
+      "sourcePath": "skills/productivity/writing-for-agents/SKILL.md",
+      "category": "skill"
+    }
+  ]
+}

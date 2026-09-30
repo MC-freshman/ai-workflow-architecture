@@ -1,0 +1,17 @@
+{
+  "schema": "ai-governance-source/v1",
+  "authorSession": "qoder",
+  "derivedFrom": "software-engineer@1.4.0",
+  "supersedes": "1.5.0",
+  "releaseScope": "Architecture 3.1.0 step T-P8: the software-engineer expert gains a scenario pipeline while keeping its previous workflows pinned; runs pinned to software-engineer@1.4.0 are untouched. Hash-manifest repair release: the previous release retained stale hashes; published bytes remain immutable.",
+  "scenarios": [
+    "refactor",
+    "release",
+    "review",
+    "test"
+  ],
+  "openDeferred": [
+    "the generic expert-task stays pinned so nothing that used it has to move"
+  ],
+  "repairOf": "1.5.0"
+}

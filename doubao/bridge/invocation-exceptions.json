@@ -1,0 +1,45 @@
+{
+  "schema": "ai-invocation-exceptions/v1",
+  "platform": "doubao",
+  "updatedAt": "2026-09-23 (3.1-D)",
+  "note": "doubao 本平台自己的矩阵例外清单。EXPECTED 判定要求 expectedCode 与实测错误码一致，同资源以别的错误码失败仍记 FAIL。本轮（采纳架构 3.1.0）口径：wf-runner 为引擎自身、registry invocable=false，按 ENTRY-04 以类型排除（不进分母）；math-modeling-programmer 工作流 1.7.2 与专家 1.9.0 含 action:script，本平台无密封脚本环境，prepare 以 CAPABILITY_UNAVAILABLE 被拒（真实、可接受缺口，登记 pendingGaps→EXPECTED）；repo-lint 在 claim+stop 合成参数下为 INVALID_REQUEST，自然分类 NEEDS-INPUT（不登记 gap，手动完整参数时才走到权限门 CAPABILITY_UNAVAILABLE，见 conform gapPlan）；mastermind-bug-bounty 专家 4.0.0 因共享侧字节缺陷 FAIL，登记 sharedSideFindings，本平台不修共享仓。",
+  "infrastructure": [],
+  "excludedByType": [
+    {
+      "kind": "engine",
+      "id": "wf-runner",
+      "version": "0.10.0",
+      "reason": "引擎自身，registry invocable=false；矩阵按 ENTRY-04 以类型排除，不进 /wf 分母（设计形态，非失败）。其权限三元组在 conform 中登记 declaredAbsent + gapPlan。"
+    }
+  ],
+  "pendingGaps": [
+    {
+      "kind": "workflow",
+      "id": "math-modeling-programmer",
+      "version": "1.7.2",
+      "expectedCode": "CAPABILITY_UNAVAILABLE",
+      "reason": "数模工作流含 action:script 阶段，doubao 无密封脚本环境、config 不声明 scriptEnvironmentRungs；prepare 实测以 CAPABILITY_UNAVAILABLE『Plan requires capabilities... action:script』被拒（D-27 闭合形态）。prompt-only 工作流不受影响。补齐路径见 capabilities.gapPlan 的 action:script。",
+      "review": "2026-09-23"
+    },
+    {
+      "kind": "agent",
+      "id": "math-modeling-programmer",
+      "version": "1.9.0",
+      "expectedCode": "CAPABILITY_UNAVAILABLE",
+      "reason": "数模专家 toolLock 含脚本工具（action:script），doubao 无密封脚本环境；prepare 实测以 CAPABILITY_UNAVAILABLE action:script 被拒。随脚本环境一并补齐，见 capabilities.gapPlan。",
+      "review": "2026-09-23"
+    }
+  ],
+  "sharedSideFindings": [
+    {
+      "kind": "agent",
+      "id": "mastermind-bug-bounty",
+      "version": "4.0.0",
+      "observedCode": "UNAUTHORIZED",
+      "observedMessage": "Strict dependency closure blocked: definition-mismatch",
+      "rootCause": "共享仓已发布字节缺陷：tool/mastermind-bug-bounty/versions/3.0.0/workflow.yaml 内 version 字段写成 2.0.0（应为 3.0.0），触发 R2 definition-mismatch；专家 4.0.0 的 toolLock 恰好钉该 3.0.0，严格闭包校验拒绝其 prepare。3.0.1 目录 yaml 正确。workbuddy 同日 3.1-adopt 全矩阵实测同一格同样 FAIL（baseline/p3-matrix.json），证明与 doubao 平台无关、全平台一致。",
+      "doNotFixHere": "已发布 3.0.0 字节只读不可改；正确修法是另立 P 表发布 mastermind-bug-bounty 专家 4.0.1（toolLock 改钉 workflow 3.0.1）。属共享 agent 仓发布，超出本轮 doubao 平台接入授权，不擅自改共享仓。",
+      "review": "2026-09-23"
+    }
+  ]
+}

@@ -1,0 +1,111 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:ai:software-selftest:v1",
+  "title": "ai-software-selftest/v1 - the harmless check a platform runs after installing a body",
+  "description": "Four check shapes are in use across the six published recipes (a capability call, a file-integrity list, an MCP reachability probe and a version-field probe). Each shape is closed on its keys so an invented step is refused, and requiredness is kept to what the published files actually carry.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "mode",
+    "checks"
+  ],
+  "properties": {
+    "schema": {
+      "const": "ai-software-selftest/v1"
+    },
+    "mode": {
+      "const": "readonly"
+    },
+    "checks": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/check"
+      }
+    },
+    "notes": {
+      "type": "string"
+    }
+  },
+  "$defs": {
+    "check": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id"
+      ],
+      "anyOf": [
+        {
+          "required": [
+            "capability"
+          ]
+        },
+        {
+          "required": [
+            "kind"
+          ]
+        }
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[a-z0-9][a-z0-9._-]*$"
+        },
+        "kind": {
+          "enum": [
+            "file-integrity",
+            "file-version",
+            "http-probe",
+            "process",
+            "advisory"
+          ]
+        },
+        "capability": {
+          "type": "string"
+        },
+        "arguments": {
+          "type": "object"
+        },
+        "command": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "expectedExitCode": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 255
+        },
+        "expectedOutputContains": {
+          "type": "string"
+        },
+        "expected": {},
+        "field": {},
+        "files": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "target": {},
+        "probe": {},
+        "onMissing": {},
+        "onReachable": {},
+        "onUnreachable": {},
+        "endpoint": {},
+        "mcpMethod": {},
+        "transport": {},
+        "timeout": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 3600
+        },
+        "notes": {
+          "type": "string"
+        }
+      }
+    }
+  }
+}

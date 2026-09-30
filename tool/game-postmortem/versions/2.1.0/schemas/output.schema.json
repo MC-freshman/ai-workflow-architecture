@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "game-postmortem report",
+  "type": "object",
+  "required": [
+    "document",
+    "summary"
+  ],
+  "properties": {
+    "document": {
+      "type": "string",
+      "minLength": 80
+    },
+    "summary": {
+      "type": "object",
+      "required": [
+        "timelineEntries",
+        "actionItems"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "timelineEntries": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "rootCauses": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "actionItems": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "notes": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "additionalProperties": false
+}

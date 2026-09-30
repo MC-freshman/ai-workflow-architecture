@@ -1,0 +1,12 @@
+{
+  "schema": "ai-governance-source/v1",
+  "authorSession": "qoder",
+  "derivedFrom": "mastermind-bug-bounty@3.0.1",
+  "supersedes": "3.0.1",
+  "releaseScope": "3.3.0 P4: the security domain gains five scenario axes (engagement gate, injection detection, surface hygiene, secrets and supply chain, evidence pack) and the pointable pool grows 6 -> 32 by declaring the 21 upstream pentest skills those scenario cards quote, so a run pins their exact version and digest even though only the routing card is delivered. The `full` default now names its six backbone cards instead of relying on the zero-naming fallback, which with a 32-card pool would deliver ~150k tokens a stage.",
+  "openDeferred": [
+    "No current pointer moved (adoption is per-platform, BP-2).",
+    "D-88 (novel- prefix misfiling) and D-89 (21 byte-identical duplicate releases) stay open; this release consumes the -security twin and renames nothing."
+  ],
+  "previousSource": "tool/mastermind-bug-bounty/versions/3.0.1/SOURCE.json"
+}

@@ -1,0 +1,6 @@
+{
+  "schema": "ai-skill-pointer/v1",
+  "id": "novel-detecting-command-injection-patterns",
+  "version": "1.0.0",
+  "hashManifest": "SHA256SUMS"
+}

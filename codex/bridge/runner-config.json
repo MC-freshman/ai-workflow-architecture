@@ -1,0 +1,43 @@
+{
+  "platform": "codex",
+  "contracts": "E:/ai/tool/runtime-contracts/versions/1.4.0",
+  "scannerRelease": "E:/ai/tool/repo-lint/versions/0.5.1",
+  "toolRoot": "E:/ai/tool",
+  "agentRoot": "E:/ai/agent",
+  "softwareRoot": "E:/ai/software",
+  "softwareRuntimeRoot": "E:/ai/codex/runtime/software",
+  "softwareGateway": "E:/ai/software/_gateway/versions/1.0.0/gateway.py",
+  "softwareGatewayConfig": "E:/ai/codex/bridge/software-gateway-config.json",
+  "softwareEnvironment": "E:/ai/codex/runtime/software/software-environment.json",
+  "runner": "E:/ai/tool/wf-runner/versions/0.10.0",
+  "bridge": "E:\\ai\\codex\\bridge.json",
+  "environmentManifest": "E:\\ai\\codex\\runtime\\runs\\20260905-phase1-implementation-02\\reports\\script-environment.json",
+  "scriptEnvironment": "E:\\ai\\codex\\runtime\\runs\\20260905-phase1-implementation-02\\environment",
+  "executionBackend": "E:/ai/codex/bridge/backends/wsl2-ubuntu.json",
+  "scriptEnvironmentRungs": [
+    {
+      "execPath": "kernel-sandbox",
+      "executionBackend": "E:/ai/codex/bridge/backends/wsl2-ubuntu.json",
+      "requiresSealedEnvironment": true
+    },
+    {
+      "execPath": "host-controlled",
+      "executionBackend": "E:/ai/codex/bridge/backends/host-python.json",
+      "requiresSealedEnvironment": false
+    }
+  ],
+  "interpreters": {
+    ".py": "E:/ai/codex/workspaces/agentic-workflow-implementation/.venv/Scripts/python.exe"
+  },
+  "capabilities": "E:\\ai\\codex\\bridge\\capabilities.json",
+  "platformRoot": "E:/ai/codex",
+  "runsRoot": "E:/ai/codex/runtime/runs",
+  "projectWriteRoots": [
+    "E:/ai/codex/workspaces"
+  ],
+  "inputRoots": [
+    "E:/ai/codex/workspaces",
+    "E:\\ai\\codex\\runtime\\runs\\20260905-phase1-implementation-02\\sample-source"
+  ],
+  "notes_20260923": "2026-09-23整理：本配置已对齐 wf-runner 0.10.0、runtime-contracts 1.4.0、repo-lint 0.5.1；旧 notes 是历史快照。"
+}

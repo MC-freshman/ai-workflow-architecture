@@ -1,0 +1,508 @@
+{
+  "schema": "ai-workflow-definition/v3",
+  "id": "game-pipeline",
+  "version": "1.0.0",
+  "mode": "pipeline",
+  "maxParallel": 1,
+  "roles": [
+    "builder",
+    "reviewer"
+  ],
+  "outputWorker": "builder",
+  "stages": [
+    {
+      "id": "EXECUTE",
+      "action": "prompt",
+      "worker": "builder",
+      "dependsOn": [],
+      "promptRef": "workflow.md#stage:EXECUTE",
+      "repairPromptRef": "workflow.md#stage:EXECUTE-REPAIR",
+      "onFail": "repair",
+      "maxIterations": 3,
+      "outputs": "schemas/execute.schema.json",
+      "gates": []
+    },
+    {
+      "id": "SELFCHECK",
+      "action": "prompt",
+      "worker": "builder",
+      "dependsOn": [
+        "EXECUTE"
+      ],
+      "promptRef": "workflow.md#stage:SELFCHECK",
+      "onFail": "stop",
+      "outputs": "schemas/selfcheck.schema.json",
+      "gates": []
+    }
+  ],
+  "requiredStages": [
+    "EXECUTE"
+  ],
+  "defaultScenario": "standard",
+  "gateDefinitions": {
+    "brainstorm-integrity": {
+      "type": "process",
+      "cwd": "evidence",
+      "argv": [
+        "workflow:scripts/validate_game_brainstorm.py"
+      ],
+      "expectExit": [
+        0
+      ],
+      "expectArtifacts": [
+        {
+          "target": "evidence:game-brainstorm-check.json",
+          "minBytes": 2
+        }
+      ],
+      "reasonFrom": "evidence:game-brainstorm-check.json"
+    },
+    "gdd-integrity": {
+      "type": "process",
+      "cwd": "evidence",
+      "argv": [
+        "workflow:scripts/validate_game_gdd_author.py"
+      ],
+      "expectExit": [
+        0
+      ],
+      "expectArtifacts": [
+        {
+          "target": "evidence:game-gdd-author-check.json",
+          "minBytes": 2
+        }
+      ],
+      "reasonFrom": "evidence:game-gdd-author-check.json"
+    },
+    "prototype-integrity": {
+      "type": "process",
+      "cwd": "evidence",
+      "argv": [
+        "workflow:scripts/validate_game_prototype.py"
+      ],
+      "expectExit": [
+        0
+      ],
+      "expectArtifacts": [
+        {
+          "target": "evidence:game-prototype-check.json",
+          "minBytes": 2
+        }
+      ],
+      "reasonFrom": "evidence:game-prototype-check.json"
+    },
+    "playtest-integrity": {
+      "type": "process",
+      "cwd": "evidence",
+      "argv": [
+        "workflow:scripts/validate_game_playtest.py"
+      ],
+      "expectExit": [
+        0
+      ],
+      "expectArtifacts": [
+        {
+          "target": "evidence:game-playtest-check.json",
+          "minBytes": 2
+        }
+      ],
+      "reasonFrom": "evidence:game-playtest-check.json"
+    },
+    "balance-integrity": {
+      "type": "process",
+      "cwd": "evidence",
+      "argv": [
+        "workflow:scripts/validate_game_balance_check.py"
+      ],
+      "expectExit": [
+        0
+      ],
+      "expectArtifacts": [
+        {
+          "target": "evidence:game-balance-check-check.json",
+          "minBytes": 2
+        }
+      ],
+      "reasonFrom": "evidence:game-balance-check-check.json"
+    },
+    "review-integrity": {
+      "type": "process",
+      "cwd": "evidence",
+      "argv": [
+        "workflow:scripts/validate_game_code_review.py"
+      ],
+      "expectExit": [
+        0
+      ],
+      "expectArtifacts": [
+        {
+          "target": "evidence:game-code-review-check.json",
+          "minBytes": 2
+        }
+      ],
+      "reasonFrom": "evidence:game-code-review-check.json"
+    },
+    "ci-integrity": {
+      "type": "process",
+      "cwd": "evidence",
+      "argv": [
+        "workflow:scripts/validate_game_ci_pipeline.py"
+      ],
+      "expectExit": [
+        0
+      ],
+      "expectArtifacts": [
+        {
+          "target": "evidence:game-ci-pipeline-check.json",
+          "minBytes": 2
+        }
+      ],
+      "reasonFrom": "evidence:game-ci-pipeline-check.json"
+    },
+    "launch-integrity": {
+      "type": "process",
+      "cwd": "evidence",
+      "argv": [
+        "workflow:scripts/validate_game_launch.py"
+      ],
+      "expectExit": [
+        0
+      ],
+      "expectArtifacts": [
+        {
+          "target": "evidence:game-launch-check.json",
+          "minBytes": 2
+        }
+      ],
+      "reasonFrom": "evidence:game-launch-check.json"
+    },
+    "localization-integrity": {
+      "type": "process",
+      "cwd": "evidence",
+      "argv": [
+        "workflow:scripts/validate_game_localization_manager.py"
+      ],
+      "expectExit": [
+        0
+      ],
+      "expectArtifacts": [
+        {
+          "target": "evidence:game-localization-manager-check.json",
+          "minBytes": 2
+        }
+      ],
+      "reasonFrom": "evidence:game-localization-manager-check.json"
+    },
+    "orchestration-integrity": {
+      "type": "process",
+      "cwd": "evidence",
+      "argv": [
+        "workflow:scripts/validate_game_team_orchestrator.py"
+      ],
+      "expectExit": [
+        0
+      ],
+      "expectArtifacts": [
+        {
+          "target": "evidence:game-team-orchestrator-check.json",
+          "minBytes": 2
+        }
+      ],
+      "reasonFrom": "evidence:game-team-orchestrator-check.json"
+    },
+    "reverse-integrity": {
+      "type": "process",
+      "cwd": "evidence",
+      "argv": [
+        "workflow:scripts/validate_game_reverse_document.py"
+      ],
+      "expectExit": [
+        0
+      ],
+      "expectArtifacts": [
+        {
+          "target": "evidence:game-reverse-document-check.json",
+          "minBytes": 2
+        }
+      ],
+      "reasonFrom": "evidence:game-reverse-document-check.json"
+    }
+  },
+  "scenarios": {
+    "standard": {
+      "summary": "通用骨架：执行 → 自检，不指定场景时的缺省（读入的上下文为空）。"
+    },
+    "brainstorm": {
+      "summary": "brainstorm：执行阶段按该场景的判断标准做（正文见注入的场景技能）。",
+      "skills": [
+        "game-scenario-brainstorm@1.0.0"
+      ],
+      "replace": [
+        {
+          "id": "EXECUTE",
+          "worker": "builder",
+          "outputs": "schemas/brainstorm-execute.schema.json",
+          "maxIterations": 2
+        },
+        {
+          "id": "SELFCHECK",
+          "worker": "builder",
+          "outputs": "schemas/brainstorm-selfcheck.schema.json"
+        }
+      ],
+      "gates": {
+        "EXECUTE": [
+          "brainstorm-integrity"
+        ],
+        "SELFCHECK": []
+      }
+    },
+    "gdd": {
+      "summary": "gdd：执行阶段按该场景的判断标准做（正文见注入的场景技能）。",
+      "skills": [
+        "game-scenario-gdd@1.0.0"
+      ],
+      "replace": [
+        {
+          "id": "EXECUTE",
+          "worker": "builder",
+          "outputs": "schemas/gdd-execute.schema.json",
+          "maxIterations": 2
+        },
+        {
+          "id": "SELFCHECK",
+          "worker": "builder",
+          "outputs": "schemas/gdd-selfcheck.schema.json"
+        }
+      ],
+      "gates": {
+        "EXECUTE": [
+          "gdd-integrity"
+        ],
+        "SELFCHECK": []
+      }
+    },
+    "prototype": {
+      "summary": "prototype：执行阶段按该场景的判断标准做（正文见注入的场景技能）。",
+      "skills": [
+        "game-scenario-prototype@1.0.0"
+      ],
+      "replace": [
+        {
+          "id": "EXECUTE",
+          "worker": "builder",
+          "outputs": "schemas/prototype-execute.schema.json",
+          "maxIterations": 2
+        },
+        {
+          "id": "SELFCHECK",
+          "worker": "builder",
+          "outputs": "schemas/prototype-selfcheck.schema.json"
+        }
+      ],
+      "gates": {
+        "EXECUTE": [
+          "prototype-integrity"
+        ],
+        "SELFCHECK": []
+      }
+    },
+    "playtest": {
+      "summary": "playtest：执行阶段按该场景的判断标准做（正文见注入的场景技能）。",
+      "skills": [
+        "game-scenario-playtest@1.0.0"
+      ],
+      "replace": [
+        {
+          "id": "EXECUTE",
+          "worker": "builder",
+          "outputs": "schemas/playtest-execute.schema.json",
+          "maxIterations": 2
+        },
+        {
+          "id": "SELFCHECK",
+          "worker": "builder",
+          "outputs": "schemas/playtest-selfcheck.schema.json"
+        }
+      ],
+      "gates": {
+        "EXECUTE": [
+          "playtest-integrity"
+        ],
+        "SELFCHECK": []
+      }
+    },
+    "balance": {
+      "summary": "balance：执行阶段按该场景的判断标准做（正文见注入的场景技能）。",
+      "skills": [
+        "game-scenario-balance@1.0.0"
+      ],
+      "replace": [
+        {
+          "id": "EXECUTE",
+          "worker": "builder",
+          "outputs": "schemas/balance-execute.schema.json",
+          "maxIterations": 2
+        },
+        {
+          "id": "SELFCHECK",
+          "worker": "builder",
+          "outputs": "schemas/balance-selfcheck.schema.json"
+        }
+      ],
+      "gates": {
+        "EXECUTE": [
+          "balance-integrity"
+        ],
+        "SELFCHECK": []
+      }
+    },
+    "code-review": {
+      "summary": "code-review：执行阶段按该场景的判断标准做（正文见注入的场景技能）。",
+      "skills": [
+        "game-scenario-code-review@1.0.0"
+      ],
+      "replace": [
+        {
+          "id": "EXECUTE",
+          "worker": "reviewer",
+          "outputs": "schemas/code_review-execute.schema.json",
+          "maxIterations": 2
+        }
+      ],
+      "gates": {
+        "EXECUTE": [
+          "review-integrity"
+        ]
+      },
+      "remove": [
+        "SELFCHECK"
+      ]
+    },
+    "ci": {
+      "summary": "ci：执行阶段按该场景的判断标准做（正文见注入的场景技能）。",
+      "skills": [
+        "game-scenario-ci@1.0.0"
+      ],
+      "replace": [
+        {
+          "id": "EXECUTE",
+          "worker": "builder",
+          "outputs": "schemas/ci-execute.schema.json",
+          "maxIterations": 2
+        },
+        {
+          "id": "SELFCHECK",
+          "worker": "builder",
+          "outputs": "schemas/ci-selfcheck.schema.json"
+        }
+      ],
+      "gates": {
+        "EXECUTE": [
+          "ci-integrity"
+        ],
+        "SELFCHECK": []
+      }
+    },
+    "launch": {
+      "summary": "launch：执行阶段按该场景的判断标准做（正文见注入的场景技能）。",
+      "skills": [
+        "game-scenario-launch@1.0.0"
+      ],
+      "replace": [
+        {
+          "id": "EXECUTE",
+          "worker": "builder",
+          "outputs": "schemas/launch-execute.schema.json",
+          "maxIterations": 2
+        },
+        {
+          "id": "SELFCHECK",
+          "worker": "builder",
+          "outputs": "schemas/launch-selfcheck.schema.json"
+        }
+      ],
+      "gates": {
+        "EXECUTE": [
+          "launch-integrity"
+        ],
+        "SELFCHECK": []
+      }
+    },
+    "localization": {
+      "summary": "localization：执行阶段按该场景的判断标准做（正文见注入的场景技能）。",
+      "skills": [
+        "game-scenario-localization@1.0.0"
+      ],
+      "replace": [
+        {
+          "id": "EXECUTE",
+          "worker": "builder",
+          "outputs": "schemas/localization-execute.schema.json",
+          "maxIterations": 2
+        },
+        {
+          "id": "SELFCHECK",
+          "worker": "builder",
+          "outputs": "schemas/localization-selfcheck.schema.json"
+        }
+      ],
+      "gates": {
+        "EXECUTE": [
+          "localization-integrity"
+        ],
+        "SELFCHECK": []
+      }
+    },
+    "orchestrator": {
+      "summary": "orchestrator：执行阶段按该场景的判断标准做（正文见注入的场景技能）。",
+      "skills": [
+        "game-scenario-orchestrator@1.0.0"
+      ],
+      "replace": [
+        {
+          "id": "EXECUTE",
+          "worker": "builder",
+          "outputs": "schemas/orchestrator-execute.schema.json",
+          "maxIterations": 2
+        },
+        {
+          "id": "SELFCHECK",
+          "worker": "builder",
+          "outputs": "schemas/orchestrator-selfcheck.schema.json"
+        }
+      ],
+      "gates": {
+        "EXECUTE": [
+          "orchestration-integrity"
+        ],
+        "SELFCHECK": []
+      }
+    },
+    "reverse-doc": {
+      "summary": "reverse-doc：执行阶段按该场景的判断标准做（正文见注入的场景技能）。",
+      "skills": [
+        "game-scenario-reverse-doc@1.0.0"
+      ],
+      "replace": [
+        {
+          "id": "EXECUTE",
+          "worker": "builder",
+          "outputs": "schemas/reverse_doc-execute.schema.json",
+          "maxIterations": 2
+        },
+        {
+          "id": "SELFCHECK",
+          "worker": "builder",
+          "outputs": "schemas/reverse_doc-selfcheck.schema.json"
+        }
+      ],
+      "gates": {
+        "EXECUTE": [
+          "reverse-integrity"
+        ],
+        "SELFCHECK": []
+      }
+    }
+  }
+}

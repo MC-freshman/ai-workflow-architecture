@@ -1,0 +1,38 @@
+{
+  "schema": "ai-agent/v2",
+  "id": "mastermind-bug-bounty",
+  "displayName": "Mastermind Bug Bounty Coordinator",
+  "version": "4.0.0",
+  "role": "Coordinator for authorized security workflows",
+  "prompt": "prompt.md",
+  "toolLock": "tool-lock.json",
+  "workflows": [
+    "mastermind-bug-bounty",
+    "mastermind-peer-task"
+  ],
+  "policies": [
+    "policies/security.md"
+  ],
+  "permissions": {
+    "network": "deny",
+    "process": "allowlisted-only",
+    "filesystem": "project-scoped"
+  },
+  "peerLock": "peer-lock.json",
+  "modelPolicy": {
+    "mode": "inherit",
+    "allowOverride": true
+  },
+  "input": {
+    "type": "text"
+  },
+  "output": {
+    "type": "text",
+    "language": "zh-CN"
+  },
+  "integrity": {
+    "sha256Manifest": "SHA256SUMS"
+  },
+  "fixes": "U6: peer-lock -> six experts 1.1.0 (runnable mastermind-peer-task workflow, explicit permissions); tool-lock mastermind-bug-bounty 1.0.0 -> 2.0.0 (v2 runner-compilable pipeline)",
+  "runnerWorkflow": "mastermind-bug-bounty"
+}

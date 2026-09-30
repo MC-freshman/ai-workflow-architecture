@@ -1,0 +1,116 @@
+{
+  "schema": "ai-software/v1",
+  "id": "nmap",
+  "version": "1.0.0",
+  "displayName": "Nmap Network Scanner",
+  "upstreamVersion": "7.95",
+  "kind": "cli-wrapper",
+  "transport": {
+    "command": "${softwareRoot}/nmap.exe",
+    "argsStyle": "declarative-argv"
+  },
+  "capabilities": [
+    {
+      "name": "version",
+      "nativeName": "nmap --version",
+      "inputSchemaRef": "schemas/empty.input.json",
+      "outputSchemaRef": "schemas/version.output.json",
+      "sideEffects": "none",
+      "permissionRequests": { "filesystem": "none", "network": "none", "process": "self", "credentials": "none" },
+      "consent": "auto",
+      "idempotent": true,
+      "safeForSelftest": true,
+      "invocation": {
+        "executable": "nmap.exe",
+        "baseArgv": ["--version"],
+        "argMapping": [],
+        "outputCapture": "stdout",
+        "outputFormat": "text",
+        "timeout": 15,
+        "successExitCodes": [0]
+      }
+    },
+    {
+      "name": "scan",
+      "nativeName": "nmap [scanType] [options] target",
+      "inputSchemaRef": "schemas/scan.input.json",
+      "outputSchemaRef": "schemas/scan.output.json",
+      "sideEffects": "external",
+      "permissionRequests": { "filesystem": "workspace", "network": "scoped", "process": "self", "credentials": "none" },
+      "consent": "confirm-stage",
+      "idempotent": false,
+      "safeForSelftest": false,
+      "invocation": {
+        "executable": "nmap.exe",
+        "baseArgv": ["-oJ", "-"],
+        "argMapping": [
+          { "param": "target", "style": "positional", "required": true },
+          { "param": "scanType", "flag": "-s", "style": "flag-concat", "default": "S", "enum": ["S", "T", "A", "U", "W", "M"] },
+          { "param": "ports", "flag": "-p", "join": "," },
+          { "param": "topPorts", "flag": "--top-ports" },
+          { "param": "serviceDetection", "flag": "-sV", "style": "boolean" },
+          { "param": "osDetection", "flag": "-O", "style": "boolean" },
+          { "param": "skipHostDiscovery", "flag": "-Pn", "style": "boolean" },
+          { "param": "noDnsResolution", "flag": "-n", "style": "boolean" },
+          { "param": "fastMode", "flag": "-F", "style": "boolean" },
+          { "param": "sequentialPorts", "flag": "-r", "style": "boolean" },
+          { "param": "openOnly", "flag": "--open", "style": "boolean" },
+          { "param": "timingTemplate", "flag": "-T", "enum": ["0", "1", "2", "3", "4", "5"] },
+          { "param": "hostTimeout", "flag": "--host-timeout" },
+          { "param": "maxRetries", "flag": "--max-retries" },
+          { "param": "outputFile", "flag": "-oN" },
+          { "param": "extraArgs", "style": "passthrough" }
+        ],
+        "outputCapture": "stdout",
+        "outputFormat": "json",
+        "outputNote": "nmap -oJ - 输出 JSON 到 stdout；末尾 host 数组后有一个尾随逗号，解析器需容忍（去除最后一个 ] 前的逗号）",
+        "timeout": 600,
+        "successExitCodes": [0]
+      }
+    },
+    {
+      "name": "serviceScan",
+      "nativeName": "nmap -sV [options] target",
+      "inputSchemaRef": "schemas/serviceScan.input.json",
+      "outputSchemaRef": "schemas/scan.output.json",
+      "sideEffects": "external",
+      "permissionRequests": { "filesystem": "workspace", "network": "scoped", "process": "self", "credentials": "none" },
+      "consent": "confirm-stage",
+      "idempotent": false,
+      "safeForSelftest": false,
+      "invocation": {
+        "executable": "nmap.exe",
+        "baseArgv": ["-sV", "--version-intensity", "5", "-oJ", "-"],
+        "argMapping": [
+          { "param": "target", "style": "positional", "required": true },
+          { "param": "ports", "flag": "-p", "join": "," },
+          { "param": "topPorts", "flag": "--top-ports" },
+          { "param": "osDetection", "flag": "-O", "style": "boolean" },
+          { "param": "skipHostDiscovery", "flag": "-Pn", "style": "boolean" },
+          { "param": "noDnsResolution", "flag": "-n", "style": "boolean" },
+          { "param": "versionIntensity", "flag": "--version-intensity", "enum": ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"] },
+          { "param": "timingTemplate", "flag": "-T", "enum": ["0", "1", "2", "3", "4", "5"] },
+          { "param": "hostTimeout", "flag": "--host-timeout" },
+          { "param": "outputFile", "flag": "-oN" },
+          { "param": "extraArgs", "style": "passthrough" }
+        ],
+        "outputCapture": "stdout",
+        "outputFormat": "json",
+        "outputNote": "同 scan，nmap JSON 尾随逗号需容忍",
+        "timeout": 900,
+        "successExitCodes": [0]
+      }
+    }
+  ],
+  "concurrency": {
+    "instanceMode": "per-run",
+    "poolSize": null,
+    "exclusiveResources": [],
+    "whenBusy": "reject-retryable"
+  },
+  "platformSupport": { "windows": "supported", "linux": "supported", "macos": "supported" },
+  "requiredProfiles": [],
+  "snapshot": "capabilities.snapshot.json",
+  "integrity": { "sha256Manifest": "SHA256SUMS" },
+  "docs": "README.md"
+}

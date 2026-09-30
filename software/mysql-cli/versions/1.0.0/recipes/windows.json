@@ -1,0 +1,37 @@
+{
+  "schema": "ai-software-recipe/v1",
+  "platform": "windows",
+  "softwareId": "mysql-cli",
+  "softwareVersion": "1.0.0",
+  "acquire": {
+    "kind": "local-install",
+    "source": "MySQL Community Server 便携版（本机已存在，本配方只取客户端工具）",
+    "officialUrl": "https://dev.mysql.com/downloads/mysql/",
+    "version": "8.0.39",
+    "license": "GPL-2.0-or-later (Community Edition)",
+    "redistributable": true,
+    "packageManager": null
+  },
+  "install": {
+    "location": "${platformRuntime}/software/mysql-cli",
+    "detectedPath": "<local-tool-body-path>",
+    "stepsRef": null,
+    "notes": "只编排客户端 mysql.exe / mysqldump.exe / mysqladmin.exe；mysqld.exe 服务端、初始化与权限管理不纳入（由数据库环境自行提供）。便携版 bin 目录依赖同发行版 DLL/字符集文件，保持目录完整"
+  },
+  "launch": {
+    "kind": "cli-wrapper",
+    "entrypoint": "mysql.exe",
+    "environment": {},
+    "pathDependencies": ["mysqldump.exe", "mysqladmin.exe", "*.dll", "..\\share\\"]
+  },
+  "verify": {
+    "versionCall": ["mysql.exe", "--version"],
+    "expectedVersionOutput": "Ver 8.0.39",
+    "selftestRef": "../selftest/readonly.json",
+    "files": [
+      { "path": "mysql.exe", "role": "交互式/批处理客户端（query）", "sha256": "5f620d6cd51d34b47389e8902b57a61a3b62c9b234662d73ef49d62c9cb2ddd9" },
+      { "path": "mysqldump.exe", "role": "逻辑备份（dump）", "sha256": "c20e50124716fb23b7ff9036962bf077313bde1158bfbfe0e8ac05563e6c5f25" },
+      { "path": "mysqladmin.exe", "role": "管理/健康检查（ping/状态）", "sha256": "7011e4e08283f2aaf879476076d326588ce1e2b324181c48ce954fb98e827f64" }
+    ]
+  }
+}

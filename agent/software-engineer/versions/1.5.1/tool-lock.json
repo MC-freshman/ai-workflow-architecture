@@ -1,0 +1,24 @@
+{
+  "schema": "ai-tool-lock/v2",
+  "skills": {
+    "coding-core-discipline": "1.0.0",
+    "coding-requirement-delivery": "1.0.0",
+    "coding-systematic-debugging": "1.0.0",
+    "coding-test-driven": "1.0.0",
+    "coding-code-review-self": "1.0.0",
+    "coding-api-design": "1.0.0",
+    "coding-python-idioms": "1.0.0",
+    "coding-frontend-best-practices": "1.0.0",
+    "coding-security-review": "1.0.0",
+    "coding-writing-docs": "1.0.0",
+    "coding-ci-cd-pipeline": "1.0.0"
+  },
+  "workflows": {
+    "expert-task": "1.1.0",
+    "se-pipeline": "1.0.0"
+  },
+  "packs": {
+    "software-engineering": "1.2.0"
+  },
+  "profiles": {}
+}

@@ -1,0 +1,134 @@
+{
+  "schema": "ai-workflow-definition/v3",
+  "id": "framework-pipeline",
+  "version": "1.0.0",
+  "mode": "pipeline",
+  "maxParallel": 1,
+  "roles": [
+    "expert"
+  ],
+  "outputWorker": "expert",
+  "gateDefinitions": {
+    "report-complete": {
+      "type": "output-schema"
+    },
+    "work-integrity": {
+      "type": "process",
+      "cwd": "evidence",
+      "argv": [
+        "workflow:scripts/validate_expert_work.py"
+      ],
+      "expectExit": [
+        0
+      ],
+      "expectArtifacts": [
+        {
+          "target": "evidence:expert-work-check.json",
+          "minBytes": 2
+        }
+      ],
+      "reasonFrom": "evidence:expert-work-check.json"
+    }
+  },
+  "stages": [
+    {
+      "id": "INTAKE",
+      "action": "prompt",
+      "worker": "expert",
+      "dependsOn": [],
+      "promptRef": "workflow.md#stage:INTAKE",
+      "outputs": "schemas/intake.schema.json"
+    },
+    {
+      "id": "WORK",
+      "action": "prompt",
+      "worker": "expert",
+      "dependsOn": [
+        "INTAKE"
+      ],
+      "promptRef": "workflow.md#stage:WORK",
+      "outputs": "schemas/work.schema.json",
+      "onFail": "repair",
+      "maxIterations": 2,
+      "repairPromptRef": "workflow.md#stage:repair",
+      "gates": [
+        "work-integrity"
+      ]
+    },
+    {
+      "id": "REPORT",
+      "action": "prompt",
+      "worker": "expert",
+      "dependsOn": [
+        "WORK"
+      ],
+      "promptRef": "workflow.md#stage:REPORT",
+      "outputs": "schemas/report.schema.json",
+      "gates": [
+        "report-complete"
+      ]
+    }
+  ],
+  "defaultScenario": "resource-author",
+  "requiredStages": [
+    "INTAKE",
+    "REPORT"
+  ],
+  "scenarios": {
+    "standard": {
+      "summary": "通用骨架：确认范围 → 执行 → 交付。缺省场景点名两张基础卡，不依赖零点名回退（R17）。",
+      "skills": [
+        "framework-scenario-resource-author@1.0.0",
+        "framework-scenario-context-budget@1.0.0"
+      ]
+    },
+    "resource-author": {
+      "summary": "新建或升级共享仓资源：归属三选一、新目录、双向 SHA256SUMS、不翻指针",
+      "skills": [
+        "framework-scenario-resource-author@1.0.0"
+      ]
+    },
+    "resource-audit": {
+      "summary": "审计既有资源：自述版本漂移、逐字节冗余、前缀不描述内容、单格判据命令",
+      "skills": [
+        "framework-scenario-resource-audit@1.0.0"
+      ]
+    },
+    "governance-edit": {
+      "summary": "改治理文本并保自洽：上位从属、五处复述常开机检、撤销要显式写",
+      "skills": [
+        "framework-scenario-governance-edit@1.0.0"
+      ]
+    },
+    "conform-gate": {
+      "summary": "跑判据与算成本：全矩阵只在两个时刻、单格 27 秒实测、平台结论不互抄",
+      "skills": [
+        "framework-scenario-conform-gate@1.0.0"
+      ]
+    },
+    "adoption-wave": {
+      "summary": "切默认与成对义务：发布≠采纳、scannerRelease 配对、成套切代与回滚演练",
+      "skills": [
+        "framework-scenario-adoption-wave@1.0.0"
+      ]
+    },
+    "run-discipline": {
+      "summary": "run 钉版、档位口径与续跑两机制：锁不被默认覆盖、草稿/过图/交稿",
+      "skills": [
+        "framework-scenario-run-discipline@1.0.0"
+      ]
+    },
+    "defect-register": {
+      "summary": "缺陷五要素登记与欠账并代：执行期只登记、判据未达不改口径充数",
+      "skills": [
+        "framework-scenario-defect-register@1.0.0"
+      ]
+    },
+    "context-budget": {
+      "summary": "注入预算工程：每阶段重发、pack 击穿收窄、零点名回退全量、薄卡唯一可行形状",
+      "skills": [
+        "framework-scenario-context-budget@1.0.0"
+      ]
+    }
+  }
+}

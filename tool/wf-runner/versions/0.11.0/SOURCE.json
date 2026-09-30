@@ -1,0 +1,12 @@
+{
+  "schema": "ai-governance-source/v1",
+  "authorSession": "codex",
+  "derivedFrom": "wf-runner@0.10.0",
+  "supersedes": "0.10.0",
+  "releaseScope": "Architecture 3.x repair round R-P2 (D-97): the run-lock records the runtime-contracts generation (resources[] kind=contracts) and every resume path re-validates it against the platform config - VERSION_CONFLICT on mismatch, no silent generation switch.",
+  "openDeferred": [
+    "adoption is a separate, per-platform act: no current.json was flipped here and no platform config was touched (发布 ≠ 采纳, BP-2)"
+  ],
+  "previousSource": "tool/wf-runner/versions/0.10.0/SOURCE.json",
+  "version": "0.11.0"
+}

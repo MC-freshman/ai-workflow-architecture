@@ -1,0 +1,281 @@
+{
+ "schema": "ai-software/v1",
+ "id": "veracrypt",
+ "version": "1.0.1",
+ "displayName": "VeraCrypt Encryption",
+ "upstreamVersion": "1.26.7",
+ "kind": "cli-wrapper",
+ "transport": {
+  "command": "${softwareRoot}/VeraCrypt.exe",
+  "argsStyle": "declarative-argv",
+  "notes": "VeraCrypt.exe 是 GUI 程序，命令行参数以 / 开头，/q 静默执行；创建卷用 VeraCrypt Format.exe"
+ },
+ "capabilities": [
+  {
+   "name": "version",
+   "nativeName": "PE file version metadata",
+   "inputSchemaRef": "schemas/empty.input.json",
+   "outputSchemaRef": "schemas/version.output.json",
+   "sideEffects": "none",
+   "permissionRequests": {
+    "filesystem": "read",
+    "network": "none",
+    "process": "none",
+    "credentials": "none"
+   },
+   "consent": "auto",
+   "idempotent": true,
+   "safeForSelftest": true,
+   "invocation": {
+    "kind": "file-version",
+    "target": "VeraCrypt.exe",
+    "versionField": "ProductVersion",
+    "notes": "VeraCrypt.exe /? 不向 stdout 输出版本（弹 GUI 帮助窗口），版本号从 PE 文件版本资源读取，不启动进程",
+    "timeout": 10
+   }
+  },
+  {
+   "name": "mount",
+   "nativeName": "VeraCrypt.exe /v <vol> /l <letter> /p <pwd> /q",
+   "inputSchemaRef": "schemas/mount.input.json",
+   "outputSchemaRef": "schemas/mount.output.json",
+   "sideEffects": "external",
+   "permissionRequests": {
+    "filesystem": "system",
+    "network": "none",
+    "process": "self",
+    "credentials": "reference:volume-password"
+   },
+   "consent": "confirm-call",
+   "idempotent": false,
+   "safeForSelftest": false,
+   "invocation": {
+    "executable": "VeraCrypt.exe",
+    "baseArgv": [
+     "/q"
+    ],
+    "argMapping": [
+     {
+      "param": "volumePath",
+      "flag": "/v",
+      "required": true
+     },
+     {
+      "param": "driveLetter",
+      "flag": "/l",
+      "required": true
+     },
+     {
+      "param": "passwordRef",
+      "flag": "/p",
+      "credential": true,
+      "required": true,
+      "notes": "从平台密钥位解析；/q 模式下密码经 argv 传递会短暂出现在进程命令行，是 VeraCrypt 已知限制，优先用 keyfiles"
+     },
+     {
+      "param": "keyfiles",
+      "flag": "/k",
+      "join": ";"
+     },
+     {
+      "param": "readOnly",
+      "flag": "/m",
+      "valueWhenTrue": "ro",
+      "style": "boolean-value"
+     },
+     {
+      "param": "removable",
+      "flag": "/m",
+      "valueWhenTrue": "rm",
+      "style": "boolean-value",
+      "conflictsWith": [
+       "readOnly"
+      ]
+     },
+     {
+      "param": "autoMount",
+      "flag": "/a",
+      "style": "boolean"
+     },
+     {
+      "param": "backgroundCache",
+      "flag": "/b",
+      "style": "boolean"
+     },
+     {
+      "param": "extraArgs",
+      "style": "passthrough"
+     }
+    ],
+    "outputCapture": "exitcode",
+    "outputFormat": "none",
+    "timeout": 120,
+    "successExitCodes": [
+     0
+    ],
+    "postCheck": {
+     "type": "drive-exists",
+     "driveLetterParam": "driveLetter"
+    }
+   }
+  },
+  {
+   "name": "dismount",
+   "nativeName": "VeraCrypt.exe /d [letter] /q",
+   "inputSchemaRef": "schemas/dismount.input.json",
+   "outputSchemaRef": "schemas/dismount.output.json",
+   "sideEffects": "external",
+   "permissionRequests": {
+    "filesystem": "system",
+    "network": "none",
+    "process": "self",
+    "credentials": "none"
+   },
+   "consent": "confirm-call",
+   "idempotent": true,
+   "safeForSelftest": false,
+   "invocation": {
+    "executable": "VeraCrypt.exe",
+    "baseArgv": [
+     "/q"
+    ],
+    "argMapping": [
+     {
+      "param": "driveLetter",
+      "flag": "/d",
+      "notes": "不传盘符则 /d 单独使用=卸载全部卷"
+     },
+     {
+      "param": "force",
+      "flag": "/f",
+      "style": "boolean",
+      "notes": "强制关闭占用句柄后卸载"
+     },
+     {
+      "param": "extraArgs",
+      "style": "passthrough"
+     }
+    ],
+    "outputCapture": "exitcode",
+    "outputFormat": "none",
+    "timeout": 60,
+    "successExitCodes": [
+     0
+    ]
+   }
+  },
+  {
+   "name": "createVolume",
+   "nativeName": "VeraCrypt Format.exe /create <vol> /size ... /q",
+   "inputSchemaRef": "schemas/createVolume.input.json",
+   "outputSchemaRef": "schemas/createVolume.output.json",
+   "sideEffects": "external",
+   "permissionRequests": {
+    "filesystem": "workspace",
+    "network": "none",
+    "process": "self",
+    "credentials": "reference:volume-password"
+   },
+   "consent": "confirm-call",
+   "idempotent": false,
+   "safeForSelftest": false,
+   "invocation": {
+    "executable": "VeraCrypt Format.exe",
+    "baseArgv": [
+     "/q"
+    ],
+    "argMapping": [
+     {
+      "param": "volumePath",
+      "flag": "/create",
+      "required": true
+     },
+     {
+      "param": "size",
+      "flag": "/size",
+      "required": true,
+      "examples": [
+       "100M",
+       "2G"
+      ]
+     },
+     {
+      "param": "passwordRef",
+      "flag": "/password",
+      "credential": true,
+      "required": true
+     },
+     {
+      "param": "encryption",
+      "flag": "/encryption",
+      "default": "AES"
+     },
+     {
+      "param": "hash",
+      "flag": "/hash",
+      "default": "SHA-512"
+     },
+     {
+      "param": "filesystem",
+      "flag": "/filesystem",
+      "default": "exfat",
+      "enum": [
+       "NTFS",
+       "FAT",
+       "exFAT",
+       "ReFS",
+       "none"
+      ]
+     },
+     {
+      "param": "keyfiles",
+      "flag": "/keyfiles",
+      "join": ";"
+     },
+     {
+      "param": "volumeType",
+      "flag": "/volume-type",
+      "enum": [
+       "file",
+       "partition"
+      ]
+     },
+     {
+      "param": "extraArgs",
+      "style": "passthrough"
+     }
+    ],
+    "outputCapture": "exitcode",
+    "outputFormat": "none",
+    "timeout": 1800,
+    "successExitCodes": [
+     0
+    ],
+    "notes": "不可逆操作：/create 会创建或覆盖目标文件，confirm-call 必须逐次确认；大卷创建耗时长"
+   }
+  }
+ ],
+ "concurrency": {
+  "instanceMode": "singleton",
+  "poolSize": 1,
+  "exclusiveResources": [
+   "veracrypt-driver",
+   "mounted-volumes",
+   "drive-letters"
+  ],
+  "whenBusy": "queue"
+ },
+ "platformSupport": {
+  "windows": "supported",
+  "linux": "supported",
+  "macos": "supported"
+ },
+ "requiredProfiles": [
+  "administrator"
+ ],
+ "snapshot": "capabilities.snapshot.json",
+ "integrity": {
+  "sha256Manifest": "SHA256SUMS"
+ },
+ "docs": "README.md"
+}

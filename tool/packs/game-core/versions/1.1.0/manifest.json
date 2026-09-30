@@ -1,0 +1,31 @@
+{
+  "schema": "ai-pack/v1",
+  "id": "game-core",
+  "version": "1.1.0",
+  "displayName": "游戏创作核心能力",
+  "skillIds": [
+    "game-game-accessibility-specialist",
+    "game-game-art-director",
+    "game-game-audio-director",
+    "game-game-creative-director",
+    "game-game-designer",
+    "game-game-economy-designer",
+    "game-game-narrative-director",
+    "game-game-producer",
+    "game-game-qa-lead",
+    "game-game-technical-director",
+    "game-game-ux-designer"
+  ],
+  "conflicts": [
+    "game-engine-godot",
+    "game-engine-unity",
+    "game-engine-unreal"
+  ],
+  "source": {
+    "snapshot": "snapshot-2026.08.31",
+    "derivedFrom": "gameforge"
+  },
+  "integrity": {
+    "sha256Manifest": "SHA256SUMS"
+  }
+}

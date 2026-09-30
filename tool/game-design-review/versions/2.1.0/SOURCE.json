@@ -1,0 +1,11 @@
+{
+  "schema": "ai-workflow-source/v1",
+  "path": "skills/workflows/game-design-review/SKILL.md",
+  "license": "MIT",
+  "sourceId": "gameforge",
+  "repository": "https://github.com/AlterLab-IEU/AlterLab_GameForge",
+  "snapshot": "snapshot-2026.08.31",
+  "derivedFrom": "tool/game-design-review 2.0.1 (legacy prompt definition)",
+  "adapter": "U2/M4-10: explicit inputs, stage anchors, machine-checkable schemas, deterministic integrity gate",
+  "upstreamCopy": "upstream/workflow-2.0.1.md（逐字节）"
+}

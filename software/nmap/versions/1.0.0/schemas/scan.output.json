@@ -1,0 +1,48 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "description": "nmap -oJ - 的 JSON 输出。注意：nmap JSON 在 host 数组末尾有尾随逗号，网关解析前须去除最后一个 ] 前的逗号。",
+  "properties": {
+    "nmaprun": {
+      "type": "object",
+      "properties": {
+        "scanner": { "type": "string" },
+        "args": { "type": "string" },
+        "start": { "type": "number" },
+        "startstr": { "type": "string" },
+        "version": { "type": "string" },
+        "xmloutputversion": { "type": "string" },
+        "scaninfo": { "type": "object" },
+        "host": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "address": { "type": "array", "items": { "type": "object" } },
+              "hostnames": { "type": "object" },
+              "ports": {
+                "type": "object",
+                "properties": {
+                  "port": {
+                    "type": "array",
+                    "items": {
+                      "type": "object",
+                      "properties": {
+                        "protocol": { "type": "string" },
+                        "portid": { "type": "string" },
+                        "state": { "type": "object" },
+                        "service": { "type": "object" }
+                      }
+                    }
+                  }
+                }
+              },
+              "os": { "type": "object" }
+            }
+          }
+        },
+        "runstats": { "type": "object" }
+      }
+    }
+  }
+}

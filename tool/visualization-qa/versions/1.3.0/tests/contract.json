@@ -1,0 +1,61 @@
+{
+  "schema": "ai-workflow-contract-test/v1",
+  "id": "visualization-qa",
+  "version": "1.2.1",
+  "generatedFrom": "workflow.yaml 的实际定义（阶段/门禁/门禁类型逐项抽取，非手写）",
+  "expect": {
+    "manifestSchema": "ai-workflow/v2.1",
+    "definitionSchema": "ai-workflow-definition/v2",
+    "mode": "executable-with-evidence",
+    "maxParallel": 1,
+    "entry": "workflow.yaml",
+    "inputSchema": "schemas/input.schema.json",
+    "outputSchema": "schemas/output.schema.json",
+    "dependencies": {
+      "workflows": {},
+      "skills": {},
+      "packs": {}
+    },
+    "stages": [
+      {
+        "id": "execute",
+        "action": "prompt",
+        "dependsOn": [],
+        "outputs": "schemas/output.schema.json",
+        "gates": [
+          "render-success",
+          "geometry-measured",
+          "no-clipping",
+          "no-unapproved-overlap",
+          "artifact-written-to-runtime"
+        ],
+        "onFail": "repair"
+      }
+    ],
+    "gateIds": [
+      "artifact-written-to-runtime",
+      "geometry-measured",
+      "no-clipping",
+      "no-unapproved-overlap",
+      "render-success"
+    ],
+    "gateDefinitions": {
+      "render-success": {
+        "type": "file"
+      },
+      "geometry-measured": {
+        "type": "json-schema"
+      },
+      "no-clipping": {
+        "type": "json-schema"
+      },
+      "no-unapproved-overlap": {
+        "type": "json-schema"
+      },
+      "artifact-written-to-runtime": {
+        "type": "json-schema"
+      }
+    }
+  },
+  "purpose": "发布自带契约测试：供 repo-lint 0.2.1 的 gate-execution-evidenced 规则（Z10 §6.4 D3）识别，把「有门禁声明但无执行证据」的 R8 warning 降为 info。本文件只声明形状与门禁接线，不声明业务运行已通过——业务证据仍以各 run 的 evidence/ 目录为准。"
+}

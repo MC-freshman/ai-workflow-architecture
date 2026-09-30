@@ -1,0 +1,6 @@
+{
+  "schema": "ai-workflow-pointer/v1",
+  "id": "math-modeling-programmer",
+  "version": "1.7.2",
+  "hashManifest": "SHA256SUMS"
+}

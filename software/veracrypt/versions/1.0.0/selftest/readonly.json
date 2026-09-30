@@ -1,0 +1,27 @@
+{
+  "schema": "ai-software-selftest/v1",
+  "mode": "readonly",
+  "checks": [
+    {
+      "id": "file-version",
+      "kind": "file-version",
+      "target": "VeraCrypt.exe",
+      "field": "ProductVersion",
+      "expected": "1.26.7",
+      "notes": "不启动进程；VeraCrypt.exe /? 弹 GUI 帮助窗口、不输出 stdout，因此版本自检读 PE 版本资源"
+    },
+    {
+      "id": "files-present",
+      "kind": "file-integrity",
+      "files": ["VeraCrypt.exe", "VeraCrypt Format.exe", "veracrypt.sys"],
+      "notes": "校验 recipe verify.files 哈希；veracrypt.sys 为内核驱动，缺失时挂载类能力不可用"
+    },
+    {
+      "id": "driver-state",
+      "kind": "advisory",
+      "probe": "sc query veracrypt（或等效驱动状态查询）",
+      "onMissing": "INFO mount/dismount/createVolume 需要管理员加载驱动；不阻断只读自检"
+    }
+  ],
+  "notes": "mount/dismount/createVolume 为系统级高影响操作，永不纳入自动自检"
+}

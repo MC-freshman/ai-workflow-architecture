@@ -1,0 +1,20 @@
+{
+  "schema": "ai-workflow-contract-test/v1",
+  "id": "game-design-review",
+  "version": "2.1.0",
+  "expect": {
+    "manifestMode": "pipeline",
+    "definitionSchema": "ai-workflow-definition/v2",
+    "stages": [
+      "intake",
+      "review",
+      "report"
+    ],
+    "gate": "review-integrity",
+    "exitCodes": {
+      "0": "pass",
+      "1": "violations",
+      "2": "missing-info"
+    }
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "required": ["targetUrl"],
+  "description": "主动扫描入参（预期能力）；扫描请求量大，必须提供 externalBoundary",
+  "properties": {
+    "targetUrl": { "type": "string", "format": "uri", "description": "扫描目标基址" },
+    "scanConfiguration": { "type": "string", "description": "扫描配置名（Audit checks maximum 等）" },
+    "scopeIncludes": { "type": "array", "items": { "type": "string" }, "description": "范围内 URL 规则" },
+    "scopeExcludes": { "type": "array", "items": { "type": "string" } },
+    "credentialsRef": { "type": "string", "description": "平台密钥位中登录凭据的引用名，不落盘" },
+    "externalBoundary": {
+      "type": "object",
+      "required": ["allowedHosts"],
+      "properties": {
+        "allowedHosts": { "type": "array", "items": { "type": "string" }, "minItems": 1 },
+        "allowedPorts": { "type": "array", "items": { "type": "integer" } }
+      }
+    }
+  },
+  "additionalProperties": true
+}

@@ -1,0 +1,15 @@
+{
+  "schema": "ai-workflow-source/v1",
+  "id": "math-modeling-programmer",
+  "version": "1.7.2",
+  "derivedFrom": "tool/math-modeling-programmer/versions/1.7.1",
+  "changes": [
+    "manifest.json / workflow.yaml：visualization-qa 1.2.0 -> 1.2.1（依赖声明与锁同步是闭合该滞后的唯一一致路径）",
+    "version 1.7.1 -> 1.7.2"
+  ],
+  "why": "Z10 §11 G4：只改专家锁会造成闭包版本冲突（主工作流自身也钉 visualization-qa 1.1.0）。",
+  "contractNote": "manifest 是封闭契约（additionalProperties=false），故溯源信息放在本文件而非 manifest。",
+  "authorSession": "zcode",
+  "createdAt": "2026-09-15",
+  "supersedes": "math-modeling-programmer@1.7.1（其 requires 钉 visualization-qa 1.2.0，在默认升到 1.2.1 后形成闭包滞后；数模专家因此无法单独同步该锁）"
+}

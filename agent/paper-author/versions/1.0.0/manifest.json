@@ -1,0 +1,34 @@
+{
+  "schema": "ai-agent/v2",
+  "id": "paper-author",
+  "displayName": "Paper Author",
+  "version": "1.0.0",
+  "role": "把研究写成可投稿稿件，并承担日常实验记录与研究作业",
+  "prompt": "prompt.md",
+  "toolLock": "tool-lock.json",
+  "workflows": [
+    "paper-pipeline",
+    "expert-task"
+  ],
+  "packs": {},
+  "policies": [
+    "policies/runtime.md"
+  ],
+  "permissions": {
+    "filesystem": "project-scoped",
+    "network": "deny",
+    "process": "allowlisted-only"
+  },
+  "integrity": {
+    "sha256Manifest": "SHA256SUMS"
+  },
+  "runnerWorkflow": "paper-pipeline",
+  "windowProfile": "256k",
+  "modelPolicy": {
+    "mode": "inherit"
+  },
+  "pinning": {
+    "schema": "ai-agent-pinning/v1",
+    "note": "Skills are pinned exactly by tool-lock; upstream cards are locked for on-demand reads only."
+  }
+}

@@ -1,0 +1,31 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "game-scope-check input",
+  "type": "object",
+  "required": [
+    "objective"
+  ],
+  "properties": {
+    "featureList": {
+      "type": "string",
+      "minLength": 3
+    },
+    "constraints": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "team": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "objective": {
+      "type": "string",
+      "minLength": 20
+    }
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,25 @@
+{
+  "schema": "ai-software-connector-source/v1",
+  "authorSession": "qoder",
+  "derivedFrom": "software/_connector/versions/1.0.5 (one envelope rule, rest byte-identical)",
+  "supersedes": "1.0.5",
+  "releaseScope": "Architecture 3.x repair round R-P5 (D-90): session open accepts attachPid - the connector verifies the pid through the platform liveness provider, marks the record attached (never launched), and refuses ATTACH_FAILED/SOFTWARE_CALL_FAILED when the pid is gone instead of starting a replacement. No new error code; no other behavior changes.",
+  "changes": [
+    "check_envelope: an absent `kind` is treated as a request (the shape the engine actually sends); an explicit wrong value is still refused. No other loosening: required keys per shape, the 64-hex idempotency key and the closed call key set are all still enforced.",
+    "manifest.json: version field plus envelopeTolerance."
+  ],
+  "unchanged": [
+    "connector.py apart from that one guard; the session lifecycle, credential materialization, refusal redaction, attestation, locks, idempotency and artifacts",
+    "1.0.0 through 1.0.5, published and immutable"
+  ],
+  "howItShouldHaveBeenCaught": "the P7 smoke built its own messages and always included `kind`, so it proved the author's shape rather than the engine's. Two cells in the P3 battery now send the engine's exact message forms.",
+  "openDeferred": [
+    "D-86/D-93 remain: the engine emits messages the published request schemas forbid. The connector interoperates instead of breaking the engine; the contract generation owns the fix.",
+    "D-94: architecture-ops 1.4.0's matrix turns an UNCLASSIFIED gateway error into PASS, contradicting its own comment - which is why the broken inventory answered PASS 6 while health said three recipes are not dispatchable."
+  ],
+  "releaseStatus": "published",
+  "publishedAt": "2026-09-25",
+  "publishedBy": "qoder, architecture 3.2 round, step P8",
+  "pointerPolicy": "software/_connector/current.json moves 1.0.5 -> 1.0.6; qoder production resolves through that pointer, so the binding is retargeted by the same script that made it.",
+  "version": "1.0.7"
+}

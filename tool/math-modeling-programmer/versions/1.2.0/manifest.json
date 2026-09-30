@@ -1,0 +1,30 @@
+{
+  "schema": "ai-workflow/v1",
+  "id": "math-modeling-programmer",
+  "displayName": "数学建模编程工作流",
+  "version": "1.2.0",
+  "entry": "workflow.yaml",
+  "inputSchema": "schemas/input.schema.json",
+  "outputSchema": "schemas/output.schema.json",
+  "permissions": {
+    "filesystem": "project-scoped",
+    "network": "deny",
+    "process": "allowlisted-only"
+  },
+  "runtime": {
+    "type": "python-mcp",
+    "entry": "scripts/mcp_server.py",
+    "python": ">=3.9"
+  },
+  "dependencies": [
+    "matplotlib>=3.7",
+    "numpy>=1.24",
+    "Pillow>=9",
+    "PyMuPDF>=1.24,<2 (strict figure QA)",
+    "visualization-layout@1.0.0",
+    "visualization-qa@1.0.0"
+  ],
+  "integrity": {
+    "sha256Manifest": "SHA256SUMS"
+  }
+}

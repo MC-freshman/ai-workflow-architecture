@@ -1,0 +1,17 @@
+{
+  "schema": "ai-governance-source/v1",
+  "authorSession": "qoder",
+  "derivedFrom": "software-engineer@1.5.1",
+  "supersedes": "1.5.1",
+  "releaseScope": "Re-pin release. tool-lock pins se-pipeline@1.0.1, the schema/prompt reconciliation release that declares inputs, notes and pending as optional stage keys. An expert keeps pinning exact workflow versions, so switching the shared tool default alone could not deliver that fix to this expert; the pin has to move here. expert-task remains pinned at 1.1.0 because it still carries the same three undeclared keys and was outside the authorized scope of this round. Every other pinned skill, pack, prompt, policy and profile is byte-identical to 1.5.1.",
+  "scenarios": [
+    "refactor",
+    "release",
+    "review",
+    "test"
+  ],
+  "openDeferred": [
+    "expert-task@1.1.0 is still pinned and still lacks inputs, notes and pending in its stage schemas",
+    "the domain pack stays in this tool-lock; a workflow-level pack declaration would inject every member into every prompt"
+  ]
+}

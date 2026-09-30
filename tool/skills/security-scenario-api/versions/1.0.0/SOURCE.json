@@ -1,0 +1,10 @@
+{
+  "schema": "ai-governance-source/v1",
+  "authorSession": "qoder",
+  "derivedFrom": "mastermind-api-validation@1.1.0",
+  "supersedes": null,
+  "releaseScope": "Architecture 3.1.0 step T-P6 judgement 1: one of six scenario skills that replace the per-task security experts. The body is that expert's own prompt and policy text verbatim; the migration moves the selector, not the knowledge.",
+  "verbatimFrom": "mastermind-api-validation/versions/1.1.0/prompt.md",
+  "bodySha256": "5f2d4dfec3e4d87c014a66f8614a915ae453aa55bc5d8cb3b020bfa6aef41b34",
+  "openDeferred": []
+}

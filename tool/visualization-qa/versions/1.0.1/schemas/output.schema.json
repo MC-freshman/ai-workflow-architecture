@@ -1,0 +1,11 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": ["verdict", "issues", "evidence"],
+  "properties": {
+    "verdict": { "enum": ["PASS", "WARN", "FAIL", "REVIEW_REQUIRED"] },
+    "issues": { "type": "array" },
+    "evidence": { "type": "object" }
+  },
+  "additionalProperties": true
+}

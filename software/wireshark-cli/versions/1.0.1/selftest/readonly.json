@@ -1,0 +1,21 @@
+{
+  "schema": "ai-software-selftest/v1",
+  "mode": "readonly",
+  "checks": [
+    {
+      "id": "version",
+      "capability": "version",
+      "arguments": {},
+      "expectedExitCode": 0,
+      "expectedOutputContains": "TShark (Wireshark) 4.2.6",
+      "timeout": 15
+    },
+    {
+      "id": "files-present",
+      "kind": "file-integrity",
+      "files": ["tshark.exe", "editcap.exe", "mergecap.exe", "capinfos.exe", "text2pcap.exe"],
+      "notes": "校验 verify.files 中声明的 SHA256；DLL 依赖由进程启动失败间接发现"
+    }
+  ],
+  "notes": "readCapture/filterCapture/convertCapture 的功能自检需要平台准备一个最小 pcap 夹具（fixture），属于 selftest-with-fixture，不在 readonly 自检范围；夹具由网关测试包提供（randpkt.exe 可生成）"
+}

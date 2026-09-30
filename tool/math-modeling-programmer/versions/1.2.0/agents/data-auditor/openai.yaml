@@ -1,0 +1,6 @@
+interface:
+  display_name: "Data Auditor"
+  short_description: "审计数模数据结构、质量和单位"
+  default_prompt: "使用 $data-auditor 审计当前数模项目的数据。"
+policy:
+  allow_implicit_invocation: false

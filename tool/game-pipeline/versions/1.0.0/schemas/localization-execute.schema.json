@@ -1,0 +1,180 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "game-localization-manager · EXECUTE",
+  "type": "object",
+  "required": [
+    "stage",
+    "status",
+    "summary",
+    "unavailableChecks",
+    "readiness",
+    "effort",
+    "languages",
+    "remediation"
+  ],
+  "properties": {
+    "readiness": {
+      "type": "object",
+      "required": [
+        "externalized",
+        "hardcodedStrings",
+        "textInImages",
+        "fontCoverage"
+      ],
+      "properties": {
+        "externalized": {
+          "type": "boolean"
+        },
+        "hardcodedStrings": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "textInImages": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "fontCoverage": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 2
+          }
+        }
+      },
+      "additionalProperties": false
+    },
+    "effort": {
+      "type": "object",
+      "required": [
+        "wordCount",
+        "languages",
+        "hoursPerKWord",
+        "totalHours"
+      ],
+      "properties": {
+        "wordCount": {
+          "type": "number",
+          "minimum": 0
+        },
+        "languages": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "string",
+            "minLength": 2
+          }
+        },
+        "hoursPerKWord": {
+          "type": "number",
+          "minimum": 0
+        },
+        "totalHours": {
+          "type": "number",
+          "minimum": 0
+        }
+      },
+      "additionalProperties": false
+    },
+    "languages": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "code",
+          "words",
+          "hours",
+          "schedule",
+          "budgetUsd"
+        ],
+        "properties": {
+          "code": {
+            "type": "string",
+            "minLength": 2
+          },
+          "words": {
+            "type": "number",
+            "minimum": 0
+          },
+          "hours": {
+            "type": "number",
+            "minimum": 0
+          },
+          "schedule": {
+            "type": "string",
+            "minLength": 2
+          },
+          "budgetUsd": {
+            "type": "number",
+            "minimum": 0
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "remediation": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "item",
+          "owner",
+          "byWhen"
+        ],
+        "properties": {
+          "item": {
+            "type": "string",
+            "minLength": 5
+          },
+          "owner": {
+            "type": "string",
+            "minLength": 1
+          },
+          "byWhen": {
+            "type": "string",
+            "minLength": 4
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "stage": {
+      "const": "EXECUTE"
+    },
+    "status": {
+      "enum": [
+        "pass",
+        "partial",
+        "blocked"
+      ]
+    },
+    "summary": {
+      "type": "string",
+      "minLength": 40
+    },
+    "blockers": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 5
+      }
+    },
+    "unavailableChecks": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "minLength": 3
+      }
+    },
+    "evidence": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "minLength": 3
+      }
+    }
+  },
+  "additionalProperties": false
+}

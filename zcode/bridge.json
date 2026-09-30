@@ -1,0 +1,24 @@
+{
+  "schema": "ai-platform-bridge/v1.1",
+  "platform": "zcode",
+  "shared": {
+    "agentRegistry": "E:/ai/agent/registry.json",
+    "toolRegistry": "E:/ai/tool/registry.json",
+    "architecturePrompt": "E:/ai/AI_ARCHITECTURE_SYSTEM_PROMPT.md",
+    "readOnly": true
+  },
+  "runtimeRoot": "E:\\ai\\zcode\\runtime",
+  "runner": "E:/ai/tool/wf-runner",
+  "modes": [
+    "workflow",
+    "agent-workflow"
+  ],
+  "defaults": {
+    "workflowVersions": {
+      "repo-lint": "0.6.3"
+    }
+  },
+  "notes": "Platform-scoped default repo-lint=0.5.2 (2026-09-26 Z-P2: raised in the same batch as config.scannerRelease=repo-lint/0.5.2, because the engine refuses a request whose selected repo-lint differs from the declared scanner release; shared current is the same 0.5.2 generation. Historical note kept: the 2026-09-19 default repo-lint=0.3.0 was the zcode-side adoption of closing-wave decision item 5c-② — explicit requests for 0.2.1 are rejected pre-write with VERSION_CONFLICT, the version-alignment exception, not a capability gap).",
+  "notes_history_20260919": "Original 2026-09-19 note: Platform-scoped default repo-lint=0.3.0 (zcode-side adoption of closing-wave decision item 5c-②; shared current stays 0.2.1 untouched; explicit requests for 0.2.1 are rejected pre-write with VERSION_CONFLICT by 0.7.7 — the version-alignment exception, not a capability gap). Staged 2026-09-19.",
+  "notes_20260927": "2026-09-27 R-P6: platform default repo-lint raised to 0.6.1 in the same batch as config.scannerRelease=repo-lint/0.6.1 (engine pairing rule); shared current is the same 0.6.1 generation after the R-P6 raise batch."
+}

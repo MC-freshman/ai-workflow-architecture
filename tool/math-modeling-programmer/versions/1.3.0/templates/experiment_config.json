@@ -1,0 +1,22 @@
+{
+  "entrypoint": "src/main.py",
+  "base_args": [],
+  "runs": [
+    {
+      "id": "EXP-001",
+      "args": ["--mode", "small"],
+      "seed": 20260829
+    }
+  ],
+  "experiment_group": "example",
+  "code_version": "working-tree",
+  "data_version": "raw-v1",
+  "seeds": [20260829],
+  "repetitions": 1,
+  "parameters": {},
+  "modes": {
+    "small": true,
+    "official": false
+  },
+  "notes": "填写实验目的和与基线的比较指标"
+}

@@ -1,0 +1,12 @@
+{
+  "schema": "ai-governance-source/v1",
+  "authorSession": "codex",
+  "derivedFrom": "repo-lint@0.5.1",
+  "supersedes": "0.5.1",
+  "releaseScope": "D-82: selected mode preserves global current-pointer/manifest/Workflow-definition R2 identity checks, while full release schema, dependency, and two-way checksum audits are limited to the selected exact dependency closure and supplied platform defaults. Inventory behavior is unchanged. Adds regression tests for skipped unrelated integrity walks and global R2 identity mismatches.",
+  "openDeferred": [
+    "Adoption remains a per-platform act; this release does not change any current pointer or platform configuration (BP-2).",
+    "The pre-existing output-schema version mismatch in repo-lint 0.5.1 remains deferred; it is unrelated to D-82 and is recorded in the P5 maintenance ledger."
+  ],
+  "previousSource": "tool/repo-lint/versions/0.5.1/SOURCE.json"
+}

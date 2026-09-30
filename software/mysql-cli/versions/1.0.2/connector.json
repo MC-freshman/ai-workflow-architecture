@@ -1,0 +1,67 @@
+{
+ "schema": "ai-software-connector/v1",
+ "softwareId": "mysql-cli",
+ "softwareVersion": "1.0.2",
+ "adapter": "generic-cli",
+ "transports": [
+  "cli-wrapper"
+ ],
+ "connectorRuntime": "python-3.9",
+ "interpreterAlias": null,
+ "userModes": [
+  "direct-cli",
+  "mediated-call"
+ ],
+ "sessionModel": "per-run",
+ "requiresConsent": true,
+ "exclusiveResources": [],
+ "operations": {
+  "version": {
+   "capability": "version",
+   "inputSchemaRef": "schemas/empty.input.json",
+   "outputSchemaRef": "schemas/version.output.json",
+   "credentials": [
+    "none"
+   ],
+   "interactive": false,
+   "filesystemRoots": [
+    "none"
+   ]
+  },
+  "query": {
+   "capability": "query",
+   "inputSchemaRef": "schemas/query.input.json",
+   "outputSchemaRef": "schemas/query.output.json",
+   "credentials": [
+    "reference:db-credentials"
+   ],
+   "interactive": false,
+   "filesystemRoots": [
+    "workspace"
+   ]
+  },
+  "dump": {
+   "capability": "dump",
+   "inputSchemaRef": "schemas/dump.input.json",
+   "outputSchemaRef": "schemas/dump.output.json",
+   "credentials": [
+    "reference:db-credentials"
+   ],
+   "interactive": false,
+   "filesystemRoots": [
+    "workspace"
+   ]
+  }
+ },
+ "credentialInjection": {
+  "format": "ini",
+  "section": "client",
+  "filePrefix": "mysql-cli",
+  "extension": "cnf",
+  "userKey": "user",
+  "passwordKey": "password",
+  "argv": [
+   "--defaults-extra-file={file}"
+  ]
+ }
+}

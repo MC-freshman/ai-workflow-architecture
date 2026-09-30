@@ -1,0 +1,1240 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://contracts.local/runtime/1.1/protocol.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "kind",
+    "requestId",
+    "operation",
+    "runId"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "enum": [
+        "ai-run-protocol/v1.1",
+        "ai-run-protocol/v1.2",
+        "ai-run-protocol/v1.3"
+      ]
+    },
+    "kind": {
+      "enum": [
+        "request",
+        "response"
+      ]
+    },
+    "requestId": {
+      "$ref": "common.schema.json#/$defs/id"
+    },
+    "runId": {
+      "$ref": "common.schema.json#/$defs/id"
+    },
+    "operation": {
+      "enum": [
+        "prepare",
+        "next",
+        "submit",
+        "status",
+        "stop",
+        "delegate"
+      ]
+    },
+    "idempotencyKey": {
+      "$ref": "common.schema.json#/$defs/id"
+    },
+    "expectedStateRevision": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "payload": {
+      "type": "object"
+    },
+    "ok": {
+      "type": "boolean"
+    },
+    "result": {
+      "type": "object"
+    },
+    "error": {
+      "$ref": "common.schema.json#/$defs/error"
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "kind": {
+            "const": "request"
+          }
+        }
+      },
+      "then": {
+        "required": [
+          "payload"
+        ],
+        "not": {
+          "anyOf": [
+            {
+              "required": [
+                "ok"
+              ]
+            },
+            {
+              "required": [
+                "result"
+              ]
+            },
+            {
+              "required": [
+                "error"
+              ]
+            }
+          ]
+        },
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "operation": {
+                  "const": "status"
+                }
+              }
+            },
+            "then": {
+              "not": {
+                "anyOf": [
+                  {
+                    "required": [
+                      "idempotencyKey"
+                    ]
+                  },
+                  {
+                    "required": [
+                      "expectedStateRevision"
+                    ]
+                  }
+                ]
+              }
+            },
+            "else": {
+              "required": [
+                "idempotencyKey"
+              ]
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "operation": {
+                  "enum": [
+                    "next",
+                    "submit",
+                    "stop",
+                    "delegate"
+                  ]
+                }
+              }
+            },
+            "then": {
+              "required": [
+                "expectedStateRevision"
+              ]
+            },
+            "else": {
+              "not": {
+                "required": [
+                  "expectedStateRevision"
+                ]
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "operation": {
+                  "const": "prepare"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "payload": {
+                  "$ref": "#/$defs/prepare"
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "operation": {
+                  "enum": [
+                    "next",
+                    "status"
+                  ]
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "payload": {
+                  "maxProperties": 0
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "operation": {
+                  "const": "submit"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "payload": {
+                  "$ref": "common.schema.json#/$defs/completion"
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "operation": {
+                  "const": "stop"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "payload": {
+                  "type": "object",
+                  "additionalProperties": false,
+                  "required": [
+                    "reason"
+                  ],
+                  "properties": {
+                    "reason": {
+                      "type": "string",
+                      "minLength": 1
+                    }
+                  },
+                  "patternProperties": {
+                    "^x-": true
+                  }
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "operation": {
+                  "const": "delegate"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "payload": {
+                  "$ref": "#/$defs/delegate"
+                }
+              }
+            }
+          }
+        ]
+      },
+      "else": {
+        "required": [
+          "ok"
+        ],
+        "not": {
+          "anyOf": [
+            {
+              "required": [
+                "payload"
+              ]
+            },
+            {
+              "required": [
+                "idempotencyKey"
+              ]
+            },
+            {
+              "required": [
+                "expectedStateRevision"
+              ]
+            }
+          ]
+        },
+        "allOf": [
+          {
+            "if": {
+              "properties": {
+                "ok": {
+                  "const": true
+                }
+              }
+            },
+            "then": {
+              "required": [
+                "result"
+              ],
+              "not": {
+                "required": [
+                  "error"
+                ]
+              },
+              "properties": {
+                "result": {
+                  "$ref": "#/$defs/result"
+                }
+              }
+            },
+            "else": {
+              "required": [
+                "error"
+              ],
+              "not": {
+                "required": [
+                  "result"
+                ]
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "ok": {
+                  "const": true
+                },
+                "operation": {
+                  "const": "next"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "result": {
+                  "required": [
+                    "task",
+                    "reason"
+                  ]
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "operation": {
+                  "not": {
+                    "const": "submit"
+                  }
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "result": {
+                  "not": {
+                    "required": [
+                      "accepted"
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "ok": {
+                  "const": true
+                },
+                "operation": {
+                  "const": "submit"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "result": {
+                  "required": [
+                    "accepted"
+                  ]
+                }
+              },
+              "allOf": [
+                {
+                  "if": {
+                    "properties": {
+                      "schemaVersion": {
+                        "const": "ai-run-protocol/v1.1"
+                      }
+                    }
+                  },
+                  "then": {
+                    "properties": {
+                      "result": {
+                        "properties": {
+                          "accepted": {
+                            "const": true
+                          }
+                        }
+                      }
+                    }
+                  }
+                },
+                {
+                  "if": {
+                    "properties": {
+                      "schemaVersion": {
+                        "const": "ai-run-protocol/v1.2"
+                      }
+                    }
+                  },
+                  "then": {
+                    "properties": {
+                      "result": {
+                        "dependentRequired": {
+                          "task": [
+                            "reason"
+                          ],
+                          "reason": [
+                            "task"
+                          ]
+                        },
+                        "properties": {
+                          "reason": {
+                            "const": "repair"
+                          }
+                        }
+                      }
+                    },
+                    "allOf": [
+                      {
+                        "if": {
+                          "properties": {
+                            "result": {
+                              "properties": {
+                                "reason": {
+                                  "const": "repair"
+                                }
+                              },
+                              "required": [
+                                "reason"
+                              ]
+                            }
+                          }
+                        },
+                        "then": {
+                          "properties": {
+                            "result": {
+                              "properties": {
+                                "accepted": {
+                                  "const": false
+                                }
+                              },
+                              "required": [
+                                "task"
+                              ]
+                            }
+                          }
+                        },
+                        "else": {
+                          "properties": {
+                            "result": {
+                              "properties": {
+                                "accepted": {
+                                  "const": true
+                                }
+                              }
+                            }
+                          }
+                        }
+                      }
+                    ]
+                  }
+                }
+              ]
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "schemaVersion": {
+                  "const": "ai-run-protocol/v1.1"
+                },
+                "operation": {
+                  "not": {
+                    "const": "next"
+                  }
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "result": {
+                  "not": {
+                    "anyOf": [
+                      {
+                        "required": [
+                          "task"
+                        ]
+                      },
+                      {
+                        "required": [
+                          "reason"
+                        ]
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "schemaVersion": {
+                  "const": "ai-run-protocol/v1.2"
+                },
+                "operation": {
+                  "not": {
+                    "enum": [
+                      "next",
+                      "submit",
+                      "delegate"
+                    ]
+                  }
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "result": {
+                  "not": {
+                    "anyOf": [
+                      {
+                        "required": [
+                          "task"
+                        ]
+                      },
+                      {
+                        "required": [
+                          "reason"
+                        ]
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "ok": {
+                  "const": true
+                },
+                "operation": {
+                  "const": "delegate"
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "result": {
+                  "required": [
+                    "delegation"
+                  ]
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "operation": {
+                  "not": {
+                    "const": "delegate"
+                  }
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "result": {
+                  "not": {
+                    "required": [
+                      "delegation"
+                    ]
+                  }
+                }
+              }
+            }
+          },
+          {
+            "if": {
+              "properties": {
+                "schemaVersion": {
+                  "const": "ai-run-protocol/v1.1"
+                },
+                "result": {
+                  "type": "object",
+                  "required": [
+                    "reason"
+                  ]
+                }
+              }
+            },
+            "then": {
+              "properties": {
+                "result": {
+                  "properties": {
+                    "reason": {
+                      "enum": [
+                        "claimed",
+                        "waiting",
+                        "blocked",
+                        "terminal",
+                        "stop-requested"
+                      ]
+                    }
+                  }
+                }
+              }
+            }
+          }
+        ]
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "schemaVersion": {
+            "const": "ai-run-protocol/v1.1"
+          }
+        },
+        "required": [
+          "schemaVersion"
+        ]
+      },
+      "then": {
+        "properties": {
+          "operation": {
+            "enum": [
+              "prepare",
+              "next",
+              "submit",
+              "status",
+              "stop"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "schemaVersion": {
+            "const": "ai-run-protocol/v1.3"
+          },
+          "operation": {
+            "not": {
+              "enum": [
+                "next",
+                "submit",
+                "delegate",
+                "prepare"
+              ]
+            }
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "result": {
+            "not": {
+              "anyOf": [
+                {
+                  "required": [
+                    "task"
+                  ]
+                },
+                {
+                  "required": [
+                    "reason"
+                  ]
+                }
+              ]
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "schemaVersion": {
+            "const": "ai-run-protocol/v1.3"
+          },
+          "operation": {
+            "const": "prepare"
+          },
+          "result": {
+            "properties": {
+              "reason": {
+                "const": "claimed"
+              }
+            },
+            "required": [
+              "reason"
+            ]
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "result": {
+            "required": [
+              "task"
+            ],
+            "properties": {
+              "accepted": {
+                "const": true
+              }
+            }
+          }
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "prepare": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "platform",
+        "parentRunId",
+        "target",
+        "parameters",
+        "inputSources"
+      ],
+      "properties": {
+        "platform": {
+          "enum": [
+            "codex",
+            "dsh",
+            "workbuddy",
+            "zcode",
+            "doubao",
+            "qoder"
+          ]
+        },
+        "parentRunId": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "common.schema.json#/$defs/id"
+            }
+          ]
+        },
+        "target": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "mode",
+            "id"
+          ],
+          "properties": {
+            "mode": {
+              "enum": [
+                "workflow",
+                "agent"
+              ]
+            },
+            "id": {
+              "$ref": "common.schema.json#/$defs/id"
+            },
+            "version": {
+              "oneOf": [
+                {
+                  "$ref": "common.schema.json#/$defs/version"
+                },
+                {
+                  "const": "current"
+                }
+              ]
+            }
+          },
+          "patternProperties": {
+            "^x-": true
+          }
+        },
+        "parameters": {
+          "type": "object"
+        },
+        "inputSources": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "sourcePath",
+              "snapshotPath"
+            ],
+            "properties": {
+              "sourcePath": {
+                "$ref": "common.schema.json#/$defs/absolutePath"
+              },
+              "snapshotPath": {
+                "$ref": "common.schema.json#/$defs/path"
+              }
+            },
+            "patternProperties": {
+              "^x-": true
+            }
+          }
+        },
+        "rigor": {
+          "enum": [
+            "fast",
+            "balanced",
+            "full"
+          ],
+          "description": "A-axis tier for this run; absent means the platform default. Recorded into the lock as execution.rigor."
+        },
+        "consent": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "agreement"
+          ],
+          "properties": {
+            "agreement": {
+              "type": "string",
+              "minLength": 8
+            },
+            "grantedAt": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "patternProperties": {
+            "^x-": true
+          },
+          "description": "The caller-side agreement that lets this run execute scripts on the host (execPath=host-controlled). It is recorded, hashed, and never inferred."
+        },
+        "scenario": {
+          "type": "string",
+          "minLength": 1,
+          "pattern": "^[a-z0-9][a-z0-9._-]*$"
+        }
+      },
+      "patternProperties": {
+        "^x-": true
+      }
+    },
+    "result": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "lockSha256",
+        "state"
+      ],
+      "properties": {
+        "lockSha256": {
+          "$ref": "common.schema.json#/$defs/hash"
+        },
+        "state": {
+          "$ref": "state.schema.json"
+        },
+        "accepted": {
+          "type": "boolean"
+        },
+        "reason": {
+          "enum": [
+            "claimed",
+            "waiting",
+            "blocked",
+            "terminal",
+            "stop-requested",
+            "repair"
+          ]
+        },
+        "task": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "#/$defs/task"
+            }
+          ]
+        },
+        "delegation": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "peer",
+            "stageId",
+            "sequence",
+            "requestSha256",
+            "verdict"
+          ],
+          "properties": {
+            "peer": {
+              "$ref": "common.schema.json#/$defs/id"
+            },
+            "stageId": {
+              "$ref": "common.schema.json#/$defs/id"
+            },
+            "sequence": {
+              "type": "integer",
+              "minimum": 1
+            },
+            "requestSha256": {
+              "$ref": "common.schema.json#/$defs/hash"
+            },
+            "verdict": {
+              "enum": [
+                "accepted",
+                "rejected"
+              ]
+            },
+            "peerRunId": {
+              "oneOf": [
+                {
+                  "type": "null"
+                },
+                {
+                  "$ref": "common.schema.json#/$defs/id"
+                }
+              ]
+            },
+            "response": {
+              "oneOf": [
+                {
+                  "type": "null"
+                },
+                {
+                  "$ref": "common.schema.json#/$defs/file"
+                }
+              ]
+            }
+          },
+          "patternProperties": {
+            "^x-": true
+          }
+        }
+      },
+      "patternProperties": {
+        "^x-": true
+      }
+    },
+    "task": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "stageId",
+        "attempt",
+        "action",
+        "initialInputSha256",
+        "inputSha256",
+        "artifacts",
+        "allowedTools"
+      ],
+      "properties": {
+        "stageId": {
+          "$ref": "common.schema.json#/$defs/id"
+        },
+        "attempt": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "action": {
+          "enum": [
+            "prompt",
+            "script",
+            "software-call"
+          ]
+        },
+        "initialInputSha256": {
+          "$ref": "common.schema.json#/$defs/hash"
+        },
+        "inputSha256": {
+          "$ref": "common.schema.json#/$defs/hash"
+        },
+        "artifacts": {
+          "type": "array",
+          "items": {
+            "$ref": "common.schema.json#/$defs/file"
+          }
+        },
+        "allowedTools": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "prompt": {
+          "type": "string",
+          "minLength": 1
+        },
+        "script": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "resourceKey",
+            "entry",
+            "argv",
+            "timeoutSeconds"
+          ],
+          "properties": {
+            "resourceKey": {
+              "$ref": "common.schema.json#/$defs/id"
+            },
+            "entry": {
+              "$ref": "common.schema.json#/$defs/path"
+            },
+            "argv": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            },
+            "timeoutSeconds": {
+              "type": "integer",
+              "minimum": 1
+            }
+          },
+          "patternProperties": {
+            "^x-": true
+          }
+        },
+        "software": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "softwareId",
+            "softwareVersion",
+            "capability",
+            "arguments",
+            "idempotencyKey",
+            "evidencePath"
+          ],
+          "properties": {
+            "softwareId": {
+              "$ref": "common.schema.json#/$defs/id"
+            },
+            "softwareVersion": {
+              "type": "string",
+              "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"
+            },
+            "capability": {
+              "$ref": "common.schema.json#/$defs/id"
+            },
+            "arguments": {
+              "type": "object"
+            },
+            "idempotencyKey": {
+              "type": "string",
+              "pattern": "^[0-9a-f]{64}$"
+            },
+            "evidencePath": {
+              "type": "string",
+              "pattern": "^evidence/software-calls/[0-9]+/request\\.json$"
+            },
+            "timeoutSeconds": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 3600
+            },
+            "inputSchemaRef": {
+              "type": "string"
+            },
+            "outputSchemaRef": {
+              "type": "string"
+            }
+          }
+        },
+        "rigor": {
+          "enum": [
+            "fast",
+            "balanced",
+            "full"
+          ]
+        },
+        "rigorSource": {
+          "enum": [
+            "declared",
+            "default"
+          ]
+        },
+        "gated": {
+          "type": "boolean"
+        },
+        "frozen": {
+          "type": "boolean"
+        },
+        "tierNotice": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "action": {
+                "const": "prompt"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "prompt"
+            ],
+            "not": {
+              "anyOf": [
+                {
+                  "required": [
+                    "script"
+                  ]
+                },
+                {
+                  "required": [
+                    "software"
+                  ]
+                }
+              ]
+            }
+          },
+          "else": {
+            "anyOf": [
+              {
+                "if": {
+                  "properties": {
+                    "action": {
+                      "const": "script"
+                    }
+                  },
+                  "required": [
+                    "action"
+                  ]
+                },
+                "then": {
+                  "required": [
+                    "script"
+                  ],
+                  "not": {
+                    "anyOf": [
+                      {
+                        "required": [
+                          "prompt"
+                        ]
+                      },
+                      {
+                        "required": [
+                          "software"
+                        ]
+                      }
+                    ]
+                  }
+                },
+                "else": {
+                  "required": [
+                    "software"
+                  ],
+                  "not": {
+                    "anyOf": [
+                      {
+                        "required": [
+                          "prompt"
+                        ]
+                      },
+                      {
+                        "required": [
+                          "script"
+                        ]
+                      }
+                    ]
+                  }
+                }
+              },
+              {
+                "if": {
+                  "properties": {
+                    "action": {
+                      "const": "software-call"
+                    }
+                  },
+                  "required": [
+                    "action"
+                  ]
+                },
+                "then": {
+                  "required": [
+                    "software"
+                  ],
+                  "not": {
+                    "anyOf": [
+                      {
+                        "required": [
+                          "prompt"
+                        ]
+                      },
+                      {
+                        "required": [
+                          "script"
+                        ]
+                      }
+                    ]
+                  }
+                }
+              }
+            ]
+          }
+        }
+      ],
+      "patternProperties": {
+        "^x-": true
+      }
+    },
+    "delegate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "peer",
+        "stageId",
+        "request"
+      ],
+      "properties": {
+        "peer": {
+          "$ref": "common.schema.json#/$defs/id"
+        },
+        "stageId": {
+          "$ref": "common.schema.json#/$defs/id"
+        },
+        "request": {
+          "type": "object"
+        }
+      },
+      "patternProperties": {
+        "^x-": true
+      }
+    }
+  },
+  "patternProperties": {
+    "^x-": true
+  }
+}

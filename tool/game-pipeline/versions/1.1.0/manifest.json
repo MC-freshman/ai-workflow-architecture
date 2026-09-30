@@ -1,0 +1,46 @@
+{
+  "schema": "ai-workflow/v2.1",
+  "id": "game-pipeline",
+  "displayName": "Game Domain Pipeline (scenarios)",
+  "version": "1.1.0",
+  "mode": "pipeline",
+  "entry": "workflow.yaml",
+  "inputSchema": "schemas/input.schema.json",
+  "outputSchema": "schemas/output.schema.json",
+  "permissions": {
+    "network": "deny",
+    "process": "allowlisted-only",
+    "filesystem": "project-scoped"
+  },
+  "dependencies": {
+    "skills": {
+      "game-game-accessibility-specialist": "1.0.0",
+      "game-game-art-director": "1.0.0",
+      "game-game-audio-director": "1.0.0",
+      "game-game-creative-director": "1.0.0",
+      "game-game-designer": "1.0.0",
+      "game-game-economy-designer": "1.0.0",
+      "game-game-narrative-director": "1.0.0",
+      "game-game-producer": "1.0.0",
+      "game-game-qa-lead": "1.0.0",
+      "game-game-technical-director": "1.0.0",
+      "game-game-ux-designer": "1.0.0",
+      "game-scenario-balance": "1.0.0",
+      "game-scenario-brainstorm": "1.0.0",
+      "game-scenario-ci": "1.0.0",
+      "game-scenario-code-review": "1.0.0",
+      "game-scenario-gdd": "1.0.0",
+      "game-scenario-launch": "1.0.0",
+      "game-scenario-localization": "1.0.0",
+      "game-scenario-orchestrator": "1.0.0",
+      "game-scenario-playtest": "1.0.0",
+      "game-scenario-prototype": "1.0.0",
+      "game-scenario-reverse-doc": "1.0.0"
+    },
+    "workflows": {},
+    "packs": {}
+  },
+  "integrity": {
+    "sha256Manifest": "SHA256SUMS"
+  }
+}

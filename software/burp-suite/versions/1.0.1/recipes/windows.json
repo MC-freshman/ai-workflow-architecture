@@ -1,0 +1,82 @@
+{
+ "schema": "ai-software-recipe/v1",
+ "platform": "windows",
+ "softwareId": "burp-suite",
+ "softwareVersion": "1.0.1",
+ "acquire": {
+  "kind": "local-install",
+  "source": "便携版（本机已存在，含破解 loader，仅用于已授权环境）",
+  "officialUrl": "https://portswigger.net/burp/releases",
+  "mcpExtensionUrl": "https://github.com/PortSwigger/mcp-server",
+  "version": "2024.5.1",
+  "license": "Commercial (Burp Suite Professional)",
+  "redistributable": false,
+  "packageManager": null,
+  "notes": "商业软件，框架只检测已安装版本与扩展，不自动下载、不搬运本体、不绕过许可"
+ },
+ "install": {
+  "location": "${platformRuntime}/software/burp-suite",
+  "detectedPath": "<local-tool-body-path> V2024.5.1\\BurpSuite V2024.5.1",
+  "stepsRef": null,
+  "notes": "便携版目录保持完整（BurpSuite 核心 jar + jre + extensions）；Linux 版在同级 Linux\\ 子目录"
+ },
+ "launch": {
+  "kind": "mcp-http",
+  "entrypoint": null,
+  "startup": {
+   "workingDir": "${softwareRoot}",
+   "environment": {
+    "JAVA_HOME": "${softwareRoot}\\jre",
+    "PATH": "${softwareRoot}\\jre\\bin;${PATH}"
+   },
+   "command": "${softwareRoot}\\jre\\bin\\java.exe",
+   "args": [
+    "-jar",
+    "BurpSuite\\burpsuitloader.jar",
+    "-r"
+   ],
+   "equivalentScript": "Start.bat（@cd BurpSuite && java -jar burpsuitloader.jar -r）",
+   "bundledRuntime": "jre\\ (OpenJDK 21.0.2)"
+  },
+  "postStartupManualSteps": [
+   "Burp 启动后进入 Extensions（扩展）标签",
+   "确认 MCP Server 扩展（burp-mcp-all-2024.5.1-compat.jar）已加载并启用",
+   "在 MCP Server 扩展配置中启用 HTTP 服务，监听 127.0.0.1:9876",
+   "本释放件已带冻结工具清单；健康检查可重新建立 SSE 会话并核对 tools/list，漂移时拒绝调用。"
+  ],
+  "endpoint": "http://127.0.0.1:9876",
+  "readyProbe": {
+   "mcpMethod": "tools/list",
+   "timeoutSeconds": 5,
+   "retries": 0,
+   "notes": "Burp 未启动时自检记 SKIP；启动后只读建立 SSE 会话并读取 tools/list。",
+   "transport": "mcp-sse"
+  }
+ },
+ "verify": {
+  "versionCall": null,
+  "selftestRef": "../selftest/readonly.json",
+  "files": [
+   {
+    "path": "BurpSuite\\burpsuite_pro_org.jar",
+    "role": "Burp Pro 核心（531MB）",
+    "sha256": "11f9bafac12184dab66069d86f00c770d26bb386e4430ad87a46b1c44844ab82"
+   },
+   {
+    "path": "BurpSuite\\burpsuitloader.jar",
+    "role": "启动 loader",
+    "sha256": "a77becf8727530e4d77f1f2b871cee0288275bfd11ecb4a5f405d4134204d003"
+   },
+   {
+    "path": "BurpSuite\\extensions\\burp-mcp-all-2024.5.1-compat.jar",
+    "role": "官方 MCP Server 扩展（28.6MB）",
+    "sha256": "4f19af77ffca2641f090c388ffea551d0705b19ce0e75cdcc7dca394b68f6deb"
+   },
+   {
+    "path": "jre\\bin\\java.exe",
+    "role": "内置 JRE（OpenJDK 21.0.2）",
+    "sha256": "638a1fa85ec764d5ebeb749047868a36d4cc3bccd26d2caebc20f0f6e4adbdc1"
+   }
+  ]
+ }
+}

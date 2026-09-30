@@ -1,0 +1,11 @@
+{
+  "schema": "ai-governance-source/v1",
+  "authorSession": "qoder",
+  "derivedFrom": "runtime-contracts@1.3.0",
+  "supersedes": "1.3.0",
+  "releaseScope": "Architecture 3.1.0 step T-P3/T-P3b/T-P4: CONTEXT_UNRESOLVED and HANDOFF_VERSION_MISMATCH join the error-code enums (D-73/D-74), strict JSON errors now name file + json path + offset (D-34), run-lock execution gains scenario / expandedGraphSha256 / contextSkills / rigorSource, and the claim task carries the effective tier fields (D-62).",
+  "openDeferred": [
+    "adoption is a separate, per-platform act: no current.json was flipped here and no platform config was touched (发布 ≠ 采纳, BP-2)"
+  ],
+  "previousSource": "tool/runtime-contracts/versions/1.3.0/SOURCE.json"
+}

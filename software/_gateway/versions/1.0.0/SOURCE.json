@@ -1,0 +1,25 @@
+{
+ "schema": "ai-software-gateway-source/v1",
+ "authorSession": "qoder",
+ "derivedFrom": "versions/架构3.0-software整合提案-20260917-v2.md §5.1-5.3 + S-P4 of versions/架构3.0.0-定稿实施表-20260920.md",
+ "supersedes": null,
+ "releaseScope": "Architecture 3.0 (framework side), step S-P4: the reference gateway and the three transports it must answer for. Staged under qoder/runtime/maintenance/3.0-A/staging; publication (software/_gateway/versions/1.0.0/) is a later step of this round, so no pointer exists in the shared repository yet.",
+ "changes": [
+  "gateway.py: call / inventory / instance messages, three transport adapters, the platform-internal lock table, the evidence/software-calls/<n>/request.json exclusive write, and the five structured refusals."
+ ],
+ "unchanged": [
+  "no engine or contract byte was touched here; the shapes this component answers to are repo-lint 0.4.0’s adapter schema and runtime-contracts 1.3.0’s error families"
+ ],
+ "openDeferred": [
+  "http-api and local-process are declared in the schema but unimplemented (the proposal §5.2 leaves them to a later generation)",
+  "cross-platform resource arbitration (C-8) is explicitly not satisfied by this component: the lock table lives inside one platform",
+  "credential resolution beyond a reference name (a gateway that reads a secret out of the platform store) - §7.4 deep end, deferred with the plan"
+ ],
+ "releaseStatus": "published",
+ "publishedAt": "2026-09-21",
+ "publishedBy": "qoder, architecture 3.0 round 3.0-A, step S-P9",
+ "publicationChanges": [
+  "none - the bytes are the staged bytes"
+ ],
+ "pointerPolicy": "published, not adopted: no shared current.json was flipped for this generation by this step (S-P9 judgement: 发布 is not 采纳)"
+}

@@ -1,0 +1,102 @@
+{
+ "schema": "ai-workflow-source/v1",
+ "authorSession": "qoder",
+ "derivedFrom": "wireshark-cli@1.0.0",
+ "supersedes": "1.0.0",
+ "releaseScope": "3.0-Q Q-P3 (qoder platform-side adoption): wireshark-cli has its capability snapshot frozen from a live read-only inquiry of an installed body, so the eight-step software gate can judge membership (C-4) and this platform can answer with a measurement. No capability, schema, recipe or selftest changed.",
+ "changes": [
+  "capabilities.snapshot.json: frozen=true, generationMethod=live-readonly-probe, liveInquiry.perExecutable names the argv actually asked and the digest of each answer, and every capability carries liveConfirmation with the option tokens seen in it.",
+  "manifest.json: the version field only - the shape is closed, so \"nothing else changed\" is stated here rather than written into the manifest.",
+  "SOURCE.json: added, as every new release must carry (SW3).",
+  "SHA256SUMS: regenerated, both directions."
+ ],
+ "unchanged": [
+  "capability names, their schemas, sideEffects / consent / idempotent flags",
+  "recipes/, schemas/, selftest/, README.md - byte for byte from 1.0.0"
+ ],
+ "evidence": {
+  "askedAt": "2026-09-21T07:11:19Z",
+  "perExecutable": {
+   "tshark": {
+    "asked": [
+     {
+      "argv": [
+       "<local-tool-body-path>",
+       "--version"
+      ],
+      "exitCode": 0,
+      "seconds": 0.42,
+      "sha256": "b5f55f8c7972e2ab4cf47f579ae1dd3b239270c1cbe71288cbd3a2f1444e46ee",
+      "bytes": 1311
+     },
+     {
+      "argv": [
+       "<local-tool-body-path>",
+       "-h"
+      ],
+      "exitCode": 0,
+      "seconds": 0.27,
+      "sha256": "019f462aa3568bcf4f998b8b1185d2d164c448c68f77c0a4acb429d50328c332",
+      "bytes": 9695
+     }
+    ],
+    "liveTextSha256": "5c135cd417c6975ca9be356a0a8d5c48a2e9523d1105bdcb82c1404d0a75c8b9"
+   },
+   "editcap": {
+    "asked": [
+     {
+      "argv": [
+       "<local-tool-body-path>",
+       "--version"
+      ],
+      "exitCode": 0,
+      "seconds": 0.04,
+      "sha256": "800c8b4f39e7b8d0e909abcd67b53e6c35a4692687e6723fac5a098645cc7315",
+      "bytes": 708
+     },
+     {
+      "argv": [
+       "<local-tool-body-path>",
+       "-h"
+      ],
+      "exitCode": 0,
+      "seconds": 0.04,
+      "sha256": "733e6b18275884ea5cda549b04c45913630ae1c6e63e8eb9f60fa8b5b30fad5d",
+      "bytes": 7454
+     }
+    ],
+    "liveTextSha256": "628638e6e03c2da4fffcb0484bc384b02e02bc47a034559c136a02f61a4431bf"
+   },
+   "mergecap": {
+    "asked": [
+     {
+      "argv": [
+       "<local-tool-body-path>",
+       "--version"
+      ],
+      "exitCode": 0,
+      "seconds": 0.04,
+      "sha256": "d30fae32151fbbdc19552111054fe98abf5df9cc9bf941d920ddf4b8664bbb38",
+      "bytes": 709
+     },
+     {
+      "argv": [
+       "<local-tool-body-path>",
+       "-h"
+      ],
+      "exitCode": 0,
+      "seconds": 0.04,
+      "sha256": "cf38e37894ae69505bdb77bc6a8e982939a58b2827c6076cbb1e08fa55a9cb93",
+      "bytes": 955
+     }
+    ],
+    "liveTextSha256": "a3c4aaac7dc6c560cf9f287e4b3b9978696cbe0d970874d60b65b89ba676bc15"
+   }
+  },
+  "rawAnswersKeptOnThisPlatform": "qoder/runtime/maintenance/3.0-Q/runs/q3-freeze/live-text.json - a platform fact, so the bytes stay on the platform and only their digests are shared"
+ },
+ "crossPlatformNote": "The body that answered is one platform install at the pinned upstream version. Another platform asks its own body: if the live list differs, the gateway answers SOFTWARE_DRIFT, which is what a frozen baseline exists for (BP-2: conclusions are not copied between platforms).",
+ "releaseStatus": "published",
+ "publishedAt": "2026-09-21",
+ "publishedBy": "qoder, architecture 3.0 platform-side round 3.0-Q, step Q-P3"
+}

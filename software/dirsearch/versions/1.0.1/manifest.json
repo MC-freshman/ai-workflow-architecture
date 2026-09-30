@@ -1,0 +1,197 @@
+{
+ "schema": "ai-software/v1",
+ "id": "dirsearch",
+ "version": "1.0.1",
+ "displayName": "Dirsearch Web Path Scanner",
+ "upstreamVersion": "0.4.3",
+ "kind": "cli-wrapper",
+ "transport": {
+  "command": "${pythonPath}/python.exe",
+  "argsStyle": "declarative-argv",
+  "prefixArgs": [
+   "${softwareRoot}/dirsearch.py"
+  ],
+  "notes": "dirsearch.exe 控制台入口 shebang 指向失效路径（failed to create process），必须用解释器直接运行 dirsearch.py；pythonPath 由 recipe 提供"
+ },
+ "capabilities": [
+  {
+   "name": "version",
+   "nativeName": "python dirsearch.py --version",
+   "inputSchemaRef": "schemas/empty.input.json",
+   "outputSchemaRef": "schemas/version.output.json",
+   "sideEffects": "none",
+   "permissionRequests": {
+    "filesystem": "none",
+    "network": "none",
+    "process": "self",
+    "credentials": "none"
+   },
+   "consent": "auto",
+   "idempotent": true,
+   "safeForSelftest": true,
+   "invocation": {
+    "executable": "${pythonPath}/python.exe",
+    "baseArgv": [
+     "${softwareRoot}/dirsearch.py",
+     "--version"
+    ],
+    "argMapping": [],
+    "outputCapture": "stdout",
+    "outputFormat": "text",
+    "timeout": 30,
+    "successExitCodes": [
+     0
+    ]
+   }
+  },
+  {
+   "name": "scan",
+   "nativeName": "python dirsearch.py -u <url> [options]",
+   "inputSchemaRef": "schemas/scan.input.json",
+   "outputSchemaRef": "schemas/scan.output.json",
+   "sideEffects": "external",
+   "permissionRequests": {
+    "filesystem": "workspace",
+    "network": "scoped",
+    "process": "self",
+    "credentials": "none"
+   },
+   "consent": "confirm-stage",
+   "idempotent": false,
+   "safeForSelftest": false,
+   "invocation": {
+    "executable": "${pythonPath}/python.exe",
+    "baseArgv": [
+     "${softwareRoot}/dirsearch.py",
+     "--full-url",
+     "-q"
+    ],
+    "argMapping": [
+     {
+      "param": "url",
+      "flag": "-u",
+      "required": true,
+      "style": "repeat"
+     },
+     {
+      "param": "wordlists",
+      "flag": "-w",
+      "style": "repeat"
+     },
+     {
+      "param": "extensions",
+      "flag": "-e",
+      "join": ","
+     },
+     {
+      "param": "excludeExtensions",
+      "flag": "--exclude-extensions",
+      "join": ","
+     },
+     {
+      "param": "removeExtensions",
+      "flag": "--remove-extensions",
+      "style": "boolean"
+     },
+     {
+      "param": "threads",
+      "flag": "-t"
+     },
+     {
+      "param": "recursionDepth",
+      "flag": "-R"
+     },
+     {
+      "param": "excludeSubdirs",
+      "flag": "--exclude-subdirs",
+      "join": ","
+     },
+     {
+      "param": "excludeStatus",
+      "flag": "-x",
+      "join": ","
+     },
+     {
+      "param": "httpMethod",
+      "flag": "-m"
+     },
+     {
+      "param": "randomAgent",
+      "flag": "--random-agent",
+      "style": "boolean"
+     },
+     {
+      "param": "cookie",
+      "flag": "--cookie"
+     },
+     {
+      "param": "headersFile",
+      "flag": "--headers-file"
+     },
+     {
+      "param": "timeout",
+      "flag": "--timeout"
+     },
+     {
+      "param": "delay",
+      "flag": "--delay"
+     },
+     {
+      "param": "retries",
+      "flag": "--retries"
+     },
+     {
+      "param": "proxy",
+      "flag": "--proxy"
+     },
+     {
+      "param": "outputFile",
+      "flag": "-o"
+     },
+     {
+      "param": "outputFormat",
+      "flag": "--format",
+      "enum": [
+       "simple",
+       "plain",
+       "json",
+       "xml",
+       "md",
+       "csv"
+      ]
+     },
+     {
+      "param": "extraArgs",
+      "style": "passthrough"
+     }
+    ],
+    "outputCapture": "stdout",
+    "outputFormat": "text",
+    "outputNote": "stdout 为扫描进度与结果文本（-q 静默模式只输出发现项）；结构化结果用 outputFile + outputFormat=json 写工作区文件后读取，JSON 报告 schema 见 scan.output.json",
+    "timeout": 1800,
+    "successExitCodes": [
+     0
+    ]
+   }
+  }
+ ],
+ "concurrency": {
+  "instanceMode": "per-run",
+  "poolSize": null,
+  "exclusiveResources": [],
+  "whenBusy": "reject-retryable"
+ },
+ "platformSupport": {
+  "windows": "supported",
+  "linux": "supported",
+  "macos": "supported"
+ },
+ "requiredProfiles": [
+  "python>=3.8"
+ ],
+ "snapshot": "capabilities.snapshot.json",
+ "integrity": {
+  "sha256Manifest": "SHA256SUMS"
+ },
+ "docs": "README.md"
+}

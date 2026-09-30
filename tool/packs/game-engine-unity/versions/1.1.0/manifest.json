@@ -1,0 +1,29 @@
+{
+  "schema": "ai-pack/v1",
+  "id": "game-engine-unity",
+  "version": "1.1.0",
+  "displayName": "Unity 引擎能力",
+  "selector": null,
+  "skillIds": [
+    "game-game-unity-specialist",
+    "coding-unity-csharp"
+  ],
+  "conflicts": [
+    "game-engine-godot",
+    "game-engine-unreal"
+  ],
+  "integrity": {
+    "sha256Manifest": "SHA256SUMS"
+  },
+  "skillVersions": {
+    "coding-unity-csharp": "1.0.0",
+    "game-game-unity-specialist": "1.0.0"
+  },
+  "pinning": {
+    "schema": "ai-pack-pinning/v1",
+    "pinnedFrom": "game-engine-unity@1.0.0",
+    "source": "tool/skills/<id>/current.json",
+    "note": "Z10 §6.4 D2：把 pack 的技能选择钉到确切版本，消费方无需自行补版本。",
+    "pinnedAt": "2026-09-14"
+  }
+}

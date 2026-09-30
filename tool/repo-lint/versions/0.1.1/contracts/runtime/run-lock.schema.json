@@ -1,0 +1,49 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://contracts.local/runtime/1.1/run-lock.schema.json",
+  "type": "object", "additionalProperties": false,
+  "required": ["schemaVersion", "recordType", "runId", "parentRunId", "platform", "createdAt", "runRoot", "canonicalization", "selection", "resources", "input", "execution"],
+  "properties": {
+    "schemaVersion": {"const": "ai-run-lock/v1.1"}, "recordType": {"const": "execution"},
+    "runId": {"$ref": "common.schema.json#/$defs/id"},
+    "parentRunId": {"oneOf": [{"type": "null"}, {"$ref": "common.schema.json#/$defs/id"}]},
+    "platform": {"enum": ["codex", "dsh", "workbuddy", "zcode", "doubao"]},
+    "createdAt": {"$ref": "common.schema.json#/$defs/time"},
+    "runRoot": {"$ref": "common.schema.json#/$defs/absolutePath"},
+    "canonicalization": {"const": "sha256-cjson-safe-v1"},
+    "selection": {
+      "type": "object", "additionalProperties": false, "required": ["agent", "workflow", "runner", "environment"],
+      "properties": {
+        "agent": {"oneOf": [{"type": "null"}, {"$ref": "common.schema.json#/$defs/id"}]},
+        "workflow": {"$ref": "common.schema.json#/$defs/id"}, "runner": {"$ref": "common.schema.json#/$defs/id"},
+        "environment": {"type": "array", "minItems": 1, "uniqueItems": true, "items": {"$ref": "common.schema.json#/$defs/id"}}
+      }
+    },
+    "resources": {"type": "array", "minItems": 3, "items": {"$ref": "common.schema.json#/$defs/resource"}},
+    "input": {
+      "type": "object", "additionalProperties": false, "required": ["parameters", "parametersSha256", "files", "manifestSha256", "snapshotSha256"],
+      "properties": {
+        "parameters": {"type": "object"}, "parametersSha256": {"$ref": "common.schema.json#/$defs/hash"},
+        "files": {"type": "array", "items": {"$ref": "common.schema.json#/$defs/file"}},
+        "manifestSha256": {"$ref": "common.schema.json#/$defs/hash"}, "snapshotSha256": {"$ref": "common.schema.json#/$defs/hash"}
+      }
+    },
+    "execution": {
+      "type": "object", "additionalProperties": false, "required": ["maxParallel", "resume", "stages"],
+      "properties": {
+        "maxParallel": {"const": 1}, "resume": {"const": false},
+        "stages": {
+          "type": "array", "minItems": 1,
+          "items": {
+            "type": "object", "additionalProperties": false, "required": ["id", "action", "dependsOn", "requiredGates"],
+            "properties": {
+              "id": {"$ref": "common.schema.json#/$defs/id"}, "action": {"enum": ["prompt", "script"]},
+              "dependsOn": {"type": "array", "uniqueItems": true, "items": {"$ref": "common.schema.json#/$defs/id"}},
+              "requiredGates": {"type": "array", "uniqueItems": true, "items": {"$ref": "common.schema.json#/$defs/id"}}
+            }
+          }
+        }
+      }
+    }
+  }
+}

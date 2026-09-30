@@ -1,0 +1,14 @@
+{
+  "schema": "ai-governance-source/v1",
+  "authorSession": "qoder",
+  "derivedFrom": "mastermind-bug-bounty@2.0.0",
+  "supersedes": "2.0.0",
+  "releaseScope": "Architecture 3.1.0 step T-P6 judgement 1: the security domain skeleton becomes a v3 definition so six scenarios select context instead of six separate experts. Stages, prompt bodies, schemas and tests are copied byte-for-byte from 2.0.0; the only added keys are schema/defaultScenario/requiredStages/scenarios.",
+  "requiredStages": [
+    "SCOPE",
+    "REPORT"
+  ],
+  "openDeferred": [
+    "scenario-specific stage narrowing (remove/add) is not used here: the six scenarios differ in what they read into context, not in graph shape (T-P1 diff)"
+  ]
+}

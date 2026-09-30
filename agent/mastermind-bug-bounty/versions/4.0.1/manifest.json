@@ -1,0 +1,38 @@
+{
+  "schema": "ai-agent/v2",
+  "id": "mastermind-bug-bounty",
+  "displayName": "Mastermind Bug Bounty Coordinator",
+  "version": "4.0.1",
+  "role": "Coordinator for authorized security workflows",
+  "prompt": "prompt.md",
+  "toolLock": "tool-lock.json",
+  "workflows": [
+    "mastermind-bug-bounty",
+    "mastermind-peer-task"
+  ],
+  "policies": [
+    "policies/security.md"
+  ],
+  "permissions": {
+    "network": "deny",
+    "process": "allowlisted-only",
+    "filesystem": "project-scoped"
+  },
+  "peerLock": "peer-lock.json",
+  "modelPolicy": {
+    "mode": "inherit",
+    "allowOverride": true
+  },
+  "input": {
+    "type": "text"
+  },
+  "output": {
+    "type": "text",
+    "language": "zh-CN"
+  },
+  "integrity": {
+    "sha256Manifest": "SHA256SUMS"
+  },
+  "fixes": "P1 repair: pin mastermind-bug-bounty workflow 3.0.1 so the current expert closure no longer traverses the immutable 3.0.0 definition-mismatch release.",
+  "runnerWorkflow": "mastermind-bug-bounty"
+}

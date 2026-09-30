@@ -1,0 +1,2 @@
+problem_id,experiment_id,claim,value,unit,method,parameter_source,uncertainty,evidence,code_module,status,notes
+Q1,EXP-000,"示例：请替换为实际结论",,,baseline,,,,,DRAFT,

@@ -1,0 +1,29 @@
+{
+  "schema": "ai-software-gateway-config/v1",
+  "note": "Consumed by the shared software connector (software/_connector, pinned release; since 2026-09-25 this platform binds _connector/versions/1.0.6/connector.py, previously the reference _gateway 1.0.0). The engine rewrites a copy of this document into each run directory (software-gateway.json) and overrides softwareRoot and evidenceRoot per run; lockRoot stays platform-wide on purpose, because that is the only way two runs of one platform can collide. **No `platform` key on purpose (2026-09-25, measured):** the connector reads `config.platform` as the *OS recipe selector* (connector.py:152-153 falls back to the OS name when the key is absent) and looks for `recipes/<that>.json` inside each immutable release - with the value `workbuddy` every body verified as `unverifiable / no-recipe-for-platform` (baseline/p2-connector-health-preedit.json). The releases carry `recipes/windows.json`, so the key stays absent and the OS fallback answers. No credential, no product and no body is stored in this file - only the platform's own paths and standing policy. **Deliberately undeclared:** `credentialProvider` and the three session providers are not provisioned on this platform, so a credentialed call answers a structured refusal naming connector.json#credentialInjection and a session open answers INTERACTIVE_REQUIRED - the honest readings, not capability claims.",
+  "softwareRoot": "E:\\ai\\software",
+  "lockRoot": "E:\\ai\\workbuddy\\runtime\\software\\locks",
+  "evidenceRoot": "E:\\ai\\workbuddy\\runtime\\software\\evidence",
+  "bodies": {
+    "dirsearch": "D:\\Various_programming_languages\\PPython\\dirsearch-master\\dirsearch-master\\dirsearch.py",
+    "mysql-cli": "<local-tool-body-path>",
+    "nmap": "<local-tool-body-path>",
+    "veracrypt": "<local-tool-body-path>",
+    "wireshark-cli": "<local-tool-body-path>"
+  },
+  "interpreters": {
+    ".py": "E:\\ai\\workbuddy\\runtime\\py-env\\Scripts\\python.exe"
+  },
+  "interpreterAliases": {
+    "PPython": "D:\\Various_programming_languages\\PPython\\python.exe"
+  },
+  "x-interpreter-aliases-note": "dirsearch 1.0.1's frozen capability snapshot names runtime.interpreter=PPython (pythonVersion 3.12.4); the alias is resolved against this platform's own install, measured in place on 2026-09-25 (`python --version` -> Python 3.12.4). The connector's own runtime stays on config.interpreters['.py'] - two different fields by design (3.2.0 裁定记录 §2).",
+  "allowedHosts": [
+    "127.0.0.1",
+    "localhost"
+  ],
+  "allowGuiLaunch": false,
+  "x-allowed-hosts-note": "Standing policy of this platform: a mediated scan may only reach the loopback. Opening a desktop window is a per-call decision and allowGuiLaunch stays off, so without a session provider the honest answer to a session open is INTERACTIVE_REQUIRED.",
+  "x-bodies-note": "burp-suite is deliberately absent from bodies: its recipe (kind mcp-http) declares no launch entrypoint - it is a licensed GUI body verified in place and never started by this platform. A call against it therefore answers SOFTWARE_NOT_INSTALLED naming bodies.burp-suite, which is the honest reading, not a platform claim about the licence.",
+  "x-cross-platform": "The lock table under lockRoot is platform-internal (C-8). A second platform on this host keeps its own table, so two platforms calling one singleton recipe would not see each other's locks. This is registered, not worked around."
+}

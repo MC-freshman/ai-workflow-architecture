@@ -1,0 +1,268 @@
+{
+  "schema": "ai-platform-capabilities/v1",
+  "platform": "qoder",
+  "attestedAt": "2026-09-29T04:50:30Z",
+  "checks": {
+    "python-runtime": true,
+    "runner-dependency-resolution": true,
+    "filesystem-platform-scoped-write": true,
+    "shared-repo-read-only-access": true,
+    "shell-command-execution": true,
+    "runner-protocol-prepare": true,
+    "prompt-stage-claim": true,
+    "prompt-stage-submit": true,
+    "idempotent-replay-and-revision-guard": true,
+    "terminal-stop-with-evidence": true,
+    "peerDispatch": true,
+    "script-environment-isolation-jail": true,
+    "renderer-matplotlib-agg-in-jail": true,
+    "process-gate-on-0.12.0": true
+  },
+  "permissionAdapters": [
+    {
+      "filesystem": "project-scoped",
+      "network": "deny",
+      "process": "allowlisted-only",
+      "evidence": "prompt 阶段由本会话执行，运行产物只落 runsRoot（引擎强制 runsRoot ⊂ platformRoot）。分面口径——脚本阶段：由 wf-runner 的 WSL2 隔离控制器执行，`unshare --net` + Landlock ABI 3 实测为**内核级强制**（探针内 network 得 gaierror、/bin/sh 未绑定故 subprocess 起不来、主机盘不可见）；prompt 阶段：network=deny 与 process=allowlisted-only 仍是**会话自律**，Qoder 具备网络与任意命令能力，不要把脚本面的强制当作全平台保证。0.7.6 注入路径下的复认证见 runtime/maintenance/2.0-B/baseline/K1a-execution-backend.json（26 项），生产面复验已结（2.0-C/baseline/）；0.7.7 的框架面复验见 runtime/maintenance/2.0-D/baseline/W-framework-published-077.json（38 项）。"
+    },
+    {
+      "filesystem": "shared-read-only-platform-report-write",
+      "network": "deny",
+      "process": "none",
+      "evidence": "本平台专属的 D04 授权（用户，2026-09-18）：bridge/backends/wsl2-ubuntu.json 的 sharedReadOnlyBinds 声明 tool + agent 只读绑进 jail。0.7.6 实测 /shared/tool 与 /shared/agent 可见且拒写、主机盘不可见、无网无 shell；repo-lint 0.3.0 每次 live 扫描前自带 sharedWriteProbe（{tool: denied, agent: denied}），并真过 /wf 跑到 succeeded（resourceCount 1824 / checkedFiles 6879 / errors 0，单趟 32.6 分钟）。证据 runtime/maintenance/2.0-B/baseline/K1b-repolint-live.json。与 zcode 的 D04 授权互相独立、结论不互抄。"
+    },
+    {
+      "filesystem": "platform-runtime-write-shared-read-only",
+      "network": "deny",
+      "process": "isolated-python",
+      "evidence": "3.0-Q Q-P1 and Q-P2 measured exactly this shape and the bytes are in the two evidence files named here: writes stay inside this platform (runsRoot is under platformRoot and every run of this round landed there), the three shared repositories are bound read-only into the jail and a create into any of them is refused by the kernel with EROFS rather than by a permission bit, and the script stage runs in an isolated interpreter with no network. Unlike the prompt-stage adapters this triple is kernel-enforced for the stage it covers: it is declared for script dispatch, not for the conversation.",
+      "scopeOfEnforcement": "script stages executed through wf-runner on the declared scriptEnvironmentRungs rung kernel-sandbox; the prompt face stays session-discipline and is not covered by this triple",
+      "measurements": {
+        "jailThreeRootsScratchDoc": {
+          "file": "qoder/runtime/maintenance/3.0-Q/baseline/q1-environment.json",
+          "cell": "S-Q1-05",
+          "sha256": "c0817e28730a176e58d3594e9d75c2a1941072e0d19076f4db26dfa04b72cf09",
+          "reading": "tool/agent/software visible and populated, every create refused with errno 30 (EROFS), /work writable, measured on the rebuilt seal in 1.0 s"
+        },
+        "jailThreeRootsProductionDoc": {
+          "file": "qoder/runtime/maintenance/3.0-Q/runs/q2-switch/jail-probe-report.json",
+          "sha256": "86a82cea715a7552857ea64c31f4afcf280c927e3bed56e7d2fb67a066bbc7ad",
+          "reading": "the same three roots under the production backend document; /proc/mounts shows all three as 9p `ro,nosuid,noatime` binds, and the seal was verified before dispatch (55.9 s clean)"
+        },
+        "isolatedInterpreter": {
+          "file": "qoder/bridge/backends/wsl2-ubuntu.json",
+          "sha256": "e95485aad8a878c7807c561e6d2760ee942214b9ef82b65b899099a8e84292b0",
+          "reading": "script stages run in the WSL2 jail on the sealed venv interpreter with no network namespace and Landlock; measured through a real script stage that reached `succeeded` (S-Q1-03) and refused on a one-line tamper (S-Q1-04)"
+        }
+      }
+    }
+  ],
+  "profiles": {
+    "renderer": {
+      "adapters": [
+        "matplotlib-adapter-first"
+      ],
+      "requires": [
+        "matplotlib"
+      ]
+    }
+  },
+  "descriptor": {
+    "schema": "ai-platform-descriptor/v2",
+    "platformId": "qoder",
+    "protocols": [
+      "ai-run-protocol/v1.1",
+      "ai-run-protocol/v1.2"
+    ],
+    "operations": [
+      "prepare",
+      "next",
+      "submit",
+      "status",
+      "stop"
+    ],
+    "actions": {
+      "prompt": {
+        "supported": true,
+        "enforcement": "advisory"
+      },
+      "script": {
+        "supported": true,
+        "enforcement": "kernel",
+        "note": "〔2026-09-19 2.0-G 重新出证后翻回〕密封脚本环境按本平台文档形态重建为 venv（`bin/python` + `pyvenv.cfg` + `lib/python3.10/site-packages`，2545 件 / 193 MB，含渲染栈），jail 边界与 jail 内 Agg 出图逐项机检 25 项全绿（qoder/runtime/maintenance/2.0-G/baseline/G3-jail-boundary.json）。09-18 那轮的同名结论按 D-2 不可回读，不作为本条依据。"
+      },
+      "peer": {
+        "supported": true,
+        "enforcement": "mediated"
+      },
+      "software-call": {
+        "supported": true,
+        "enforcement": "kernel",
+        "note": "adopted with 3.0-Q Q-P2/Q-P3: the action exists in the engine this platform now runs, the software root is declared and bound read-only, the gateway is the published sealed bytes, and three recipes have frozen snapshots. Enforcement is kernel-level in the sense that the gate chain and the jail decide, not the conversation; what the platform does NOT claim is that a dispatch of a real CLI body succeeds today - the reference gateway asks `--tools`, which third-party CLIs do not answer (that gap is registered as D-60).",
+        "evidence": {
+          "engine": "tool/wf-runner/versions/0.12.0（生产钉版，2026-09-29 采纳轮；切换前字节 qoder/runtime/maintenance/20260929-0.12-adoption/checkpoint/qoder-config.json）",
+          "softwareRoot": "declared in qoder/bridge/qoder-config.json and bound read-only as the third jail root - measured EROFS on three roots under the production backend document (3.0-Q Q-P2 jail probe, baseline/q2-switch.json)",
+          "gateway": "software/_connector/versions/1.0.7/connector.py（连接器形态，2026-09-22 用户方向裁定的落点；1.0.7 带 D-90 attachPid，旧条目写的 _gateway 1.0.0 是 3.0 代字节，已按实况更正）",
+          "frozenSnapshots": "mysql-cli@1.0.1, wireshark-cli@1.0.1, dirsearch@1.0.1 frozen from live read-only inquiry (3.0-Q Q-P3, baseline/q3-freeze.json)",
+          "gateChain": "the eight-step chain is exercised up to prepare by 3.0-Q Q-P5 cell S-Q5-06, which pins execution.software in the lock and stops before dispatch",
+          "declaredAbsentAt": "3.0-A S-P7",
+          "adoptionRound": "qoder/runtime/maintenance/20260929-0.12-adoption"
+        }
+      }
+    },
+    "profiles": {
+      "renderer": {
+        "declared": true,
+        "adapters": [
+          "matplotlib-adapter-first"
+        ],
+        "requires": [
+          "matplotlib"
+        ]
+      },
+      "python>=3.8": {
+        "declared": true,
+        "adapters": [
+          "sealed-venv-python-3.10.12"
+        ],
+        "requires": [
+          "python>=3.8"
+        ],
+        "evidence": {
+          "file": "qoder/bridge/script-environment.json",
+          "sha256": "1ceb85f2be86bf55fbfe84cb23fbaed1f959286ee2d519d2af82c626e05192dd",
+          "reading": "the sealed script environment resolves 3.10.12 inside the jail; measured by importing the render stack there and by `sys.version` in the stage that reached `succeeded` (Q-P1 battery, S-Q1-02 and S-Q1-03)",
+          "pythonVersion": "3.10.12",
+          "atLeast38": true
+        },
+        "namingNote": "declared under the literal key the recipes already name (C-3 keeps requiredProfiles an opaque string set), so no published recipe byte had to change: dirsearch@1.0.1 still asks for `python>=3.8` verbatim. Renaming the axis is a shared-repo change and belongs with C-3 naming hygiene, not to this platform adoption."
+      }
+    },
+    "enforcement": "mediated",
+    "recovery": [
+      "replay",
+      "process-reconcile"
+    ],
+    "x-note": "声明 v2 子描述符，使 CAP-01（plan_capability_gap）在本平台真被行使（2.0-A 发现 v1-only 描述符会让分面预检在第二参考平台上失效）。分面不可相加：prompt=advisory 不可读作 script=advisory，script=kernel 也不可读作全平台内核强制。actions.peer 于 2026-09-18 生产接入轮全绿后翻转（2.0-C 的 K2 16/16、K1a 26/26、K1b 22/22、K3 23/23、Q4 五锚、Q6a 10/10、Q6b2 5/5），验收期间由 tmp overlay 承载该位，真实文件在全绿前保持 supported=false。 〔2026-09-19 2.0-G〕configDigest/environmentDigest 按「该文件字节的 sha256」复算刷新；runnerDigest/runnerTreeDigest **无法从盘上复算**（换算规则未在共享侧文档化），保留原值并按 D-11 标注为继承值——没有任何机器在复核它们。",
+    "evidenceBindings": {
+      "configDigest": "a2660e916012985d9487f58ffc8ef5ab2ebd685337299dd4a4f634ac818ccd23",
+      "runnerDigest": "4e152bdb66834fa6defeb2a0a677b5a099c32ddbc8523c4a8c76acf695fc650e",
+      "runnerTreeDigest": "65264119660f10b4b9e4617073e5c68c5d4cc9e6119777a95e931b7a69657e69",
+      "environmentDigest": "1ceb85f2be86bf55fbfe84cb23fbaed1f959286ee2d519d2af82c626e05192dd"
+    },
+    "software": {
+      "softwareRoot": "E:/ai/software",
+      "softwareRuntimeRoot": "E:/ai/qoder/runtime/software",
+      "softwareGateway": {
+        "path": "E:/ai/qoder/runtime/maintenance/3.0-A/staging/_gateway/versions/1.0.0/gateway.py",
+        "sha256": "70af94a36363e6f01aaf0db13930a335554aa7487ad32d219da0422fa0e5474e",
+        "version": "1.0.0",
+        "status": "staged reference - not published, not adopted"
+      },
+      "softwareEnvironment": "E:/ai/qoder/runtime/software/software-environment.json",
+      "lockTableScope": "platform-internal (this runtime only)",
+      "crossPlatformArbitration": "NOT satisfied - C-8 remains open and is inherited from 2.1-A/HANDOFF-P8b.md; no claim is made here that a second platform would see these locks",
+      "bodiesPresent": [
+        "burp-suite",
+        "dirsearch",
+        "mysql-cli",
+        "nmap",
+        "veracrypt",
+        "wireshark-cli"
+      ],
+      "snapshotFrozen": [],
+      "dispatchBlockedOn": "none of the six capability snapshots is frozen (C-4), so a real-body call answers CAPABILITY_UNAVAILABLE naming capabilities.snapshot.json#frozen"
+    }
+  },
+  "attested": {
+    "contracts": "E:/ai/tool/runtime-contracts/versions/1.5.0（独立契约包，自带 SHA256SUMS 自校验；runtime-contracts/1.5.1 也已发布，本平台按配对代钉 1.5.0——0.12.0 的锁形态与 1.5.0 配对，换到 1.5.1 属下一代配对，不在本步顺手抬）。本条此前写的是 1.1.0，与生产 config 不符，已按盘上实况更正。",
+    "scannerRelease": "E:/ai/tool/repo-lint/versions/0.6.3（资源完整性扫描释放；缺失即 CAPABILITY_UNAVAILABLE 失败关闭）。0.6.3 解除了 output schema 对 report.version 的 const 钉死（D-83），0.6.2/0.6.3 的 validate_contracts.py 与 contracts 1.5.0 逐字节同步（D-75），本平台由 conformance 1.5.1 的 test_validator_sync 一格机检。此前写的 0.3.0 与生产 config 不符，已更正；0.5.2 的 workflow.yaml 自述 0.5.1（D-95）也一并记在这里，因为本轮抓到过一次由它导致的失败关闭：baseline/q1b-probe-corrections-and-attribution.json。",
+    "runner": "E:/ai/tool/wf-runner/versions/0.12.0（本平台显式钉版，2026-09-29 采纳轮 qoder/runtime/maintenance/20260929-0.12-adoption）。0.11.0 起 run-lock 记 contracts 代并在续跑时复验，不一致即 VERSION_CONFLICT（D-97）；0.12.0 起被拒 prepare 的未提交 run 目录整体移入本平台诊断层 qoder/runtime/logs/wf-runner/rejected/ 并留 DISCARDED.txt（D-45），cli.py 首行置 sys.dont_write_bytecode（D-46）。本平台两条都出过实测：baseline/q1-half-switch-and-contract-generation.json 与 baseline/q1-final-state.json。上一代（0.10.1 / 0.10.0 栈）的历史文字与读数保留在 qoder/runtime/maintenance/20260923-optimization/ 与 3.0-Q/，本轮不改写历史。",
+    "executionBackend": "E:/ai/qoder/bridge/backends/wsl2-ubuntu.json（WSL2 Ubuntu2204 + Landlock ABI 3 + chroot；D04 只读绑定 tool+agent）。verifyTimeoutSeconds=120 是**本平台的自选预算**，引擎只按 1..3600 校验取值，不是接口上限；0.7.7 起超预算报 ENVIRONMENT_VERIFY_TIMEOUT，不再冒充 HASH_MISMATCH（哈希码只留给真实内容变化）。",
+    "productionAdoption": "2026-09-18 收口波：生产配置由 wf-runner 0.6.0 + repo-lint 0.2.1 legacy 布局切到 **0.7.6 + runtime-contracts 1.1.0 + scannerRelease repo-lint 0.3.0 + executionBackend + projectWriteRoots + peer 两键**。接入前逐字节备份与 sha256 在 `runtime/maintenance/2.0-C/pre-adoption/`（三件：qoder-config.json 552b4d19… / capabilities.json 4bb4643a… / bridge.json 3dfeda16…），恢复=按备份复制回去并核对哈希。**生产面复验按最终字节重跑**：K2 16/16、K1a 26/26、K1b 22/22（含真跑 live 扫描，本轮 34.9 分钟）、K3 23/23、Q4 五锚、Q6a 10/10、Q6b2 5/5、Q6b 矩阵、Q6c 终检——证据 `runtime/maintenance/2.0-C/baseline/`。共享 current 一律未动（wf-runner 0.5.2 / repo-lint 0.2.1 / runtime-contracts 1.0.0）；本轮零新共享发布。**观察窗口自本次生产接入起算**（≥48h 且 ≥10 次代表性成功 run），其后才可能定稿 `versions/架构2.0.0.md`。**第二波（2.0-D，2026-09-18）**：生产 runner 由 0.7.6 切到已发布的 **0.7.7**（`tool/wf-runner/versions/0.7.7`，共享 current 仍 0.5.2）。切前逐字节备份在 `runtime/maintenance/2.0-D/pre-adoption/`（四件，qoder-config.json b953ada7… 即切换前 0.7.6 配置）。按最终字节复验：38 项框架电池在发布件上全绿（`baseline/W-framework-published-077.json`，树摘要 a5f6ea1b…，与暂存件同摘要）、生产配置上 platform-conformance 9/9、生产入口 prepare→stop 6/6（`baseline/W-prod-smoke.json`）。按 BP-3，补丁代引擎不重跑 35 分钟 live 扫描与 39 格全矩阵。**引擎字节变了 ⇒ 观察窗口自 2.0-D 接入时刻重新起算**；判据口径已改（回读窗口内真实发生的 run，不凑次数）。　〔2026-09-29 采纳轮，本平台〕生产由 wf-runner 0.10.1 + runtime-contracts 1.4.1 + scannerRelease repo-lint 0.5.2 + _connector 1.0.6 + 平台默认 repo-lint 0.5.2 一批切到 0.12.0 / 1.5.0 / 0.6.3 / _connector 1.0.7 / 默认 0.6.3。切换前逐字节 checkpoint 与 sha256 在 qoder/runtime/maintenance/20260929-0.12-adoption/checkpoint/（CHECKPOINT.json），恢复＝按该备份复制回去并核对哈希。半切换被实测拒绝：见 qoder/runtime/maintenance/20260929-0.12-adoption/baseline/q1-final-state.json 的 Q1-93。共享五处 current 一字未动。",
+    "peerDispatch": "本平台自写 `bridge/ops/peer_dispatcher.py`（`qoder-peer-dispatcher/1.0.0`）：引擎 `dispatch_delegation` 进程内调用，经 0.7.6 CLI 为每个 peer 建**真实子 run**（父 runId 入 request、精确钉版），泵 next→submit 本平台撰写的阶段证据→终态即止；回显 requestSha256、算 resultSha256、逐次追加 calls.log。五锚（父子闭环 / 血缘逐子机检 / 同键回放零追加 / 四拒绝面零副作用 / 受限面结构化）在候选面（2.0-B）与生产面（2.0-C）各跑一遍。**配置纪律（源自引擎侧缺陷①，本平台自防）**：`checks.peerDispatch` 与 `peerDispatcherModule` 必须同批置入——只有能力位而无模块键会让 dispatch_delegation 半写 dispatch 目录后抛裸 KeyError 并永久卡死该幂等序列；本平台另有自防：子 run 目录已存在时**拒绝**而非清空重建。**0.7.7 起 delegate 是协议上的真操作**：`payload={peer, stageId, request}` 经 CLI 投递，答案即契约的 `result.delegation` 封闭成员（peer/stageId/整数 sequence/requestSha256/verdict，完整派发回执走 `x-dispatchReport`），父 run 与子 run 都是真实 run-lock 钉版 run——2.0-D 的 38 项电池就是在 wire 上跑的（`runtime/maintenance/2.0-D/baseline/W-framework*.json`）。0.7.6 时代只能进程内驱动 `dispatch_delegation`，那条路径仍然可用。",
+    "loop": "prepare → next(claim) → submit → stop 五操作；prompt 与 script 两阶段均已真跑到 succeeded（脚本阶段=本平台第一条真实业务闭环）",
+    "matrix": "〔2026-09-29 采纳轮，本平台直跑 architecture-ops/1.5.0 的 invocation_matrix〕PASS 50 / NEEDS-INPUT 1 / EXPECTED 1 / FAIL 0，invocableDenominator=52，wf-runner 按资源类型排除（inDenominator false）。两条非绿格逐字点名：repo-lint@0.6.3 记 NEEDS-INPUT（harness 从内联 schema 合成不出 0.6.3 输入面的参数形状，errorCode INVALID_REQUEST；该资源在本平台的可调用性由 Q1 的生产 config prepare 与锁内 0.6.3 钉版出证，不由矩阵出证）；veracrypt@1.0.1 记 EXPECTED（snapshotFrozen=false / SNAPSHOT_NOT_FROZEN，本体已核验在位、4 项能力）。证据 qoder/runtime/maintenance/20260929-0.12-adoption/baseline/q2-matrix-0.12.0.json，runsRoot qoder/runtime/matrix-smoke/20260929-045338/runs。上一代读数（3.0-Q，45 格）：PASS 41 / NEEDS-INPUT 1 / EXPECTED 3 / FAIL 0。",
+    "evidence": "候选面自证：runtime/maintenance/2.0-B/（13 份机检证据 / 204 项全绿，小结 PLATFORM-STATUS.md）。生产面复验（0.7.6 波）：runtime/maintenance/2.0-C/（接入前备份 pre-adoption/ 含 sha256）。框架闭合与 0.7.7 接入（2.0-D 波）：runtime/maintenance/2.0-D/（patches/ 逐字节补丁脚本、staging/ 暂存件、baseline/W-framework*.json 38 项、baseline/W-prod-smoke.json 6 项、pre-adoption/ 切换前备份）。　本轮（2026-09-29 采纳轮）证据目录 qoder/runtime/maintenance/20260929-0.12-adoption/baseline/：q1-half-switch-and-contract-generation.json、q1b-probe-corrections-and-attribution.json、q1-final-state.json、q2-readout-before.json、q2-readout-after.json。",
+    "launcherRequirements": "PYTHONIOENCODING=utf-8（否则中文 prompt 按 cp936 落盘、UTF-8 读不回）与 PYTHONDONTWRITEBYTECODE=1 + -B（否则向只读发布目录写 __pycache__，触发资源完整性拒绝）；跑 ops/invocation_matrix.py 还须 PYTHONUTF8=1（或 -X utf8），否则该 harness 以 cp936 解码引擎 UTF-8 输出而崩溃；prepare/next 单次要 15–35 s（引擎每次重新 discover 整个 tool+agent），凡涉及外部持锁的用例必须让持锁进程活到 1 分钟以上，否则测的是计时竞态而不是互斥。",
+    "defaultFollow": "共享默认换代后本平台零配置跟随（2026-09-15 实证，入口只读 current.json 并钉进 run-lock）；0.7.4 起 prepare 允许省略版本或传 `current`，本平台在真实 CLI 上把「显式 > 本平台覆盖 > 共享 current」三序各跑一遍并核对 run-lock 的 resolvedFrom.kind（2.0-B/baseline/Q6a-conformance-entry.json）。真实的 switch_defaults apply 不在本平台执行（会动共享默认、波及其它平台）。",
+    "scriptEnvironment": "E:/ai/qoder/runtime/wsl-py-env（本平台自建 WSL2 Ubuntu2204 venv：python 3.10.12 / matplotlib 3.10.9 / Pillow 12.3.0 / numpy 2.2.6 / PyMuPDF 1.28.2 + runner requirements.lock 的 8 个库逐版对齐）；逐文件快照 E:/ai/qoder/bridge/script-environment.json（**2401 项 sha256+size**，剪掉 wheel 测试目录、sample_data 与 __pycache__）。引擎实测 verify_script → {\"verified\":2401,\"mismatches\":0}；耗时为 0.7.6 面观测 26.3s（0.6.0 面 51.9s），0.7.7 只改错误码语义未重测。**口径纠正（2.0-D）**：120s 从来不是接口上限，而是本平台写在后端文档里的自选预算（引擎按 1..3600 校验取值）；0.7.6 及以前超时会以 HASH_MISMATCH『环境被改』的名义失败，0.7.7 起报 ENVIRONMENT_VERIFY_TIMEOUT、哈希码只留给真实内容变化。**求解器链不封是成本判断而不是能力上限**：装满 scipy/pandas/sklearn/statsmodels/sympy 达 7108 文件、整轮哈希实测 157s，把预算写到 ≥200s 即可跑，代价是每次脚本阶段前的固定哈希开销——本平台因此只封工作流脚本真正 import 的库（见 declaredAbsent.math-solver-chain）。改环境后必须重生成快照并实测哈希耗时。",
+    "profiles.renderer": "已声明并实证渲染：matplotlib 3.10.9/Agg 在 jail 内出图（两次跑哈希相同=渲染确定）。矩阵据此放行数模工作流与两专家的图/PDF 面。"
+  },
+  "declaredAbsent": {
+    "mcp-tool-surface": "Qoder 客户端支持 MCP，但未注册过指向 tool/agent 的工作流服务 → 不声明；传输面按规范 §9 以 CLI 成立",
+    "hostEnvironmentManifest": "不声明：本平台在机器级 Windows 解释器（D 盘 python 3.9.13）上跑 cli.py 进程本身，从未建过钉版主机清单，故 verify_host 与 controllerSha256 交叉校验在本平台不生效。如实陈述后果：0.12.0 因此未向引擎证明「本平台接受的正是这份隔离控制器字节」；控制器哈希仍记录在 2.0-B 的观测里。"
+  },
+  "gapPlan": {
+    "profile:administrator": {
+      "path": "提权档位：本平台无常驻管理员令牌。要用 veracrypt 走的是红线 5 的当次同意 + 一次性提权会话，并在 descriptor.profiles 里声明 administrator 及其适配器与证据绑定；不补则该行维持 declaredAbsent（BP-2 时间差，随采纳平台的自证补齐，不是终局措辞）。",
+      "costMinutes": 90
+    },
+    "software-snapshot-freeze": {
+      "path": "recipe owner (doubao authored the six) issues 1.0.1 with capabilities.snapshot.json frozen=true, or authorises this platform to freeze it from a measured live list",
+      "costMinutes": 45
+    },
+    "profile:windowProfile": {
+      "path": "补齐＝二选一：① 读厂商侧模型目录/账户配置拿到本会话模型的上下文上限（零 run、零探测）；② 一次受控探测：递增上下文直至客户端报超限或触发压缩，回读 `contextWindowEstimated`，结论写回 `checks` 与 R17 的 WINDOW_PROFILES 声明。补前 256k 只按地板用、1m 只按规划档用。",
+      "costMinutes": 25
+    },
+    "software:veracrypt": {
+      "path": "本平台不冻结 veracrypt 快照：它是 GUI 本体、没有可安全自动询问的 stdout，且真会话属红线 5 的当次同意面。补齐形态＝在本平台 descriptor.profiles 声明 desktop-session 适配器、经 _connector 的 sessionLaunch/Liveness/Terminate 三面起一次真会话并把会话生命周期与attachPid 绑成证据（0.12.0 时代由 _connector 1.0.7 的 D-90 attachPid 支撑），随后重跑 `conform --only veracrypt` 单格。不补则该行维持 unverified，不得写成已可调用。",
+      "costMinutes": 75
+    }
+  },
+  "unverified": {
+    "process-gates": "〔2026-09-29 已在生产字节上复跑，两面都有〕本平台生产现钉 wf-runner 0.12.0。真 run `q29-q3-gate-drill`：game-sprint-plan@2.1.1 的 review 阶段带 process 门禁 plan-integrity（scripts/validate_plan.py，cwd=evidence，expectExit [0]，expectArtifacts evidence:plan-check.json minBytes 2）。抓失败面：attempt 1 封入被改坏的 capacity.json（effectiveCapacityHours 24.0，实算 28.8），门禁脚本真跑并给出 CAPACITY_MISMATCH，引擎按 onFail=repair 开 attempt 2，attempt 1 封存件未变；通过面：attempt 2 封入订正副本，plan-check.json 记 pass，整 run succeeded，run-succeeded 事件恰好一条，执行器日志 _gateexec/plan-integrity/{stdout,stderr}.log 在位。机制口径不变：process 门禁由 gate_exec 用主机 sys.executable 在 run 的证据目录内跑发布脚本，不走 WSL、不读 scriptEnvironment。档位未写＝草稿，本条不是交稿级读数。证据 qoder/runtime/maintenance/20260929-0.12-adoption/baseline/q3-real-run-process-gate-on-0.12.0.json。　本条**仍缺**的一件只剩崩溃恢复：需 `Engine(config, fault=...)` 故障注入，CLI 不暴露该入口；已实证的相邻面是同键幂等回放不重复执行（本轮 Q3-40/41：重放后 state.json 与 events.jsonl 逐字节未变）与终态守卫（Q3-50）。",
+    "crash-recovery": "未做（需 `Engine(config, fault=...)` 故障注入，CLI 不暴露该入口）。已实证：同键同请求幂等回放不重复执行、`REVISION_CONFLICT` 拒绝且 events.jsonl/state.json 逐字节未变、同 runId 重复 prepare 拒绝——见 runtime/reports/protocol-guards-20260915/GUARDS-NOTE.md",
+    "command-registration-A1A2": "Skill / 斜杠入口面存在且 /wf /wfa 已装入用户级 ~/.qoder/skills 并在会话内成功装载驱动过真 run；跨新会话的自动发现尚未重启客户端验证。",
+    "a3-mcp-registration": "未注册指向共享仓库的本地 MCP 服务",
+    "profile:windowProfile": "R17 需要的窗口上限（256k 地板 / 1m 规划档）**本平台无实测依据，故不声明为能力**。查过的面：`qoder/resources/**` 客户端 bundle 里 `contextWindow` 符号 279 处、字面 `1000000` 38 处、`contextWindowEstimated`/`contextWindowExceededCount` 存在，但**没有任何静态赋值**（`contextWindow:<数字>` 零命中），说明数值由运行时/服务端注入；`<local-user-path> 与 `qoder/runtime/logs` 下也无持久读数。未做消耗型探测（向会话灌递增至压缩阈值）——按 BP-3 与 token 成本约束，那不该为一条声明而跑。因此 repo-lint 0.6.0 的 R17 取 `DEFAULT_WINDOW_PROFILE=256k` 作保守地板判定；novel-writer 若声明 `windowProfile: 1m`，那是**用户 2026-09-25 授权的规划档**，不是本平台实测上限，台账与本文件都按此口径写，不得写成「本平台支持 1M」。"
+  },
+  "notes": "qoder 平台自证（对齐架构基线 1.0.0 §4 与规范 §9 的声明式接口；2026-09-18 起生产栈为 wf-runner 0.7.7 + runtime-contracts 1.1.0 + repo-lint 0.3.0 scannerRelease + 声明式 WSL2 后端，0.7.6 为同日上一波）。**顶层 permissions 字段一律不用**（2026-09-18 实测得出）：`permissions.py` 的词表是闭合的三元组（network∈{deny,egress-allowlist}、process∈{isolated-python,allowlisted-only}、filesystem∈{project-scoped,platform-runtime-write-shared-read-only}），旧生产块里的描述性取值（available-not-denied / user-approved / platform-scoped-with-user-approval）在 0.6.0 时代**从未被校验过**——不是 0.7.6 收紧，而是那段代码只在委派路径上跑，而本平台从未真正走到 delegate；一旦本平台把 peer 接线跑起来，prepare 阶段就以 UNKNOWN_PERMISSION 拒绝整次派发。且该字段是**单一全局三元组，结构上无法表达分面口径**，故本平台不填它（缺省=unspecified，不与工作流断言冲突），机器读的分面断言全部由 permissionAdapters（两三元组）与 descriptor.actions（prompt=advisory / script=kernel / peer=mediated）承载；人读口径同此：网络 available-not-denied、进程 user-approved、文件系统 platform-scoped-with-user-approval。checks 只登记实证项，负面能力一律进 declaredAbsent，checks 内绝不放 false（all(checks.values()) 是 prepare 前置门禁，false 会连坐全部 prepare）。历史：2026-09-12 曾因 repo-lint 0.1.1 的 platform 枚举拒绝 qoder 而无法 prepare，当日发布 0.1.2 候选打通；0.2.x 已把 qoder 纳入枚举；repo-lint「策略不可兑现」的原上报⑤在 0.7.5/0.7.6 的 executionBackend + sharedReadOnlyBinds 注入路径下已结清。三条 0.7.6 引擎侧缺陷/口径问题（peer 误配裸 KeyError 卡死序列 / scannerRelease 静默改写被选中版本 / capabilities.permissions 迟到的强校验）连同验证超时冒充篡改那一格，已由 **wf-runner 0.7.7** 闭合：派发器在写任何 dispatch 记录之前解析、能力位与模块键不一致在**配置阶段**即拒、选中的 workflow:repo-lint 不再被改写且保留自身 resolvedFrom、验证超时报 ENVIRONMENT_VERIFY_TIMEOUT（全量→增量哈希仍未做，登记为开放项）。用户 2026-09-18 先决定不发 0.7.7、同日改判并授权「切到 0.7.7」，本文按后者陈述。委派期的权限拒绝另修一处：拒绝以协议内的 `UNAUTHORIZED` 出信封（子码留在消息里），此前 PERMISSION_EXCEEDED / UNKNOWN_PERMISSION 不在错误码枚举内，会让引擎连自己的错误响应都构不出来。用户级配置与凭据在 <local-user-path> mcp-router 密钥），不迁入平台或共享仓库目录。\n\n〔2026-09-19 2.0-F 校正〕本次只下调可证伪项：`script-environment-isolation-jail`、`renderer-matplotlib-agg-in-jail` 移出 checks，`descriptor.actions.script.supported` 改 false。`process-gates` / `crash-recovery` 维持 `unverified`（2.0-E 曾测，但其一手证据按 D-2 不可回读，按红线 4 不以不可回读的结论充数）。`evidenceBindings` 四项指向 2.0-C/2.0-D 灭失件，仅作历史绑定，不构成本平台现行已验证。",
+  "notes_s2": "S-P2 (2026-09-20): software/registry.json exists, so the third union source gap is closed and the union now carries the software repository profiles; this platform has no software body installed yet, so those rows stay declaredAbsent with a path and a cost. Production pin unchanged.",
+  "notes_s7": "S-P7 wiring self-verification: the three shared roots are proved on this platform jail (read-only, write-denied), the affected matrix cells ran at FAIL 0 on a scratch config, and this document is the only production-side file the step wrote. Production adoption is still 0.7.7: the software-call row above is declaredAbsent on purpose.",
+  "notes_q4": "3.0-Q Q-P4: the permission triple the jail was already enforcing and the python profile the sealed environment already satisfies are now declared with their measurements attached. profile:administrator stays in gapPlan as a real absence: an elevated seat is not something this platform declares to reach a zero, and using veracrypt needs consent per call plus one measured run (red line 5).",
+  "notes_q5": "3.0-Q Q-P5: `action:software-call` moved out of declaredAbsent because the reason recorded there (production pinned to 0.7.7, no such action) stopped being true when this platform adopted 0.9.0. The prior wording is preserved here: the software-call action is proved on the staged wf-runner 0.9.0 candidate of this platform, and production stays pinned to wf-runner 0.7.7 which has no such action; the row is absent because the platform has not adopted the generation, not because the platform cannot run it",
+  "declaredAbsentHistory": {
+    "math-solver-chain": {
+      "removedAt": "2026-09-29T04:50:30Z",
+      "why": "2026-09-22 用户裁决（架构基本原则 1.3 + 红线 6 通用化）：数模与其它 agentic workflow 等同，math-solver-chain 不再是各平台需要声明的能力项，「交稿须转某平台」作废。账见 versions/平台接入清单.md §8.19 与 AGENTS.md 同日条款；zcode 已在 2026-09-26 移出自家的同一条。",
+      "measurementKeptBecause": "下面这段是本平台的真测量，删了就没有人知道成本在哪：装满 scipy/pandas/sklearn/statsmodels/sympy 达 7108 文件、整轮哈希实测 157s，把后端预算写到 ≥200s 即可跑，代价是每个脚本阶段前的固定哈希开销。",
+      "previousText": "范围按实测收窄而不是笼统说「不具备」：**图 QA / 渲染 / PDF 文本审计链可承接**——发布脚本实际 import 的第三方只有 matplotlib / numpy / PIL / fitz，这四个 + runner 锁库已在密封环境里且 jail 内实测出图。**求解器链本平台未封**（不是引擎不支持、也不是接口上限）：密封清单每脚本阶段前全量重算哈希，加进 scipy/pandas/sklearn/statsmodels/sympy 后是 7108 文件 / 实测 157s，本平台可以自选把 `verifyTimeoutSeconds` 提到 ≥200（取值域到 3600s）来接纳它，但那是每次脚本阶段的固定开销，因此当前判断是先不封。剩余的真缺口是**增量哈希**（共享侧 ⑥ 的可修部分已在 0.7.7 落地：超时与篡改分开；按子树/按包摘要仍未做）。任何交稿级数模要求应转 zcode（比赛备份平台）。〔2026-09-19 2.0-G 实测更新〕上面那组 7108 件 / 157 s 是灭失前环境的测量；本轮重建后的密封环境实测 2545 件 / 193 MB，派发前全量重哈希冷启 72.7 s、暖启 22.6–27.9 s（`baseline/G2-render-stack.json`），科学计算栈本轮未复封。"
+    }
+  },
+  "gapPlanClosed": {
+    "action:software-call": {
+      "closedAt": "2026-09-29T04:50:30Z",
+      "closure": "3.0-Q Q-P2/Q-P3 采纳 0.9.0 栈时激活；本轮 0.12.0 下该行判 pass",
+      "previousPath": {
+        "path": "publish wf-runner 0.9.0 (S-P9), declare softwareRoot / softwareGateway / softwareEnvironment in the production config, then flip this row",
+        "costMinutes": 20
+      }
+    },
+    "union-source-gap:software": {
+      "closedAt": "2026-09-29T04:50:30Z",
+      "closure": "生产 config 声明 softwareRoot 并已作第三根只读绑定（3.0-Q Q-P2）",
+      "previousPath": {
+        "path": "declare softwareRoot in the production config when the platform adopts wf-runner 0.9.0 (the S-P7 scratch wiring already proves the three roots bind read-only); until then the software repository cannot contribute to the union from this production config",
+        "costMinutes": 15
+      }
+    },
+    "profile:python>=3.8": {
+      "closedAt": "2026-09-29T04:50:30Z",
+      "closure": "3.0-Q 按 C-3 字面键取实测 3.10.12 声明，conform 该行判 pass",
+      "previousPath": {
+        "path": "在本平台 capabilities.json 的 profiles 里声明该键，并把适配器绑到已密封环境里的 python3 解释器（版本可从 qoder/bridge/backends/wsl2-ubuntu.json 指向的环境清单读出），随后重跑一次 conform：该行会从 declaredAbsent 变 pass。属采纳面工作，不在框架判据内。",
+        "costMinutes": 15
+      }
+    },
+    "permission-triple:platform-runtime-write-shared-read-only/deny/isolated-python": {
+      "closedAt": "2026-09-29T04:50:30Z",
+      "closure": "3.0-Q 把 jail 三元组绑证据后 conform 判 pass（2.0-G 的 G3-jail-boundary.json 25/25 为一手件）",
+      "previousPath": {
+        "path": "声明缺口而不是能力缺口：本平台 jail 内正是「写本平台运行面 + 共享仓只读 + 隔离 python 进程」这一形态，2.0-G 的 G3-jail-boundary.json（25/25）逐项实测过可见/拒写/无网，但 `permissionAdapters` 里从未把它写成第三个三元组，所以 `conform` 只能按无适配器判 `declaredAbsent`。补齐＝在 `permissionAdapters` 追加该三元组声明（附本轮边界电池的证据路径）并复跑 `conform` + G3 面；不改共享仓、不改生产钉版。",
+        "costMinutes": 30
+      }
+    }
+  }
+}

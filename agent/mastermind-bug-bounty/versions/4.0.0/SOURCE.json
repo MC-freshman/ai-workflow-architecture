@@ -1,0 +1,19 @@
+{
+  "schema": "ai-governance-source/v1",
+  "authorSession": "qoder",
+  "derivedFrom": "mastermind-bug-bounty@3.5.0",
+  "supersedes": "3.5.0",
+  "releaseScope": "Architecture 3.1.0 step T-P6 judgement 1: the merged security expert. Its lock now pins the v3 skeleton plus the six scenario skills; the seven experts it replaces stay on disk unchanged and are marked deprecated in the registry (pinned runs keep resolving).",
+  "replacesExperts": [
+    "mastermind-recon",
+    "mastermind-triage",
+    "mastermind-api-validation",
+    "mastermind-js-analysis",
+    "mastermind-crypto-analysis",
+    "mastermind-reporting",
+    "security-researcher"
+  ],
+  "openDeferred": [
+    "the six source experts keep their own published bytes; no content was rewritten into this prompt beyond the scenario-selection section"
+  ]
+}

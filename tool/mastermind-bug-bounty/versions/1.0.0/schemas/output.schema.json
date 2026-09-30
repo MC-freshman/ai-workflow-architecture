@@ -1,0 +1,12 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "runId": { "type": "string" },
+    "workflowId": { "type": "string" },
+    "workflowVersion": { "type": "string" },
+    "summary": { "type": "string" },
+    "workers": { "type": "array", "items": { "type": "object" } }
+  },
+  "required": ["runId", "workflowId", "workflowVersion", "summary", "workers"]
+}

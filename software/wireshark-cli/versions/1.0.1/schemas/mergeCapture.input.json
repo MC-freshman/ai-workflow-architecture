@@ -1,0 +1,13 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "required": ["outputFile", "inputFiles"],
+  "description": "mergecap：合并多个捕获文件（按时间戳排序）",
+  "properties": {
+    "outputFile": { "type": "string", "description": "-w 合并输出文件" },
+    "inputFiles": { "type": "array", "items": { "type": "string" }, "minItems": 2, "description": "待合并的捕获文件（位置参数，可重复）" },
+    "outputFormat": { "type": "string", "description": "-F 输出类型", "default": "pcapng" },
+    "snapshotLength": { "type": "integer", "minimum": 1, "description": "-s 快照长度" }
+  },
+  "additionalProperties": false
+}

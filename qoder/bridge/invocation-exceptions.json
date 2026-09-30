@@ -1,0 +1,160 @@
+{
+  "schema": "ai-invocation-exceptions/v1",
+  "platform": "qoder",
+  "updatedAt": "2026-09-29",
+  "note": "qoder 本平台自己的矩阵例外清单，只登记两类：① 设计例外；② 平台能力缺口。EXPECTED 判定要求 expectedCode 与实测错误码一致，同资源以别的错误码失败仍记 FAIL。当前状态（2026-09-29 采纳轮之后）：本平台生产 = qoder-config.json a2660e91 / capabilities.json 17bdeec7 / bridge.json 0251f1a5，栈为 wf-runner 0.12.0 + runtime-contracts 1.5.0 + scannerRelease repo-lint 0.6.3 + 平台默认 repo-lint 0.6.3 + softwareGateway _connector 1.0.7 + executionBackend + projectWriteRoots + peer 两键。矩阵生产面实测 PASS 50 / NEEDS-INPUT 1 / EXPECTED 1 / FAIL 0（分母 52，wf-runner 按类型排除）。两条非绿格：repo-lint@0.6.3 NEEDS-INPUT 是矩阵表达力上限（harness 合成不出该释放的输入面参数），不是可调用性判定；veracrypt@1.0.1 EXPECTED 是快照未冻结。2026-09-18 至 2026-09-21 那段措辞（写的是 0.7.6 栈、分母 39、唯一 FAIL 为 repo-lint@0.2.1）整段保留在 noteHistory_20260918，不当作现状引用。",
+  "repoLintRowRootCause": {
+    "current": "现状（2026-09-29）：repo-lint@0.6.3 在矩阵内记 NEEDS-INPUT / INVALID_REQUEST——harness 从内联 schema 合成不出该释放要求的参数形状，属矩阵的表达力上限。该资源的可调用性不由矩阵出证：本平台 Q1 在生产 config 上以 scope=live 参数 prepare 成功，run-lock 内 workflow:repo-lint 记 0.6.3 且 resolvedFrom.kind=platform-default。本轮未重跑 34.9 分钟量级的 live 全仓扫描（BP-3 风险比例）。",
+    "history_20260918": "共享侧缺陷③（qoder 首证 Q6d-06，与 zcode 封存件 runs/v6g-repo021 只读交叉核对一致）：声明 scannerRelease=repo-lint/0.3.0 的配置面上，显式请求 repo-lint@0.2.1 被依赖锁**静默改写**——prepare 答 ok:true，run-lock 内该键只剩一条 0.3.0 / resolvedFrom=dependency-lock 记录，即不存在一个 0.2.1 的 run。矩阵按共享 current 显式传 0.2.1 并把 0.2.1 形状的参数交给实际加载的 0.3.0 释放，claim 处 INVALID_REQUEST；plan() 在 stop 路径同样重校验，故该 run 永久卡 prepared（qoder 侧证据 run q2c-q6d-explicit 原样保留）。**本文件此前把该现象记为『阶段 schema 交叉污染』，属因果倒置的表述，已按此更正。**失败关闭、不误跑。",
+    "closedDefect": "本字段此前记的是共享侧缺陷③（声明 scannerRelease=0.3.0 时显式请求 repo-lint@0.2.1 被依赖锁静默改写，run 永久卡 prepared）。该缺陷由 wf-runner 0.8.0 的 F2 两半闭合（入口选择权威化 + resolvedFrom 保留），0.12.0 字节上不存在；旧文本随 noteHistory_20260918 / productionFace_20260918 一起保留。"
+  },
+  "productionFace": {
+    "runner": "wf-runner@0.12.0（生产 qoder-config.json；共享 current 亦 0.12.0，本平台自钉）",
+    "contracts": "runtime-contracts@1.5.0 + scannerRelease repo-lint@0.6.3（配对代，半切换被实测拒绝）",
+    "connector": "software/_connector/versions/1.0.7/connector.py（连接器形态；旧 _gateway 不再绑定）",
+    "backend": "bridge/backends/wsl2-ubuntu.json（含本平台专属 D04 只读绑定 tool+agent+software）",
+    "platformDefaultRepoLint": "bridge.json defaults.workflowVersions[repo-lint]=0.6.3 —— 与 scannerRelease 同批动，分开动会被 resolution.py 的锁一致性检查挡下（本轮抓到的是同族失败的另一面：D-95）",
+    "matrix": "PASS 50 / NEEDS-INPUT 1 / EXPECTED 1 / FAIL 0（分母 52）",
+    "matrixEvidence": [
+      "qoder/runtime/maintenance/20260929-0.12-adoption/baseline/q2-matrix-0.12.0.json",
+      "qoder/runtime/maintenance/20260929-0.12-adoption/baseline/q2-readout-after.json",
+      "qoder/runtime/maintenance/20260929-0.12-adoption/baseline/q1-final-state.json",
+      "qoder/runtime/maintenance/20260929-0.12-adoption/baseline/q3-real-run-process-gate-on-0.12.0.json"
+    ],
+    "expected": [
+      {
+        "kind": "software",
+        "id": "veracrypt",
+        "version": "1.0.1",
+        "expectedCode": "SNAPSHOT_NOT_FROZEN"
+      }
+    ],
+    "history": [
+      "1.0 判据（r5，0.6.0 + repo-lint 0.2.1 legacy）：PASS 38 / EXPECTED 2 / FAIL 0",
+      "2.0 候选 0.7.3 轮（2.0-A）：PASS 38 / EXPECTED 1 / FAIL 0，唯一 EXPECTED = repo-lint 策略缺口",
+      "2.0 候选 0.7.6 轮（2.0-B）：能力缺口关闭，改为版本对齐的 1 FAIL；repo-lint@0.3.0 在矩阵内记 NEEDS-INPUT（harness 合成限制），真实可调用性由 K1b 端到端出证",
+      "2.0 生产接入轮（2.0-C，当前判据）：同数 PASS 38 / FAIL 1；FAIL 根因重新定性为缺陷③；14 份 / 219 项机检全绿；观察窗口自 2026-09-18 16:51(+08) 起算",
+      "2.0-C 生产接入轮（0.7.6/0.7.7 栈）：分母 39，PASS 38 / FAIL 1（唯一 FAIL = repo-lint@0.2.1，根因缺陷③，已由 0.8.0 的 F2 半闭合）",
+      "3.0-Q（0.9.0 栈，45 格）：PASS 41 / NEEDS-INPUT 1 / EXPECTED 3 / FAIL 0",
+      "2026-09-29 采纳轮（0.12.0 栈，52 格）：PASS 50 / NEEDS-INPUT 1 / EXPECTED 1 / FAIL 0，burp-suite 与 nmap 随 1.0.1 冻结转 PASS"
+    ]
+  },
+  "infrastructure": [
+    {
+      "_status": "设计例外，不作为 EXPECTED 计数：0.7.1 起由 ENTRY-04 按资源类型排除（报告里 excludedByType=[{kind:engine,id:wf-runner,inDenominator:false}]）",
+      "kind": "workflow",
+      "id": "wf-runner",
+      "version": "0.5.2",
+      "expectedCode": "CAPABILITY_UNAVAILABLE",
+      "reason": "引擎自身（自指定义 action:script → cli.py），不作为用户可调用工作流；其权限策略未在 qoder permissionAdapters 中声明，按声明式接口被拒属设计例外的正确表现。此处 version 字段只是 1.0 轮的展示值、与判据无关（该字面量已由 2.0-A 作为共享侧文档缺陷上报）",
+      "review": "2026-09-18"
+    }
+  ],
+  "pendingGaps": [
+    {
+      "id": "burp-suite",
+      "kind": "software",
+      "version": "*",
+      "expectedCode": "SNAPSHOT_NOT_FROZEN",
+      "reason": "closed on this platform's own run: row PASS with snapshotFrozen=true at 1.0.1 (capabilities 4, bodyVerified true). nmap 的根因是配方声明了 7.95 不存在的 -oJ（D-61），由 X-P4 换成 live 实证的 -oX 后冻结；burp-suite 由 X-P2 应用换针 plan 后冻结。",
+      "evidence": "invocation-matrix software row, 3.0-A S-P9",
+      "remediation": "qoder/runtime/maintenance/3.0-A/GAP-3.0.md (burp-suite)",
+      "costMinutes": 25,
+      "review": "2026-09-21",
+      "gapStatus": "closed",
+      "closedBy": "2026-09-29 采纳轮本平台矩阵（qoder/runtime/maintenance/20260929-0.12-adoption/baseline/q2-matrix-0.12.0.json）",
+      "closedAt": "2026-09-29"
+    },
+    {
+      "id": "dirsearch",
+      "kind": "software",
+      "version": "*",
+      "expectedCode": "SNAPSHOT_NOT_FROZEN",
+      "reason": "frozen by 3.0-Q Q-P3 as 1.0.1: the installed body answered `--version` (dirsearch v0.4.3) and `--help`, and every option its two capabilities name appears in that live text; matrix row is PASS at 1.0.1",
+      "evidence": "invocation-matrix software row, 3.0-A S-P9",
+      "remediation": "qoder/runtime/maintenance/3.0-A/GAP-3.0.md (dirsearch)",
+      "costMinutes": 45,
+      "review": "2026-09-21",
+      "gapStatus": "closed",
+      "closedBy": "3.0-Q Q-P3",
+      "closedAt": "2026-09-21"
+    },
+    {
+      "id": "mysql-cli",
+      "kind": "software",
+      "version": "*",
+      "expectedCode": "SNAPSHOT_NOT_FROZEN",
+      "reason": "frozen by 3.0-Q Q-P3 as 1.0.1: both executables the recipe names (mysql.exe 8.0.39, mysqldump.exe 8.0.39) answered `--version` and `--help` and confirmed all three capabilities; matrix row is PASS at 1.0.1",
+      "evidence": "invocation-matrix software row, 3.0-A S-P9",
+      "remediation": "qoder/runtime/maintenance/3.0-A/GAP-3.0.md (mysql-cli)",
+      "costMinutes": 45,
+      "review": "2026-09-21",
+      "gapStatus": "closed",
+      "closedBy": "3.0-Q Q-P3",
+      "closedAt": "2026-09-21"
+    },
+    {
+      "id": "nmap",
+      "kind": "software",
+      "version": "*",
+      "expectedCode": "SNAPSHOT_NOT_FROZEN",
+      "reason": "closed on this platform's own run: row PASS with snapshotFrozen=true at 1.0.1 (capabilities 3, bodyVerified true). nmap 的根因是配方声明了 7.95 不存在的 -oJ（D-61），由 X-P4 换成 live 实证的 -oX 后冻结；burp-suite 由 X-P2 应用换针 plan 后冻结。",
+      "evidence": "invocation-matrix software row, 3.0-A S-P9",
+      "remediation": "qoder/runtime/maintenance/3.0-A/GAP-3.0.md (nmap)",
+      "costMinutes": 30,
+      "review": "2026-09-21",
+      "gapStatus": "closed",
+      "closedBy": "2026-09-29 采纳轮本平台矩阵（qoder/runtime/maintenance/20260929-0.12-adoption/baseline/q2-matrix-0.12.0.json）",
+      "closedAt": "2026-09-29"
+    },
+    {
+      "id": "veracrypt",
+      "kind": "software",
+      "version": "*",
+      "expectedCode": "SNAPSHOT_NOT_FROZEN",
+      "reason": "仍开放，且原因比『未冻结』更具体：本体是 GUI 子系统程序，文本模式 /version 与 /help 都答空 stdout，不动卷就没有可读的能力清单，本平台不为刷绿去动卷。2026-09-27 X-P4 发布了声明 desktop-session 的 1.0.1，快照如实不冻结，本平台矩阵行因此 EXPECTED、conform 该行 unverified。",
+      "evidence": "invocation-matrix software row, 3.0-A S-P9",
+      "remediation": "qoder/runtime/maintenance/3.0-A/GAP-3.0.md (veracrypt)",
+      "costMinutes": 75,
+      "review": "2026-09-21",
+      "gapStatus": "open",
+      "route": "补齐＝在本平台 descriptor.profiles 声明 desktop-session 适配器，经 _connector 1.0.7 的 sessionLaunch/Liveness/Terminate + attachPid（D-90）起一次真会话并把生命周期绑成证据，随后 `conform --only veracrypt` 单格复验。真会话属红线 5 的当次同意的面。"
+    },
+    {
+      "id": "wireshark-cli",
+      "kind": "software",
+      "version": "*",
+      "expectedCode": "SNAPSHOT_NOT_FROZEN",
+      "reason": "frozen by 3.0-Q Q-P3 as 1.0.1: tshark 4.2.6, editcap and mergecap all answered and confirmed all five capabilities from their own usage surface; matrix row is PASS at 1.0.1",
+      "evidence": "invocation-matrix software row, 3.0-A S-P9",
+      "remediation": "qoder/runtime/maintenance/3.0-A/GAP-3.0.md (wireshark-cli)",
+      "costMinutes": 45,
+      "review": "2026-09-21",
+      "gapStatus": "closed",
+      "closedBy": "3.0-Q Q-P3",
+      "closedAt": "2026-09-21"
+    }
+  ],
+  "pendingGapsNote": "Software rows on this platform at 2026-09-29: 5 PASS with frozen snapshots (dirsearch/mysql-cli/wireshark-cli/burp-suite/nmap) and 1 EXPECTED (veracrypt). A row is never turned green by editing this ledger - the gateway answers `frozen` and the matrix reads that answer. 结论不互抄：以上是本平台自己这一跑的读数。",
+  "noteHistory_20260918": "qoder 本平台自己的矩阵例外清单，只登记两类：① 设计例外；② 平台能力缺口。EXPECTED 判定要求 expectedCode 与实测错误码一致，同资源以别的错误码失败仍记 FAIL。当前状态（2026-09-18 生产接入轮之后）：本平台生产三件 = qoder-config.json b953ada7… / capabilities.json e5d31985… / bridge.json 3c5ae9cb…，栈为 wf-runner 0.7.6 + runtime-contracts 1.1.0 + scannerRelease repo-lint 0.3.0 + executionBackend + projectWriteRoots + peer 两键；repo-lint 的『策略不可兑现』缺口已闭合（用户单独授予本平台 D04 式共享仓只读绑定，jail 内 /shared/{tool,agent} 可见且拒写，repo-lint@0.3.0 的 live 扫描经 prepare→next→jail 脚本→submit→succeeded 真过 /wf：2.0-C/baseline/K1b-repolint-live.json，本轮单趟 34.9 分钟）。**本平台不登记任何『repo-lint 能力缺口』，也不把 repo-lint 那格写成 PASS**：剩下的不是能力问题而是版本对齐问题，且根因已在生产面重新定性——见下条。矩阵生产面实测 PASS 38 / NEEDS-INPUT 0 / EXPECTED 0 / FAIL 1（分母 39，wf-runner 由 ENTRY-04 按类型排除）。另两条口径事实：① harness 永远显式传 target.version，故平台作用域默认覆盖不会出现在矩阵行里（默认解析面由 Q6a 证明）；② 任何平台的 repo-lint 都不能只靠矩阵出证——--targets 钉 0.3.0 时 harness 从内联 schema 合成不出 toolRoot == '/shared/tool' 这类常量，只能记 NEEDS-INPUT，这是矩阵的表达力上限而不是不可调用。 〔2026-09-19 2.0-G〕三条 matplotlib/renderer 相关 pendingGaps 已删除：密封环境已装渲染栈且 jail 内出图实测通过（`runtime/maintenance/2.0-G/baseline/G3-jail-boundary.json` 25/25、`G2-render-stack.json`），capabilities.json 相应两条 declaredAbsent 亦已翻回 checks。删除是**取消免罪符**，此后该面回归会以 FAIL 现形。改前逐字节备份 `runtime/maintenance/2.0-G/baseline/G4-invocation-exceptions-pre-G2.json`。",
+  "productionFace_20260918": {
+    "runner": "wf-runner@0.7.6（生产 qoder-config.json；共享 current 仍 0.5.2，选版与指针是两套机制）",
+    "contracts": "runtime-contracts@1.1.0 + scannerRelease repo-lint@0.3.0（G-B 双布局已在 qoder 生产现场复验）",
+    "backend": "bridge/backends/wsl2-ubuntu.json（wf-runner-execution-backend/v1，含本平台专属 D04 只读绑定 tool+agent）",
+    "platformDefaultRepoLint": "bridge.json defaults.workflowVersions[repo-lint]=0.3.0 —— 已置入但在 provenance 上被缺陷③遮蔽（对照 Q6a-04：game-sprint-plan 同引擎能解析出 platform-default），账上只记『已置入、效果不可观测』",
+    "matrix": "PASS 38 / NEEDS-INPUT 0 / EXPECTED 0 / FAIL 1（分母 39；唯一 FAIL = repo-lint@0.2.1，根因见 repoLintRowRootCause；wf-runner 按类型排除）",
+    "matrixEvidence": [
+      "qoder/runtime/maintenance/2.0-C/baseline/Q6b-matrix.json",
+      "qoder/runtime/maintenance/2.0-C/baseline/Q6b-matrix-076-report.json",
+      "qoder/runtime/maintenance/2.0-C/baseline/Q6b2-repolint-row.json",
+      "qoder/runtime/maintenance/2.0-C/baseline/Q6d-bridge-default-and-stop-wedge.json"
+    ],
+    "expected": [],
+    "history": [
+      "1.0 判据（r5，0.6.0 + repo-lint 0.2.1 legacy）：PASS 38 / EXPECTED 2 / FAIL 0",
+      "2.0 候选 0.7.3 轮（2.0-A）：PASS 38 / EXPECTED 1 / FAIL 0，唯一 EXPECTED = repo-lint 策略缺口",
+      "2.0 候选 0.7.6 轮（2.0-B）：能力缺口关闭，改为版本对齐的 1 FAIL；repo-lint@0.3.0 在矩阵内记 NEEDS-INPUT（harness 合成限制），真实可调用性由 K1b 端到端出证",
+      "2.0 生产接入轮（2.0-C，当前判据）：同数 PASS 38 / FAIL 1；FAIL 根因重新定性为缺陷③；14 份 / 219 项机检全绿；观察窗口自 2026-09-18 16:51(+08) 起算"
+    ]
+  }
+}

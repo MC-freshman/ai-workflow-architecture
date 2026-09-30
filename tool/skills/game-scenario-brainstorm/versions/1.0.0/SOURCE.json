@@ -1,0 +1,10 @@
+{
+  "schema": "ai-governance-source/v1",
+  "authorSession": "qoder",
+  "derivedFrom": "game-brainstorm@2.2.0",
+  "supersedes": null,
+  "releaseScope": "Architecture 3.1.0 step T-P7: one of eleven scenario skills for game-pipeline. The body is that workflow's own prompt file verbatim, so the collapse moved the selector and did not rewrite the craft.",
+  "verbatimFrom": "tool/game-brainstorm/versions/2.2.0/workflow.md",
+  "bodySha256": "66131a991679d81df58ebf91833ce819ff116e954c4d0ad17f70f6559b3ed832",
+  "openDeferred": []
+}

@@ -1,0 +1,18 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": ["figure_id", "claim", "path", "source_result_ids", "status"],
+  "properties": {
+    "figure_id": {"type": "string"},
+    "claim": {"type": "string", "minLength": 1},
+    "path": {"type": "string", "minLength": 1},
+    "source_result_ids": {"type": "string"},
+    "status": {"type": "string", "enum": ["DRAFT", "CHECKED", "FROZEN"]},
+    "qa_report_path": {"type": "string"},
+    "visual_review_path": {"type": "string"},
+    "preview_path": {"type": "string"},
+    "source_hash": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "preview_hash": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+  },
+  "additionalProperties": true
+}

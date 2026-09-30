@@ -1,0 +1,13 @@
+{
+  "schema": "ai-governance-source/v1",
+  "authorSession": "qoder",
+  "derivedFrom": "framework-pipeline@1.0.0 (stage graph, gate and the D-92 prompt fix) + se-pipeline@1.1.0 (original gate)",
+  "supersedes": null,
+  "releaseScope": "3.3.0 P6 new domain workflow for papers plus daily research coursework: 14 scenarios over 13 routing cards. The pointable pool additionally declares the 56 upstream nature/paper cards the routing cards quote, so an on-demand read is version-pinned and hash-checkable; declaring is not delivering — only the named routing card enters the prompt. The defaultScenario is `standard`; it was corrected after the first lint pass caught the value inherited from framework-pipeline pointing at a scenario this workflow does not declare.",
+  "openDeferred": [
+    "Four upstream cards reach outside their own release with ../../ paths (D-94); they are locked but not quoted.",
+    "Inherited schemas keep expert-task titles (same as framework-pipeline).",
+    "No current pointer moved."
+  ],
+  "previousSource": "tool/framework-pipeline/versions/1.0.0/SOURCE.json"
+}

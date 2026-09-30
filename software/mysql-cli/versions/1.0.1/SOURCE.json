@@ -1,0 +1,77 @@
+{
+ "schema": "ai-workflow-source/v1",
+ "authorSession": "qoder",
+ "derivedFrom": "mysql-cli@1.0.0",
+ "supersedes": "1.0.0",
+ "releaseScope": "3.0-Q Q-P3 (qoder platform-side adoption): mysql-cli has its capability snapshot frozen from a live read-only inquiry of an installed body, so the eight-step software gate can judge membership (C-4) and this platform can answer with a measurement. No capability, schema, recipe or selftest changed.",
+ "changes": [
+  "capabilities.snapshot.json: frozen=true, generationMethod=live-readonly-probe, liveInquiry.perExecutable names the argv actually asked and the digest of each answer, and every capability carries liveConfirmation with the option tokens seen in it.",
+  "manifest.json: the version field only - the shape is closed, so \"nothing else changed\" is stated here rather than written into the manifest.",
+  "SOURCE.json: added, as every new release must carry (SW3).",
+  "SHA256SUMS: regenerated, both directions."
+ ],
+ "unchanged": [
+  "capability names, their schemas, sideEffects / consent / idempotent flags",
+  "recipes/, schemas/, selftest/, README.md - byte for byte from 1.0.0"
+ ],
+ "evidence": {
+  "askedAt": "2026-09-21T07:11:19Z",
+  "perExecutable": {
+   "mysql": {
+    "asked": [
+     {
+      "argv": [
+       "<local-tool-body-path>",
+       "--version"
+      ],
+      "exitCode": 0,
+      "seconds": 0.03,
+      "sha256": "2315b088558128bcd2446d21eaec2ada94454cb84b8331b02d89f49669a09d86",
+      "bytes": 109
+     },
+     {
+      "argv": [
+       "<local-tool-body-path>",
+       "--help"
+      ],
+      "exitCode": 0,
+      "seconds": 0.03,
+      "sha256": "2eb05222247f9355620a253c26f113cef6250b2ae204f32163e0a2053d449c1d",
+      "bytes": 15722
+     }
+    ],
+    "liveTextSha256": "c51d6a52282024b858ed8f48a98c588cc97d2d172b0404c7e1701cdc1fc0b4a3"
+   },
+   "mysqldump": {
+    "asked": [
+     {
+      "argv": [
+       "<local-tool-body-path>",
+       "--version"
+      ],
+      "exitCode": 0,
+      "seconds": 0.02,
+      "sha256": "e1a3430d32a73ca1608b375c0cd0a9893dff219ade65e857b8ef24221ee8f585",
+      "bytes": 74
+     },
+     {
+      "argv": [
+       "<local-tool-body-path>",
+       "--help"
+      ],
+      "exitCode": 0,
+      "seconds": 0.02,
+      "sha256": "68697bc49d199b81366b0dc2005863926ec23ae684375ecfd9420b91a16a0f19",
+      "bytes": 25179
+     }
+    ],
+    "liveTextSha256": "909632edf8f87621bb26b8f9a7eaa5b4762c670438029526f2fa278c2d742a5c"
+   }
+  },
+  "rawAnswersKeptOnThisPlatform": "qoder/runtime/maintenance/3.0-Q/runs/q3-freeze/live-text.json - a platform fact, so the bytes stay on the platform and only their digests are shared"
+ },
+ "crossPlatformNote": "The body that answered is one platform install at the pinned upstream version. Another platform asks its own body: if the live list differs, the gateway answers SOFTWARE_DRIFT, which is what a frozen baseline exists for (BP-2: conclusions are not copied between platforms).",
+ "releaseStatus": "published",
+ "publishedAt": "2026-09-21",
+ "publishedBy": "qoder, architecture 3.0 platform-side round 3.0-Q, step Q-P3"
+}

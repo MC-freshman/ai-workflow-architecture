@@ -1,0 +1,21 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "required": ["inputFile"],
+  "properties": {
+    "inputFile": { "type": "string", "description": "本地 pcap/pcapng 捕获文件路径（-r）", "examples": ["capture.pcapng"] },
+    "displayFilter": { "type": "string", "description": "Wireshark 显示过滤器表达式（-Y）", "examples": ["http", "tcp.port == 443", "usb.transfer_type == 0x01"] },
+    "readFilter": { "type": "string", "description": "读取时 BPF 过滤器（-R，两遍分析时建议改用 -Y -2）" },
+    "protocolFilterTop": { "type": "string", "description": "顶层协议过滤（-J），仅 json/pdml/ek 输出时生效" },
+    "protocolFilterAll": { "type": "string", "description": "所有层协议过滤（-j）" },
+    "packetCount": { "type": "integer", "minimum": 1, "description": "最多读取包数（-c）" },
+    "packetDetails": { "type": "boolean", "default": false, "description": "-V，输出包详情树" },
+    "hexBytes": { "type": "boolean", "default": false, "description": "-x，输出 hex+ASCII 转储" },
+    "twoPass": { "type": "boolean", "default": false, "description": "-2，两遍分析（依赖后续包字段的过滤器需要）" },
+    "noDuplicateKeys": { "type": "boolean", "default": false, "description": "--no-duplicate-keys，JSON 输出合并重复键" },
+    "outputFormat": { "type": "string", "enum": ["json", "jsonraw", "pdml", "psml", "fields", "tabs", "text", "ek"], "default": "json" },
+    "fields": { "type": "array", "items": { "type": "string" }, "description": "-T fields 时提取的字段（-e 可重复），如 [\"frame.number\",\"ip.src\",\"tcp.port\"]" },
+    "fieldSeparator": { "type": "string", "description": "-T fields 的字段分隔符（-E separator=,）", "default": "\\t" }
+  },
+  "additionalProperties": false
+}

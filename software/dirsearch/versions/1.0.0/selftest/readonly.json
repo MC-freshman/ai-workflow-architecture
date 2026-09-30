@@ -1,0 +1,21 @@
+{
+  "schema": "ai-software-selftest/v1",
+  "mode": "readonly",
+  "checks": [
+    {
+      "id": "version",
+      "capability": "version",
+      "arguments": {},
+      "expectedExitCode": 0,
+      "expectedOutputContains": "dirsearch v0.4.3",
+      "timeout": 30,
+      "notes": "可能输出 pkg_resources DeprecationWarning 到 stderr，不影响退出码判定"
+    },
+    {
+      "id": "interpreter-present",
+      "kind": "file-integrity",
+      "files": ["${pythonPath}/python.exe", "dirsearch.py"],
+      "notes": "python.exe 与 dirsearch.py 哈希在 recipe verify.files 中声明"
+    }
+  ]
+}

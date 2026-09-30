@@ -1,0 +1,31 @@
+{
+  "schema": "ai-workflow/v2.1",
+  "id": "wf-runner",
+  "version": "0.11.0",
+  "mode": "pipeline",
+  "entry": "workflow.yaml",
+  "inputSchema": "schemas/input.json",
+  "outputSchema": "schemas/output.json",
+  "permissions": {
+    "filesystem": "platform-runtime-write-shared-read-only",
+    "network": "deny",
+    "process": "isolated-python"
+  },
+  "dependencies": {
+    "workflows": {
+      "repo-lint": "0.5.1"
+    },
+    "skills": {},
+    "packs": {}
+  },
+  "runtime": {
+    "type": "python-cli",
+    "entry": "cli.py",
+    "python": ">=3.9",
+    "environmentLock": "requirements.lock.txt"
+  },
+  "integrity": {
+    "sha256Manifest": "SHA256SUMS"
+  },
+  "displayName": "Workflow Runner (process-gate at-most-once execution)"
+}

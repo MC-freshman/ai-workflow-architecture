@@ -1,0 +1,13 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "description": "代理历史查询/拦截控制入参（预期能力，具体参数以冻结的工具 inputSchema 为准）",
+  "properties": {
+    "offset": { "type": "integer", "minimum": 0, "description": "历史记录起始偏移" },
+    "limit": { "type": "integer", "minimum": 1, "maximum": 500, "default": 50 },
+    "hostFilter": { "type": "string", "description": "按目标主机过滤" },
+    "methodFilter": { "type": "string", "enum": ["GET", "POST", "PUT", "DELETE", "PATCH", "HEAD", "OPTIONS", "*"] },
+    "interceptEnabled": { "type": "boolean", "description": "设置代理拦截开关（true/false）" }
+  },
+  "additionalProperties": true
+}

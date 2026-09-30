@@ -1,0 +1,35 @@
+{
+  "schema": "ai-governance-tool/v1",
+  "id": "architecture-ops",
+  "displayName": "Shared Governance Operations",
+  "version": "1.3.0",
+  "kind": "governance-tool",
+  "invocable": false,
+  "runtime": {
+    "type": "python-cli",
+    "entry": "architecture_ops",
+    "python": ">=3.9",
+    "testFramework": "stdlib unittest"
+  },
+  "commands": {
+    "switch_defaults": "one-sentence platform-scope default switch over all three shared repositories: plan/apply(CAS+checkpoint)/verify/revert; never edits a shared current.json, never another platform (requirement #3 / ADR-7; 3.0 S-P2 adds kind software)",
+    "version_impact": "read-only reverse-dependency (who exact tool-locks a resource@version) for closure checks",
+    "doctor": "platform-local read-only state report (lives per platform under ops/; this package standardizes the contract)",
+    "invocation_matrix": "the /wf and /wfa invocable-surface matrix over the shared registries (prepare->next->stop, FAIL 0 = interface face complete). --config is required and there is no platform default; --out parents are created; run names are stamped per invocation; --print-digest pins this harness version."
+  },
+  "coversGates": [
+    "requirement #3 one-sentence switch",
+    "DEF-01/02/03",
+    "REL CAS/rollback",
+    "F10",
+    "D-10/D-14/D-17/D-18 acceptance harness shared and versioned"
+  ],
+  "depends": {
+    "contracts": {
+      "runtime-contracts": "1.1.0"
+    }
+  },
+  "integrity": {
+    "sha256Manifest": "SHA256SUMS"
+  }
+}

@@ -1,0 +1,61 @@
+{
+  "schema": "ai-workflow-definition/v2",
+  "id": "mastermind-bug-bounty",
+  "version": "2.0.0",
+  "mode": "pipeline",
+  "maxParallel": 1,
+  "roles": [
+    "coordinator"
+  ],
+  "outputWorker": "coordinator",
+  "stages": [
+    {
+      "id": "SCOPE",
+      "action": "prompt",
+      "worker": "coordinator",
+      "dependsOn": [],
+      "promptRef": "workflow.md#stage:SCOPE",
+      "outputs": "schemas/scope.schema.json"
+    },
+    {
+      "id": "RECON",
+      "action": "prompt",
+      "worker": "coordinator",
+      "dependsOn": [
+        "SCOPE"
+      ],
+      "promptRef": "workflow.md#stage:RECON",
+      "outputs": "schemas/recon.schema.json"
+    },
+    {
+      "id": "ANALYSIS",
+      "action": "prompt",
+      "worker": "coordinator",
+      "dependsOn": [
+        "RECON"
+      ],
+      "promptRef": "workflow.md#stage:ANALYSIS",
+      "outputs": "schemas/analysis.schema.json"
+    },
+    {
+      "id": "TRIAGE",
+      "action": "prompt",
+      "worker": "coordinator",
+      "dependsOn": [
+        "ANALYSIS"
+      ],
+      "promptRef": "workflow.md#stage:TRIAGE",
+      "outputs": "schemas/triage.schema.json"
+    },
+    {
+      "id": "REPORT",
+      "action": "prompt",
+      "worker": "coordinator",
+      "dependsOn": [
+        "TRIAGE"
+      ],
+      "promptRef": "workflow.md#stage:REPORT",
+      "outputs": "schemas/report.schema.json"
+    }
+  ]
+}

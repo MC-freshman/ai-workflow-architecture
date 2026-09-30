@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "ai-workflow/math-modeling-programmer/input/v1",
+  "title": "Math Modeling Programmer Input",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["projectRoot"],
+  "properties": {
+    "projectRoot": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Absolute path to the explicitly authorized project root"
+    },
+    "task": {
+      "type": "string",
+      "minLength": 1
+    },
+    "stage": {
+      "type": "string",
+      "enum": ["INIT", "AUDIT", "SPEC", "BASELINE", "SOLVE", "EXPERIMENT", "VALIDATE", "FIGURES", "FREEZE"]
+    },
+    "inputFiles": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 }
+    },
+    "modelSpec": {
+      "type": "string",
+      "minLength": 1
+    },
+    "acceptance": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 }
+    }
+  }
+}

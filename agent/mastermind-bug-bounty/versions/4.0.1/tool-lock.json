@@ -1,0 +1,16 @@
+{
+  "schema": "ai-tool-lock/v2",
+  "workflows": {
+    "mastermind-bug-bounty": "3.0.1",
+    "mastermind-peer-task": "1.0.0"
+  },
+  "tools": [],
+  "skills": {
+    "security-scenario-recon": "1.0.0",
+    "security-scenario-triage": "1.0.0",
+    "security-scenario-api": "1.0.0",
+    "security-scenario-js": "1.0.0",
+    "security-scenario-crypto": "1.0.0",
+    "security-scenario-report": "1.0.0"
+  }
+}

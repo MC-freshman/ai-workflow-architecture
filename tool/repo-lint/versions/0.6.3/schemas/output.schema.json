@@ -1,0 +1,280 @@
+{
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "type": "object",
+ "required": [
+  "schema",
+  "version",
+  "generatedAt",
+  "roots",
+  "summary",
+  "decision",
+  "coverage",
+  "resources",
+  "findings",
+  "scope",
+  "processExitPolicy",
+  "sharedWriteProbe"
+ ],
+ "properties": {
+  "schema": {
+   "const": "ai-repo-lint-report/v1"
+  },
+  "version": {
+   "type": "string",
+   "description": "D-83: the report carries the linter release that produced it. The 0.5.2-era schema pinned a hardcoded const (0.3.0), which made every newer release's own report fail its own contract; a plain string keeps the field truthful without a self-breaking pin."
+  },
+  "generatedAt": {
+   "type": "string",
+   "format": "date-time"
+  },
+  "roots": {
+   "type": "object",
+   "required": [
+    "tool",
+    "agent"
+   ],
+   "properties": {
+    "tool": {
+     "type": "string"
+    },
+    "agent": {
+     "type": "string"
+    },
+    "software": {
+     "type": "string"
+    }
+   }
+  },
+  "selection": {
+   "type": [
+    "string",
+    "null"
+   ]
+  },
+  "summary": {
+   "type": "object",
+   "required": [
+    "errors",
+    "warnings",
+    "infos",
+    "resourceCount",
+    "checkedFiles",
+    "exitCode"
+   ],
+   "properties": {
+    "errors": {
+     "type": "integer",
+     "minimum": 0
+    },
+    "warnings": {
+     "type": "integer",
+     "minimum": 0
+    },
+    "infos": {
+     "type": "integer",
+     "minimum": 0
+    },
+    "resourceCount": {
+     "type": "integer",
+     "minimum": 0
+    },
+    "checkedFiles": {
+     "type": "integer",
+     "minimum": 0
+    },
+    "exitCode": {
+     "enum": [
+      0,
+      1,
+      2
+     ]
+    },
+    "softwareResources": {
+     "type": "integer",
+     "minimum": 0
+    }
+   }
+  },
+  "decision": {
+   "type": "object",
+   "required": [
+    "scope",
+    "status",
+    "runtimeStatus",
+    "blockingFindings"
+   ],
+   "properties": {
+    "scope": {
+     "enum": [
+      "inventory",
+      "selection"
+     ]
+    },
+    "status": {
+     "enum": [
+      "blocked",
+      "static-pass"
+     ]
+    },
+    "runtimeStatus": {
+     "const": "not-validated"
+    },
+    "blockingFindings": {
+     "type": "array"
+    }
+   }
+  },
+  "coverage": {
+   "type": "object"
+  },
+  "resources": {
+   "type": "array",
+   "items": {
+    "type": "object",
+    "required": [
+     "kind",
+     "id",
+     "version",
+     "path",
+     "manifestSchema"
+    ]
+   }
+  },
+  "findings": {
+   "type": "array",
+   "items": {
+    "type": "object",
+    "required": [
+     "rule",
+     "severity",
+     "code",
+     "kind",
+     "id",
+     "version",
+     "path",
+     "message"
+    ],
+    "properties": {
+     "rule": {
+      "type": "string",
+      "pattern": "^(?:R(?:[1-9]|1[0-4])|SW[1-9])$",
+      "description": "R1-R14 are the workflow/expert faces; SW1-SW9 are the software face added by 3.0 S-P3a. A new rule family has to be named here or the package refuses its own report."
+     },
+     "severity": {
+      "enum": [
+       "error",
+       "warning",
+       "info"
+      ]
+     },
+     "code": {
+      "type": "string"
+     },
+     "message": {
+      "type": "string"
+     }
+    }
+   }
+  },
+  "scope": {
+   "enum": [
+    "live",
+    "snapshot"
+   ]
+  },
+  "processExitPolicy": {
+   "const": "blockers-only"
+  },
+  "sharedWriteProbe": {
+   "type": "object",
+   "required": [
+    "applied"
+   ],
+   "properties": {
+    "applied": {
+     "type": "boolean"
+    },
+    "tool": {
+     "type": "string"
+    },
+    "agent": {
+     "type": "string"
+    }
+   },
+   "additionalProperties": false
+  },
+  "software": {
+   "type": "object",
+   "additionalProperties": false,
+   "required": [
+    "resources",
+    "findings"
+   ],
+   "properties": {
+    "resources": {
+     "type": "array",
+     "items": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+       "id",
+       "version",
+       "kind",
+       "capabilities",
+       "platformSupport",
+       "recipes",
+       "profiles"
+      ],
+      "properties": {
+       "id": {
+        "type": "string"
+       },
+       "version": {
+        "type": "string"
+       },
+       "kind": {
+        "type": [
+         "string",
+         "null"
+        ]
+       },
+       "capabilities": {
+        "type": "integer",
+        "minimum": 0
+       },
+       "platformSupport": {
+        "type": "array",
+        "items": {
+         "type": "string"
+        }
+       },
+       "recipes": {
+        "type": "array",
+        "items": {
+         "type": "string"
+        }
+       },
+       "profiles": {
+        "type": "array",
+        "items": {
+         "type": "string"
+        }
+       }
+      }
+     }
+    },
+    "findings": {
+     "type": "object",
+     "additionalProperties": {
+      "type": "integer",
+      "minimum": 0
+     }
+    }
+   }
+  }
+ },
+ "additionalProperties": false,
+ "patternProperties": {
+  "^x-": true
+ }
+}

@@ -1,0 +1,61 @@
+{
+  "schema": "ai-software-capability-snapshot/v1",
+  "softwareId": "burp-suite",
+  "softwareVersion": "1.0.0",
+  "upstreamVersion": "2024.5.1",
+  "generatedAt": "2026-09-18",
+  "generationMethod": "pending-live-tools-list",
+  "frozen": false,
+  "freezeInstructions": "启动 Burp（Start.bat）→ 确认 MCP Server 扩展已启用并监听 127.0.0.1:9876 → 调用 MCP tools/list → 将结果（工具名/描述/inputSchema）规范化回填本文件对应能力的 frozenToolName 与 nativeName，标注每个工具的 sideEffects/consent → 将本文件 frozen 置 true 并发布新版本配方（1.0.1 或 1.1.0）。未冻结前 proxyHistory/scannerScan 为 pending 能力，prepare 时按 pending 处理，不可自动调用。",
+  "capabilities": [
+    {
+      "name": "mcpListTools",
+      "nativeName": "JSON-RPC tools/list",
+      "frozen": true,
+      "sideEffects": "none",
+      "consent": "auto",
+      "idempotent": true,
+      "safeForSelftest": true,
+      "inputSchemaRef": "schemas/empty.input.json",
+      "outputSchemaRef": "schemas/mcpTools.output.json"
+    },
+    {
+      "name": "mcpCallTool",
+      "nativeName": "JSON-RPC tools/call",
+      "frozen": true,
+      "sideEffects": "external",
+      "consent": "confirm-stage",
+      "idempotent": false,
+      "safeForSelftest": false,
+      "inputSchemaRef": "schemas/mcpCall.input.json",
+      "outputSchemaRef": "schemas/mcpCall.output.json"
+    },
+    {
+      "name": "proxyHistory",
+      "nativeName": "tools/call（Proxy 类别，工具名待冻结）",
+      "frozen": false,
+      "frozenToolName": null,
+      "category": "Proxy（代理历史 / 拦截控制）",
+      "sideEffects": "external",
+      "consent": "confirm-stage",
+      "idempotent": true,
+      "safeForSelftest": false,
+      "inputSchemaRef": "schemas/proxyIntercept.input.json",
+      "outputSchemaRef": "schemas/proxyIntercept.output.json"
+    },
+    {
+      "name": "scannerScan",
+      "nativeName": "tools/call（Scanner 类别，工具名待冻结）",
+      "frozen": false,
+      "frozenToolName": null,
+      "category": "Scanner（主动/被动扫描；完整扫描 API 仅 Pro）",
+      "sideEffects": "external",
+      "consent": "confirm-stage",
+      "idempotent": false,
+      "safeForSelftest": false,
+      "inputSchemaRef": "schemas/scannerScan.input.json",
+      "outputSchemaRef": "schemas/scannerScan.output.json"
+    }
+  ],
+  "upstreamDocs": "https://github.com/PortSwigger/mcp-server"
+}

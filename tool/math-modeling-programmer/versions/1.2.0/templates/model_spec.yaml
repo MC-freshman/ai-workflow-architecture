@@ -1,0 +1,35 @@
+# 由建模手填写，编程手实现前逐项确认。
+problem_id: ""
+question: ""
+status: "UNCONFIRMED"  # 编程实现前必须由建模手改为 CONFIRMED
+objective:
+  name: ""
+  direction: "minimize"  # minimize or maximize
+  unit: ""
+inputs:
+  - name: ""
+    source: ""
+    unit: ""
+    description: ""
+parameters:
+  - name: ""
+    value: null
+    unit: ""
+    source: ""
+decision_variables:
+  - name: ""
+    domain: ""
+constraints:
+  - ""
+assumptions:
+  - id: "A-001"
+    statement: ""
+    status: "UNCONFIRMED"
+metrics:
+  - name: ""
+    definition: ""
+baseline: ""
+validation_plan:
+  - ""
+open_questions:
+  - ""

@@ -1,0 +1,71 @@
+schema: ai-workflow-definition/v3
+id: visualization-qa
+version: 1.3.0
+mode: executable-with-evidence
+maxParallel: 1
+roles:
+- visualization-engineer
+outputWorker: visualization-engineer
+stages:
+- id: execute
+  action: prompt
+  worker: visualization-engineer
+  promptRef: workflow.md#stage:execute
+  outputs: schemas/output.schema.json
+  onFail: repair
+  maxIterations: 3
+  repairPromptRef: workflow.md#stage:repair
+  gates:
+  - render-success
+  - geometry-measured
+  - no-clipping
+  - no-unapproved-overlap
+  - artifact-written-to-runtime
+gateDefinitions:
+  render-success:
+    type: file
+    target: evidence:qa/preview.png
+    minBytes: 1024
+  geometry-measured:
+    type: json-schema
+    target: evidence:qa/report.json
+    schema: schemas/qa-report.schema.json
+    crossHash:
+    - field:
+      - previewSha256
+      against: evidence:qa/preview.png
+  no-clipping:
+    type: json-schema
+    target: evidence:qa/report.json
+    schema: schemas/qa-clipping.schema.json
+  no-unapproved-overlap:
+    type: json-schema
+    target: evidence:qa/report.json
+    schema: schemas/qa-overlap.schema.json
+  artifact-written-to-runtime:
+    type: json-schema
+    target: evidence:qa/report.json
+    schema: schemas/qa-artifacts.schema.json
+defaultScenario: standard
+requiredStages:
+- execute
+scenarios:
+  axes:
+    summary: 轴系与比例：刻度、单位、截断与对数轴都要有依据。
+    skills:
+    - visualization-layout@1.1.0
+  citation:
+    summary: 引用与出处：图的来源数据与图注一致，能回到原始文件。
+    skills:
+    - paper-figure@1.0.0
+  color:
+    summary: 配色与图例：色板可读、图例不压数据，色盲友好。
+    skills:
+    - visualization-layout@1.1.0
+  export:
+    summary: 导出与尺寸：目标介质的 dpi/尺寸/字体内嵌逐项核对。
+    skills:
+    - paper-programmer-visualization@1.0.0
+    - visualization-layout@1.1.0
+  standard:
+    summary: 不指定场景时的既有形状：阶段与门禁一字不改。

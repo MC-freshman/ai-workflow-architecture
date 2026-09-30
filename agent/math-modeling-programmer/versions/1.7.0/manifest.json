@@ -1,0 +1,29 @@
+{
+  "schema": "ai-agent/v2",
+  "id": "math-modeling-programmer",
+  "displayName": "数学建模编程专家",
+  "version": "1.7.0",
+  "role": "数学建模项目的数据审计、求解、实验、验证和图表交付",
+  "workflows": [
+    "math-modeling-programmer"
+  ],
+  "prompt": "prompt.md",
+  "toolLock": "tool-lock.json",
+  "policies": [
+    "policies/modeling.md"
+  ],
+  "modelPolicy": {
+    "mode": "inherit",
+    "allowOverride": true
+  },
+  "input": {
+    "type": "text"
+  },
+  "output": {
+    "type": "text",
+    "language": "zh-CN"
+  },
+  "integrity": {
+    "sha256Manifest": "SHA256SUMS"
+  }
+}

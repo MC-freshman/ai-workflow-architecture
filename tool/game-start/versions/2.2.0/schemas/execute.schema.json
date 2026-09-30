@@ -1,0 +1,194 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "game-start · EXECUTE",
+  "type": "object",
+  "required": [
+    "stage",
+    "status",
+    "summary",
+    "unavailableChecks",
+    "charter",
+    "milestones",
+    "risks",
+    "nextActions"
+  ],
+  "properties": {
+    "charter": {
+      "type": "object",
+      "required": [
+        "objective",
+        "scope",
+        "outOfScope",
+        "successCriteria",
+        "targetPlatform"
+      ],
+      "properties": {
+        "objective": {
+          "type": "string",
+          "minLength": 20
+        },
+        "scope": {
+          "type": "string",
+          "minLength": 10
+        },
+        "outOfScope": {
+          "type": "string",
+          "minLength": 5
+        },
+        "successCriteria": {
+          "type": "array",
+          "minItems": 2,
+          "items": {
+            "type": "string",
+            "minLength": 8
+          }
+        },
+        "targetPlatform": {
+          "type": "string",
+          "minLength": 2
+        }
+      },
+      "additionalProperties": false
+    },
+    "milestones": {
+      "type": "array",
+      "minItems": 3,
+      "items": {
+        "type": "object",
+        "required": [
+          "name",
+          "target",
+          "exitCriteria"
+        ],
+        "properties": {
+          "name": {
+            "type": "string",
+            "minLength": 3
+          },
+          "target": {
+            "type": "string",
+            "minLength": 3
+          },
+          "exitCriteria": {
+            "type": "string",
+            "minLength": 10
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "risks": {
+      "type": "array",
+      "minItems": 3,
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "description",
+          "probability",
+          "impact",
+          "mitigation"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "minLength": 1
+          },
+          "description": {
+            "type": "string",
+            "minLength": 15
+          },
+          "probability": {
+            "enum": [
+              "L",
+              "M",
+              "H"
+            ]
+          },
+          "impact": {
+            "enum": [
+              "L",
+              "M",
+              "H"
+            ]
+          },
+          "mitigation": {
+            "type": "string",
+            "minLength": 10
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "nextActions": {
+      "type": "array",
+      "minItems": 2,
+      "items": {
+        "type": "object",
+        "required": [
+          "action",
+          "owner",
+          "due",
+          "milestoneRef"
+        ],
+        "properties": {
+          "action": {
+            "type": "string",
+            "minLength": 10
+          },
+          "owner": {
+            "type": "string",
+            "minLength": 1
+          },
+          "due": {
+            "type": "string",
+            "minLength": 1
+          },
+          "milestoneRef": {
+            "type": "string",
+            "minLength": 3
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    "stage": {
+      "const": "EXECUTE"
+    },
+    "status": {
+      "enum": [
+        "pass",
+        "partial",
+        "blocked"
+      ]
+    },
+    "summary": {
+      "type": "string",
+      "minLength": 40
+    },
+    "blockers": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "minLength": 5
+      }
+    },
+    "unavailableChecks": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "minLength": 3
+      }
+    },
+    "evidence": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string",
+        "minLength": 3
+      }
+    }
+  },
+  "additionalProperties": false
+}

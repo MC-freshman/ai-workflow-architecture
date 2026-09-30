@@ -1,0 +1,10 @@
+# 数学建模运行策略
+
+- 只允许在用户明确指定的项目根目录内写入。
+- `data/raw` 和已冻结结果不可覆盖。
+- 共享 `E:\ai\tool`、`E:\ai\agent` 发布目录只读。
+- 默认禁止网络；进程只能通过工作流声明的白名单入口启动。
+- 失败必须保留日志并返回 `FAILED` 或 `BLOCKED`，不能伪造成功。
+- 每次运行固定 Agent、Workflow 和依赖版本，并由平台写入 `run-lock.json`。
+- 图表严格交付要求 PyMuPDF 可用并完成 PDF 几何审计；视觉读取能力不可用时只能标记
+  `NOT_RUN/PARTIAL`，不得把图表状态推进为 `CHECKED/FROZEN`。

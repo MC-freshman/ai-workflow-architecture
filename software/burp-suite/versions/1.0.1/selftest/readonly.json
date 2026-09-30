@@ -1,0 +1,33 @@
+{
+ "schema": "ai-software-selftest/v1",
+ "mode": "readonly",
+ "checks": [
+  {
+   "id": "files-present",
+   "kind": "file-integrity",
+   "files": [
+    "BurpSuite\\burpsuite_pro_org.jar",
+    "BurpSuite\\burpsuitloader.jar",
+    "BurpSuite\\extensions\\burp-mcp-all-2024.5.1-compat.jar",
+    "jre\\bin\\java.exe"
+   ],
+   "notes": "校验 verify.files 中声明的 SHA256；不启动 Burp"
+  },
+  {
+   "id": "mcp-endpoint",
+   "capability": "mcpListTools",
+   "kind": "http-probe",
+   "transport": "mcp-sse",
+   "endpoint": "http://127.0.0.1:9876",
+   "mcpMethod": "tools/list",
+   "timeout": 5,
+   "onUnreachable": "SKIP",
+   "onReachable": {
+    "assertResultToolsArray": true,
+    "compareFrozenTools": true
+   },
+   "notes": "Burp 运行时按 SSE 根端点建立一次 session；本次 released snapshot 已冻结，重复读到的工具名/输入 schema 与 runtime.tools 不一致时答 SOFTWARE_DRIFT。"
+  }
+ ],
+ "notes": "只读自检不调用 HTTP、项目数据、扫描或配置写入工具；这些动作仍由 Burp UI 的审批开关控制。"
+}

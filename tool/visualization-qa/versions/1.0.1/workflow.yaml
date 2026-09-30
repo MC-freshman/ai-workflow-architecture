@@ -1,0 +1,33 @@
+id: visualization-qa
+version: 1.0.1
+entry: workflow.md
+mode: executable-with-evidence
+requires:
+  skills:
+    - visualization-layout@1.0.0
+gates:
+  - render-success
+  - geometry-measured
+  - no-clipping
+  - no-unapproved-overlap
+  - artifact-written-to-runtime
+steps:
+  - id: prepare
+    action: validate-figure-contract
+  - id: render
+    action: execute-isolated-renderer
+  - id: measure
+    action: collect-element-bounds
+  - id: audit
+    action: detect-clipping-overlap-and-font-issues
+  - id: repair
+    action: apply-deterministic-layout-repair
+    maxIterations: 3
+  - id: verify
+    action: render-and-audit-again
+
+stages:
+  - id: execute
+    mode: serial
+    workers: [visualization-engineer]
+outputWorker: visualization-engineer

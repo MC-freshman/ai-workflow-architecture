@@ -1,0 +1,6 @@
+interface:
+  display_name: "Solver Engineer"
+  short_description: "实现数模基线、求解器和实验"
+  default_prompt: "使用 $solver-engineer 实现已确认的数模模型。"
+policy:
+  allow_implicit_invocation: false

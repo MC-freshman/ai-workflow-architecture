@@ -1,0 +1,6 @@
+{
+  "schema": "ai-contracts-pointer/v1",
+  "id": "runtime-contracts",
+  "version": "1.5.0",
+  "hashManifest": "SHA256SUMS"
+}

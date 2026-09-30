@@ -1,0 +1,15 @@
+{
+ "$schema": "http://json-schema.org/draft-07/schema#",
+ "type": "object",
+ "description": "D-61 closure: nmap 7.95 has no -oJ flag (live --help probed 2026-09-27); the capability runs `-oX -` and the connector captures the raw XML document on stdout. Consumers parse the nmap XML from rawOutput.",
+ "properties": {
+  "rawOutput": {
+   "type": "string",
+   "minLength": 1
+  }
+ },
+ "required": [
+  "rawOutput"
+ ],
+ "additionalProperties": true
+}

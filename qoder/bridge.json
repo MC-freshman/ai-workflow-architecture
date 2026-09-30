@@ -1,0 +1,23 @@
+{
+ "schema": "ai-platform-bridge/v1.1",
+ "platform": "qoder",
+ "shared": {
+  "agentRegistry": "E:\\ai\\agent\\registry.json",
+  "toolRegistry": "E:\\ai\\tool\\registry.json",
+  "architecturePrompt": "E:\\ai\\AI_ARCHITECTURE_SYSTEM_PROMPT.md",
+  "readOnly": true
+ },
+ "runtimeRoot": "E:\\ai\\qoder\\runtime",
+ "runner": "E:\\ai\\tool\\wf-runner",
+ "defaults": {
+  "workflowVersions": {
+   "repo-lint": "0.6.3"
+  },
+  "x-note": "仅本平台作用域。2026-09-29 采纳轮（qoder/runtime/maintenance/20260929-0.12-adoption）把本平台默认入口版 与 scannerRelease 一起对齐到 repo-lint/0.6.3：引擎在 resolution.py 里比对「选中的 repo-lint 版本」与本平台声明的 scannerRelease，不一致直接 VERSION_CONFLICT（D-52 族），所以这两处必须同批动，历史上分开动过就出过不可调用。旧条目讲的是 0.7.6 时代的 schema 交叉污染（scannerRelease 0.3.0 vs 默认 0.2.1），该缺陷已由 2.0/3.x 各轮闭合，留在这里只会误导，故整条替换。共享 current 一字未动。"
+ },
+ "modes": [
+  "workflow",
+  "agent-workflow"
+ ],
+ "x-note-3-0-q": "3.0-Q Q-P2: the platform default for repo-lint moves to 0.4.0 in the same batch as config.scannerRelease, because the engine refuses a request whose selected repo-lint differs from the declared scanner release."
+}

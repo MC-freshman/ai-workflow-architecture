@@ -1,0 +1,17 @@
+{
+  "schema": "ai-governance-source/v1",
+  "authorSession": "qoder",
+  "derivedFrom": "skill:nature-nature-proposal-writer@1.0.0+nature-within-approved-proposal@1.0.0+nature-literature-push-template@1.0.0",
+  "supersedes": null,
+  "releaseScope": "3.3.0 P6 scenario card for paper-author. Every quoted block is the referenced skill's own description copied verbatim with its language and byte size recorded; new writing is limited to step order, the one-line stance and the refusal gates.",
+  "verbatimFrom": {
+    "nature-nature-proposal-writer@1.0.0": "SKILL.md#frontmatter.description",
+    "nature-within-approved-proposal@1.0.0": "SKILL.md#frontmatter.description",
+    "nature-literature-push-template@1.0.0": "SKILL.md#frontmatter.description"
+  },
+  "bodySha256": "5d30f0519c626e0600e5858239267bd80eb4ff9159b191c90b986f3c4623ce9c",
+  "openDeferred": [
+    "The numbered spine cards (nature-00-scope, -01-research-canon, -02-evidence-table, -04-section-contracts) are 192-339 B stubs; this card quotes the substantive cards instead and records that the spine is thin.",
+    "No current pointer moved (red line 5)."
+  ]
+}

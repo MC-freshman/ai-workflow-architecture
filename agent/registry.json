@@ -1,0 +1,117 @@
+{
+  "schema": "ai-agent-registry/v2",
+  "version": 14,
+  "agents": [
+    {
+      "id": "game-builder",
+      "current": "game-builder/current.json",
+      "version": "1.9.1",
+      "enabled": true
+    },
+    {
+      "id": "mastermind-api-validation",
+      "current": "mastermind-api-validation/current.json",
+      "version": "1.1.0",
+      "enabled": true,
+      "deprecated": true,
+      "supersededBy": "mastermind-bug-bounty",
+      "deprecationNote": "3.1-A T-P6: replaced by the merged security expert plus a scenario selection; the published bytes of this expert are unchanged and runs pinned to it still resolve and stop."
+    },
+    {
+      "id": "mastermind-bug-bounty",
+      "current": "mastermind-bug-bounty/current.json",
+      "version": "4.0.1",
+      "enabled": true
+    },
+    {
+      "id": "mastermind-crypto-analysis",
+      "current": "mastermind-crypto-analysis/current.json",
+      "version": "1.1.0",
+      "enabled": true,
+      "deprecated": true,
+      "supersededBy": "mastermind-bug-bounty",
+      "deprecationNote": "3.1-A T-P6: replaced by the merged security expert plus a scenario selection; the published bytes of this expert are unchanged and runs pinned to it still resolve and stop."
+    },
+    {
+      "id": "mastermind-js-analysis",
+      "current": "mastermind-js-analysis/current.json",
+      "version": "1.1.0",
+      "enabled": true,
+      "deprecated": true,
+      "supersededBy": "mastermind-bug-bounty",
+      "deprecationNote": "3.1-A T-P6: replaced by the merged security expert plus a scenario selection; the published bytes of this expert are unchanged and runs pinned to it still resolve and stop."
+    },
+    {
+      "id": "mastermind-recon",
+      "current": "mastermind-recon/current.json",
+      "version": "1.1.0",
+      "enabled": true,
+      "deprecated": true,
+      "supersededBy": "mastermind-bug-bounty",
+      "deprecationNote": "3.1-A T-P6: replaced by the merged security expert plus a scenario selection; the published bytes of this expert are unchanged and runs pinned to it still resolve and stop."
+    },
+    {
+      "id": "mastermind-reporting",
+      "current": "mastermind-reporting/current.json",
+      "version": "1.1.0",
+      "enabled": true,
+      "deprecated": true,
+      "supersededBy": "mastermind-bug-bounty",
+      "deprecationNote": "3.1-A T-P6: replaced by the merged security expert plus a scenario selection; the published bytes of this expert are unchanged and runs pinned to it still resolve and stop."
+    },
+    {
+      "id": "mastermind-triage",
+      "current": "mastermind-triage/current.json",
+      "version": "1.1.0",
+      "enabled": true,
+      "deprecated": true,
+      "supersededBy": "mastermind-bug-bounty",
+      "deprecationNote": "3.1-A T-P6: replaced by the merged security expert plus a scenario selection; the published bytes of this expert are unchanged and runs pinned to it still resolve and stop."
+    },
+    {
+      "id": "math-modeling-programmer",
+      "current": "math-modeling-programmer/current.json",
+      "version": "1.9.0",
+      "enabled": true
+    },
+    {
+      "id": "novel-writer",
+      "current": "novel-writer/current.json",
+      "version": "1.5.1",
+      "enabled": true
+    },
+    {
+      "id": "security-researcher",
+      "current": "security-researcher/current.json",
+      "version": "1.4.0",
+      "enabled": true,
+      "deprecated": true,
+      "supersededBy": "mastermind-bug-bounty",
+      "deprecationNote": "3.1-A T-P6: replaced by the merged security expert plus a scenario selection; the published bytes of this expert are unchanged and runs pinned to it still resolve and stop."
+    },
+    {
+      "id": "software-engineer",
+      "current": "software-engineer/current.json",
+      "version": "1.5.2",
+      "enabled": true
+    },
+    {
+      "id": "visualization-engineer",
+      "current": "visualization-engineer/current.json",
+      "version": "1.7.1",
+      "enabled": true
+    },
+    {
+      "id": "framework-author",
+      "current": "framework-author/current.json",
+      "version": "1.0.0",
+      "enabled": true
+    },
+    {
+      "id": "paper-author",
+      "current": "paper-author/current.json",
+      "version": "1.0.0",
+      "enabled": true
+    }
+  ]
+}

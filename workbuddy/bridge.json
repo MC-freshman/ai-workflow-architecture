@@ -1,0 +1,20 @@
+{
+  "schema": "ai-platform-bridge/v1",
+  "platform": "workbuddy",
+  "shared": {
+    "agentRegistry": "E:\\ai\\agent\\registry.json",
+    "toolRegistry": "E:\\ai\\tool\\registry.json",
+    "architecturePrompt": "E:\\ai\\AI_ARCHITECTURE_SYSTEM_PROMPT.md",
+    "readOnly": true
+  },
+  "runtimeRoot": "E:\\ai\\workbuddy\\runtime",
+  "modes": [
+    "workflow",
+    "agent-workflow"
+  ],
+  "defaults": {
+    "workflowVersions": {
+      "repo-lint": "0.5.2"
+    }
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "mastermind-peer-task input",
+  "type": "object",
+  "properties": {
+    "engagementId": {
+      "type": "string"
+    },
+    "brief": {
+      "type": "string"
+    },
+    "targets": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "parameters": {
+      "type": "object"
+    }
+  },
+  "additionalProperties": true
+}

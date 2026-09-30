@@ -1,0 +1,15 @@
+{
+  "schema": "ai-workflow-source/v1",
+  "sourceId": "math-modeling-skill-main",
+  "sourcePath": "tools/figure",
+  "snapshot": "snapshot-2026.08.31",
+  "license": "user-confirmed-open-source",
+  "enhancement": "runtime-render-measure-repair-gates-and-element-collision-audit",
+  "patch": {
+    "version": "1.2.1",
+    "from": "visualization-qa@1.2.0",
+    "change": "仅改 manifest/workflow.yaml 的版本号并新增 tests/contract.json；其余文件逐字节不变。",
+    "why": "Z10 §11 G8 / §6.4 D3：补契约测试，使 R8 gate-unverified 在 lint 0.2.1 下降级为 info。",
+    "at": "2026-09-14"
+  }
+}

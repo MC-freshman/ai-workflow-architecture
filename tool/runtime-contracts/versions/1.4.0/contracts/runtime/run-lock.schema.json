@@ -1,0 +1,522 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://contracts.local/runtime/1.1/run-lock.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "recordType",
+    "runId",
+    "parentRunId",
+    "platform",
+    "createdAt",
+    "runRoot",
+    "canonicalization",
+    "selection",
+    "resources",
+    "input",
+    "execution"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "enum": [
+        "ai-run-lock/v1.1",
+        "ai-run-lock/v1.2",
+        "ai-run-lock/v1.3"
+      ]
+    },
+    "recordType": {
+      "const": "execution"
+    },
+    "runId": {
+      "$ref": "common.schema.json#/$defs/id"
+    },
+    "parentRunId": {
+      "oneOf": [
+        {
+          "type": "null"
+        },
+        {
+          "$ref": "common.schema.json#/$defs/id"
+        }
+      ]
+    },
+    "platform": {
+      "enum": [
+        "codex",
+        "dsh",
+        "workbuddy",
+        "zcode",
+        "doubao",
+        "qoder"
+      ]
+    },
+    "createdAt": {
+      "$ref": "common.schema.json#/$defs/time"
+    },
+    "runRoot": {
+      "$ref": "common.schema.json#/$defs/absolutePath"
+    },
+    "canonicalization": {
+      "const": "sha256-cjson-safe-v1"
+    },
+    "selection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "agent",
+        "workflow",
+        "runner",
+        "environment"
+      ],
+      "properties": {
+        "agent": {
+          "oneOf": [
+            {
+              "type": "null"
+            },
+            {
+              "$ref": "common.schema.json#/$defs/id"
+            }
+          ]
+        },
+        "workflow": {
+          "$ref": "common.schema.json#/$defs/id"
+        },
+        "runner": {
+          "$ref": "common.schema.json#/$defs/id"
+        },
+        "environment": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "$ref": "common.schema.json#/$defs/id"
+          }
+        }
+      },
+      "patternProperties": {
+        "^x-": true
+      }
+    },
+    "resources": {
+      "type": "array",
+      "minItems": 3,
+      "items": {
+        "$ref": "common.schema.json#/$defs/resource"
+      }
+    },
+    "input": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "parameters",
+        "parametersSha256",
+        "files",
+        "manifestSha256",
+        "snapshotSha256"
+      ],
+      "properties": {
+        "parameters": {
+          "type": "object"
+        },
+        "parametersSha256": {
+          "$ref": "common.schema.json#/$defs/hash"
+        },
+        "files": {
+          "type": "array",
+          "items": {
+            "$ref": "common.schema.json#/$defs/file"
+          }
+        },
+        "manifestSha256": {
+          "$ref": "common.schema.json#/$defs/hash"
+        },
+        "snapshotSha256": {
+          "$ref": "common.schema.json#/$defs/hash"
+        }
+      },
+      "patternProperties": {
+        "^x-": true
+      }
+    },
+    "execution": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "expandedGraphSha256",
+        "maxParallel",
+        "resume",
+        "scenario",
+        "stages"
+      ],
+      "properties": {
+        "maxParallel": {
+          "const": 1
+        },
+        "resume": {
+          "const": false
+        },
+        "stages": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "id",
+              "action",
+              "dependsOn",
+              "requiredGates"
+            ],
+            "properties": {
+              "id": {
+                "$ref": "common.schema.json#/$defs/id"
+              },
+              "action": {
+                "enum": [
+                  "prompt",
+                  "script",
+                  "software-call"
+                ]
+              },
+              "dependsOn": {
+                "type": "array",
+                "uniqueItems": true,
+                "items": {
+                  "$ref": "common.schema.json#/$defs/id"
+                }
+              },
+              "requiredGates": {
+                "type": "array",
+                "uniqueItems": true,
+                "items": {
+                  "$ref": "common.schema.json#/$defs/id"
+                }
+              },
+              "software": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "softwareId",
+                  "softwareVersion",
+                  "capability"
+                ],
+                "properties": {
+                  "softwareId": {
+                    "$ref": "common.schema.json#/$defs/id"
+                  },
+                  "softwareVersion": {
+                    "type": "string",
+                    "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"
+                  },
+                  "capability": {
+                    "$ref": "common.schema.json#/$defs/id"
+                  },
+                  "instanceMode": {
+                    "enum": [
+                      "per-run",
+                      "pooled",
+                      "singleton"
+                    ]
+                  },
+                  "exclusiveResources": {
+                    "type": "array",
+                    "items": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            },
+            "patternProperties": {
+              "^x-": true
+            }
+          }
+        },
+        "rigor": {
+          "enum": [
+            "fast",
+            "balanced",
+            "full"
+          ],
+          "description": "A-axis: how much ceremony this run pays for. Absent on v1.1 locks."
+        },
+        "gated": {
+          "type": "boolean",
+          "description": "True only when every required gate of every completed stage was enforced."
+        },
+        "frozen": {
+          "type": "boolean",
+          "description": "A deliverable claim. Only a full-rigor, gated run may assert it."
+        },
+        "execPath": {
+          "enum": [
+            "kernel-sandbox",
+            "platform-venv",
+            "host-controlled"
+          ],
+          "description": "B-axis: which rung of the script execution ladder actually ran."
+        },
+        "hostConsent": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "agreementSha256"
+          ],
+          "properties": {
+            "agreementSha256": {
+              "$ref": "common.schema.json#/$defs/hash"
+            },
+            "agreedAt": {
+              "type": "string",
+              "minLength": 1
+            }
+          },
+          "patternProperties": {
+            "^x-": true
+          }
+        },
+        "environmentSealed": {
+          "type": "boolean",
+          "description": "False means the platform declared no sealed script environment; selection.environment must then be empty (D-27 contract half)."
+        },
+        "software": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "gateway",
+            "declared"
+          ],
+          "properties": {
+            "gateway": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "path",
+                "sha256"
+              ],
+              "properties": {
+                "path": {
+                  "type": "string",
+                  "minLength": 1
+                },
+                "sha256": {
+                  "type": "string",
+                  "pattern": "^[0-9a-f]{64}$"
+                }
+              }
+            },
+            "declared": {
+              "type": "array",
+              "minItems": 1,
+              "items": {
+                "type": "object",
+                "additionalProperties": false,
+                "required": [
+                  "softwareId",
+                  "softwareVersion",
+                  "snapshotSha256"
+                ],
+                "properties": {
+                  "softwareId": {
+                    "$ref": "common.schema.json#/$defs/id"
+                  },
+                  "softwareVersion": {
+                    "type": "string",
+                    "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"
+                  },
+                  "snapshotSha256": {
+                    "type": "string",
+                    "pattern": "^[0-9a-f]{64}$"
+                  }
+                }
+              }
+            },
+            "callsRoot": {
+              "const": "evidence/software-calls"
+            }
+          }
+        },
+        "rigorSource": {
+          "enum": [
+            "declared",
+            "default"
+          ]
+        },
+        "scenario": {
+          "anyOf": [
+            {
+              "type": "string",
+              "minLength": 1
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "expandedGraphSha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "contextSkills": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "pattern": "^[a-z0-9][a-z0-9._-]*$"
+          }
+        }
+      },
+      "patternProperties": {
+        "^x-": true
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "stages": {
+                "contains": {
+                  "type": "object",
+                  "properties": {
+                    "action": {
+                      "const": "software-call"
+                    }
+                  },
+                  "required": [
+                    "action"
+                  ]
+                }
+              }
+            },
+            "required": [
+              "stages"
+            ]
+          },
+          "then": {
+            "required": [
+              "software"
+            ]
+          }
+        }
+      ]
+    }
+  },
+  "patternProperties": {
+    "^x-": true
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "execution": {
+            "properties": {
+              "frozen": {
+                "const": true
+              }
+            },
+            "required": [
+              "frozen"
+            ]
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "execution": {
+            "properties": {
+              "rigor": {
+                "const": "full"
+              },
+              "gated": {
+                "const": true
+              }
+            },
+            "required": [
+              "rigor",
+              "gated"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "execution": {
+            "properties": {
+              "execPath": {
+                "const": "host-controlled"
+              }
+            },
+            "required": [
+              "execPath"
+            ]
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "execution": {
+            "required": [
+              "hostConsent"
+            ]
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "execution": {
+            "properties": {
+              "environmentSealed": {
+                "const": false
+              }
+            },
+            "required": [
+              "environmentSealed"
+            ]
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "selection": {
+            "properties": {
+              "environment": {
+                "maxItems": 0
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "execution": {
+            "properties": {
+              "rigor": {
+                "const": "fast"
+              }
+            },
+            "required": [
+              "rigor"
+            ]
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "execution": {
+            "properties": {
+              "frozen": {
+                "const": false
+              }
+            }
+          }
+        }
+      }
+    }
+  ]
+}

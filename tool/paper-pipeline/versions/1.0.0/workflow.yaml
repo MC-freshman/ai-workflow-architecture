@@ -1,0 +1,164 @@
+{
+  "schema": "ai-workflow-definition/v3",
+  "id": "paper-pipeline",
+  "version": "1.0.0",
+  "mode": "pipeline",
+  "maxParallel": 1,
+  "roles": [
+    "expert"
+  ],
+  "outputWorker": "expert",
+  "gateDefinitions": {
+    "report-complete": {
+      "type": "output-schema"
+    },
+    "work-integrity": {
+      "type": "process",
+      "cwd": "evidence",
+      "argv": [
+        "workflow:scripts/validate_expert_work.py"
+      ],
+      "expectExit": [
+        0
+      ],
+      "expectArtifacts": [
+        {
+          "target": "evidence:expert-work-check.json",
+          "minBytes": 2
+        }
+      ],
+      "reasonFrom": "evidence:expert-work-check.json"
+    }
+  },
+  "stages": [
+    {
+      "id": "INTAKE",
+      "action": "prompt",
+      "worker": "expert",
+      "dependsOn": [],
+      "promptRef": "workflow.md#stage:INTAKE",
+      "outputs": "schemas/intake.schema.json"
+    },
+    {
+      "id": "WORK",
+      "action": "prompt",
+      "worker": "expert",
+      "dependsOn": [
+        "INTAKE"
+      ],
+      "promptRef": "workflow.md#stage:WORK",
+      "outputs": "schemas/work.schema.json",
+      "onFail": "repair",
+      "maxIterations": 2,
+      "repairPromptRef": "workflow.md#stage:repair",
+      "gates": [
+        "work-integrity"
+      ]
+    },
+    {
+      "id": "REPORT",
+      "action": "prompt",
+      "worker": "expert",
+      "dependsOn": [
+        "WORK"
+      ],
+      "promptRef": "workflow.md#stage:REPORT",
+      "outputs": "schemas/report.schema.json",
+      "gates": [
+        "report-complete"
+      ]
+    }
+  ],
+  "defaultScenario": "standard",
+  "requiredStages": [
+    "INTAKE",
+    "REPORT"
+  ],
+  "scenarios": {
+    "standard": {
+      "summary": "通用学术写作骨架：确认边界 → 起草并自查 → 交付。缺省场景点名两族各一张卡，不依赖零点名回退（R17）。",
+      "skills": [
+        "paper-scenario-evidence-mapping@1.0.0",
+        "paper-scenario-section-draft@1.0.0"
+      ]
+    },
+    "scope-mapping": {
+      "summary": "稿件对刊：先定刊物范围、体裁与档位再动笔",
+      "skills": [
+        "paper-scenario-scope-mapping@1.0.0"
+      ]
+    },
+    "literature-canon": {
+      "summary": "文献正典与检索策略，并筛除水货",
+      "skills": [
+        "paper-scenario-literature-canon@1.0.0"
+      ]
+    },
+    "evidence-mapping": {
+      "summary": "把每条主张钉到可复核证据上，或显式降级",
+      "skills": [
+        "paper-scenario-evidence-mapping@1.0.0"
+      ]
+    },
+    "argument-design": {
+      "summary": "论证骨架：可反驳假设、论证图与缺口分析",
+      "skills": [
+        "paper-scenario-argument-design@1.0.0"
+      ]
+    },
+    "section-draft": {
+      "summary": "分节起草：引言/方法/结果/讨论/结论/摘要",
+      "skills": [
+        "paper-scenario-section-draft@1.0.0"
+      ]
+    },
+    "style-polish": {
+      "summary": "文体打磨：风格护栏、标点与中文审稿语体",
+      "skills": [
+        "paper-scenario-style-polish@1.0.0"
+      ]
+    },
+    "figure-contract": {
+      "summary": "图件契约：素材溯源、图注自洽、统计一致",
+      "skills": [
+        "paper-scenario-figure-contract@1.0.0"
+      ]
+    },
+    "reviewer-response": {
+      "summary": "审稿应对：分歧裁决、大小修与更正",
+      "skills": [
+        "paper-scenario-reviewer-response@1.0.0"
+      ]
+    },
+    "integrity-check": {
+      "summary": "诚信与可复核：自审、一致性清扫、伦理、披露与元数据",
+      "skills": [
+        "paper-scenario-integrity-check@1.0.0"
+      ]
+    },
+    "chinese-mode": {
+      "summary": "中文作者模式：流程、语体与术语单独成立",
+      "skills": [
+        "paper-scenario-chinese-mode@1.0.0"
+      ]
+    },
+    "experiment-plan": {
+      "summary": "日常实验：先定何为算数，记录含做不成的实验",
+      "skills": [
+        "paper-scenario-experiment-plan@1.0.0"
+      ]
+    },
+    "data-report": {
+      "summary": "日常数据：统计呈现、包一致性与异常日志对账",
+      "skills": [
+        "paper-scenario-data-report@1.0.0"
+      ]
+    },
+    "proposal-assignment": {
+      "summary": "日常作业：计划书、课程研究作业与文献推送",
+      "skills": [
+        "paper-scenario-proposal-assignment@1.0.0"
+      ]
+    }
+  }
+}

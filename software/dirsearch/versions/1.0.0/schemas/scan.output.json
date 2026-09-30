@@ -1,0 +1,27 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "stdout": { "type": "string", "description": "-q 静默模式下为发现的路径行" },
+    "exitCode": { "type": "integer" },
+    "reportFile": {
+      "type": "object",
+      "description": "当 outputFile + outputFormat=json 时读取报告文件，dirsearch JSON 为结果数组",
+      "properties": {
+        "results": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "url": { "type": "string" },
+              "status": { "type": "integer" },
+              "contentLength": { "type": "integer" },
+              "contentType": { "type": "string" },
+              "redirect": { "type": "string" }
+            }
+          }
+        }
+      }
+    }
+  }
+}

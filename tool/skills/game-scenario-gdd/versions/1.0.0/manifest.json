@@ -1,0 +1,28 @@
+{
+  "schema": "ai-skill/v1",
+  "id": "game-scenario-gdd",
+  "version": "1.0.0",
+  "kind": "scenario",
+  "category": "game-mastermind",
+  "entry": "SKILL.md",
+  "input": {
+    "type": "workflow-stage-context",
+    "contract": "the stage prompt this scenario is selected for"
+  },
+  "output": {
+    "type": "guidance",
+    "contract": "judgement criteria and refusal rules for that scenario"
+  },
+  "permissions": [],
+  "requires": [],
+  "conflicts": [],
+  "source": {
+    "sourceId": "workflow:game-gdd-author",
+    "path": "versions/2.2.0/workflow.md",
+    "license": "in-repo",
+    "snapshot": "derived at 3.1-A T-P7"
+  },
+  "integrity": {
+    "sha256Manifest": "SHA256SUMS"
+  }
+}

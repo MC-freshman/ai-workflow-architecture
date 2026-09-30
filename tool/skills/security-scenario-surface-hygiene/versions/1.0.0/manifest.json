@@ -1,0 +1,28 @@
+{
+  "schema": "ai-skill/v1",
+  "id": "security-scenario-surface-hygiene",
+  "version": "1.0.0",
+  "kind": "scenario",
+  "category": "security-mastermind",
+  "entry": "SKILL.md",
+  "input": {
+    "type": "workflow-stage-context",
+    "contract": "the stage prompt this scenario is selected for"
+  },
+  "output": {
+    "type": "guidance",
+    "contract": "routing order, verbatim per-skill triggers and refusal rules"
+  },
+  "permissions": [],
+  "requires": [],
+  "conflicts": [],
+  "source": {
+    "sourceId": "skill:novel-auditing-cors-policy-security|skill:novel-checking-http-security-headers-security|skill:novel-analyzing-tls-config-security|skill:novel-detecting-ssl-cert-issues-security|skill:novel-detecting-weak-cryptography-security|skill:novel-detecting-directory-listing-security|skill:novel-detecting-debug-endpoints-security|skill:novel-fingerprinting-server-software-security",
+    "path": "versions/1.0.0/SKILL.md",
+    "license": "MIT (upstream: Jeremy Longshore / Intent Solutions)",
+    "snapshot": "derived at 3.3.0 P4"
+  },
+  "integrity": {
+    "sha256Manifest": "SHA256SUMS"
+  }
+}

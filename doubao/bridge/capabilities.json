@@ -1,0 +1,148 @@
+{
+  "schema": "ai-platform-capabilities/v1",
+  "platform": "doubao",
+  "attestedAt": "2026-09-23",
+  "checks": {
+    "python-runtime": true,
+    "runner-dependency-resolution": true,
+    "filesystem-platform-scoped-write": true,
+    "shared-repo-read-only-access": true,
+    "shell-command-execution": true,
+    "runner-protocol-prepare": true,
+    "prompt-stage-claim": true,
+    "prompt-stage-submit": true,
+    "terminal-stop-with-evidence": true,
+    "context-skill-injection": true,
+    "scenario-expansion": true
+  },
+  "permissionAdapters": [
+    {
+      "filesystem": "project-scoped",
+      "network": "deny",
+      "process": "allowlisted-only",
+      "evidence": "doubao 自证（2026-09-23，3.1-D 接入轮）：prompt 阶段由本会话执行，运行产物只落 runsRoot（引擎强制 runsRoot ⊂ platformRoot）。口径——network=deny、process=allowlisted-only、filesystem=project-scoped 在 prompt 面是会话自律（enforcement=advisory），Doubao 会话本身具备网络与命令能力，不要把自律读作内核强制；脚本面本平台无密封环境，action:script 派发回答 CAPABILITY_UNAVAILABLE。可调用性以 invocation 矩阵实测为准。"
+    }
+  ],
+  "profiles": {
+    "renderer": {
+      "adapters": [
+        "matplotlib-adapter-first"
+      ],
+      "requires": [
+        "matplotlib"
+      ]
+    }
+  },
+  "descriptor": {
+    "schema": "ai-platform-descriptor/v2",
+    "platformId": "doubao",
+    "protocols": [
+      "ai-run-protocol/v1.1",
+      "ai-run-protocol/v1.2"
+    ],
+    "operations": [
+      "prepare",
+      "next",
+      "submit",
+      "status",
+      "stop"
+    ],
+    "actions": {
+      "prompt": {
+        "supported": true,
+        "enforcement": "advisory",
+        "note": "prompt 阶段由会话执行并 claim；矩阵全 workflow/agent claim+stop 实测通过。advisory＝会话自律，非内核强制。"
+      },
+      "script": {
+        "supported": false,
+        "enforcement": "none",
+        "note": "本平台无 WSL/容器密封脚本环境，config 不声明 scriptEnvironmentRungs；action:script 派发按 D-27 回答 CAPABILITY_UNAVAILABLE，prompt-only 工作流不受影响。"
+      },
+      "peer": {
+        "supported": false,
+        "enforcement": "none",
+        "note": "未声明 peerDispatcherModule/peerChildExecutor，委派不可用。"
+      },
+      "software-call": {
+        "supported": false,
+        "enforcement": "none",
+        "note": "按用户 2026-09-23 授权，software 软件仓问题默认忽视，本平台不声明 softwareRoot/gateway。"
+      }
+    },
+    "profiles": {
+      "renderer": {
+        "declared": true,
+        "adapters": [
+          "matplotlib-adapter-first"
+        ],
+        "requires": [
+          "matplotlib"
+        ],
+        "evidence": {
+          "selftest": "venv 内 matplotlib Agg 真实出图成功（E:\\ai\\doubao\\runtime\\renderer-selftest\\render.png）；matplotlib 3.9.4 / numpy 1.26.4 已钉版。"
+        }
+      }
+    },
+    "enforcement": "advisory",
+    "recovery": [
+      "replay"
+    ],
+    "evidenceBindings": {
+      "configDigest": "60c7c942d99feb00d297a81dcc894f7682aa9d64f9f2697dbba97b0a45f2a749",
+      "runnerDigest": "a6462c0131a14f04dfb5c09ac8f97a97b91c1c4b754f795e6a162af22e55ffa8",
+      "runnerTreeDigest": "5714bb464afd6d65fbdaa3ccd885386147fe1f7374c13cab01d03037a82cee42",
+      "environmentDigest": "4bbed6c62415b1a4f61dae21fda32aa4c193ac0952e90fe729a8fd167d833759"
+    },
+    "x-note": "doubao 3.1-D 接入声明 v2 子描述符，使 CAP-01（plan_capability_gap）在本平台被行使。分面不可相加：prompt=advisory 不可读作 script 可用；script/peer/software-call supported=false 如实登记。evidenceBindings 四摘要均按 platform-conformance 1.4.0 test_evidence_bindings 的规则从盘上字节复算。"
+  },
+  "attested": {
+    "stack": "wf-runner 0.10.0 + runtime-contracts 1.4.0 + repo-lint 0.5.1（三件同代，本平台显式钉版，2026-09-23）。",
+    "f1-context-injection": "visualization-qa@1.3.0 prepare 后 run-lock.execution.contextSkills=[paper-figure,paper-programmer-visualization,visualization-layout]，3 个 skill 资源带双哈希与 resolvedFrom 入锁（F-1 正向实测）。",
+    "f2-scenario-expansion": "standard/color/export 三场景 prepare，expandedGraphSha256 互不相同（24d1465e / 186fe77b / a116693d），contextSkills 随场景切换（F-2 实测）。",
+    "loop": "prepare → next(claim prompt) → stop 闭环：doubao-31-smoke-001 终态 stopped，锁记 scenario=standard、rigor=balanced、rigorSource=default（D-62 档位可见）、selection.environment=[]（无密封环境合法锁形态，D-27）。",
+    "matrix": "全量 invocation 矩阵结果见 runtime/matrix-smoke/ 与 runtime/maintenance/3.1-adoption/（本轮读数）。",
+    "renderer-selftest": "venv 内 matplotlib Agg 出图成功，renderer profile 可兑现（隔离沙箱渲染未做，见 action:script 缺口）。"
+  },
+  "declaredAbsent": {
+    "action:script": "无密封脚本隔离环境（无 WSL/容器），config 不声明 scriptEnvironmentRungs；协议内 action:script 阶段与 --tool render-figure/record-visual-review 不可执行，引擎回答 CAPABILITY_UNAVAILABLE。",
+    "action:peer": "未声明 peerDispatcherModule，peer 委派不可用。"
+  },
+  "gapPlan": {
+    "action:script": {
+      "path": "按 BP-1 §1.6 在 doubao/runtime 建平台内密封脚本环境（platform-venv）或接入 WSL2 executionBackend，并在 config.scriptEnvironmentRungs 声明后重跑矩阵脚本格",
+      "costMinutes": 120
+    },
+    "action:peer": {
+      "path": "实现 doubao 平台 peer_dispatcher，在 config 声明 peerDispatcherModule/peerContentRoot 并跑 peer 电池后翻转",
+      "costMinutes": 90
+    },
+    "union-source-gap:software": {
+      "path": "经用户 2026-09-23 授权留待；后续按连接器/MCP 方向接入 software 仓、声明 softwareRoot 与 gateway 后重算 conform",
+      "costMinutes": 120
+    },
+    "permission-triple:platform-runtime-write-shared-read-only/deny/isolated-python": {
+      "path": "wf-runner 为引擎自身（设计上 invocable=false、不作为 /wf 可调用资源，已被矩阵按类型排除）；若要在本平台兑现该三元组，需随密封脚本环境一并建 isolated-python 适配器，见 action:script 计划",
+      "costMinutes": 120
+    },
+    "permission-triple:shared-read-only-platform-report-write/deny/none": {
+      "path": "接入 D04 共享仓只读绑定（或平台只读挂载 tool/agent）并声明对应 permissionAdapter，使 repo-lint 可在本平台 live 扫描；需与脚本环境/只读挂载一起做",
+      "costMinutes": 90
+    },
+    "python-package:pymupdf": {
+      "path": "按 BP-1 §1.6 在 doubao venv 钉装 pymupdf（math-modeling-programmer 1.7.2 的 PDF 链环境锁需要）；可随脚本环境/数模能力一并补齐",
+      "costMinutes": 15
+    }
+  },
+  "unverified": {
+    "crash-recovery": "未实测（需 Engine(config, fault=...) 故障注入，CLI 不暴露）",
+    "process-gates": "未实测（无脚本环境，process 门禁格不可达）",
+    "command-registration-A1A2": "/wf /wfa 命令注册与插件安装未实测",
+    "mcp-tool-surface": "未注册指向共享仓的本地 MCP 服务；传输面以 CLI 成立"
+  },
+  "permissions": {
+    "network": "deny",
+    "process": "allowlisted-only",
+    "filesystem": "project-scoped"
+  },
+  "notes": "doubao 平台自证（2026-09-23，采纳架构 3.1.0，3.1-D 接入轮）。checks 只登记实证项，负面能力一律进 declaredAbsent/unverified，每条非 pass 项在 gapPlan 带补齐路径与整数分钟成本。数模自 2026-09-22 起与其它工作流等同（math-solver-chain 不再是能力项，故不再单列）。software 软件仓按用户授权本轮不接入。旧代字节备份于 runtime/maintenance/3.1-adoption/checkpoint/。"
+}

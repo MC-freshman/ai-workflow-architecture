@@ -1,0 +1,102 @@
+{
+  "schema": "ai-invocation-exceptions/v1",
+  "platform": "workbuddy",
+  "updatedAt": "2026-09-21 (candidate r1, 3.0 software face)",
+  "note": "workbuddy 本平台自己的矩阵例外清单。EXPECTED 判定要求 expectedCode 与实测错误码一致，同资源以别的错误码失败仍记 FAIL。本候选文件由生产 invocation-exceptions.json 逐字节复制后只做两处登记改动（3.0 软件面采纳 P4 前置动作），生产文件本步不改动：① 追加六条 software 类待补齐条目（D-47）；② 重审 repo-lint 条目——版本 0.2.1 -> 0.3.0、错误码 CAPABILITY_UNAVAILABLE -> VERSION_CONFLICT，两者均为 P4 首轮全矩阵实测读数，旧值完整留档于该条目 previous。候选翻正项：六配方 capabilities.snapshot.json#frozen 一旦由配方作者冻结（D-47），这六条即从清单移除，届时走 single-cell digest 单格冒烟即可，不需重跑全矩阵（BP-3）；repo-lint 条目自带时效（selfExpiring），共享 current 抬到 0.4.0 后必须重审。",
+  "infrastructure": [
+    {
+      "kind": "workflow",
+      "id": "wf-runner",
+      "version": "0.5.2",
+      "expectedCode": "CAPABILITY_UNAVAILABLE",
+      "reason": "引擎自身，不作为用户可调用工作流（自指 action:script → cli.py）。矩阵经共享 current 解析该资源为 0.5.2（本平台引擎钉 0.6.0 属另一套机制，与资源指针无关）；其权限策略未在 workbuddy permissionAdapters 中声明，按声明式要求被拒——设计例外的正确表现",
+      "review": "2026-09-16"
+    }
+  ],
+  "pendingGaps": [
+    {
+      "kind": "workflow",
+      "id": "repo-lint",
+      "version": "0.3.0",
+      "expectedCode": "VERSION_CONFLICT",
+      "reason": "本轮重审条目（原 @0.2.1 / CAPABILITY_UNAVAILABLE，理由见本项 previous）。版本移到 0.3.0、错误码改为 VERSION_CONFLICT，两者都是 P4 首轮全矩阵实测到的真读数，不是推测：① 版本：3.0 采纳后本平台 runner 钉 0.9.0、契约换 standalone 包 runtime-contracts/1.3.0，scannerRelease 显式声明 repo-lint/0.4.0（runtime_core.py:44-45 要求 standalone 包必须由平台声明扫描器）；而共享 current 仍指 0.3.0（本平台不改共享指针 —— D-52），矩阵的默认探针版本取自共享 current，故这一格请求的是 0.3.0。② 错误码：在 3.0 下 /wf 的 repo-lint 选择与 scannerRelease 是同一个 key，显式请求一个不等于平台扫描器版本的 repo-lint 会被引擎在设计上 fail-closed 拒（resolution.py:171-180），报文自带正解『align the pin or request 0.4.0』。这是引擎的正确行为，不是本平台故障。③ 为何不再是 CAPABILITY_UNAVAILABLE：权限门在解析之后才判，3.0 下这一格先撞解版本冲突，根本到不了权限门。④ 平台能力缺口本身未变（脚本隔离沙箱仍缺失），其权威登记处是 capabilities.declaredAbsent.scriptEnvironment 与 bridge/platform.md 待办 W1，不再由本条目承载。⑤ 本条目自带时效：共享 current 一旦抬到 0.4.0（各平台同批采纳动作，非本平台可单方面执行），这个 key 即不可达，条目必须随之删除；届时以 0.4.0 的读数（实测为 INVALID_REQUEST，即 harness 定义的 NEEDS-INPUT：repo-lint 的 input schema 要求 scope=live 时 toolRoot 恰为 /shared/tool 这个 jail 挂载点，合成参数不可能满足）为准重新审一次。",
+      "review": "2026-09-21",
+      "previous": {
+        "version": "0.2.1",
+        "expectedCode": "CAPABILITY_UNAVAILABLE",
+        "reason": "平台能力缺口：它声明 filesystem=shared-read-only-platform-report-write / network=deny / process=none，要求脚本能只读访问共享仓库根。本平台无内核级脚本隔离沙箱（declaredAbsent.scriptEnvironment），不谎报适配器凑绿（架构基线 1.0.0 §6 例外②）。在此之前保持不可调用，改走 A4 直读语义。"
+      },
+      "selfExpiring": true
+    },
+    {
+      "kind": "software",
+      "id": "burp-suite",
+      "version": "1.0.0",
+      "expectedCode": "SNAPSHOT_NOT_FROZEN",
+      "reason": "共享侧待补齐项（D-47，配方作者 doubao）：六配方 capabilities.snapshot.json#frozen 全为假，网关 inventory 如实回 frozen=false，按 C-4『未冻结即缺口、永不算漂移』记缺口。本平台已实测该配方可解析、本体已就地登记核验（bridge/software-environment.json），故这不是平台接入债，也不阻断 call 之前的全部门链——链在 snapshot 门 fail-closed 拒，拒绝发生在派发之前（baseline/p3-gateway.json: selftestCallsRefused 5/5，evidenceRoot 未变）。",
+      "review": "2026-09-21",
+      "doNotFixHere": "D-47 属共享软件仓作者侧；本平台只登记不自改共享仓（红线 1/7）"
+    },
+    {
+      "kind": "software",
+      "id": "dirsearch",
+      "version": "1.0.0",
+      "expectedCode": "SNAPSHOT_NOT_FROZEN",
+      "reason": "共享侧待补齐项（D-47，配方作者 doubao）：六配方 capabilities.snapshot.json#frozen 全为假，网关 inventory 如实回 frozen=false，按 C-4『未冻结即缺口、永不算漂移』记缺口。本平台已实测该配方可解析、本体已就地登记核验（bridge/software-environment.json），故这不是平台接入债，也不阻断 call 之前的全部门链——链在 snapshot 门 fail-closed 拒，拒绝发生在派发之前（baseline/p3-gateway.json: selftestCallsRefused 5/5，evidenceRoot 未变）。",
+      "review": "2026-09-21",
+      "doNotFixHere": "D-47 属共享软件仓作者侧；本平台只登记不自改共享仓（红线 1/7）"
+    },
+    {
+      "kind": "software",
+      "id": "mysql-cli",
+      "version": "1.0.0",
+      "expectedCode": "SNAPSHOT_NOT_FROZEN",
+      "reason": "共享侧待补齐项（D-47，配方作者 doubao）：六配方 capabilities.snapshot.json#frozen 全为假，网关 inventory 如实回 frozen=false，按 C-4『未冻结即缺口、永不算漂移』记缺口。本平台已实测该配方可解析、本体已就地登记核验（bridge/software-environment.json），故这不是平台接入债，也不阻断 call 之前的全部门链——链在 snapshot 门 fail-closed 拒，拒绝发生在派发之前（baseline/p3-gateway.json: selftestCallsRefused 5/5，evidenceRoot 未变）。",
+      "review": "2026-09-21",
+      "doNotFixHere": "D-47 属共享软件仓作者侧；本平台只登记不自改共享仓（红线 1/7）"
+    },
+    {
+      "kind": "software",
+      "id": "nmap",
+      "version": "1.0.0",
+      "expectedCode": "SNAPSHOT_NOT_FROZEN",
+      "reason": "共享侧待补齐项（D-47，配方作者 doubao）：六配方 capabilities.snapshot.json#frozen 全为假，网关 inventory 如实回 frozen=false，按 C-4『未冻结即缺口、永不算漂移』记缺口。本平台已实测该配方可解析、本体已就地登记核验（bridge/software-environment.json），故这不是平台接入债，也不阻断 call 之前的全部门链——链在 snapshot 门 fail-closed 拒，拒绝发生在派发之前（baseline/p3-gateway.json: selftestCallsRefused 5/5，evidenceRoot 未变）。",
+      "review": "2026-09-21",
+      "doNotFixHere": "D-47 属共享软件仓作者侧；本平台只登记不自改共享仓（红线 1/7）"
+    },
+    {
+      "kind": "software",
+      "id": "veracrypt",
+      "version": "1.0.0",
+      "expectedCode": "SNAPSHOT_NOT_FROZEN",
+      "reason": "共享侧待补齐项（D-47，配方作者 doubao）：六配方 capabilities.snapshot.json#frozen 全为假，网关 inventory 如实回 frozen=false，按 C-4『未冻结即缺口、永不算漂移』记缺口。本平台已实测该配方可解析、本体已就地登记核验（bridge/software-environment.json），故这不是平台接入债，也不阻断 call 之前的全部门链——链在 snapshot 门 fail-closed 拒，拒绝发生在派发之前（baseline/p3-gateway.json: selftestCallsRefused 5/5，evidenceRoot 未变）。",
+      "review": "2026-09-21",
+      "doNotFixHere": "D-47 属共享软件仓作者侧；本平台只登记不自改共享仓（红线 1/7）"
+    },
+    {
+      "kind": "software",
+      "id": "wireshark-cli",
+      "version": "1.0.0",
+      "expectedCode": "SNAPSHOT_NOT_FROZEN",
+      "reason": "共享侧待补齐项（D-47，配方作者 doubao）：六配方 capabilities.snapshot.json#frozen 全为假，网关 inventory 如实回 frozen=false，按 C-4『未冻结即缺口、永不算漂移』记缺口。本平台已实测该配方可解析、本体已就地登记核验（bridge/software-environment.json），故这不是平台接入债，也不阻断 call 之前的全部门链——链在 snapshot 门 fail-closed 拒，拒绝发生在派发之前（baseline/p3-gateway.json: selftestCallsRefused 5/5，evidenceRoot 未变）。",
+      "review": "2026-09-21",
+      "doNotFixHere": "D-47 属共享软件仓作者侧；本平台只登记不自改共享仓（红线 1/7）"
+    }
+  ],
+  "candidate": {
+    "derivedFrom": "E:\\ai\\workbuddy\\bridge\\invocation-exceptions.json",
+    "round": "workbuddy architecture 3.0.0 adoption, P4",
+    "added": [
+      "software:burp-suite@1.0.0",
+      "software:dirsearch@1.0.0",
+      "software:mysql-cli@1.0.0",
+      "software:nmap@1.0.0",
+      "software:veracrypt@1.0.0",
+      "software:wireshark-cli@1.0.0"
+    ],
+    "rewritten": [
+      "workflow:repo-lint 0.2.1/CAPABILITY_UNAVAILABLE -> 0.3.0/VERSION_CONFLICT (selfExpiring)"
+    ],
+    "productionUntouched": true
+  }
+}

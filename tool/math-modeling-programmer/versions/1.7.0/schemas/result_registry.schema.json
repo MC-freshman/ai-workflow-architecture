@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": ["result_id", "problem_id", "experiment_id", "claim", "value", "unit", "status"],
+  "properties": {
+    "result_id": {"type": "string", "minLength": 1},
+    "problem_id": {"type": "string", "minLength": 1},
+    "experiment_id": {"type": "string", "minLength": 1},
+    "claim": {"type": "string", "minLength": 1},
+    "value": {},
+    "unit": {"type": "string"},
+    "method": {"type": "string"},
+    "input_hash": {"type": "string"},
+    "code_hash": {"type": "string"},
+    "config_hash": {"type": "string"},
+    "validation_ids": {"type": "array", "items": {"type": "string"}},
+    "evidence": {"type": "array", "items": {"type": "string"}},
+    "status": {"type": "string", "enum": ["DRAFT", "CHECKED", "FROZEN", "BLOCKED"]}
+  },
+  "additionalProperties": true
+}

@@ -1,0 +1,15 @@
+{
+  "schema": "ai-agent-source/v1",
+  "id": "math-modeling-programmer",
+  "version": "1.9.0",
+  "derivedFrom": "agent/math-modeling-programmer/versions/1.8.2",
+  "changes": [
+    "tool-lock.json：workflows.math-modeling-programmer 1.7.1 -> 1.7.2",
+    "tool-lock.json：workflows.visualization-qa 1.2.0 -> 1.2.1（与工作流新 requires 一致）",
+    "manifest.json：version 1.8.2 -> 1.9.0",
+    "tests/contract.json：从过期的 1.6.0 刷新为 1.9.0"
+  ],
+  "supersedes": "agent math-modeling-programmer 1.8.2（其锁钉 visualization-qa 1.2.0，在工作流 requires 未同步前无法单独升级）",
+  "authorSession": "zcode",
+  "createdAt": "2026-09-15"
+}

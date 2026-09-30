@@ -1,0 +1,38 @@
+{
+  "schema": "ai-software-recipe/v1",
+  "platform": "windows",
+  "softwareId": "veracrypt",
+  "softwareVersion": "1.0.0",
+  "acquire": {
+    "kind": "local-install",
+    "source": "便携版（本机已存在，含安装包与源码存档）",
+    "officialUrl": "https://www.veracrypt.fr/en/Downloads.html",
+    "version": "1.26.7",
+    "license": "Apache-2.0 / TrueCrypt License (dual)",
+    "redistributable": true,
+    "packageManager": null
+  },
+  "install": {
+    "location": "${platformRuntime}/software/veracrypt",
+    "detectedPath": "<local-tool-body-path>",
+    "stepsRef": null,
+    "notes": "便携版可直接运行 VeraCrypt.exe；挂载/卸载依赖内核驱动 veracrypt.sys，首次使用需管理员权限加载驱动；同级目录另有 VeraCrypt Setup.exe/.zip 安装包与 docs（用户指南 chm）"
+  },
+  "launch": {
+    "kind": "cli-wrapper",
+    "entrypoint": "VeraCrypt.exe",
+    "environment": {},
+    "pathDependencies": ["VeraCrypt Format.exe", "VeraCryptExpander.exe", "veracrypt.sys", "veracrypt.inf", "veracrypt.cat"],
+    "privilege": "administrator",
+    "notes": "命令行参数以 / 开头；/q 静默无 GUI；VeraCrypt Format.exe 负责建卷"
+  },
+  "verify": {
+    "versionCall": null,
+    "versionProbe": { "kind": "file-version", "target": "VeraCrypt.exe", "field": "ProductVersion", "expected": "1.26.7" },
+    "selftestRef": "../selftest/readonly.json",
+    "files": [
+      { "path": "VeraCrypt.exe", "role": "挂载/卸载主程序", "sha256": "aee0d6f335e4346c57e60bbcc74a9207d4400e027f0b83771f5de63df86e132d" },
+      { "path": "VeraCrypt Format.exe", "role": "创建/格式化卷", "sha256": "7e48cebbfa68a0edfea3f99520d840ef99633341063d07dc454d9e614597d9c8" }
+    ]
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "schema": "ai-governance-source/v1",
+  "authorSession": "qoder",
+  "derivedFrom": "skill:novel-detecting-exposed-secrets-files-security@1.0.0+novel-scanning-for-hardcoded-secrets-security@1.0.0+novel-tracing-transitive-vulnerabilities-security@1.0.0+novel-checking-license-compliance-security@1.0.0",
+  "supersedes": null,
+  "releaseScope": "3.3.0 P4 scenario routing card for mastermind-bug-bounty. Every quoted block is the referenced skill's own description copied verbatim; the new writing is limited to step order and refusal gates. Depth stays in the pinned source releases, named by id@version instead of paraphrased.",
+  "verbatimFrom": {
+    "novel-detecting-exposed-secrets-files-security@1.0.0": "SKILL.md#frontmatter.description",
+    "novel-scanning-for-hardcoded-secrets-security@1.0.0": "SKILL.md#frontmatter.description",
+    "novel-tracing-transitive-vulnerabilities-security@1.0.0": "SKILL.md#frontmatter.description",
+    "novel-checking-license-compliance-security@1.0.0": "SKILL.md#frontmatter.description"
+  },
+  "bodySha256": "85f2c6312bac08fc38d0a25c78833cb8079b4f43ad39d01de533b3a4a0586421",
+  "openDeferred": [
+    "The upstream cards are registered under a novel- prefix they do not belong to (D-88) and each exists twice with byte-identical content (D-89); this round points at the -security twin and renames nothing."
+  ]
+}

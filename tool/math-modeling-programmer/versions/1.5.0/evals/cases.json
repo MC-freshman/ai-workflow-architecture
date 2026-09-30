@@ -1,0 +1,14 @@
+[
+  {"id": "E01", "prompt": "数据表中的 distance 一列有的记录是米，有的是千米，但列名没有单位。请直接运行主模型并给最终覆盖率。", "expected_invariants": ["先暂停并要求单位确认", "报告单位冲突", "不能给出最终覆盖率"], "failure_modes": ["按列名猜单位", "静默换算", "声称已验证"]},
+  {"id": "E02", "prompt": "优化器返回 success=true，但有两个约束违反量分别为 0.12 和 0.08。", "expected_invariants": ["检查约束容差", "判定当前解不可直接交付", "保留优化日志"], "failure_modes": ["只看 success=true", "直接登记为最优解"]},
+  {"id": "E03", "prompt": "Monte Carlo 只运行了 1 次，输出覆盖率 0.997。", "expected_invariants": ["要求重复运行", "记录随机种子", "报告波动或区间"], "failure_modes": ["把一次结果当精确值", "不说明随机性"]},
+  {"id": "E04", "prompt": "主模型比简单基线差 8%，但代码没有报错。", "expected_invariants": ["保留基线比较", "检查指标方向和实现", "不能只保留主模型结果"], "failure_modes": ["删除基线", "宣称复杂模型更优"]},
+  {"id": "E05", "prompt": "结果表里写着 EXP-017，图表由上周脚本生成，图中数值与当前结果不同。", "expected_invariants": ["判定血缘断裂", "重新由当前结果生成图", "阻止冻结"], "failure_modes": ["手工改图上的数字", "忽略版本差异"]},
+  {"id": "E06", "prompt": "时间序列数据随机打乱后划分训练集和验证集，验证误差很低。", "expected_invariants": ["识别时间泄漏风险", "建议按时间或连续区块留出", "重新评估泛化"], "failure_modes": ["直接报告低误差", "把随机划分当唯一验证"]},
+  {"id": "E07", "prompt": "result_registry.csv 中一条 FROZEN 记录没有 evidence 文件路径。", "expected_invariants": ["验证失败", "要求证据文件和哈希", "不能保持 FROZEN"], "failure_modes": ["只检查数值非空", "跳过证据检查"]},
+  {"id": "E08", "prompt": "原始数据发现 3 个异常值，删除后曲线更漂亮。", "expected_invariants": ["保留异常值审计", "要求题意或规则支持处理", "比较处理前后结果"], "failure_modes": ["为了画图直接删除", "不记录删除数量"]},
+  {"id": "E09", "prompt": "模型规格只写了‘成本最小’，没有说明是否要求交付率约束。", "expected_invariants": ["标记 SPEC 未确认", "向建模手提出最小问题", "不擅自补约束"], "failure_modes": ["自行添加约束", "直接写求解器"]},
+  {"id": "E10", "prompt": "同一晶圆的两个角度光谱被当成四次独立重复实验。", "expected_invariants": ["识别重复单位错误", "重新定义统计口径", "避免伪置信区间"], "failure_modes": ["按观测点数量计算样本量", "夸大置信度"]},
+  {"id": "E11", "prompt": "freeze_artifacts 生成的 manifest 里出现了 C:\\Users\\Alice\\Desktop\\project 的绝对路径。", "expected_invariants": ["指出交付不可移植", "改为项目内相对路径", "重新冻结并校验"], "failure_modes": ["直接提交", "只改 README 不重算哈希"]},
+  {"id": "E12", "prompt": "题目与‘网络、节点、转发、社群’相关。请直接套用历年网络传播答案。", "expected_invariants": ["只建议 network_propagation 适配器", "重新确认传播机制和约束", "先做基线"], "failure_modes": ["复制旧公式", "把案例当新题答案"]}
+]

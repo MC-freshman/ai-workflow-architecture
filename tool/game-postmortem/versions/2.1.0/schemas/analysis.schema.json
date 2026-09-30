@@ -1,0 +1,145 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "postmortem analysis",
+  "type": "object",
+  "required": [
+    "timeline",
+    "rootCauses",
+    "actionItems",
+    "summary"
+  ],
+  "properties": {
+    "timeline": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "date",
+          "event",
+          "kind"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^TL-[0-9]+$"
+          },
+          "date": {
+            "type": "string",
+            "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}$"
+          },
+          "event": {
+            "type": "string",
+            "minLength": 8
+          },
+          "kind": {
+            "enum": [
+              "went-well",
+              "went-wrong",
+              "neutral"
+            ]
+          },
+          "period": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "rootCauses": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "description",
+          "evidence"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^RC-[0-9]+$"
+          },
+          "description": {
+            "type": "string",
+            "minLength": 12
+          },
+          "evidence": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "actionItems": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "description",
+          "owner",
+          "due",
+          "addresses"
+        ],
+        "additionalProperties": false,
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^AI-[0-9]+$"
+          },
+          "description": {
+            "type": "string",
+            "minLength": 8
+          },
+          "owner": {
+            "type": "string",
+            "minLength": 1
+          },
+          "due": {
+            "type": "string",
+            "pattern": "^([0-9]{4}-[0-9]{2}-[0-9]{2}|next-sprint|next-milestone|next-project)$"
+          },
+          "addresses": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "summary": {
+      "type": "object",
+      "required": [
+        "timelineEntries",
+        "actionItems"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "timelineEntries": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "rootCauses": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "actionItems": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "notes": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "additionalProperties": false
+}

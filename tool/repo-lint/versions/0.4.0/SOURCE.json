@@ -1,0 +1,32 @@
+{
+ "schema": "ai-workflow-source/v1",
+ "authorSession": "qoder",
+ "derivedFrom": "repo-lint@0.3.0",
+ "supersedes": "0.3.0",
+ "releaseScope": "Architecture 3.0 (framework side), step S-P3a: the software repository gets the shape contracts BP-1 requires - four schemas, one linter wired into the same CLI and the same report, and two severity classes so a rule written after a published byte registers instead of refusing retroactively. Staged under qoder/runtime/maintenance/3.0-A/staging; publication is a later step of this round.",
+ "changes": [
+  "schemas/software-manifest-v1.schema.json, software-recipe-v1.schema.json, software-selftest-v1.schema.json, software-gateway-adapter-v1.schema.json: added. Key names follow the six published recipes (C-1), `credentials` accepts only none|reference:<name> (C-6), requiredProfiles stays an opaque string set (C-3), and the adapter contract is what S-P4's reference gateway and its three mocks must satisfy.",
+  "scripts/software_lint.py: added - registry/pointer/seal/shape/snapshot-coverage/selftest consistency checks and the credential-literal scan.",
+  "scripts/repo_lint.py: --software-root and --software-new-release; the software findings merge into the same findings list, summary counts and blocking decision, so a platform gets one answer for the three shared repositories.",
+  "schemas/input.schema.json gains optional softwareRoot; schemas/output.schema.json gains roots.software, summary.softwareResources and the software section, and its findings.rule pattern widens from R1-R14 to also name SW1-SW9 - without that widening the package refuses its own report (the D-27 shape of problem, caught by S3a-13 on the first run).",
+  "workflow.yaml: version 0.4.0 and the softwareRoot stage argument.",
+  "manifest.json: version and displayName; SHA256SUMS regenerated; SOURCE.json is this file."
+ ],
+ "unchanged": [
+  "the tool/ and agent/ faces: same rules R1-R16, same selection and closure logic",
+  "requirements.lock.txt / requirements.txt (no new dependency; jsonschema was already pinned)",
+  "the CLI contract for existing callers - softwareRoot is optional"
+ ],
+ "openDeferred": [
+  "README concurrency-chapter completeness (proposal 10) is not enforced yet: the six releases document it, a rule for it needs the same published-vs-new split",
+  "SOFTWARE_RECIPE_MISSING stays a warning for published bytes; the platform-side conform maps it to declaredAbsent with a path and a cost (C-2)",
+  "the engine does not call this linter yet - it runs at publication and at conform time (S-P5/S-P7)"
+ ],
+ "releaseStatus": "published",
+ "publishedAt": "2026-09-21",
+ "publishedBy": "qoder, architecture 3.0 round 3.0-A, step S-P9",
+ "publicationChanges": [
+  "none - the bytes are the staged bytes"
+ ],
+ "pointerPolicy": "published, not adopted: no shared current.json was flipped for this generation by this step (S-P9 judgement: 发布 is not 采纳)"
+}

@@ -1,0 +1,17 @@
+{
+  "schema": "ai-workflow-input/v1",
+  "type": "object",
+  "additionalProperties": true,
+  "required": [
+    "brief"
+  ],
+  "properties": {
+    "brief": {
+      "type": "string",
+      "minLength": 1
+    },
+    "scenario": {
+      "type": "string"
+    }
+  }
+}

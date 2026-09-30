@@ -1,0 +1,44 @@
+{
+  "platform": "workbuddy",
+  "contracts": "E:\\ai\\tool\\runtime-contracts\\versions\\1.4.1",
+  "scannerRelease": "E:\\ai\\tool\\repo-lint\\versions\\0.5.2",
+  "toolRoot": "E:\\ai\\tool",
+  "agentRoot": "E:\\ai\\agent",
+  "softwareRoot": "E:\\ai\\software",
+  "softwareGateway": "E:\\ai\\software\\_connector\\versions\\1.0.6\\connector.py",
+  "softwareGatewayConfig": "E:\\ai\\workbuddy\\bridge\\software-gateway-config.json",
+  "softwareEnvironment": "E:\\ai\\workbuddy\\bridge\\software-environment.json",
+  "interpreters": {
+    ".py": "E:\\ai\\workbuddy\\runtime\\py-env\\Scripts\\python.exe"
+  },
+  "softwareProfiles": {
+    "readonly-observe": {
+      "filesystem": [
+        "read"
+      ],
+      "network": [
+        "loopback"
+      ],
+      "process": [
+        "self"
+      ],
+      "credentials": [],
+      "sideEffects": [
+        "none"
+      ],
+      "consent": "auto"
+    }
+  },
+  "bridge": "E:\\ai\\workbuddy\\bridge.json",
+  "runner": "E:\\ai\\tool\\wf-runner\\versions\\0.10.1",
+  "environmentManifest": "E:\\ai\\workbuddy\\bridge\\environment.json",
+  "capabilities": "E:\\ai\\workbuddy\\bridge\\capabilities.json",
+  "runsRoot": "E:\\ai\\workbuddy\\runtime\\runs",
+  "platformRoot": "E:\\ai\\workbuddy",
+  "inputRoots": [
+    "E:\\ai"
+  ],
+  "notes": "workbuddy 平台显式钉版（2026-09-16 S2 落盘）：runner wf-runner 0.6.0（manifest+SHA256SUMS 实测齐备）、contracts repo-lint 0.2.1（契约 platform 枚举已含 workbuddy）。共享 current = wf-runner 0.5.2 / repo-lint 0.2.1：引擎选版与共享指针是两套机制，本平台钉版不改动任何共享默认。tool/agent 业务版本不在此文件钉——解析顺序为显式版本 → 共享 current，保证用户一句话换代跟随（invocation-manual.md §4）。环境 = 本平台自建 Windows venv（E:\\ai\\workbuddy\\runtime\\py-env，python 3.9.13），按 runner requirements.lock 8 库逐一匹配 + matplotlib 3.9.4（renderer profile 需要），environmentManifest 指向 bridge/environment.json。未设置的可选键及其后果——scriptEnvironment 缺 → 协议内 action:script 阶段与 --tool render-figure/record-visual-review 不可执行（与 matrix 默认 claim+stop 不冲突）；peerDispatcherModule / peerChildExecutor 缺 → 委派不可用；hostEnvironmentManifest 缺 → 不做 runner 解释器逐文件校验（与 zcode 同形）。前置条件见 capabilities.permissionAdapters：不声明业务三元组则 0.6.0 下每次 prepare 都被拒。 | 架构 3.0 生产接线（2026-09-21，platform-side P5；候选由 P2 派生、P3 复验、P4 全矩阵判据）。相对生产文件的变化只有钥匙：runner 0.6.0 -> 0.9.0；contracts 由 repo-lint/0.2.1（legacy 布局）改为 standalone 包 runtime-contracts/1.3.0，并按 0.9.0 配对要求显式声明 scannerRelease=repo-lint/0.4.0（resolution.py 会把该版本与任何显式 repo-lint 选择做 VERSION_CONFLICT 比对，故它必须与本平台真正运行的扫描器一致）。软件面新增 softwareRoot / softwareGateway / softwareGatewayConfig / softwareEnvironment / interpreters / softwareProfiles。softwareProfiles 只声明 readonly-observe 一档——它覆盖六配方全部 sideEffects=none 的 capability （即 recipe 里 safeForSelftest 的那一组）在 profile 门被读的五个维度；写类 / 外部 / system / 凭证类请求面本平台本轮不声明，落到 profile 门按 PROFILE_NOT_DECLARED 拒（未实测面不写成支持）。capabilities 指向 bridge/capabilities.json（P5 生产采用完成：候选 capabilities 的 software 段、descriptor.profiles、declaredAbsent.profile:administrator 与 permissions 词表迁移均已并入生产文件；采纳前的四件生产文件逐字节备份于 runtime/maintenance/3.0-adopt/pre-adoption/）。本轮不改共享 current.json（D-52：抬针属各平台同批动作），不代他平台申报。 P4 修正（2026-09-21）：本平台的 bridge 键指向 bridge/bridge.json，其中本平台默认 defaults.workflowVersions[\"repo-lint\"]=0.4.0 由共享权威工具 architecture-ops 1.2.0 switch_defaults 写入（plan→apply→verify，CAS + checkpoint，sharedCurrentTouched=false）——把平台默认对齐到本平台声明的 scannerRelease，正是 P4 实测那条 VERSION_CONFLICT 报文（resolution.py:171-180「align the pin or request 0.4.0」）给出的正解：选版与扫描器是同一个 key，平台默认必须与平台声明的扫描器版本一致；这条默认写在平台自己的 bridge.json，共享 current.json 一字未动（D-52）。",
+  "notes_20260923": "2026-09-23整理：本配置已对齐 wf-runner 0.10.0、runtime-contracts 1.4.0、repo-lint 0.5.1；旧 notes 是历史快照。 | 2026-09-23 架构 3.1.0 全面接入（workbuddy platform-side P1–P7，判据与逐条读数见 runtime/maintenance/3.1-adopt/P-TABLE.md）：本轮改的是**一个键**——`bridge` 由 `bridge/bridge-candidate-090.json` 改指正式 `bridge/bridge.json`。理由是一次实测驱动的收口：3.0 轮把平台作用域默认（`defaults.workflowVersions[\"repo-lint\"]`）写在正式 bridge.json，但配置的 `bridge` 键当时指着一份内容与之**逐字节相同**（ab974057…，均为 0.4.0）的候选副本，故无行为差异；3.1 整理轮只把正式 bridge.json 抬到 0.5.1，两份自此分叉，`repo-lint` 的**入口别名路径**（请求不带版本或写 `current`，见 engine.py `_entry_resolution`/G-A）会读到候选副本里的 0.4.0，与 `scannerRelease 0.5.1` 撞上 `resolution.py:171-180` 的 fail-closed：实测报文 `VERSION_CONFLICT: Selected workflow:repo-lint@0.4.0 conflicts with this platform's scannerRelease repo-lint@0.5.1`（两种别名形态都复现）。**同时更正旧 notes 里一句与字节不符的记述**：3.0 轮 notes 写『P4 修正：本平台的 bridge 键指向 bridge/bridge.json』，而当时字节一直指候选副本——本轮才真正落成。其余 15 个键逐字未动；`*-candidate-090.json` 三件为 3.0 轮冻结留证，不再被任何键引用，其中的 `defaults`（repo-lint 0.4.0）是历史读数，不得重新接线。",
+  "notes_20260925": "2026-09-25 架构 3.2.0 全面接入（workbuddy platform-side P1–P7，判据与逐条读数见 runtime/maintenance/3.2-adopt/P-TABLE.md）：本轮改 4 个键——① runner/contracts/scannerRelease **成套**切到 `wf-runner 0.10.1` / `runtime-contracts 1.4.1` / `repo-lint 0.5.2`（3.2.0 裁定记录 2026-09-24 §1：三件必须成套，混用任意一件触发 `VERSION_CONFLICT`；BP-3 口径下这是补丁代，不跑全矩阵，受影响证据由单格冒烟与连接器电池重出）；② `softwareGateway` 由参考网关 `_gateway/1.0.0/gateway.py` 换绑到共享连接器 **`_connector/versions/1.0.6/connector.py`**（跟随 `software/_connector/current.json` 的被钉释放）。换绑的实测依据（baseline/p2-battery-gateway-before.json / p2-battery-connector-before.json）：用引擎原样（无 `kind`，D-93 家族）的 `software.health` 消息打参考网关，两种信封形态都答 `INVALID_REQUEST: unknown gateway request schema`（3.2 管理面对旧网关整体不可达）；打连接器则 `ok=true`、6 行 health。其余键逐字未动；`bridge/software-gateway-config.json` 的同轮改动（删 `platform` 键、加 interpreterAliases/allowedHosts/allowGuiLaunch）见该文件自己的 note。**未声明的**：credentialProvider 与 session 三个 provider 本平台没有，故凭据中介调用、桌面会话、GUI 启动按连接器契约如实得到结构化拒绝/`INTERACTIVE_REQUIRED`，不写成支持。"
+}

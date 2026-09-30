@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Mastermind Bug Bounty Workflow · RECON · 被动侦察与资产指纹（委派 recon / js-analysis）",
+  "type": "object",
+  "required": [
+    "stage",
+    "status",
+    "summary"
+  ],
+  "properties": {
+    "stage": {
+      "type": "string",
+      "minLength": 1
+    },
+    "status": {
+      "enum": [
+        "pass",
+        "partial",
+        "blocked"
+      ]
+    },
+    "summary": {
+      "type": "string",
+      "minLength": 1
+    },
+    "unavailableChecks": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "delegations": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    },
+    "assets": {
+      "type": "array",
+      "items": {
+        "type": "object"
+      }
+    }
+  },
+  "additionalProperties": true
+}

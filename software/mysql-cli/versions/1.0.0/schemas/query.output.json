@@ -1,0 +1,12 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "exitCode": { "type": "integer" },
+    "format": { "type": "string", "enum": ["tsv", "xml", "html", "table"] },
+    "stdout": { "type": "string", "description": "--batch --raw 时为制表符分隔文本，首行表头" },
+    "stderr": { "type": "string" },
+    "rowsAffected": { "type": "integer", "description": "写操作时的影响行数（从 stderr 提示解析，可选）" }
+  },
+  "required": ["exitCode", "stdout"]
+}

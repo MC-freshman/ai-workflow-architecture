@@ -1,0 +1,11 @@
+{
+  "schema": "ai-governance-source/v1",
+  "authorSession": "codex",
+  "derivedFrom": "runtime-contracts@1.4.0",
+  "supersedes": "1.4.0",
+  "releaseScope": "Corrects run-lock schema version gating: scenario and expandedGraphSha256 are required for v1.3 but not retroactively imposed on v1.1/v1.2; adds a positive v1.3 graph-lock static bundle while preserving legacy v1.2 fixtures.",
+  "openDeferred": [
+    "adoption is a separate, per-platform act: no current.json was flipped here and no platform config was touched (发布 ≠ 采纳, BP-2)"
+  ],
+  "previousSource": "tool/runtime-contracts/versions/1.4.0/SOURCE.json"
+}

@@ -1,0 +1,6 @@
+{
+  "schema": "ai-workflow-pointer/v1",
+  "id": "paper-pipeline",
+  "version": "1.0.0",
+  "hashManifest": "SHA256SUMS"
+}

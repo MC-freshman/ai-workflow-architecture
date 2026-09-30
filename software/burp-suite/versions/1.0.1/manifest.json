@@ -1,0 +1,143 @@
+{
+ "schema": "ai-software/v1",
+ "id": "burp-suite",
+ "version": "1.0.1",
+ "displayName": "Burp Suite Pro (MCP Server)",
+ "upstreamVersion": "2024.5.1",
+ "kind": "mcp-http",
+ "transport": {
+  "protocol": "mcp-sse",
+  "baseUrl": "http://127.0.0.1:9876",
+  "headers": {},
+  "auth": {
+   "type": "none",
+   "notes": "loopback 端点，扩展默认不启用鉴权；如扩展配置了 token，改为 reference:burp-mcp-token"
+  },
+  "protocolVersion": "2024-11-05",
+  "capabilityAttestation": "native-tools-list",
+  "notes": "Burp MCP Server 实测为根路径 SSE：GET / 获取 session endpoint，再向同源 session URL 发送 JSON-RPC；不把 GUI JAR 当 CLI 启动。"
+ },
+ "capabilities": [
+  {
+   "name": "mcpListTools",
+   "nativeName": "JSON-RPC tools/list over MCP SSE",
+   "inputSchemaRef": "schemas/empty.input.json",
+   "outputSchemaRef": "schemas/mcpTools.output.json",
+   "sideEffects": "none",
+   "permissionRequests": {
+    "filesystem": "none",
+    "network": "loopback",
+    "process": "none",
+    "credentials": "none"
+   },
+   "consent": "auto",
+   "idempotent": true,
+   "safeForSelftest": true,
+   "invocation": {
+    "transport": "mcp-http",
+    "endpoint": "http://127.0.0.1:9876",
+    "mcpMethod": "tools/list",
+    "healthCheck": true,
+    "timeout": 15,
+    "successCondition": "JSON-RPC result.tools is an array",
+    "notes": "先建立一次同源 SSE 会话并完成 initialize/initialized，再发送 tools/list。"
+   }
+  },
+  {
+   "name": "mcpCallTool",
+   "nativeName": "JSON-RPC tools/call over MCP SSE",
+   "inputSchemaRef": "schemas/mcpCall.input.json",
+   "outputSchemaRef": "schemas/mcpCall.output.json",
+   "sideEffects": "external",
+   "permissionRequests": {
+    "filesystem": "workspace",
+    "network": "scoped",
+    "process": "none",
+    "credentials": "none"
+   },
+   "consent": "confirm-stage",
+   "idempotent": false,
+   "safeForSelftest": false,
+   "invocation": {
+    "transport": "mcp-http",
+    "endpoint": "http://127.0.0.1:9876",
+    "mcpMethod": "tools/call",
+    "toolNameParam": "params.name",
+    "argumentsParam": "params.arguments",
+    "timeout": 900,
+    "notes": "先建立一次同源 SSE 会话并完成 initialize/initialized，再发送 tools/call；toolName 必须来自本释放件的 runtime.tools 冻结清单。"
+   }
+  },
+  {
+   "name": "proxyHistory",
+   "nativeName": "burp.proxy.history（工具名待 live tools/list 冻结）",
+   "inputSchemaRef": "schemas/proxyIntercept.input.json",
+   "outputSchemaRef": "schemas/proxyIntercept.output.json",
+   "sideEffects": "external",
+   "permissionRequests": {
+    "filesystem": "workspace",
+    "network": "scoped",
+    "process": "none",
+    "credentials": "none"
+   },
+   "consent": "confirm-stage",
+   "idempotent": true,
+   "safeForSelftest": false,
+   "invocation": {
+    "transport": "mcp-http",
+    "endpoint": "http://127.0.0.1:9876",
+    "mcpMethod": "tools/call",
+    "toolNameParam": "params.name",
+    "frozenToolName": null,
+    "timeout": 120,
+    "notes": "本释放件只冻结真实工具清单；历史查询语义尚未与该能力的旧 schema 完成一一映射，保持 pending。"
+   }
+  },
+  {
+   "name": "scannerScan",
+   "nativeName": "burp.scanner.scan（工具名待 live tools/list 冻结）",
+   "inputSchemaRef": "schemas/scannerScan.input.json",
+   "outputSchemaRef": "schemas/scannerScan.output.json",
+   "sideEffects": "external",
+   "permissionRequests": {
+    "filesystem": "workspace",
+    "network": "scoped",
+    "process": "none",
+    "credentials": "none"
+   },
+   "consent": "confirm-stage",
+   "idempotent": false,
+   "safeForSelftest": false,
+   "invocation": {
+    "transport": "mcp-http",
+    "endpoint": "http://127.0.0.1:9876",
+    "mcpMethod": "tools/call",
+    "toolNameParam": "params.name",
+    "frozenToolName": null,
+    "timeout": 1800,
+    "notes": "live tools/list 没有启动扫描的工具，只有读取既有 scanner issues；保持 pending，不冒充主动扫描。"
+   }
+  }
+ ],
+ "concurrency": {
+  "instanceMode": "singleton",
+  "poolSize": 1,
+  "exclusiveResources": [
+   "tcp:127.0.0.1:9876",
+   "burp-project-file",
+   "license-seat:1"
+  ],
+  "whenBusy": "queue"
+ },
+ "platformSupport": {
+  "windows": "supported",
+  "linux": "untested",
+  "macos": "untested"
+ },
+ "requiredProfiles": [],
+ "snapshot": "capabilities.snapshot.json",
+ "integrity": {
+  "sha256Manifest": "SHA256SUMS"
+ },
+ "docs": "README.md"
+}

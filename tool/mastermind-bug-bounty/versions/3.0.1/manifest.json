@@ -1,0 +1,30 @@
+{
+  "schema": "ai-workflow/v2.1",
+  "id": "mastermind-bug-bounty",
+  "displayName": "Mastermind Bug Bounty Workflow",
+  "version": "3.0.1",
+  "mode": "pipeline",
+  "entry": "workflow.yaml",
+  "inputSchema": "schemas/input.schema.json",
+  "outputSchema": "schemas/output.schema.json",
+  "permissions": {
+    "network": "deny",
+    "process": "allowlisted-only",
+    "filesystem": "project-scoped"
+  },
+  "dependencies": {
+    "skills": {
+      "security-scenario-recon": "1.0.0",
+      "security-scenario-triage": "1.0.0",
+      "security-scenario-api": "1.0.0",
+      "security-scenario-js": "1.0.0",
+      "security-scenario-crypto": "1.0.0",
+      "security-scenario-report": "1.0.0"
+    },
+    "workflows": {},
+    "packs": {}
+  },
+  "integrity": {
+    "sha256Manifest": "SHA256SUMS"
+  }
+}

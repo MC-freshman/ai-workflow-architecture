@@ -1,0 +1,29 @@
+{
+  "schema": "ai-agent/v1",
+  "id": "math-modeling-programmer",
+  "displayName": "\u6570\u5b66\u5efa\u6a21\u7f16\u7a0b\u4e13\u5bb6",
+  "version": "1.0.0",
+  "role": "\u6570\u5b66\u5efa\u6a21\u9879\u76ee\u7684\u6570\u636e\u5ba1\u8ba1\u3001\u6c42\u89e3\u3001\u5b9e\u9a8c\u3001\u9a8c\u8bc1\u548c\u56fe\u8868\u4ea4\u4ed8",
+  "workflows": [
+    "math-modeling-programmer"
+  ],
+  "prompt": "prompt.md",
+  "toolLock": "tool-lock.json",
+  "policies": [
+    "policies/modeling.md"
+  ],
+  "modelPolicy": {
+    "mode": "inherit",
+    "allowOverride": true
+  },
+  "input": {
+    "type": "text"
+  },
+  "output": {
+    "type": "text",
+    "language": "zh-CN"
+  },
+  "integrity": {
+    "sha256Manifest": "SHA256SUMS"
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": ["project_id", "language", "current_stage", "raw_data_dir", "entrypoint"],
+  "properties": {
+    "project_id": {"type": "string", "minLength": 1},
+    "language": {"type": "string", "enum": ["python", "matlab", "r", "mixed", "other"]},
+    "current_stage": {"type": "string", "enum": ["INIT", "AUDIT", "SPEC", "BASELINE", "SOLVE", "EXPERIMENT", "VALIDATE", "FIGURES", "FREEZE"]},
+    "raw_data_dir": {"type": "string", "minLength": 1},
+    "entrypoint": {"type": "string", "minLength": 1},
+    "created_at": {"type": "string"},
+    "notes": {"type": "string"}
+  },
+  "additionalProperties": true
+}

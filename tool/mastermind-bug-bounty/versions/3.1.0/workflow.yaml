@@ -1,0 +1,145 @@
+{
+  "schema": "ai-workflow-definition/v3",
+  "id": "mastermind-bug-bounty",
+  "version": "3.1.0",
+  "mode": "pipeline",
+  "maxParallel": 1,
+  "roles": [
+    "coordinator"
+  ],
+  "outputWorker": "coordinator",
+  "stages": [
+    {
+      "id": "SCOPE",
+      "action": "prompt",
+      "worker": "coordinator",
+      "dependsOn": [],
+      "promptRef": "workflow.md#stage:SCOPE",
+      "outputs": "schemas/scope.schema.json"
+    },
+    {
+      "id": "RECON",
+      "action": "prompt",
+      "worker": "coordinator",
+      "dependsOn": [
+        "SCOPE"
+      ],
+      "promptRef": "workflow.md#stage:RECON",
+      "outputs": "schemas/recon.schema.json"
+    },
+    {
+      "id": "ANALYSIS",
+      "action": "prompt",
+      "worker": "coordinator",
+      "dependsOn": [
+        "RECON"
+      ],
+      "promptRef": "workflow.md#stage:ANALYSIS",
+      "outputs": "schemas/analysis.schema.json"
+    },
+    {
+      "id": "TRIAGE",
+      "action": "prompt",
+      "worker": "coordinator",
+      "dependsOn": [
+        "ANALYSIS"
+      ],
+      "promptRef": "workflow.md#stage:TRIAGE",
+      "outputs": "schemas/triage.schema.json"
+    },
+    {
+      "id": "REPORT",
+      "action": "prompt",
+      "worker": "coordinator",
+      "dependsOn": [
+        "TRIAGE"
+      ],
+      "promptRef": "workflow.md#stage:REPORT",
+      "outputs": "schemas/report.schema.json"
+    }
+  ],
+  "defaultScenario": "full",
+  "requiredStages": [
+    "SCOPE",
+    "REPORT"
+  ],
+  "scenarios": {
+    "full": {
+      "summary": "整条链照旧跑：定界 → 侦察 → 分析 → 分诊 → 成文。缺省场景点名六张主卡，不得依赖\"不点名＝注入全部声明\"的回退（R17）。",
+      "skills": [
+        "security-scenario-recon@1.0.0",
+        "security-scenario-triage@1.0.0",
+        "security-scenario-api@1.0.0",
+        "security-scenario-js@1.0.0",
+        "security-scenario-crypto@1.0.0",
+        "security-scenario-report@1.0.0"
+      ]
+    },
+    "recon": {
+      "summary": "授权范围内的被动侦察与指纹识别（该场景把对应专家的原有判断标准读进上下文，不改阶段图形状。）",
+      "skills": [
+        "security-scenario-recon@1.0.0"
+      ]
+    },
+    "triage": {
+      "summary": "重复、无效与信息不足的报告分诊（该场景把对应专家的原有判断标准读进上下文，不改阶段图形状。）",
+      "skills": [
+        "security-scenario-triage@1.0.0"
+      ]
+    },
+    "api": {
+      "summary": "接口面：参数、鉴权与业务规则校验（该场景把对应专家的原有判断标准读进上下文，不改阶段图形状。）",
+      "skills": [
+        "security-scenario-api@1.0.0"
+      ]
+    },
+    "js": {
+      "summary": "前端脚本与 SourceMap 里可读到的行为分析（该场景把对应专家的原有判断标准读进上下文，不改阶段图形状。）",
+      "skills": [
+        "security-scenario-js@1.0.0"
+      ]
+    },
+    "crypto": {
+      "summary": "编码、哈希与自实现密码学的可复核判定（该场景把对应专家的原有判断标准读进上下文，不改阶段图形状。）",
+      "skills": [
+        "security-scenario-crypto@1.0.0"
+      ]
+    },
+    "report": {
+      "summary": "可提交的复现步骤与影响面报告（该场景把对应专家的原有判断标准读进上下文，不改阶段图形状。）",
+      "skills": [
+        "security-scenario-report@1.0.0"
+      ]
+    },
+    "engagement-gate": {
+      "summary": "授权与范围门禁：ROE 核对 → 目标枚举 → 会战留痕，主动扫描之前的三道闸",
+      "skills": [
+        "security-scenario-engagement-gate@1.0.0"
+      ]
+    },
+    "injection-detect": {
+      "summary": "源码执行类缺陷定位：SQL/命令注入、eval-exec、不安全反序列化",
+      "skills": [
+        "security-scenario-injection-detect@1.0.0"
+      ]
+    },
+    "surface-hygiene": {
+      "summary": "暴露面卫生：CORS、响应头、TLS 与证书、弱加密、目录列举、调试端点、组件指纹",
+      "skills": [
+        "security-scenario-surface-hygiene@1.0.0"
+      ]
+    },
+    "secrets-supply-chain": {
+      "summary": "凭据与依赖链：暴露文件、硬编码密钥、传递性漏洞、许可证合规",
+      "skills": [
+        "security-scenario-secrets-supply-chain@1.0.0"
+      ]
+    },
+    "evidence-pack": {
+      "summary": "证据成文：单漏洞报告与高管摘要（含风险分构成与修复优先级）",
+      "skills": [
+        "security-scenario-evidence-pack@1.0.0"
+      ]
+    }
+  }
+}

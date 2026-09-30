@@ -1,0 +1,19 @@
+{
+  "schema": "ai-governance-source/v1",
+  "authorSession": "qoder",
+  "derivedFrom": "skill:nature-conflicting-reviewers-tests@1.0.0+nature-conflicting-reviewers@1.0.0+nature-minor-revision@1.0.0+nature-minor-revision-tests@1.0.0+nature-major-revision-missing-evidence@1.0.0",
+  "supersedes": null,
+  "releaseScope": "3.3.0 P6 scenario card for paper-author. Every quoted block is the referenced skill's own description copied verbatim with its language and byte size recorded; new writing is limited to step order, the one-line stance and the refusal gates.",
+  "verbatimFrom": {
+    "nature-conflicting-reviewers-tests@1.0.0": "SKILL.md#frontmatter.description",
+    "nature-conflicting-reviewers@1.0.0": "SKILL.md#frontmatter.description",
+    "nature-minor-revision@1.0.0": "SKILL.md#frontmatter.description",
+    "nature-minor-revision-tests@1.0.0": "SKILL.md#frontmatter.description",
+    "nature-major-revision-missing-evidence@1.0.0": "SKILL.md#frontmatter.description"
+  },
+  "bodySha256": "3a2d6e7960d1e926557850b12a4f1ddb4396189c66b811a617412f4a9380e93c",
+  "openDeferred": [
+    "The numbered spine cards (nature-00-scope, -01-research-canon, -02-evidence-table, -04-section-contracts) are 192-339 B stubs; this card quotes the substantive cards instead and records that the spine is thin.",
+    "No current pointer moved (red line 5)."
+  ]
+}

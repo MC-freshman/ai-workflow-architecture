@@ -1,0 +1,6 @@
+{
+  "schema": "ai-skill-pointer/v1",
+  "id": "ecc-nodejs-keccak256-skills",
+  "version": "1.0.0",
+  "hashManifest": "SHA256SUMS"
+}

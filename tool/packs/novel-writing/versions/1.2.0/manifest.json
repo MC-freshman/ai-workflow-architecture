@@ -1,0 +1,51 @@
+{
+  "schema": "ai-pack/v1",
+  "id": "novel-writing",
+  "version": "1.2.0",
+  "displayName": "小说与中文创作能力",
+  "skillIds": [
+    "novel-story-cover-chinese",
+    "novel-story-deslop-chinese",
+    "novel-story-import-chinese",
+    "novel-story-long-analyze-chinese",
+    "novel-story-long-scan-chinese",
+    "novel-story-long-write-chinese",
+    "novel-story-review-chinese",
+    "novel-story-setup-chinese",
+    "novel-story-short-analyze-chinese",
+    "novel-story-short-scan-chinese",
+    "novel-story-short-write-chinese",
+    "novel-story-chinese",
+    "novel-avoid-ai-writing-writing"
+  ],
+  "conflicts": [],
+  "source": {
+    "snapshot": "snapshot-2026.08.31",
+    "derivedFrom": "novelhub"
+  },
+  "integrity": {
+    "sha256Manifest": "SHA256SUMS"
+  },
+  "skillVersions": {
+    "novel-avoid-ai-writing-writing": "1.0.0",
+    "novel-story-chinese": "1.0.0",
+    "novel-story-cover-chinese": "1.0.0",
+    "novel-story-deslop-chinese": "1.0.0",
+    "novel-story-import-chinese": "1.0.0",
+    "novel-story-long-analyze-chinese": "1.0.0",
+    "novel-story-long-scan-chinese": "1.0.0",
+    "novel-story-long-write-chinese": "1.0.0",
+    "novel-story-review-chinese": "1.0.0",
+    "novel-story-setup-chinese": "1.0.0",
+    "novel-story-short-analyze-chinese": "1.0.0",
+    "novel-story-short-scan-chinese": "1.0.0",
+    "novel-story-short-write-chinese": "1.0.0"
+  },
+  "pinning": {
+    "schema": "ai-pack-pinning/v1",
+    "pinnedFrom": "novel-writing@1.1.0",
+    "source": "tool/skills/<id>/current.json",
+    "note": "Z10 §6.4 D2：把 pack 的技能选择钉到确切版本，消费方无需自行补版本。",
+    "pinnedAt": "2026-09-14"
+  }
+}

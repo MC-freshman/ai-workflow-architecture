@@ -1,0 +1,12 @@
+{
+  "schema": "ai-peer-lock/v1",
+  "peers": {
+    "mastermind-recon": "1.1.0",
+    "mastermind-js-analysis": "1.1.0",
+    "mastermind-api-validation": "1.1.0",
+    "mastermind-crypto-analysis": "1.1.0",
+    "mastermind-triage": "1.1.0",
+    "mastermind-reporting": "1.1.0"
+  },
+  "notes": "U6: exact locks for real business delegation; experts 1.1.0 add the runnable mastermind-peer-task workflow"
+}

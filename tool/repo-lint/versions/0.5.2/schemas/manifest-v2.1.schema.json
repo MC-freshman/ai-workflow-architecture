@@ -1,0 +1,170 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:ai:workflow-manifest:v2.1",
+  "type": "object",
+  "required": [
+    "schema",
+    "id",
+    "version",
+    "mode",
+    "entry",
+    "inputSchema",
+    "outputSchema",
+    "permissions",
+    "dependencies",
+    "integrity"
+  ],
+  "properties": {
+    "schema": {
+      "const": "ai-workflow/v2.1"
+    },
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9._-]*$"
+    },
+    "version": {
+      "type": "string",
+      "minLength": 5
+    },
+    "displayName": {
+      "type": "string"
+    },
+    "mode": {
+      "enum": [
+        "prompt-skill",
+        "pipeline",
+        "executable-with-evidence",
+        "agent-orchestration"
+      ]
+    },
+    "entry": {
+      "type": "string",
+      "minLength": 1
+    },
+    "inputSchema": {
+      "type": "string",
+      "minLength": 1
+    },
+    "outputSchema": {
+      "type": "string",
+      "minLength": 1
+    },
+    "permissions": {
+      "type": "object",
+      "required": [
+        "filesystem",
+        "network",
+        "process"
+      ],
+      "additionalProperties": {
+        "type": [
+          "string",
+          "array",
+          "object"
+        ]
+      }
+    },
+    "dependencies": {
+      "type": "object",
+      "properties": {
+        "workflows": {
+          "type": [
+            "object",
+            "array"
+          ]
+        },
+        "skills": {
+          "type": [
+            "object",
+            "array"
+          ]
+        },
+        "packs": {
+          "type": [
+            "object",
+            "array"
+          ]
+        },
+        "software": {
+          "type": "object",
+          "additionalProperties": {
+            "type": "string",
+            "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"
+          }
+        }
+      },
+      "additionalProperties": false,
+      "patternProperties": {
+        "^x-": true
+      }
+    },
+    "runtime": {
+      "type": "object",
+      "required": [
+        "type",
+        "entry",
+        "python",
+        "environmentLock"
+      ],
+      "properties": {
+        "type": {
+          "const": "python-cli"
+        },
+        "entry": {
+          "type": "string",
+          "minLength": 1
+        },
+        "python": {
+          "type": "string",
+          "minLength": 1
+        },
+        "environmentLock": {
+          "type": "string",
+          "minLength": 1
+        }
+      },
+      "additionalProperties": false,
+      "patternProperties": {
+        "^x-": true
+      }
+    },
+    "interface": {
+      "type": "object",
+      "required": [
+        "transport",
+        "execution"
+      ],
+      "properties": {
+        "transport": {
+          "type": "string"
+        },
+        "execution": {
+          "type": "string"
+        }
+      },
+      "additionalProperties": false,
+      "patternProperties": {
+        "^x-": true
+      }
+    },
+    "integrity": {
+      "type": "object",
+      "required": [
+        "sha256Manifest"
+      ],
+      "properties": {
+        "sha256Manifest": {
+          "const": "SHA256SUMS"
+        }
+      },
+      "additionalProperties": false,
+      "patternProperties": {
+        "^x-": true
+      }
+    }
+  },
+  "additionalProperties": false,
+  "patternProperties": {
+    "^x-": true
+  }
+}

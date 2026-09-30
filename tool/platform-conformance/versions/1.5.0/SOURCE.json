@@ -1,0 +1,30 @@
+{
+  "schema": "ai-governance-tool-source/v1",
+  "authorSession": "codex",
+  "derivedFrom": "platform-conformance@1.4.0",
+  "supersedes": "1.4.0",
+  "releaseScope": "Architecture 3.x repair round R-P4 (D-92, chosen alternative: conform gains the per-software verdict family rather than rewording the P7/P8 criteria). Pass = softwareRoot/softwareGateway/softwareGatewayConfig wired + frozen snapshot + verified body registered in softwareEnvironment.bodies; unfrozen or body-less rows answer unverified; platforms declaring no software wiring answer declaredAbsent.",
+  "changes": [
+    "adds focused positive and negative tests for unsealed v1.2/v1.3 run-locks",
+    "conform checks scriptEnvironmentRungs when a platform declares script support",
+    "legacy scriptEnvironment evidence alias is accepted only when an explicit usable rung exists",
+    "declaredAbsent platforms retain their explicit verdict without requiring a rung",
+    "adds focused tests for legacy single-backend refusal, malformed rungs, and declaredAbsent"
+  ],
+  "unchanged": [
+    "compute_union, union_body, every union item id, and --only filtering behavior",
+    "all prior tests and env_config.py"
+  ],
+  "openDeferred": [
+    "per-capability rows for a software release (the union currently carries the profiles and permissions a recipe requires, not each capability it offers)",
+    "a machine-readable schema for the report itself"
+  ],
+  "releaseStatus": "published",
+  "publishedAt": "2026-09-23",
+  "publishedBy": "codex, architecture repair P4",
+  "publicationChanges": [
+    "new patch release; 1.4.0 remains unchanged"
+  ],
+  "pointerPolicy": "published, not adopted: shared platform-conformance current.json remains unchanged until a later planned adoption switch",
+  "version": "1.5.0"
+}

@@ -1,0 +1,15 @@
+{
+  "schema": "ai-governance-source/v1",
+  "authorSession": "qoder",
+  "derivedFrom": "skill:novel-composing-vulnerability-report-security@1.0.0+novel-generating-executive-summary-security@1.0.0",
+  "supersedes": null,
+  "releaseScope": "3.3.0 P4 scenario routing card for mastermind-bug-bounty. Every quoted block is the referenced skill's own description copied verbatim; the new writing is limited to step order and refusal gates. Depth stays in the pinned source releases, named by id@version instead of paraphrased.",
+  "verbatimFrom": {
+    "novel-composing-vulnerability-report-security@1.0.0": "SKILL.md#frontmatter.description",
+    "novel-generating-executive-summary-security@1.0.0": "SKILL.md#frontmatter.description"
+  },
+  "bodySha256": "a0aceee5fe4d3d75c08b9597f32177631fd2b00cf8e34ba6379f7cd1111e2bac",
+  "openDeferred": [
+    "The upstream cards are registered under a novel- prefix they do not belong to (D-88) and each exists twice with byte-identical content (D-89); this round points at the -security twin and renames nothing."
+  ]
+}

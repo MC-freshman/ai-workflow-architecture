@@ -1,0 +1,21 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "required": ["host", "user", "passwordRef", "sql"],
+  "properties": {
+    "host": { "type": "string", "description": "数据库主机（-h）" },
+    "port": { "type": "integer", "minimum": 1, "maximum": 65535, "default": 3306, "description": "端口（-P）" },
+    "user": { "type": "string", "description": "用户名（-u）" },
+    "passwordRef": { "type": "string", "description": "平台密钥位中数据库密码的引用名；网关渲染为临时 --defaults-extra-file" },
+    "database": { "type": "string", "description": "默认数据库（-D）" },
+    "sql": { "type": "string", "description": "要执行的 SQL（-e）；多条用分号", "examples": ["SELECT VERSION();", "SHOW DATABASES;"] },
+    "outputXml": { "type": "boolean", "default": false, "description": "-X XML 输出" },
+    "outputHtml": { "type": "boolean", "default": false, "description": "-H HTML 输出" },
+    "outputTable": { "type": "boolean", "default": false, "description": "-t 表格输出" },
+    "skipColumnNames": { "type": "boolean", "default": false, "description": "-N 不输出列名" },
+    "verticalOutput": { "type": "boolean", "default": false, "description": "-E 纵向显示" },
+    "connectTimeout": { "type": "integer", "minimum": 1, "description": "--connect-timeout 秒" },
+    "extraArgs": { "type": "array", "items": { "type": "string" } }
+  },
+  "additionalProperties": false
+}

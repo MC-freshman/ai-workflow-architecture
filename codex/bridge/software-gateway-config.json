@@ -1,0 +1,16 @@
+{
+  "softwareRoot": "E:/ai/software",
+  "lockRoot": "E:/ai/codex/runtime/software/locks",
+  "evidenceRoot": "E:/ai/codex/runtime/software/evidence",
+  "bodies": {
+    "burp-suite": "<local-tool-body-path> V2024.5.1/BurpSuite V2024.5.1/BurpSuite/burpsuite_pro_org.jar",
+    "dirsearch": "D:/Various_programming_languages/PPython/dirsearch-master/dirsearch-master/dirsearch.py",
+    "mysql-cli": "<local-tool-body-path>",
+    "nmap": "<local-tool-body-path>",
+    "veracrypt": "<local-tool-body-path>",
+    "wireshark-cli": "<local-tool-body-path>"
+  },
+  "interpreters": {
+    ".py": "E:/ai/codex/workspaces/agentic-workflow-implementation/.venv/Scripts/python.exe"
+  }
+}

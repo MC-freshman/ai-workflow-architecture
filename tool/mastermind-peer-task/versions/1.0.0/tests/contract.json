@@ -1,0 +1,15 @@
+{
+  "schema": "ai-workflow-contract-test/v1",
+  "id": "mastermind-peer-task",
+  "version": "1.0.0",
+  "expect": {
+    "manifestMode": "pipeline",
+    "definitionSchema": "ai-workflow-definition/v2",
+    "stages": [
+      "BRIEF",
+      "EXECUTE",
+      "DELIVER"
+    ],
+    "workflowSyntaxPeers": "rejected-by-frozen-contracts"
+  }
+}

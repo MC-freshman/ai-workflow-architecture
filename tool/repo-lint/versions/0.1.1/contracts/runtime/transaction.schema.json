@@ -1,0 +1,20 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://contracts.local/runtime/1.1/transaction.schema.json",
+  "type": "object", "additionalProperties": false,
+  "required": ["schemaVersion", "transactionId", "platform", "runId", "idempotencyKey", "requestSha256", "request", "phase", "effectBoundaryCrossed", "eventSequences", "response"],
+  "properties": {
+    "schemaVersion": {"const": "ai-run-transaction/v1.1"}, "transactionId": {"$ref": "common.schema.json#/$defs/id"},
+    "platform": {"enum": ["codex", "dsh", "workbuddy", "zcode", "doubao"]},
+    "runId": {"$ref": "common.schema.json#/$defs/id"}, "idempotencyKey": {"$ref": "common.schema.json#/$defs/id"},
+    "requestSha256": {"$ref": "common.schema.json#/$defs/hash"},
+    "request": {"allOf": [{"$ref": "protocol.schema.json"}, {"properties": {"kind": {"const": "request"}, "operation": {"not": {"const": "status"}}}}]},
+    "phase": {"enum": ["intent", "committed", "unknown-outcome"]}, "effectBoundaryCrossed": {"type": "boolean"},
+    "eventSequences": {"type": "array", "uniqueItems": true, "items": {"type": "integer", "minimum": 1}},
+    "response": {"oneOf": [{"type": "null"}, {"allOf": [{"$ref": "protocol.schema.json"}, {"properties": {"kind": {"const": "response"}}}]}]}
+  },
+  "allOf": [
+    {"if": {"properties": {"phase": {"const": "committed"}}}, "then": {"properties": {"response": {"type": "object"}}}, "else": {"properties": {"response": {"type": "null"}, "eventSequences": {"maxItems": 0}}}},
+    {"if": {"properties": {"phase": {"const": "unknown-outcome"}}}, "then": {"properties": {"effectBoundaryCrossed": {"const": true}}}}
+  ]
+}

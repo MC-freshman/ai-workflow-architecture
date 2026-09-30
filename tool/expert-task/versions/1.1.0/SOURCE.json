@@ -1,0 +1,19 @@
+{
+  "schema": "ai-workflow-source/v1",
+  "authorSession": "zcode",
+  "derivedFrom": "expert-task@1.0.0",
+  "supersedes": "expert-task@1.0.0（WORK 声明 onFail=repair 但无门禁，repair 不可达；且修复提示词把触发条件写成 schema 校验失败）",
+  "designEvidence": "E:/ai/zcode/runtime/runs/20260914-u3-repo-lint-020/reports/engine-060-design.json（设计项 ④）",
+  "changes": [
+    "WORK 新增脚本支撑的 process 门禁 work-integrity：核对 deliverable 三要素（name + path|inline + status）、占位文本、unavailableChecks 纪律、总状态与逐项状态矛盾",
+    "WORK 的 onFail=repair 因此真正可达（最多两轮）；门禁脚本 scripts/validate_expert_work.py，退出码 0/1/2",
+    "修复提示词改为描述真实触发条件（门禁未过），不再声称 schema 校验失败",
+    "WORK 提示词加入门禁说明，使专家事前知道机械检查项"
+  ],
+  "unchanged": [
+    "INTAKE / REPORT 两阶段与 report-complete 门禁",
+    "四个 schemas 的输出契约",
+    "manifest 权限与依赖声明"
+  ],
+  "createdAt": "2026-09-15"
+}

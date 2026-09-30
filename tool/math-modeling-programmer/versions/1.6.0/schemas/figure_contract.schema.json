@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "ai-workflow/math-modeling-programmer/figure-contract/v1",
+  "type": "object",
+  "additionalProperties": true,
+  "required": ["figure_id", "claim", "entrypoint", "panels"],
+  "properties": {
+    "figure_id": {"type": "string", "minLength": 1},
+    "claim": {"type": "string", "minLength": 1},
+    "entrypoint": {"type": "string", "minLength": 1},
+    "build_function": {"type": "string", "minLength": 1},
+    "backend": {"const": "python"},
+    "width_mm": {"type": "number", "exclusiveMinimum": 0},
+    "height_mm": {"type": "number", "exclusiveMinimum": 0},
+    "preview_dpi": {"type": "integer", "minimum": 72},
+    "final_dpi": {"type": "integer", "minimum": 300},
+    "text_policy": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "min_pt": {"type": "number", "exclusiveMinimum": 0}
+      }
+    },
+    "panels": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "role", "unique_question"],
+        "properties": {
+          "id": {"type": "string", "minLength": 1},
+          "role": {"type": "string", "minLength": 1},
+          "unique_question": {"type": "string", "minLength": 1}
+        }
+      }
+    },
+    "alignment": {"type": "object"},
+    "legend_policy": {"type": "object"},
+    "annotation_policy": {"type": "object"},
+    "source_result_ids": {"type": "array", "items": {"type": "string"}}
+  }
+}

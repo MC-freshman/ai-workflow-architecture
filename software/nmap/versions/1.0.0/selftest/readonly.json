@@ -1,0 +1,20 @@
+{
+  "schema": "ai-software-selftest/v1",
+  "mode": "readonly",
+  "checks": [
+    {
+      "id": "version",
+      "capability": "version",
+      "arguments": {},
+      "expectedExitCode": 0,
+      "expectedOutputContains": "Nmap version 7.95",
+      "timeout": 15
+    },
+    {
+      "id": "files-present",
+      "kind": "file-integrity",
+      "files": ["nmap.exe", "ncat.exe", "nping.exe"],
+      "notes": "校验 verify.files 中声明的 SHA256"
+    }
+  ]
+}

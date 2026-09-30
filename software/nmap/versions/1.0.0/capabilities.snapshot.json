@@ -1,0 +1,43 @@
+{
+  "schema": "ai-software-capability-snapshot/v1",
+  "softwareId": "nmap",
+  "softwareVersion": "1.0.0",
+  "upstreamVersion": "7.95",
+  "generatedAt": "2026-09-18",
+  "generationMethod": "manual-from-cli-help",
+  "upstreamHelpSource": "nmap (no args) usage output",
+  "capabilities": [
+    {
+      "name": "version",
+      "nativeName": "nmap --version",
+      "sideEffects": "none",
+      "consent": "auto",
+      "idempotent": true,
+      "safeForSelftest": true,
+      "inputSchemaRef": "schemas/empty.input.json",
+      "outputSchemaRef": "schemas/version.output.json"
+    },
+    {
+      "name": "scan",
+      "nativeName": "nmap [scanType] [options] target",
+      "sideEffects": "external",
+      "consent": "confirm-stage",
+      "idempotent": false,
+      "safeForSelftest": false,
+      "inputSchemaRef": "schemas/scan.input.json",
+      "outputSchemaRef": "schemas/scan.output.json",
+      "argvSummary": "-oJ - [-s{S|T|A|U}] [-p ports] [--top-ports N] [-sV] [-O] [-Pn] [-n] [-F] [-r] [--open] [-T0..5] [--host-timeout T] target"
+    },
+    {
+      "name": "serviceScan",
+      "nativeName": "nmap -sV [options] target",
+      "sideEffects": "external",
+      "consent": "confirm-stage",
+      "idempotent": false,
+      "safeForSelftest": false,
+      "inputSchemaRef": "schemas/serviceScan.input.json",
+      "outputSchemaRef": "schemas/scan.output.json",
+      "argvSummary": "-sV [--version-intensity 0..9] -oJ - [-p ports] [--top-ports N] [-O] [-Pn] [-n] [-T0..5] target"
+    }
+  ]
+}

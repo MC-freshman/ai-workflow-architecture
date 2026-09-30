@@ -1,0 +1,193 @@
+{
+  "schema": "ai-platform-capabilities/v1",
+  "platform": "workbuddy",
+  "attestedAt": "2026-09-25",
+  "checks": {
+    "python-runtime": true,
+    "runner-dependency-resolution": true,
+    "filesystem-platform-scoped-write": true,
+    "shared-repo-read-only-access": true,
+    "shell-command-execution": true,
+    "runner-protocol-prepare": true,
+    "prompt-stage-claim": true,
+    "prompt-stage-submit": true,
+    "terminal-stop-with-evidence": true
+  },
+  "permissionAdapters": [
+    {
+      "filesystem": "project-scoped",
+      "network": "deny",
+      "process": "allowlisted-only",
+      "evidence": "workbuddy 自证（2026-09-16，接入轮实测）：prompt 阶段由本会话执行，运行产物只落 runsRoot（引擎强制 runsRoot ⊂ platformRoot；写探针 runtime\\runs\\probe-20260916\\write-probe.txt）。分面口径——脚本阶段：本平台未提供脚本隔离沙箱，协议内 action:script 阶段不可执行（见 declaredAbsent.scriptEnvironment），矩阵 claim+stop 不依赖脚本阶段；prompt 阶段：network=deny 与 process=allowlisted-only 是会话自律，WorkBuddy 会话具备网络与任意命令能力，不要把自律当作内核级强制。可调用性以 invocation 矩阵实测为准。"
+    }
+  ],
+  "profiles": {
+    "renderer": {
+      "adapters": [
+        "matplotlib-adapter-first"
+      ],
+      "requires": [
+        "matplotlib"
+      ]
+    }
+  },
+  "attested": {
+    "contracts": "E:\\ai\\tool\\runtime-contracts\\versions\\1.4.1（本平台显式钉版，3.2.0 成套代；1.4.1 把 run-lock 的 `scenario`/`expandedGraphSha256` 门到 v1.3 同时保持 v1.1/v1.2 兼容——本平台 3.1 的场景电池在 1.4.1 上逐字复现通过，即该兼容点的实测）。配对要求：wf-runner 会把任何显式 repo-lint 选择与 config.scannerRelease 比对（resolution.py:171-180），故本平台 scannerRelease 显式声明 repo-lint/0.5.2，且平台作用域默认 defaults.workflowVersions[\"repo-lint\"] 已由 `architecture-ops 1.4.0 switch_defaults` 同步抬到 0.5.2（plan→apply→verify，readback 0.5.2）",
+    "runner": "E:\\ai\\tool\\wf-runner\\versions\\0.10.1（本平台显式钉版；3.2.0 成套代，修复 process gate 的 at-most-once。manifest+SHA256SUMS 逐文件实测相符：本轮七件发布物 122 个文件全绿，见 runtime/maintenance/3.2-adopt/baseline/p1-inventory-recheck.json）",
+    "environment": "E:\\ai\\workbuddy\\runtime\\py-env（Windows venv，python 3.9.13；runner requirements.lock 8 库逐一匹配 + matplotlib 3.9.4 / numpy 1.26.4 供 renderer profile；逐包版本见 bridge/environment.json，20/20 导入自测通过）",
+    "renderer-selftest": "venv 内 matplotlib Agg 真实出图成功（E:\\ai\\workbuddy\\runtime\\renderer-selftest\\render.png，35938 字节）——renderer 适配器可兑现（未做隔离沙箱渲染验证，见 declaredAbsent.scriptEnvironment）",
+    "loop": "prepare → next(claim prompt) → submit → stop 实测两闭环：① workflow=game-sprint-plan@2.1.1 intake/capacity/plan 三阶段连续 completed → stopped（runtime\\runs\\workbuddy-submit-smoke-20260916，stateRevision 11 终态）；② agent=novel-writer@1.4.0 经 tool-lock 解析 expert-task，INTAKE prompt 含专家上下文 → stopped（runtime\\runs\\workbuddy-agent-smoke-20260916-r2）。驱动报告 runtime\\logs\\s4-driver-report.json / s4-agent-driver-report.json",
+    "matrix": "现行全矩阵基线 = 3.1.0 采纳轮（2026-09-23）的 **48 格 `PASS 43 / NEEDS-INPUT 1 / EXPECTED 3 / FAIL 1`**（runtime/maintenance/3.1-adopt/baseline/p3-matrix.json，harness digest `de1a7b62…`；那 1 格 FAIL 已定位到共享侧 `agent:mastermind-bug-bounty@4.0.0` 的 tool-lock 钉了定义与 manifest 不符的 workflow@3.0.0，处置路径在该条与本文件 3.1 notes）。**3.2.0 轮不重跑全矩阵**（BP-3：全矩阵只在首次接入与引擎/契约大版本升级两个时刻跑；0.10.0→0.10.1 / 1.4.0→1.4.1 / 0.5.1→0.5.2 均为补丁代），改跑受影响面：软件 6 格单格矩阵 + 连接器电池 + 提示词面冒烟（见 attested.matrix-3.2 与 attested.3.2-fields）。",
+    "matrix-3.2": "3.2.0 受影响面读数（2026-09-25）：`invocation_matrix --only software`（architecture-ops 1.4.0）= **PASS 3 / EXPECTED 3 / FAIL 0，6 格**（runtime/maintenance/3.2-adopt/baseline/p4-matrix-software.json）——`dirsearch@1.0.1` / `mysql-cli@1.0.2` / `wireshark-cli@1.0.1` PASS，`burp-suite`/`nmap`/`veracrypt` @1.0.0 EXPECTED（`SNAPSHOT_NOT_FROZEN`，原因逐条见 software 段）。**D-94 口径**：1.4.0 矩阵会把未归类的网关错误落成 PASS，故本格读数不单独作证，与连接器电池（attested.3.2-fields，引擎原样消息直驱）互为对照，两者一致（3 可派发 / 3 不可派发）。",
+    "conform": "P4（2026-09-25，3.2.0 采纳后，platform-conformance 1.4.1 真跑）：`union=6f0a1ec09978 items=27 pass=21 declaredAbsent=6 unverified=0 remediationMissing=0 floorReached=False`，`conformDigest=c61212f58a7a`（baseline/p4-conform-after.json）。并集由 3.1 的 `75a89e670df7` 移到 `6f0a1ec09978`（`mysql-cli@1.0.2` 的 requiredProfiles 收敛为空、requiredBy 随指针更新），**27 个判定项的 verdict 逐一未变**；`--union-out` 字节 sha256 = `6f0a1ec09978960cb4a022d21bc4f75c4717bd3a932439f8348dad053537af95`（Get-FileHash 复算与报告一致）。换绑没有凭空造出任何一格能力，也没有让哪一格变绿；6 条非 pass 全部仍是带 gapPlan 的已声明缺口。3.1 采纳时读数对照：`pass=21 / declaredAbsent=6 / remediationMissing=0`（3.1 轮已把 9 条缺到 6 条，见 3.1 轮 attested.conform）。",
+    "3.1-fields": "P5（2026-09-23，本平台自证，baseline/p5-fields.json）：**F-1 上下文注入** —— `novel-pipeline` 指定场景 `outline` 时 run-lock `execution.contextSkills` = 该场景点名的 2 个技能、认领到的 prompt 32,573 字符且正文含该 2 份技能文档标记；不指定场景（回落 `standard`）时 contextSkills = 工作流 `dependencies.skills` 声明的 7 个、prompt 159,041 字符含 7 份正文 —— 「场景点名以场景为准、未点名回落工作流声明」在真字节上成立，技能正文确实进了提示词。**F-2 场景展开与哈希** —— `execution.scenario` 与 `execution.expandedGraphSha256` 均入锁；同一流程不同场景哈希互不相同（`game-pipeline` standard `cfb591cc…` vs `gdd` `c3d324c9…`；`novel-pipeline` standard `250619ad…` / outline `a67836d5…` / hook `2413203b…`，本轮共 5 个互异摘要）；未知名场景被拒且报文列出全部已声明场景（12 个）；对 v2 定义传场景被拒并点名 `definition schema: ai-workflow-definition/v2`。**档位可见（D-62）** —— 未写档位时锁内 `rigor=balanced / rigorSource=default`，认领报文带 `tierNotice=effective tier=balanced (defaulted, and no tier written means draft); gates=on; frozen=False; not a submission-grade or frozen result`；写 `rigor=full` 时 `rigorSource=declared`、notice 改述 declared by the request。**未测**：续跑时 `expandedGraphSha256` 失配 ⇒ `VERSION_CONFLICT` 那一支需要改已发布字节才能触发，本轮不碰（红线 1），登记为 unverified。",
+    "3.2-fields": "P2/P3（2026-09-25，本平台自证，runtime/maintenance/3.2-adopt/baseline/）：**换绑电池**——引擎原样（无 `kind`，D-93 家族）的 `software.health` 消息打参考网关 `_gateway/1.0.0`，两种信封形态都答 `INVALID_REQUEST: unknown gateway request schema`（3.2 管理面在旧绑定下整体不可达）；打共享连接器 `_connector/1.0.6` 则 `ok=true`、6 行 health（p2-battery-gateway-before.json / p2-battery-connector-before.json）。**连接器电池 13/13 绿**（p3-connector-battery-rerun.json，引擎原样消息直驱）：① `software.list` 6 行（mysql-cli `declaration=declared`，其余 5 件 `derived`——连接器按不可变 manifest 派生 3.2 覆盖层）；② health 给出 **3 可派发 / 3 不可派发**且逐条点名（burp-suite：快照未冻结+本体未登记；nmap：快照未冻结+配方 pin 65 字符；veracrypt：快照未冻结）；③ describe×6（adapter 与 operations 集）；④ **三条真派发**：`dirsearch@version` → `dirsearch v0.4.3`（经本机 PPython 3.12.4 别名）、`mysql-cli@version` → `Ver 8.0.39`、`wireshark-cli@version` → `TShark 4.2.6`，各自 exit 0 且带编号证据对；⑤ 拒绝格全部结构化且发生在派发前：`mysql-cli@query`（无 credentialProvider ⇒ `CAPABILITY_UNAVAILABLE` 点名 `configKey: credentialProvider`）、`nmap@scan`/`veracrypt@version`（snapshot 门）、`burp-suite@version`（点名 offered operations）、`session.open`（无 provider/无 gateway-config 软件档 ⇒ `PROFILE_NOT_DECLARED`）；⑥ 幂等重放：同键第二次答 `replayed:true` 且编号目录数不变；⑦ `software.evidence` 读回 index 与在盘序列一致；⑧ 证据审计：4 个编号目录各带 request/response/connector/artifacts，敏感串扫描 0 命中（p3-evidence-audit.txt）。**提示词面回归**：0.10.1 + 1.4.1 上重跑 3.1 的字段电池 8 格，图哈希/prompt 字符数/contextSkills/tierNotice 与 3.1 读数**逐字相同**（p2-smoke-fields-rerun.json 对照 3.1-adopt/baseline/p5-fields-final.json）——contracts 1.4.1 的 v1.2 锁兼容点被实测覆盖。",
+    "concurrency": "C1/C2 实测（workbuddy-cc-a-20260916=game-sprint-plan 2.1.1 / workbuddy-cc-b-20260916=game-brainstorm 2.2.0 交错并行 prepare→next→stop 六步全 ok，两 run 同时活跃互不影响）：runtime\\logs\\s7-cc-report.json",
+    "defaultFollow": "runtime\\check_follow.py 校验矩阵 40 行全部从共享 current 解析、零漂移（runtime\\check-follow-result.json）；换代跟随五步演练留痕 runtime\\maintenance\\generation-follow-drill-20260916.md",
+    "doctor": "ops\\doctor.py --platform workbuddy = ok:true 零 blockers 零 warnings（runtime\\reports\\doctor-20260916-workbuddy.txt）",
+    "shared-read-only": "tool\\registry.json（27 工作流）与 agent\\registry.json（13 专家）读取成功，无写操作（本轮 S3）",
+    "platform-write": "runtime\\runs\\probe-20260916\\write-probe.txt 写入成功（53 字节）"
+  },
+  "declaredAbsent": {
+    "peerDispatch": "未声明 peerDispatch，也不提供 peerDispatcherModule / peerChildExecutor；checks 内不放 false（all(checks.values()) 是运行前置门禁）。委派请求按协议不匹配任何操作支，本平台不声称 peer 派发能力。",
+    "mcp-tool-surface": "WorkBuddy 客户端未注册指向 tool/agent 的工作流 MCP 服务 → 不声明；传输面按 §9 以 CLI + 用户级 Skill 成立",
+    "scriptEnvironment": "未提供脚本隔离沙箱（无 WSL/容器隔离）；协议内 action:script 阶段与 --tool render-figure / record-visual-review 的一格执行不可用。矩阵默认 claim+stop 不受影响；含脚本阶段的工作流（如 repo-lint）因此在其脚本面不可执行。",
+    "math-solver-chain": "数模工作流可 prepare/claim prompt，但脚本阶段不可执行（无脚本隔离环境）→ 求解器链不承接；任何交稿级数模要求应转 zcode（比赛备份平台）。",
+    "profile:administrator": "veracrypt 的 mount / dismount / createVolume 要求管理员权限（recipe requiredProfiles=[administrator]）。WorkBuddy 会话以普通用户运行，未注册提权适配器 → 不声明。只读类 capability（含 veracrypt version）不受影响，它们不要求该 profile。",
+    "action:script": "并集项名（platform-conformance 的键形）。本平台未提供脚本隔离沙箱（无 WSL/容器隔离、无 scriptEnvironmentRungs），协议内 action:script 阶段不可执行；权威登记与出处同上一条 scriptEnvironment。",
+    "action:peer": "并集项名。本平台未声明 peerDispatch，也不提供 peerDispatcherModule / peerChildExecutor → 委派不可用；权威登记与出处同上一条 peerDispatch。",
+    "permission-triple:platform-runtime-write-shared-read-only/deny/isolated-python": "并集项名。这是 wf-runner 自己声明的脚本面策略（平台运行期可写、共享仓只读、隔离解释器）：本平台没有密封脚本环境，故无法兑现该三元组。与 action:script 同一根因（W1）。",
+    "permission-triple:shared-read-only-platform-report-write/deny/none": "并集项名。这是 repo-lint 声明的只读共享根策略：需要 D04 只读 jail 挂载与脚本隔离环境。本平台实测被 repo-lint 0.5.1 自身拒绝——`--scope live` 报文原文『live scope requires the platform's read-only jail mounts for every root it is given: /shared/tool, /shared/agent and, when a software root is passed, /shared/software (D04 declaration; BP-1: one binding set for all three roots)』（P-TABLE P4 记录，tmp/p4-repo-lint-live.u8.txt）。",
+    "python-package:pymupdf": "并集项名。math-modeling-programmer 的 environmentLock 钉了 PyMuPDF，而本平台声明的主机侧环境清单（bridge/environment.json 20 包）不含它，且本平台没有密封脚本环境 ⇒ 数模求解链的脚本面不承接。这是 W1 的存在面，不是漏装。"
+  },
+  "gapPlan": {
+    "action:script": {
+      "path": "建脚本隔离环境（参考 qoder 的 WSL2 jail 或容器方案），随后在 config 里声明 scriptEnvironmentRungs 与指向密封环境清单的 environmentManifest，并按 runner 的脚本门链在真字节上出证。本轮不做：建沙箱需用户单独授权（bridge/platform.md 待办 W1）。",
+      "costMinutes": 600
+    },
+    "action:peer": {
+      "path": "声明 peerDispatch 并落地 config.peerDispatcherModule / peerChildExecutor 两个键，再按 peer-lock 语义实测一次委派闭环；在此之前不声明（未实测面不写成支持）。",
+      "costMinutes": 480
+    },
+    "permission-triple:platform-runtime-write-shared-read-only/deny/isolated-python": {
+      "path": "与 action:script 同一根因（无密封脚本环境）：W1 解决后该三元组随即被满足，不需要单独的动作。",
+      "costMinutes": 0
+    },
+    "permission-triple:shared-read-only-platform-report-write/deny/none": {
+      "path": "同上再加 D04 只读 jail 挂载（/shared/tool、/shared/agent、/shared/software 三个根一套绑定，BP-1 要求三仓同构）。W1 解决后按 snapshot 或 live 口径重跑 repo-lint 并留报告。",
+      "costMinutes": 600
+    },
+    "python-package:pymupdf": {
+      "path": "在密封脚本环境内按 math-modeling-programmer 的 environmentLock 补上 PyMuPDF；主机侧 venv 装它并无意义（没有密封环境就没有『密封环境内的依赖』这一语义）。与 W1 同批解决。",
+      "costMinutes": 120
+    },
+    "profile:administrator": {
+      "path": "为软件面的 veracrypt 注册提权适配器，或把该配方改由管理员会话运行。属软件面，按用户 2026-09-23 裁定默认忽视；只读类 capability 不受影响。",
+      "costMinutes": 240
+    },
+    "union-source-gap:tool": {
+      "path": "tool 仓 registry.json 缺失时的兜底项：本平台读数里未触发（三仓 registry 全部可读，unionSourceGaps=[]）；保留此项以免将来缺仓时读成绿。",
+      "costMinutes": 30
+    },
+    "union-source-gap:agent": {
+      "path": "同上（agent 仓）。",
+      "costMinutes": 30
+    },
+    "union-source-gap:software": {
+      "path": "同上（software 仓）。",
+      "costMinutes": 30
+    }
+  },
+  "unverified": {
+    "script-stage-execution": "未实测，且缺隔离环境",
+    "process-gates": "未实测（唯一有 process 门禁的 repo-lint 在 prepare 即被权限策略拒，见例外清单）",
+    "crash-recovery": "未实测（需 Engine(config, fault=...) 故障注入，CLI 不暴露该入口）",
+    "same-run-concurrent-write-guard": "引擎 Store.lease() 契约成立，未做破坏性实测（以规范 §10 为权威）",
+    "c5-same-project-serial": "同项目目录串行约束未实测（全系统 NOT_RUN，具备补测条件）",
+    "a3-mcp-registration": "未注册指向共享仓库的本地 MCP 服务",
+    "continuation-graph-hash-mismatch": "3.1 F-2 的续跑失配支（`execution.expandedGraphSha256` 与 `plan()` 重算不符 ⇒ VERSION_CONFLICT）未实测：触发它需要改动已发布字节，红线 1 不允许；本平台只测到「同一流程不同场景哈希互异」与正常续跑不被误拒（见 attested.3.1-fields）",
+    "tp3b-end-to-end-cells": "架构 3.1.0 §6 的 T-P3b 九格端到端（真派发脚本 / 真 kill 受管进程 / 真让网关答 busy / 环境根拼错的真拒绝）未跑：需要带 scriptEnvironmentRungs 与网关运行面的平台实盘出证，本平台没有该面（同 W1）",
+    "credential-mediated-call": "3.2.0 的凭据中介调用（mysql-cli 的 query/dump）未实测：本平台未声明 `credentialProvider`，连接器在派发前以 `CAPABILITY_UNAVAILABLE` 点名 `configKey: credentialProvider` 拒绝（baseline/p3-connector-battery-rerun.json 拒绝格）。补齐路径：用户在 Windows 凭据管理器创建 `reference:db-credentials`，平台声明 provider 命令后按新 P 表真跑一次 `SELECT 1` 并核对证据里只有引用名（qoder P7 冒烟口径，约 45 分钟，需用户建凭据）。",
+    "desktop-session": "3.2.0 的 desktop-session（open/status/close）未实测：本平台未声明 session 三个 provider，连接器答 `PROFILE_NOT_DECLARED`/`INTERACTIVE_REQUIRED`，不伪装成功。补齐路径：平台自写会话进程助手（参考 qoder runtime/software/session-process-windows.py 的形状）并在 gateway config 声明三键 + softwareProfiles（约 90 分钟；真起 GUI 另需用户逐次授权）。",
+    "connector-mcp-forward": "burp-suite 经连接器的 MCP/HTTP 转发未实测：被钉 1.0.0 快照未冻结且端点未监听（health 逐条点名）。共享侧 burp-suite 1.0.1 已发布但指针翻转待用户授权（qoder P8 留的 plan 未应用）；翻转后本平台单格冒烟约 15 分钟。"
+  },
+  "permissions": {
+    "filesystem": "project-scoped",
+    "network": "deny",
+    "process": "allowlisted-only"
+  },
+  "notes": "workbuddy 平台自证（2026-09-16，对齐架构基线 1.0.0 §4 与规范 §9 的声明式接口）。checks 只登记实证项，负面能力一律进 declaredAbsent / unverified。契约 platform 枚举（repo-lint 0.2.1 protocol/run-lock/transaction）已含 workbuddy（codex 2026-09-12 prepare 拒绝信息所示枚举 ['codex','dsh','workbuddy','zcode','doubao'] 为证），无需发布新契约版本。已知共享侧例外：repo-lint 的 shared-read-only-platform-report-write 策略在现行隔离控制器下任何平台都无法兑现（架构基线 §6 例外②）；wf-runner 为引擎自身（设计例外）。 | 架构 3.0 生产采用（2026-09-21，platform-side P5，判据 runtime/maintenance/3.0-adopt/P-TABLE.md）：本文件的软件面为 3.0 新增——software 段登记六配方解析/本体登记读数，descriptor.profiles 声明 python>=3.8（供 platform-conformance 判 profile:<name>，刻意不带 ai-platform-descriptor/v2 schema，见 descriptor.note），declaredAbsent 增 profile:administrator。permissions 已随 wf-runner 0.9.0 的 config 期词表校验迁移，旧三元组完整留档于 x-permissions-migration.superseded（旧值在 0.6.0 下从未被引擎读过，故此前不可见）。attested.contracts / attested.runner 按新钉版刷新，attested.matrix 换为 P4 生产前的候选全矩阵读数。 | **架构 3.1.0 全面接入（2026-09-23，platform-side P1–P7，判据 runtime/maintenance/3.1-adopt/P-TABLE.md）**：本轮把声明面对齐到 3.1 代际与实测事实——① `attested` 全体刷新（runner 0.10.0 / contracts 1.4.0 / scannerRelease repo-lint 0.5.1，并新增 `conform` 与 `3.1-fields` 两条自证读数）；② `attested.matrix` 换成 3.1 内容集上的 **48 格**全矩阵（三格软件翻正、一格共享侧 FAIL 已定位到 agent 4.0.0 的 tool-lock，见该条）；③ `descriptor.actions` 首次声明（prompt=true 是实证能力，此前被 conform 读成 declaredAbsent 属声明面缺项；script/peer=false 如实），仍**不带** v2 schema；④ `declaredAbsent` 增 5 条**并集项 id 键形**的缺口条目（脚本面 3 条、peer 1 条、PyMuPDF 1 条），旧的语义名条目一字未删（平台章与其它文档以它们为权威出处）；⑤ 新增 `gapPlan`，为全部 6 条非 pass 并集项写明「改什么 + 成本」，兑现 conform 的『缺口必须带出口』契约；⑥ `unverified` 增两条如实未测项（续跑图哈希失配支、T-P3b 九格端到端）；⑦ `software.snapshotFrozen` 由 [] 更正为三件 1.0.1（共享侧 3.0-Q Q-P3 已冻结，本平台实测复核）。**未做的**：不翻共享 current、不写共享三仓、不代他平台申报；软件仓侧修复按用户裁定默认忽视。 | **架构 3.2.0 全面接入（2026-09-25，platform-side P1–P7，判据 runtime/maintenance/3.2-adopt/P-TABLE.md；本轮 = 3.2.0 定稿实施表 P7 行在本平台落地）**：① runner/contracts/scannerRelease **成套**切到 0.10.1 / 1.4.1 / 0.5.2（补丁代，BP-3 口径不跑全矩阵，受影响证据单格重出），平台默认 repo-lint 由 `architecture-ops 1.4.0 switch_defaults` 抬到 0.5.2（plan→apply→verify）；② **软件派发面换绑到共享连接器 `_connector/1.0.6`**，gateway config 删 `platform` 键（连接器把它读成 OS 配方选择器——不带它才落到 recipes/windows.json，实测证据在文件 note）、加 interpreterAliases(PPython)/allowedHosts/allowGuiLaunch；③ 连接器电池 **13/13**（3 条真派发 + 5 个结构化拒绝格 + 幂等重放 + evidence 读回 + 审计），与矩阵软件 6 格互为对照一致；④ `attested` 增 `matrix-3.2` 与 `3.2-fields`，`conform` 刷到 1.4.1 读数（`union=6f0a1ec09978`，27 项 verdict 与 3.1 逐一未变）；⑤ `unverified` 增三项如实未测（凭据中介调用 / 桌面会话 / burp MCP 转发），各带补齐路径与成本；⑥ `snapshotFrozen` 更正 mysql-cli@1.0.2。**本轮一处环境事实（如实登记）**：P1 后、冒烟首跑时 `wf-runner 0.10.1` 释放目录内出现外来瞬态文件（7 格 `HASH_MISMATCH: Runner source package is incomplete`），数分钟后自行消失、目录复算 27/27 全绿——与 `repo-lint 0.5.2` 目录内出现过又消失的 `__pycache__/*.pyc` 同窗口（本机有他会话在活动）；两处均登记不处置，本平台未动共享仓任何字节。",
+  "descriptor": {
+    "note": "本键同时承载两件事：① `actions` —— platform-conformance conform 判 `action:*` 并集项读的位置（3.1 轮补：`prompt` 在本平台是实证支持的能力，此前因本键无 actions 而被读成 declaredAbsent，属声明面缺项，不是能力缺项）；② `profiles` —— 软件配方 requiredProfiles 的对应声明，供 conform 判 `profile:<name>`。整份 descriptor **刻意不含** `schema: ai-platform-descriptor/v2`：带该 schema 会让 wf-runner 的 CAP-01 门接管整个 prepare 判据（engine.py:347-354、997-1003 实测只认该 schema 字面量），要求逐 action/profile/operation 声明，那是 CAP-01/ADR-1 另一条轴，不在本轮采纳范围。不带 schema 时 `plan_capability_gap` 直接返回空，本平台既有 checks 门不变 —— 这一点在本轮 P6 后按最终字节重跑 P5 电池时被再次实测确认（prepare 未被 CAP-01 拦）。",
+    "actions": {
+      "prompt": {
+        "supported": true,
+        "evidence": "checks.prompt-stage-claim / prompt-stage-submit / terminal-stop-with-evidence 三项实证；矩阵 42 个工作流/专家格里 41 格 PASS（唯一非 PASS 是 repo-lint 的合成参数不足与共享侧 mastermind-bug-bounty 锁缺陷，两者都不在 prompt 能力面上）"
+      },
+      "script": {
+        "supported": false,
+        "evidence": "无脚本隔离沙箱（declaredAbsent.scriptEnvironment）"
+      },
+      "peer": {
+        "supported": false,
+        "evidence": "未声明 peerDispatch、无 peerDispatcherModule / peerChildExecutor（declaredAbsent.peerDispatch）"
+      }
+    },
+    "profiles": {
+      "python>=3.8": {
+        "declared": true,
+        "adapters": [
+          "workbuddy-venv-python"
+        ],
+        "evidence": "runtime/py-env（Windows venv，python 3.9.13）即 config.interpreters[\".py\"] 所指；逐包版本见 bridge/environment.json"
+      }
+    }
+  },
+  "x-permissions-migration": {
+    "at": "2026-09-21 (workbuddy 3.0 adoption, P3)",
+    "why": "arch 3.0 采纳轮（2026-09-21）在 P3 实测中发现：wf-runner 0.9.0 于 config 阶段对 capabilities.permissions 调用 permissions.normalize()，旧读数里的 network=available-not-denied / process=user-approved / filesystem=platform-scoped-with-user-approval 都不在当前词表内，会让每次 prepare 在引擎初始化即被拒 UNKNOWN_PERMISSION（0.6.0 只在 peer 委派路径校验，故该问题此前不可见）。现对齐为 permissionAdapters 中的业务三元组——那是本平台对可运行资源所承诺的策略。诚实性提示保持不变：会话本身具备网络与任意命令能力，network=deny / process=allowlisted-only 是策略自律，不是内核级强制（见 capabilities.permissionAdapters[0].evidence）。",
+    "superseded": {
+      "network": "available-not-denied",
+      "process": "user-approved",
+      "filesystem": "platform-scoped-with-user-approval"
+    }
+  },
+  "software": {
+    "adoptedFrom": "architecture 3.0.0（software 面）；本平台 platform-side 采纳轮 2026-09-21（P-TABLE.md P1-P6，本轮只做本平台、不改共享指针、不代他平台申报）",
+    "wiring": "bridge/workbuddy-config.json 的 softwareRoot + softwareGateway + softwareGatewayConfig + softwareEnvironment + interpreters[\".py\"]（三键缺任一，引擎在 software-gate 的 declared 门即拒 CAPABILITY_UNAVAILABLE）。**3.2.0 起软件派发面换绑到共享连接器**（见 connectorBinding）",
+    "gateway": "**共享连接器 software/_connector/versions/1.0.6/connector.py**（跟随 `software/_connector/current.json` 的被钉释放；参考网关 `_gateway/1.0.0` 保留为共享侧兼容基线，本平台 2026-09-25 起不再指向它）。传输面 = ai-software-call/v1 + ai-software-admin/v1 + ai-software-session/v1，stdin/stdout 单 JSON 往返；入口 = software.list/describe/health/call/session/artifact/evidence",
+    "gatewayConfig": "bridge/software-gateway-config.json（只放本平台自己的路径与本体登记位 + 常设口径 allowedHosts=回环、allowGuiLaunch=false、interpreterAliases.PPython=本机 3.12.4 实测路径；**刻意不带 `platform` 键**——连接器把它读成 OS 配方选择器，带平台 id 会让本体核验全落 no-recipe-for-platform，实测证据在该文件的 note 与 baseline/p2-connector-health-preedit.json）",
+    "environment": "bridge/software-environment.json（本体就地检测登记，不复制、不入仓）",
+    "recipesResolved": 6,
+    "bodiesLaunchable": 5,
+    "bodiesNotLaunchable": {
+      "burp-suite": "kind=mcp-http，recipe 未声明启动入口；本体已校验在盘，网关不启动它"
+    },
+    "snapshotFrozen": [
+      "dirsearch@1.0.1",
+      "mysql-cli@1.0.2",
+      "wireshark-cli@1.0.1"
+    ],
+    "snapshotNote": "**2026-09-25 复核更新**（3.2.0 采纳轮 P3 实测，baseline/p3-connector-battery-rerun.json）：当前被钉释放中 `dirsearch@1.0.1` / `mysql-cli@1.0.2` / `wireshark-cli@1.0.1` 三件快照 frozen=true 且本体在盘核验（bodyDigest=ok）⇒ 连接器 health 判**可派发**，矩阵软件三格 PASS；`mysql-cli` 的 current 已由共享侧抬到 **1.0.2**（新增 connector.json：credentialReferences 契约字段 + credentialInjection 声明）。仍为 false 的三件：`nmap`（usage 无 `-oJ`，配方 baseArgv 与真 CLI 不符 ⇒ 拒绝冻结，共享侧 D-61；另有 nmap.exe 的 pin 是 65 字符这条配方侧缺陷）、`veracrypt`（GUI 无 stdout）、`burp-suite`（端点未监听）——三者按 C-4 记 EXPECTED/SNAPSHOT_NOT_FROZEN，任何真实 call 在 snapshot 门 fail-closed，拒绝发生在派发之前。软件面只登记不追改共享仓。",
+    "connectorBinding": "**3.2.0 采纳读数（2026-09-25，P2/P3 实测）**：连接器 health 六行 = **3 可派发 / 3 不可派发**，与矩阵软件 6 格逐行一致；三条真派发（三个 `--version`，exit 0，带编号证据对：dirsearch v0.4.3 / mysql Ver 8.0.39 / TShark 4.2.6）；拒绝格全部结构化且发生在派发前（凭据中介调用点名缺 `credentialProvider`；桌面会话点名 gateway-config 无 softwareProfiles；burp-suite 点名 offered operations）；幂等重放 `replayed:true` 且不新增派发目录；`software.evidence` 读回一致；证据目录敏感串扫描 0 命中。**未声明面（不写成支持）**：credentialProvider 未提供 ⇒ mysql 的 query/dump 只能到结构化拒绝；session 三 provider 未提供 ⇒ desktop-session 只能到 `INTERACTIVE_REQUIRED`/`PROFILE_NOT_DECLARED`；`allowGuiLaunch=false` ⇒ 不代起 GUI。补齐路径与成本见 gapPlan。",
+    "profilesDeclared": [
+      "readonly-observe"
+    ],
+    "softwareProfiles": "config.softwareProfiles 只声明 readonly-observe 一档，覆盖六配方全部 sideEffects=none 的 capability（即 recipe 的 safeForSelftest 组）在 profile 门被读的五个维度（filesystem/network/process/credentials/sideEffects）；写类 / 外部 / system / 凭证类请求面本轮不声明，落 profile 门按 PROFILE_NOT_DECLARED 拒。",
+    "evidence": {
+      "p1-inventory": "runtime/maintenance/3.0-adopt/baseline/p1-inventory.json",
+      "p2-paths": "runtime/maintenance/3.0-adopt/baseline/p2-paths.json",
+      "gatewayConfig": "bridge/software-gateway-config.json",
+      "environment": "bridge/software-environment.json",
+      "connectorBattery": "runtime/maintenance/3.2-adopt/baseline/p3-connector-battery-rerun.json",
+      "rebindBattery": "runtime/maintenance/3.2-adopt/baseline/p2-battery-gateway-before.json"
+    },
+    "crossPlatform": "网关锁表 lockRoot 是平台内私有的（C-8），本机另一平台有自己的表；两个平台调同一个 singleton 配方时互不可见。此处只登记，不做规避，也不代他平台申报。",
+    "measured": {
+      "bodyFilesTotal": 19,
+      "bodyFilesMatched": 17,
+      "rootsPresent": 3,
+      "bodyDetectedPathsPresent": 6
+    }
+  }
+}

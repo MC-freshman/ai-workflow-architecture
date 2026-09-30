@@ -1,0 +1,24 @@
+{
+  "schema": "ai-pack/v1",
+  "id": "visualization-quality",
+  "version": "1.2.0",
+  "displayName": "可视化渲染与布局质量",
+  "skillIds": [
+    "visualization-layout",
+    "paper-figure",
+    "paper-programmer-visualization"
+  ],
+  "skillVersions": {
+    "visualization-layout": "1.1.0",
+    "paper-figure": "1.0.0",
+    "paper-programmer-visualization": "1.0.0"
+  },
+  "conflicts": [],
+  "source": {
+    "snapshot": "snapshot-2026.08.31",
+    "derivedFrom": "math-modeling-skill-main"
+  },
+  "integrity": {
+    "sha256Manifest": "SHA256SUMS"
+  }
+}

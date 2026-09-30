@@ -1,0 +1,578 @@
+{
+ "schema": "ai-tool-registry/v2",
+ "version": 17,
+ "skills": [
+  {
+   "id": "skills-awesome-coding",
+   "path": "_registry/skills-awesome-coding.json",
+   "kind": "skill-catalog",
+   "enabled": true,
+   "invocable": false
+  },
+  {
+   "id": "skills-ecc",
+   "path": "_registry/skills-ecc.json",
+   "kind": "skill-catalog",
+   "enabled": true,
+   "invocable": false
+  },
+  {
+   "id": "skills-framework-author",
+   "path": "_registry/skills-framework-author.json",
+   "kind": "skill-catalog",
+   "enabled": true,
+   "invocable": false
+  },
+  {
+   "id": "skills-game-pipeline",
+   "path": "_registry/skills-game-pipeline.json",
+   "kind": "skill-catalog",
+   "enabled": true,
+   "invocable": false
+  },
+  {
+   "id": "skills-gameforge",
+   "path": "_registry/skills-gameforge.json",
+   "kind": "skill-catalog",
+   "enabled": true,
+   "invocable": false
+  },
+  {
+   "id": "skills-math-modeling-programmer",
+   "path": "_registry/skills-math-modeling-programmer.json",
+   "kind": "skill-catalog",
+   "enabled": true,
+   "invocable": false
+  },
+  {
+   "id": "skills-math-modeling-skill",
+   "path": "_registry/skills-math-modeling-skill.json",
+   "kind": "skill-catalog",
+   "enabled": true,
+   "invocable": false
+  },
+  {
+   "id": "skills-mattpocock",
+   "path": "_registry/skills-mattpocock.json",
+   "kind": "skill-catalog",
+   "enabled": true,
+   "invocable": false
+  },
+  {
+   "id": "skills-nature-skills",
+   "path": "_registry/skills-nature-skills.json",
+   "kind": "skill-catalog",
+   "enabled": true,
+   "invocable": false
+  },
+  {
+   "id": "skills-novelhub",
+   "path": "_registry/skills-novelhub.json",
+   "kind": "skill-catalog",
+   "enabled": true,
+   "invocable": false
+  },
+  {
+   "id": "skills-paper-author",
+   "path": "_registry/skills-paper-author.json",
+   "kind": "skill-catalog",
+   "enabled": true,
+   "invocable": false
+  },
+  {
+   "id": "skills-security-mastermind",
+   "path": "_registry/skills-security-mastermind.json",
+   "kind": "skill-catalog",
+   "enabled": true,
+   "invocable": false
+  }
+ ],
+ "packs": [
+  {
+   "id": "game-core",
+   "current": "packs/game-core/current.json",
+   "enabled": true,
+   "invocable": false
+  },
+  {
+   "id": "game-engine-godot",
+   "current": "packs/game-engine-godot/current.json",
+   "enabled": true,
+   "invocable": false
+  },
+  {
+   "id": "game-engine-unity",
+   "current": "packs/game-engine-unity/current.json",
+   "enabled": true,
+   "invocable": false
+  },
+  {
+   "id": "game-engine-unreal",
+   "current": "packs/game-engine-unreal/current.json",
+   "enabled": true,
+   "invocable": false
+  },
+  {
+   "id": "novel-writing",
+   "current": "packs/novel-writing/current.json",
+   "enabled": true,
+   "invocable": false
+  },
+  {
+   "id": "security-audit",
+   "current": "packs/security-audit/current.json",
+   "enabled": true,
+   "invocable": false
+  },
+  {
+   "id": "software-engineering",
+   "current": "packs/software-engineering/current.json",
+   "enabled": true,
+   "invocable": false
+  },
+  {
+   "id": "visualization-quality",
+   "current": "packs/visualization-quality/current.json",
+   "enabled": true,
+   "invocable": false
+  }
+ ],
+ "workflows": [
+  {
+   "id": "game-analytics-setup",
+   "current": "game-analytics-setup/current.json",
+   "enabled": true,
+   "kind": "workflow",
+   "invocable": true,
+   "transports": [
+    "cli-json",
+    "mcp",
+    "skill"
+   ]
+  },
+  {
+   "id": "game-balance-check",
+   "current": "game-balance-check/current.json",
+   "enabled": true,
+   "kind": "workflow",
+   "invocable": true,
+   "transports": [
+    "cli-json",
+    "mcp",
+    "skill"
+   ],
+   "deprecated": true,
+   "supersededBy": "game-pipeline",
+   "deprecationNote": "3.1-A T-P7: collapsed into game-pipeline as a scenario; the prompt body moved verbatim into game-scenario-<slug>, and runs pinned to this release keep resolving because its bytes were not touched."
+  },
+  {
+   "id": "game-brainstorm",
+   "current": "game-brainstorm/current.json",
+   "enabled": true,
+   "kind": "workflow",
+   "invocable": true,
+   "transports": [
+    "cli-json",
+    "mcp",
+    "skill"
+   ],
+   "deprecated": true,
+   "supersededBy": "game-pipeline",
+   "deprecationNote": "3.1-A T-P7: collapsed into game-pipeline as a scenario; the prompt body moved verbatim into game-scenario-<slug>, and runs pinned to this release keep resolving because its bytes were not touched."
+  },
+  {
+   "id": "game-ci-pipeline",
+   "current": "game-ci-pipeline/current.json",
+   "enabled": true,
+   "kind": "workflow",
+   "invocable": true,
+   "transports": [
+    "cli-json",
+    "mcp",
+    "skill"
+   ],
+   "deprecated": true,
+   "supersededBy": "game-pipeline",
+   "deprecationNote": "3.1-A T-P7: collapsed into game-pipeline as a scenario; the prompt body moved verbatim into game-scenario-<slug>, and runs pinned to this release keep resolving because its bytes were not touched."
+  },
+  {
+   "id": "game-code-review",
+   "current": "game-code-review/current.json",
+   "enabled": true,
+   "kind": "workflow",
+   "invocable": true,
+   "transports": [
+    "cli-json",
+    "mcp",
+    "skill"
+   ],
+   "deprecated": true,
+   "supersededBy": "game-pipeline",
+   "deprecationNote": "3.1-A T-P7: collapsed into game-pipeline as a scenario; the prompt body moved verbatim into game-scenario-<slug>, and runs pinned to this release keep resolving because its bytes were not touched."
+  },
+  {
+   "id": "game-design-review",
+   "current": "game-design-review/current.json",
+   "enabled": true,
+   "kind": "workflow",
+   "invocable": true,
+   "transports": [
+    "cli-json",
+    "mcp",
+    "skill"
+   ]
+  },
+  {
+   "id": "game-gdd-author",
+   "current": "game-gdd-author/current.json",
+   "enabled": true,
+   "kind": "workflow",
+   "invocable": true,
+   "transports": [
+    "cli-json",
+    "mcp",
+    "skill"
+   ],
+   "deprecated": true,
+   "supersededBy": "game-pipeline",
+   "deprecationNote": "3.1-A T-P7: collapsed into game-pipeline as a scenario; the prompt body moved verbatim into game-scenario-<slug>, and runs pinned to this release keep resolving because its bytes were not touched."
+  },
+  {
+   "id": "game-jam-mode",
+   "current": "game-jam-mode/current.json",
+   "enabled": true,
+   "kind": "workflow",
+   "invocable": true,
+   "transports": [
+    "cli-json",
+    "mcp",
+    "skill"
+   ]
+  },
+  {
+   "id": "game-launch",
+   "current": "game-launch/current.json",
+   "enabled": true,
+   "kind": "workflow",
+   "invocable": true,
+   "transports": [
+    "cli-json",
+    "mcp",
+    "skill"
+   ],
+   "deprecated": true,
+   "supersededBy": "game-pipeline",
+   "deprecationNote": "3.1-A T-P7: collapsed into game-pipeline as a scenario; the prompt body moved verbatim into game-scenario-<slug>, and runs pinned to this release keep resolving because its bytes were not touched."
+  },
+  {
+   "id": "game-localization-manager",
+   "current": "game-localization-manager/current.json",
+   "enabled": true,
+   "kind": "workflow",
+   "invocable": true,
+   "transports": [
+    "cli-json",
+    "mcp",
+    "skill"
+   ],
+   "deprecated": true,
+   "supersededBy": "game-pipeline",
+   "deprecationNote": "3.1-A T-P7: collapsed into game-pipeline as a scenario; the prompt body moved verbatim into game-scenario-<slug>, and runs pinned to this release keep resolving because its bytes were not touched."
+  },
+  {
+   "id": "game-market-research",
+   "current": "game-market-research/current.json",
+   "enabled": true,
+   "kind": "workflow",
+   "invocable": true,
+   "transports": [
+    "cli-json",
+    "mcp",
+    "skill"
+   ]
+  },
+  {
+   "id": "game-playtest",
+   "current": "game-playtest/current.json",
+   "enabled": true,
+   "kind": "workflow",
+   "invocable": true,
+   "transports": [
+    "cli-json",
+    "mcp",
+    "skill"
+   ],
+   "deprecated": true,
+   "supersededBy": "game-pipeline",
+   "deprecationNote": "3.1-A T-P7: collapsed into game-pipeline as a scenario; the prompt body moved verbatim into game-scenario-<slug>, and runs pinned to this release keep resolving because its bytes were not touched."
+  },
+  {
+   "id": "game-postmortem",
+   "current": "game-postmortem/current.json",
+   "enabled": true,
+   "kind": "workflow",
+   "invocable": true,
+   "transports": [
+    "cli-json",
+    "mcp",
+    "skill"
+   ]
+  },
+  {
+   "id": "game-prototype",
+   "current": "game-prototype/current.json",
+   "enabled": true,
+   "kind": "workflow",
+   "invocable": true,
+   "transports": [
+    "cli-json",
+    "mcp",
+    "skill"
+   ],
+   "deprecated": true,
+   "supersededBy": "game-pipeline",
+   "deprecationNote": "3.1-A T-P7: collapsed into game-pipeline as a scenario; the prompt body moved verbatim into game-scenario-<slug>, and runs pinned to this release keep resolving because its bytes were not touched."
+  },
+  {
+   "id": "game-retrospective",
+   "current": "game-retrospective/current.json",
+   "enabled": true,
+   "kind": "workflow",
+   "invocable": true,
+   "transports": [
+    "cli-json",
+    "mcp",
+    "skill"
+   ]
+  },
+  {
+   "id": "game-reverse-document",
+   "current": "game-reverse-document/current.json",
+   "enabled": true,
+   "kind": "workflow",
+   "invocable": true,
+   "transports": [
+    "cli-json",
+    "mcp",
+    "skill"
+   ],
+   "deprecated": true,
+   "supersededBy": "game-pipeline",
+   "deprecationNote": "3.1-A T-P7: collapsed into game-pipeline as a scenario; the prompt body moved verbatim into game-scenario-<slug>, and runs pinned to this release keep resolving because its bytes were not touched."
+  },
+  {
+   "id": "game-scope-check",
+   "current": "game-scope-check/current.json",
+   "enabled": true,
+   "kind": "workflow",
+   "invocable": true,
+   "transports": [
+    "cli-json",
+    "mcp",
+    "skill"
+   ]
+  },
+  {
+   "id": "game-sprint-plan",
+   "current": "game-sprint-plan/current.json",
+   "enabled": true,
+   "kind": "workflow",
+   "invocable": true,
+   "transports": [
+    "cli-json",
+    "mcp",
+    "skill"
+   ]
+  },
+  {
+   "id": "game-start",
+   "current": "game-start/current.json",
+   "enabled": true,
+   "kind": "workflow",
+   "invocable": true,
+   "transports": [
+    "cli-json",
+    "mcp",
+    "skill"
+   ]
+  },
+  {
+   "id": "game-team-orchestrator",
+   "current": "game-team-orchestrator/current.json",
+   "enabled": true,
+   "kind": "workflow",
+   "invocable": true,
+   "transports": [
+    "cli-json",
+    "mcp",
+    "skill"
+   ],
+   "deprecated": true,
+   "supersededBy": "game-pipeline",
+   "deprecationNote": "3.1-A T-P7: collapsed into game-pipeline as a scenario; the prompt body moved verbatim into game-scenario-<slug>, and runs pinned to this release keep resolving because its bytes were not touched."
+  },
+  {
+   "id": "mastermind-bug-bounty",
+   "current": "mastermind-bug-bounty/current.json",
+   "enabled": true,
+   "kind": "workflow",
+   "invocable": true,
+   "transports": [
+    "cli-json",
+    "mcp",
+    "skill"
+   ]
+  },
+  {
+   "id": "mastermind-peer-task",
+   "current": "mastermind-peer-task/current.json",
+   "enabled": true,
+   "kind": "workflow",
+   "invocable": true,
+   "transports": [
+    "cli-json",
+    "mcp",
+    "skill"
+   ]
+  },
+  {
+   "id": "expert-task",
+   "current": "expert-task/current.json",
+   "enabled": true,
+   "kind": "workflow",
+   "invocable": true,
+   "transports": [
+    "cli-json",
+    "mcp",
+    "skill"
+   ]
+  },
+  {
+   "id": "math-modeling-programmer",
+   "current": "math-modeling-programmer/current.json",
+   "enabled": true,
+   "kind": "workflow",
+   "invocable": true,
+   "transports": [
+    "cli-json",
+    "mcp",
+    "skill"
+   ]
+  },
+  {
+   "id": "visualization-qa",
+   "current": "visualization-qa/current.json",
+   "enabled": true,
+   "kind": "workflow",
+   "invocable": true,
+   "transports": [
+    "cli-json",
+    "mcp",
+    "skill"
+   ]
+  },
+  {
+   "id": "repo-lint",
+   "current": "repo-lint/current.json",
+   "enabled": true,
+   "kind": "governance-workflow",
+   "invocable": true,
+   "transports": [
+    "cli-json"
+   ]
+  },
+  {
+   "id": "wf-runner",
+   "current": "wf-runner/current.json",
+   "enabled": true,
+   "kind": "engine",
+   "invocable": false,
+   "transports": []
+  },
+  {
+   "id": "game-pipeline",
+   "current": "game-pipeline/current.json",
+   "enabled": true,
+   "kind": "workflow",
+   "invocable": true,
+   "transports": [
+    "cli-json",
+    "mcp",
+    "skill"
+   ]
+  },
+  {
+   "id": "novel-pipeline",
+   "current": "novel-pipeline/current.json",
+   "enabled": true,
+   "kind": "workflow",
+   "invocable": true,
+   "transports": [
+    "cli-json",
+    "mcp",
+    "skill"
+   ]
+  },
+  {
+   "id": "se-pipeline",
+   "current": "se-pipeline/current.json",
+   "enabled": true,
+   "kind": "workflow",
+   "invocable": true,
+   "transports": [
+    "cli-json",
+    "mcp",
+    "skill"
+   ]
+  },
+  {
+   "id": "framework-pipeline",
+   "current": "framework-pipeline/current.json",
+   "version": "1.0.0",
+   "enabled": true,
+   "kind": "workflow",
+   "invocable": true,
+   "transports": [
+    "cli-json"
+   ]
+  },
+  {
+   "id": "paper-pipeline",
+   "current": "paper-pipeline/current.json",
+   "version": "1.0.0",
+   "enabled": true,
+   "kind": "workflow",
+   "invocable": true,
+   "transports": [
+    "cli-json"
+   ]
+  }
+ ],
+ "contracts": [
+  {
+   "id": "runtime-contracts",
+   "current": "runtime-contracts/current.json",
+   "kind": "contracts",
+   "invocable": false,
+   "enabled": true,
+   "transports": []
+  }
+ ],
+ "typeNote": "C6: kind/invocable drive the /wf+/wfa denominator. Non-invocable resources (engine/contracts/pack/skill-catalog) are excluded by type (ENTRY-04), never counted as EXPECTED business failures.",
+ "governance": [
+  {
+   "id": "platform-conformance",
+   "current": "platform-conformance/current.json",
+   "kind": "governance-tool",
+   "invocable": false,
+   "enabled": true
+  },
+  {
+   "id": "architecture-ops",
+   "current": "architecture-ops/current.json",
+   "kind": "governance-tool",
+   "invocable": false,
+   "enabled": true
+  }
+ ]
+}

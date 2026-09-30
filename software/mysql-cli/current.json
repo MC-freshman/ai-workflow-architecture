@@ -1,0 +1,11 @@
+{
+  "schema": "ai-software-pointer/v1",
+  "id": "mysql-cli",
+  "version": "1.0.2",
+  "available": [
+    "1.0.0",
+    "1.0.1",
+    "1.0.2"
+  ],
+  "hashManifest": "SHA256SUMS"
+}

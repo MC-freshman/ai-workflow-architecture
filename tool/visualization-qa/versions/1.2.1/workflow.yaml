@@ -1,0 +1,41 @@
+schema: ai-workflow-definition/v2
+id: visualization-qa
+version: 1.2.1
+mode: executable-with-evidence
+maxParallel: 1
+roles: [visualization-engineer]
+outputWorker: visualization-engineer
+stages:
+  - id: execute
+    action: prompt
+    worker: visualization-engineer
+    promptRef: workflow.md#stage:execute
+    outputs: schemas/output.schema.json
+    onFail: repair
+    maxIterations: 3
+    repairPromptRef: workflow.md#stage:repair
+    gates: [render-success, geometry-measured, no-clipping, no-unapproved-overlap, artifact-written-to-runtime]
+gateDefinitions:
+  render-success:
+    type: file
+    target: "evidence:qa/preview.png"
+    minBytes: 1024
+  geometry-measured:
+    type: json-schema
+    target: "evidence:qa/report.json"
+    schema: "schemas/qa-report.schema.json"
+    crossHash:
+      - field: [previewSha256]
+        against: "evidence:qa/preview.png"
+  no-clipping:
+    type: json-schema
+    target: "evidence:qa/report.json"
+    schema: "schemas/qa-clipping.schema.json"
+  no-unapproved-overlap:
+    type: json-schema
+    target: "evidence:qa/report.json"
+    schema: "schemas/qa-overlap.schema.json"
+  artifact-written-to-runtime:
+    type: json-schema
+    target: "evidence:qa/report.json"
+    schema: "schemas/qa-artifacts.schema.json"

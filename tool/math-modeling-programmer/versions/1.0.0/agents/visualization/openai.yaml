@@ -1,0 +1,6 @@
+interface:
+  display_name: "Visualization"
+  short_description: "生成并检查论文图表"
+  default_prompt: "使用 $visualization 检查并生成数模论文图表。"
+policy:
+  allow_implicit_invocation: false

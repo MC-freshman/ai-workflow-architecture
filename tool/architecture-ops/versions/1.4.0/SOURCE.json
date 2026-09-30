@@ -1,0 +1,28 @@
+{
+  "schema": "ai-governance-source/v1",
+  "authorSession": "codex",
+  "derivedFrom": "architecture-ops@1.3.0",
+  "supersedes": "1.3.0",
+  "releaseScope": "D-31: adds a shared current.json switch with registry and release integrity verification, compare-and-swap, platform-local exact-byte checkpoint, readback, and guarded revert. Existing switch_defaults, version_impact, and invocation_matrix behavior is unchanged.",
+  "changes": [
+    "Adds architecture_ops.switch_current for workflow/agent/software/contracts/governance pointers.",
+    "Plan verifies the registered resource, current version, target manifest and two-way SHA256SUMS coverage.",
+    "Apply rechecks registry/release/current snapshots, atomically updates the pointer and records a platform-runtime checkpoint; verify and revert are explicit."
+  ],
+  "unchanged": [
+    "switch_defaults.py",
+    "version_impact.py",
+    "invocation_matrix.py"
+  ],
+  "openDeferred": [
+    "No cross-platform resource arbitration is claimed; the switch is one shared pointer operation with a platform-local checkpoint."
+  ],
+  "releaseStatus": "published",
+  "publishedAt": "2026-09-23",
+  "publishedBy": "codex, architecture repair P3",
+  "publicationChanges": [
+    "New semantic version directory; 1.3.0 bytes remain unchanged."
+  ],
+  "pointerPolicy": "published, not adopted: shared architecture-ops current.json remains unchanged until a later explicit switch.",
+  "previousSource": "tool/architecture-ops/versions/1.3.0/SOURCE.json"
+}

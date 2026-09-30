@@ -1,0 +1,2 @@
+figure_id,claim,path,source_result_ids,format,dpi,width_mm,height_mm,status,qa_report_path,visual_review_path,preview_path,source_hash,preview_hash,notes
+FIG-001,"示例：主模型在目标指标上优于基线",figures/example.pdf,EXP-001,pdf,,,,DRAFT,,,,,,

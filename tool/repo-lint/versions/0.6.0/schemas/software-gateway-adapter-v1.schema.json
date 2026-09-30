@@ -1,0 +1,399 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:ai:software-gateway-adapter:v1",
+  "title": "ai-software-gateway-adapter/v1 - the one-line JSON contract between the engine and a platform software gateway",
+  "description": "The engine speaks this and nothing else to a gateway (same shape as the script-environment and peer-dispatcher dispatches: one JSON object in on stdin, one JSON object out on stdout). Written here because S-P4 builds the reference gateway and the three transport mocks against it, and a platform that prefers its own implementation has to pass the same contract tests (proposal 8.2).",
+  "type": "object",
+  "oneOf": [
+    {
+      "$ref": "#/$defs/callRequest"
+    },
+    {
+      "$ref": "#/$defs/callResponse"
+    },
+    {
+      "$ref": "#/$defs/inventoryRequest"
+    },
+    {
+      "$ref": "#/$defs/inventoryResponse"
+    },
+    {
+      "$ref": "#/$defs/instanceRequest"
+    },
+    {
+      "$ref": "#/$defs/instanceResponse"
+    }
+  ],
+  "$defs": {
+    "id": {
+      "type": "string",
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]{0,127}$"
+    },
+    "digest": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "errorCode": {
+      "enum": [
+        "SOFTWARE_NOT_INSTALLED",
+        "SOFTWARE_DRIFT",
+        "SOFTWARE_BUSY",
+        "PROFILE_NOT_DECLARED",
+        "CONSENT_REQUIRED",
+        "EGRESS_DENIED",
+        "CAPABILITY_UNAVAILABLE",
+        "SOFTWARE_CALL_FAILED",
+        "SOFTWARE_TIMEOUT",
+        "GATEWAY_UNREACHABLE",
+        "INVALID_REQUEST"
+      ]
+    },
+    "callRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema",
+        "kind",
+        "softwareId",
+        "softwareVersion",
+        "capability",
+        "arguments",
+        "idempotencyKey",
+        "timeoutSeconds"
+      ],
+      "properties": {
+        "schema": {
+          "const": "ai-software-call/v1"
+        },
+        "kind": {
+          "const": "request"
+        },
+        "softwareId": {
+          "$ref": "#/$defs/id"
+        },
+        "softwareVersion": {
+          "type": "string",
+          "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"
+        },
+        "capability": {
+          "$ref": "#/$defs/id"
+        },
+        "arguments": {
+          "type": "object"
+        },
+        "idempotencyKey": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        },
+        "timeoutSeconds": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 3600
+        },
+        "runId": {
+          "$ref": "#/$defs/id"
+        },
+        "credentialReferences": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "pattern": "^reference:[A-Za-z0-9._-]+$"
+          }
+        }
+      }
+    },
+    "callResponse": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema",
+        "kind",
+        "ok"
+      ],
+      "properties": {
+        "schema": {
+          "const": "ai-software-call/v1"
+        },
+        "kind": {
+          "const": "response"
+        },
+        "ok": {
+          "type": "boolean"
+        },
+        "result": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "outputSha256",
+            "exitCode"
+          ],
+          "properties": {
+            "outputSha256": {
+              "$ref": "#/$defs/digest"
+            },
+            "output": {},
+            "exitCode": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 255
+            },
+            "outputPath": {
+              "type": "string",
+              "minLength": 1
+            },
+            "instanceMode": {
+              "enum": [
+                "per-run",
+                "pooled",
+                "singleton"
+              ]
+            },
+            "replayed": {
+              "type": "boolean"
+            },
+            "evidencePath": {
+              "type": "string",
+              "pattern": "^evidence/software-calls/[0-9]+/request\\.json$",
+              "description": "The exclusive-write anchor the engine replays an idempotency key against (C-7)."
+            },
+            "requestSha256": {
+              "$ref": "#/$defs/digest"
+            }
+          }
+        },
+        "error": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "code",
+            "message",
+            "retryable"
+          ],
+          "properties": {
+            "code": {
+              "$ref": "#/$defs/errorCode"
+            },
+            "message": {
+              "type": "string",
+              "minLength": 1
+            },
+            "retryable": {
+              "type": "boolean"
+            },
+            "named": {
+              "type": "object",
+              "description": "Which recipe/config key the refusal points at; a structured refusal always names its cause."
+            }
+          }
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "ok": {
+                "const": true
+              }
+            },
+            "required": [
+              "ok"
+            ]
+          },
+          "then": {
+            "required": [
+              "result"
+            ],
+            "not": {
+              "required": [
+                "error"
+              ]
+            }
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "ok": {
+                "const": false
+              }
+            },
+            "required": [
+              "ok"
+            ]
+          },
+          "then": {
+            "required": [
+              "error"
+            ],
+            "not": {
+              "required": [
+                "result"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    "inventoryRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema",
+        "kind",
+        "softwareId",
+        "softwareVersion"
+      ],
+      "properties": {
+        "schema": {
+          "const": "ai-software-inventory/v1"
+        },
+        "kind": {
+          "const": "request"
+        },
+        "softwareId": {
+          "$ref": "#/$defs/id"
+        },
+        "softwareVersion": {
+          "type": "string",
+          "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"
+        }
+      }
+    },
+    "inventoryResponse": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema",
+        "kind",
+        "ok",
+        "capabilities"
+      ],
+      "properties": {
+        "schema": {
+          "const": "ai-software-inventory/v1"
+        },
+        "kind": {
+          "const": "response"
+        },
+        "ok": {
+          "const": true
+        },
+        "softwareId": {
+          "$ref": "#/$defs/id"
+        },
+        "installedVersion": {
+          "type": "string",
+          "minLength": 1
+        },
+        "capabilities": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "name"
+            ],
+            "properties": {
+              "name": {
+                "$ref": "#/$defs/id"
+              },
+              "description": {
+                "type": "string"
+              },
+              "inputSchema": {
+                "type": "object"
+              }
+            }
+          }
+        },
+        "error": {
+          "type": "object"
+        }
+      }
+    },
+    "instanceRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema",
+        "kind",
+        "operation",
+        "softwareId",
+        "key"
+      ],
+      "properties": {
+        "schema": {
+          "const": "ai-software-instance/v1"
+        },
+        "kind": {
+          "const": "request"
+        },
+        "operation": {
+          "enum": [
+            "claim",
+            "release",
+            "status"
+          ]
+        },
+        "softwareId": {
+          "$ref": "#/$defs/id"
+        },
+        "key": {
+          "type": "string",
+          "minLength": 1
+        },
+        "holder": {
+          "$ref": "#/$defs/id"
+        },
+        "exclusiveResources": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        }
+      }
+    },
+    "instanceResponse": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema",
+        "kind",
+        "ok"
+      ],
+      "properties": {
+        "schema": {
+          "const": "ai-software-instance/v1"
+        },
+        "kind": {
+          "const": "response"
+        },
+        "ok": {
+          "type": "boolean"
+        },
+        "state": {
+          "enum": [
+            "idle",
+            "claimed",
+            "busy",
+            "not-installed"
+          ]
+        },
+        "holder": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "queued": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "error": {
+          "type": "object"
+        }
+      }
+    }
+  }
+}

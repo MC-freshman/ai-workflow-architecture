@@ -1,0 +1,226 @@
+{
+ "schema": "ai-software-capability-snapshot/v1",
+ "softwareId": "wireshark-cli",
+ "softwareVersion": "1.0.1",
+ "upstreamVersion": "4.2.6",
+ "generatedAt": "2026-09-21",
+ "generationMethod": "live-readonly-probe",
+ "upstreamHelpSource": "tshark -h, editcap -h, mergecap -h",
+ "capabilities": [
+  {
+   "name": "version",
+   "nativeName": "tshark --version",
+   "sideEffects": "none",
+   "consent": "auto",
+   "idempotent": true,
+   "safeForSelftest": true,
+   "inputSchemaRef": "schemas/empty.input.json",
+   "outputSchemaRef": "schemas/version.output.json",
+   "liveConfirmation": {
+    "askedThrough": "tshark",
+    "tokensSeen": [
+     "--version"
+    ],
+    "at": "2026-09-21T07:11:19Z"
+   }
+  },
+  {
+   "name": "readCapture",
+   "nativeName": "tshark -r <file> -T json",
+   "sideEffects": "local-write",
+   "consent": "auto",
+   "idempotent": true,
+   "safeForSelftest": false,
+   "inputSchemaRef": "schemas/readCapture.input.json",
+   "outputSchemaRef": "schemas/readCapture.output.json",
+   "argvSummary": "[-r file] [-Y filter] [-J proto] [-c N] [-V] [-x] [-2] -T json",
+   "liveConfirmation": {
+    "askedThrough": "tshark",
+    "tokensSeen": [
+     "--no-duplicate-keys",
+     "-2",
+     "-E",
+     "-J",
+     "-R",
+     "-T",
+     "-V",
+     "-Y",
+     "-c",
+     "-e",
+     "-j",
+     "-r",
+     "-x"
+    ],
+    "at": "2026-09-21T07:11:19Z"
+   }
+  },
+  {
+   "name": "filterCapture",
+   "nativeName": "tshark -r <file> -Y <filter> -T json",
+   "sideEffects": "local-write",
+   "consent": "auto",
+   "idempotent": true,
+   "safeForSelftest": false,
+   "inputSchemaRef": "schemas/filterCapture.input.json",
+   "outputSchemaRef": "schemas/readCapture.output.json",
+   "argvSummary": "-T json [-r file] -Y filter [-J proto] [-c N] [-V] [-x] [-2] [-w out]",
+   "liveConfirmation": {
+    "askedThrough": "tshark",
+    "tokensSeen": [
+     "-2",
+     "-J",
+     "-T",
+     "-V",
+     "-Y",
+     "-c",
+     "-r",
+     "-w",
+     "-x"
+    ],
+    "at": "2026-09-21T07:11:19Z"
+   }
+  },
+  {
+   "name": "convertCapture",
+   "nativeName": "editcap [options] <infile> <outfile>",
+   "sideEffects": "local-write",
+   "consent": "auto",
+   "idempotent": true,
+   "safeForSelftest": false,
+   "inputSchemaRef": "schemas/convertCapture.input.json",
+   "outputSchemaRef": "schemas/convertCapture.output.json",
+   "argvSummary": "[-A start] [-B stop] [-r] [-d|-D win] [-s len] [-C chop] [-c N|-i N] [-F fmt] infile outfile",
+   "liveConfirmation": {
+    "askedThrough": "editcap",
+    "tokensSeen": [
+     "-A",
+     "-B",
+     "-C",
+     "-D",
+     "-F",
+     "-c",
+     "-d",
+     "-i",
+     "-r",
+     "-s",
+     "-t"
+    ],
+    "at": "2026-09-21T07:11:19Z"
+   }
+  },
+  {
+   "name": "mergeCapture",
+   "nativeName": "mergecap -w <outfile> <infile...>",
+   "sideEffects": "local-write",
+   "consent": "auto",
+   "idempotent": true,
+   "safeForSelftest": false,
+   "inputSchemaRef": "schemas/mergeCapture.input.json",
+   "outputSchemaRef": "schemas/convertCapture.output.json",
+   "argvSummary": "-w outfile [-F fmt] [-s len] infile1 infile2 ...",
+   "liveConfirmation": {
+    "askedThrough": "mergecap",
+    "tokensSeen": [
+     "-F",
+     "-s",
+     "-w"
+    ],
+    "at": "2026-09-21T07:11:19Z"
+   }
+  }
+ ],
+ "frozen": true,
+ "liveInquiry": {
+  "policy": "read-only: `--version` and the usage flag against the installed body; no scan traffic, no volume, no mount, no credential use, no project write",
+  "bannerCarriesPinnedUpstream": {
+   "tshark": true,
+   "editcap": true,
+   "mergecap": true
+  },
+  "perExecutable": {
+   "tshark": {
+    "argvAnswered": [
+     {
+      "argv": [
+       "<local-tool-body-path>",
+       "--version"
+      ],
+      "exitCode": 0,
+      "seconds": 0.42,
+      "sha256": "b5f55f8c7972e2ab4cf47f579ae1dd3b239270c1cbe71288cbd3a2f1444e46ee",
+      "bytes": 1311
+     },
+     {
+      "argv": [
+       "<local-tool-body-path>",
+       "-h"
+      ],
+      "exitCode": 0,
+      "seconds": 0.27,
+      "sha256": "019f462aa3568bcf4f998b8b1185d2d164c448c68f77c0a4acb429d50328c332",
+      "bytes": 9695
+     }
+    ],
+    "capabilities": [
+     "version",
+     "readCapture",
+     "filterCapture"
+    ]
+   },
+   "editcap": {
+    "argvAnswered": [
+     {
+      "argv": [
+       "<local-tool-body-path>",
+       "--version"
+      ],
+      "exitCode": 0,
+      "seconds": 0.04,
+      "sha256": "800c8b4f39e7b8d0e909abcd67b53e6c35a4692687e6723fac5a098645cc7315",
+      "bytes": 708
+     },
+     {
+      "argv": [
+       "<local-tool-body-path>",
+       "-h"
+      ],
+      "exitCode": 0,
+      "seconds": 0.04,
+      "sha256": "733e6b18275884ea5cda549b04c45913630ae1c6e63e8eb9f60fa8b5b30fad5d",
+      "bytes": 7454
+     }
+    ],
+    "capabilities": [
+     "convertCapture"
+    ]
+   },
+   "mergecap": {
+    "argvAnswered": [
+     {
+      "argv": [
+       "<local-tool-body-path>",
+       "--version"
+      ],
+      "exitCode": 0,
+      "seconds": 0.04,
+      "sha256": "d30fae32151fbbdc19552111054fe98abf5df9cc9bf941d920ddf4b8664bbb38",
+      "bytes": 709
+     },
+     {
+      "argv": [
+       "<local-tool-body-path>",
+       "-h"
+      ],
+      "exitCode": 0,
+      "seconds": 0.04,
+      "sha256": "cf38e37894ae69505bdb77bc6a8e982939a58b2827c6076cbb1e08fa55a9cb93",
+      "bytes": 955
+     }
+    ],
+    "capabilities": [
+     "mergeCapture"
+    ]
+   }
+  }
+ }
+}

@@ -1,0 +1,12 @@
+{
+  "schema": "ai-workflow-contract-test/v1",
+  "workflow": "mastermind-bug-bounty",
+  "version": "1.0.0",
+  "assertions": [
+    "scope confirmation precedes active testing",
+    "discovery precedes validation",
+    "triage precedes reporting",
+    "every worker is version-pinned in run-lock",
+    "shared repository remains read-only"
+  ]
+}

@@ -1,0 +1,66 @@
+{
+  "schema": "ai-workflow-contract-test/v1",
+  "id": "math-modeling-programmer",
+  "version": "1.7.0",
+  "expect": {
+    "definitionSchema": "ai-workflow-definition/v2",
+    "mode": "pipeline",
+    "maxParallel": 1,
+    "stages": [
+      "INIT",
+      "AUDIT",
+      "SPEC",
+      "BASELINE",
+      "SOLVE",
+      "EXPERIMENT",
+      "VALIDATE",
+      "FIGURES",
+      "FREEZE"
+    ],
+    "stageActions": {
+      "INIT": "script",
+      "AUDIT": "script",
+      "SPEC": "prompt",
+      "BASELINE": "prompt",
+      "SOLVE": "prompt",
+      "EXPERIMENT": "script",
+      "VALIDATE": "prompt",
+      "FIGURES": "prompt",
+      "FREEZE": "script"
+    },
+    "gates": [
+      "domain",
+      "figure_contract",
+      "source_preflight",
+      "render_preview",
+      "layout_bbox_qa",
+      "composition_efficiency",
+      "panel_alignment",
+      "pdf_collision",
+      "visual_review"
+    ],
+    "gateType": "math-stage",
+    "runtime": {
+      "type": "python-cli",
+      "entry": "scripts/phase1_adapter.py",
+      "environmentLock": "requirements-phase1.lock.txt"
+    },
+    "requires": {
+      "workflows": {
+        "visualization-qa": "1.2.0"
+      },
+      "skills": {
+        "visualization-layout": "1.1.0"
+      }
+    },
+    "tiering": "档位未写明即草稿：本契约只声明形状与依赖对齐，不声明业务档位、不触发 INIT/求解/冻结。",
+    "purpose": "形状与依赖契约；供 repo-lint 0.2.1 的 gate-execution-evidenced 规则（D3）识别发布自带契约测试。",
+    "testsPresent": [
+      "tests/test_core.py",
+      "tests/test_tasks.py",
+      "tests/test_figure_qa.py",
+      "tests/test_composition_audit.py",
+      "tests/test_upgrade.py"
+    ]
+  }
+}

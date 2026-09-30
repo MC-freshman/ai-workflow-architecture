@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": ["entrypoint", "capacityConfig"],
+  "properties": {
+    "entrypoint": { "type": "string", "minLength": 1 },
+    "capacityConfig": {
+      "type": "object",
+      "required": ["bufferPercent"],
+      "additionalProperties": false,
+      "properties": {
+        "bufferPercent": { "type": "number", "minimum": 0, "maximum": 50 },
+        "soloMode": { "type": "boolean" },
+        "previousSprints": { "type": "array", "items": { "type": "object", "required": ["planned", "completed"], "additionalProperties": false, "properties": { "planned": { "type": "number" }, "completed": { "type": "number" } } } }
+      }
+    },
+    "milestone": { "type": "string" },
+    "designPillars": { "type": "array", "items": { "type": "string" } },
+    "backlog": { "type": "array", "items": { "type": "string" } }
+  },
+  "additionalProperties": false
+}

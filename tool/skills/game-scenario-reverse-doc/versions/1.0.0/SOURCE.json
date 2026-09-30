@@ -1,0 +1,10 @@
+{
+  "schema": "ai-governance-source/v1",
+  "authorSession": "qoder",
+  "derivedFrom": "game-reverse-document@2.1.0",
+  "supersedes": null,
+  "releaseScope": "Architecture 3.1.0 step T-P7: one of eleven scenario skills for game-pipeline. The body is that workflow's own prompt file verbatim, so the collapse moved the selector and did not rewrite the craft.",
+  "verbatimFrom": "tool/game-reverse-document/versions/2.1.0/workflow.md",
+  "bodySha256": "32e353cc484a6428c170d073975f42010cb7c8177da30bd43dc81aea2eb32091",
+  "openDeferred": []
+}

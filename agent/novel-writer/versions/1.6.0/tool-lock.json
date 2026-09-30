@@ -1,0 +1,24 @@
+{
+  "schema": "ai-tool-lock/v2",
+  "skills": {
+    "novel-story-cover-chinese": "1.0.0",
+    "novel-story-deslop-chinese": "1.0.0",
+    "novel-story-import-chinese": "1.0.0",
+    "novel-story-long-analyze-chinese": "1.0.0",
+    "novel-story-long-scan-chinese": "1.0.0",
+    "novel-story-long-write-chinese": "1.0.0",
+    "novel-story-review-chinese": "1.0.0",
+    "novel-story-setup-chinese": "1.0.0",
+    "novel-story-short-analyze-chinese": "1.0.0",
+    "novel-story-short-scan-chinese": "1.0.0",
+    "novel-story-short-write-chinese": "1.0.0",
+    "novel-story-chinese": "1.0.0",
+    "novel-avoid-ai-writing-writing": "1.0.0"
+  },
+  "workflows": {
+    "expert-task": "1.1.0",
+    "novel-pipeline": "1.1.0"
+  },
+  "packs": {},
+  "profiles": {}
+}

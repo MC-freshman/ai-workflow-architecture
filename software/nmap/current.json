@@ -1,0 +1,10 @@
+{
+  "schema": "ai-software-pointer/v1",
+  "id": "nmap",
+  "version": "1.0.1",
+  "available": [
+    "1.0.0",
+    "1.0.1"
+  ],
+  "hashManifest": "SHA256SUMS"
+}

@@ -1,0 +1,30 @@
+{
+  "schema": "ai-workflow-contract-test/v1",
+  "id": "game-jam-mode",
+  "version": "2.1.0",
+  "expect": {
+    "manifestMode": "pipeline",
+    "definitionSchema": "ai-workflow-definition/v2",
+    "stages": [
+      "EXECUTE",
+      "SELFCHECK"
+    ],
+    "gate": "jam-integrity (process)",
+    "gateScript": "scripts/validate_game_jam_mode.py",
+    "gateArtifact": "game-jam-mode-check.json",
+    "repair": "EXECUTE onFail=repair maxIterations=2",
+    "inputSchemaReal": true,
+    "outputSchemaReal": true,
+    "expectedVerdicts": {
+      "positive": "pass",
+      "negative": "violations",
+      "missingInfo": "missing-info"
+    },
+    "unavailableCapabilitiesMarked": [
+      "Engine",
+      "GitHub",
+      "Context7",
+      "implicit-commands"
+    ]
+  }
+}

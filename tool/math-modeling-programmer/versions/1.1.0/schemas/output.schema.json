@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "ai-workflow/math-modeling-programmer/output/v1",
+  "title": "Math Modeling Programmer Output",
+  "type": "object",
+  "additionalProperties": true,
+  "required": ["status"],
+  "properties": {
+    "status": {
+      "type": "string",
+      "enum": ["PASS", "PARTIAL", "BLOCKED", "FAILED", "NOT_RUN"]
+    },
+    "stage": {
+      "type": "string",
+      "enum": ["INIT", "AUDIT", "SPEC", "BASELINE", "SOLVE", "EXPERIMENT", "VALIDATE", "FIGURES", "FREEZE"]
+    },
+    "runId": { "type": "string" },
+    "artifacts": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "validation": {
+      "type": "array",
+      "items": { "type": "object" }
+    },
+    "blockedReasons": {
+      "type": "array",
+      "items": { "type": "string" }
+    },
+    "figureQa": {
+      "type": "object",
+      "properties": {
+        "status": {"enum": ["PASS", "PARTIAL", "BLOCKED", "FAILED", "NOT_RUN"]},
+        "report": {"type": "string"},
+        "preview": {"type": "string"},
+        "visualReview": {"type": "string"}
+      }
+    }
+  }
+}

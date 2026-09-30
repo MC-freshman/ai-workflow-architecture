@@ -1,0 +1,20 @@
+{
+  "schema": "ai-platform-bridge/v1",
+  "platform": "dsh",
+  "shared": {
+    "agentRegistry": "E:\\ai\\agent\\registry.json",
+    "toolRegistry": "E:\\ai\\tool\\registry.json",
+    "architecturePrompt": "E:\\ai\\AI_ARCHITECTURE_SYSTEM_PROMPT.md",
+    "readOnly": true
+  },
+  "runtimeRoot": "E:\\ai\\dsh\\runtime",
+  "modes": [
+    "workflow",
+    "agent-workflow"
+  ],
+  "runner": {
+    "enabled": true,
+    "version": "0.10.1",
+    "config": "E:/ai/dsh/bridge/runner-config.json"
+  }
+}

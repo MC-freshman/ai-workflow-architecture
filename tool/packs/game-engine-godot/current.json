@@ -1,0 +1,6 @@
+{
+  "schema": "ai-pack-pointer/v1",
+  "id": "game-engine-godot",
+  "version": "1.1.0",
+  "hashManifest": "SHA256SUMS"
+}

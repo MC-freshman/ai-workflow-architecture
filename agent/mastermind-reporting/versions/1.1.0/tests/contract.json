@@ -1,0 +1,3 @@
+{
+  "schema": "ai-agent-contract-test/v1", "agent": "mastermind-reporting", "version": "1.0.0", "assertions": ["no tool implementation", "Chinese output", "confirmed-only body", "credential redaction"]
+}

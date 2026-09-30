@@ -1,0 +1,20 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "required": ["target"],
+  "description": "服务/版本扫描（固定 -sV），参数同 scan 但不含 scanType",
+  "properties": {
+    "target": { "type": "string", "description": "目标主机、网段或域名", "examples": ["192.168.1.1", "10.0.0.0/24"] },
+    "ports": { "type": "array", "items": { "type": "string" }, "examples": [["22", "80", "443"], ["1-1024"]] },
+    "topPorts": { "type": "integer", "minimum": 1, "maximum": 65535 },
+    "versionIntensity": { "type": "string", "enum": ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9"], "default": "5", "description": "--version-intensity，0 轻探针，9 全探针" },
+    "osDetection": { "type": "boolean", "default": false },
+    "skipHostDiscovery": { "type": "boolean", "default": false },
+    "noDnsResolution": { "type": "boolean", "default": true },
+    "timingTemplate": { "type": "string", "enum": ["0", "1", "2", "3", "4", "5"], "default": "3" },
+    "hostTimeout": { "type": "string", "examples": ["30m"] },
+    "outputFile": { "type": "string" },
+    "extraArgs": { "type": "array", "items": { "type": "string" } }
+  },
+  "additionalProperties": false
+}

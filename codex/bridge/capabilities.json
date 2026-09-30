@@ -1,0 +1,147 @@
+{
+  "schema": "ai-platform-capabilities/v1",
+  "platform": "codex",
+  "attestedAt": "2026-09-21",
+  "checks": {
+    "python-runtime": true,
+    "filesystem-project-scoped": true,
+    "raw-input-write-denied": true,
+    "release-write-denied": true,
+    "outside-write-denied": true,
+    "unapproved-process-denied": true,
+    "python-child-allowed": true,
+    "host-network-denied": true,
+    "host-mount-absent": true,
+    "environment-stripped": true,
+    "runner-script-path": true,
+    "mcp-tool-surface": true,
+    "runner-dependency-resolution": true,
+    "runner-protocol-prepare": true,
+    "terminal-stop-with-evidence": true
+  },
+  "permissions": {
+    "filesystem": "project-scoped",
+    "network": "deny",
+    "process": "allowlisted-only"
+  },
+  "permissionAdapters": [
+    {
+      "filesystem": "project-scoped",
+      "network": "deny",
+      "process": "allowlisted-only",
+      "evidence": "Codex isolation-v2 probe: Landlock ABI 3, project write allowed, raw/release/outside writes denied, unapproved process and host network denied; G1 runner 0.5.2 nine-stage execution passed. Controller hash is identical in runner 0.5.2 and 0.6.0 (2026-09-15)."
+    },
+    {
+      "filesystem": "platform-runtime-write-shared-read-only",
+      "network": "deny",
+      "process": "isolated-python",
+      "evidence": "Codex 3.0 backend declaration; the 0.9.0 sealed shared-root probe is pending because the published jail precondition fails before dispatch, with the failure retained under codex/runtime/maintenance/3.0-C."
+    },
+    {
+      "filesystem": "shared-read-only-platform-report-write",
+      "network": "deny",
+      "process": "none",
+      "evidence": "Codex 3.0 repo-lint binding declaration; the bounded live scan stopped during environment verification and its stopped-run report is retained under codex/runtime/maintenance/3.0-C."
+    }
+  ],
+  "profiles": {
+    "renderer": {
+      "adapters": [
+        "matplotlib-adapter-first"
+      ],
+      "requires": [
+        "matplotlib"
+      ]
+    },
+    "python>=3.8": {
+      "declared": true,
+      "adapters": ["codex-script-environment-python"],
+      "requires": ["python >= 3.8"]
+    }
+  },
+  "controllerSha256": "2cd9c1230d9074775601753a713e101b3428c6bd8056f9050f101fc2c58b5ac4",
+  "descriptor": {
+    "schema": "ai-platform-descriptor/v2",
+    "platformId": "codex",
+    "protocols": ["ai-run-protocol/v1.1", "ai-run-protocol/v1.2", "ai-run-protocol/v1.3"],
+    "operations": ["prepare", "next", "submit", "status", "stop"],
+    "actions": {
+      "prompt": {"supported": true, "enforcement": "advisory"},
+      "script": {"supported": true, "enforcement": "kernel"},
+      "peer": {"supported": false, "enforcement": "mediated"},
+      "software-call": {"supported": true, "enforcement": "mediated"}
+    },
+    "profiles": {
+      "renderer": {
+        "declared": true,
+        "adapters": ["matplotlib-adapter-first"],
+        "requires": ["matplotlib"]
+      },
+      "python>=3.8": {
+        "declared": true,
+        "adapters": ["codex-script-environment-python"],
+        "requires": ["python >= 3.8"]
+      }
+    },
+    "enforcement": "mediated",
+    "recovery": ["replay", "process-reconcile"],
+    "software": {
+      "softwareRoot": "E:/ai/software",
+      "softwareRuntimeRoot": "E:/ai/codex/runtime/software",
+      "softwareGateway": "E:/ai/software/_gateway/versions/1.0.0/gateway.py",
+      "softwareGatewayConfig": "E:/ai/codex/bridge/software-gateway-config.json",
+      "softwareEnvironment": "E:/ai/codex/runtime/software/software-environment.json",
+      "lockTableScope": "platform-internal",
+      "crossPlatformArbitration": "NOT satisfied until a neutral project layer is separately authorized",
+      "snapshotFrozen": []
+    }
+  },
+  "evidence": {
+    "isolation": "E:\\ai\\codex\\runtime\\runs\\20260905-phase1-implementation-02\\reports\\isolation-capabilities-v2.json",
+    "environment": "E:\\ai\\codex\\runtime\\runs\\20260905-phase1-implementation-02\\reports\\script-environment.json",
+    "g1": "E:\\ai\\codex\\runtime\\runs\\20260914-g1-acceptance\\reports\\g1-paired-acceptance.json",
+    "mcp": "E:\\ai\\codex\\runtime\\runs\\20260914-mcp-reconnect-acceptance\\reports\\mcp-reconnect-acceptance.json"
+  },
+  "declaredAbsent": {
+    "peerDispatch": "Codex does not declare a peer dispatcher; agent/workflow invocation remains available, but workflow steps that require platform peer dispatch must stop with a capability error.",
+    "shared-read-only-script-mount": "The 0.9.0 shared-root boundary is not independently re-certified: the published jail fails its mount precondition before dispatch, and the bounded live scan stopped during environment verification."
+  },
+  "gapPlan": {
+    "action:peer": {
+      "path": "Add and independently verify a Codex peer dispatcher before enabling the peer facet; do not borrow another platform dispatcher.",
+      "costMinutes": 120
+    },
+    "action:prompt": {
+      "path": "Re-run the prompt claim smoke on the 0.9.0 production pin and bind its report here.",
+      "costMinutes": 20
+    },
+    "action:script": {
+      "path": "Re-run the 0.9.0 script ladder on a Codex-owned backend and bind the resulting jail or consented-host evidence.",
+      "costMinutes": 45
+    },
+    "permission-triple:platform-runtime-write-shared-read-only/deny/isolated-python": {
+      "path": "Bind the three shared roots read-only in the Codex backend and attach the boundary probe after it passes.",
+      "costMinutes": 30
+    },
+    "permission-triple:shared-read-only-platform-report-write/deny/none": {
+      "path": "Run repo-lint 0.4.0 against the three Codex bindings and attach its write-denial report.",
+      "costMinutes": 30
+    },
+    "profile:administrator": {
+      "path": "Declare a per-call administrator consent adapter only after a Codex-owned VeraCrypt boundary test; otherwise retain this explicit gap.",
+      "costMinutes": 90
+    },
+    "python-package:pymupdf": {
+      "path": "Normalize the Codex environment manifest package key and re-verify the sealed environment.",
+      "costMinutes": 15
+    },
+    "python-package:pyyaml": {
+      "path": "Normalize the Codex environment manifest package key and re-verify the sealed environment.",
+      "costMinutes": 15
+    },
+    "python-package:typing-extensions": {
+      "path": "Normalize the Codex environment manifest package key and re-verify the sealed environment.",
+      "costMinutes": 15
+    }
+  }
+}

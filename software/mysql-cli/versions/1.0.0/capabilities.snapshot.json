@@ -1,0 +1,43 @@
+{
+  "schema": "ai-software-capability-snapshot/v1",
+  "softwareId": "mysql-cli",
+  "softwareVersion": "1.0.0",
+  "upstreamVersion": "8.0.39",
+  "generatedAt": "2026-09-18",
+  "generationMethod": "manual-from-cli-help",
+  "upstreamHelpSource": "mysql --help, mysqldump --help",
+  "capabilities": [
+    {
+      "name": "version",
+      "nativeName": "mysql --version",
+      "sideEffects": "none",
+      "consent": "auto",
+      "idempotent": true,
+      "safeForSelftest": true,
+      "inputSchemaRef": "schemas/empty.input.json",
+      "outputSchemaRef": "schemas/version.output.json"
+    },
+    {
+      "name": "query",
+      "nativeName": "mysql --defaults-extra-file=<tmp> -h host [-P port] -u user [-D db] -e sql --batch --raw",
+      "sideEffects": "external",
+      "consent": "confirm-stage",
+      "idempotent": false,
+      "safeForSelftest": false,
+      "inputSchemaRef": "schemas/query.input.json",
+      "outputSchemaRef": "schemas/query.output.json",
+      "argvSummary": "--batch --raw --defaults-extra-file tmp -h host -P port -u user [-D db] -e sql [-X|-H|-t] [-N] [-E] [--connect-timeout N]"
+    },
+    {
+      "name": "dump",
+      "nativeName": "mysqldump --defaults-extra-file=<tmp> --single-transaction ... ",
+      "sideEffects": "local-write",
+      "consent": "confirm-stage",
+      "idempotent": true,
+      "safeForSelftest": false,
+      "inputSchemaRef": "schemas/dump.input.json",
+      "outputSchemaRef": "schemas/dump.output.json",
+      "argvSummary": "--single-transaction --routines --triggers --events --defaults-extra-file tmp -h host -P port -u user (--all-databases | --databases db... | db [table...]) [--no-data] [--no-create-info] [--where cond] [--result-file out]"
+    }
+  ]
+}

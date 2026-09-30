@@ -1,0 +1,61 @@
+{
+ "schema": "ai-software-recipe/v1",
+ "platform": "windows",
+ "softwareId": "nmap",
+ "softwareVersion": "1.0.0",
+ "acquire": {
+  "kind": "local-install",
+  "source": "便携版（本机已存在）",
+  "officialUrl": "https://nmap.org/download.html",
+  "version": "7.95",
+  "license": "NPSL (Nmap Public Source License)",
+  "redistributable": true,
+  "packageManager": null
+ },
+ "install": {
+  "location": "${platformRuntime}/software/nmap",
+  "detectedPath": "<local-tool-body-path>",
+  "stepsRef": null,
+  "notes": "便携版无需安装，复制目录即可；Npcap 驱动需单独安装（https://npcap.com）用于原始套接字扫描（-sS/-O/-sU），无驱动时 -sS 退化为 -sT（TCP connect）"
+ },
+ "launch": {
+  "kind": "cli-wrapper",
+  "entrypoint": "nmap.exe",
+  "environment": {},
+  "pathDependencies": [
+   "ncat.exe",
+   "nping.exe",
+   "ndiff.py",
+   "scripts\\",
+   "nselib\\"
+  ]
+ },
+ "verify": {
+  "versionCall": [
+   "nmap.exe",
+   "--version"
+  ],
+  "expectedVersionOutput": "Nmap version 7.95",
+  "selftestRef": "../selftest/readonly.json",
+  "files": [
+   {
+    "path": "nmap.exe",
+    "role": "主程序",
+    "sha256": "f2496b4588c96a17aba7a6a9ac06dbaf69363dd8f2b4d008555aacc40867f78f",
+    "note": "live-measured 2026-09-27 (D-61: the 1.0.0 entry did not match the on-disk binary)"
+   },
+   {
+    "path": "ncat.exe",
+    "role": "netcat 实现",
+    "sha256": "a3071223a56a18c9fb913696487f69d1ea2633176412446d4b7eecc82d33c262",
+    "note": "live-measured 2026-09-27 (D-61: the 1.0.0 entry did not match the on-disk binary)"
+   },
+   {
+    "path": "nping.exe",
+    "role": "包生成/探测",
+    "sha256": "cf13938876c5379d80543d0c8f0a594f5195a810acafd490e1cb6fa989f8ad73",
+    "note": "live-measured 2026-09-27 (D-61: the 1.0.0 entry did not match the on-disk binary)"
+   }
+  ]
+ }
+}

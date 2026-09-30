@@ -1,0 +1,35 @@
+{
+ "schema": "ai-software-connector-source/v1",
+ "authorSession": "qoder",
+ "derivedFrom": "software/_connector/versions/1.0.0 (the previous release of this resource)",
+ "supersedes": "1.0.0",
+ "releaseScope": "Architecture 3.2, step P4a (credential path): the connector can now turn a declared `reference:<name>` into what a body needs without the value crossing argv, evidence, the call index or the artifact scan. No engine byte, no contract byte and no published recipe was touched; 1.0.0 stays byte-identical.",
+ "changes": [
+  "credential materialization: a platform-declared provider command (config.credentialProvider) is asked over a pipe, the value is written to a mode-0600 file in config.credentialWorkspace, and the argv slots that reference the file come from the release’s own credentialInjection declaration - shared code names neither a credential store nor a client flag spelling (BP-2).",
+  "the injected slots go in front of everything the recipe asked for, because a MySQL-style option file is only read as the client’s first argument.",
+  "evidence carries the reference, the format, the file path and the count of injected slots; argv is redacted, and redaction replaces rather than hashes, since a digest of a short secret is a guessing oracle.",
+  "the credential workspace joins the artifact scan’s exclusion list: a list of what the software wrote must never be able to report the temporary credential file.",
+  "whatever happens after materialization - a refusal, a timeout, a body that could not start - the file is discarded in the same call, because the discard runs in the call’s own finally."
+ ],
+ "unchanged": [
+  "the three published engine-facing shapes, the session shape and ai-software-admin/v1: same requests, same answers, still zero new error codes",
+  "resolution, attestation (snapshot-only, never --tools), locks, idempotency, sessions, artifacts",
+  "software/_connector/versions/1.0.0 and every published recipe: byte for byte",
+  "the five other recipes still carry no connector.json, so they still resolve through the derived overlay; only mysql-cli 1.0.2 declares one"
+ ],
+ "openDeferred": [
+  "D-87: the injection shape had no home in any published declaration, so credentialInjection was added to the still-unpublished ai-software-connector/v1 candidate (qoder runtime). Publishing it as contract is a repo-lint/contracts step, not a connector step.",
+  "the env injection format is implemented but has no fixture body that reads it; every release declared so far uses ini.",
+  "a real credential-requiring dispatch (mysql query/dump) is P4b: this release was exercised against a fake provider and a fake body, plus the platform’s real provider read-only without dispatching MySQL.",
+  "mysql-cli 1.0.2 is published but its pointer is not switched here: other platforms pin 1.0.1, and an in-flight 1.0.1 pin resolves to SOFTWARE_NOT_INSTALLED the moment the pointer moves - that is a cross-platform adoption decision, not a connector one."
+ ],
+ "releaseStatus": "published",
+ "publishedAt": "2026-09-24",
+ "publishedBy": "qoder, architecture 3.2 round, step P4a",
+ "pointerPolicy": "software/_connector/current.json moves 1.0.0 -> 1.0.1: this resource was published the same day and no platform config points at it yet, so its own default carries no cross-platform reader. 1.0.0 stays immutable and readable.",
+ "selftest": {
+  "harness": "qoder/runtime/maintenance/20260923-3.2.0/P4a-credential/p4a-selftest.py",
+  "readback": "qoder/runtime/maintenance/20260923-3.2.0/P4a-credential/P4a-readback.json",
+  "also": "the 3.2 P3 battery is rerun against this release (98 cells) so the credential work cannot silently regress the dispatch chain"
+ }
+}

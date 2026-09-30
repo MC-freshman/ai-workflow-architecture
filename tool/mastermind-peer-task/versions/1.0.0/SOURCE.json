@@ -1,0 +1,5 @@
+{
+  "schema": "ai-workflow-source/v1",
+  "purpose": "U6: runnable workflow for the six mastermind peer agents",
+  "note": "role differentiation comes from each agent's own prompt/policies prepended by the runner"
+}

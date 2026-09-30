@@ -1,0 +1,17 @@
+{
+  "schema": "ai-governance-source/v1",
+  "authorSession": "qoder",
+  "derivedFrom": "skill:nature-prior-art-search@1.0.0+nature-search-strategy@1.0.0+nature-research-anti-slop@1.0.0",
+  "supersedes": null,
+  "releaseScope": "3.3.0 P6 scenario card for paper-author. Every quoted block is the referenced skill's own description copied verbatim with its language and byte size recorded; new writing is limited to step order, the one-line stance and the refusal gates.",
+  "verbatimFrom": {
+    "nature-prior-art-search@1.0.0": "SKILL.md#frontmatter.description",
+    "nature-search-strategy@1.0.0": "SKILL.md#frontmatter.description",
+    "nature-research-anti-slop@1.0.0": "SKILL.md#frontmatter.description"
+  },
+  "bodySha256": "0447f6ec3f5839c688f89fe0ed84a66b45bd28922bf6c77095913b2c2856294b",
+  "openDeferred": [
+    "The numbered spine cards (nature-00-scope, -01-research-canon, -02-evidence-table, -04-section-contracts) are 192-339 B stubs; this card quotes the substantive cards instead and records that the spine is thin.",
+    "No current pointer moved (red line 5)."
+  ]
+}

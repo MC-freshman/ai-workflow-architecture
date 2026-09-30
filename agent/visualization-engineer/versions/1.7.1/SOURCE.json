@@ -1,0 +1,15 @@
+{
+  "schema": "ai-governance-source/v1",
+  "authorSession": "qoder",
+  "derivedFrom": "visualization-engineer@1.6.0",
+  "supersedes": "1.7.0",
+  "releaseScope": "Architecture 3.1.0 step T-P8: the visualization expert moves onto the scenario release of its own QA workflow; the previous release stays pinned by older runs. Hash-manifest repair release: the previous release retained stale hashes; published bytes remain immutable.",
+  "scenarios": [
+    "axes",
+    "citation",
+    "color",
+    "export"
+  ],
+  "openDeferred": [],
+  "repairOf": "1.7.0"
+}

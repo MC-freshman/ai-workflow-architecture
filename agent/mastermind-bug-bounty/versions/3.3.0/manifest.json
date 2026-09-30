@@ -1,0 +1,15 @@
+{
+  "schema": "ai-agent/v1",
+  "id": "mastermind-bug-bounty",
+  "displayName": "Mastermind Bug Bounty Coordinator",
+  "version": "3.3.0",
+  "role": "Coordinator for authorized security workflows",
+  "workflows": ["mastermind-bug-bounty"],
+  "prompt": "prompt.md",
+  "toolLock": "tool-lock.json",
+  "policies": ["policies/security.md"],
+  "modelPolicy": { "mode": "inherit", "allowOverride": true },
+  "input": { "type": "text" },
+  "output": { "type": "text", "language": "zh-CN" },
+  "integrity": { "sha256Manifest": "SHA256SUMS" }
+}

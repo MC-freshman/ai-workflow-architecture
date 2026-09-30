@@ -1,0 +1,27 @@
+{
+  "schema": "ai-invocation-exceptions/v1",
+  "platform": "zcode",
+  "updatedAt": "2026-09-27",
+  "note": "Updated by the 3.x repair round R-P6 (2026-09-27): nmap and burp-suite entries removed (both rows now PASS through the 1.0.7 connector); veracrypt carried to 1.0.1; the repo-lint live cell is a jail-scoped NEEDS-INPUT (its input schema requires /shared/* mounts under scope=live), registered as a harness-side limitation, not an exception.",
+  "infrastructure": [
+    {
+      "kind": "workflow",
+      "id": "wf-runner",
+      "version": "0.11.0",
+      "expectedCode": "CAPABILITY_UNAVAILABLE",
+      "reason": "Runner is infrastructure, not a user workflow; its separate permission policy is intentionally undeclared.",
+      "evidence": "E:/ai/zcode/runtime/maintenance/20260927-3x-repair/matrix-full-0110-final.json"
+    }
+  ],
+  "pendingGaps": [
+    {
+      "kind": "software",
+      "id": "veracrypt",
+      "version": "1.0.1",
+      "expectedCode": "SNAPSHOT_NOT_FROZEN",
+      "reason": "Snapshot honestly unfrozen (a GUI program has no stdout contract to live-inquire). 1.0.1 (X-P5) publishes the desktop-session declaration with per-call consent semantics; the row stays EXPECTED-until-consent. Fill path: a per-call-consented session run (red line 5).",
+      "evidence": "E:/ai/zcode/runtime/maintenance/20260926-3.2-adopt/Z3/smoke-res-6.json",
+      "note": "expectedCode must equal the gap code the harness observes for an unfrozen-snapshot row (classify() matches on it); the connector answers ok:true/frozen:false, so the observed gap code is SNAPSHOT_NOT_FROZEN, not CAPABILITY_UNAVAILABLE."
+    }
+  ]
+}

@@ -1,0 +1,104 @@
+{
+  "schema": "ai-platform-capabilities/v1",
+  "platform": "dsh",
+  "attestedAt": "2026-09-27",
+  "checks": {
+    "python-runtime": true,
+    "runner-protocol-prepare": false
+  },
+  "permissions": {
+    "filesystem": "project-scoped",
+    "network": "deny",
+    "process": "allowlisted-only"
+  },
+  "permissionAdapters": [],
+  "descriptor": {
+    "schema": "ai-platform-descriptor/v2",
+    "platformId": "dsh",
+    "protocols": [
+      "ai-run-protocol/v1.1",
+      "ai-run-protocol/v1.2",
+      "ai-run-protocol/v1.3"
+    ],
+    "operations": [
+      "prepare",
+      "next",
+      "submit",
+      "status",
+      "stop"
+    ],
+    "actions": {
+      "prompt": {
+        "supported": true,
+        "enforcement": "advisory"
+      },
+      "script": {
+        "supported": false,
+        "enforcement": "none"
+      },
+      "peer": {
+        "supported": false,
+        "enforcement": "none"
+      },
+      "software-call": {
+        "supported": false,
+        "enforcement": "none"
+      }
+    },
+    "enforcement": "advisory",
+    "recovery": [
+      "replay"
+    ]
+  },
+  "declaredAbsent": {
+    "sealed-script-environment": "No scriptEnvironmentRungs/interpreters declared - every package-pinned release is refused at prepare (45/45). Fill path: build the sealed WSL environment and declare the rung (~240 min).",
+    "software-face": "No softwareRoot/softwareGateway declared - the software repository contributes no union rows and the matrix runs no software cells (~180 min).",
+    "mcp-tool-surface": "Not registered (~240 min).",
+    "peer-dispatch": "peerDispatcherModule not declared; peer actions refused (~120 min)."
+  },
+  "unverified": {
+    "runner-protocol-prepare": "配置接线已完成，需 DSH 会话补齐 capability evidence 后复验。"
+  },
+  "notes": "本文件只表达当前可回读的能力边界；未验证能力保持 fail-closed。",
+  "attestationStatus": "re-attested 2026-09-27 by the zcode session under the user repair-round authorization (codex/doubao excluded, dsh included). Readings: platform-conformance 1.5.0 suite 25 OK (6 skipped: no evidenceBindings, no script rungs declared); conform items 25 / pass 0 / declaredAbsent 24 / unverified 1 (digest b8096652d08a); full invocation matrix on the current generation wf-runner 0.12.0 + runtime-contracts 1.5.0 + repo-lint 0.6.3: PASS 0 / NEEDS-INPUT 1 / FAIL 45 - every failure is CAPABILITY_UNAVAILABLE from the engine refusing releases whose pinned packages have no declared sealed environment, plus the repo-lint live cell which is a jail-scope NEEDS-INPUT on host-run harnesses. This is the honest fail-closed face: nothing is claimed beyond it.",
+  "gapPlan": {
+    "sealed-script-environment": {
+      "path": "build sealed env per the zcode 09-26 recipe (pip --target at phase1 lock pins, environment_verify full pass), then declare scriptEnvironmentRungs + re-attest",
+      "costMinutes": 240
+    },
+    "software-face": {
+      "path": "declare softwareRoot/softwareGateway(+config)/softwareEnvironment, wire the shared connector, run conform + software matrix cells",
+      "costMinutes": 180
+    },
+    "mcp-tool-surface": {
+      "path": "register an MCP client adapter and re-attest",
+      "costMinutes": 240
+    },
+    "peer-dispatch": {
+      "path": "declare peerDispatcherModule + content root, run the V6-class battery",
+      "costMinutes": 120
+    },
+    "union-source-gap:software": {
+      "path": "same as software-face: declaring softwareRoot lets the software repository contribute union rows",
+      "costMinutes": 180
+    },
+    "action:script": {
+      "path": "same as sealed-script-environment",
+      "costMinutes": 240
+    },
+    "action:peer": {
+      "path": "same as peer-dispatch",
+      "costMinutes": 120
+    },
+    "profile:administrator": {
+      "path": "per-call consent adapter only (red line 5); no resident elevation",
+      "costMinutes": 90
+    }
+  },
+  "readings": {
+    "conformDigest": "b8096652d08a (pre-gapPlan)",
+    "matrixPaired": "PASS 0 / NEEDS-INPUT 1 / FAIL 45 (0.12.0/1.5.0/0.6.3, final)",
+    "matrixPreRaise": "PASS 0 / FAIL 46 (45 CAPABILITY_UNAVAILABLE + 1 VERSION_CONFLICT from the then-pinned repo-lint 0.5.2 vs raised current 0.6.1 - the D-52 pairing rule working)",
+    "evidence": "dsh/runtime/maintenance/20260927-dsh-selfcert/"
+  }
+}

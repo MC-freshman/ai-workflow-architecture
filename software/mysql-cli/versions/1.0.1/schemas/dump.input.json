@@ -1,0 +1,26 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "required": ["host", "user", "passwordRef"],
+  "oneOf": [
+    { "required": ["allDatabases"] },
+    { "required": ["databases"] },
+    { "required": ["database"] }
+  ],
+  "properties": {
+    "host": { "type": "string" },
+    "port": { "type": "integer", "minimum": 1, "maximum": 65535, "default": 3306 },
+    "user": { "type": "string" },
+    "passwordRef": { "type": "string", "description": "密钥位引用名，渲染为临时 defaults-file" },
+    "database": { "type": "string", "description": "单个数据库（位置参数，配合 tables）" },
+    "databases": { "type": "array", "items": { "type": "string" }, "description": "--databases 多个库" },
+    "tables": { "type": "array", "items": { "type": "string" }, "description": "单库下的表名（位置参数）" },
+    "allDatabases": { "type": "boolean", "default": false, "description": "--all-databases" },
+    "noData": { "type": "boolean", "default": false, "description": "--no-data 只导结构" },
+    "noSchema": { "type": "boolean", "default": false, "description": "--no-create-info 只导数据" },
+    "where": { "type": "string", "description": "--where 行过滤条件" },
+    "resultFile": { "type": "string", "description": "--result-file 直接写入的工作区文件路径（推荐）" },
+    "extraArgs": { "type": "array", "items": { "type": "string" } }
+  },
+  "additionalProperties": false
+}

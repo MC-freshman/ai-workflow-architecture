@@ -1,0 +1,6 @@
+{
+  "schema": "ai-agent-contract-test/v1",
+  "agent": "mastermind-recon",
+  "version": "1.0.0",
+  "assertions": ["no tool implementation", "passive before active", "model inherited", "redacted output"]
+}

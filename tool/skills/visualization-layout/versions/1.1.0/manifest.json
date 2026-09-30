@@ -1,0 +1,36 @@
+{
+  "schema": "ai-skill/v1",
+  "id": "visualization-layout",
+  "version": "1.1.0",
+  "kind": "atomic",
+  "category": "visual-quality",
+  "entry": "SKILL.md",
+  "input": {
+    "type": "matplotlib-figure-or-rendered-artifact",
+    "contract": "figure plus target dimensions and layout constraints"
+  },
+  "output": {
+    "type": "json-and-preview",
+    "contract": "issues, measured bounds, verdict, and preview path"
+  },
+  "permissions": [
+    "read-project",
+    "execute-isolated-renderer"
+  ],
+  "requires": [
+    "python>=3.9",
+    "matplotlib>=3.7",
+    "Pillow>=9"
+  ],
+  "conflicts": [],
+  "source": {
+    "sourceId": "math-modeling-skill-main",
+    "path": "tools/figure",
+    "license": "user-confirmed-open-source",
+    "snapshot": "snapshot-2026.08.31",
+    "enhancement": "renderer-neutral-element-collision-audit"
+  },
+  "integrity": {
+    "sha256Manifest": "SHA256SUMS"
+  }
+}

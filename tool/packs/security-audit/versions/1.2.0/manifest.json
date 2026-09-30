@@ -1,0 +1,33 @@
+{
+  "schema": "ai-pack/v1",
+  "id": "security-audit",
+  "version": "1.2.0",
+  "displayName": "安全审计能力",
+  "skillIds": [
+    "coding-security-review",
+    "coding-input-validation",
+    "coding-secrets-handling"
+  ],
+  "conflicts": [
+    "offensive-security"
+  ],
+  "source": {
+    "snapshot": "snapshot-2026.08.31",
+    "derivedFrom": "awesome-coding"
+  },
+  "integrity": {
+    "sha256Manifest": "SHA256SUMS"
+  },
+  "skillVersions": {
+    "coding-input-validation": "1.0.0",
+    "coding-secrets-handling": "1.0.0",
+    "coding-security-review": "1.0.0"
+  },
+  "pinning": {
+    "schema": "ai-pack-pinning/v1",
+    "pinnedFrom": "security-audit@1.1.0",
+    "source": "tool/skills/<id>/current.json",
+    "note": "Z10 §6.4 D2：把 pack 的技能选择钉到确切版本，消费方无需自行补版本。",
+    "pinnedAt": "2026-09-14"
+  }
+}

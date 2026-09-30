@@ -1,0 +1,6 @@
+{
+  "schema": "ai-agent-contract-test/v1",
+  "agent": "mastermind-js-analysis",
+  "version": "1.0.0",
+  "assertions": ["no tool implementation", "static analysis only", "model inherited", "credential redaction"]
+}

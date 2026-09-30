@@ -1,0 +1,31 @@
+{
+  "schema": "ai-skill/v1",
+  "id": "ecc-low-score-example",
+  "version": "1.0.0",
+  "kind": "atomic",
+  "category": "skill",
+  "entry": "SKILL.md",
+  "input": {
+    "type": "text",
+    "contract": "task plus project context"
+  },
+  "output": {
+    "type": "text",
+    "contract": "advice, edits, or named artifacts"
+  },
+  "permissions": [
+    "read-project"
+  ],
+  "requires": [],
+  "conflicts": [],
+  "source": {
+    "path": "skills/agent-self-evaluation/examples/low-score-example.md",
+    "license": "repository-LICENSE",
+    "sourceId": "ecc",
+    "repository": "ECC-main",
+    "snapshot": "snapshot-2026.08.31"
+  },
+  "integrity": {
+    "sha256Manifest": "SHA256SUMS"
+  }
+}

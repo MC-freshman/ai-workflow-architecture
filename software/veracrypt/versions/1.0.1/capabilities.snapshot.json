@@ -1,0 +1,55 @@
+{
+ "schema": "ai-software-capability-snapshot/v1",
+ "softwareId": "veracrypt",
+ "softwareVersion": "1.0.0",
+ "upstreamVersion": "1.26.7",
+ "generatedAt": "2026-09-18",
+ "generationMethod": "manual-from-vendor-cli-reference | 1.0.1 note: the snapshot stays honestly unfrozen - a GUI program has no stdout contract to live-inquire, so nothing here was verified against a baseline; session open/status/close are declared but answer INTERACTIVE_REQUIRED until a per-call-consented run (X-P5, D-61/D-84/D-90 context).",
+ "upstreamHelpSource": "VeraCrypt 命令行参考（User Guide.chm / veracrypt.fr）；/? 弹 GUI 不输出 stdout",
+ "capabilities": [
+  {
+   "name": "version",
+   "nativeName": "PE ProductVersion",
+   "sideEffects": "none",
+   "consent": "auto",
+   "idempotent": true,
+   "safeForSelftest": true,
+   "inputSchemaRef": "schemas/empty.input.json",
+   "outputSchemaRef": "schemas/version.output.json"
+  },
+  {
+   "name": "mount",
+   "nativeName": "VeraCrypt.exe /v <vol> /l <letter> /p <pwd> /q",
+   "sideEffects": "external",
+   "consent": "confirm-call",
+   "idempotent": false,
+   "safeForSelftest": false,
+   "inputSchemaRef": "schemas/mount.input.json",
+   "outputSchemaRef": "schemas/mount.output.json",
+   "argvSummary": "/q /v volume /l letter /p passwordRef [/k keyfiles] [/m ro|rm] [/a] [/b]"
+  },
+  {
+   "name": "dismount",
+   "nativeName": "VeraCrypt.exe /d [letter] /q",
+   "sideEffects": "external",
+   "consent": "confirm-call",
+   "idempotent": true,
+   "safeForSelftest": false,
+   "inputSchemaRef": "schemas/dismount.input.json",
+   "outputSchemaRef": "schemas/dismount.output.json",
+   "argvSummary": "/q /d [letter] [/f]"
+  },
+  {
+   "name": "createVolume",
+   "nativeName": "VeraCrypt Format.exe /create <vol> /size ... /q",
+   "sideEffects": "external",
+   "consent": "confirm-call",
+   "idempotent": false,
+   "safeForSelftest": false,
+   "inputSchemaRef": "schemas/createVolume.input.json",
+   "outputSchemaRef": "schemas/createVolume.output.json",
+   "argvSummary": "/q /create volume /size N[KMG] /password passwordRef [/encryption AES] [/hash SHA-512] [/filesystem exFAT] [/keyfiles k] [/volume-type file]"
+  }
+ ],
+ "frozen": false
+}

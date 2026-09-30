@@ -1,0 +1,6 @@
+{
+  "schema": "ai-workflow-pointer/v1",
+  "id": "wf-runner",
+  "version": "0.12.0",
+  "hashManifest": "SHA256SUMS"
+}

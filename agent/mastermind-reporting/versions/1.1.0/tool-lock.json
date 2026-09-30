@@ -1,0 +1,7 @@
+{
+  "schema": "ai-tool-lock/v1",
+  "workflows": {
+    "mastermind-peer-task": "1.0.0"
+  },
+  "tools": []
+}

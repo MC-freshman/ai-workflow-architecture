@@ -1,0 +1,16 @@
+{
+  "schema": "ai-workflow-contract-test/v1",
+  "id": "expert-task",
+  "version": "1.0.0",
+  "expect": {
+    "manifestMode": "pipeline",
+    "definitionSchema": "ai-workflow-definition/v2",
+    "stages": [
+      "INTAKE",
+      "WORK",
+      "REPORT"
+    ],
+    "gate": "report-complete (output-schema)",
+    "repair": "WORK onFail=repair maxIterations=2"
+  }
+}

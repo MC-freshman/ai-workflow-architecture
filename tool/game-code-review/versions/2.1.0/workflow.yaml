@@ -1,0 +1,47 @@
+{
+  "schema": "ai-workflow-definition/v2",
+  "id": "game-code-review",
+  "version": "2.1.0",
+  "mode": "pipeline",
+  "maxParallel": 1,
+  "roles": [
+    "reviewer"
+  ],
+  "outputWorker": "reviewer",
+  "gateDefinitions": {
+    "review-integrity": {
+      "type": "process",
+      "cwd": "evidence",
+      "argv": [
+        "workflow:scripts/validate_game_code_review.py"
+      ],
+      "expectExit": [
+        0
+      ],
+      "expectArtifacts": [
+        {
+          "target": "evidence:game-code-review-check.json",
+          "minBytes": 2
+        }
+      ],
+      "reasonFrom": "evidence:game-code-review-check.json"
+    }
+  },
+  "stages": [
+    {
+      "id": "EXECUTE",
+      "action": "prompt",
+      "worker": "reviewer",
+      "dependsOn": [],
+      "promptRef": "workflow.md#stage:EXECUTE",
+      "inputs": "schemas/input.schema.json",
+      "outputs": "schemas/execute.schema.json",
+      "gates": [
+        "review-integrity"
+      ],
+      "onFail": "repair",
+      "maxIterations": 2,
+      "repairPromptRef": "workflow.md#stage:repair"
+    }
+  ]
+}

@@ -1,0 +1,107 @@
+{
+  "schema": "ai-workflow-definition/v3",
+  "id": "mastermind-bug-bounty",
+  "version": "2.0.0",
+  "mode": "pipeline",
+  "maxParallel": 1,
+  "roles": [
+    "coordinator"
+  ],
+  "outputWorker": "coordinator",
+  "stages": [
+    {
+      "id": "SCOPE",
+      "action": "prompt",
+      "worker": "coordinator",
+      "dependsOn": [],
+      "promptRef": "workflow.md#stage:SCOPE",
+      "outputs": "schemas/scope.schema.json"
+    },
+    {
+      "id": "RECON",
+      "action": "prompt",
+      "worker": "coordinator",
+      "dependsOn": [
+        "SCOPE"
+      ],
+      "promptRef": "workflow.md#stage:RECON",
+      "outputs": "schemas/recon.schema.json"
+    },
+    {
+      "id": "ANALYSIS",
+      "action": "prompt",
+      "worker": "coordinator",
+      "dependsOn": [
+        "RECON"
+      ],
+      "promptRef": "workflow.md#stage:ANALYSIS",
+      "outputs": "schemas/analysis.schema.json"
+    },
+    {
+      "id": "TRIAGE",
+      "action": "prompt",
+      "worker": "coordinator",
+      "dependsOn": [
+        "ANALYSIS"
+      ],
+      "promptRef": "workflow.md#stage:TRIAGE",
+      "outputs": "schemas/triage.schema.json"
+    },
+    {
+      "id": "REPORT",
+      "action": "prompt",
+      "worker": "coordinator",
+      "dependsOn": [
+        "TRIAGE"
+      ],
+      "promptRef": "workflow.md#stage:REPORT",
+      "outputs": "schemas/report.schema.json"
+    }
+  ],
+  "defaultScenario": "full",
+  "requiredStages": [
+    "SCOPE",
+    "REPORT"
+  ],
+  "scenarios": {
+    "full": {
+      "summary": "整条链照旧跑：定界 → 侦察 → 分析 → 分诊 → 成文（不选场景时的缺省）。"
+    },
+    "recon": {
+      "summary": "授权范围内的被动侦察与指纹识别（该场景把对应专家的原有判断标准读进上下文，不改阶段图形状。）",
+      "skills": [
+        "security-scenario-recon@1.0.0"
+      ]
+    },
+    "triage": {
+      "summary": "重复、无效与信息不足的报告分诊（该场景把对应专家的原有判断标准读进上下文，不改阶段图形状。）",
+      "skills": [
+        "security-scenario-triage@1.0.0"
+      ]
+    },
+    "api": {
+      "summary": "接口面：参数、鉴权与业务规则校验（该场景把对应专家的原有判断标准读进上下文，不改阶段图形状。）",
+      "skills": [
+        "security-scenario-api@1.0.0"
+      ]
+    },
+    "js": {
+      "summary": "前端脚本与 SourceMap 里可读到的行为分析（该场景把对应专家的原有判断标准读进上下文，不改阶段图形状。）",
+      "skills": [
+        "security-scenario-js@1.0.0"
+      ]
+    },
+    "crypto": {
+      "summary": "编码、哈希与自实现密码学的可复核判定（该场景把对应专家的原有判断标准读进上下文，不改阶段图形状。）",
+      "skills": [
+        "security-scenario-crypto@1.0.0"
+      ]
+    },
+    "report": {
+      "summary": "可提交的复现步骤与影响面报告（该场景把对应专家的原有判断标准读进上下文，不改阶段图形状。）",
+      "skills": [
+        "security-scenario-report@1.0.0"
+      ]
+    }
+  }
+}

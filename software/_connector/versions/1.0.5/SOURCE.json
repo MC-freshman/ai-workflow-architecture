@@ -1,0 +1,32 @@
+{
+ "schema": "ai-software-connector-source/v1",
+ "authorSession": "qoder",
+ "derivedFrom": "software/_connector/versions/1.0.4 (its four text files, byte for byte)",
+ "supersedes": "1.0.4",
+ "releaseScope": "Architecture 3.2, step P7 (qoder binding): a re-seal, not a behaviour change. 1.0.4 was published with a SHA256SUMS row naming __pycache__/connector.cpython-39.pyc, which git never tracked - so any platform checking this repository out gets \"listed-file-missing\" against the release it is told to run, and the shared repository carries a compiled binary, which BP-1 forbids (the repos hold freezable text). This release seals the files that are actually versioned.",
+ "changes": [
+  "manifest.json: the version field only",
+  "SHA256SUMS: regenerated over the four versioned text files; no __pycache__ row",
+  "SOURCE.json: this file"
+ ],
+ "unchanged": [
+  "connector.py, README.md, schemas/software-admin-v1.schema.json - digests verified equal to 1.0.4 before this release was written",
+  "the Burp native MCP SSE path added in 1.0.4, and every earlier surface: the engine-facing shapes, session lifecycle, credential materialization and the refusal-redaction rules",
+  "1.0.0 through 1.0.4 remain published and immutable, including 1.0.4 with its bad seal"
+ ],
+ "knownDefectThisFixes": {
+  "id": "D-91",
+  "shape": "a published release whose own hash manifest lists an untracked file",
+  "howItWasFound": "the P3 battery seal cell went red while smoke-testing the production binding, after a stray __pycache__ directory was removed from the working tree",
+  "operationalNote": "the removal was done before checking git, and the file was untracked - so the one on-disk copy of a sealed digest is gone and 1.0.4 can no longer be re-verified against it. The functional bytes were never at risk (the four text files still match their digests), and the recorded lesson is: inspect and copy a sealed release before deleting anything inside it",
+  "guard": "the seal check now also asserts every listed row is tracked by git, so the class is machine-caught instead of rediscovered by an editor"
+ },
+ "releaseStatus": "published",
+ "publishedAt": "2026-09-25",
+ "publishedBy": "qoder, architecture 3.2 round, step P7",
+ "pointerPolicy": "software/_connector/current.json moves 1.0.4 -> 1.0.5. This is the same registered discipline as the earlier self-moves of this resource (§8.25 deviation 3), and qoder production now resolves its softwareGateway through this pointer.",
+ "selftest": {
+  "seal": "every row of SHA256SUMS exists on disk, matches its digest, and is tracked by git",
+  "batteries": "P3 98 cells, P4a 41 cells, P5 35 cells rerun against the pinned release"
+ }
+}

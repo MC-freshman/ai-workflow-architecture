@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": [
+    "stage",
+    "status",
+    "artifacts"
+  ],
+  "properties": {
+    "stage": {
+      "enum": [
+        "INIT",
+        "AUDIT",
+        "SPEC",
+        "BASELINE",
+        "SOLVE",
+        "EXPERIMENT",
+        "VALIDATE",
+        "FIGURES",
+        "FREEZE"
+      ]
+    },
+    "status": {
+      "const": "pass"
+    },
+    "artifacts": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "additionalProperties": false
+}

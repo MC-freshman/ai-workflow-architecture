@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "game-design-review input",
+  "type": "object",
+  "anyOf": [
+    {
+      "required": [
+        "designDocument"
+      ]
+    },
+    {
+      "required": [
+        "designPath"
+      ]
+    }
+  ],
+  "properties": {
+    "designDocument": {
+      "type": "string",
+      "minLength": 40
+    },
+    "designPath": {
+      "type": "string",
+      "minLength": 1
+    },
+    "pillars": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "reviewFocus": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "constraints": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "additionalProperties": false
+}

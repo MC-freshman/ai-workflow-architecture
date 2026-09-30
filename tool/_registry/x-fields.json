@@ -1,0 +1,7 @@
+{
+  "schema": "ai-x-field-registry/v1",
+  "version": 1,
+  "updatedAt": "2026-09-14",
+  "note": "repo-lint 0.2.0 起，封闭 schema 中以 x- 开头的字段被接受并由规则 R15 登记。字段在此登记后 R15 记为 info；未登记的 x- 字段为 warning（不阻塞）。演进路径：先以 x- 沉淀，下个契约版本转正为正式字段。",
+  "fields": []
+}

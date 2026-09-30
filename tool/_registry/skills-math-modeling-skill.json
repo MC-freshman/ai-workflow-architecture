@@ -1,0 +1,315 @@
+{
+  "schema": "ai-skill-catalog/v1",
+  "sourceId": "math-modeling-skill",
+  "snapshot": "snapshot-2026.08.31",
+  "skills": [
+    {
+      "id": "paper-math-modeling-skill-main",
+      "version": "1.0.0",
+      "sourceId": "math-modeling-skill",
+      "sourcePath": "SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "paper-skill",
+      "version": "1.0.0",
+      "sourceId": "math-modeling-skill",
+      "sourcePath": "dsh-plugin/math-modeling-agent/skills/math-modeling/使用指南.md",
+      "category": "skill"
+    },
+    {
+      "id": "paper-math-modeling",
+      "version": "1.0.0",
+      "sourceId": "math-modeling-skill",
+      "sourcePath": "dsh-plugin/math-modeling-agent/skills/math-modeling/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "paper-01",
+      "version": "1.0.0",
+      "sourceId": "math-modeling-skill",
+      "sourcePath": "dsh-plugin/math-modeling-agent/skills/math-modeling/assets/01-优化算法说明.md",
+      "category": "skill"
+    },
+    {
+      "id": "paper-02",
+      "version": "1.0.0",
+      "sourceId": "math-modeling-skill",
+      "sourcePath": "dsh-plugin/math-modeling-agent/skills/math-modeling/assets/02-预测类算法说明.md",
+      "category": "skill"
+    },
+    {
+      "id": "paper-03",
+      "version": "1.0.0",
+      "sourceId": "math-modeling-skill",
+      "sourcePath": "dsh-plugin/math-modeling-agent/skills/math-modeling/assets/03-评价类算法说明.md",
+      "category": "skill"
+    },
+    {
+      "id": "paper-04",
+      "version": "1.0.0",
+      "sourceId": "math-modeling-skill",
+      "sourcePath": "dsh-plugin/math-modeling-agent/skills/math-modeling/assets/04-图论与网络分析算法说明.md",
+      "category": "skill"
+    },
+    {
+      "id": "paper-05",
+      "version": "1.0.0",
+      "sourceId": "math-modeling-skill",
+      "sourcePath": "dsh-plugin/math-modeling-agent/skills/math-modeling/assets/05-统计分析与数据处理算法说明.md",
+      "category": "skill"
+    },
+    {
+      "id": "paper-06",
+      "version": "1.0.0",
+      "sourceId": "math-modeling-skill",
+      "sourcePath": "dsh-plugin/math-modeling-agent/skills/math-modeling/assets/06-综合类算法说明.md",
+      "category": "skill"
+    },
+    {
+      "id": "paper-07",
+      "version": "1.0.0",
+      "sourceId": "math-modeling-skill",
+      "sourcePath": "dsh-plugin/math-modeling-agent/skills/math-modeling/assets/07-机器学习算法说明.md",
+      "category": "skill"
+    },
+    {
+      "id": "paper-skill-references",
+      "version": "1.0.0",
+      "sourceId": "math-modeling-skill",
+      "sourcePath": "dsh-plugin/math-modeling-agent/skills/math-modeling/references/算法索引.md",
+      "category": "skill"
+    },
+    {
+      "id": "paper-subagent",
+      "version": "1.0.0",
+      "sourceId": "math-modeling-skill",
+      "sourcePath": "dsh-plugin/math-modeling-agent/skills/math-modeling/references/Subagent调度.md",
+      "category": "skill"
+    },
+    {
+      "id": "paper-skill-roles",
+      "version": "1.0.0",
+      "sourceId": "math-modeling-skill",
+      "sourcePath": "dsh-plugin/math-modeling-agent/skills/math-modeling/references/roles/建模手/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "paper-skill-references-202a0143",
+      "version": "1.0.0",
+      "sourceId": "math-modeling-skill",
+      "sourcePath": "dsh-plugin/math-modeling-agent/skills/math-modeling/references/roles/建模手/references/常见模式.md",
+      "category": "skill"
+    },
+    {
+      "id": "paper-skill-references-91d8b42f",
+      "version": "1.0.0",
+      "sourceId": "math-modeling-skill",
+      "sourcePath": "dsh-plugin/math-modeling-agent/skills/math-modeling/references/roles/建模手/references/工作流程.md",
+      "category": "skill"
+    },
+    {
+      "id": "paper-skill-references-0ad16641",
+      "version": "1.0.0",
+      "sourceId": "math-modeling-skill",
+      "sourcePath": "dsh-plugin/math-modeling-agent/skills/math-modeling/references/roles/建模手/references/建模设计理论.md",
+      "category": "skill"
+    },
+    {
+      "id": "paper-skill-references-cf2cee0a",
+      "version": "1.0.0",
+      "sourceId": "math-modeling-skill",
+      "sourcePath": "dsh-plugin/math-modeling-agent/skills/math-modeling/references/roles/建模手/references/前置合同.md",
+      "category": "skill"
+    },
+    {
+      "id": "paper-skill-references-b6289e68",
+      "version": "1.0.0",
+      "sourceId": "math-modeling-skill",
+      "sourcePath": "dsh-plugin/math-modeling-agent/skills/math-modeling/references/roles/建模手/references/质检清单.md",
+      "category": "skill"
+    },
+    {
+      "id": "paper-skill-roles-b665351a",
+      "version": "1.0.0",
+      "sourceId": "math-modeling-skill",
+      "sourcePath": "dsh-plugin/math-modeling-agent/skills/math-modeling/references/roles/编程手/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "paper-skill-references-f0a22ed0",
+      "version": "1.0.0",
+      "sourceId": "math-modeling-skill",
+      "sourcePath": "dsh-plugin/math-modeling-agent/skills/math-modeling/references/roles/编程手/references/工作流程.md",
+      "category": "skill"
+    },
+    {
+      "id": "paper-skill-references-9e0af5d8",
+      "version": "1.0.0",
+      "sourceId": "math-modeling-skill",
+      "sourcePath": "dsh-plugin/math-modeling-agent/skills/math-modeling/references/roles/编程手/references/质检清单.md",
+      "category": "skill"
+    },
+    {
+      "id": "paper-matlab",
+      "version": "1.0.0",
+      "sourceId": "math-modeling-skill",
+      "sourcePath": "dsh-plugin/math-modeling-agent/skills/math-modeling/references/roles/编程手/references/MATLAB规范.md",
+      "category": "skill"
+    },
+    {
+      "id": "paper-skill-roles-6aaa2c0e",
+      "version": "1.0.0",
+      "sourceId": "math-modeling-skill",
+      "sourcePath": "dsh-plugin/math-modeling-agent/skills/math-modeling/references/roles/论文手/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "paper-skill-references-696b9acf",
+      "version": "1.0.0",
+      "sourceId": "math-modeling-skill",
+      "sourcePath": "dsh-plugin/math-modeling-agent/skills/math-modeling/references/roles/论文手/references/工作流程.md",
+      "category": "skill"
+    },
+    {
+      "id": "paper-skill-references-1083b4c1",
+      "version": "1.0.0",
+      "sourceId": "math-modeling-skill",
+      "sourcePath": "dsh-plugin/math-modeling-agent/skills/math-modeling/references/roles/论文手/references/论文格式规范.md",
+      "category": "skill"
+    },
+    {
+      "id": "paper-skill-references-e19dbd17",
+      "version": "1.0.0",
+      "sourceId": "math-modeling-skill",
+      "sourcePath": "dsh-plugin/math-modeling-agent/skills/math-modeling/references/roles/论文手/references/写作规范.md",
+      "category": "skill"
+    },
+    {
+      "id": "paper-skill-references-6362945c",
+      "version": "1.0.0",
+      "sourceId": "math-modeling-skill",
+      "sourcePath": "dsh-plugin/math-modeling-agent/skills/math-modeling/references/roles/论文手/references/英文化工作流.md",
+      "category": "skill"
+    },
+    {
+      "id": "paper-skill-references-99963aee",
+      "version": "1.0.0",
+      "sourceId": "math-modeling-skill",
+      "sourcePath": "dsh-plugin/math-modeling-agent/skills/math-modeling/references/roles/论文手/references/章节模板.md",
+      "category": "skill"
+    },
+    {
+      "id": "paper-skill-references-cbfa93ad",
+      "version": "1.0.0",
+      "sourceId": "math-modeling-skill",
+      "sourcePath": "dsh-plugin/math-modeling-agent/skills/math-modeling/references/roles/论文手/references/自审框架.md",
+      "category": "skill"
+    },
+    {
+      "id": "paper-latex",
+      "version": "1.0.0",
+      "sourceId": "math-modeling-skill",
+      "sourcePath": "dsh-plugin/math-modeling-agent/skills/math-modeling/references/roles/论文手/references/LaTeX格式规范.md",
+      "category": "skill"
+    },
+    {
+      "id": "paper-docx",
+      "version": "1.0.0",
+      "sourceId": "math-modeling-skill",
+      "sourcePath": "dsh-plugin/math-modeling-agent/skills/math-modeling/tools/docx/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "paper-figure",
+      "version": "1.0.0",
+      "sourceId": "math-modeling-skill",
+      "sourcePath": "dsh-plugin/math-modeling-agent/skills/math-modeling/tools/figure/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "paper-latex-tools",
+      "version": "1.0.0",
+      "sourceId": "math-modeling-skill",
+      "sourcePath": "dsh-plugin/math-modeling-agent/skills/math-modeling/tools/latex/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "paper-paper-search",
+      "version": "1.0.0",
+      "sourceId": "math-modeling-skill",
+      "sourcePath": "dsh-plugin/math-modeling-agent/skills/math-modeling/tools/paper_search/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "paper-pdf",
+      "version": "1.0.0",
+      "sourceId": "math-modeling-skill",
+      "sourcePath": "dsh-plugin/math-modeling-agent/skills/math-modeling/tools/pdf/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "paper-xlsx",
+      "version": "1.0.0",
+      "sourceId": "math-modeling-skill",
+      "sourcePath": "dsh-plugin/math-modeling-agent/skills/math-modeling/tools/xlsx/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "paper-skill-roles-f629d658",
+      "version": "1.0.0",
+      "sourceId": "math-modeling-skill",
+      "sourcePath": "references/roles/建模手/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "paper-docx-tools",
+      "version": "1.0.0",
+      "sourceId": "math-modeling-skill",
+      "sourcePath": "tools/docx/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "paper-figure-tools",
+      "version": "1.0.0",
+      "sourceId": "math-modeling-skill",
+      "sourcePath": "tools/figure/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "paper-latex-tools-0b748672",
+      "version": "1.0.0",
+      "sourceId": "math-modeling-skill",
+      "sourcePath": "tools/latex/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "paper-paper-search-tools",
+      "version": "1.0.0",
+      "sourceId": "math-modeling-skill",
+      "sourcePath": "tools/paper_search/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "paper-pdf-tools",
+      "version": "1.0.0",
+      "sourceId": "math-modeling-skill",
+      "sourcePath": "tools/pdf/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "paper-xlsx-tools",
+      "version": "1.0.0",
+      "sourceId": "math-modeling-skill",
+      "sourcePath": "tools/xlsx/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "visualization-layout",
+      "version": "1.1.0",
+      "sourceId": "math-modeling-skill-main",
+      "sourcePath": "tools/figure",
+      "category": "visual-quality"
+    }
+  ]
+}

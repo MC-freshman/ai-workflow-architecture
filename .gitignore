@@ -1,0 +1,108 @@
+# E:\ai 治理文本层仓库 — 白名单式忽略（默认全排除）
+#
+# 为什么是白名单而不是"列出要排除的"：E:\ai 实测约 36.9 GB，里面是各运行平台的
+# 客户端二进制、runtime 产物、凭据、缓存、日志、密封脚本环境与软件本体。
+# 这些**一律不进版本历史**（BP-1：仓内只放可冻结、可跨平台共享的文本）。
+# 新增目录默认被排除，只有下面显式放行的路径才纳入历史。
+
+/*
+
+!/.gitignore
+!/.gitattributes
+
+# ── 根级治理文档（AGENTS / 系统提示词 / 总手册 / 总框架 / 调用适配规范 / 赛后台账）
+!/AGENTS.md
+!/AI_ARCHITECTURE_SYSTEM_PROMPT.md
+!/agentic-workflow-master-manual.md
+!/HANDOFF.md
+!/invocation-adapters-spec.md
+!/post-competition-closeout.md
+
+# ── 架构版本文档区（含 架构基本原则.md = BP-1~BP-4 权威文本）
+!/versions/
+
+# ── 三共享仓库（tool 工作流 / agent 专家 / software 软件配方）
+!/tool/
+!/agent/
+!/software/
+
+# ── 六个运行平台目录：runtime 与本体仍整体排除，bridge/ 接入面文本层自 2026-09-19 起放行
+#    理由 1：平台配置、凭据、缓存、日志、运行产物按 BP-4 划界属于"归平台"的内容（runtime/ 不入仓）；
+#    理由 2：本仓在根级，任何平台都不得用 git 操作回滚**别的平台**的文件（红线 8 不变）——
+#            本仓由用户与治理会话管理，是用户层的灾备保险，不是平台间互改通道。
+#    变更缘由（2.0-R 教训）：平台客户端本体装在 E:\ai\<平台>\ 内，客户端升级/重装会清空
+#    安装目录，bridge/（接入面）随之灭失（qoder 2026-09-19 事故，先例 E:\ai\qoder\.git 同殁）。
+#    经用户授权，各平台 bridge/（纯文本：配置/能力声明/运维脚本，审扫无凭据无产物）
+#    与顶层 bridge.json 纳入本仓——再灭失即 git checkout 可恢复。
+!/zcode/
+/zcode/*
+!/zcode/bridge/
+!/zcode/bridge.json
+!/qoder/
+/qoder/*
+!/qoder/bridge/
+!/qoder/bridge.json
+!/codex/
+/codex/*
+!/codex/bridge/
+!/codex/bridge.json
+!/doubao/
+/doubao/*
+!/doubao/bridge/
+!/doubao/bridge.json
+!/workbuddy/
+/workbuddy/*
+!/workbuddy/bridge/
+!/workbuddy/bridge.json
+!/dsh/
+/dsh/*
+!/dsh/bridge/
+!/dsh/bridge.json
+
+# ── 平台侧 provider 代码（BP-7 例外，2026-09-27 X-P2 裁定）：被生产 config 以绝对路径引用的
+#    平台运行位代码随仓保护（先例 b1c74165 的 session-process-windows.py），一次性维护脚本
+#    不入库（已有 inbox/archive 镜像 + 逐文件哈希）。其余 runtime 证据仍整体排除。
+!/zcode/runtime/
+/zcode/runtime/*
+!/zcode/runtime/software/
+/zcode/runtime/software/*
+!/zcode/runtime/software/session-process-windows.py
+!/qoder/runtime/
+/qoder/runtime/*
+!/qoder/runtime/software/
+/qoder/runtime/software/*
+!/qoder/runtime/software/credential-provider-windows.py
+!/qoder/runtime/software/session-process-windows.py
+
+# ── 静态文档站（Docusaurus 3.10；2026-09-27 经用户批准放行，只放文本与配置）
+#    依赖、缓存与生成物由 docs-site/.gitignore 自行排除（node_modules、.docusaurus、
+#    build、/docs/、/generated/、/static/img/synced/），此处只解除顶层目录级排除。
+!/docs-site/
+
+# ── inbox 与用户内容区同样排除：/inbox/  /ai学习笔记/  /.zcode/
+
+# ── 放行路径内部的例外（这些目录被显式放行，但其中的非共享文本仍须排除）
+
+# 软件本体：phpStudy_64（曾 546 MiB / 1178 文件，含真机 MySQL datadir 与在用账号记录）
+# 已于 2026-09-19 实勘灭失、09-22 二次确认（见 架构3.0.0-文件地图.md 附2 KNOWN_ABSENT）；
+# 规则保留仅为防止旧副本回流进版本历史——绝不入库。
+software/phpStudy_64/
+
+# 任何位置的字节码缓存与临时产物
+**/__pycache__/
+**/*.pyc
+*.tmp
+*.bak~
+
+# 兜底：即便将来放行了新目录，这些扩展名也不该进来
+*.exe
+*.dll
+*.so
+*.pyd
+*.msi
+*.zip
+*.7z
+*.rar
+*.iso
+*.sqlite
+*.db

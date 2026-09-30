@@ -1,0 +1,77 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:ai:software-admin:v1",
+  "title": "ai-software-admin/v1 - the read-facing connector entries that are not an engine dispatch",
+  "description": "One JSON object in, one JSON object out, same envelope discipline as the published ai-software-gateway-adapter/v1. This file exists because `software.list`, `software.describe`, `software.health`, `software.artifact` and `software.evidence` are asked by a platform or a human, never by a run stage: the engine keeps speaking only the three published shapes, so adopting the connector asks nothing of wf-runner. It adds no error code - the enum is $ref'd from the published contract.",
+  "type": "object",
+  "oneOf": [
+    { "$ref": "#/$defs/adminRequest" },
+    { "$ref": "#/$defs/adminResponse" }
+  ],
+  "$defs": {
+    "adminRequest": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema", "kind", "operation"],
+      "properties": {
+        "schema": { "const": "ai-software-admin/v1" },
+        "kind": { "const": "request" },
+        "operation": {
+          "enum": ["software.list", "software.describe", "software.health",
+                   "software.artifact", "software.evidence"]
+        },
+        "softwareId": { "$ref": "urn:ai:software-gateway-adapter:v1#/$defs/id" },
+        "softwareVersion": { "type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$" },
+        "sequence": { "type": "integer", "minimum": 1 },
+        "path": { "type": "string", "minLength": 1 },
+        "withSchemas": { "type": "boolean" },
+        "kindOfRecord": { "enum": ["call", "session"] }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": { "operation": { "enum": ["software.describe", "software.artifact", "software.evidence"] } },
+            "required": ["operation"]
+          },
+          "then": { "anyOf": [{ "required": ["softwareId"] }, { "required": ["sequence"] }] }
+        }
+      ]
+    },
+    "adminResponse": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schema", "kind", "ok", "operation"],
+      "properties": {
+        "schema": { "const": "ai-software-admin/v1" },
+        "kind": { "const": "response" },
+        "ok": { "type": "boolean" },
+        "operation": {
+          "enum": ["software.list", "software.describe", "software.health",
+                   "software.artifact", "software.evidence"]
+        },
+        "result": { "type": "object" },
+        "error": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["code", "message", "retryable"],
+          "properties": {
+            "code": { "$ref": "urn:ai:software-gateway-adapter:v1#/$defs/errorCode" },
+            "message": { "type": "string", "minLength": 1 },
+            "retryable": { "type": "boolean" },
+            "named": { "type": "object" }
+          }
+        }
+      },
+      "allOf": [
+        {
+          "if": { "properties": { "ok": { "const": true } }, "required": ["ok"] },
+          "then": { "required": ["result"], "not": { "required": ["error"] } }
+        },
+        {
+          "if": { "properties": { "ok": { "const": false } }, "required": ["ok"] },
+          "then": { "required": ["error"], "not": { "required": ["result"] } }
+        }
+      ]
+    }
+  }
+}

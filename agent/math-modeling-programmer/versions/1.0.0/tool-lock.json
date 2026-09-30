@@ -1,0 +1,7 @@
+{
+  "schema": "ai-tool-lock/v1",
+  "workflows": {
+    "math-modeling-programmer": "1.0.0"
+  },
+  "tools": []
+}

@@ -1,0 +1,316 @@
+{
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "$id": "urn:ai:software-session:v1",
+ "title": "ai-software-session/v1 - long-lived desktop/MCP session contract for the 3.2 connector",
+ "description": "One JSON object in, one out, same envelope discipline as the published ai-software-gateway-adapter/v1. It is the only 3.2 shape that was genuinely missing: the published contract already covers call, inventory and instance claim/release/status. Error codes are $ref'd from the published enum rather than copied, so this file adds no new code: what the 3.2 plan called INTERACTIVE_REQUIRED is a session STATE here, and a mediated call that needs a human is already CONSENT_REQUIRED in the published enum.",
+ "type": "object",
+ "oneOf": [
+  {
+   "$ref": "#/$defs/sessionRequest"
+  },
+  {
+   "$ref": "#/$defs/sessionResponse"
+  }
+ ],
+ "$defs": {
+  "sessionRequest": {
+   "type": "object",
+   "additionalProperties": false,
+   "required": [
+    "schema",
+    "kind",
+    "operation",
+    "softwareId",
+    "softwareVersion",
+    "sessionKey",
+    "timeoutSeconds"
+   ],
+   "properties": {
+    "schema": {
+     "const": "ai-software-session/v1"
+    },
+    "kind": {
+     "const": "request"
+    },
+    "operation": {
+     "enum": [
+      "open",
+      "status",
+      "close"
+     ]
+    },
+    "softwareId": {
+     "$ref": "urn:ai:software-gateway-adapter:v1#/$defs/id"
+    },
+    "softwareVersion": {
+     "type": "string",
+     "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"
+    },
+    "sessionKey": {
+     "$ref": "urn:ai:software-gateway-adapter:v1#/$defs/id"
+    },
+    "holder": {
+     "$ref": "urn:ai:software-gateway-adapter:v1#/$defs/id"
+    },
+    "runId": {
+     "$ref": "urn:ai:software-gateway-adapter:v1#/$defs/id"
+    },
+    "profile": {
+     "$ref": "urn:ai:software-gateway-adapter:v1#/$defs/id"
+    },
+    "consentToken": {
+     "type": [
+      "string",
+      "null"
+     ]
+    },
+    "timeoutSeconds": {
+     "type": "integer",
+     "minimum": 1,
+     "maximum": 3600
+    },
+    "credentialReferences": {
+     "type": "array",
+     "uniqueItems": true,
+     "items": {
+      "type": "string",
+      "pattern": "^reference:[A-Za-z0-9._-]+$"
+     }
+    },
+    "attachPid": {
+     "type": "integer",
+     "minimum": 1,
+     "description": "D-90: attach to an already-running process the human started, by OS pid. Present = attach path (the connector must verify liveness before claiming the session and must refuse with a structured error when the pid is gone or not attachable); absent = provider launch path. Never fabricated by the connector."
+    }
+   },
+   "allOf": [
+    {
+     "if": {
+      "properties": {
+       "operation": {
+        "const": "open"
+       }
+      },
+      "required": [
+       "operation"
+      ]
+     },
+     "then": {
+      "required": [
+       "profile"
+      ]
+     }
+    }
+   ]
+  },
+  "sessionResponse": {
+   "type": "object",
+   "additionalProperties": false,
+   "required": [
+    "schema",
+    "kind",
+    "ok",
+    "state"
+   ],
+   "properties": {
+    "schema": {
+     "const": "ai-software-session/v1"
+    },
+    "kind": {
+     "const": "response"
+    },
+    "ok": {
+     "type": "boolean"
+    },
+    "state": {
+     "enum": [
+      "SESSION_READY",
+      "INTERACTIVE_REQUIRED",
+      "SESSION_BUSY",
+      "SESSION_CLOSED",
+      "NOT_INSTALLED"
+     ]
+    },
+    "sessionKey": {
+     "$ref": "urn:ai:software-gateway-adapter:v1#/$defs/id"
+    },
+    "endpoint": {
+     "type": "object",
+     "additionalProperties": false,
+     "required": [
+      "host",
+      "port"
+     ],
+     "properties": {
+      "host": {
+       "type": "string",
+       "minLength": 1
+      },
+      "port": {
+       "type": "integer",
+       "minimum": 1,
+       "maximum": 65535
+      },
+      "transport": {
+       "enum": [
+        "mcp-stdio",
+        "mcp-http"
+       ]
+      }
+     }
+    },
+    "interactivePrompt": {
+     "type": "object",
+     "additionalProperties": false,
+     "required": [
+      "reason",
+      "instructions"
+     ],
+     "properties": {
+      "reason": {
+       "type": "string",
+       "minLength": 1
+      },
+      "instructions": {
+       "type": "array",
+       "minItems": 1,
+       "items": {
+        "type": "string",
+        "minLength": 1
+       }
+      }
+     }
+    },
+    "evidencePath": {
+     "type": "string",
+     "pattern": "^evidence/software-sessions/[0-9]+/request\\.json$"
+    },
+    "error": {
+     "type": "object",
+     "additionalProperties": false,
+     "required": [
+      "code",
+      "message",
+      "retryable"
+     ],
+     "properties": {
+      "code": {
+       "$ref": "urn:ai:software-gateway-adapter:v1#/$defs/errorCode"
+      },
+      "message": {
+       "type": "string",
+       "minLength": 1
+      },
+      "retryable": {
+       "type": "boolean"
+      },
+      "named": {
+       "type": "object"
+      }
+     }
+    }
+   },
+   "allOf": [
+    {
+     "if": {
+      "properties": {
+       "ok": {
+        "const": true
+       }
+      },
+      "required": [
+       "ok"
+      ]
+     },
+     "then": {
+      "not": {
+       "required": [
+        "error"
+       ]
+      }
+     }
+    },
+    {
+     "if": {
+      "properties": {
+       "ok": {
+        "const": false
+       }
+      },
+      "required": [
+       "ok"
+      ]
+     },
+     "then": {
+      "required": [
+       "error"
+      ],
+      "not": {
+       "required": [
+        "endpoint"
+       ]
+      }
+     }
+    },
+    {
+     "if": {
+      "properties": {
+       "state": {
+        "const": "INTERACTIVE_REQUIRED"
+       }
+      },
+      "required": [
+       "state"
+      ]
+     },
+     "then": {
+      "required": [
+       "interactivePrompt"
+      ],
+      "properties": {
+       "ok": {
+        "const": true
+       }
+      }
+     }
+    },
+    {
+     "if": {
+      "properties": {
+       "state": {
+        "const": "SESSION_READY"
+       }
+      },
+      "required": [
+       "state"
+      ]
+     },
+     "then": {
+      "required": [
+       "sessionKey"
+      ]
+     }
+    },
+    {
+     "if": {
+      "properties": {
+       "state": {
+        "const": "SESSION_BUSY"
+       }
+      },
+      "required": [
+       "state"
+      ]
+     },
+     "then": {
+      "properties": {
+       "ok": {
+        "const": false
+       }
+      }
+     }
+    }
+   ]
+  }
+ }
+}

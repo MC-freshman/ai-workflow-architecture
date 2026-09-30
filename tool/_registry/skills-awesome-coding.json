@@ -1,0 +1,329 @@
+{
+  "schema": "ai-skill-catalog/v1",
+  "sourceId": "awesome-coding",
+  "snapshot": "snapshot-2026.08.31",
+  "skills": [
+    {
+      "id": "coding-api-design",
+      "version": "1.0.0",
+      "sourceId": "awesome-coding",
+      "sourcePath": "skills/api-design/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "coding-chinese-commit",
+      "version": "1.0.0",
+      "sourceId": "awesome-coding",
+      "sourcePath": "skills/chinese-commit/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "coding-ci-cd-pipeline",
+      "version": "1.0.0",
+      "sourceId": "awesome-coding",
+      "sourcePath": "skills/ci-cd-pipeline/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "coding-cocos-creator",
+      "version": "1.0.0",
+      "sourceId": "awesome-coding",
+      "sourcePath": "skills/cocos-creator/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "coding-cocos-creator-adaptation",
+      "version": "1.0.0",
+      "sourceId": "awesome-coding",
+      "sourcePath": "skills/cocos-creator-adaptation/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "coding-cocos-creator-bundle",
+      "version": "1.0.0",
+      "sourceId": "awesome-coding",
+      "sourcePath": "skills/cocos-creator-bundle/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "coding-cocos-creator-drawcall",
+      "version": "1.0.0",
+      "sourceId": "awesome-coding",
+      "sourcePath": "skills/cocos-creator-drawcall/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "coding-cocos-creator-hotupdate",
+      "version": "1.0.0",
+      "sourceId": "awesome-coding",
+      "sourcePath": "skills/cocos-creator-hotupdate/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "coding-cocos-creator-tween-anim",
+      "version": "1.0.0",
+      "sourceId": "awesome-coding",
+      "sourcePath": "skills/cocos-creator-tween-anim/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "coding-cocos-creator-ui-list",
+      "version": "1.0.0",
+      "sourceId": "awesome-coding",
+      "sourcePath": "skills/cocos-creator-ui-list/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "coding-cocos2dx-lua",
+      "version": "1.0.0",
+      "sourceId": "awesome-coding",
+      "sourcePath": "skills/cocos2dx-lua/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "coding-code-review-self",
+      "version": "1.0.0",
+      "sourceId": "awesome-coding",
+      "sourcePath": "skills/code-review-self/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "coding-concurrency-safety",
+      "version": "1.0.0",
+      "sourceId": "awesome-coding",
+      "sourcePath": "skills/concurrency-safety/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "coding-core-discipline",
+      "version": "1.0.0",
+      "sourceId": "awesome-coding",
+      "sourcePath": "skills/core-discipline/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "coding-database-safety",
+      "version": "1.0.0",
+      "sourceId": "awesome-coding",
+      "sourcePath": "skills/database-safety/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "coding-docker-best-practices",
+      "version": "1.0.0",
+      "sourceId": "awesome-coding",
+      "sourcePath": "skills/docker-best-practices/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "coding-domestic-stack",
+      "version": "1.0.0",
+      "sourceId": "awesome-coding",
+      "sourcePath": "skills/domestic-stack/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "coding-error-handling",
+      "version": "1.0.0",
+      "sourceId": "awesome-coding",
+      "sourcePath": "skills/error-handling/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "coding-frontend-best-practices",
+      "version": "1.0.0",
+      "sourceId": "awesome-coding",
+      "sourcePath": "skills/frontend-best-practices/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "coding-game-assets-memory",
+      "version": "1.0.0",
+      "sourceId": "awesome-coding",
+      "sourcePath": "skills/game-assets-memory/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "coding-game-math",
+      "version": "1.0.0",
+      "sourceId": "awesome-coding",
+      "sourcePath": "skills/game-math/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "coding-game-netcode",
+      "version": "1.0.0",
+      "sourceId": "awesome-coding",
+      "sourcePath": "skills/game-netcode/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "coding-game-performance",
+      "version": "1.0.0",
+      "sourceId": "awesome-coding",
+      "sourcePath": "skills/game-performance/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "coding-gameplay-architecture",
+      "version": "1.0.0",
+      "sourceId": "awesome-coding",
+      "sourcePath": "skills/gameplay-architecture/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "coding-go-idioms",
+      "version": "1.0.0",
+      "sourceId": "awesome-coding",
+      "sourcePath": "skills/go-idioms/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "coding-godot-gdscript",
+      "version": "1.0.0",
+      "sourceId": "awesome-coding",
+      "sourcePath": "skills/godot-gdscript/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "coding-input-validation",
+      "version": "1.0.0",
+      "sourceId": "awesome-coding",
+      "sourcePath": "skills/input-validation/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "coding-integration-testing",
+      "version": "1.0.0",
+      "sourceId": "awesome-coding",
+      "sourcePath": "skills/integration-testing/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "coding-large-repo-refactor",
+      "version": "1.0.0",
+      "sourceId": "awesome-coding",
+      "sourcePath": "skills/large-repo-refactor/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "coding-legacy-safe-edit",
+      "version": "1.0.0",
+      "sourceId": "awesome-coding",
+      "sourcePath": "skills/legacy-safe-edit/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "coding-naming-things",
+      "version": "1.0.0",
+      "sourceId": "awesome-coding",
+      "sourcePath": "skills/naming-things/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "coding-node-best-practices",
+      "version": "1.0.0",
+      "sourceId": "awesome-coding",
+      "sourcePath": "skills/node-best-practices/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "coding-performance-profiling",
+      "version": "1.0.0",
+      "sourceId": "awesome-coding",
+      "sourcePath": "skills/performance-profiling/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "coding-pr-description",
+      "version": "1.0.0",
+      "sourceId": "awesome-coding",
+      "sourcePath": "skills/pr-description/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "coding-python-idioms",
+      "version": "1.0.0",
+      "sourceId": "awesome-coding",
+      "sourcePath": "skills/python-idioms/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "coding-requirement-delivery",
+      "version": "1.0.0",
+      "sourceId": "awesome-coding",
+      "sourcePath": "skills/requirement-delivery/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "coding-rust-safety",
+      "version": "1.0.0",
+      "sourceId": "awesome-coding",
+      "sourcePath": "skills/rust-safety/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "coding-secrets-handling",
+      "version": "1.0.0",
+      "sourceId": "awesome-coding",
+      "sourcePath": "skills/secrets-handling/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "coding-security-review",
+      "version": "1.0.0",
+      "sourceId": "awesome-coding",
+      "sourcePath": "skills/security-review/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "coding-shell-scripting-safe",
+      "version": "1.0.0",
+      "sourceId": "awesome-coding",
+      "sourcePath": "skills/shell-scripting-safe/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "coding-systematic-debugging",
+      "version": "1.0.0",
+      "sourceId": "awesome-coding",
+      "sourcePath": "skills/systematic-debugging/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "coding-test-data-management",
+      "version": "1.0.0",
+      "sourceId": "awesome-coding",
+      "sourcePath": "skills/test-data-management/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "coding-test-driven",
+      "version": "1.0.0",
+      "sourceId": "awesome-coding",
+      "sourcePath": "skills/test-driven/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "coding-unity-csharp",
+      "version": "1.0.0",
+      "sourceId": "awesome-coding",
+      "sourcePath": "skills/unity-csharp/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "coding-unreal-cpp",
+      "version": "1.0.0",
+      "sourceId": "awesome-coding",
+      "sourcePath": "skills/unreal-cpp/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "coding-writing-docs",
+      "version": "1.0.0",
+      "sourceId": "awesome-coding",
+      "sourcePath": "skills/writing-docs/SKILL.md",
+      "category": "skill"
+    }
+  ]
+}

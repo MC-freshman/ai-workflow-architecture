@@ -1,0 +1,18 @@
+{
+  "schema": "ai-governance-source/v1",
+  "authorSession": "qoder",
+  "derivedFrom": "visualization-qa@1.2.1",
+  "supersedes": "1.2.1",
+  "releaseScope": "Architecture 3.1.0 step T-P8: the visualization skeleton gains scenario selection over the three skills its expert already pins. Stage ids stay as they were; requiredStages names the first stage so no scenario can drop it.",
+  "requiredStages": [
+    "execute"
+  ],
+  "scenarios": [
+    "axes",
+    "citation",
+    "color",
+    "export",
+    "standard"
+  ],
+  "openDeferred": []
+}

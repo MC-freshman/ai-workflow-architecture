@@ -1,0 +1,17 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "required": ["inputFile", "displayFilter"],
+  "description": "按显示过滤器筛选捕获文件，固定 -T json 输出；displayFilter 必填",
+  "properties": {
+    "inputFile": { "type": "string", "description": "本地 pcap/pcapng 文件路径（-r）" },
+    "displayFilter": { "type": "string", "description": "Wireshark 显示过滤器（-Y，必填）", "examples": ["http.request.method == GET", "usb.capdata"] },
+    "protocolFilterTop": { "type": "string", "description": "-J 顶层协议过滤" },
+    "packetCount": { "type": "integer", "minimum": 1 },
+    "packetDetails": { "type": "boolean", "default": false },
+    "hexBytes": { "type": "boolean", "default": false },
+    "twoPass": { "type": "boolean", "default": false },
+    "outputFile": { "type": "string", "description": "-w 将过滤后的包写入新文件（不写则结果走 stdout JSON）" }
+  },
+  "additionalProperties": false
+}

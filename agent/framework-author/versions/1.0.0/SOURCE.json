@@ -1,0 +1,13 @@
+{
+  "schema": "ai-governance-source/v1",
+  "authorSession": "qoder",
+  "derivedFrom": "governance:agents.md + versions/架构基本原则.md + tool/wf-runner@0.10.1 engine readings + this round's ledgers P1-P4",
+  "supersedes": null,
+  "releaseScope": "3.3.0 P5 new expert for updating this architecture itself. Rule text is quoted from this repo's governance documents; platform facts are this round's measurements. The ECC pool was originally proposed as this domain's source, and measured it contributes only 旁证: 38 hits of which 6 are placeholders and 16 Japanese, with zero coverage of this repo's release, adoption and pointer rules (D-91).",
+  "openDeferred": [
+    "No Pack is pinned by design (R17): the eight scenario cards are the whole delivery.",
+    "Adoption is a separate, authorised act; this release changes no pointer.",
+    "windowProfile=256k here is the conservative default, not an attested ceiling."
+  ],
+  "previousSource": null
+}

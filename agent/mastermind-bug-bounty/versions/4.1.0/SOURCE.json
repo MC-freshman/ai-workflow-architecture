@@ -1,0 +1,12 @@
+{
+  "schema": "ai-governance-source/v1",
+  "authorSession": "qoder",
+  "derivedFrom": "mastermind-bug-bounty@4.0.0",
+  "supersedes": "4.0.1",
+  "releaseScope": "3.3.0 P4: the Agent locks 26 more Skills — five routing cards and the 21 upstream pentest skills they route into — and moves its main workflow pin to 3.1.0. Prompt and policy bytes are unchanged. The delivery per stage stays inside the R17 budget because locking a Skill is not delivering it: only the routing cards a scenario names are.",
+  "openDeferred": [
+    "No current pointer moved; adoption is a separate act per platform.",
+    "The upstream Skills carry a novel- id prefix that does not describe them (D-88) and are duplicated byte-for-byte (D-89)."
+  ],
+  "previousSource": "agent/mastermind-bug-bounty/versions/4.0.1/SOURCE.json"
+}

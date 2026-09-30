@@ -1,0 +1,11 @@
+**.pyc
+__pycache__/
+
+*.zip
+temp_release/
+
+CLAUDE.md
+
+examples
+
+docs

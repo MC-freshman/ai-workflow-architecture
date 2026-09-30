@@ -1,0 +1,7 @@
+interface:
+  display_name: "Math Modeling Programmer"
+  short_description: "数模竞赛数据、算法、验证与绘图"
+  default_prompt: "使用 $math-modeling-programmer 协助我完成一次可复现的数模编程任务。"
+
+policy:
+  allow_implicit_invocation: true

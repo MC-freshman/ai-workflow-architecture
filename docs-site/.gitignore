@@ -1,0 +1,30 @@
+# 依赖与缓存（不可入库件，按 BP-7 走"重建配方 + 逐文件哈希"而不是进 git）
+node_modules/
+.docusaurus/
+build/
+.cache/
+npm-debug.log*
+.npm-install.log
+
+# 生成物：事实来源是 data/docs-manifest.json + content/ + E:\ai 原文
+/docs/
+/generated/
+/static/img/synced/
+/data/source-lock.json
+/data/inventory.json
+/data/generated-report.json
+/data/redact-report.json
+/data/conform-report.json
+/data/build-*.json
+
+# 平台/编辑器
+.DS_Store
+Thumbs.db
+*.swp
+.idea/
+.vscode/
+
+# 本地运行日志（不是证据件，需要留证时写到本平台的 runtime/maintenance 台账里）
+.serve.log
+.build-*.log
+.conform-*.log

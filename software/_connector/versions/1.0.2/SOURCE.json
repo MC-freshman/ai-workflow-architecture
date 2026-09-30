@@ -1,0 +1,28 @@
+{
+ "schema": "ai-software-connector-source/v1",
+ "authorSession": "qoder",
+ "derivedFrom": "software/_connector/versions/1.0.1",
+ "supersedes": "1.0.1",
+ "releaseScope": "Architecture 3.2, step P4a follow-up (one defect, three vectors): a connector refusal must name its cause without quoting a caller-supplied string. Found while staging the P4a readings for commit - the sentinel value was sitting inside a refusal detail in P4a-readback.json. No engine byte, no contract byte, no recipe touched.",
+ "changes": [
+  "check_credentials: a rejected reference is reported by position, length and reason instead of by value, because the rejected string is precisely what a secret looks like when a caller gets it wrong",
+  "validate_arguments: the refusal carries the failing rule and the JSON pointer, and no longer forwards the validator message, which quotes the offending instance",
+  "the credential provider error stream is withheld and the exit code is the whole report - an error stream is where a helper might print the value while explaining why it could not hand it over"
+ ],
+ "unchanged": [
+  "every other behaviour: resolution, attestation (snapshot-only, never --tools), the eight-step chain, locks, idempotency, sessions, artifacts, the materialization mechanism itself, and the three published engine-facing shapes",
+  "1.0.0 and 1.0.1 remain published and immutable"
+ ],
+ "openDeferred": [
+  "the same quoting habit is worth a look in the recipe-facing refusals that echo a placeholder or a path; those carry no caller secret today, and no change was made there without a test that proves one is needed",
+  "D-88 stands: a component release carries no manifest any published schema constrains, so \"passes its own schema\" remains self-certification until the contract generation takes it"
+ ],
+ "releaseStatus": "published",
+ "publishedAt": "2026-09-24",
+ "publishedBy": "qoder, architecture 3.2 round, step P4a",
+ "pointerPolicy": "software/_connector/current.json moves 1.0.1 -> 1.0.2, same discipline as the 1.0.1 move and carrying the same registered deviation: this resource has no platform config reader yet. 1.0.1 is left in place because it holds a value-echoing refusal.",
+ "selftest": {
+  "credential": "qoder/runtime/maintenance/20260923-3.2.0/P4a-credential/p4a-selftest.py (41 cells, three of them new redaction assertions that fail against 1.0.1 and pass here)",
+  "regression": "the 3.2 P3 battery rerun against 1.0.2"
+ }
+}

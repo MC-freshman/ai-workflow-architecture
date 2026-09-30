@@ -1,0 +1,96 @@
+{
+  "schema": "ai-platform-capabilities/v1",
+  "platform": "qoder",
+  "attestedAt": "2026-09-18",
+  "checks": {
+    "python-runtime": true,
+    "runner-dependency-resolution": true,
+    "filesystem-platform-scoped-write": true,
+    "shared-repo-read-only-access": true,
+    "shell-command-execution": true,
+    "runner-protocol-prepare": true,
+    "prompt-stage-claim": true,
+    "prompt-stage-submit": true,
+    "idempotent-replay-and-revision-guard": true,
+    "terminal-stop-with-evidence": true,
+    "script-environment-isolation-jail": true,
+    "renderer-matplotlib-agg-in-jail": true
+  },
+  "permissionAdapters": [
+    {
+      "filesystem": "project-scoped",
+      "network": "deny",
+      "process": "allowlisted-only",
+      "evidence": "Prompt stages run in this session with writes confined to qoder runtime (engine enforces runsRoot inside platformRoot); network=deny and process=allowlisted-only are session self-restraint on the prompt face, not kernel enforcement. Script stages are kernel-forced (WSL2 + Landlock ABI 3 jail, see the shared-read-only adapter). Re-attested on wf-runner 0.7.6 under qoder/runtime/maintenance/2.0-B/."
+    },
+    {
+      "filesystem": "shared-read-only-platform-report-write",
+      "network": "deny",
+      "process": "none",
+      "evidence": "qoder-side D04 grant (user, 2026-09-18): bridge/backends/wsl2-ubuntu.json declares sharedReadOnlyBinds tool + agent; the 0.7.6 injection-path jail check in qoder/runtime/maintenance/2.0-B/ proves /shared/tool and /shared/agent are visible and write-denied inside the jail, and repo-lint 0.3.0 re-probes them write-denied before every live scan."
+    }
+  ],
+  "profiles": {
+    "renderer": {
+      "adapters": [
+        "matplotlib-adapter-first"
+      ],
+      "requires": [
+        "matplotlib"
+      ]
+    }
+  },
+  "descriptor": {
+    "schema": "ai-platform-descriptor/v2",
+    "platformId": "qoder",
+    "protocols": [
+      "ai-run-protocol/v1.1",
+      "ai-run-protocol/v1.2"
+    ],
+    "operations": [
+      "prepare",
+      "next",
+      "submit",
+      "status",
+      "stop"
+    ],
+    "actions": {
+      "prompt": {
+        "supported": true,
+        "enforcement": "advisory"
+      },
+      "script": {
+        "supported": true,
+        "enforcement": "kernel"
+      },
+      "peer": {
+        "supported": false,
+        "reason": "NO_VERIFIED_DISPATCHER"
+      }
+    },
+    "profiles": {
+      "renderer": {
+        "declared": true,
+        "adapters": [
+          "matplotlib-adapter-first"
+        ],
+        "requires": [
+          "matplotlib"
+        ]
+      }
+    },
+    "enforcement": "mediated",
+    "recovery": [
+      "replay",
+      "process-reconcile"
+    ],
+    "x-note": "Declared so CAP-01 (plan_capability_gap) is actually exercised on qoder: 2.0-A reported that a v1-only descriptor makes the faceted pre-check inert on the second reference platform. Facets are per-action and not summable -- prompt=advisory must not be read as script=advisory, and script=kernel must not be read as the whole platform being kernel-enforced."
+  },
+  "declaredAbsent": {
+    "peerDispatch": "Pilot surface as authored 2026-09-18: no peerDispatcherModule in qoder-config-rc076.json yet, descriptor.actions.peer = supported:false / NO_VERIFIED_DISPATCHER. qoder certifies this face on its own (zcode's V6 evidence is not portable); it flips to declared-present only after qoder's own V6-equivalent child-run acceptance goes green in qoder/runtime/maintenance/2.0-B/.",
+    "mcp-tool-surface": "Qoder client speaks MCP but no workflow service points at tool/agent -> not declared.",
+    "math-solver-chain": "Not validated on qoder; no delivery or freeze claim. The sealed venv pins only what published scripts import (matplotlib/numpy/PIL/fitz + the runner lock); scipy-class solvers would push the per-file inventory past the 120s verify budget.",
+    "hostEnvironmentManifest": "Not declared: qoder runs cli.py on the shared host interpreter (Windows python 3.9.13) and never built a pinned host inventory, so verify_host and the controllerSha256 cross-check stay inactive here. Consequence stated honestly: 0.7.6 does not prove to the engine that this platform accepted exactly this isolation controller bytes. qoder's controller hash is nevertheless recorded in qoder/runtime/maintenance/2.0-B/ as an observation."
+  },
+  "notes": "PILOT capability surface for architecture 2.0 candidate wf-runner 0.7.6 (qoder self-certification, item 5). Production capabilities.json and qoder-config.json (runner 0.6.0) stay untouched until the closing wave. checks must all be true for prepare to pass at all, so unverified faces live in declaredAbsent / descriptor.actions.peer instead of being added as false."
+}

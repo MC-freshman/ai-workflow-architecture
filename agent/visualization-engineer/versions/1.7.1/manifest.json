@@ -1,0 +1,30 @@
+{
+  "schema": "ai-agent/v2",
+  "id": "visualization-engineer",
+  "displayName": "可视化工程专家",
+  "version": "1.7.1",
+  "role": "负责真实渲染、几何测量、布局修复、视觉回归和论文图表交付",
+  "prompt": "prompt.md",
+  "toolLock": "tool-lock.json",
+  "packs": {
+    "visualization-quality": "1.1.0"
+  },
+  "workflows": [
+    "visualization-qa"
+  ],
+  "runnerWorkflow": "visualization-qa",
+  "policies": [
+    "project-scoped",
+    "render-in-runtime",
+    "no-claim-without-evidence"
+  ],
+  "permissions": {
+    "network": "deny",
+    "process": "allowlisted-only",
+    "filesystem": "project-scoped"
+  },
+  "integrity": {
+    "sha256Manifest": "SHA256SUMS"
+  },
+  "fixes": "runnerWorkflow=visualization-qa for runner agent mode; tool-lock visualization-qa 1.1.0->1.2.0 (1.1.0 definition is legacy and cannot be compiled by the runner; 1.2.0 is the v2 gate-migrated candidate) (ZP-12)"
+}

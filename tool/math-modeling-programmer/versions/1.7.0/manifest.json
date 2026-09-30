@@ -1,0 +1,40 @@
+{
+  "schema": "ai-workflow/v2.1",
+  "id": "math-modeling-programmer",
+  "displayName": "Math Modeling Programmer",
+  "version": "1.7.0",
+  "mode": "pipeline",
+  "entry": "workflow.yaml",
+  "inputSchema": "schemas/phase1-input.json",
+  "outputSchema": "schemas/phase1-output.json",
+  "permissions": {
+    "filesystem": "project-scoped",
+    "network": "deny",
+    "process": "allowlisted-only"
+  },
+  "dependencies": {
+    "skills": {
+      "visualization-layout": "1.1.0"
+    },
+    "workflows": {
+      "visualization-qa": "1.2.0"
+    },
+    "packs": {}
+  },
+  "runtime": {
+    "type": "python-cli",
+    "entry": "scripts/phase1_adapter.py",
+    "python": ">=3.10",
+    "environmentLock": "requirements-phase1.lock.txt"
+  },
+  "integrity": {
+    "sha256Manifest": "SHA256SUMS"
+  },
+  "dependencyAlignment": {
+    "schema": "ai-workflow-dependency-note/v1",
+    "alignedFrom": "math-modeling-programmer@1.6.0",
+    "change": "visualization-qa 1.1.0 -> 1.2.0（共享默认）",
+    "reason": "Z10 §11 G4：只改专家锁会造成闭包版本冲突（主工作流自身也钉 1.1.0），故先对齐工作流依赖。",
+    "alignedAt": "2026-09-14"
+  }
+}

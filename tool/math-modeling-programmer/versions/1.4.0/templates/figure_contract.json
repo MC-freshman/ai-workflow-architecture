@@ -1,0 +1,27 @@
+{
+  "figure_id": "FIG-1",
+  "claim": "方法 X 在保持误差范围的同时改善指标 Y",
+  "entrypoint": "figures/fig1.py",
+  "build_function": "build_figure",
+  "backend": "python",
+  "width_mm": 183,
+  "height_mm": 120,
+  "preview_dpi": 150,
+  "final_dpi": 300,
+  "text_policy": {
+    "min_pt": 5.0
+  },
+  "panels": [
+    {"id": "a", "role": "主证据", "unique_question": "主要方法比较是否支持核心结论"},
+    {"id": "b", "role": "稳健性", "unique_question": "结论在参数扰动下是否保持"}
+  ],
+  "alignment": {
+    "require_panel_labels": true,
+    "tolerance_pt": 1.5,
+    "gutter_tolerance_pt": 1.5,
+    "exclude_axes": []
+  },
+  "legend_policy": {"placement": "outside-right", "no_data_occlusion": true},
+  "annotation_policy": {"placement": "data-envelope", "max_labels": 12},
+  "source_result_ids": ["RES-001"]
+}

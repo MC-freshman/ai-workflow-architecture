@@ -1,0 +1,12 @@
+{
+  "schema": "ai-governance-source/v1",
+  "authorSession": "codex",
+  "derivedFrom": "runtime-contracts@1.4.0",
+  "supersedes": "1.4.0",
+  "releaseScope": "Architecture 3.x repair round R-P2 (D-97): run-lock resources gain kind=contracts so the engine can pin and re-validate the contracts generation a run was prepared under.",
+  "openDeferred": [
+    "adoption is a separate, per-platform act: no current.json was flipped here and no platform config was touched (发布 ≠ 采纳, BP-2)"
+  ],
+  "previousSource": "tool/runtime-contracts/versions/1.4.0/SOURCE.json",
+  "version": "1.5.0"
+}

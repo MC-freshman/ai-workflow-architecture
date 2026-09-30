@@ -1,0 +1,3 @@
+{
+  "schema": "ai-agent-contract-test/v1", "agent": "mastermind-crypto-analysis", "version": "1.0.0", "assertions": ["no tool implementation", "offline first", "no secret persistence", "model inherited"]
+}

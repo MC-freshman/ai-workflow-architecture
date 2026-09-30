@@ -1,0 +1,30 @@
+{
+  "schema": "ai-workflow-contract-test/v1",
+  "id": "game-playtest",
+  "version": "2.1.0",
+  "expect": {
+    "manifestMode": "pipeline",
+    "definitionSchema": "ai-workflow-definition/v2",
+    "stages": [
+      "EXECUTE",
+      "SELFCHECK"
+    ],
+    "gate": "playtest-integrity (process)",
+    "gateScript": "scripts/validate_game_playtest.py",
+    "gateArtifact": "game-playtest-check.json",
+    "repair": "EXECUTE onFail=repair maxIterations=2",
+    "inputSchemaReal": true,
+    "outputSchemaReal": true,
+    "expectedVerdicts": {
+      "positive": "pass",
+      "negative": "violations",
+      "missingInfo": "missing-info"
+    },
+    "unavailableCapabilitiesMarked": [
+      "Engine",
+      "GitHub",
+      "Context7",
+      "implicit-commands"
+    ]
+  }
+}

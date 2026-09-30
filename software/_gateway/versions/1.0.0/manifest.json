@@ -1,0 +1,46 @@
+{
+ "schema": "ai-software-gateway/v1",
+ "id": "_gateway",
+ "version": "1.0.0",
+ "displayName": "Reference software gateway",
+ "kind": "local-process",
+ "invocable": false,
+ "runtime": {
+  "type": "python-cli",
+  "entry": "gateway.py",
+  "python": ">=3.9"
+ },
+ "contract": {
+  "adapter": "ai-software-call/v1",
+  "inventory": "ai-software-inventory/v1",
+  "instance": "ai-software-instance/v1",
+  "validatedBy": "repo-lint 0.4.0 schemas/software-gateway-adapter-v1.schema.json"
+ },
+ "transportsImplemented": [
+  "cli-wrapper",
+  "mcp-stdio",
+  "mcp-http"
+ ],
+ "transportsDeclaredNotImplemented": [
+  "http-api",
+  "local-process"
+ ],
+ "concurrency": {
+  "perRun": "claims nothing",
+  "pooled": "one slot per digest(holder) mod poolSize",
+  "singleton": "one platform-wide slot",
+  "exclusiveResources": "one lock per key, loser writes nothing",
+  "scope": "platform-internal (C-8: cross-platform arbitration is not satisfied here and is not claimed)"
+ },
+ "refusals": [
+  "CAPABILITY_UNAVAILABLE",
+  "SOFTWARE_DRIFT",
+  "SOFTWARE_NOT_INSTALLED",
+  "SOFTWARE_BUSY",
+  "CONSENT_REQUIRED"
+ ],
+ "integrity": {
+  "sha256Manifest": "SHA256SUMS"
+ },
+ "docs": "README.md"
+}

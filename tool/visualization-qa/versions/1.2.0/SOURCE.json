@@ -1,0 +1,8 @@
+{
+  "schema": "ai-workflow-source/v1",
+  "sourceId": "math-modeling-skill-main",
+  "sourcePath": "tools/figure",
+  "snapshot": "snapshot-2026.08.31",
+  "license": "user-confirmed-open-source",
+  "enhancement": "runtime-render-measure-repair-gates-and-element-collision-audit"
+}

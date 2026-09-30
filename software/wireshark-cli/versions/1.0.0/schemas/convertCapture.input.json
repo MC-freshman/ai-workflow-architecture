@@ -1,0 +1,22 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "required": ["inputFile", "outputFile"],
+  "description": "editcap：格式转换、时间范围裁剪、去重、截断、分割",
+  "properties": {
+    "inputFile": { "type": "string", "description": "输入捕获文件（位置参数 0）" },
+    "outputFile": { "type": "string", "description": "输出捕获文件（位置参数 1）" },
+    "startTime": { "type": "string", "description": "-A 起始时间（ISO 8601 或相对秒）", "examples": ["2024-01-01T00:00:00"] },
+    "stopTime": { "type": "string", "description": "-B 截止时间" },
+    "keepSelected": { "type": "boolean", "default": false, "description": "-r 保留（而非删除）时间范围内的包" },
+    "dedup": { "type": "boolean", "default": false, "description": "-d 去重（窗口 5）" },
+    "dedupWindow": { "type": "integer", "minimum": 1, "description": "-D 自定义去重窗口" },
+    "snaplen": { "type": "integer", "minimum": 1, "description": "-s 每包截断到 N 字节" },
+    "chopBytes": { "type": "string", "description": "-C 切割字节，如 100（去尾）或 -100（去头）" },
+    "timeAdjust": { "type": "string", "description": "-t 时间戳调整（秒）" },
+    "splitByPackets": { "type": "integer", "minimum": 1, "description": "-c 按每 N 包分割为多文件" },
+    "splitBySeconds": { "type": "integer", "minimum": 1, "description": "-i 按每 N 秒分割为多文件" },
+    "outputFormat": { "type": "string", "description": "-F 输出捕获类型（如 pcap、pcapng）", "default": "pcapng" }
+  },
+  "additionalProperties": false
+}

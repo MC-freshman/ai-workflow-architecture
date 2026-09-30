@@ -1,0 +1,32 @@
+{
+  "schema": "ai-governance-source/v1",
+  "authorSession": "qoder",
+  "derivedFrom": "game 域 12 条（逐条见 scenarios）",
+  "supersedes": null,
+  "releaseScope": "Architecture 3.1.0 step T-P7: one game pipeline with scenario selection replacing eleven shape-identical workflows. Each scenario carries its own gate declaration and output contract, copied from the workflow it stands for, so collapsing did not loosen any of them.",
+  "collapsed": {
+    "brainstorm": "game-brainstorm",
+    "gdd": "game-gdd-author",
+    "prototype": "game-prototype",
+    "playtest": "game-playtest",
+    "balance": "game-balance-check",
+    "code-review": "game-code-review",
+    "ci": "game-ci-pipeline",
+    "launch": "game-launch",
+    "localization": "game-localization-manager",
+    "orchestrator": "game-team-orchestrator",
+    "reverse-doc": "game-reverse-document"
+  },
+  "keptIndependent": [
+    {
+      "scenario": "sprint",
+      "workflow": "game-sprint-plan",
+      "reason": "四个小写阶段 intake/capacity/plan/review 与 worker=planner；两阶段骨架装不下，收拢会改写它的阶段语义（判据①禁止\"为凑形状硬压\"）"
+    }
+  ],
+  "openDeferred": [
+    "the default scenario carries no gate instance (each of the eleven named scenarios brings back the gate its own workflow had); the backbone stage list is the shared shape",
+    "SELFCHECK is present for every collapsed workflow except game-code-review, which removes it; the backbone keeps onFail=repair on EXECUTE because all eleven sources had it",
+    "the pipeline input schema is permissive (additionalProperties true) on purpose: the twelve source input contracts differ, and each scenario still answers to its own output schema"
+  ]
+}

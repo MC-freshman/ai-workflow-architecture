@@ -1,0 +1,153 @@
+{
+ "schema": "ai-software-capability-snapshot/v1",
+ "softwareId": "mysql-cli",
+ "softwareVersion": "1.0.1",
+ "upstreamVersion": "8.0.39",
+ "generatedAt": "2026-09-21",
+ "generationMethod": "live-readonly-probe",
+ "upstreamHelpSource": "mysql --help, mysqldump --help",
+ "capabilities": [
+  {
+   "name": "version",
+   "nativeName": "mysql --version",
+   "sideEffects": "none",
+   "consent": "auto",
+   "idempotent": true,
+   "safeForSelftest": true,
+   "inputSchemaRef": "schemas/empty.input.json",
+   "outputSchemaRef": "schemas/version.output.json",
+   "liveConfirmation": {
+    "askedThrough": "mysql",
+    "tokensSeen": [
+     "--version"
+    ],
+    "at": "2026-09-21T07:11:19Z"
+   }
+  },
+  {
+   "name": "query",
+   "nativeName": "mysql --defaults-extra-file=<tmp> -h host [-P port] -u user [-D db] -e sql --batch --raw",
+   "sideEffects": "external",
+   "consent": "confirm-stage",
+   "idempotent": false,
+   "safeForSelftest": false,
+   "inputSchemaRef": "schemas/query.input.json",
+   "outputSchemaRef": "schemas/query.output.json",
+   "argvSummary": "--batch --raw --defaults-extra-file tmp -h host -P port -u user [-D db] -e sql [-X|-H|-t] [-N] [-E] [--connect-timeout N]",
+   "liveConfirmation": {
+    "askedThrough": "mysql",
+    "tokensSeen": [
+     "--batch",
+     "--connect-timeout",
+     "--raw",
+     "-D",
+     "-E",
+     "-H",
+     "-N",
+     "-P",
+     "-X",
+     "-e",
+     "-h",
+     "-t",
+     "-u"
+    ],
+    "at": "2026-09-21T07:11:19Z"
+   }
+  },
+  {
+   "name": "dump",
+   "nativeName": "mysqldump --defaults-extra-file=<tmp> --single-transaction ... ",
+   "sideEffects": "local-write",
+   "consent": "confirm-stage",
+   "idempotent": true,
+   "safeForSelftest": false,
+   "inputSchemaRef": "schemas/dump.input.json",
+   "outputSchemaRef": "schemas/dump.output.json",
+   "argvSummary": "--single-transaction --routines --triggers --events --defaults-extra-file tmp -h host -P port -u user (--all-databases | --databases db... | db [table...]) [--no-data] [--no-create-info] [--where cond] [--result-file out]",
+   "liveConfirmation": {
+    "askedThrough": "mysqldump",
+    "tokensSeen": [
+     "--all-databases",
+     "--databases",
+     "--events",
+     "--no-create-info",
+     "--no-data",
+     "--result-file",
+     "--routines",
+     "--single-transaction",
+     "--triggers",
+     "--where",
+     "-P",
+     "-h",
+     "-u"
+    ],
+    "at": "2026-09-21T07:11:19Z"
+   }
+  }
+ ],
+ "frozen": true,
+ "liveInquiry": {
+  "policy": "read-only: `--version` and the usage flag against the installed body; no scan traffic, no volume, no mount, no credential use, no project write",
+  "bannerCarriesPinnedUpstream": {
+   "mysql": true,
+   "mysqldump": true
+  },
+  "perExecutable": {
+   "mysql": {
+    "argvAnswered": [
+     {
+      "argv": [
+       "<local-tool-body-path>",
+       "--version"
+      ],
+      "exitCode": 0,
+      "seconds": 0.03,
+      "sha256": "2315b088558128bcd2446d21eaec2ada94454cb84b8331b02d89f49669a09d86",
+      "bytes": 109
+     },
+     {
+      "argv": [
+       "<local-tool-body-path>",
+       "--help"
+      ],
+      "exitCode": 0,
+      "seconds": 0.03,
+      "sha256": "2eb05222247f9355620a253c26f113cef6250b2ae204f32163e0a2053d449c1d",
+      "bytes": 15722
+     }
+    ],
+    "capabilities": [
+     "version",
+     "query"
+    ]
+   },
+   "mysqldump": {
+    "argvAnswered": [
+     {
+      "argv": [
+       "<local-tool-body-path>",
+       "--version"
+      ],
+      "exitCode": 0,
+      "seconds": 0.02,
+      "sha256": "e1a3430d32a73ca1608b375c0cd0a9893dff219ade65e857b8ef24221ee8f585",
+      "bytes": 74
+     },
+     {
+      "argv": [
+       "<local-tool-body-path>",
+       "--help"
+      ],
+      "exitCode": 0,
+      "seconds": 0.02,
+      "sha256": "68697bc49d199b81366b0dc2005863926ec23ae684375ecfd9420b91a16a0f19",
+      "bytes": 25179
+     }
+    ],
+    "capabilities": [
+     "dump"
+    ]
+   }
+  }
+ }
+}

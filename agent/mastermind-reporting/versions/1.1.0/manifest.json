@@ -1,0 +1,35 @@
+{
+  "schema": "ai-agent/v1",
+  "id": "mastermind-reporting",
+  "displayName": "Mastermind Reporting Expert",
+  "version": "1.1.0",
+  "role": "Chinese security report synthesis",
+  "prompt": "prompt.md",
+  "toolLock": "tool-lock.json",
+  "policies": [
+    "policies/security.md"
+  ],
+  "workflows": [
+    "mastermind-peer-task"
+  ],
+  "modelPolicy": {
+    "mode": "inherit",
+    "allowOverride": true
+  },
+  "input": {
+    "type": "text"
+  },
+  "output": {
+    "type": "text",
+    "language": "zh-CN"
+  },
+  "integrity": {
+    "sha256Manifest": "SHA256SUMS"
+  },
+  "runnerWorkflow": "mastermind-peer-task",
+  "permissions": {
+    "network": "deny",
+    "process": "allowlisted-only",
+    "filesystem": "project-scoped"
+  }
+}

@@ -1,0 +1,54 @@
+{
+  "schema": "ai-software-connector-component/v1",
+  "id": "_connector",
+  "version": "1.0.0",
+  "displayName": "Shared software connector",
+  "kind": "local-process",
+  "invocable": false,
+  "runtime": {
+    "type": "python-cli",
+    "entry": "connector.py",
+    "python": ">=3.9",
+    "optionalModules": [{ "name": "jsonschema", "minVersion": "4.0", "neededFor": "argument validation",
+                          "whenAbsent": "CAPABILITY_UNAVAILABLE before dispatch" }]
+  },
+  "contract": {
+    "engineFacing": ["ai-software-call/v1", "ai-software-inventory/v1", "ai-software-instance/v1"],
+    "session": "ai-software-session/v1",
+    "admin": "ai-software-admin/v1",
+    "releaseOverlay": "ai-software-connector/v1",
+    "validatedBy": "repo-lint 0.5.2 schemas/software-gateway-adapter-v1.schema.json (engine-facing shapes, unchanged)",
+    "errorCodes": "the published eleven; this release adds none"
+  },
+  "entries": [
+    "software.list", "software.describe", "software.health", "software.call",
+    "software.session", "software.artifact", "software.evidence"
+  ],
+  "adapters": {
+    "generic-cli": "argv from the recipe's own invocation, programs resolved against the install dir or config.tools, never PATH",
+    "mcp-proxy": "native MCP transport; tools/list asked only where the release declares native attestation",
+    "http-adapter": "POST to the recipe's declared endpoint",
+    "desktop-session": "open/status/close; a human step answers INTERACTIVE_REQUIRED instead of a simulated success"
+  },
+  "attestation": {
+    "default": "snapshot-only",
+    "means": "declared + snapshot frozen + body present with the recipe's own digest; it does NOT claim the body advertised the capability",
+    "never": "asking a cli-wrapper body --tools (D-60)"
+  },
+  "transportsImplemented": ["cli-wrapper", "mcp-stdio", "mcp-http", "local-process"],
+  "concurrency": {
+    "perRun": "claims nothing",
+    "pooled": "one slot per digest(holder) mod poolSize",
+    "singleton": "one platform-wide slot",
+    "exclusiveResources": "one lock per key, loser writes nothing",
+    "sessions": "one held lock per session key until close",
+    "scope": "platform-internal (BP-4 1.3: cross-platform arbitration is not required and not claimed)"
+  },
+  "refusals": [
+    "INVALID_REQUEST", "CAPABILITY_UNAVAILABLE", "SOFTWARE_NOT_INSTALLED", "SOFTWARE_DRIFT",
+    "SOFTWARE_BUSY", "CONSENT_REQUIRED", "PROFILE_NOT_DECLARED", "EGRESS_DENIED",
+    "SOFTWARE_CALL_FAILED", "SOFTWARE_TIMEOUT", "GATEWAY_UNREACHABLE"
+  ],
+  "integrity": { "sha256Manifest": "SHA256SUMS" },
+  "docs": "README.md"
+}

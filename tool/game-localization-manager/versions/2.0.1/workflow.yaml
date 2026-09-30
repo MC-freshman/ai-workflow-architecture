@@ -1,0 +1,13 @@
+id: game-localization-manager
+version: 2.0.1
+entry: workflow.md
+mode: prompt
+steps:
+  - id: execute
+    input: task-context
+    output: workflow-result
+stages:
+  - id: execute
+    mode: serial
+    workers: [game-builder]
+outputWorker: game-builder

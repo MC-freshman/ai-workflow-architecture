@@ -1,0 +1,17 @@
+{
+  "schema": "ai-workflow-contract-test/v1",
+  "id": "mastermind-bug-bounty",
+  "version": "2.0.0",
+  "expect": {
+    "manifestMode": "pipeline",
+    "definitionSchema": "ai-workflow-definition/v2",
+    "stages": [
+      "SCOPE",
+      "RECON",
+      "ANALYSIS",
+      "TRIAGE",
+      "REPORT"
+    ],
+    "workflowSyntaxPeers": "rejected-by-frozen-contracts"
+  }
+}

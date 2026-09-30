@@ -1,0 +1,85 @@
+{
+  "schema": "ai-workflow-contract-test/v1",
+  "id": "game-sprint-plan",
+  "version": "2.1.1",
+  "generatedFrom": "workflow.yaml 的实际定义（阶段/门禁/门禁类型逐项抽取，非手写）",
+  "expect": {
+    "manifestSchema": "ai-workflow/v2.1",
+    "definitionSchema": "ai-workflow-definition/v2",
+    "mode": "pipeline",
+    "maxParallel": 1,
+    "entry": "workflow.yaml",
+    "inputSchema": "schemas/input.schema.json",
+    "outputSchema": "schemas/output.schema.json",
+    "dependencies": {
+      "workflows": {},
+      "skills": {},
+      "packs": {}
+    },
+    "stages": [
+      {
+        "id": "intake",
+        "action": "prompt",
+        "dependsOn": [],
+        "outputs": "schemas/intake.schema.json",
+        "gates": [],
+        "onFail": null
+      },
+      {
+        "id": "capacity",
+        "action": "prompt",
+        "dependsOn": [
+          "intake"
+        ],
+        "outputs": "schemas/capacity.schema.json",
+        "gates": [],
+        "onFail": null
+      },
+      {
+        "id": "plan",
+        "action": "prompt",
+        "dependsOn": [
+          "capacity"
+        ],
+        "outputs": "schemas/plan.schema.json",
+        "gates": [],
+        "onFail": null
+      },
+      {
+        "id": "review",
+        "action": "prompt",
+        "dependsOn": [
+          "plan"
+        ],
+        "outputs": "schemas/output.schema.json",
+        "gates": [
+          "plan-integrity"
+        ],
+        "onFail": "repair"
+      }
+    ],
+    "gateIds": [
+      "plan-integrity"
+    ],
+    "gateDefinitions": {
+      "plan-integrity": {
+        "type": "process",
+        "cwd": "evidence",
+        "argv": [
+          "workflow:scripts/validate_plan.py"
+        ],
+        "expectExit": [
+          0
+        ],
+        "expectArtifacts": [
+          {
+            "target": "evidence:plan-check.json",
+            "minBytes": 2
+          }
+        ],
+        "reasonFrom": "evidence:plan-check.json"
+      }
+    }
+  },
+  "purpose": "发布自带契约测试：供 repo-lint 0.2.1 的 gate-execution-evidenced 规则（Z10 §6.4 D3）识别，把「有门禁声明但无执行证据」的 R8 warning 降为 info。本文件只声明形状与门禁接线，不声明业务运行已通过——业务证据仍以各 run 的 evidence/ 目录为准。"
+}

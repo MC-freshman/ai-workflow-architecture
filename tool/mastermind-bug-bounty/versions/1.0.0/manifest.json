@@ -1,0 +1,16 @@
+{
+  "schema": "ai-workflow/v1",
+  "id": "mastermind-bug-bounty",
+  "displayName": "Mastermind Bug Bounty Workflow",
+  "version": "1.0.0",
+  "entry": "workflow.yaml",
+  "inputSchema": "schemas/input.schema.json",
+  "outputSchema": "schemas/output.schema.json",
+  "permissions": {
+    "filesystem": "read-only-by-default",
+    "network": "deny-until-authorized",
+    "process": "deny-until-authorized"
+  },
+  "dependencies": [],
+  "integrity": { "sha256Manifest": "SHA256SUMS" }
+}

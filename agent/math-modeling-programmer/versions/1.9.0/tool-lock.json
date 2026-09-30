@@ -1,0 +1,18 @@
+{
+  "schema": "ai-tool-lock/v2",
+  "skills": {
+    "paper-programmer-visualization": "1.0.0",
+    "paper-figure": "1.0.0",
+    "visualization-layout": "1.1.0"
+  },
+  "workflows": {
+    "math-modeling-programmer": "1.7.2",
+    "visualization-qa": "1.2.1"
+  },
+  "packs": {
+    "visualization-quality": "1.2.0"
+  },
+  "profiles": {
+    "renderer": "matplotlib-adapter-first"
+  }
+}

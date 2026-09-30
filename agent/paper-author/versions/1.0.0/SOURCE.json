@@ -1,0 +1,13 @@
+{
+  "schema": "ai-governance-source/v1",
+  "authorSession": "qoder",
+  "derivedFrom": "catalog:skills-nature-skills.json (348 topics) + catalog:skills-math-modeling-skill.json (44)",
+  "supersedes": null,
+  "releaseScope": "3.3.0 P6 new expert for papers and daily research coursework. Thirteen scenario cards, each quoting 3-5 upstream cards verbatim with the quoted section named; the 56 quoted upstream releases are locked so an on-demand read is pinned, and none of them is delivered unless a scenario names it. No Pack is pinned by design (R17).",
+  "openDeferred": [
+    "windowProfile=256k is the conservative default; the platform ceiling is unattested.",
+    "Adoption (pointer moves and matrix re-attestation) is a separate authorised act.",
+    "Overlaps with math-modeling-programmer and visualization-engineer on figures and statistical reporting: those two own computation and figure QA, this one owns the write-up. The boundary is stated in the prompt, not enforced by the engine."
+  ],
+  "previousSource": null
+}

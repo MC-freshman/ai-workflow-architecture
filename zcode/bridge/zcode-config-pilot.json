@@ -1,0 +1,22 @@
+{
+  "platform": "zcode",
+  "contracts": "E:/ai/tool/runtime-contracts/versions/1.1.0",
+  "toolRoot": "E:/ai/tool",
+  "agentRoot": "E:/ai/agent",
+  "bridge": "E:\\ai\\zcode\\bridge.json",
+  "runner": "E:/ai/tool/wf-runner/versions/0.7.6",
+  "peerDispatcherModule": "E:/ai/zcode/bridge/ops/peer_dispatcher.py",
+  "peerContentRoot": "E:/ai/zcode/runtime/maintenance/2.0-unlock/v6/content",
+  "environmentManifest": "E:\\ai\\zcode\\bridge\\script-environment.json",
+  "capabilities": "E:\\ai\\zcode\\bridge\\capabilities-pilot.json",
+  "runsRoot": "E:\\ai\\zcode\\runtime\\runs",
+  "platformRoot": "E:\\ai\\zcode",
+  "inputRoots": [
+    "E:\\ai\\zcode"
+  ],
+  "notes": "PILOT config for 2.0-unlock items 3/4 verification (runner 0.7.6 candidate; contracts 1.1.0 + scannerRelease 0.3.0; WSL2+Landlock script chain; item 4b adds peerDispatcherModule + peerContentRoot for the V6 acceptance surface). Peer dispatch was exercised through tmp acceptance overlays (zcode/runtime/tmp/v6) with checks.peerDispatch=true; the pilot capabilities flag is only set after V6-a goes green. Production zcode-config.json remains pinned at runner 0.6.0 with no script/peer chain until the closing wave.",
+  "scannerRelease": "E:/ai/tool/repo-lint/versions/0.3.0",
+  "hostEnvironmentManifest": "E:\\ai\\zcode\\bridge\\host-environment.json",
+  "scriptEnvironment": "E:\\ai\\zcode\\runtime\\script-env\\py310",
+  "executionBackend": "E:\\ai\\zcode\\bridge\\backends\\wsl2-ubuntu.json"
+}

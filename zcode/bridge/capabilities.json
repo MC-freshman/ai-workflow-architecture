@@ -1,0 +1,156 @@
+{
+  "schema": "ai-platform-capabilities/v1",
+  "platform": "zcode",
+  "attestedAt": "2026-09-27",
+  "attestationStatus": "re-attested 2026-09-27 (+08) by the maintenance repair round M-P5: zcode adopted wf-runner 0.12.0 (D-45 discarded-run trail preservation, D-46 bytecode guard) + repo-lint 0.6.3 (D-75 validator sync + D-83 report-version unpin) + platform-conformance 1.5.1 battery. Readings: suite 26/26, conform, full matrix on the 0.12.0 stack (see round ledger).",
+  "checks": {
+    "python-runtime": true,
+    "runner-dependency-resolution": true,
+    "prompt-stage-claim": true,
+    "script-environment-isolation-jail": true,
+    "peerDispatch": true,
+    "software-gateway-smoke": true
+  },
+  "permissionAdapters": [
+    {
+      "filesystem": "project-scoped",
+      "network": "deny",
+      "process": "allowlisted-only",
+      "evidence": "Prompt-only session adapter: writes confined to this platform, no task network requests or task subprocesses; runner lifecycle uses pinned CLI. These are session constraints, NOT OS-level sandbox isolation."
+    },
+    {
+      "filesystem": "shared-read-only-platform-report-write",
+      "network": "deny",
+      "process": "none",
+      "evidence": "D04 shared-read-only binding (authorized 2026-09-17, zcode-scoped): jail checks D04_* in runtime/maintenance/2.0-unlock/baseline/C2d-backend.json (Landlock+chroot on the pinned WSL2 backend); repo-lint write-probes the mounts before scanning."
+    },
+    {
+      "filesystem": "platform-runtime-write-shared-read-only",
+      "network": "deny",
+      "process": "isolated-python",
+      "evidence": "Script-stage adapter declared 2026-09-26: the WSL2+Landlock jail executes script stages with an isolated python while writing only platform runtime paths and reading shared repositories read-only. Byte-generation note: jail boundary machine checks are from the 0.7.7 production battery (runtime/maintenance/2.0-prod-adoption/baseline/RL30P77-snapshot.json); on the 0.10.1 bytes the environment half is re-verified by the engine's own environment_verify full pass (2370 files, 0 mismatches, Z4/env-verification-attestation.json)."
+    }
+  ],
+  "profiles": {
+    "renderer": {
+      "adapters": [
+        "matplotlib-adapter-first"
+      ],
+      "requires": [
+        "matplotlib"
+      ]
+    }
+  },
+  "descriptor": {
+    "schema": "ai-platform-descriptor/v2",
+    "platformId": "zcode",
+    "protocols": [
+      "ai-run-protocol/v1.1",
+      "ai-run-protocol/v1.2"
+    ],
+    "operations": [
+      "prepare",
+      "next",
+      "submit",
+      "status",
+      "stop"
+    ],
+    "actions": {
+      "prompt": {
+        "supported": true,
+        "enforcement": "advisory",
+        "note": "Prompt stages are executed by the ZCode session itself; the enforcement is the session adapter declared in permissionAdapters, not an OS sandbox."
+      },
+      "script": {
+        "supported": true,
+        "enforcement": "kernel",
+        "note": "Declared with the explicit scriptEnvironmentRungs entry (kernel-sandbox on the WSL2+Landlock backend, requiresSealedEnvironment=true) that conform 1.4.1 test_script_rungs requires. Environment seal re-verified 2026-09-26 by environment_verify full pass (2370/2370, 0 mismatches) after the scientific stack was added at the exact pins of math-modeling-programmer@1.7.2 requirements-phase1.lock.txt. Execution evidence is labeled by byte generation: the RL30P77 real script run to succeeded is 0.7.7 bytes; on 0.10.1 bytes no end-to-end script run exists yet because the only published script-stage workflow (repo-lint@0.5.2) is refused by the engine's strict closure (round defect Z-D2, shared-side)."
+      },
+      "peer": {
+        "supported": true,
+        "enforcement": "mediated",
+        "note": "peerDispatcherModule wired since 2.0 (V6 battery, 0.7.7 bytes, four rejection faces + lineage + idempotent replay). The dispatcher module and content root are unchanged in this round; no 0.10.1-specific peer run has been executed yet - the full matrix exercises the peer-affected cells at prepare/claim/stop level."
+      }
+    },
+    "profiles": {
+      "renderer": {
+        "declared": true,
+        "adapters": [
+          "matplotlib-adapter-first"
+        ],
+        "requires": [
+          "matplotlib"
+        ]
+      },
+      "python>=3.8": {
+        "declared": true,
+        "adapters": [
+          "wsl2-sealed-python-3.10.12"
+        ],
+        "requires": [
+          "python>=3.8"
+        ],
+        "evidence": {
+          "file": "zcode/bridge/script-environment.json",
+          "reading": "the sealed script environment resolves 3.10.12 inside the WSL2 jail; 2026-09-26 the scientific stack was added at the phase1 lock pins and the whole tree re-verified by environment_verify full pass (2370 files, 0 mismatches)",
+          "pythonVersion": "3.10.12",
+          "atLeast38": true
+        }
+      }
+    },
+    "enforcement": "mediated",
+    "recovery": [
+      "replay"
+    ],
+    "evidenceBindings": {
+      "configDigest": "1bcb2e47a32eeaefce5981afa268ab97cabd5514f3275ca797829faf18f6be73",
+      "runnerDigest": "4e152bdb66834fa6defeb2a0a677b5a099c32ddbc8523c4a8c76acf695fc650e",
+      "runnerTreeDigest": "65264119660f10b4b9e4617073e5c68c5d4cc9e6119777a95e931b7a69657e69",
+      "environmentDigest": "1e3687c9cb625552ede851336c6ec3062af99f198661435eef2e3d3fe7539a88"
+    }
+  },
+  "software": {
+    "gateway": "software/_connector/versions/1.0.7 (shared connector, pinned bytes)",
+    "configKeys": "zcode/bridge/zcode-config.json declares softwareRoot / softwareRuntimeRoot / softwareGateway / softwareGatewayConfig / softwareEnvironment / softwareProfiles / softwareConsentGrants / interpreters",
+    "gatewayConfig": "zcode/bridge/software-gateway.json: bodies are this platform's own survey (every file hashed on this machine against the published recipe verify.files); allowedHosts=[127.0.0.1, localhost]; allowGuiLaunch=false; no credentialProvider and no session providers declared yet",
+    "frozenSnapshots": "dirsearch@1.0.1, mysql-cli@1.0.2, wireshark-cli@1.0.1 frozen (published); nmap@1.0.0, burp-suite@1.0.0, veracrypt@1.0.0 unfrozen (published state, honestly served as frozen=false)",
+    "bodySurvey": "Z3/body-survey.json: dirsearch 2/2, mysql-cli 3/3, wireshark-cli 5/5, burp-suite 4/4, veracrypt 2/2 files match; nmap.exe carries a one-hex-digit digest mismatch against its own recipe (drift evidence, registered with D-61 context) and nmap stays unfrozen",
+    "realDispatch": "Z3/call-dirsearch-version-res.json: real connector dispatch of dirsearch@1.0.1 version capability (exitCode 0, stdout 'dirsearch v0.4.3', outputSha256 a4af01b0...); same-key replay returned replayed=true without re-dispatch (Z3/call-dirsearch-version-replay.json); evidence layout under zcode/runtime/software/evidence/",
+    "smoke": "Z3/smoke-req-*/res-*: 10/10 structured exchanges (6 inventory asks, software.list, software.health, unknown-id CAPABILITY_UNAVAILABLE, missing-key INVALID_REQUEST); engine-shaped messages (no kind key) verified against _connector 1.0.6 (D-93 fix present)"
+  },
+  "declaredAbsent": {
+    "mcp-tool-surface": "Not registered. Fill path: register an MCP client adapter on this platform and re-attest; estimated cost 240 minutes. This is a platform gap, not a design exemption.",
+    "profile:administrator": "Intentionally retained (3.0-Q precedent, adopted read-only as precedent, not copied as evidence): resident elevation is red line 5 on this architecture; the platform declares it absent rather than claiming it, with the per-call-consent closure path in gapPlan. Required by software:veracrypt@1.0.0 (the veracrypt mount operation)."
+  },
+  "gapPlan": {
+    "mcp-tool-surface": {
+      "path": "register an MCP tool-surface adapter for zcode, smoke tools/list against one local server, re-attest capabilities",
+      "costMinutes": 240
+    },
+    "profile:administrator": {
+      "path": "declare an administrator-scoped adapter only behind a per-call consent grant (no resident elevation, red line 5): register the consent-gated adapter, verify one elevated software operation under a per-call consentToken, re-attest",
+      "costMinutes": 90
+    },
+    "math-solver-chain": {
+      "path": "obsolete as a capability item since the 2026-09-22 ruling (math modeling equals every other agentic workflow); the scientific stack it needs is now declared in the sealed script environment at the phase1 lock pins - kept here only as provenance of the removal",
+      "costMinutes": 0
+    },
+    "software:nmap": {
+      "path": "X-P4 (this round): publish nmap 1.0.1 with recipe verify.files matching the live body, freeze the snapshot from a live read-only inquiry, register the verified body",
+      "costMinutes": 60
+    },
+    "software:veracrypt": {
+      "path": "X-P5 (this round): publish veracrypt 1.0.1 declaring the desktop-session transport; the snapshot stays honestly unfrozen (no stdout to inquire) until a per-call-consent session run",
+      "costMinutes": 45
+    }
+  },
+  "evidence": {
+    "promptSubmit": "runtime/maintenance/20260917-reconnect/submit-intake-response.txt; full matrix 2026-09-26 Z4/matrix-full.json exercises prepare/claim/stop on the 0.10.1 stack",
+    "terminalStop": "runtime/maintenance/20260917-reconnect/stop-smoke-response.txt",
+    "scriptEnvironment": "0.7.7 bytes: runtime/maintenance/2.0-prod-adoption/baseline/RL30P77-snapshot.json (real script stage to succeeded) + RL30P77-negatives.json. 0.10.1 bytes: Z4/env-verification-attestation.json (engine environment_verify full pass, 2370/2370, 0 mismatches, manifestSha256 1e3687c9cb625552); end-to-end script execution on 0.10.1 is blocked repo-wide by Z-D2, not by this platform",
+    "peerDispatch": "0.7.7 bytes: runtime/maintenance/2.0-prod-adoption/baseline/V6-{a-closure,b-lineage,c-idempotency,d-rejections,e-restricted}.json (BATTERY GREEN); dispatcher module unchanged this round",
+    "softwareCall": "20260927-3x-repair/rp5/ evidence set: attach open->SESSION_READY on a human-path pid, status alive, close SESSION_CLOSED, dead-pid attach refused ATTACH_FAILED without starting a replacement; regression smoke + real dirsearch dispatch on 1.0.7",
+    "conformance": "Z2/suite-after.txt and Z4/suite-final.txt (25 tests: the 1 failure is the shared-side Z-D1, byte-identical before and after this round's changes) + Z4/conform-floor.json (final: items 27 / pass 26 / declaredAbsent 1 / unverified 0 / remediationMissing 0, digest 5e7f769c85cf, union 21afc04781c3)"
+  },
+  "notes": "Rewritten 2026-09-26 by the zcode full-adoption round (Z-P4). The previous attestation (2026-09-19) described the 0.7.7 stack and is superseded; its evidence files remain on disk and are referenced by byte generation. math-solver-chain is removed from declaredAbsent per the 2026-09-22 ruling that math modeling equals every other agentic workflow - the capability item itself no longer exists in the union. mcp-tool-surface stays declaredAbsent with a fill path; no other union item is declared absent."
+}

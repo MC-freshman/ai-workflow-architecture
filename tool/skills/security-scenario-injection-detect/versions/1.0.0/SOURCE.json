@@ -1,0 +1,17 @@
+{
+  "schema": "ai-governance-source/v1",
+  "authorSession": "qoder",
+  "derivedFrom": "skill:novel-detecting-sql-injection-patterns-security@1.0.0+novel-detecting-command-injection-patterns-security@1.0.0+novel-detecting-eval-exec-usage-security@1.0.0+novel-detecting-insecure-deserialization-security@1.0.0",
+  "supersedes": null,
+  "releaseScope": "3.3.0 P4 scenario routing card for mastermind-bug-bounty. Every quoted block is the referenced skill's own description copied verbatim; the new writing is limited to step order and refusal gates. Depth stays in the pinned source releases, named by id@version instead of paraphrased.",
+  "verbatimFrom": {
+    "novel-detecting-sql-injection-patterns-security@1.0.0": "SKILL.md#frontmatter.description",
+    "novel-detecting-command-injection-patterns-security@1.0.0": "SKILL.md#frontmatter.description",
+    "novel-detecting-eval-exec-usage-security@1.0.0": "SKILL.md#frontmatter.description",
+    "novel-detecting-insecure-deserialization-security@1.0.0": "SKILL.md#frontmatter.description"
+  },
+  "bodySha256": "749706ab00b0682fdbd9153dfb339de652a2bbcb92b919eb5227854995fa307a",
+  "openDeferred": [
+    "The upstream cards are registered under a novel- prefix they do not belong to (D-88) and each exists twice with byte-identical content (D-89); this round points at the -security twin and renames nothing."
+  ]
+}

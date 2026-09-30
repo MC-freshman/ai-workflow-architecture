@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "game-design-review report",
+  "type": "object",
+  "required": [
+    "document",
+    "summary"
+  ],
+  "properties": {
+    "document": {
+      "type": "string",
+      "minLength": 80
+    },
+    "summary": {
+      "type": "object",
+      "required": [
+        "critical",
+        "major",
+        "minor"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "critical": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "major": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "minor": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "notes": {
+          "type": "string"
+        }
+      }
+    }
+  },
+  "additionalProperties": false
+}

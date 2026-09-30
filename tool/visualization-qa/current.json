@@ -1,0 +1,6 @@
+{
+  "schema": "ai-workflow-pointer/v1",
+  "id": "visualization-qa",
+  "version": "1.3.0",
+  "hashManifest": "SHA256SUMS"
+}

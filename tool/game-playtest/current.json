@@ -1,0 +1,6 @@
+{
+  "schema": "ai-workflow-pointer/v1",
+  "id": "game-playtest",
+  "version": "2.1.0",
+  "hashManifest": "SHA256SUMS"
+}

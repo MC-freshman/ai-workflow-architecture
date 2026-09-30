@@ -1,0 +1,28 @@
+{
+  "schema": "ai-skill/v1",
+  "id": "framework-scenario-defect-register",
+  "version": "1.0.0",
+  "kind": "scenario",
+  "category": "framework-author",
+  "entry": "SKILL.md",
+  "input": {
+    "type": "workflow-stage-context",
+    "contract": "the stage prompt this scenario is selected for"
+  },
+  "output": {
+    "type": "guidance",
+    "contract": "ordered procedure, verbatim rules and refusal gates"
+  },
+  "permissions": [],
+  "requires": [],
+  "conflicts": [],
+  "source": {
+    "sourceId": "governance:agents.md|versions/架构基本原则.md",
+    "path": "versions/1.0.0/SKILL.md",
+    "license": "in-repo",
+    "snapshot": "derived at 3.3.0 P5"
+  },
+  "integrity": {
+    "sha256Manifest": "SHA256SUMS"
+  }
+}

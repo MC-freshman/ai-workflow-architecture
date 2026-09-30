@@ -1,0 +1,20 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "required": ["toolName", "arguments"],
+  "description": "通用 MCP tools/call 入参；toolName 必须出现在冻结快照中",
+  "properties": {
+    "toolName": { "type": "string", "description": "tools/list 返回的工具名", "examples": ["proxy_history"] },
+    "arguments": { "type": "object", "description": "工具参数，须符合该工具 inputSchema", "additionalProperties": true },
+    "externalBoundary": {
+      "type": "object",
+      "description": "外部交互边界（目标 host/端口/路径根），禁止 * 与 0.0.0.0/0",
+      "properties": {
+        "allowedHosts": { "type": "array", "items": { "type": "string" }, "minItems": 1 },
+        "allowedPorts": { "type": "array", "items": { "type": "integer" } }
+      },
+      "required": ["allowedHosts"]
+    }
+  },
+  "additionalProperties": false
+}

@@ -1,0 +1,10 @@
+{
+  "schema": "ai-governance-source/v1",
+  "authorSession": "qoder",
+  "derivedFrom": "game-playtest@2.1.0",
+  "supersedes": null,
+  "releaseScope": "Architecture 3.1.0 step T-P7: one of eleven scenario skills for game-pipeline. The body is that workflow's own prompt file verbatim, so the collapse moved the selector and did not rewrite the craft.",
+  "verbatimFrom": "tool/game-playtest/versions/2.1.0/workflow.md",
+  "bodySha256": "600a051450c64ff465d2c2619378b061245a35439d87895c218dffecbb112b31",
+  "openDeferred": []
+}

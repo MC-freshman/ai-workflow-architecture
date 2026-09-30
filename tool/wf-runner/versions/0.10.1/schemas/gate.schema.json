@@ -1,0 +1,380 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "wf generic gate declaration and evidence contract (M3-B, runner-owned)",
+  "$defs": {
+    "hash": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "targetRef": {
+      "type": "string",
+      "pattern": "^(evidence|work|run):[A-Za-z0-9][A-Za-z0-9._/-]*$"
+    },
+    "targetRecord": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "ref",
+        "sha256",
+        "size"
+      ],
+      "properties": {
+        "ref": {
+          "$ref": "#/$defs/targetRef"
+        },
+        "sha256": {
+          "$ref": "#/$defs/hash"
+        },
+        "size": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "crossCheck": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "field",
+        "against"
+      ],
+      "properties": {
+        "field": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "minItems": 1
+        },
+        "against": {
+          "$ref": "#/$defs/targetRef"
+        }
+      }
+    },
+    "scanRule": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "pattern"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_-]+$"
+        },
+        "pattern": {
+          "type": "string",
+          "minLength": 3
+        }
+      }
+    },
+    "artifact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "target"
+      ],
+      "properties": {
+        "target": {
+          "$ref": "#/$defs/targetRef"
+        },
+        "minBytes": {
+          "type": "integer",
+          "minimum": 1
+        }
+      }
+    },
+    "declaration": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "type"
+      ],
+      "properties": {
+        "type": {
+          "enum": [
+            "file",
+            "json-schema",
+            "hash",
+            "pattern-scan",
+            "process"
+          ]
+        },
+        "target": {
+          "$ref": "#/$defs/targetRef"
+        },
+        "minBytes": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "sha256": {
+          "$ref": "#/$defs/hash"
+        },
+        "schema": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9][A-Za-z0-9._/-]*$"
+        },
+        "crossHash": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/crossCheck"
+          }
+        },
+        "entries": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "target"
+            ],
+            "properties": {
+              "target": {
+                "$ref": "#/$defs/targetRef"
+              },
+              "sha256": {
+                "$ref": "#/$defs/hash"
+              }
+            }
+          }
+        },
+        "rules": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/scanRule"
+          }
+        },
+        "targets": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/targetRef"
+          }
+        },
+        "argv": {
+          "type": "array",
+          "maxItems": 32,
+          "items": {
+            "type": "string",
+            "pattern": "^(workflow:)?[A-Za-z0-9=./_:+-]+$"
+          }
+        },
+        "timeoutSeconds": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 120
+        },
+        "expectExit": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "integer"
+          }
+        },
+        "expectArtifacts": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/artifact"
+          }
+        },
+        "cwd": {
+          "enum": [
+            "work",
+            "evidence"
+          ]
+        },
+        "reasonFrom": {
+          "$ref": "#/$defs/targetRef"
+        }
+      },
+      "allOf": [
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "const": "file"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "target"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "const": "json-schema"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "target",
+              "schema"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "const": "hash"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "entries"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "const": "pattern-scan"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "rules",
+              "targets"
+            ]
+          }
+        },
+        {
+          "if": {
+            "properties": {
+              "type": {
+                "const": "process"
+              }
+            }
+          },
+          "then": {
+            "required": [
+              "argv",
+              "expectArtifacts"
+            ]
+          }
+        }
+      ]
+    },
+    "evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "schema",
+        "gateId",
+        "type",
+        "status",
+        "executorVersion"
+      ],
+      "properties": {
+        "schema": {
+          "const": "ai-gate-evidence/v1"
+        },
+        "gateId": {
+          "type": "string",
+          "pattern": "^[A-Za-z0-9_-]+$"
+        },
+        "type": {
+          "enum": [
+            "file",
+            "json-schema",
+            "hash",
+            "pattern-scan",
+            "process"
+          ]
+        },
+        "status": {
+          "enum": [
+            "pass",
+            "fail"
+          ]
+        },
+        "reason": {
+          "type": "string"
+        },
+        "executorVersion": {
+          "type": "string"
+        },
+        "targets": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/targetRecord"
+          },
+          "default": []
+        },
+        "hits": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "rule",
+              "target",
+              "line",
+              "context"
+            ],
+            "properties": {
+              "rule": {
+                "type": "string"
+              },
+              "target": {
+                "$ref": "#/$defs/targetRef"
+              },
+              "line": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "context": {
+                "type": "string"
+              }
+            }
+          },
+          "default": []
+        },
+        "process": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "exitCode",
+            "durationMs"
+          ],
+          "properties": {
+            "exitCode": {
+              "type": "integer"
+            },
+            "durationMs": {
+              "type": "integer",
+              "minimum": 0
+            },
+            "stdoutLog": {
+              "$ref": "#/$defs/targetRef"
+            },
+            "stderrLog": {
+              "$ref": "#/$defs/targetRef"
+            }
+          }
+        }
+      }
+    }
+  },
+  "type": "object",
+  "oneOf": [
+    {
+      "$ref": "#/$defs/declaration"
+    },
+    {
+      "$ref": "#/$defs/evidence"
+    }
+  ]
+}

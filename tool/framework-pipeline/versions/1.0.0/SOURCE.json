@@ -1,0 +1,12 @@
+{
+  "schema": "ai-governance-source/v1",
+  "authorSession": "qoder",
+  "derivedFrom": "se-pipeline@1.1.0 (structure and gate) + this round's ledgers P1-P4 (rule text)",
+  "supersedes": null,
+  "releaseScope": "3.3.0 P5 new domain workflow: nine scenarios over eight scenario cards for updating this architecture. Stage graph, schemas and the work-integrity gate are derived from se-pipeline 1.1.0 unchanged in shape. Two intentional differences: the prompt names the legal `status` enum values and states that `pending` is a field, not a status (the report enum has no pending, and an agent following the older wording gets rejected by its own contract); and no Pack is pinned anywhere, per R17.",
+  "openDeferred": [
+    "Inherited schemas keep expert-task titles; renaming them would be a contract change with no behavioural effect, so it is registered, not done.",
+    "No current pointer moved; this release exists but is not selected by default."
+  ],
+  "previousSource": "tool/se-pipeline/versions/1.1.0/SOURCE.json"
+}

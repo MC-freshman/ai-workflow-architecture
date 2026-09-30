@@ -1,0 +1,11 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": ["validation_id", "status", "checks"],
+  "properties": {
+    "validation_id": {"type": "string"},
+    "status": {"type": "string", "enum": ["PASS", "FAIL"]},
+    "checks": {"type": "array", "items": {"type": "object", "required": ["check_id", "status"], "properties": {"check_id": {"type": "string"}, "status": {"type": "string", "enum": ["PASS", "FAIL", "NOT_RUN"]}}}}
+  },
+  "additionalProperties": true
+}

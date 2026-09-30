@@ -1,0 +1,2 @@
+- project-scoped
+- no-credentials

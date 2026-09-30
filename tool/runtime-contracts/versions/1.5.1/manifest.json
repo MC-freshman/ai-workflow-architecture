@@ -1,0 +1,87 @@
+{
+  "schema": "ai-runtime-contracts/v1",
+  "id": "runtime-contracts",
+  "displayName": "Runtime Protocol & Schema Contracts",
+  "version": "1.5.1",
+  "kind": "contracts",
+  "invocable": false,
+  "entry": "contracts/runtime/validate_contracts.py",
+  "protocols": [
+    "ai-run-protocol/v1.1",
+    "ai-run-protocol/v1.2",
+    "ai-run-protocol/v1.3"
+  ],
+  "carriedSchemaVersions": {
+    "common": "1.1",
+    "protocol": [
+      "v1.1",
+      "v1.2",
+      "v1.3"
+    ],
+    "run-lock": [
+      "v1.1",
+      "v1.2",
+      "v1.3"
+    ],
+    "state": [
+      "v1.1",
+      "v1.2"
+    ],
+    "event": [
+      "v1.1",
+      "v1.2"
+    ],
+    "transaction": "v1.1",
+    "error-envelope": "v2",
+    "platform-descriptor": "v2",
+    "protocolEntry": "v1.1",
+    "handoff-bundle": "v1"
+  },
+  "v2Additions": [
+    "ai-run-error/v2 (unified machine-readable error envelope)",
+    "ai-platform-descriptor/v2 (declarative platform identity + capability facets, replaces schema platform enum)"
+  ],
+  "dependencies": {
+    "contracts": {},
+    "runner": null,
+    "workflows": {},
+    "note": "Must not depend on runner or repo-lint implementations (no circular dependency). Consumers pin this version."
+  },
+  "verification": {
+    "runtime": "python-cli",
+    "python": ">=3.9",
+    "testFramework": "stdlib (no pytest)",
+    "staticOnly": true,
+    "noExecutionNoPersistenceNoRecovery": true
+  },
+  "integrity": {
+    "sha256Manifest": "SHA256SUMS"
+  },
+  "entryVersionResolution": "prepare.target.version optional; entry alias literal 'current' resolved once by the engine in the order explicit > platform-default override > shared current and pinned exact with provenance (wf-runner >= 0.7.4)",
+  "additionsIn120": [
+    "ai-run-lock/v1.2: execution.rigor (fast|balanced|full), execution.gated, execution.frozen, execution.execPath, execution.hostConsent, execution.environmentSealed",
+    "ai-run-lock/v1.2 rules: frozen=true requires rigor=full and gated=true; execPath=host-controlled requires hostConsent; environmentSealed=false requires an empty selection.environment",
+    "selection.environment minItems relaxed from 1 to 0 (D-27: a platform with no sealed script environment can now write a legal lock)",
+    "ai-run-protocol/v1.3: a prepare response may carry the first claim (result.task + reason=claimed), which is what lets rigor=fast run a single round trip; a claimed response without a task is invalid",
+    "v1.1 locks and v1.1/v1.2 protocol documents remain valid: every change is additive"
+  ],
+  "additionsIn121": [
+    "prepare request may declare rigor (fast|balanced|full) - $defs.prepare is additionalProperties:false, so an undeclared tier could not be sent at all",
+    "prepare request may declare consent (agreement text + optional grantedAt), the only lawful way for a run to be allowed host-controlled script execution",
+    "tiers stay cost-only by contract: no rule here keys any capability off rigor, because BP-2 makes the capability floor identical in all three (a fast run keeps every function, it keeps less evidence). The lock-level tie-rules in 1.2.0 carry the whole restriction: frozen requires full+gated.",
+    "a fast prepare may answer with the first claim in the same envelope; that is why 1.2.0 added the v1.3 rule \"a prepare response whose reason is claimed must carry a task\". Under v1.1/v1.2 a fast run simply gets the two round trips it always got."
+  ],
+  "additionsIn122": [
+    "handoff-bundle.schema.json (handoff-bundle/v1): the platform-neutral交接包 shape BP-4 §4.5 names as the only cross-run state channel - completed-stage conclusions (common $defs/completion, so digests are the same objects a submit carries), a *version view* with no host paths, the artifact rows the bundle directory must contain, and an integrity digest over them.",
+    "state.schema.json rule 2 narrowed, not loosened: \"prepared => completed is empty\" now holds for every run **except** one whose state names the run and bundle manifest it was imported from (x-handoff.fromRun + manifestSha256). A run that imported nothing still cannot start with a filled completed list - checked below in both directions.",
+    "no protocol change: prepare/stop already accept ^x- payload keys, so a bundle is requested through x-handoff and never through a new operation or a new protocol version.",
+    "a bundle always describes finished stages of some other run: it cannot carry an in-flight state machine, and a continuing run re-pins versions in its own lock (2.1.0 §3.6 red line)."
+  ],
+  "additionsIn141": [
+    "Run-lock schema gates scenario and expandedGraphSha256 on v1.3 while keeping v1.1/v1.2 compatible; static positive bundles now cover both the legacy v1.2 shape and scenario-aware v1.3 shape."
+  ],
+  "additionsIn150": [
+    "ai-run-lock resources[] may carry kind=contracts: the engine (wf-runner 0.11.0, D-97) records the runtime-contracts release a run was prepared under, and re-validates the recorded generation against the platform config on every resume path (plan/next/submit/stop) - a mismatch is VERSION_CONFLICT, never a silent switch. Locks written by older runners simply lack the row and stay valid (the check applies only when the row is present).",
+    "common.$defs.error.code gains VERSION_CONFLICT (D-74 family): the engine has raised it since D-52 and the 0.10.0 graph-pin resume check, and the stop/next response validation walks the common error def - a legal refusal must be expressible by the contract."
+  ]
+}

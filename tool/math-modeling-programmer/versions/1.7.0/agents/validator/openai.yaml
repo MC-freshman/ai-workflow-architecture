@@ -1,0 +1,6 @@
+interface:
+  display_name: "Model Validator"
+  short_description: "复算数模结果并审查风险"
+  default_prompt: "使用 $validator 独立复算并审查数模结果。"
+policy:
+  allow_implicit_invocation: false

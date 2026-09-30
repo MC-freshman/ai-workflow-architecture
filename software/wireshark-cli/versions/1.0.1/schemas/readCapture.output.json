@@ -1,0 +1,16 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "description": "tshark -T json 输出：包对象数组。-T fields 时为制表符分隔文本（由 fields 决定列）。",
+  "type": "array",
+  "items": {
+    "type": "object",
+    "properties": {
+      "_source": {
+        "type": "object",
+        "properties": {
+          "layers": { "type": "object", "description": "协议层键值对，如 frame/eth/ip/tcp/http" }
+        }
+      }
+    }
+  }
+}

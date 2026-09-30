@@ -1,0 +1,26 @@
+{
+  "schema": "ai-docs-exclude/v1",
+  "comment": "默认不进入站点构建的内容。inventory.mjs 用它做候选集裁剪；docs-conform.mjs 用它核对产物里确实没出现这些路径。每条带理由，避免以后被当成随手忽略。",
+  "patterns": [
+    { "glob": "**/node_modules/**", "reason": "依赖缓存，不可入库件（BP-7），不是文档" },
+    { "glob": "**/.docusaurus/**", "reason": "Docusaurus 中间产物" },
+    { "glob": "docs-site/build/**", "reason": "站点构建产物" },
+    { "glob": "**/runtime/**", "reason": "平台运行产物：日志、run-lock、缓存、一手证据（红线：不发布）" },
+    { "glob": "**/_sources/**", "reason": "上游快照与第三方原始仓库，非本项目事实来源" },
+    { "glob": "**/software/phpStudy_64/**", "reason": "软件本体 + 在用账号形态记录，明文禁止随任何参考版对外发布" },
+    { "glob": "**/venv/**", "reason": "密封脚本环境/虚拟环境，不可入库件" },
+    { "glob": "**/.venv/**", "reason": "同上" },
+    { "glob": "**/__pycache__/**", "reason": "字节码缓存" },
+    { "glob": "**/.env", "reason": "凭据" },
+    { "glob": "**/*.pem", "reason": "私钥" },
+    { "glob": "**/*.key", "reason": "私钥" },
+    { "glob": "**/*token*", "reason": "令牌类文件名，先排除再人工复核" },
+    { "glob": "**/*secret*", "reason": "凭据类文件名，先排除再人工复核" },
+    { "glob": "**/*.log", "reason": "运行日志" },
+    { "glob": "inbox/**", "reason": "备份/归档/垃圾桶三区职责，非发布面；需要时按条目单独授权纳入" },
+    { "glob": "inbox/ai学习笔记/**", "reason": "用户学习笔记；2026-09-29 由根级迁入 inbox，已由上一条 inbox/** 覆盖，此行保留以显式记录归属" },
+    { "glob": "dsh/**", "reason": "该平台未接入 3.0 判据面，暂无经确认的现行平台章" },
+    { "glob": "**/*.min.js", "reason": "压缩产物" },
+    { "glob": "**/*.html", "reason": "第三方许可证 HTML 等非一手文档" }
+  ]
+}

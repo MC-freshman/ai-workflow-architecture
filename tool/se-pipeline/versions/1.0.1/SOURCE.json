@@ -1,0 +1,31 @@
+{
+  "schema": "ai-governance-source/v1",
+  "authorSession": "qoder",
+  "derivedFrom": "se-pipeline@1.0.0",
+  "supersedes": "1.0.0",
+  "releaseScope": "Schema/prompt reconciliation release. The three stage prompts in workflow.md ask for keys that the corresponding stage output schemas did not declare, and every schema closes additionalProperties, so an author who followed the prompt was rejected by the engine with GATE_FAILED. Observed live on qoder run qoderagent-se-arch-20260924-142841 (INTAKE first submission rejected, state revision unchanged). inputs, notes and pending are added as optional properties: the prompt-level requirement is unchanged and no run that omits them can now be rejected for writing them. The stage graph, gates, scenarios, prompts and scripts are byte-identical to 1.0.0.",
+  "scenarios": {
+    "refactor": [
+      "coding-core-discipline",
+      "coding-api-design"
+    ],
+    "release": [
+      "coding-ci-cd-pipeline",
+      "coding-requirement-delivery",
+      "coding-writing-docs"
+    ],
+    "review": [
+      "coding-code-review-self",
+      "coding-security-review"
+    ],
+    "test": [
+      "coding-test-driven",
+      "coding-systematic-debugging"
+    ]
+  },
+  "packReference": "the domain pack stays in the expert tool-lock (it is where these skills come from); it is deliberately not a workflow context dependency, because a declared pack would inject all of its members into every prompt",
+  "openDeferred": [
+    "stage bodies stay generic: the domain content arrives through the selected skills",
+    "expert-task@1.1.0 and novel-pipeline@1.0.0 carry the same three missing keys; out of scope for this release because only se-pipeline was authorized, so their agents keep pinning the defective schemas"
+  ]
+}

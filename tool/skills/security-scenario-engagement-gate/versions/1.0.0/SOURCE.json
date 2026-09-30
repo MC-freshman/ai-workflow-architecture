@@ -1,0 +1,16 @@
+{
+  "schema": "ai-governance-source/v1",
+  "authorSession": "qoder",
+  "derivedFrom": "skill:novel-confirming-pentest-authorization-security@1.0.0+novel-defining-pentest-scope-security@1.0.0+novel-recording-pentest-engagement-security@1.0.0",
+  "supersedes": null,
+  "releaseScope": "3.3.0 P4 scenario routing card for mastermind-bug-bounty. Every quoted block is the referenced skill's own description copied verbatim; the new writing is limited to step order and refusal gates. Depth stays in the pinned source releases, named by id@version instead of paraphrased.",
+  "verbatimFrom": {
+    "novel-confirming-pentest-authorization-security@1.0.0": "SKILL.md#frontmatter.description",
+    "novel-defining-pentest-scope-security@1.0.0": "SKILL.md#frontmatter.description",
+    "novel-recording-pentest-engagement-security@1.0.0": "SKILL.md#frontmatter.description"
+  },
+  "bodySha256": "372bd28050fb2707c70927540882ad7320c7e58323b0272a1d8c0c2a7bf365bc",
+  "openDeferred": [
+    "The upstream cards are registered under a novel- prefix they do not belong to (D-88) and each exists twice with byte-identical content (D-89); this round points at the -security twin and renames nothing."
+  ]
+}

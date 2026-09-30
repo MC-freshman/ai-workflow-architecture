@@ -1,0 +1,18 @@
+{
+  "schema": "ai-workflow-definition/v2",
+  "id": "wf-runner",
+  "version": "0.1.0",
+  "mode": "pipeline",
+  "maxParallel": 1,
+  "roles": [],
+  "stages": [
+    {
+      "id": "dispatch",
+      "action": "script",
+      "worker": "none",
+      "script": "cli.py",
+      "inputs": "schemas/input.json",
+      "outputs": "schemas/output.json"
+    }
+  ]
+}

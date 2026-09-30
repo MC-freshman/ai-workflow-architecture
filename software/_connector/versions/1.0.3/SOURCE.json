@@ -1,0 +1,33 @@
+{
+ "schema": "ai-software-connector-source/v1",
+ "authorSession": "qoder",
+ "derivedFrom": "software/_connector/versions/1.0.2",
+ "supersedes": "1.0.2",
+ "releaseScope": "Architecture 3.2, step P5 (sessions): a desktop-session could be described but not driven - `open` always answered INTERACTIVE_REQUIRED, `status` read the record back without asking whether anything was alive, and `close` released a lock over a session nobody had stopped. This release makes the lifecycle real, while keeping the human path honest when the platform cannot or has not agreed to start something.",
+ "changes": [
+  "three platform providers answer the operating-system questions: sessionLaunch, sessionLiveness, sessionTerminate. Shared code names no Windows API, no detach flag and no taskkill - those are the platform side of the house, and each platform registers and answers for its own (BP-2).",
+  "open: the endpoint host and port are checked against the named profile BEFORE the key is claimed and before anything starts, so a session that would reach a port the profile does not cover is EGRESS_DENIED with nothing to clean up afterwards.",
+  "open with consent: when the platform allows the launch, the pid goes into the session record and the answer is SESSION_READY; when consent is missing (config.allowGuiLaunch off) or no launch provider is registered, the answer stays INTERACTIVE_REQUIRED and the reason names which of the two it was - the record it leaves carries no pid, because nothing was started.",
+  "status asks the platform whether the pid is still there, so a window the human closed by hand reads back as SESSION_CLOSED and its lock is released, instead of a stale SESSION_READY that would keep every other holder out forever.",
+  "close stops the process first; if the platform cannot stop it the lock is deliberately kept, because a session that is still on screen is not free."
+ ],
+ "unchanged": [
+  "the three published engine-facing shapes, the session wire contract (states, error enum, the additionalProperties:false response), ai-software-admin/v1, and the call path including credential materialization and the 1.0.2 redaction rules",
+  "resolution, snapshot attestation (snapshot-only, never --tools), locks, idempotency, artifacts",
+  "1.0.0, 1.0.1 and 1.0.2 remain published and immutable"
+ ],
+ "openDeferred": [
+  "this was proven against a real long-lived process started through the provider, not against VeraCrypt or Burp: veracrypt 1.0.0 has no connector.json, so its derived overlay still says generic-cli, and changing that is a new recipe release - a shared-repo write the 3.2 plan puts in P5 step 2 but which was not authorised as part of this step.",
+  "burp-suite cannot be served at all today: its capability snapshot is unfrozen and nothing listens on its declared 127.0.0.1:9876 endpoint, so the native MCP row stays unverified rather than green.",
+  "a session launched by a human (INTERACTIVE_REQUIRED) has no pid, so `status` can only report the record, not the window; attaching to an already-running desktop app needs a declared attach path, which no published shape carries (D-90).",
+  "D-85, D-86, D-87, D-88, D-89 stand as registered."
+ ],
+ "releaseStatus": "published",
+ "publishedAt": "2026-09-25",
+ "publishedBy": "qoder, architecture 3.2 round, step P5",
+ "pointerPolicy": "software/_connector/current.json moves 1.0.2 -> 1.0.3, the same discipline already registered as deviation 3 in versions/平台接入清单.md §8.25: this resource has no platform config reader yet (qoder production still points at _gateway 1.0.0).",
+ "selftest": {
+  "credential": "P4a/p4a-selftest.py (41 cells) and P3/p3-selftest.py (98 cells) both rerun against the pinned release",
+  "session": "P5/p5-selftest.py (34 cells): lifecycle against a real process, consent and missing-provider paths, the port ceiling before opening, and every answer validated against the 3.2 session contract"
+ }
+}

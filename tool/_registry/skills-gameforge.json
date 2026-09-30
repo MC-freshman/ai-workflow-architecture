@@ -1,0 +1,245 @@
+{
+  "schema": "ai-skill-catalog/v1",
+  "sourceId": "gameforge",
+  "snapshot": "snapshot-2026.08.31",
+  "skills": [
+    {
+      "id": "game-game-accessibility-specialist",
+      "version": "1.0.0",
+      "sourceId": "gameforge",
+      "sourcePath": "skills/agents/game-accessibility-specialist/SKILL.md",
+      "category": "role-source"
+    },
+    {
+      "id": "game-game-art-director",
+      "version": "1.0.0",
+      "sourceId": "gameforge",
+      "sourcePath": "skills/agents/game-art-director/SKILL.md",
+      "category": "role-source"
+    },
+    {
+      "id": "game-game-audio-director",
+      "version": "1.0.0",
+      "sourceId": "gameforge",
+      "sourcePath": "skills/agents/game-audio-director/SKILL.md",
+      "category": "role-source"
+    },
+    {
+      "id": "game-game-creative-director",
+      "version": "1.0.0",
+      "sourceId": "gameforge",
+      "sourcePath": "skills/agents/game-creative-director/SKILL.md",
+      "category": "role-source"
+    },
+    {
+      "id": "game-game-designer",
+      "version": "1.0.0",
+      "sourceId": "gameforge",
+      "sourcePath": "skills/agents/game-designer/SKILL.md",
+      "category": "role-source"
+    },
+    {
+      "id": "game-game-economy-designer",
+      "version": "1.0.0",
+      "sourceId": "gameforge",
+      "sourcePath": "skills/agents/game-economy-designer/SKILL.md",
+      "category": "role-source"
+    },
+    {
+      "id": "game-game-narrative-director",
+      "version": "1.0.0",
+      "sourceId": "gameforge",
+      "sourcePath": "skills/agents/game-narrative-director/SKILL.md",
+      "category": "role-source"
+    },
+    {
+      "id": "game-game-producer",
+      "version": "1.0.0",
+      "sourceId": "gameforge",
+      "sourcePath": "skills/agents/game-producer/SKILL.md",
+      "category": "role-source"
+    },
+    {
+      "id": "game-game-qa-lead",
+      "version": "1.0.0",
+      "sourceId": "gameforge",
+      "sourcePath": "skills/agents/game-qa-lead/SKILL.md",
+      "category": "role-source"
+    },
+    {
+      "id": "game-game-technical-director",
+      "version": "1.0.0",
+      "sourceId": "gameforge",
+      "sourcePath": "skills/agents/game-technical-director/SKILL.md",
+      "category": "role-source"
+    },
+    {
+      "id": "game-game-ux-designer",
+      "version": "1.0.0",
+      "sourceId": "gameforge",
+      "sourcePath": "skills/agents/game-ux-designer/SKILL.md",
+      "category": "role-source"
+    },
+    {
+      "id": "game-game-godot-specialist",
+      "version": "1.0.0",
+      "sourceId": "gameforge",
+      "sourcePath": "skills/engine-specialists/game-godot-specialist/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "game-game-unity-specialist",
+      "version": "1.0.0",
+      "sourceId": "gameforge",
+      "sourcePath": "skills/engine-specialists/game-unity-specialist/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "game-game-unreal-specialist",
+      "version": "1.0.0",
+      "sourceId": "gameforge",
+      "sourcePath": "skills/engine-specialists/game-unreal-specialist/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "game-game-analytics-setup",
+      "version": "1.0.0",
+      "sourceId": "gameforge",
+      "sourcePath": "skills/workflows/game-analytics-setup/SKILL.md",
+      "category": "workflow-source"
+    },
+    {
+      "id": "game-game-balance-check",
+      "version": "1.0.0",
+      "sourceId": "gameforge",
+      "sourcePath": "skills/workflows/game-balance-check/SKILL.md",
+      "category": "workflow-source"
+    },
+    {
+      "id": "game-game-brainstorm",
+      "version": "1.0.0",
+      "sourceId": "gameforge",
+      "sourcePath": "skills/workflows/game-brainstorm/SKILL.md",
+      "category": "workflow-source"
+    },
+    {
+      "id": "game-game-ci-pipeline",
+      "version": "1.0.0",
+      "sourceId": "gameforge",
+      "sourcePath": "skills/workflows/game-ci-pipeline/SKILL.md",
+      "category": "workflow-source"
+    },
+    {
+      "id": "game-game-code-review",
+      "version": "1.0.0",
+      "sourceId": "gameforge",
+      "sourcePath": "skills/workflows/game-code-review/SKILL.md",
+      "category": "workflow-source"
+    },
+    {
+      "id": "game-game-design-review",
+      "version": "1.0.0",
+      "sourceId": "gameforge",
+      "sourcePath": "skills/workflows/game-design-review/SKILL.md",
+      "category": "workflow-source"
+    },
+    {
+      "id": "game-game-gdd-author",
+      "version": "1.0.0",
+      "sourceId": "gameforge",
+      "sourcePath": "skills/workflows/game-gdd-author/SKILL.md",
+      "category": "workflow-source"
+    },
+    {
+      "id": "game-game-jam-mode",
+      "version": "1.0.0",
+      "sourceId": "gameforge",
+      "sourcePath": "skills/workflows/game-jam-mode/SKILL.md",
+      "category": "workflow-source"
+    },
+    {
+      "id": "game-game-launch",
+      "version": "1.0.0",
+      "sourceId": "gameforge",
+      "sourcePath": "skills/workflows/game-launch/SKILL.md",
+      "category": "workflow-source"
+    },
+    {
+      "id": "game-game-localization-manager",
+      "version": "1.0.0",
+      "sourceId": "gameforge",
+      "sourcePath": "skills/workflows/game-localization-manager/SKILL.md",
+      "category": "workflow-source"
+    },
+    {
+      "id": "game-game-market-research",
+      "version": "1.0.0",
+      "sourceId": "gameforge",
+      "sourcePath": "skills/workflows/game-market-research/SKILL.md",
+      "category": "workflow-source"
+    },
+    {
+      "id": "game-game-playtest",
+      "version": "1.0.0",
+      "sourceId": "gameforge",
+      "sourcePath": "skills/workflows/game-playtest/SKILL.md",
+      "category": "workflow-source"
+    },
+    {
+      "id": "game-game-postmortem",
+      "version": "1.0.0",
+      "sourceId": "gameforge",
+      "sourcePath": "skills/workflows/game-postmortem/SKILL.md",
+      "category": "workflow-source"
+    },
+    {
+      "id": "game-game-prototype",
+      "version": "1.0.0",
+      "sourceId": "gameforge",
+      "sourcePath": "skills/workflows/game-prototype/SKILL.md",
+      "category": "workflow-source"
+    },
+    {
+      "id": "game-game-retrospective",
+      "version": "1.0.0",
+      "sourceId": "gameforge",
+      "sourcePath": "skills/workflows/game-retrospective/SKILL.md",
+      "category": "workflow-source"
+    },
+    {
+      "id": "game-game-reverse-document",
+      "version": "1.0.0",
+      "sourceId": "gameforge",
+      "sourcePath": "skills/workflows/game-reverse-document/SKILL.md",
+      "category": "workflow-source"
+    },
+    {
+      "id": "game-game-scope-check",
+      "version": "1.0.0",
+      "sourceId": "gameforge",
+      "sourcePath": "skills/workflows/game-scope-check/SKILL.md",
+      "category": "workflow-source"
+    },
+    {
+      "id": "game-game-sprint-plan",
+      "version": "1.0.0",
+      "sourceId": "gameforge",
+      "sourcePath": "skills/workflows/game-sprint-plan/SKILL.md",
+      "category": "workflow-source"
+    },
+    {
+      "id": "game-game-start",
+      "version": "1.0.0",
+      "sourceId": "gameforge",
+      "sourcePath": "skills/workflows/game-start/SKILL.md",
+      "category": "workflow-source"
+    },
+    {
+      "id": "game-game-team-orchestrator",
+      "version": "1.0.0",
+      "sourceId": "gameforge",
+      "sourcePath": "skills/workflows/game-team-orchestrator/SKILL.md",
+      "category": "workflow-source"
+    }
+  ]
+}

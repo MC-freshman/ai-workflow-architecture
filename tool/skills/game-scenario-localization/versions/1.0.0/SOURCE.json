@@ -1,0 +1,10 @@
+{
+  "schema": "ai-governance-source/v1",
+  "authorSession": "qoder",
+  "derivedFrom": "game-localization-manager@2.1.0",
+  "supersedes": null,
+  "releaseScope": "Architecture 3.1.0 step T-P7: one of eleven scenario skills for game-pipeline. The body is that workflow's own prompt file verbatim, so the collapse moved the selector and did not rewrite the craft.",
+  "verbatimFrom": "tool/game-localization-manager/versions/2.1.0/workflow.md",
+  "bodySha256": "23c049963d8fff9de36bc2be87555b4a41fe38ff44b54069bfa02a7ad0525cb1",
+  "openDeferred": []
+}

@@ -1,0 +1,7 @@
+{
+  "entrypoint": "tests/fixtures/hello.py",
+  "base_args": [],
+  "runs": [
+    {"id": "EXP-TEST", "args": [], "seed": 7}
+  ]
+}

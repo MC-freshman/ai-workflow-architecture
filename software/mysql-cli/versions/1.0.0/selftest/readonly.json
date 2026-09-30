@@ -1,0 +1,29 @@
+{
+  "schema": "ai-software-selftest/v1",
+  "mode": "readonly",
+  "checks": [
+    {
+      "id": "version",
+      "capability": "version",
+      "arguments": {},
+      "expectedExitCode": 0,
+      "expectedOutputContains": "Ver 8.0.39",
+      "timeout": 15
+    },
+    {
+      "id": "dump-version",
+      "kind": "process",
+      "command": ["mysqldump.exe", "--version"],
+      "expectedExitCode": 0,
+      "expectedOutputContains": "Ver 8.0.39",
+      "timeout": 15
+    },
+    {
+      "id": "files-present",
+      "kind": "file-integrity",
+      "files": ["mysql.exe", "mysqldump.exe", "mysqladmin.exe"],
+      "notes": "校验 recipe verify.files 哈希；不连接任何数据库"
+    }
+  ],
+  "notes": "query/dump 需要真实数据库连接与凭据，不纳入 readonly 自检；连接性检查由工作流在 confirm-stage 后执行"
+}

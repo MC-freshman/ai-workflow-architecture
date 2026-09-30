@@ -1,0 +1,38 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "required": ["target"],
+  "properties": {
+    "target": {
+      "type": "string",
+      "description": "目标主机、网段或域名（nmap target specification）",
+      "examples": ["192.168.1.1", "10.0.0.0/24", "192.168.1.1-50", "example.com"]
+    },
+    "scanType": {
+      "type": "string",
+      "enum": ["S", "T", "A", "U", "W", "M"],
+      "default": "S",
+      "description": "S=TCP SYN(需原始套接字), T=TCP Connect(无需驱动), A=ACK, U=UDP, W=Window, M=Maimon"
+    },
+    "ports": {
+      "type": "array",
+      "items": { "type": "string" },
+      "description": "端口范围列表，渲染时以逗号连接传给 -p",
+      "examples": [["22", "80", "443"], ["1-1024"], ["T:80,443", "U:53"]]
+    },
+    "topPorts": { "type": "integer", "minimum": 1, "maximum": 65535, "description": "扫描 N 个最常见端口（--top-ports）" },
+    "serviceDetection": { "type": "boolean", "default": false, "description": "启用 -sV 服务/版本探测" },
+    "osDetection": { "type": "boolean", "default": false, "description": "启用 -O 操作系统探测（需原始套接字）" },
+    "skipHostDiscovery": { "type": "boolean", "default": false, "description": "-Pn，跳过主机发现，视所有主机在线" },
+    "noDnsResolution": { "type": "boolean", "default": true, "description": "-n，不做反向 DNS 解析" },
+    "fastMode": { "type": "boolean", "default": false, "description": "-F，快速模式（仅扫描常见端口）" },
+    "sequentialPorts": { "type": "boolean", "default": false, "description": "-r，顺序扫描端口而非随机" },
+    "openOnly": { "type": "boolean", "default": false, "description": "--open，只输出开放端口" },
+    "timingTemplate": { "type": "string", "enum": ["0", "1", "2", "3", "4", "5"], "default": "3", "description": "-T0 偏执 ~ -T5 疯狂，授权测试建议 ≤3" },
+    "hostTimeout": { "type": "string", "description": "单主机超时，如 30m / 1h", "examples": ["30m"] },
+    "maxRetries": { "type": "integer", "minimum": 0, "description": "探针重传上限" },
+    "outputFile": { "type": "string", "description": "额外保存 normal 文本报告的工作区路径（-oN）" },
+    "extraArgs": { "type": "array", "items": { "type": "string" }, "description": "透传给 nmap 的额外参数（网关逐字追加，不做转义处理）" }
+  },
+  "additionalProperties": false
+}

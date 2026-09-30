@@ -1,0 +1,2660 @@
+{
+  "schema": "ai-skill-catalog/v1",
+  "sourceId": "nature-skills",
+  "snapshot": "snapshot-2026.08.31",
+  "skills": [
+    {
+      "id": "nature-readme-en",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-academic-search/README_EN.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-nature-academic-search",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-academic-search/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-citation-parser",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-academic-search/references/citation-parser.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-dedup-engine",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-academic-search/references/dedup-engine.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-ris-bibtex-format",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-academic-search/references/ris-bibtex-format.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-search-strategy",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-academic-search/references/search-strategy.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-source-tiers",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-academic-search/references/source-tiers.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-wf1-multi-source-search",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-academic-search/references/workflows/wf1-multi-source-search.md",
+      "category": "workflow-source"
+    },
+    {
+      "id": "nature-wf2-citation-verification",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-academic-search/references/workflows/wf2-citation-verification.md",
+      "category": "workflow-source"
+    },
+    {
+      "id": "nature-wf3-mesh-strategy",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-academic-search/references/workflows/wf3-mesh-strategy.md",
+      "category": "workflow-source"
+    },
+    {
+      "id": "nature-wf4-citation-file-mgmt",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-academic-search/references/workflows/wf4-citation-file-mgmt.md",
+      "category": "workflow-source"
+    },
+    {
+      "id": "nature-wf5-reference-mgmt",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-academic-search/references/workflows/wf5-reference-mgmt.md",
+      "category": "workflow-source"
+    },
+    {
+      "id": "nature-wf6-strict-other-citation-impact-audit",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-academic-search/references/workflows/wf6-strict-other-citation-impact-audit.md",
+      "category": "workflow-source"
+    },
+    {
+      "id": "nature-routing-and-ops",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-academic-search/static/core/routing-and-ops.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-tools",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-academic-search/static/core/tools.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-readme-en-nature-citation",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-citation/README_EN.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-nature-citation",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-citation/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-journal-scope",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-citation/references/journal-scope.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-ris-endnote",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-citation/references/ris-endnote.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-script-usage",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-citation/references/script-usage.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-search-strategy-references",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-citation/references/search-strategy.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-chinese-mode",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-citation/static/core/chinese-mode.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-principles",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-citation/static/core/principles.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-workflow",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-citation/static/core/workflow.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-readme-en-nature-data",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-data/README_EN.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-nature-data",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-data/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-chinese-author-alignment",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-data/references/chinese-author-alignment.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-fair-metadata-checklist",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-data/references/fair-metadata-checklist.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-nature-article-requirements",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-data/references/nature-article-requirements.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-policy-principles",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-data/references/policy-principles.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-repository-and-identifiers",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-data/references/repository-and-identifiers.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-source-basis",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-data/references/source-basis.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-statement-patterns",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-data/references/statement-patterns.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-chinese-mode-core",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-data/static/core/chinese-mode.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-stance",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-data/static/core/stance.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-workflow-core",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-data/static/core/workflow.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-readme-en-nature-downloader",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-downloader/README_EN.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-nature-downloader",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-downloader/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-nature-downloader-reference-research-2026-07-15",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-downloader/docs/nature-downloader-reference-research-2026-07-15.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-2026-06-21-nature-downloader-merge",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-downloader/docs/superpowers/plans/2026-06-21-nature-downloader-merge.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-delivery-verification-and-failures",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-downloader/references/delivery-verification-and-failures.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-institutional-browser-workflow",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-downloader/references/institutional-browser-workflow.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-readme-en-nature-experiment-log",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-experiment-log/README_EN.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-nature-experiment-log",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-experiment-log/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-example-electrochemical",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-experiment-log/references/example-electrochemical.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-example-log",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-experiment-log/references/example-log.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-example-thermal-stability",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-experiment-log/references/example-thermal-stability.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-anomaly-log",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-experiment-log/templates/anomaly-log.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-equipment-tracking",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-experiment-log/templates/equipment-tracking.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-experiment-index",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-experiment-log/templates/experiment-index.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-readme-en-nature-figure",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-figure/README_EN.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-nature-figure",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-figure/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-third-party-notices",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-figure/assets/figures4papers/THIRD_PARTY_NOTICES.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-ai-graphical-abstract-workflow",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-figure/references/ai-graphical-abstract-workflow.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-api",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-figure/references/api.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-asset-adaptation",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-figure/references/asset-adaptation.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-backend-selection",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-figure/references/backend-selection.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-chart-types",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-figure/references/chart-types.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-common-patterns",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-figure/references/common-patterns.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-demos",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-figure/references/demos.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-design-theory",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-figure/references/design-theory.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-figure-contract",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-figure/references/figure-contract.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-figure-legend-conventions",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-figure/references/figure-legend-conventions.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-multipanel-evidence-architecture",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-figure/references/multipanel-evidence-architecture.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-nature-2026-observations",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-figure/references/nature-2026-observations.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-nature-article-requirements-references",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-figure/references/nature-article-requirements.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-openrouter-image-generation",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-figure/references/openrouter-image-generation.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-qa-contract",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-figure/references/qa-contract.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-r-template-index",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-figure/references/r-template-index.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-r-workflow",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-figure/references/r-workflow.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-template-catalog",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-figure/references/template-catalog.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-tutorials",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-figure/references/tutorials.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-contract",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-figure/static/core/contract.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-stance-core",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-figure/static/core/stance.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-python",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-figure/static/fragments/backend/python.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-r",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-figure/static/fragments/backend/r.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-readme-en-nature-image2ppt",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-image2ppt/README_EN.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-nature-image2ppt",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-image2ppt/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-page-worker-base",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-image2ppt/prompts/page-worker-base.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-page-worker",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-image2ppt/prompts/page-worker.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-assets-provenance-contract",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-image2ppt/references/assets-provenance-contract.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-cli-helper",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-image2ppt/references/cli-helper.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-manifest-arrow-extension",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-image2ppt/references/manifest-arrow-extension.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-manifest-schema",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-image2ppt/references/manifest-schema.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-object-routing",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-image2ppt/references/object-routing.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-ocr-text-hints-contract",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-image2ppt/references/ocr-text-hints-contract.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-page-decision-tree",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-image2ppt/references/page-decision-tree.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-qa-contract-references",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-image2ppt/references/qa-contract.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-region-decomposition",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-image2ppt/references/region-decomposition.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-runtime-dependencies",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-image2ppt/references/runtime-dependencies.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-workflow-references",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-image2ppt/references/workflow.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-readme-en-nature-literature-pipeline",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-literature-pipeline/README_EN.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-nature-literature-pipeline",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-literature-pipeline/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-cron-setup",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-literature-pipeline/references/cron-setup.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-gap-analysis",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-literature-pipeline/references/gap-analysis.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-note-template",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-literature-pipeline/references/note-template.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-push-format",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-literature-pipeline/references/push-format.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-review-compilation-workflow",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-literature-pipeline/references/review-compilation-workflow.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-scoring-system",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-literature-pipeline/references/scoring-system.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-literature-push-template",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-literature-pipeline/templates/literature-push-template.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-readme-en-nature-paper-card",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-paper-card/README_EN.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-nature-paper-card",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-paper-card/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-card-schema",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-paper-card/references/card-schema.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-evidence-and-provenance",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-paper-card/references/evidence-and-provenance.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-research-idea-gates",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-paper-card/references/research-idea-gates.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-output-contract",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-paper-card/static/core/output-contract.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-principles-core",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-paper-card/static/core/principles.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-workflow-core-af48c362",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-paper-card/static/core/workflow.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-clinical",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-paper-card/static/fragments/paper_type/clinical.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-discovery",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-paper-card/static/fragments/paper_type/discovery.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-materials",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-paper-card/static/fragments/paper_type/materials.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-methods",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-paper-card/static/fragments/paper_type/methods.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-resource",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-paper-card/static/fragments/paper_type/resource.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-review",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-paper-card/static/fragments/paper_type/review.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-readme-en-nature-paper-to-patent",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-paper-to-patent/README_EN.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-nature-paper-to-patent",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-paper-to-patent/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-cn-patent-drafting-guide",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-paper-to-patent/references/cn-patent-drafting-guide.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-corpus-derived-patterns",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-paper-to-patent/references/corpus-derived-patterns.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-corpus-pair-audit",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-paper-to-patent/references/corpus-pair-audit.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-draft-schema",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-paper-to-patent/references/draft-schema.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-patent-figure-guide",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-paper-to-patent/references/patent-figure-guide.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-correction-handler",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-paper-to-patent/references/disclosure/correction_handler.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-disclosure-builder",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-paper-to-patent/references/disclosure/disclosure_builder.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-disclosure-preview",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-paper-to-patent/references/disclosure/disclosure_preview.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-disclosure-self-check",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-paper-to-patent/references/disclosure/disclosure_self_check.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-intake",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-paper-to-patent/references/disclosure/intake.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-iteration-context",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-paper-to-patent/references/disclosure/iteration_context.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-merger",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-paper-to-patent/references/disclosure/merger.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-patent-points-analyzer",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-paper-to-patent/references/disclosure/patent_points_analyzer.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-prior-art-search",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-paper-to-patent/references/disclosure/prior_art_search.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-project-scan",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-paper-to-patent/references/disclosure/project_scan.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-template-reference",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-paper-to-patent/references/disclosure/template_reference.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-tooling",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-paper-to-patent/references/disclosure/tooling.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-output-contract-core",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-paper-to-patent/static/core/output-contract.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-principles-core-d2af3719",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-paper-to-patent/static/core/principles.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-workflow-core-1d6daa76",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-paper-to-patent/static/core/workflow.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-algorithm-software",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-paper-to-patent/static/fragments/invention/algorithm-software.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-apparatus-system",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-paper-to-patent/static/fragments/invention/apparatus-system.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-mixed",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-paper-to-patent/static/fragments/invention/mixed.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-process-material",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-paper-to-patent/static/fragments/invention/process-material.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-mixed-project",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-paper-to-patent/static/fragments/source/mixed-project.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-pasted-text",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-paper-to-patent/static/fragments/source/pasted-text.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-pdf-text",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-paper-to-patent/static/fragments/source/pdf-text.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-scanned-pdf",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-paper-to-patent/static/fragments/source/scanned-pdf.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-claim-set",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-paper-to-patent/static/fragments/task/claim-set.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-disclosure-analysis",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-paper-to-patent/static/fragments/task/disclosure-analysis.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-disclosure-iteration",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-paper-to-patent/static/fragments/task/disclosure-iteration.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-full-draft",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-paper-to-patent/static/fragments/task/full-draft.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-paper-patent-audit",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-paper-to-patent/static/fragments/task/paper-patent-audit.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-technical-disclosure",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-paper-to-patent/static/fragments/task/technical-disclosure.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-readme-en-nature-paper2ppt",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-paper2ppt/README_EN.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-nature-paper2ppt",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-paper2ppt/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-design-and-layout",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-paper2ppt/references/design-and-layout.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-figure-assets",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-paper2ppt/references/figure-assets.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-self-review",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-paper2ppt/references/self-review.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-output-and-quality",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-paper2ppt/static/core/output-and-quality.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-principles-core-db5e1f9d",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-paper2ppt/static/core/principles.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-toolchain",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-paper2ppt/static/core/toolchain.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-workflow-core-dc45acf8",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-paper2ppt/static/core/workflow.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-clinical-paper-type",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-paper2ppt/static/fragments/paper_type/clinical.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-discovery-paper-type",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-paper2ppt/static/fragments/paper_type/discovery.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-materials-paper-type",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-paper2ppt/static/fragments/paper_type/materials.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-methods-paper-type",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-paper2ppt/static/fragments/paper_type/methods.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-resource-paper-type",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-paper2ppt/static/fragments/paper_type/resource.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-review-paper-type",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-paper2ppt/static/fragments/paper_type/review.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-readme-en-nature-polishing",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-polishing/README_EN.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-nature-polishing",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-polishing/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-latex-layout",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-polishing/references/latex-layout.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-nat-comms-2025-diction",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-polishing/references/nat-comms-2025-diction.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-phrasebank-playbook",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-polishing/references/phrasebank-playbook.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-published-article-patterns",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-polishing/references/published-article-patterns.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-section-moves",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-polishing/references/section-moves.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-style-guardrails",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-polishing/references/style-guardrails.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-writing-strategy",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-polishing/references/writing-strategy.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-failure-modes",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-polishing/static/core/failure-modes.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-output-format",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-polishing/static/core/output-format.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-stance-core-5aaa30be",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-polishing/static/core/stance.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-generic",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-polishing/static/fragments/journal/generic.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-nat-comms",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-polishing/static/fragments/journal/nat-comms.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-nat-mach-intell",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-polishing/static/fragments/journal/nat-mach-intell.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-nature",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-polishing/static/fragments/journal/nature.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-en",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-polishing/static/fragments/language/en.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-zh-to-en",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-polishing/static/fragments/language/zh-to-en.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-algorithmic",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-polishing/static/fragments/paper_type/algorithmic.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-hypothesis",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-polishing/static/fragments/paper_type/hypothesis.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-methods-paper-type-3b00b801",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-polishing/static/fragments/paper_type/methods.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-research",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-polishing/static/fragments/paper_type/research.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-review-paper-type-639c4785",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-polishing/static/fragments/paper_type/review.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-abstract",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-polishing/static/fragments/section/abstract.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-conclusion",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-polishing/static/fragments/section/conclusion.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-discussion",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-polishing/static/fragments/section/discussion.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-intro",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-polishing/static/fragments/section/intro.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-methods-section",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-polishing/static/fragments/section/methods.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-results",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-polishing/static/fragments/section/results.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-title",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-polishing/static/fragments/section/title.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-readme-en-nature-proposal-writer",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-proposal-writer/README_EN.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-nature-proposal-writer",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-proposal-writer/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-skill",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-proposal-writer/references/降承诺提案模式.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-chinese-review-writing-style",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-proposal-writer/references/chinese-review-writing-style.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-compose-mode",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-proposal-writer/references/compose-mode.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-evaluation-rubric",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-proposal-writer/references/evaluation-rubric.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-export-archive",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-proposal-writer/references/export-archive.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-foundation-files",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-proposal-writer/references/foundation-files.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-gpt-handoff-revision-brief",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-proposal-writer/references/gpt-handoff-revision-brief.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-hybrid-mode",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-proposal-writer/references/hybrid-mode.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-partial-proposal-scope",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-proposal-writer/references/partial-proposal-scope.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-professor-dispatch",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-proposal-writer/references/professor-dispatch.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-project-structure",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-proposal-writer/references/project-structure.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-ref-renumbering-cascade",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-proposal-writer/references/ref-renumbering-cascade.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-research-anti-slop",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-proposal-writer/references/research-anti-slop.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-review-critique-methodology",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-proposal-writer/references/review-critique-methodology.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-review-paper-framework",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-proposal-writer/references/review-paper-framework.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-revise-mode",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-proposal-writer/references/revise-mode.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-stopping-rules",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-proposal-writer/references/stopping-rules.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-validation-checklist",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-proposal-writer/references/validation-checklist.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-within-approved-proposal",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-proposal-writer/references/within-approved-proposal.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-worked-example-quaternary-proposal",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-proposal-writer/references/worked-example-quaternary-proposal.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-00-scope",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-proposal-writer/templates/00_scope.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-01-research-canon",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-proposal-writer/templates/01_research_canon.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-02-evidence-table",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-proposal-writer/templates/02_evidence_table.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-03-argument-map",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-proposal-writer/templates/03_argument_map.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-04-section-contracts",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-proposal-writer/templates/04_section_contracts.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-05-style-guide",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-proposal-writer/templates/05_style_guide.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-qa-report",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-proposal-writer/templates/qa_report.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-revision-brief",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-proposal-writer/templates/revision_brief.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-readme-en-nature-reader",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-reader/README_EN.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-nature-reader",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-reader/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-article-anatomy",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-reader/references/article-anatomy.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-equation-handling",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-reader/references/equation-handling.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-figure-extraction",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-reader/references/figure-extraction.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-grounding-rules",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-reader/references/grounding-rules.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-output-spec",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-reader/references/output-spec.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-output-contract-core-05d1ffda",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-reader/static/core/output-contract.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-principles-core-4ce0178a",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-reader/static/core/principles.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-workflow-core-fdb0a192",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-reader/static/core/workflow.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-doi-arxiv",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-reader/static/fragments/source/doi-arxiv.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-html",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-reader/static/fragments/source/html.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-pasted-text-source",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-reader/static/fragments/source/pasted-text.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-pdf-text-source",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-reader/static/fragments/source/pdf-text.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-scanned-pdf-source",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-reader/static/fragments/source/scanned-pdf.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-readme-en-nature-ref-verifier",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-ref-verifier/README_EN.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-nature-ref-verifier",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-ref-verifier/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-common-patterns-references",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-ref-verifier/references/common-patterns.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-readme-en-nature-response",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-response/README_EN.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-nature-response",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-response/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-conflicting-reviewers",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-response/examples/conflicting-reviewers.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-major-revision-with-missing-evidence",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-response/examples/major-revision-with-missing-evidence.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-minor-revision",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-response/examples/minor-revision.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-action-mapping",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-response/references/action-mapping.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-chinese-author-alignment-references",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-response/references/chinese-author-alignment.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-comment-taxonomy",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-response/references/comment-taxonomy.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-difficult-cases",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-response/references/difficult-cases.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-intake-and-routing",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-response/references/intake-and-routing.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-latex-templates",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-response/references/latex-templates.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-package-consistency-audit",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-response/references/package-consistency-audit.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-qa-checklist",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-response/references/qa-checklist.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-response-structure",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-response/references/response-structure.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-source-basis-references",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-response/references/source-basis.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-tone-and-stance",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-response/references/tone-and-stance.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-stance-core-13e88e6a",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-response/static/core/stance.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-workflow-core-6d511abc",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-response/static/core/workflow.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-conflicting-reviewers-tests",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-response/tests/conflicting-reviewers.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-defensive-draft-audit",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-response/tests/defensive-draft-audit.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-evaluation-summary",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-response/tests/evaluation-summary.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-impossible-experiment",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-response/tests/impossible-experiment.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-major-revision-missing-evidence",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-response/tests/major-revision-missing-evidence.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-minor-revision-tests",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-response/tests/minor-revision.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-reviewer-visibility",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-response/tests/reviewer-visibility.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-rubric",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-response/tests/rubric.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-task-status-tracking",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-response/tests/task-status-tracking.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-unclear-decision-type",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-response/tests/unclear-decision-type.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-readme-en-nature-reviewer",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-reviewer/README_EN.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-nature-reviewer",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-reviewer/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-domain-specific-review-gates",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-reviewer/references/domain-specific-review-gates.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-editorial-criteria-and-processes",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-reviewer/references/editorial criteria and processes.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-qa-checklist-references",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-reviewer/references/qa-checklist.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-report-structure",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-reviewer/references/report-structure.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-review-axes",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-reviewer/references/review-axes.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-reviewer-workflow",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-reviewer/references/reviewer-workflow.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-role-boundaries",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-reviewer/references/role-boundaries.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-source-basis-references-ff9626c1",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-reviewer/references/source-basis.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-technical-concern-taxonomy",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-reviewer/references/technical-concern-taxonomy.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-punctuation-style",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-reviewer/tests/punctuation-style.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-reviewer-independence",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-reviewer/tests/reviewer-independence.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-severity-tiering",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-reviewer/tests/severity-tiering.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-traceable-review",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-reviewer/tests/traceable-review.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-readme-en-nature-shared",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-shared/README_EN.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-nature-shared",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-shared/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-consistency-sweep",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-shared/core/consistency-sweep.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-discussion-argument-language",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-shared/core/discussion-argument-language.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-ethics",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-shared/core/ethics.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-main-text-discipline",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-shared/core/main-text-discipline.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-nature-abstract",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-shared/core/nature-abstract.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-nature-introduction",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-shared/core/nature-introduction.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-nature-results-discussion",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-shared/core/nature-results-discussion.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-paper-type-taxonomy",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-shared/core/paper-type-taxonomy.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-reader-workflow",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-shared/core/reader-workflow.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-research-compliance",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-shared/core/research-compliance.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-terminology-ledger",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-shared/core/terminology-ledger.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-nat-comms-journal-formats",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-shared/journal-formats/nat-comms.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-nature-machine-intelligence",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-shared/journal-formats/nature-machine-intelligence.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-nature-journal-formats",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-shared/journal-formats/nature.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-readme-en-nature-statistics",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-statistics/README_EN.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-nature-statistics",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-statistics/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-common-failure-modes",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-statistics/references/common-failure-modes.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-figure-statistics",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-statistics/references/figure-statistics.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-nature-article-requirements-references-8befbc31",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-statistics/references/nature-article-requirements.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-reviewer-checklist",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-statistics/references/reviewer-checklist.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-source-basis-references-fe3ae278",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-statistics/references/source-basis.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-statistical-reporting",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-statistics/references/statistical-reporting.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-readme-en-nature-writing",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-writing/README_EN.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-nature-writing",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-writing/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-abstract-references",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-writing/references/abstract.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-article-architecture",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-writing/references/article-architecture.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-chinese-author-workflow",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-writing/references/chinese-author-workflow.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-conclusion-references",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-writing/references/conclusion.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-experiments",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-writing/references/experiments.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-introduction",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-writing/references/introduction.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-method",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-writing/references/method.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-nat-comms-2025-corpus",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-writing/references/nat-comms-2025-corpus.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-nature-summary-paragraph",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-writing/references/nature-summary-paragraph.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-paper-review",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-writing/references/paper-review.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-paragraph-flow",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-writing/references/paragraph-flow.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-related-work",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-writing/references/related-work.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-submission-package",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-writing/references/submission-package.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-abstract-examples",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-writing/references/examples/abstract-examples.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-index",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-writing/references/examples/index.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-introduction-examples",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-writing/references/examples/introduction-examples.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-method-examples",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-writing/references/examples/method-examples.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-template-a",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-writing/references/examples/abstract/template-a.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-template-b",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-writing/references/examples/abstract/template-b.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-template-c",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-writing/references/examples/abstract/template-c.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-novel-task-challenge-decomposition",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-writing/references/examples/introduction/novel-task-challenge-decomposition.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-pipeline-not-recommended-abstract-only",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-writing/references/examples/introduction/pipeline-not-recommended-abstract-only.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-pipeline-version-1-one-contribution-multi-advantages",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-writing/references/examples/introduction/pipeline-version-1-one-contribution-multi-advantages.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-pipeline-version-2-two-contributions",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-writing/references/examples/introduction/pipeline-version-2-two-contributions.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-pipeline-version-3-new-module-on-existing-pipeline",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-writing/references/examples/introduction/pipeline-version-3-new-module-on-existing-pipeline.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-pipeline-version-4-observation-driven",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-writing/references/examples/introduction/pipeline-version-4-observation-driven.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-technical-challenge-version-1-existing-task",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-writing/references/examples/introduction/technical-challenge-version-1-existing-task.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-technical-challenge-version-2-existing-task-insight-backed-by-traditional",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-writing/references/examples/introduction/technical-challenge-version-2-existing-task-insight-backed-by-traditional.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-technical-challenge-version-3-novel-task",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-writing/references/examples/introduction/technical-challenge-version-3-novel-task.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-version-1-task-then-application",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-writing/references/examples/introduction/version-1-task-then-application.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-version-2-application-first",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-writing/references/examples/introduction/version-2-application-first.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-version-3-general-to-specific-setting",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-writing/references/examples/introduction/version-3-general-to-specific-setting.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-version-4-open-with-challenge",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-writing/references/examples/introduction/version-4-open-with-challenge.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-example-of-the-three-elements",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-writing/references/examples/method/example-of-the-three-elements.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-method-writing-common-issues-note",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-writing/references/examples/method/method-writing-common-issues-note.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-module-design-instant-ngp",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-writing/references/examples/method/module-design-instant-ngp.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-module-motivation-patterns",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-writing/references/examples/method/module-motivation-patterns.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-module-triad-neural-body",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-writing/references/examples/method/module-triad-neural-body.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-neural-body-annotated-figure-text",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-writing/references/examples/method/neural-body-annotated-figure-text.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-overview-template",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-writing/references/examples/method/overview-template.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-pre-writing-questions",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-writing/references/examples/method/pre-writing-questions.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-section-skeleton",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-writing/references/examples/method/section-skeleton.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-output-format-core",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-writing/static/core/output-format.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-stance-core-d3167ff9",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-writing/static/core/stance.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-workflow-core-0e98f785",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-writing/static/core/workflow.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-generic-journal",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-writing/static/fragments/journal/generic.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-nat-comms-journal",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-writing/static/fragments/journal/nat-comms.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-nat-mach-intell-journal",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-writing/static/fragments/journal/nat-mach-intell.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-nature-family",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-writing/static/fragments/journal/nature-family.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-nature-journal",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-writing/static/fragments/journal/nature.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-en-language",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-writing/static/fragments/language/en.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-zh-to-en-language",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-writing/static/fragments/language/zh-to-en.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-algorithmic-paper-type",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-writing/static/fragments/paper_type/algorithmic.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-hypothesis-paper-type",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-writing/static/fragments/paper_type/hypothesis.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-methods-paper-type-eebf6bdd",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-writing/static/fragments/paper_type/methods.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-research-paper-type",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-writing/static/fragments/paper_type/research.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-review-paper-type-f26f847b",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-writing/static/fragments/paper_type/review.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-abstract-section",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-writing/static/fragments/section/abstract.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-conclusion-section",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-writing/static/fragments/section/conclusion.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-discussion-section",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-writing/static/fragments/section/discussion.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-experiments-section",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-writing/static/fragments/section/experiments.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-intro-section",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-writing/static/fragments/section/intro.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-method-section",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-writing/static/fragments/section/method.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-related-work-section",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-writing/static/fragments/section/related-work.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-title-section",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-writing/static/fragments/section/title.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-manuscript",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-writing/static/fragments/task/manuscript.md",
+      "category": "skill"
+    },
+    {
+      "id": "nature-submission-package-task",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-writing/static/fragments/task/submission-package.md",
+      "category": "skill"
+    }
+  ]
+}

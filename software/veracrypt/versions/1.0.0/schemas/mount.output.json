@@ -1,0 +1,11 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "exitCode": { "type": "integer" },
+    "driveLetter": { "type": "string", "description": "挂载成功的盘符" },
+    "mounted": { "type": "boolean" },
+    "stderr": { "type": "string" }
+  },
+  "required": ["exitCode", "mounted"]
+}

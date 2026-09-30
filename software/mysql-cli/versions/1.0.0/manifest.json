@@ -1,0 +1,131 @@
+{
+  "schema": "ai-software/v1",
+  "id": "mysql-cli",
+  "version": "1.0.0",
+  "displayName": "MySQL Client CLI (mysql, mysqldump)",
+  "upstreamVersion": "8.0.39",
+  "kind": "cli-wrapper",
+  "transport": {
+    "command": "${softwareRoot}/mysql.exe",
+    "argsStyle": "declarative-argv",
+    "notes": "query 用 mysql.exe，dump 用 mysqldump.exe（各能力 invocation 分别声明 executable）"
+  },
+  "capabilities": [
+    {
+      "name": "version",
+      "nativeName": "mysql --version",
+      "inputSchemaRef": "schemas/empty.input.json",
+      "outputSchemaRef": "schemas/version.output.json",
+      "sideEffects": "none",
+      "permissionRequests": { "filesystem": "none", "network": "none", "process": "self", "credentials": "none" },
+      "consent": "auto",
+      "idempotent": true,
+      "safeForSelftest": true,
+      "invocation": {
+        "executable": "mysql.exe",
+        "baseArgv": ["--version"],
+        "argMapping": [],
+        "outputCapture": "stdout",
+        "outputFormat": "text",
+        "timeout": 15,
+        "successExitCodes": [0]
+      }
+    },
+    {
+      "name": "query",
+      "nativeName": "mysql --defaults-extra-file=<tmp> -h ... -D db -e <sql> --batch",
+      "inputSchemaRef": "schemas/query.input.json",
+      "outputSchemaRef": "schemas/query.output.json",
+      "sideEffects": "external",
+      "permissionRequests": { "filesystem": "workspace", "network": "scoped", "process": "self", "credentials": "reference:db-credentials" },
+      "consent": "confirm-stage",
+      "idempotent": false,
+      "safeForSelftest": false,
+      "invocation": {
+        "executable": "mysql.exe",
+        "baseArgv": ["--batch", "--raw"],
+        "credentialHandling": {
+          "mechanism": "defaults-extra-file",
+          "injectArgv": ["--defaults-extra-file", "<temp-file>"],
+          "injectPosition": "head",
+          "notes": "网关将 passwordRef 解析后写入工作区临时 my.cnf（[client] 段），在 argv 头部注入 --defaults-extra-file=<tmp>，调用结束立即删除；defaultsFile 不是用户参数、不在 argMapping 中；禁止 -p明文 与 MYSQL_PWD 落日志",
+          "tempFilePermissions": "owner-only",
+          "deleteAfterCall": true
+        },
+        "argMapping": [
+          { "param": "host", "flag": "-h", "required": true },
+          { "param": "port", "flag": "-P" },
+          { "param": "user", "flag": "-u", "required": true },
+          { "param": "database", "flag": "-D" },
+          { "param": "sql", "flag": "-e", "required": true },
+          { "param": "outputXml", "flag": "-X", "style": "boolean", "conflictsWith": ["outputHtml", "outputTable"] },
+          { "param": "outputHtml", "flag": "-H", "style": "boolean" },
+          { "param": "outputTable", "flag": "-t", "style": "boolean" },
+          { "param": "skipColumnNames", "flag": "-N", "style": "boolean" },
+          { "param": "verticalOutput", "flag": "-E", "style": "boolean" },
+          { "param": "connectTimeout", "flag": "--connect-timeout" },
+          { "param": "extraArgs", "style": "passthrough" }
+        ],
+        "outputCapture": "stdout",
+        "outputFormat": "tsv",
+        "outputNote": "--batch --raw 输出制表符分隔文本（首行表头）；-X 输出 XML；破坏性 SQL（DROP/DELETE/UPDATE 无 WHERE/TRUNCATE）由工作流门禁拦截或升级 confirm-call",
+        "timeout": 600,
+        "successExitCodes": [0]
+      }
+    },
+    {
+      "name": "dump",
+      "nativeName": "mysqldump --defaults-extra-file=<tmp> ... > out.sql",
+      "inputSchemaRef": "schemas/dump.input.json",
+      "outputSchemaRef": "schemas/dump.output.json",
+      "sideEffects": "local-write",
+      "permissionRequests": { "filesystem": "workspace", "network": "scoped", "process": "self", "credentials": "reference:db-credentials" },
+      "consent": "confirm-stage",
+      "idempotent": true,
+      "safeForSelftest": false,
+      "invocation": {
+        "executable": "mysqldump.exe",
+        "baseArgv": ["--single-transaction", "--routines", "--triggers", "--events"],
+        "credentialHandling": {
+          "mechanism": "defaults-extra-file",
+          "injectArgv": ["--defaults-extra-file", "<temp-file>"],
+          "injectPosition": "head",
+          "notes": "同 query，临时 my.cnf 用后即删",
+          "tempFilePermissions": "owner-only",
+          "deleteAfterCall": true
+        },
+        "argMapping": [
+          { "param": "host", "flag": "-h", "required": true },
+          { "param": "port", "flag": "-P" },
+          { "param": "user", "flag": "-u", "required": true },
+          { "param": "allDatabases", "flag": "--all-databases", "style": "boolean" },
+          { "param": "databases", "flag": "--databases", "style": "repeat" },
+          { "param": "database", "style": "positional", "position": 0, "notes": "单库位置参数（mysqldump db [table...]），与 --databases/--all-databases 互斥，由 schema oneOf 约束" },
+          { "param": "tables", "style": "positional", "position": 1, "repeating": true, "notes": "单库时的表名位置参数，跟在 database 之后" },
+          { "param": "noData", "flag": "--no-data", "style": "boolean" },
+          { "param": "noSchema", "flag": "--no-create-info", "style": "boolean" },
+          { "param": "where", "flag": "--where" },
+          { "param": "resultFile", "flag": "--result-file" },
+          { "param": "extraArgs", "style": "passthrough" }
+        ],
+        "outputCapture": "stdout",
+        "outputFormat": "sql-text",
+        "outputNote": "SQL 逻辑备份文本；优先用 resultFile 直接写工作区文件（避免 Windows 控制台编码问题），否则重定向 stdout",
+        "timeout": 1800,
+        "successExitCodes": [0]
+      }
+    }
+  ],
+  "concurrency": {
+    "instanceMode": "per-run",
+    "poolSize": null,
+    "exclusiveResources": [],
+    "whenBusy": "reject-retryable",
+    "notes": "框架级 per-run 并行；同一数据库的并发写/DDL 可能触发行锁/表锁，由工作流控制；--single-transaction 保证一致性读不锁表"
+  },
+  "platformSupport": { "windows": "supported", "linux": "supported", "macos": "supported" },
+  "requiredProfiles": [],
+  "snapshot": "capabilities.snapshot.json",
+  "integrity": { "sha256Manifest": "SHA256SUMS" },
+  "docs": "README.md"
+}

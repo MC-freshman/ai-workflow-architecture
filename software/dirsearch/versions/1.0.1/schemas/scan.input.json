@@ -1,0 +1,32 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "required": ["url"],
+  "properties": {
+    "url": {
+      "oneOf": [ { "type": "string" }, { "type": "array", "items": { "type": "string" }, "minItems": 1 } ],
+      "description": "目标 URL（-u，可重复多个）",
+      "examples": ["http://127.0.0.1:8080"]
+    },
+    "wordlists": { "type": "array", "items": { "type": "string" }, "description": "字典文件路径（-w，可重复）；不传用内置字典" },
+    "extensions": { "type": "array", "items": { "type": "string" }, "description": "扩展名（-e，逗号连接），如 [\"php\",\"txt\",\"bak\"]" },
+    "excludeExtensions": { "type": "array", "items": { "type": "string" } },
+    "removeExtensions": { "type": "boolean", "default": false, "description": "--remove-extensions" },
+    "threads": { "type": "integer", "minimum": 1, "maximum": 100, "description": "-t 线程数，授权测试建议 ≤10" },
+    "recursionDepth": { "type": "integer", "minimum": 0, "description": "-R 递归爆破深度" },
+    "excludeSubdirs": { "type": "array", "items": { "type": "string" } },
+    "excludeStatus": { "type": "array", "items": { "type": "string" }, "description": "-x 排除状态码，如 [\"404\",\"500\"]" },
+    "httpMethod": { "type": "string", "default": "GET", "enum": ["GET", "HEAD", "POST", "PUT", "DELETE", "OPTIONS", "PATCH"] },
+    "randomAgent": { "type": "boolean", "default": true, "description": "--random-agent 随机 UA" },
+    "cookie": { "type": "string", "description": "Cookie 头（敏感，优先用 headersFile 引用工作区文件）" },
+    "headersFile": { "type": "string", "description": "自定义头文件路径" },
+    "timeout": { "type": "integer", "minimum": 1, "description": "连接超时（秒）" },
+    "delay": { "type": "number", "minimum": 0, "description": "请求间隔（秒），限速用" },
+    "retries": { "type": "integer", "minimum": 0 },
+    "proxy": { "type": "string", "description": "代理地址，如 http://127.0.0.1:8080（通常指向 Burp）" },
+    "outputFile": { "type": "string", "description": "-o 报告输出路径（工作区）" },
+    "outputFormat": { "type": "string", "enum": ["simple", "plain", "json", "xml", "md", "csv"], "description": "报告格式；需结构化结果用 json" },
+    "extraArgs": { "type": "array", "items": { "type": "string" } }
+  },
+  "additionalProperties": false
+}

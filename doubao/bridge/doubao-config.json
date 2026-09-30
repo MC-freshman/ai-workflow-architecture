@@ -1,0 +1,20 @@
+{
+  "platform": "doubao",
+  "contracts": "E:\\ai\\tool\\runtime-contracts\\versions\\1.4.0",
+  "toolRoot": "E:\\ai\\tool",
+  "agentRoot": "E:\\ai\\agent",
+  "bridge": "E:\\ai\\doubao\\bridge.json",
+  "runner": "E:\\ai\\tool\\wf-runner\\versions\\0.10.0",
+  "environmentManifest": "E:\\ai\\doubao\\bridge\\environment.json",
+  "capabilities": "E:\\ai\\doubao\\bridge\\capabilities.json",
+  "runsRoot": "E:\\ai\\doubao\\runtime\\runs",
+  "platformRoot": "E:\\ai\\doubao",
+  "inputRoots": [
+    "E:\\ai"
+  ],
+  "scannerRelease": "E:\\ai\\tool\\repo-lint\\versions\\0.5.1",
+  "notes_31": "doubao 平台采纳架构 3.1.0（2026-09-23，3.1-D 接入轮）：显式钉版 wf-runner 0.10.0 + runtime-contracts 1.4.0 + repo-lint 0.5.1（三件同代，引擎拒绝半切换，D-52）。引擎选版与共享 current 是两套机制：本平台钉版不改任何共享默认。F-1 上下文注入与 F-2 场景展开（expandedGraphSha256 入锁）已在本平台实测，证据见 bridge/capabilities.json 的 attested 段与 runtime/maintenance/3.1-adoption/。",
+  "notes_absent": "本平台不声明 scriptEnvironmentRungs（无 WSL/容器密封环境）：脚本派发按 D-27 闭合形态回答 CAPABILITY_UNAVAILABLE，prompt-only 工作流与矩阵 claim+stop 不受影响。不声明 peerDispatcherModule（委派不可用）。",
+  "notes_software": "按用户 2026-09-23 授权，software 软件仓相关问题默认忽视：本 config 不声明 softwareRoot/softwareGateway 等键，software 面不纳入本轮接入门槛；conform 中表现为 union-source-gap:software（gapPlan 已登记）。",
+  "notes_history": "历史快照（2026-09-16 首轮接入）：runner wf-runner 0.6.0、contracts repo-lint 0.2.1，自建 Windows venv（python 3.9.13）。旧配置字节备份于 runtime/maintenance/3.1-adoption/checkpoint/。"
+}

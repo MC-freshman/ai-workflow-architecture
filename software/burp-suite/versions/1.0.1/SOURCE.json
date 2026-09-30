@@ -1,0 +1,31 @@
+{
+ "schema": "ai-workflow-source/v1",
+ "authorSession": "qoder",
+ "derivedFrom": "burp-suite@1.0.0 plus qoder/runtime/maintenance/20260923-3.2.0/P5/live-tools-list-readback.json",
+ "supersedes": "1.0.0",
+ "releaseScope": "Architecture 3.2 P5: freeze a real Burp MCP SSE tools/list result and add the connector-facing SSE dispatch shape without rewriting the 1.0.0 release.",
+ "changes": [
+  "manifest.json: version 1.0.1, protocol mcp-sse, protocolVersion 2024-11-05, capabilityAttestation native-tools-list, and linux/macos status changed to untested because no recipes are published for those bodies.",
+  "capabilities.snapshot.json: frozen=true; live serverInfo burp-suite 1.1.2 and 25 tools with input schemas recorded under runtime.tools; proxyHistory and scannerScan remain per-capability pending.",
+  "recipes/windows.json, selftest/readonly.json and README.md: transport and operational notes now describe the tested root SSE session.",
+  "SOURCE.json and SHA256SUMS: added/regenerated for the new immutable release."
+ ],
+ "unchanged": [
+  "burp-suite@1.0.0 remains byte-identical and its current pointer remains unchanged.",
+  "No software body or credential is stored in this release."
+ ],
+ "evidence": {
+  "toolsListReadback": "qoder/runtime/maintenance/20260923-3.2.0/P5/live-tools-list-readback.json",
+  "toolsListSha256": "8baf895ec1abe513ff30e5b2614340f3f5d050dd2ffd1adc6030600790ba7a79",
+  "toolCount": 25,
+  "serverInfo": {
+   "name": "burp-suite",
+   "version": "1.1.2"
+  }
+ },
+ "releaseStatus": "candidate",
+ "publishedAt": "2026-09-25",
+ "publishedBy": "qoder, architecture 3.2 P5 Burp live MCP closure",
+ "pointerPolicy": "Candidate only: software/burp-suite/current.json remains 1.0.0 until a separately checkpointed cross-platform pointer switch is authorized.",
+ "migration": "The connector release must be 1.0.4 or newer for mcp-sse dispatch; older connectors continue to refuse the unfrozen 1.0.0 snapshot or treat the Burp JAR as a CLI body."
+}

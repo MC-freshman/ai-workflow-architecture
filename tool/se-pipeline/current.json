@@ -1,0 +1,6 @@
+{
+  "schema": "ai-workflow-pointer/v1",
+  "id": "se-pipeline",
+  "version": "1.0.1",
+  "hashManifest": "SHA256SUMS"
+}

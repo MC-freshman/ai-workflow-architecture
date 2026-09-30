@@ -1,0 +1,32 @@
+{
+  "schema": "ai-workflow/v2.1",
+  "id": "framework-pipeline",
+  "displayName": "Framework Authoring Pipeline (scenarios)",
+  "version": "1.0.0",
+  "mode": "pipeline",
+  "entry": "workflow.yaml",
+  "inputSchema": "schemas/input.schema.json",
+  "outputSchema": "schemas/output.schema.json",
+  "permissions": {
+    "network": "deny",
+    "process": "allowlisted-only",
+    "filesystem": "project-scoped"
+  },
+  "dependencies": {
+    "skills": {
+      "framework-scenario-resource-author": "1.0.0",
+      "framework-scenario-resource-audit": "1.0.0",
+      "framework-scenario-governance-edit": "1.0.0",
+      "framework-scenario-conform-gate": "1.0.0",
+      "framework-scenario-adoption-wave": "1.0.0",
+      "framework-scenario-run-discipline": "1.0.0",
+      "framework-scenario-defect-register": "1.0.0",
+      "framework-scenario-context-budget": "1.0.0"
+    },
+    "workflows": {},
+    "packs": {}
+  },
+  "integrity": {
+    "sha256Manifest": "SHA256SUMS"
+  }
+}

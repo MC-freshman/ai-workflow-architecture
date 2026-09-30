@@ -1,0 +1,28 @@
+{
+  "schema": "ai-skill/v1",
+  "id": "paper-scenario-style-polish",
+  "version": "1.0.0",
+  "kind": "scenario",
+  "category": "paper-author",
+  "entry": "SKILL.md",
+  "input": {
+    "type": "workflow-stage-context",
+    "contract": "the stage prompt this scenario is selected for"
+  },
+  "output": {
+    "type": "guidance",
+    "contract": "verbatim upstream criteria, step order and refusal rules"
+  },
+  "permissions": [],
+  "requires": [],
+  "conflicts": [],
+  "source": {
+    "sourceId": "skill:nature-style-guardrails|skill:nature-punctuation-style|skill:nature-chinese-review-writing-style|skill:nature-research-anti-slop",
+    "path": "versions/1.0.0/SKILL.md",
+    "license": "in-repo (upstream nature/paper skill cards)",
+    "snapshot": "derived at 3.3.0 P6"
+  },
+  "integrity": {
+    "sha256Manifest": "SHA256SUMS"
+  }
+}

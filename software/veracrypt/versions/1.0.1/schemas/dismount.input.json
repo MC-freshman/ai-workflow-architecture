@@ -1,0 +1,10 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "driveLetter": { "type": "string", "pattern": "^[A-Za-z]?$", "description": "要卸载的盘符（/d X）；留空或不传 = /d 卸载全部卷" },
+    "force": { "type": "boolean", "default": false, "description": "/f 强制关闭占用句柄" },
+    "extraArgs": { "type": "array", "items": { "type": "string" } }
+  },
+  "additionalProperties": false
+}

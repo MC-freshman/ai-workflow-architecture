@@ -1,0 +1,12 @@
+{
+  "schema": "ai-agent-contract-test/v1",
+  "agent": "mastermind-bug-bounty",
+  "version": "4.0.1",
+  "assertions": [
+    "model policy inherits the invoking session",
+    "only workflow mastermind-bug-bounty@3.0.1 is callable",
+    "tool implementation is absent from the agent bundle",
+    "active testing requires explicit authorization",
+    "published files are immutable after release"
+  ]
+}

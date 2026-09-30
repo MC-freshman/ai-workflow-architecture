@@ -1,0 +1,6 @@
+{
+  "schema": "ai-agent-pointer/v1",
+  "id": "security-researcher",
+  "version": "1.4.0",
+  "hashManifest": "SHA256SUMS"
+}

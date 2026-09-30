@@ -1,0 +1,41 @@
+{
+  "schema": "ai-tool-lock/v2",
+  "skills": {
+    "game-game-designer": "1.0.0",
+    "game-game-accessibility-specialist": "1.0.0",
+    "game-game-narrative-director": "1.0.0",
+    "game-game-economy-designer": "1.0.0",
+    "game-game-audio-director": "1.0.0",
+    "game-game-producer": "1.0.0",
+    "game-game-qa-lead": "1.0.0",
+    "game-game-technical-director": "1.0.0",
+    "game-game-art-director": "1.0.0",
+    "game-game-ux-designer": "1.0.0",
+    "game-game-creative-director": "1.0.0",
+    "game-scenario-brainstorm": "1.0.0",
+    "game-scenario-gdd": "1.0.0",
+    "game-scenario-prototype": "1.0.0",
+    "game-scenario-playtest": "1.0.0",
+    "game-scenario-balance": "1.0.0",
+    "game-scenario-code-review": "1.0.0",
+    "game-scenario-ci": "1.0.0",
+    "game-scenario-launch": "1.0.0",
+    "game-scenario-localization": "1.0.0",
+    "game-scenario-orchestrator": "1.0.0",
+    "game-scenario-reverse-doc": "1.0.0"
+  },
+  "workflows": {
+    "game-sprint-plan": "2.1.1",
+    "game-start": "2.2.0",
+    "game-retrospective": "2.1.0",
+    "game-analytics-setup": "2.1.0",
+    "game-market-research": "2.1.0",
+    "game-jam-mode": "2.1.0",
+    "game-postmortem": "2.1.0",
+    "game-design-review": "2.1.0",
+    "game-scope-check": "2.1.0",
+    "game-pipeline": "1.1.0"
+  },
+  "packs": {},
+  "profiles": {}
+}

@@ -1,0 +1,21 @@
+{
+  "schema": "ai-governance-source/v1",
+  "authorSession": "qoder",
+  "derivedFrom": "skill:novel-auditing-cors-policy-security@1.0.0+novel-checking-http-security-headers-security@1.0.0+novel-analyzing-tls-config-security@1.0.0+novel-detecting-ssl-cert-issues-security@1.0.0+novel-detecting-weak-cryptography-security@1.0.0+novel-detecting-directory-listing-security@1.0.0+novel-detecting-debug-endpoints-security@1.0.0+novel-fingerprinting-server-software-security@1.0.0",
+  "supersedes": null,
+  "releaseScope": "3.3.0 P4 scenario routing card for mastermind-bug-bounty. Every quoted block is the referenced skill's own description copied verbatim; the new writing is limited to step order and refusal gates. Depth stays in the pinned source releases, named by id@version instead of paraphrased.",
+  "verbatimFrom": {
+    "novel-auditing-cors-policy-security@1.0.0": "SKILL.md#frontmatter.description",
+    "novel-checking-http-security-headers-security@1.0.0": "SKILL.md#frontmatter.description",
+    "novel-analyzing-tls-config-security@1.0.0": "SKILL.md#frontmatter.description",
+    "novel-detecting-ssl-cert-issues-security@1.0.0": "SKILL.md#frontmatter.description",
+    "novel-detecting-weak-cryptography-security@1.0.0": "SKILL.md#frontmatter.description",
+    "novel-detecting-directory-listing-security@1.0.0": "SKILL.md#frontmatter.description",
+    "novel-detecting-debug-endpoints-security@1.0.0": "SKILL.md#frontmatter.description",
+    "novel-fingerprinting-server-software-security@1.0.0": "SKILL.md#frontmatter.description"
+  },
+  "bodySha256": "8147030c00f3ca107e8ba7d111ccda9cc4c2a0a99e7acf3a83ce9b2b46b2eb7c",
+  "openDeferred": [
+    "The upstream cards are registered under a novel- prefix they do not belong to (D-88) and each exists twice with byte-identical content (D-89); this round points at the -security twin and renames nothing."
+  ]
+}

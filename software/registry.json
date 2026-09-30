@@ -1,0 +1,98 @@
+{
+ "schema": "ai-software-registry/v1",
+ "version": 1,
+ "software": [
+  {
+   "id": "burp-suite",
+   "current": "burp-suite/current.json",
+   "enabled": true,
+   "kind": "mcp-http",
+   "invocable": false,
+   "transports": []
+  },
+  {
+   "id": "dirsearch",
+   "current": "dirsearch/current.json",
+   "enabled": true,
+   "kind": "cli-wrapper",
+   "invocable": false,
+   "transports": []
+  },
+  {
+   "id": "mysql-cli",
+   "current": "mysql-cli/current.json",
+   "enabled": true,
+   "kind": "cli-wrapper",
+   "invocable": false,
+   "transports": []
+  },
+  {
+   "id": "nmap",
+   "current": "nmap/current.json",
+   "enabled": true,
+   "kind": "cli-wrapper",
+   "invocable": false,
+   "transports": []
+  },
+  {
+   "id": "veracrypt",
+   "current": "veracrypt/current.json",
+   "enabled": true,
+   "kind": "cli-wrapper",
+   "invocable": false,
+   "transports": []
+  },
+  {
+   "id": "wireshark-cli",
+   "current": "wireshark-cli/current.json",
+   "enabled": true,
+   "kind": "cli-wrapper",
+   "invocable": false,
+   "transports": []
+  }
+ ],
+ "compatibility": {
+  "adjudicatedAt": "2026-09-20",
+  "adjudicatedBy": "S-P2 of versions/架构3.0.0-定稿实施表-20260920.md, judgement ②",
+  "rule": "每个轴一个裁定，裁定即约束：出现两种合法形态的写法不在本仓存在。",
+  "axes": {
+   "selectionKey": {
+    "decided": "version",
+    "why": "三仓指针一律用 `version` 选释放版；同一指针里同时出现 `current` 与 `version即歧义，消费者必须拒。registry 条目里的 `current` 是**指针文件的路径**（与 tool/agent 同构），不是版本键。",
+    "alignedNow": [
+     "software/burp-suite/current.json",
+     "software/dirsearch/current.json",
+     "software/mysql-cli/current.json",
+     "software/nmap/current.json",
+     "software/veracrypt/current.json",
+     "software/wireshark-cli/current.json"
+    ]
+   },
+   "registryCarriesVersion": {
+    "decided": "no",
+    "why": "registry 不存版本号，版本只活在指针里（单一来源）。`agent/registry.json` 现存条目带 `version` 属历史遗留：按**一致性检查**对待（与指针不符即告警，S-P3a 校验器承担），不得作为解析输入。"
+   },
+   "available": {
+    "decided": "advisory-and-checked",
+    "why": "`available` 保留，但它是 `versions/` 目录枚举的缓存：值必须等于实际目录清单，不等即校验错误。任何消费者不得用它做选择。"
+   },
+   "updatedAt": {
+    "decided": "abolished",
+    "why": "指针里的 `updatedAt` 废除。三仓共享侧无一个读者（本仓 grep 实测：只有无关文档带同名键），手写日期只会成为漂移源；释放时间以 `versions/` 目录与新版必带的 `SOURCE.json` 为准。平台私有读者若要它，须在自己平台内自证（BP-2 结论不互抄）。"
+   },
+   "hashManifest": {
+    "decided": "mandatory",
+    "why": "三仓指针一律带 `hashManifest`（值 `SHA256SUMS`），软件六个指针本次补齐。"
+   },
+   "pointerSchemaFamily": {
+    "decided": "ai-<kind>-pointer/v1",
+    "why": "模式按 kind 不按仓：`tool` 内并存 workflow/contracts/governance/pack 四种完全符合模式；不新增家族（C-5），3.0 的参考网关沿用 `ai-software-pointer/v1`。"
+   },
+   "gatewayPointer": {
+    "decided": "reuse ai-software-pointer/v1",
+    "why": "S-P4 的 `software/_gateway/current.json` 用同型指针，`id: \"_gateway\"`，不另立 schema（C-5 后半句在这里落地）。"
+   }
+  }
+ },
+ "typeNote": "C-5: software entries are resolved by the same registry+pointer machinery as tool/agent. kind/invocable/transports carry no software resource into the /wf+/wfa denominator: a recipe is reached through a workflow stage (software-call) via the gateway, never called directly, hence invocable=false and transports=[]."
+}

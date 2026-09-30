@@ -1,0 +1,37 @@
+{
+  "schema": "ai-workflow/v2.1",
+  "id": "novel-pipeline",
+  "displayName": "Novel Pipeline (scenarios)",
+  "version": "1.1.0",
+  "mode": "pipeline",
+  "entry": "workflow.yaml",
+  "inputSchema": "schemas/input.schema.json",
+  "outputSchema": "schemas/output.schema.json",
+  "permissions": {
+    "network": "deny",
+    "process": "allowlisted-only",
+    "filesystem": "project-scoped"
+  },
+  "dependencies": {
+    "skills": {
+      "novel-avoid-ai-writing-writing": "1.0.0",
+      "novel-story-chinese": "1.0.0",
+      "novel-story-cover-chinese": "1.0.0",
+      "novel-story-deslop-chinese": "1.0.0",
+      "novel-story-import-chinese": "1.0.0",
+      "novel-story-long-analyze-chinese": "1.0.0",
+      "novel-story-long-scan-chinese": "1.0.0",
+      "novel-story-long-write-chinese": "1.0.0",
+      "novel-story-review-chinese": "1.0.0",
+      "novel-story-setup-chinese": "1.0.0",
+      "novel-story-short-analyze-chinese": "1.0.0",
+      "novel-story-short-scan-chinese": "1.0.0",
+      "novel-story-short-write-chinese": "1.0.0"
+    },
+    "workflows": {},
+    "packs": {}
+  },
+  "integrity": {
+    "sha256Manifest": "SHA256SUMS"
+  }
+}

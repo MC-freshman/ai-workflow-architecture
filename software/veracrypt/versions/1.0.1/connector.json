@@ -1,0 +1,60 @@
+{
+ "schema": "ai-software-connector/v1",
+ "softwareId": "veracrypt",
+ "softwareVersion": "1.0.1",
+ "adapter": "desktop-session",
+ "transports": [
+  "desktop-session"
+ ],
+ "connectorRuntime": "python-3.9",
+ "interpreterAlias": null,
+ "userModes": [
+  "direct-cli",
+  "mediated-call"
+ ],
+ "sessionModel": "singleton",
+ "requiresConsent": true,
+ "exclusiveResources": [
+  "veracrypt-gui"
+ ],
+ "attestation": "snapshot-only",
+ "sessionGuidance": {
+  "interactive": true,
+  "notes": "VeraCrypt is a GUI program with no stdout contract: opening a mediated session means the human (or a per-call-consented launch) puts the window up, and every mount/dismount inside it stays a human action. The connector drives open/status/close only and refuses INTERACTIVE_REQUIRED for anything else. Mount operations are red-line-5 (per-call authorization), never auto-granted."
+ },
+ "operations": {
+  "open": {
+   "capability": "version",
+   "credentials": [
+    "none"
+   ],
+   "interactive": true,
+   "filesystemRoots": [
+    "none"
+   ],
+   "network": "none"
+  },
+  "status": {
+   "capability": "version",
+   "credentials": [
+    "none"
+   ],
+   "interactive": false,
+   "filesystemRoots": [
+    "none"
+   ],
+   "network": "none"
+  },
+  "close": {
+   "capability": "version",
+   "credentials": [
+    "none"
+   ],
+   "interactive": false,
+   "filesystemRoots": [
+    "none"
+   ],
+   "network": "none"
+  }
+ }
+}

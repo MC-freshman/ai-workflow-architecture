@@ -1,0 +1,39 @@
+schema: ai-workflow-definition/v2
+id: game-design-review
+version: 2.1.0
+mode: pipeline
+maxParallel: 1
+roles: [reviewer]
+outputWorker: reviewer
+stages:
+  - id: intake
+    action: prompt
+    worker: reviewer
+    promptRef: workflow.md#stage:intake
+    outputs: schemas/intake.schema.json
+  - id: review
+    action: prompt
+    worker: reviewer
+    dependsOn: [intake]
+    promptRef: workflow.md#stage:review
+    outputs: schemas/review.schema.json
+    onFail: repair
+    maxIterations: 2
+    repairPromptRef: workflow.md#stage:repair
+    gates: [review-integrity]
+  - id: report
+    action: prompt
+    worker: reviewer
+    dependsOn: [review]
+    promptRef: workflow.md#stage:report
+    outputs: schemas/output.schema.json
+gateDefinitions:
+  review-integrity:
+    type: process
+    cwd: evidence
+    argv: ["workflow:scripts/validate_review.py"]
+    expectExit: [0]
+    expectArtifacts:
+      - target: "evidence:review-check.json"
+        minBytes: 2
+    reasonFrom: "evidence:review-check.json"

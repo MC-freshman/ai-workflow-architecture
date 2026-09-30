@@ -1,0 +1,12 @@
+{
+  "schema": "ai-software-gateway-source/v1",
+  "authorSession": "zcode",
+  "derivedFrom": "software/_gateway/versions/1.0.0 (three-state dispatch recording in invoke(); rest byte-identical)",
+  "supersedes": "1.0.0",
+  "releaseScope": "Maintenance repair round M-P2 (D-76): request.json gains dispatchState (not-dispatched / dispatched-completed / dispatched-uncertain), written before the process starts and updated with the outcome. The 3.2.0 P3b criterion ('three states readable from request.json') becomes judgeable against the reference gateway itself. No error-code or envelope change. Note: the call path still asks live capabilities the D-60 way - unchanged, platforms dispatch through the connector.",
+  "releaseStatus": "published",
+  "publishedAt": "2026-09-27",
+  "publishedBy": "zcode session (maintenance repair M-P2)",
+  "pointerPolicy": "_gateway/current.json raised 1.0.0 -> 1.0.1 with pre/post hashes in the round ledger",
+  "version": "1.0.1"
+}

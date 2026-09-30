@@ -1,0 +1,11 @@
+{
+  "schema": "ai-governance-source/v1",
+  "authorSession": "qoder",
+  "derivedFrom": "game-pipeline@1.0.0",
+  "supersedes": "1.0.0",
+  "releaseScope": "3.3.0 P2: the `standard` scenario now names its Skill instead of relying on the full-declaration fallback, and the pointable pool grows from 11 scenario cards to 22 by adopting the 11 role cards the consuming Agent already locks. Declaring a Skill does not deliver it — only the scenario's own selection does — so this widens what a scenario may ask for without widening any delivery.",
+  "openDeferred": [
+    "No current pointer moved; adoption stays a per-platform act (BP-2, red line 5)."
+  ],
+  "previousSource": "tool/game-pipeline/versions/1.0.0/SOURCE.json"
+}

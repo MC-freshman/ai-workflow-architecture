@@ -1,0 +1,13 @@
+{
+  "schema": "ai-governance-source/v1",
+  "authorSession": "qoder",
+  "derivedFrom": "novel-writer@1.5.1",
+  "supersedes": "1.5.1",
+  "releaseScope": "3.3.0 P3: the Agent stops pinning the 'novel-writing' Pack (all 13 members were already locked by name, so no authorisation is lost) and declares windowProfile=1m. Its cards are long-form sized — 16.6k to 34.8k tokens per scenario delivery — which fits a 1,000,000-token window budget but not a 256,000 one.",
+  "openDeferred": [
+    "windowProfile=1m is the user's authorised planning profile for long-form creation (2026-09-25), NOT an attested platform ceiling: no static evidence on this host yields the real context limit, so it is recorded in qoder/bridge/capabilities.json as unverified with a 25-minute closure path.",
+    "R17 trusts this self-declared value; nothing yet caps a windowProfile above the platform's attested ceiling (registered as a follow-up defect, not fixed here).",
+    "No current pointer moved; the Pack itself is unchanged and still published."
+  ],
+  "previousSource": "agent/novel-writer/versions/1.5.1/SOURCE.json"
+}

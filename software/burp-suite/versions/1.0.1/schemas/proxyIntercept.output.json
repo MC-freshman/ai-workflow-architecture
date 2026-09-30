@@ -1,0 +1,23 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "items": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "string" },
+          "host": { "type": "string" },
+          "method": { "type": "string" },
+          "url": { "type": "string" },
+          "statusCode": { "type": "integer" },
+          "request": { "type": "string" },
+          "response": { "type": "string" }
+        }
+      }
+    },
+    "total": { "type": "integer" }
+  },
+  "notes": "结构为预期形态，最终以冻结快照中该工具的输出定义为准"
+}

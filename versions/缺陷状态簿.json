@@ -1,0 +1,699 @@
+{
+ "schema": "ai-defect-status-book/v1",
+ "generatedAt": "2026-09-27 (M-P6 flip)",
+ "generatedBy": "zcode session, R-P1 of 架构3.x-框架侧统一修复方案-20260927.md (executing round)",
+ "rules": {
+  "statuses": [
+   "open",
+   "closed",
+   "absorbed",
+   "ruled",
+   "unverified-registration"
+  ],
+  "discipline": "D-32: no row may say 'probably fixed'; closed/absorbed/ruled rows must carry a verifiable source path; unverified-registration rows are red rows named loudly, never counted as done",
+  "redRows": "status in (open, unverified-registration)"
+ },
+ "defects": [
+  {
+   "id": "D-25",
+   "title": "process 门禁每次 submit 由引擎重跑子进程（带副作用门禁被重复执行）",
+   "location": "engine.py process-gate path (2.1-A 登记，未定位到行)",
+   "status": "closed",
+   "owner": "codex（wf-runner 0.10.1，2026-09-24 裁定记录 §1 同源）",
+   "costMinutes": 120,
+   "source": "tool/wf-runner/versions/0.10.1/SOURCE.json; tool/wf-runner/versions/0.11.0/tests/test_process_gate_idempotency.py",
+   "evidence": "0.10.1 SOURCE.json releaseScope 明载：process-gate submit replay 改为持久化 per-run/stage/attempt/gate intent+outcome 记录，同提交复用记录结果、绑定变化冲突、有 intent 无 outcome 失败关闭为 UNKNOWN_OUTCOME；0.11.0 携带 test_process_gate_idempotency.py",
+   "correctionNote": "2026-09-27 状态簿首版误标 open——建簿时未核对 0.10.1 releaseScope；立修复表前核实纠正（佐证立表前逐号核实的必要性）"
+  },
+  {
+   "id": "D-26",
+   "title": "门3/门4 驱动脚本与 fixture/baseline 产物的实测成本更正（登记级）",
+   "location": "versions/平台接入清单.md §8.7",
+   "status": "closed",
+   "owner": "2.0-G 重出证",
+   "costMinutes": 0,
+   "source": "AGENTS.md 2.0-H 段"
+  },
+  {
+   "id": "D-27",
+   "title": "environmentManifest 可选化被 run-lock schema 封顶",
+   "location": "tool/runtime-contracts/（1.2.x 代已修）",
+   "status": "closed",
+   "owner": "09-23 修复轮",
+   "costMinutes": 0,
+   "source": "versions/平台接入清单.md:302"
+  },
+  {
+   "id": "D-28",
+   "title": "platform-conformance/1.0.0 目录内 5 个未登记 .pyc（永久历史红行）",
+   "location": "tool/platform-conformance/versions/1.0.0/",
+   "status": "ruled",
+   "owner": "留痕；发布器从此双向拒绝未登记字节",
+   "costMinutes": 0,
+   "source": "versions/平台接入清单.md:302"
+  },
+  {
+   "id": "D-29",
+   "title": "（09-23 修复轮登记，已修）",
+   "location": "versions/平台接入清单.md:302",
+   "status": "closed",
+   "owner": "09-23 修复轮",
+   "costMinutes": 0,
+   "source": "versions/平台接入清单.md:302"
+  },
+  {
+   "id": "D-30",
+   "title": "（已修）",
+   "location": "versions/平台接入清单.md:302",
+   "status": "closed",
+   "owner": "09-23 修复轮",
+   "costMinutes": 0,
+   "source": "versions/平台接入清单.md:302"
+  },
+  {
+   "id": "D-31",
+   "title": "共享侧没有带 checkpoint 切 current.json 的工具",
+   "location": "tool/architecture-ops/（checkpointed plan→apply→verify 已实装并被 3.0/3.2 各轮使用）",
+   "status": "closed",
+   "owner": "3.0-A/09-23",
+   "costMinutes": 0,
+   "source": "versions/平台接入清单.md:302 + §8.26 P7/P8 使用记录"
+  },
+  {
+   "id": "D-32",
+   "title": "判据 --only 只认单选择器，多选静默出空报告假绿",
+   "location": "tool/platform-conformance/versions/1.4.x/conformance/conform.py（1.4.0 起 --only 多选逐条判定）",
+   "status": "closed",
+   "owner": "3.1-A F-4",
+   "costMinutes": 0,
+   "source": "versions/平台接入清单.md:380"
+  },
+  {
+   "id": "D-33",
+   "title": "暂存件残留 __pycache__ 使引擎包自检报 HASH_MISMATCH",
+   "location": "发布器 purge 字节码（3.0-A 起）",
+   "status": "closed",
+   "owner": "3.0-A",
+   "costMinutes": 0,
+   "source": "versions/平台接入清单.md:317"
+  },
+  {
+   "id": "D-34",
+   "title": "strict JSON 错误只报值不报文件",
+   "location": "tool/runtime-contracts/versions/1.4.0/SOURCE.json（strict JSON errors now name file + json path + offset）",
+   "status": "closed",
+   "owner": "3.1-A T-P3b",
+   "costMinutes": 0,
+   "source": "tool/runtime-contracts/versions/1.4.0/SOURCE.json"
+  },
+  {
+   "id": "D-35",
+   "title": "0.8.0 起 scriptEnvironmentRungs 未声明者 fail-closed 的采纳面裁定",
+   "location": "versions/架构3.1.0-发布完整性修复实施表-20260923.md",
+   "status": "closed",
+   "owner": "09-23 修复轮",
+   "costMinutes": 0,
+   "source": "versions/架构3.x-框架侧统一修复方案-20260927.md §5"
+  },
+  {
+   "id": "D-36",
+   "title": "成对切换闭包与三仓逐字节 revert 演练",
+   "location": "3.0-A S-P9 实装（三次拒绝零字节写入）",
+   "status": "closed",
+   "owner": "3.0-A",
+   "costMinutes": 0,
+   "source": "qoder/runtime/maintenance/3.0-A/3.0-LEDGER.md"
+  },
+  {
+   "id": "D-37",
+   "title": "已发布 repo-lint 0.1.1/0.2.1 的语义与新代冲突（S-P2 实测）",
+   "location": "3.0-A S-P2 裁定",
+   "status": "closed",
+   "owner": "3.0-A",
+   "costMinutes": 0,
+   "source": "qoder/runtime/maintenance/3.0-A/3.0-LEDGER.md"
+  },
+  {
+   "id": "D-38",
+   "title": "单样本臂当硬门 ⇒ 假红",
+   "location": "3.0-A S-P3 内修",
+   "status": "closed",
+   "owner": "3.0-A",
+   "costMinutes": 0,
+   "source": "qoder/runtime/maintenance/3.0-A/3.0-LEDGER.md"
+  },
+  {
+   "id": "D-39",
+   "title": "读回扫描比被测面浅一层",
+   "location": "3.0-A S-P3 内修",
+   "status": "closed",
+   "owner": "3.0-A",
+   "costMinutes": 0,
+   "source": "qoder/runtime/maintenance/3.0-A/3.0-LEDGER.md"
+  },
+  {
+   "id": "D-40",
+   "title": "UNPINNED 65 位摘要（第二次独立实测）",
+   "location": "3.0-A S-P3 内修",
+   "status": "closed",
+   "owner": "3.0-A",
+   "costMinutes": 0,
+   "source": "qoder/runtime/maintenance/3.0-A/3.0-LEDGER.md"
+  },
+  {
+   "id": "D-41",
+   "title": "读回并发格用惰性生成器 ⇒ 争用从未发生",
+   "location": "3.0-A S-P4 内修",
+   "status": "closed",
+   "owner": "3.0-A",
+   "costMinutes": 0,
+   "source": "qoder/runtime/maintenance/3.0-A/3.0-LEDGER.md S-P4 段"
+  },
+  {
+   "id": "D-42",
+   "title": "软件释放版未进 run-lock resources[]",
+   "location": "engine.py resources 组装段",
+   "status": "absorbed",
+   "owner": "连接器方向（裁定记录 §5）；随 R-P2 D-97 一并在锁内补代际记录时复核",
+   "costMinutes": 60,
+   "source": "versions/架构3.x-框架侧统一修复方案-20260927.md §5"
+  },
+  {
+   "id": "D-43",
+   "title": "qoder 生产 config 不声明 softwareRoot ⇒ software 仓不进并集",
+   "location": "qoder/bridge/qoder-config.json（09-24 P0-A 已声明）",
+   "status": "closed",
+   "owner": "qoder 09-24",
+   "costMinutes": 0,
+   "source": "versions/平台接入清单.md §8.25"
+  },
+  {
+   "id": "D-44",
+   "title": "并集粒度不按能力出行（只到 profile/triple/package/action）",
+   "location": "tool/platform-conformance/ conform 判定项族",
+   "status": "absorbed",
+   "owner": "R-P4（D-92 判定项族同源收口）",
+   "costMinutes": 45,
+   "source": "qoder/runtime/maintenance/3.0-A/3.0-LEDGER.md S-P5 段"
+  },
+  {
+   "id": "D-45",
+   "title": "prepare 期拒绝走 discard_uncommitted_run_dir ⇒ 门禁 trail 不落盘",
+   "location": "engine.py discard_uncommitted_run_dir",
+   "status": "closed",
+   "owner": "M-P1..M-P5 of 架构3.x-维护缺陷修复实施表 (2026-09-27, zcode session)",
+   "costMinutes": 90,
+   "source": "tool/wf-runner/versions/0.12.0/engine.py",
+   "evidence": "wf-runner 0.12.0: discard_uncommitted_run_dir first MOVES the uncommitted dir into the platform diagnostic layer (logs/wf-runner/rejected/<run>-<ts> + DISCARDED.txt); probe: rejected-prepare trail readable, runs/ clean"
+  },
+  {
+   "id": "D-46",
+   "title": "驱动器 import 共享释放版把 __pycache__ 写进已发布件（纪律类；完整性门可拦）",
+   "location": "各会话执行纪律（-B）；engine integrity gate 为机检兜底",
+   "status": "closed",
+   "owner": "M-P1..M-P5 of 架构3.x-维护缺陷修复实施表 (2026-09-27, zcode session)",
+   "costMinutes": 15,
+   "source": "tool/wf-runner/versions/0.12.0/cli.py",
+   "evidence": "wf-runner 0.12.0 cli.py sets sys.dont_write_bytecode before any import; test_no_bytecode runs the CLI without -B and asserts the tree stays clean (0 pyc measured)"
+  },
+  {
+   "id": "D-47",
+   "title": "六件配方能力快照全部未冻结",
+   "location": "software/*/capabilities.snapshot.json",
+   "status": "absorbed",
+   "owner": "逐件发布收口：dirsearch/mysql-cli/wireshark-cli 1.0.1 已冻结（3.0-Q）；burp-suite 1.0.1 已冻结待换针（X-P1）；nmap 本轮 X-P4；veracrypt 本轮 X-P5（如实不冻结）",
+   "costMinutes": 45,
+   "source": "versions/平台接入清单.md §8.18 + 本轮 X 表"
+  },
+  {
+   "id": "D-48",
+   "title": "selftest 按配方 readonly.json 执行（S-P7 实装）",
+   "location": "software/*/selftest/",
+   "status": "closed",
+   "owner": "3.0-A",
+   "costMinutes": 0,
+   "source": "qoder/runtime/maintenance/3.0-A/3.0-LEDGER.md"
+  },
+  {
+   "id": "D-49",
+   "title": "成对切换拒绝规则被实测成一次真实阻断",
+   "location": "3.0-A S-P9",
+   "status": "closed",
+   "owner": "3.0-A",
+   "costMinutes": 0,
+   "source": "AGENTS.md 3.0-A 段"
+  },
+  {
+   "id": "D-50",
+   "title": "WSL 内对 /mnt/e 做 live 全仓扫描 >420s ⇒ jail 内跑 linter 不能作常规路径",
+   "location": "repo-lint 执行面（宿主侧 + scannerRelease 声明为现行形态）",
+   "status": "ruled",
+   "owner": "3.0-A 成本事实裁定",
+   "costMinutes": 0,
+   "source": "qoder/runtime/maintenance/3.0-A/3.0-LEDGER.md S-P7 段"
+  },
+  {
+   "id": "D-51",
+   "title": "busy 被拒的锚点被判'结果未知'",
+   "location": "T-P3b 六格修复",
+   "status": "closed",
+   "owner": "3.1-A T-P3b",
+   "costMinutes": 0,
+   "source": "versions/平台接入清单.md:380"
+  },
+  {
+   "id": "D-52",
+   "title": "选中的 repo-lint 版本与 scannerRelease 不一致静默换版",
+   "location": "tool/wf-runner/versions/0.10.1/resolution.py:178（VERSION_CONFLICT 已实装）",
+   "status": "closed",
+   "owner": "3.0-A",
+   "costMinutes": 0,
+   "source": "qoder/runtime/maintenance/3.0-A/3.0-LEDGER.md；zcode 09-26 复验"
+  },
+  {
+   "id": "D-53",
+   "title": "start_script 不复验密封",
+   "location": "T-P3b 六格修复",
+   "status": "closed",
+   "owner": "3.1-A T-P3b",
+   "costMinutes": 0,
+   "source": "versions/平台接入清单.md:380"
+  },
+  {
+   "id": "D-54",
+   "title": "Q-P1 环境操作教训（登记级）",
+   "location": "qoder/runtime/maintenance/3.0-Q/Q-LEDGER.md",
+   "status": "ruled",
+   "owner": "3.0-Q 过程留痕",
+   "costMinutes": 0,
+   "source": "qoder/runtime/maintenance/3.0-Q/Q-LEDGER.md"
+  },
+  {
+   "id": "D-55",
+   "title": "Q-P1 接入面事实（已收进平台声明面）",
+   "location": "qoder/bridge/capabilities.json",
+   "status": "closed",
+   "owner": "3.0-Q",
+   "costMinutes": 0,
+   "source": "qoder/runtime/maintenance/3.0-Q/Q-LEDGER.md"
+  },
+  {
+   "id": "D-56",
+   "title": "环境根拼错被报成内核挂载失败",
+   "location": "T-P3b 六格修复",
+   "status": "closed",
+   "owner": "3.1-A T-P3b",
+   "costMinutes": 0,
+   "source": "versions/平台接入清单.md:380"
+  },
+  {
+   "id": "D-57",
+   "title": "Q-P2 工具口径（登记级）",
+   "location": "qoder/runtime/maintenance/3.0-Q/Q-LEDGER.md",
+   "status": "ruled",
+   "owner": "3.0-Q 过程留痕",
+   "costMinutes": 0,
+   "source": "qoder/runtime/maintenance/3.0-Q/Q-LEDGER.md"
+  },
+  {
+   "id": "D-58",
+   "title": "Q-P2 过程教训，非代码缺陷",
+   "location": "qoder/runtime/maintenance/3.0-Q/Q-LEDGER.md",
+   "status": "ruled",
+   "owner": "3.0-Q 过程留痕",
+   "costMinutes": 0,
+   "source": "qoder/runtime/maintenance/3.0-Q/Q-LEDGER.md"
+  },
+  {
+   "id": "D-59",
+   "title": "矩阵软件行读错 interpreters 位置",
+   "location": "tool/architecture-ops/versions/1.4.0/architecture_ops/invocation_matrix.py:268-287（config map 优先已实装）",
+   "status": "closed",
+   "owner": "3.1-A F-4/T-P3b",
+   "costMinutes": 20,
+   "source": "versions/平台接入清单.md:380"
+  },
+  {
+   "id": "D-60",
+   "title": "参考网关问 --tools 而真实 CLI 答不出 ⇒ 绿行只证登记不证可派发",
+   "location": "software/_connector/versions/1.0.6/connector.py（snapshot-only attestation，不问 --tools）",
+   "status": "closed",
+   "owner": "连接器 1.0.6 落地（09-22 方向的实装）",
+   "costMinutes": 0,
+   "source": "versions/平台接入清单.md §8.25 P3 段"
+  },
+  {
+   "id": "D-61",
+   "title": "nmap 配方声明 7.95 不存在的 -oJ ⇒ 拒绝冻结",
+   "location": "software/nmap/versions/1.0.0/recipes/",
+   "status": "closed",
+   "owner": "R-P2..R-P6/X-P4 of 架构3.x-框架侧统一修复方案 (2026-09-27, zcode session)",
+   "costMinutes": 60,
+   "source": "software/nmap/versions/1.0.1/SOURCE.json",
+   "evidence": "nmap 1.0.1 (X-P4): scan/serviceScan run -oX (7.95 has no -oJ), recipe verify.files live-measured, snapshot frozen from live inquiry; conform --only nmap pass with floorReached=true"
+  },
+  {
+   "id": "D-62",
+   "title": "档位只在提示词自律、机器读不出",
+   "location": "tool/runtime-contracts/versions/1.4.0/SOURCE.json（run-lock execution gains rigor/rigorSource）",
+   "status": "closed",
+   "owner": "3.1-A T-P3b",
+   "costMinutes": 0,
+   "source": "tool/runtime-contracts/versions/1.4.0/SOURCE.json"
+  },
+  {
+   "id": "D-63",
+   "title": "（连接器方向裁定项）",
+   "location": "versions/架构3.x-框架侧统一修复方案-20260927.md §5",
+   "status": "ruled",
+   "owner": "连接器代已落地",
+   "costMinutes": 0,
+   "source": "versions/架构3.x-框架侧统一修复方案-20260927.md §5"
+  },
+  {
+   "id": "D-64",
+   "title": "kill 后只不重复派发、不自动回收",
+   "location": "T-P3b 六格修复",
+   "status": "closed",
+   "owner": "3.1-A T-P3b",
+   "costMinutes": 0,
+   "source": "versions/平台接入清单.md:380"
+  },
+  {
+   "id": "D-65",
+   "title": "19 条历史非终态 run 的状态名不在现行终态集合 ⇒ 只能按 mtime 划窗口",
+   "location": "各平台 runtime/runs/（遗留字面量）",
+   "status": "closed",
+   "owner": "M-P1..M-P5 of 架构3.x-维护缺陷修复实施表 (2026-09-27, zcode session)",
+   "costMinutes": 60,
+   "source": "zcode/runtime/maintenance/20260927-3x-repair/m-p4/census-summary.json",
+   "evidence": "mapping ruling registered (completed->succeeded, completed-awaiting-instruction->waiting-for-input) + six-platform census filed (14 historical literals, all on codex; zcode/qoder/doubao/workbuddy/dsh clean); historical state bytes preserved by design"
+  },
+  {
+   "id": "D-66",
+   "title": "上位条文与复述文档之间没有一致性机检",
+   "location": "repo-lint R16（0.5.1 起内建）",
+   "status": "closed",
+   "owner": "3.1-A",
+   "costMinutes": 40,
+   "source": "versions/平台接入清单.md:380-381"
+  },
+  {
+   "id": "D-67",
+   "title": "历史快照与现行规则混排（文档卫生）",
+   "location": "治理文本多处置history于现行段（zcode 09-26 排查 30+ 处）",
+   "status": "closed",
+   "owner": "M-P1..M-P5 of 架构3.x-维护缺陷修复实施表 (2026-09-27, zcode session)",
+   "costMinutes": 120,
+   "source": "zcode/runtime/maintenance/20260927-3x-repair/m-p3/d67-inventory.json",
+   "evidence": "sweep executed: HANDOFF math clauses historicized (3), spec 09-17 snapshot marked, system prompt top-level list gains architecture-manager, AGENTS.md 09-27 status section supersedes stale value claims; residual narrative drift deliberately kept with reasons in d67-inventory.json"
+  },
+  {
+   "id": "D-68",
+   "title": "远端拒连时按'本地已入库、远端待复算'记账的口径（非代码缺陷）",
+   "location": "versions/平台接入清单.md:399 等多处使用",
+   "status": "ruled",
+   "owner": "常设口径",
+   "costMinutes": 0,
+   "source": "versions/平台接入清单.md:399"
+  },
+  {
+   "id": "D-69",
+   "title": "registry 缺 deprecated 位、enabled:false 是硬开关",
+   "location": "tool/registry.json（deprecated/supersededBy 已实装，09-23 起各收拢轮使用）",
+   "status": "closed",
+   "owner": "3.1-A F-3/T-P6",
+   "costMinutes": 0,
+   "source": "versions/平台接入清单.md:388"
+  },
+  {
+   "id": "D-70",
+   "title": "自述漂移正是 R2 该抓的形状（判据已具备）",
+   "location": "repo-lint R2 规则",
+   "status": "closed",
+   "owner": "3.1-A（R2 抓出 D-95/D-70 同族）",
+   "costMinutes": 0,
+   "source": "qoder/runtime/maintenance/3.1-A/3.1-LEDGER.md"
+  },
+  {
+   "id": "D-71",
+   "title": "过渡实现待替换",
+   "location": "qoder/runtime/maintenance/3.1-A/3.1-LEDGER.md",
+   "status": "closed",
+   "owner": "3.1-A T-P4（复核翻转，2026-09-27 立修复表前核实）",
+   "costMinutes": 60,
+   "source": "tool/repo-lint/versions/0.6.1/scripts/repo_lint.py; tool/repo-lint/versions/0.6.1/schemas/workflow-definition-v3.schema.json",
+   "evidence": "T-P4 行明载\"删掉 0.5.0 的剥键换标过渡实现 D-71\"；0.6.1 复核：scripts/repo_lint.py:588 起为原生 v3 分支（defaultScenario/requiredStages/scenarios 自有校验），schemas/workflow-definition-v3.schema.json 独立成文，运行期剥键换标逻辑不存在"
+  },
+  {
+   "id": "D-72",
+   "title": "提示词锚点语法从未成文",
+   "location": "invocation-adapters-spec.md §11（3.1-A 成文）",
+   "status": "closed",
+   "owner": "3.1-A",
+   "costMinutes": 0,
+   "source": "qoder/runtime/maintenance/3.1-A/3.1-LEDGER.md"
+  },
+  {
+   "id": "D-73",
+   "title": "新错误码（CONTEXT_UNRESOLVED 等）尚未进契约",
+   "location": "tool/runtime-contracts/versions/1.4.0/SOURCE.json（joined the error-code enums）",
+   "status": "closed",
+   "owner": "3.1-A T-P3",
+   "costMinutes": 0,
+   "source": "tool/runtime-contracts/versions/1.4.0/SOURCE.json"
+  },
+  {
+   "id": "D-74",
+   "title": "引擎 raise 契约里没有的 HANDOFF_VERSION_MISMATCH（2.1-A 遗留）",
+   "location": "tool/runtime-contracts/versions/1.4.1/contracts/runtime/error-envelope.schema.json:74",
+   "status": "closed",
+   "owner": "3.1-A T-P3",
+   "costMinutes": 0,
+   "source": "tool/runtime-contracts/versions/1.4.0/SOURCE.json + 1.4.1 schema 实读"
+  },
+  {
+   "id": "D-75",
+   "title": "同一份校验器字节活在两个释放里，修复只到一处",
+   "location": "qoder/runtime/maintenance/3.1-A/3.1-LEDGER.md",
+   "status": "closed",
+   "owner": "M-P1..M-P5 of 架构3.x-维护缺陷修复实施表 (2026-09-27, zcode session)",
+   "costMinutes": 45,
+   "source": "tool/repo-lint/versions/0.6.2/SOURCE.json",
+   "evidence": "repo-lint 0.6.2: validate_contracts.py synced byte-for-byte from runtime-contracts 1.5.0; conformance 1.5.1 test_validator_sync makes one-sided fixes fail (negative measured on 0.6.1)"
+  },
+  {
+   "id": "D-76",
+   "title": "_gateway 三态（accepted/running/succeeded）未进 request.json 判据面",
+   "location": "software/_gateway/1.0.0（已发布不可回改）",
+   "status": "closed",
+   "owner": "M-P1..M-P5 of 架构3.x-维护缺陷修复实施表 (2026-09-27, zcode session)",
+   "costMinutes": 60,
+   "source": "software/_gateway/versions/1.0.1/gateway.py",
+   "evidence": "_gateway 1.0.1: request.json carries dispatchState (not-dispatched -> dispatched-completed/uncertain); probe with loopback http mock judged the 3.2.0 P3b criterion against the reference gateway itself"
+  },
+  {
+   "id": "D-77",
+   "title": "提示词锚点（与 D-72 同面）",
+   "location": "invocation-adapters-spec.md §11",
+   "status": "closed",
+   "owner": "3.1-A",
+   "costMinutes": 0,
+   "source": "qoder/runtime/maintenance/3.1-A/3.1-LEDGER.md"
+  },
+  {
+   "id": "D-78",
+   "title": "一个子块的编辑吃掉相邻文件全部改动（过程自纠，登记级）",
+   "location": "qoder/runtime/maintenance/3.1-A/3.1-LEDGER.md",
+   "status": "ruled",
+   "owner": "3.1-A 过程留痕",
+   "costMinutes": 0,
+   "source": "qoder/runtime/maintenance/3.1-A/3.1-LEDGER.md"
+  },
+  {
+   "id": "D-79",
+   "title": "v2 阶段模式 if 缺 required ⇒ 局部对象全分支开火",
+   "location": "3.1-A 场景 replace 补丁（T-P3b 内修）",
+   "status": "closed",
+   "owner": "3.1-A",
+   "costMinutes": 0,
+   "source": "versions/平台接入清单.md:397"
+  },
+  {
+   "id": "D-80",
+   "title": "合并时自创权限三元组 ⇒ 所有平台凭空多一格 declaredAbsent（纪律）",
+   "location": "conform 判定逻辑（union 只认已声明三元组）",
+   "status": "ruled",
+   "owner": "纪律入 R-P1 状态簿沿用",
+   "costMinutes": 0,
+   "source": "versions/平台接入清单.md:397"
+  },
+  {
+   "id": "D-81",
+   "title": "（号段已声明、逐条定义盘面未找到）",
+   "location": "未定位",
+   "status": "ruled",
+   "owner": "M-P3 定义查证（2026-09-27）",
+   "costMinutes": 0,
+   "source": "versions/缺陷状态簿.json（本裁定）；zcode/runtime/maintenance/20260927-3x-repair/m-p3/ 查证记录",
+   "evidence": "全台账 + inbox/archive 镜像 + versions/ 全量 grep 无逐条定义；3.1-A 的\"D-70…D-82 十三条\"区间声明使其余十二条各有出处，唯 D-81 从未被任何文本赋义。裁定：该号视为从未定义的登记空洞，后续若有会话主张此号须先在状态簿补条目再引用。",
+   "correctionNote": "unverified-registration -> ruled per the M-P3 sweep (definitions sought everywhere, none found)"
+  },
+  {
+   "id": "D-82",
+   "title": "--select 无单格成本（57.4s vs 全量 58.8s）",
+   "location": "repo-lint 0.5.2（30.1s，裁定记录 §1）",
+   "status": "closed",
+   "owner": "09-23 修复轮",
+   "costMinutes": 0,
+   "source": "versions/架构3.2.0-裁定记录-20260924.md §1"
+  },
+  {
+   "id": "D-83",
+   "title": "（用户 09-27 账面点名；盘面未找到逐条定义）",
+   "location": "未定位",
+   "status": "closed",
+   "owner": "M-P1..M-P5 of 架构3.x-维护缺陷修复实施表 (2026-09-27, zcode session)",
+   "costMinutes": 0,
+   "source": "tool/repo-lint/versions/0.6.3/SOURCE.json",
+   "evidence": "definition recovered from the 3.1.0 baseline (qoder evidence mirror): output schema pinned report.version to a hardcoded const; repo-lint 0.6.3 unpins it (plain string)"
+  },
+  {
+   "id": "D-84",
+   "title": "连接器声明件缺 attestation/会话指引/逐操作 network-filesystem 三个位",
+   "location": "runtime-contracts 下一代（R-P2 ①）",
+   "status": "closed",
+   "owner": "R-P2..R-P6/X-P4 of 架构3.x-框架侧统一修复方案 (2026-09-27, zcode session)",
+   "costMinutes": 90,
+   "source": "tool/repo-lint/versions/0.6.1/schemas/software-connector-v1.schema.json",
+   "evidence": "runtime-contracts 1.5.0 + repo-lint 0.6.1: ai-software-connector/v1 published with attestation/sessionGuidance/per-operation network (schemas/software-connector-v1.schema.json)"
+  },
+  {
+   "id": "D-85",
+   "title": "inventoryResponse 闭合键集无 frozen，而锁与引擎读它",
+   "location": "engine.py:660；ai-software-inventory/v1",
+   "status": "closed",
+   "owner": "R-P2..R-P6/X-P4 of 架构3.x-框架侧统一修复方案 (2026-09-27, zcode session)",
+   "costMinutes": 90,
+   "source": "tool/repo-lint/versions/0.6.1/schemas/software-gateway-adapter-v1.schema.json",
+   "evidence": "repo-lint 0.6.1 inventoryResponse requires frozen (D-85); _gateway 1.0.0 is judged historically non-conformant, not exempted"
+  },
+  {
+   "id": "D-86",
+   "title": "引擎 call 请求带 consented/holder，不在已发布 callRequest 键集",
+   "location": "engine.py:670/727-735",
+   "status": "closed",
+   "owner": "R-P2..R-P6/X-P4 of 架构3.x-框架侧统一修复方案 (2026-09-27, zcode session)",
+   "costMinutes": 60,
+   "source": "tool/repo-lint/versions/0.6.1/schemas/software-gateway-adapter-v1.schema.json",
+   "evidence": "repo-lint 0.6.1 callRequest declares the engine-added consented/holder keys; the engine message is now legal under the published shape"
+  },
+  {
+   "id": "D-87",
+   "title": "credentialInjection 在已发布声明件里没有位",
+   "location": "ai-software-manifest/v1 闭合键集；mysql-cli@1.0.2 connector.json",
+   "status": "closed",
+   "owner": "R-P2..R-P6/X-P4 of 架构3.x-框架侧统一修复方案 (2026-09-27, zcode session)",
+   "costMinutes": 60,
+   "source": "tool/repo-lint/versions/0.6.1/schemas/software-manifest-v1.schema.json",
+   "evidence": "repo-lint 0.6.1 software-manifest-v1 gains credentialInjection"
+  },
+  {
+   "id": "D-88",
+   "title": "组件类释放件（software/_*）不受任何已发布 schema 约束",
+   "location": "repo-lint software_lint 只遍历 registry 条目",
+   "status": "closed",
+   "owner": "R-P2..R-P6/X-P4 of 架构3.x-框架侧统一修复方案 (2026-09-27, zcode session)",
+   "costMinutes": 75,
+   "source": "tool/repo-lint/versions/0.6.1/scripts/software_lint.py",
+   "evidence": "repo-lint 0.6.1 publishes software-component-v1 and software_lint traverses software/_*; negative fixture (corrupted component manifest) goes red"
+  },
+  {
+   "id": "D-89",
+   "title": "连接器拒绝凭据时原样回显被拒串（真泄漏）",
+   "location": "修于 software/_connector/versions/1.0.2",
+   "status": "closed",
+   "owner": "3.2.0 P4a",
+   "costMinutes": 0,
+   "source": "versions/架构3.x-框架侧统一修复方案-20260927.md §2"
+  },
+  {
+   "id": "D-90",
+   "title": "人工路径起来的程序无法被附着（无 pid 位）",
+   "location": "runtime-contracts 会话形状 + 连接器",
+   "status": "closed",
+   "owner": "R-P2..R-P6/X-P4 of 架构3.x-框架侧统一修复方案 (2026-09-27, zcode session)",
+   "costMinutes": 120,
+   "source": "software/_connector/versions/1.0.7/connector.py",
+   "evidence": "runtime contract software-session-v1 carries attachPid; connector 1.0.7 attach verified on real processes (open->SESSION_READY, status, close, dead-pid ATTACH_FAILED)"
+  },
+  {
+   "id": "D-91",
+   "title": "_connector 1.0.4 SHA256SUMS 列被忽略路径（永久红行）",
+   "location": "software/_connector/versions/1.0.4/SHA256SUMS",
+   "status": "ruled",
+   "owner": "不回改；1.0.5/1.0.6 已重出正确封条；显式点名仍报历史错误",
+   "costMinutes": 0,
+   "source": "versions/架构3.x-框架侧统一修复方案-20260927.md §2；zcode 09-26 复核仍唯一"
+  },
+  {
+   "id": "D-92",
+   "title": "conform 27 判定项族没有按软件的行，P7/P8 判据口径命不中",
+   "location": "tool/platform-conformance/versions/1.4.1/conformance/conform.py",
+   "status": "closed",
+   "owner": "R-P2..R-P6/X-P4 of 架构3.x-框架侧统一修复方案 (2026-09-27, zcode session)",
+   "costMinutes": 45,
+   "source": "tool/platform-conformance/versions/1.5.0/conformance/conform.py",
+   "evidence": "platform-conformance 1.5.0 adds one union row per software release; conform --only burp-suite / --only nmap name real rows and reach floorReached=true on single cells"
+  },
+  {
+   "id": "D-93",
+   "title": "连接器要求 kind:request 而 runner 从不发 kind",
+   "location": "修于 software/_connector/versions/1.0.6（缺失即视为请求）",
+   "status": "closed",
+   "owner": "3.2.0 P8",
+   "costMinutes": 0,
+   "source": "versions/架构3.x-框架侧统一修复方案-20260927.md §2"
+  },
+  {
+   "id": "D-94",
+   "title": "矩阵把未归类网关错误判成 PASS（判据假绿）",
+   "location": "tool/architecture-ops/versions/1.4.0/architecture_ops/invocation_matrix.py",
+   "status": "closed",
+   "owner": "R-P2..R-P6/X-P4 of 架构3.x-框架侧统一修复方案 (2026-09-27, zcode session)",
+   "costMinutes": 60,
+   "source": "tool/architecture-ops/versions/1.5.0/architecture_ops/invocation_matrix.py",
+   "evidence": "architecture-ops 1.5.0: unclassified gateway errors are FAIL; stub-outage probe reproduced old PASS 6 -> new FAIL 6"
+  },
+  {
+   "id": "D-95",
+   "title": "repo-lint@0.5.2 workflow.yaml 自述 0.5.1 ⇒ 引擎严格闭包拒绝（=zcode 09-26 轮的 Z-D2）",
+   "location": "tool/repo-lint/versions/0.5.2/workflow.yaml:3 vs manifest.json",
+   "status": "closed",
+   "owner": "R-P2..R-P6/X-P4 of 架构3.x-框架侧统一修复方案 (2026-09-27, zcode session)",
+   "costMinutes": 30,
+   "source": "tool/repo-lint/versions/0.6.1/workflow.yaml",
+   "evidence": "repo-lint 0.6.1 published with workflow.yaml self-version in lockstep; 0.5.2 untouched; full snapshot scan errors 0 after the raise batch"
+  },
+  {
+   "id": "D-96",
+   "title": "3.3.0 两条新域以未定义 kind:pipeline + invocable:true 登记，引擎无此命名空间（=zcode Z-D1 内容侧根因）",
+   "location": "tool/registry.json（framework-pipeline/paper-pipeline 两行）；test_entry04.py:12",
+   "status": "closed",
+   "owner": "R-P2..R-P6/X-P4 of 架构3.x-框架侧统一修复方案 (2026-09-27, zcode session)",
+   "costMinutes": 45,
+   "source": "tool/registry.json",
+   "evidence": "registry framework-pipeline/paper-pipeline kind pipeline->workflow (3.1.0 precedent); 1.4.1 conformance suite 25/25 after the fix; both pipelines reachable through the engine namespace"
+  },
+  {
+   "id": "D-97",
+   "title": "runner↔contracts 混代不被机械拒绝且 run-lock 不记 contracts 代（=zcode Z-D3）",
+   "location": "engine.py prepare/plan；ai-run-lock resources",
+   "status": "closed",
+   "owner": "R-P2..R-P6/X-P4 of 架构3.x-框架侧统一修复方案 (2026-09-27, zcode session)",
+   "costMinutes": 90,
+   "source": "tool/wf-runner/versions/0.11.0/engine.py",
+   "evidence": "runner 0.11.0 records contracts:runtime-contracts in the lock and re-validates on resume (VERSION_CONFLICT); contracts 1.5.0 grants kind=contracts; mixed-generation prepare refused with zero disk"
+  }
+ ]
+}

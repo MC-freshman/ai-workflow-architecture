@@ -1,0 +1,46 @@
+schema: ai-workflow-definition/v2
+id: game-sprint-plan
+version: 2.1.1
+mode: pipeline
+maxParallel: 1
+roles: [planner]
+outputWorker: planner
+stages:
+  - id: intake
+    action: prompt
+    worker: planner
+    promptRef: workflow.md#stage:intake
+    outputs: schemas/intake.schema.json
+  - id: capacity
+    action: prompt
+    worker: planner
+    dependsOn: [intake]
+    promptRef: workflow.md#stage:capacity
+    outputs: schemas/capacity.schema.json
+  - id: plan
+    action: prompt
+    worker: planner
+    dependsOn: [capacity]
+    promptRef: workflow.md#stage:plan
+    outputs: schemas/plan.schema.json
+  - id: review
+    action: prompt
+    worker: planner
+    dependsOn: [plan]
+    promptRef: workflow.md#stage:review
+    outputs: schemas/output.schema.json
+    onFail: repair
+    maxIterations: 2
+    repairPromptRef: workflow.md#stage:repair
+    gates: [plan-integrity]
+gateDefinitions:
+  plan-integrity:
+    type: process
+    cwd: evidence
+    argv: ["workflow:scripts/validate_plan.py"]
+    expectExit: [0]
+    expectArtifacts:
+      - target: "evidence:plan-check.json"
+        minBytes: 2
+    reasonFrom: "evidence:plan-check.json"
+    timeoutSeconds: 60

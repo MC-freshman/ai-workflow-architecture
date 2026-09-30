@@ -1,0 +1,23 @@
+{
+  "schema": "ai-workflow/v2.1",
+  "id": "visualization-qa",
+  "displayName": "可视化渲染与几何质量检查",
+  "version": "1.2.0",
+  "mode": "executable-with-evidence",
+  "entry": "workflow.yaml",
+  "inputSchema": "schemas/input.schema.json",
+  "outputSchema": "schemas/output.schema.json",
+  "permissions": {
+    "filesystem": "project-scoped",
+    "network": "deny",
+    "process": "allowlisted-only"
+  },
+  "dependencies": {
+    "workflows": {},
+    "skills": {},
+    "packs": {}
+  },
+  "integrity": {
+    "sha256Manifest": "SHA256SUMS"
+  }
+}

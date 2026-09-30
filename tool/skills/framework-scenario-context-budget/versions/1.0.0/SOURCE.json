@@ -1,0 +1,12 @@
+{
+  "schema": "ai-governance-source/v1",
+  "authorSession": "qoder",
+  "derivedFrom": "governance:agents.md + versions/架构基本原则.md + this round's ledgers P1-P4",
+  "supersedes": null,
+  "releaseScope": "3.3.0 P5 scenario card for framework-author. Rule text is quoted from this repo's own governance documents; measured numbers name the evidence file or engine line they came from; upstream ECC skills are quoted verbatim with their original language marked and used only where they genuinely apply.",
+  "bodySha256": "9043fbaba71d43a1f887e3f5bb9498d063e869dede1f6d96e01f0d95b655bbee",
+  "openDeferred": [
+    "The ECC pool was advertised as 31 usable topics; measured it is 38 hits of which 6 are placeholders, 16 are Japanese and several belong to other products (D-91). This card therefore carries the authority itself rather than paraphrasing that pool.",
+    "No current pointer moved (red line 5)."
+  ]
+}

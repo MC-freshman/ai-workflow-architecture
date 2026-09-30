@@ -1,0 +1,49 @@
+{
+  "schema": "ai-skill-catalog/v1",
+  "sourceId": "math-modeling-programmer",
+  "snapshot": "snapshot-2026.08.31",
+  "skills": [
+    {
+      "id": "paper-programmer-math-modeling-programmer",
+      "version": "1.0.0",
+      "sourceId": "math-modeling-programmer",
+      "sourcePath": "SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "paper-programmer-data-auditor",
+      "version": "1.0.0",
+      "sourceId": "math-modeling-programmer",
+      "sourcePath": "agents/data-auditor/SKILL.md",
+      "category": "role-source"
+    },
+    {
+      "id": "paper-programmer-solver-engineer",
+      "version": "1.0.0",
+      "sourceId": "math-modeling-programmer",
+      "sourcePath": "agents/solver-engineer/SKILL.md",
+      "category": "role-source"
+    },
+    {
+      "id": "paper-programmer-validator",
+      "version": "1.0.0",
+      "sourceId": "math-modeling-programmer",
+      "sourcePath": "agents/validator/SKILL.md",
+      "category": "role-source"
+    },
+    {
+      "id": "paper-programmer-visualization",
+      "version": "1.0.0",
+      "sourceId": "math-modeling-programmer",
+      "sourcePath": "agents/visualization/SKILL.md",
+      "category": "role-source"
+    },
+    {
+      "id": "paper-programmer-workflow",
+      "version": "1.0.0",
+      "sourceId": "math-modeling-programmer",
+      "sourcePath": "workflow/SKILL.md",
+      "category": "skill"
+    }
+  ]
+}

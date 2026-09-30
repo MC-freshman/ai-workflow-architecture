@@ -1,0 +1,6 @@
+{
+  "schema": "ai-workflow-pointer/v1",
+  "id": "repo-lint",
+  "version": "0.6.3",
+  "hashManifest": "SHA256SUMS"
+}

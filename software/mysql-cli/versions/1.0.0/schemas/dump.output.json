@@ -1,0 +1,11 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "properties": {
+    "exitCode": { "type": "integer" },
+    "resultFile": { "type": "string", "description": "生成的 SQL 备份文件（传了 resultFile 时）" },
+    "stdout": { "type": "string", "description": "未指定 resultFile 时 SQL 文本走 stdout" },
+    "stderr": { "type": "string" }
+  },
+  "required": ["exitCode"]
+}

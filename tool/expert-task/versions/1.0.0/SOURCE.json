@@ -1,0 +1,7 @@
+{
+  "schema": "ai-workflow-source/v1",
+  "purpose": "Z10 §6.1 A1: generic runnable pipeline for experts without their own workflow",
+  "note": "role differentiation comes from each agent's own prompt/policies, which the runner prepends to every stage prompt",
+  "createdAt": "2026-09-14",
+  "authorSession": "zcode"
+}

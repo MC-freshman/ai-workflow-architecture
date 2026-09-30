@@ -1,0 +1,72 @@
+{
+  "schema": "ai-invocation-exceptions/v1",
+  "updatedAt": "2026-09-21",
+  "platform": "codex",
+  "infrastructure": [
+    {
+      "kind": "workflow",
+      "id": "wf-runner",
+      "version": "0.5.2",
+      "expectedCode": "CAPABILITY_UNAVAILABLE",
+      "reason": "The engine release is a versioned dependency, not a user workflow. Calling it through itself would form a cycle. /wf accepts the id but reports this design exception."
+    }
+  ],
+  "pendingGaps": [
+    {
+      "kind": "workflow",
+      "id": "repo-lint",
+      "version": "0.2.1",
+      "expectedCode": "CAPABILITY_UNAVAILABLE",
+      "reason": "repo-lint requires shared-read-only-platform-report-write, while the verified Codex script jail exposes only copy-in release/work/environment roots. The interface remains visible and returns this precise capability exception."
+    },
+    {
+      "kind": "workflow",
+      "id": "repo-lint",
+      "version": "0.3.0",
+      "expectedCode": "VERSION_CONFLICT",
+      "reason": "The registry retains repo-lint 0.3.0 for historical matrix coverage, while Codex 3.0 explicitly selects scannerRelease repo-lint 0.4.0; the engine must fail closed instead of silently mixing releases."
+    },
+    {
+      "kind": "software",
+      "id": "burp-suite",
+      "version": "1.0.0",
+      "expectedCode": "SNAPSHOT_NOT_FROZEN",
+      "reason": "The 3.0 recipe resolves and the Codex body hash is verified, but the shared capability snapshot is intentionally not frozen yet; software-call remains fail-closed."
+    },
+    {
+      "kind": "software",
+      "id": "dirsearch",
+      "version": "1.0.0",
+      "expectedCode": "SNAPSHOT_NOT_FROZEN",
+      "reason": "The 3.0 recipe resolves and the Codex body hash is verified, but the shared capability snapshot is intentionally not frozen yet; software-call remains fail-closed."
+    },
+    {
+      "kind": "software",
+      "id": "mysql-cli",
+      "version": "1.0.0",
+      "expectedCode": "SNAPSHOT_NOT_FROZEN",
+      "reason": "The 3.0 recipe resolves and the Codex body hash is verified, but the shared capability snapshot is intentionally not frozen yet; software-call remains fail-closed."
+    },
+    {
+      "kind": "software",
+      "id": "nmap",
+      "version": "1.0.0",
+      "expectedCode": "SNAPSHOT_NOT_FROZEN",
+      "reason": "The 3.0 recipe resolves and the Codex body hash is verified, but the shared capability snapshot is intentionally not frozen yet; software-call remains fail-closed."
+    },
+    {
+      "kind": "software",
+      "id": "veracrypt",
+      "version": "1.0.0",
+      "expectedCode": "SNAPSHOT_NOT_FROZEN",
+      "reason": "The 3.0 recipe resolves and the Codex body hash is verified, but the shared capability snapshot is intentionally not frozen yet; software-call remains fail-closed."
+    },
+    {
+      "kind": "software",
+      "id": "wireshark-cli",
+      "version": "1.0.0",
+      "expectedCode": "SNAPSHOT_NOT_FROZEN",
+      "reason": "The 3.0 recipe resolves and the Codex body hash is verified, but the shared capability snapshot is intentionally not frozen yet; software-call remains fail-closed."
+    }
+  ]
+}

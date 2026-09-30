@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": ["sprintPlan", "summary"],
+  "properties": {
+    "sprintPlan": { "type": "string", "minLength": 50 },
+    "summary": {
+      "type": "object",
+      "required": ["goal", "totalEstimatedHours", "effectiveCapacityHours", "remainingHours"],
+      "additionalProperties": false,
+      "properties": {
+        "goal": { "type": "string" },
+        "totalEstimatedHours": { "type": "number", "minimum": 0 },
+        "effectiveCapacityHours": { "type": "number", "minimum": 0 },
+        "remainingHours": { "type": "number" },
+        "criticalPathLength": { "type": "integer", "minimum": 0 },
+        "risksNamed": { "type": "integer", "minimum": 0 }
+      }
+    }
+  },
+  "additionalProperties": false
+}

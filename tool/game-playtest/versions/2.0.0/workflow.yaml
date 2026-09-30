@@ -1,0 +1,8 @@
+id: game-playtest
+version: 2.0.0
+entry: workflow.md
+mode: prompt
+steps:
+  - id: execute
+    input: task-context
+    output: workflow-result

@@ -1,0 +1,23 @@
+{
+  "platform": "dsh",
+  "contracts": "E:/ai/tool/runtime-contracts/versions/1.5.0",
+  "scannerRelease": "E:/ai/tool/repo-lint/versions/0.6.3",
+  "toolRoot": "E:/ai/tool",
+  "agentRoot": "E:/ai/agent",
+  "runner": "E:/ai/tool/wf-runner/versions/0.12.0",
+  "bridge": "E:/ai/dsh/bridge/bridge.json",
+  "platformRoot": "E:/ai/dsh",
+  "runsRoot": "E:/ai/dsh/runtime/runs",
+  "projectWriteRoots": [
+    "E:/ai/dsh/workspaces"
+  ],
+  "inputRoots": [
+    "E:/ai/dsh/workspaces"
+  ],
+  "scriptEnvironmentRungs": [],
+  "interpreters": {},
+  "notes_20260927": "DSH 接入配置由 architecture-manager 生成；脚本与特殊软件能力保持未声明，待 DSH 会话自证。",
+  "capabilities": "E:/ai/dsh/bridge/capabilities.json",
+  "notes_20260927b": "2026-09-27 R-P6: dsh runner-config raised to the current paired generation (wf-runner 0.11.0 + runtime-contracts 1.5.0 + repo-lint 0.6.1) by the zcode session under the user repair-round authorization (codex/doubao explicitly excluded, dsh included). Script/interpreters/software stay undeclared - fail-closed readings are the honest face.",
+  "notes_20260927c": "2026-09-27 M-P5: runner 0.12.0 (D-45/D-46) + repo-lint 0.6.2 (D-75) adopted; contracts 1.5.0 unchanged from the paired raise."
+}
