@@ -106,3 +106,10 @@ software/phpStudy_64/
 *.iso
 *.sqlite
 *.db
+
+# ── publication files added by export-governance-public.mjs
+!/LICENSE
+!/README.md
+!/PUBLICATION-BOUNDARY.md
+!/REPOSITORY-SHA256SUMS
+!/EXPORT-MANIFEST.json
