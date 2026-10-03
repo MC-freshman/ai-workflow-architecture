@@ -2,6 +2,7 @@ import fs from 'node:fs';
 import {join} from 'node:path';
 import {randomUUID} from 'node:crypto';
 import Ajv2020 from 'ajv/dist/2020.js';
+import Ajv from 'ajv';
 import {targetPath,defaultAuditRoot} from '../../core/paths.mjs';
 import {readJson,stableJson} from '../../core/json.mjs';
 import {sha256,sha256File} from '../../core/hash.mjs';
@@ -24,7 +25,7 @@ export function buildSoftwareCommandPlan({workspaceRoot,platformId,softwareId,op
   let request;
   if(operation==='call') {
     const cap=resource.manifest.capabilities.find(row=>row.name===capability);if(!cap)throw Error('CAPABILITY_UNAVAILABLE');
-    const inputSchema=readJson(join(resource.directory,cap.inputSchemaRef)),validate=new Ajv2020({strict:false,validateFormats:false}).compile(inputSchema);if(!validate(values))throw Error('SOFTWARE_ARGUMENT_INVALID');
+    const inputSchema=readJson(join(resource.directory,cap.inputSchemaRef)),Validator=String(inputSchema.$schema || '').includes('draft-07')?Ajv:Ajv2020,validate=new Validator({strict:false,validateFormats:false}).compile(inputSchema);if(!validate(values))throw Error('SOFTWARE_ARGUMENT_INVALID');
     request={schema:'ai-software-call/v1',kind:'request',softwareId,softwareVersion:pointer.version,capability,arguments:values,credentialReferences,idempotencyKey:sha256(planId),timeoutSeconds:cap.invocation.timeout || 30,profile:profile || (connector.value.softwareProfiles?.['manager-'+softwareId]?'manager-'+softwareId:'readonly-version'),consented:true,holder:'manager-ui'};
   }else request={schema:'ai-software-session/v1',kind:'request',operation,softwareId,softwareVersion:pointer.version,sessionKey:'manager-software',holder:'manager-ui',profile:profile || (connector.value.softwareProfiles?.['manager-'+softwareId]?'manager-'+softwareId:'administrator'),timeoutSeconds:60,consented:true};
   return {schema:'architecture-manager-plan/v1',kind:'software-command',planId,workspaceRoot,generatedAt:now,applyMode:'confirmation-required',writePerformed:false,target:{platformId,softwareId,operation,capability,arguments:values,credentialReferences,profile:request.profile,version:pointer.version,bodyPath},payload:{request,python:runtime.python,connectorPath:connector.gatewayPath,configPath:connector.path,connectorSha256:sha256File(connector.gatewayPath),configSha256:sha256(connector.text),releaseSha256:resource.sumsSha256,bodySha256:bodyRow.sha256},steps:[{operation:operation==='call'?'confirmed-declared-action':'confirmed-session-'+operation,dispatch:'registered-connector-provider-only',request}],verification:['same frozen release and platform binding','source/body hash before dispatch','version, function and session liveness are separate','repeated confirmation does not start another process']};

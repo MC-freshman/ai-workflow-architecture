@@ -24,6 +24,7 @@ test('renderer domains stay split and write kinds remain centralized', () => {
   }
 
   assert.deepEqual(PLAN_WRITE_KINDS, [
+    'mcp-credential', 'mcp-credential-provider',
     'software-command',
     'platform-body',
     'body-import','body-import-revert',

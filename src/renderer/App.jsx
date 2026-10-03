@@ -483,7 +483,8 @@ export default function App() {
     setBusy(true);
     setTransactionProgress(null);
     try {
-      const applied = await api.applyPlan({ plan: planPreview, afterText: planPayload?.afterText, actor: 'local-user' });
+      const applied = await api.applyPlan({ plan: planPreview, afterText: planPayload?.afterText, credentialValue:planPayload?.credentialValue, actor: 'local-user' });
+      if(planPreview.kind==='mcp-credential')setPlanPayload(null);
       if(applied.stoppedAfterCompletion) {
         setMessage('停止请求到达时当前原子步骤已完成；结果已保留，后续验证尚未运行。请重新扫描并查看审计记录。');
         setPlanPreview(null);setPlanPayload(null);return;

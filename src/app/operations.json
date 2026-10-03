@@ -1,18 +1,90 @@
 {
   "schema": "architecture-manager-operations/v1",
   "operations": {
-    "listRuntimeBodies":{"channel":"intake:runtime-bodies","phase":"query","backend":"listRuntimeBodies","argumentsStyle":"input","taskMode":"owned"},
-    "previewSoftwareBodyPlacement": {"channel":"intake:software-placement","phase":"plan","backend":"buildSoftwareBodyPlacementPlan","argumentsStyle":"input","taskMode":"owned"},
-    "previewSoftwareBody": {"channel":"intake:software-body","phase":"plan","backend":"buildSoftwareBodyPlan","argumentsStyle":"input","taskMode":"owned"},
-    "readSoftwareBodyActions": {"channel":"software:body-actions","phase":"query","backend":"readSoftwareBodyActions","argumentsStyle":"input","taskMode":"owned"},
-    "previewSoftwareCommand": {"channel":"plan:software-command","phase":"plan","backend":"buildSoftwareCommandPlan","argumentsStyle":"input","taskMode":"owned"},
-    "previewPlatformBody": {"channel":"intake:platform-body","phase":"plan","backend":"buildPlatformBodyPlan","argumentsStyle":"input","taskMode":"owned"},
-    "readToolBodyEditor": {"channel":"intake:tool-editor","phase":"query","backend":"readToolBodyEditor","argumentsStyle":"input","taskMode":"owned"},
-    "previewToolBody": {"channel":"intake:tool-plan","phase":"plan","backend":"buildToolBodyPlan","argumentsStyle":"input","taskMode":"owned"},
-    "checkSharedBody": {"channel":"intake:body-smoke","phase":"execute","backend":"checkSharedBody","argumentsStyle":"input","taskMode":"owned"},
-    "readBodyEditor": {"channel":"intake:body-editor","phase":"query","backend":"readBodyEditor","argumentsStyle":"input","taskMode":"owned"},
-    "listBodyDependencies": {"channel":"intake:dependencies","phase":"query","backend":"listBodyDependencies","argumentsStyle":"input","taskMode":"owned"},
-    "previewAgentSkillBody": {"channel":"intake:agent-skill-plan","phase":"plan","backend":"buildAgentSkillBodyPlan","argumentsStyle":"input","taskMode":"owned"},
+    "listRuntimeBodies": {
+      "channel": "intake:runtime-bodies",
+      "phase": "query",
+      "backend": "listRuntimeBodies",
+      "argumentsStyle": "input",
+      "taskMode": "owned"
+    },
+    "previewSoftwareBodyPlacement": {
+      "channel": "intake:software-placement",
+      "phase": "plan",
+      "backend": "buildSoftwareBodyPlacementPlan",
+      "argumentsStyle": "input",
+      "taskMode": "owned"
+    },
+    "previewSoftwareBody": {
+      "channel": "intake:software-body",
+      "phase": "plan",
+      "backend": "buildSoftwareBodyPlan",
+      "argumentsStyle": "input",
+      "taskMode": "owned"
+    },
+    "readSoftwareBodyActions": {
+      "channel": "software:body-actions",
+      "phase": "query",
+      "backend": "readSoftwareBodyActions",
+      "argumentsStyle": "input",
+      "taskMode": "owned"
+    },
+    "previewSoftwareCommand": {
+      "channel": "plan:software-command",
+      "phase": "plan",
+      "backend": "buildSoftwareCommandPlan",
+      "argumentsStyle": "input",
+      "taskMode": "owned"
+    },
+    "previewPlatformBody": {
+      "channel": "intake:platform-body",
+      "phase": "plan",
+      "backend": "buildPlatformBodyPlan",
+      "argumentsStyle": "input",
+      "taskMode": "owned"
+    },
+    "readToolBodyEditor": {
+      "channel": "intake:tool-editor",
+      "phase": "query",
+      "backend": "readToolBodyEditor",
+      "argumentsStyle": "input",
+      "taskMode": "owned"
+    },
+    "previewToolBody": {
+      "channel": "intake:tool-plan",
+      "phase": "plan",
+      "backend": "buildToolBodyPlan",
+      "argumentsStyle": "input",
+      "taskMode": "owned"
+    },
+    "checkSharedBody": {
+      "channel": "intake:body-smoke",
+      "phase": "execute",
+      "backend": "checkSharedBody",
+      "argumentsStyle": "input",
+      "taskMode": "owned"
+    },
+    "readBodyEditor": {
+      "channel": "intake:body-editor",
+      "phase": "query",
+      "backend": "readBodyEditor",
+      "argumentsStyle": "input",
+      "taskMode": "owned"
+    },
+    "listBodyDependencies": {
+      "channel": "intake:dependencies",
+      "phase": "query",
+      "backend": "listBodyDependencies",
+      "argumentsStyle": "input",
+      "taskMode": "owned"
+    },
+    "previewAgentSkillBody": {
+      "channel": "intake:agent-skill-plan",
+      "phase": "plan",
+      "backend": "buildAgentSkillBodyPlan",
+      "argumentsStyle": "input",
+      "taskMode": "owned"
+    },
     "confirm": {
       "channel": "ui:confirm",
       "phase": "ui"
@@ -434,9 +506,46 @@
       "backend": "buildIntakeRevertPlan",
       "argumentsStyle": "input",
       "taskMode": "owned"
+    },
+    "readMcpConfiguration": {
+      "channel": "native-mcp:readMcpConfiguration",
+      "phase": "query",
+      "backend": "readMcpConfiguration",
+      "argumentsStyle": "input",
+      "taskMode": "owned"
+    },
+    "discoverNativeMcp": {
+      "channel": "native-mcp:discoverNativeMcp",
+      "phase": "execute",
+      "backend": "discoverNativeMcp",
+      "argumentsStyle": "input",
+      "taskMode": "owned"
+    },
+    "previewMcpBody": {
+      "channel": "native-mcp:previewMcpBody",
+      "phase": "plan",
+      "backend": "buildMcpBodyPlan",
+      "argumentsStyle": "input",
+      "taskMode": "owned"
+    },
+    "previewNativeCredential": {
+      "channel": "native-mcp:previewNativeCredential",
+      "phase": "plan",
+      "backend": "buildNativeCredentialPlan",
+      "argumentsStyle": "input",
+      "taskMode": "owned"
+    },
+    "previewNativeCredentialProvider": {
+      "channel": "native-mcp:previewNativeCredentialProvider",
+      "phase": "plan",
+      "backend": "buildNativeCredentialProviderPlan",
+      "argumentsStyle": "input",
+      "taskMode": "owned"
     }
   },
   "planKinds": [
+    "mcp-credential",
+    "mcp-credential-provider",
     "software-command",
     "platform-body",
     "body-import",

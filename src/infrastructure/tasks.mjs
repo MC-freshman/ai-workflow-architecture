@@ -28,7 +28,7 @@ export function runDomainTask({method,args,workspaceRoot,platformId=null,jobId=r
   const root=resolve(workspaceRoot);
   let binding=null,owner=null;
   if(platformId) {try {binding=platformPython(root,platformId);owner=platformId;} catch { /* No temporary directory before a platform is configured. */ }}
-  if(!owner) for(const id of allPlatformIds(root)) {try {binding=platformPython(root,id);owner=id;break;} catch { /* no automatic configuration */ }}
+  if(!owner && !platformId) for(const id of allPlatformIds(root)) {try {binding=platformPython(root,id);owner=id;break;} catch { /* no automatic configuration */ }}
   // Read-only scans also work in a workspace without a configured platform.
   const cwd=owner?targetPath(root,`${owner}/runtime/tmp/manager-tasks/${jobId}`):null;
   if(cwd) mkdirSync(cwd,{recursive:true});

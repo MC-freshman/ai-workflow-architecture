@@ -1,4 +1,5 @@
 import {restoreOwnedFiles} from './transactions/recovery.mjs';
+import {applyNativeCredential,verifyNativeCredential,applyNativeCredentialProvider,verifyNativeCredentialProvider} from './domains/software/credentials.mjs';
 import {applyPlatformBody,verifyPlatformBody} from './domains/intake/platform-body.mjs';
 import {applySoftwareCommand,verifySoftwareCommand} from './domains/software/actions.mjs';
 import {applyIntakePublication,verifyIntakePublication,revertIntakePublication,assertIntakeRevertPlan,verifyIntakeRevert} from './domains/intake/publication.mjs';
@@ -30,8 +31,10 @@ import { defaultAuditRoot, localViewPath, safeRelative, targetPath } from './cor
 import { sha256 } from './core/hash.mjs';
 import { atomicWrite, makeId, output, requirePlan, saveCheckpoint, writeAudit } from './transactions/kernel.mjs';
 
-export function applyPlan({ plan, afterText = null, actor = 'local-user', auditRoot = defaultAuditRoot(), now = new Date().toISOString(), failAfterCheckpoint = false, onProgress = () => {} }) {
+export function applyPlan({ plan, afterText = null, credentialValue = null, actor = 'local-user', auditRoot = defaultAuditRoot(), now = new Date().toISOString(), failAfterCheckpoint = false, onProgress = () => {} }) {
   requirePlan(plan);
+  if(plan.kind==='mcp-credential')return applyNativeCredential(plan,{value:credentialValue,actor,auditRoot});
+  if(plan.kind==='mcp-credential-provider')return applyNativeCredentialProvider(plan,{actor,auditRoot});
   if(plan.kind==='platform-body')return applyPlatformBody(plan,{actor,auditRoot,onProgress});
   if(plan.kind==='software-command')return applySoftwareCommand(plan,{actor,auditRoot});
   if(plan.kind==='body-import')return applyIntakePublication(plan,{actor,auditRoot,now,onProgress});
@@ -291,6 +294,8 @@ function applyIntegration(plan, afterText, context) {
 }
 
 export function verifyPlanTarget({ plan }) {
+  if(plan.kind==='mcp-credential')return verifyNativeCredential(plan);
+  if(plan.kind==='mcp-credential-provider')return verifyNativeCredentialProvider(plan);
   if(plan.kind==='software-command')return verifySoftwareCommand(plan);
   if(plan.kind==='platform-body')return verifyPlatformBody(plan);
   requirePlan(plan);

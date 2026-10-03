@@ -93,5 +93,10 @@ contextBridge.exposeInMainWorld('architectureManager', Object.freeze({
   listIntakeJournals: (...args) => ipcRenderer.invoke("intake:history", ...args),
   readIntakeJournal: (...args) => ipcRenderer.invoke("intake:journal", ...args),
   previewIntakeRevertPlan: (...args) => ipcRenderer.invoke("intake:revert-plan", ...args),
+  readMcpConfiguration: (...args) => ipcRenderer.invoke("native-mcp:readMcpConfiguration", ...args),
+  discoverNativeMcp: (...args) => ipcRenderer.invoke("native-mcp:discoverNativeMcp", ...args),
+  previewMcpBody: (...args) => ipcRenderer.invoke("native-mcp:previewMcpBody", ...args),
+  previewNativeCredential: (...args) => ipcRenderer.invoke("native-mcp:previewNativeCredential", ...args),
+  previewNativeCredentialProvider: (...args) => ipcRenderer.invoke("native-mcp:previewNativeCredentialProvider", ...args),
   onTransactionProgress: (callback) => { const listener = (_event, progress) => callback(progress); ipcRenderer.on('transaction:progress', listener); return () => ipcRenderer.removeListener('transaction:progress', listener); }
 }));

@@ -146,6 +146,11 @@ function registerIpc() {
     const result=await dialog.showOpenDialog({title:'选择要接入的本体来源',properties:[input.kind==='directory'?'openDirectory':'openFile']});
     return result.canceled?null:result.filePaths[0] ?? null;
   });
+  handleOperation('native-mcp:readMcpConfiguration',()=>{throw Error('IPC_BACKEND_REQUIRED');});
+  handleOperation('native-mcp:discoverNativeMcp',()=>{throw Error('IPC_BACKEND_REQUIRED');});
+  handleOperation('native-mcp:previewMcpBody',()=>{throw Error('IPC_BACKEND_REQUIRED');});
+  handleOperation('native-mcp:previewNativeCredential',()=>{throw Error('IPC_BACKEND_REQUIRED');});
+  handleOperation('native-mcp:previewNativeCredentialProvider',()=>{throw Error('IPC_BACKEND_REQUIRED');});
   handleOperation('intake:scan-source',()=>{throw Error('IPC_BACKEND_REQUIRED');});
   handleOperation('intake:body-editor',()=>{throw Error('IPC_BACKEND_REQUIRED');});
   handleOperation('intake:body-smoke',()=>{throw Error('IPC_BACKEND_REQUIRED');});
