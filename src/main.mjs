@@ -1,4 +1,5 @@
 import {runDomainTask,cancelDomainTask,cancelAllDomainTasks} from './infrastructure/tasks.mjs';
+import {taskContext} from './app/task-context.mjs';
 import {buildSoftwareBodyPlacementPlan,buildSoftwareBodyPlan,readSoftwareBodyActions} from './domains/intake/software-body.mjs';
 import {buildSoftwareCommandPlan} from './domains/software/actions.mjs';
 import {listRuntimeBodies} from './domains/intake/runtime-body.mjs';
@@ -103,7 +104,7 @@ function registerIpc() {
     const metadata=args.at(-1)?.__managerTaskContext?args.pop():{};
     const input=args[0];
     if(!declaration.backend) return handler(event,...args);
-    const workspaceRoot=typeof input==='string'?input:input?.workspaceRoot || input?.plan?.workspaceRoot;
+    const {workspaceRoot,platformId}=taskContext(input);
     let parameters;
     switch(declaration.argumentsStyle) {
       case 'document': parameters=[input.workspaceRoot,input.relativePath];break;
@@ -114,7 +115,7 @@ function registerIpc() {
     }
     const mode=input?.plan?.kind==='software-launch' || input?.plan?.kind==='software-command' && input.plan.target.operation==='open'?'provider-session':declaration.taskMode;
     return lifecycle.track(async()=>{
-      const result=await runDomainTask({method:declaration.backend,args:parameters,workspaceRoot,platformId:input?.platformId || input?.plan?.target?.platformId,jobId:metadata.jobId,workspaceSession:metadata.workspaceSession,mode,phase:declaration.phase,onProgress:progress=>event.sender.send('transaction:progress',progress)});
+      const result=await runDomainTask({method:declaration.backend,args:parameters,workspaceRoot,platformId,jobId:metadata.jobId,workspaceSession:metadata.workspaceSession,mode,phase:declaration.phase,onProgress:progress=>event.sender.send('transaction:progress',progress)});
       if(declaration.backend==='scanWorkspace') rememberWorkspace(result.workspaceRoot);
       return result;
     });

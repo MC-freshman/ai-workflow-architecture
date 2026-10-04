@@ -1,5 +1,5 @@
 import { createHash } from 'node:crypto';
-import {openSync,readSync,closeSync} from 'node:fs';
+import {openSync,readSync,closeSync} from './physical-fs.mjs';
 
 export function sha256(value) {
   return createHash('sha256').update(value, 'utf8').digest('hex');

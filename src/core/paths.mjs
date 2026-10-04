@@ -1,4 +1,4 @@
-import { existsSync, lstatSync, realpathSync } from 'node:fs';
+import { existsSync, lstatSync, realpathSync } from './physical-fs.mjs';
 import { homedir, tmpdir } from 'node:os';
 import { join, normalize, relative, resolve, sep } from 'node:path';
 import { sha256 } from './hash.mjs';

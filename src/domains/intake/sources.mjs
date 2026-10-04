@@ -1,4 +1,4 @@
-import {createReadStream,readdirSync,lstatSync,statSync,statfsSync} from 'node:fs';
+import {createReadStream,readdirSync,lstatSync,statSync,statfsSync} from '../../core/physical-fs.mjs';
 import {basename,join,extname} from 'node:path';
 import {createHash} from 'node:crypto';
 import {TextDecoder} from 'node:util';

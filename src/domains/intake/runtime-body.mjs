@@ -1,4 +1,4 @@
-import fs from 'node:fs';
+import fs from '../../core/physical-fs.mjs';
 import {join,dirname,relative} from 'node:path';
 import {randomUUID,createHash} from 'node:crypto';
 import {Readable} from 'node:stream';

@@ -1,4 +1,4 @@
-import {openSync,closeSync,readSync,statSync,createReadStream} from 'node:fs';
+import {openSync,closeSync,readSync,statSync,createReadStream} from '../../core/physical-fs.mjs';
 import {Readable} from 'node:stream';
 import {TextDecoder} from 'node:util';
 import {createInflateRaw,crc32} from 'node:zlib';

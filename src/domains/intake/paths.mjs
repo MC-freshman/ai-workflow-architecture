@@ -1,4 +1,4 @@
-import {lstatSync,existsSync} from 'node:fs';
+import {lstatSync,existsSync} from '../../core/physical-fs.mjs';
 import {dirname,resolve} from 'node:path';
 
 export function externalSourcePath(value) {
