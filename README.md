@@ -4,7 +4,7 @@
 
 ## 1. 打开和选择工作区
 
-1. 双击 `Architecture-Manager-0.5.0-portable-x64.exe`，或运行同版 `setup-x64.exe` 安装。便携包、安装包和 `SHA256SUMS-0.5.0.txt` 位于 `architecture-manager/release/`；历史版本保留供回退。
+1. 双击 `Architecture-Manager-0.5.0-portable-x64.exe`，或运行同版 `setup-x64.exe` 安装。便携包、安装包和 `SHA256SUMS-0.5.0.txt` 位于 `architecture-manager/release/`；历史版本在 GitHub Releases 保留供回退。
 2. 点击右上角“选择工作区”，选自己的架构根目录。本机是 `E:\ai`；不要选择某一个 tool、agent 或平台的子目录。最近目录会记忆，切换工作区会清空旧计划和待提交凭据。
 3. 全新用户可在首次页面克隆自己的架构副本。GitHub 登录在系统自己的界面完成；提交姓名和邮箱只用于 Git 提交身份。
 4. 等“扫描完成”后操作。默认扫描只读，生成计划也不写入。核对目标后点击“确认并执行”，才开始安置、发布、绑定或调用。

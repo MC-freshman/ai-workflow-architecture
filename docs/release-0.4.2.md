@@ -1,6 +1,6 @@
 # 0.4.2 修复与提速补丁
 
-当前下载：release/Architecture-Manager-0.4.2-portable-x64.exe 或同目录 setup 包；用 SHA256SUMS-0.4.2.txt 核对。0.4.1 包保留，未覆盖。
+下载：GitHub Release [v0.4.2](https://github.com/MC-freshman/architecture-manager/releases/tag/v0.4.2)，用其中的 SHA256SUMS-0.4.2.txt 核对（服务端 sha256 与 2026-10-03 本机包逐字相同）。0.4.1 包未覆盖。2026-10-04 本机 `release/` 清理旧版本后仅保留 0.5.0，0.4.1/0.4.2 历史包以 GitHub Releases 为回退副本。
 
 实际便携 EXE 六条界面/IPC 链通过：启动和 Worker 扫描、文档 Git 差异、发布计划、认证范围、所选平台软件连接器健康、Git 查询。打包验收修复了 Electron 冻结 preload 与 Proxy 任务包装的不兼容，避免启动扫描失败。双包的内部 app-64.7z 哈希一致，所有打包 src 文件对齐本次 conform 源码 SHA。
 
