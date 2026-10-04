@@ -1,7 +1,9 @@
+import {useSelectionApi} from '../../shared/useSelectionApi.mjs';
 import React,{useEffect,useState} from 'react';
 import {friendlyError} from '../../presenter.mjs';
 const newAction=()=>({name:'',args:'',parameters:[],sideEffects:'none',filesystem:'read',network:'none',probeReadOnly:false});
 export function SoftwareBodyForm({api,workspace,platformId,intake,setMessage,setPlanPreview,setPlanPayload}) {
+  api=useSelectionApi(api,workspace+":"+platformId+":"+intake.sourceFingerprint);
   const [id,setId]=useState(''),[displayName,setDisplayName]=useState(''),[upstream,setUpstream]=useState(''),[version,setVersion]=useState(''),[mode,setMode]=useState('cli'),[runtime,setRuntime]=useState(''),[versionArgs,setVersionArgs]=useState('--version'),[launchArgs,setLaunchArgs]=useState(''),[actions,setActions]=useState([]),[placement,setPlacement]=useState(null),[working,setWorking]=useState(false),[error,setError]=useState(''),[result,setResult]=useState(null);
   useEffect(()=>{let active=true;setPlacement(null);if(platformId && id)api.listRuntimeBodies({workspaceRoot:workspace,platformId}).then(rows=>{if(active){const previous=rows.findLast(row=>row.plan.target.resourceId===id && row.plan.payload.intake.sourceFingerprint===intake.sourceFingerprint && row.plan.payload.intake.selectedEntry===intake.selectedEntry);if(previous)setPlacement(previous.plan);}}).catch(error=>{if(active)setError(friendlyError(error));});return ()=>{active=false;};},[api,workspace,platformId,id,intake.sourceFingerprint,intake.selectedEntry]);
   const plan=async action=>{setWorking(true);setError('');try{const value=await action();setPlanPreview(value);setPlanPayload(null);setMessage('请核对软件计划并确认执行。版本询问、功能测试和会话状态各自记录。');}catch(error){setError(friendlyError(error));}finally{setWorking(false);}};

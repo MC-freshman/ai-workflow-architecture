@@ -12,6 +12,7 @@ import {buildIntakePublicationPlan} from './publication.mjs';
 import {assertBodyIdentity,sharedRegistration,encode} from './shared-body.mjs';
 import {hasSensitiveLiteral} from './policy.mjs';
 import {validateFrozenResource} from '../resources/versions.mjs';
+import {mcpCredentialReferences} from '../software/mcp-config.mjs';
 const NAME=/^[a-zA-Z0-9][a-zA-Z0-9._-]*$/;
 export const buildSoftwareBodyPlacementPlan=({intake,platformId,softwareId})=>buildRuntimeBodyPlan({intake,platformId,resourceId:softwareId});
 export function normalizeSoftwareAction(action) {
@@ -70,8 +71,9 @@ export function buildSoftwareBodyPlan({placementPlan,displayName,upstreamVersion
   const changes=[...registration,...(adopt?[{path:relative(root,connector.path).replaceAll('\\','/'),content:encode(gateway)},{path:provider,content:fs.readFileSync(fileURLToPath(new URL('../../runtime/platform_provider.py',import.meta.url)),'utf8')}]:[])];
   return buildIntakePublicationPlan({intake,platformId,repository:'software',resourceId:softwareId,version,files,changes,placementPlan,settings:{mode,profile,observed,bodyPath:entry,upstreamVersion,launchArgs,adopt},now});
 }
-export function readSoftwareBodyActions({workspaceRoot,softwareId}) {
+export function readSoftwareBodyActions({workspaceRoot,softwareId,platformId=null}) {
   if(!/^[a-z0-9][a-z0-9._-]*$/.test(softwareId || ''))throw Error('INVALID_SOFTWARE_ID');
   const current=readJson(targetPath(workspaceRoot,`software/${softwareId}/current.json`)),{directory,manifest}=validateFrozenResource(workspaceRoot,'software',softwareId,current.version),snapshot=readJson(join(directory,manifest.snapshot));
-  return {softwareId,version:current.version,kind:manifest.kind,actions:manifest.capabilities.map(cap=>({...cap,inputSchema:readJson(join(directory,cap.inputSchemaRef)),observed:snapshot.capabilities?.find(row=>row.name===cap.name)?.frozen!==false && snapshot.frozen===true})),writePerformed:false};
+  let requiredReferences=[];if(platformId){try{requiredReferences=mcpCredentialReferences(runnerConfig(workspaceRoot,platformId).value.nativeMcpServers?.[softwareId] || {});}catch{/* Binding unavailable is shown by the command planner. */}}
+  return {softwareId,version:current.version,kind:manifest.kind,requiredReferences,actions:manifest.capabilities.map(cap=>({...cap,inputSchema:readJson(join(directory,cap.inputSchemaRef)),observed:snapshot.capabilities?.find(row=>row.name===cap.name)?.frozen!==false && snapshot.frozen===true,definitionOnly:snapshot.capabilities?.find(row=>row.name===cap.name)?.observation?.functionExecuted===false})),writePerformed:false};
 }

@@ -1,30 +1,11 @@
-import React, { useEffect, useState } from 'react';
-
-export function PlanCenterPanel({ api, workspace }) {
-  const [parsed, setParsed] = useState(null);
-  const [error, setError] = useState(null);
-  const load = () => {
-    if (!workspace) return;
-    setError(null);
-    api.parseImplementationTables(workspace).then((data) => setParsed(data)).catch((e) => setError(String(e?.message ?? e)));
-  };
-  useEffect(() => {
-    setParsed(null);
-    load();
-  }, [workspace]);
-  return <section className="panel"><div className="panel-title"><span>计划中心（versions/ 里的 P 表）</span><div className="panel-tools"><span className="muted">{parsed ? `${parsed.documents.length} 份实施表` : '未解析'}</span><button className="small-button" onClick={load} disabled={!workspace}>重新解析</button></div></div>
-    {error && <div className="empty">解析失败：{error}</div>}
-    {!parsed && !error && <div className="empty">选择工作区后解析 versions/ 下的 P 步表（只读；状态仍以文档本身为准）。</div>}
-    {parsed && parsed.documents.length === 0 && <div className="empty">versions/ 里没有带 P 步表的文档。</div>}
-    {parsed && parsed.documents.map((document) => <div key={document.path}>
-      <div className="panel-subtitle">{document.path} · {document.steps.length} 步</div>
-      <div className="rows">{document.steps.map((step) => <div className="row" key={document.path + step.id}>
-        <div>
-          <span className="row-name">{step.id} {step.name}</span>
-          <div className="path-line">{step.duration || '时长未写'} · 产物：{(step.artifacts || '未写').slice(0, 80)}</div>
-          <div className="path-line">判据：{(step.criteria || '未写').slice(0, 160)}</div>
-        </div>
-      </div>)}</div>
-    </div>)}
-  </section>;
+import React,{useEffect,useState} from 'react';
+import {useSelectionApi} from '../shared/useSelectionApi.mjs';
+import {friendlyError} from '../presenter.mjs';
+export function PlanCenterPanel({api,workspace,onOpenDocument=null}) {
+  api=useSelectionApi(api,workspace);
+  const [parsed,setParsed]=useState(null),[error,setError]=useState(''),[selected,setSelected]=useState(''),[page,setPage]=useState(0);
+  const load=async()=>{if(!workspace)return;setError('');try{const value=await api.parseImplementationTables(workspace);setParsed(value);setSelected(previous=>value.documents.some(row=>row.path===previous)?previous:value.documents[0]?.path || '');setPage(0);}catch(error){setError(friendlyError(error));}};
+  useEffect(()=>{setParsed(null);load();},[workspace]);
+  const document=parsed?.documents.find(row=>row.path===selected),steps=document?.steps || [];
+  return <section className="panel"><div className="panel-title"><span>计划中心（按文档表头读取）</span><button className="small-button" disabled={!workspace} onClick={load}>重新解析</button></div><p>状态以原文为准，不根据文件存在推测完成。普通或加粗 P 表、重排表头及进度表都可读取。</p>{error && <div className="scan-result warning">{error}</div>}{parsed && <><label className="wizard-field">实施表（{parsed.documents.length} 份）<select value={selected} onChange={event=>{setSelected(event.target.value);setPage(0);}}>{parsed.documents.map(row=><option key={row.path} value={row.path}>{row.path} · {row.steps.length} 步</option>)}</select></label>{document && <>{onOpenDocument && <button className="small-button" onClick={()=>onOpenDocument(document.path)}>打开全文／更新计划进度</button>}<div className="rows">{steps.slice(page*20,(page+1)*20).map((step,index)=><div className="row" key={step.id+':'+index}><div><strong>{step.id} {step.name}</strong><span className="pill">{step.status || '原文未写状态'}</span><div className="path-line">{step.duration || '原文未写时长'}</div><details><summary>子块、产物与判据</summary><p>子块：{step.blocks || '未声明'}</p><p>产物：{step.artifacts || '未声明'}</p><p>判据：{step.criteria || '此表未声明判据，请读正式方案'}</p></details></div></div>)}</div><div className="git-actions"><button className="small-button" disabled={!page} onClick={()=>setPage(value=>value-1)}>上一页</button><span>{page+1} / {Math.max(1,Math.ceil(steps.length/20))}</span><button className="small-button" disabled={(page+1)*20>=steps.length} onClick={()=>setPage(value=>value+1)}>下一页</button></div></>}</>}{parsed?.documents.length===0 && <p>当前 versions/ 没有可识别的 P 表。</p>}</section>;
 }

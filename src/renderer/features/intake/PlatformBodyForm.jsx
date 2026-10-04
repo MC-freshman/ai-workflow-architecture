@@ -1,6 +1,8 @@
+import {useSelectionApi} from '../../shared/useSelectionApi.mjs';
 import React,{useEffect,useRef,useState} from 'react';
 import {friendlyError} from '../../presenter.mjs';
 export function PlatformBodyForm({api,workspace,intake,inventory,setPlanPreview,setPlanPayload,setMessage}) {
+  api=useSelectionApi(api,workspace+":"+(intake?.sourceFingerprint || ""));
   const [selection,setSelection]=useState('__new__'),[id,setId]=useState(''),[confirmed,setConfirmed]=useState(false),[fields,setFields]=useState({}),[displayName,setDisplayName]=useState(''),[mode,setMode]=useState('manual-native'),[args,setArgs]=useState('{client-descriptor}'),[identity,setIdentity]=useState('architecture-json-cli-client'),[error,setError]=useState(''),[working,setWorking]=useState(false),[result,setResult]=useState(null),[snapshot,setSnapshot]=useState(null);const serial=useRef(0),platformId=selection==='__new__'?id:selection;
   useEffect(()=>{const current=++serial.current;setSnapshot(null);setResult(null);if(!/^[a-z][a-z0-9-]{1,30}$/.test(platformId))return;api.readOnboardingConfig({workspaceRoot:workspace,platformId}).then(value=>{if(current!==serial.current)return;setFields(value.fields);setDisplayName(value.fields.displayName || platformId);setSnapshot(value);setError('');}).catch(error=>{if(current===serial.current)setError(friendlyError(error));});return ()=>{serial.current++;};},[api,workspace,platformId]);
   const act=async action=>{setWorking(true);setError('');try{const value=await action();if(value?.schema==='architecture-manager-plan/v1'){setPlanPreview(value);setPlanPayload(null);setMessage('平台本体接入计划已生成。配置和目录登记会明确保持待认证；安置不会启动客户端。');}else setResult(value);}catch(error){setError(friendlyError(error));}finally{setWorking(false);}};

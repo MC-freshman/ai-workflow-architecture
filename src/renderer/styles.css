@@ -173,3 +173,9 @@ body { background: var(--bg); color: var(--text); }
 .onboarding-result { margin-top: 16px; padding: 14px; border: 1px solid var(--line); border-radius: 8px; max-height: 38vh; overflow: auto; }
 .onboarding-footer { justify-content: space-between; border-top: 1px solid var(--line); padding-top: 12px; }
 .onboarding-automatic { padding: 14px; margin: 14px 0; background: var(--surface-soft, #edf5ff); border: 1px solid #bfdbfe; border-radius: 8px; }
+.notice { top: 52px; z-index: 25; max-height: 22vh; }
+.checklist-row { display: flex; align-items: center; gap: 10px; margin: 9px 0; overflow-wrap: anywhere; }
+.wizard-grid > label { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+fieldset { min-width: 0; border: 1px solid var(--line); border-radius: 8px; padding: 14px; margin: 14px 0; }
+fieldset pre { max-height: 30vh; overflow: auto; white-space: pre-wrap; overflow-wrap: anywhere; }
+@media (max-width: 850px) { .wizard-grid { grid-template-columns: minmax(0,1fr); } .wizard-field { grid-template-columns: minmax(0,1fr); } .content { padding: 16px 18px 80px; } .notice { top: 92px; } }

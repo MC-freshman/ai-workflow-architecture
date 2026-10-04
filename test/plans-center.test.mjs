@@ -37,6 +37,9 @@ test('parses P-step tables out of versions/ documents', () => {
   assert.equal(p1.id, 'P1');
   rmSync(root, { recursive: true, force: true });
 });
+test('ordinary and bold P tables are mapped by headers, including reordered columns and progress-only tables',()=>{
+  const root=makeFixture();writeFileSync(join(root,'versions','plain.md'),'| 状态 | P | 判据 | 产物 | 时长 | 子块 |\n|---|---|---|---|---|---|\n| 待执行 | P12 工作流 | 可调用 | 新版本 | 2 h | 两块 |\n\n| P | 状态 | 说明 |\n|---|---|---|\n| **P13** | 完成 | 实测 |\n');const steps=parseImplementationTables(root).documents.find(row=>row.path.endsWith('plain.md')).steps;assert.equal(steps[0].id,'P12');assert.equal(steps[0].criteria,'可调用');assert.equal(steps[0].status,'待执行');assert.equal(steps[1].status,'完成');assert.equal(steps[1].criteria,null);rmSync(root,{recursive:true,force:true});
+});
 
 test('diffDocument reads a git diff read-only', () => {
   const root = mkdtempSync(join(tmpdir(), 'am-diff-'));

@@ -1,6 +1,8 @@
+import {useSelectionApi} from '../../shared/useSelectionApi.mjs';
 import React,{useEffect,useState} from 'react';
 import {friendlyError} from '../../presenter.mjs';
 export function McpBodyForm({api,workspace,platformId,intake,setMessage,setPlanPreview,setPlanPayload}) {
+  api=useSelectionApi(api,workspace+":"+platformId+":"+intake.sourceFingerprint);
   const [servers,setServers]=useState([]),[selected,setSelected]=useState(''),[id,setId]=useState(''),[name,setName]=useState(''),[runtime,setRuntime]=useState(''),[placement,setPlacement]=useState(null),[discovery,setDiscovery]=useState(null),[permissions,setPermissions]=useState({}),[reference,setReference]=useState(''),[secret,setSecret]=useState(''),[error,setError]=useState(''),[working,setWorking]=useState(false),[page,setPage]=useState(0);
   useEffect(()=>{let active=true;setPlacement(null);setDiscovery(null);setSecret('');api.readMcpConfiguration({intake}).then(value=>{if(active){setServers(value.servers);setSelected(value.servers[0]?.name || '');}}).catch(error=>{if(active)setError(friendlyError(error));});return ()=>{active=false;};},[api,intake.sourceFingerprint,intake.selectedEntry]);
   useEffect(()=>{let active=true;setPlacement(null);setDiscovery(null);setSecret('');if(id && platformId)api.listRuntimeBodies({workspaceRoot:workspace,platformId}).then(rows=>{if(active)setPlacement(rows.findLast(row=>row.plan.target.resourceId===id && row.plan.payload.intake.sourceFingerprint===intake.sourceFingerprint && row.plan.payload.intake.selectedEntry===intake.selectedEntry)?.plan || null);}).catch(error=>{if(active)setError(friendlyError(error));});return ()=>{active=false;};},[api,workspace,platformId,id,intake.sourceFingerprint,intake.selectedEntry]);

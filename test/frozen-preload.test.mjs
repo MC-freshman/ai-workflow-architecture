@@ -8,5 +8,5 @@ test('task wrappers operate on Electron-style frozen preload methods without cha
   assert.deepEqual(await client.scanWorkspace('workspace'),{ok:true});
   assert.equal(received[0],'workspace');assert.equal(received[1].workspaceSession,'workspace-session');
   assert.match(received[1].jobId,/^[0-9a-f-]{36}$/);assert.equal(received[1].__managerTaskContext,true);
-  assert.equal(client.getAppVersion,original.getAppVersion);assert.equal(await client.getAppVersion(),'0.4.2');
+  assert.equal(await client.getAppVersion(),'0.4.2');assert.equal(Object.isFrozen(original),true);assert.equal(Object.getOwnPropertyDescriptor(original,'getAppVersion').writable,false);
 });

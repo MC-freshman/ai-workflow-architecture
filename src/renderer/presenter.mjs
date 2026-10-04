@@ -84,6 +84,7 @@ export function friendlyError(error) {
     CREDENTIAL_UNAVAILABLE:"这个引用在本平台凭据库中不可用，请保存或恢复。",
     CREDENTIAL_VALUE_INVALID:"请输入非空凭据值，且不要将它填进配置或计划。",
     CREDENTIAL_REFERENCE_INVALID:"凭据引用需为 reference:名称，仅含英文、数字、点、下划线或连字符。",
+    STALE_TASK_RESULT:'已忽略旧工作区或旧对象的结果，请查看当前选择。',
     RAW_SECRET_NOT_ALLOWED: '配置中只能填写凭据引用，不能填写密码或令牌原值。',
     DOCUMENT_BASELINE_MISMATCH: '文档在读取后发生了变化，请重新打开文档再编辑。',
     PLATFORM_CONFIGURATION_PATH_MISMATCH: '环境、证据和配置必须属于所选平台，请选择它自己的目录。',
