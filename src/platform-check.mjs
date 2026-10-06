@@ -10,6 +10,7 @@ import { clientBinding } from './onboarding-client.mjs';
 import { environmentBinding } from './domains/certification/binding.mjs';
 import {certificationSnapshot} from './domains/certification/fingerprints.mjs';
 import {certificationSelection} from './domains/certification/selection.mjs';
+import {declarationTargets} from './domains/certification/declared.mjs';
 import {mergeCertification,readCoverage} from './domains/certification/evidence.mjs';
 import { matrixProgressDecoder } from './core/matrix-progress.mjs';
 
@@ -102,6 +103,25 @@ function saveCheck(base, out, result) {
   return { ...result, evidencePath, writePerformed: true };
 }
 
+// The exact command line the judge receives. Kept as one pure function so the argument contract —
+// in particular the version overrides — is checkable without launching the runner.
+export function buildMatrixArgs({ configPath, out, matrixPath, matrix, exceptionsPath, selection, only = null, platformId, workspaceRoot }) {
+  const args = ['--config', configPath, '--out', matrixPath, '--runs-root', join(out, 'matrix-runs')];
+  const partialPath = join(out, 'matrix.partial.json');
+  const manifestPath = join(dirname(dirname(matrix)), 'manifest.json');
+  const progressSupported = existsSync(manifestPath) && readJson(manifestPath).interface?.matrixProgress === 'ai-invocation-matrix-event/v1';
+  if (progressSupported) args.push('--progress-jsonl', '--partial-out', partialPath);
+  if (exceptionsPath && existsSync(exceptionsPath)) args.push('--exceptions', exceptionsPath);
+  if (selection.kind !== 'full' && selection.selected.length) args.push('--only', only);
+  // The judge must select the version this platform actually uses. Without this the matrix pins the
+  // shared current pointer while the platform declares its own default, and the engine refuses the
+  // pair with VERSION_CONFLICT — a version-alignment mismatch reported as a failed cell. Explicit
+  // --targets is the same mechanism the single-cell smoke check already uses.
+  const overrides = declarationTargets({ workspaceRoot, platformId, keys: selection.selected });
+  if (overrides.length) args.push('--targets', overrides.join(','));
+  return args;
+}
+
 export function previewPlatformCheck({workspaceRoot,platformId,mode='full',only=null}) {
   const root=resolve(workspaceRoot),pre=inspectPlatformConnection({workspaceRoot:root,platformId});
   if(!pre.configPath) throw Error('ONBOARDING_CONFIGURATION_REQUIRED');
@@ -149,14 +169,8 @@ export async function runPlatformCheck({ workspaceRoot, platformId, mode = 'quic
     if (!initialFloor) result.issues = ['能力检查程序未成功产生报告；调用检查尚未执行。请查看命令错误。'];
     return saveCheck(base, out, result);
   }
-  const matrixArgs = ['--config', pre.configPath, '--out', matrixPath, '--runs-root', join(out, 'matrix-runs')];
+  const matrixArgs = buildMatrixArgs({ configPath: pre.configPath, out, matrixPath, matrix, exceptionsPath: join(root, platformId, 'bridge', 'invocation-exceptions.json'), selection, only, platformId, workspaceRoot: root });
   const partialPath = join(out, 'matrix.partial.json');
-  const manifestPath=join(dirname(dirname(matrix)), 'manifest.json');
-  const progressSupported = existsSync(manifestPath) && readJson(manifestPath).interface?.matrixProgress === 'ai-invocation-matrix-event/v1';
-  if (progressSupported) matrixArgs.push('--progress-jsonl', '--partial-out', partialPath);
-  const exceptionsPath = join(root, platformId, 'bridge', 'invocation-exceptions.json');
-  if (existsSync(exceptionsPath)) matrixArgs.push('--exceptions', exceptionsPath);
-  if (selection.kind!=='full' && selection.selected.length) matrixArgs.push('--only',only);
   const callableCount=selection.selected.length;
   // First onboarding must finish the required inventory; a fixed 30-minute cap
   // can abort a valid large registry. This budget does not claim to improve speed.
