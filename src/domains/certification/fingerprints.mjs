@@ -8,25 +8,31 @@ import {verifyFrozenDirectory} from '../resources/integrity.mjs';
 import {parseDefinition} from '../resources/contracts.mjs';
 import {certificationHasher} from './content-cache.mjs';
 import {platformConfigPath} from './binding.mjs';
+import {declaredDefaults,resolvedCellVersion} from './declared.mjs';
 
 export {stableJson} from '../../core/json.mjs';
 const digest=value=>sha256(stableJson(value));
 export const resourceKey=row=>`${row.kind}:${row.id}`;
 const repositories={workflow:'tool',agent:'agent',software:'software'};
 const excludedConfig=new Set(['runner','contracts','scannerRelease','capabilities','softwareGatewayConfig','executionBackend','environmentManifest','scriptEnvironment','scriptEnvironmentRungs','softwareGateway','softwareEnvironment','softwareRuntimeRoot','peerDispatcherModule','peerContentRoot','interpreters','runsRoot','bridge']);
-export function certificationInventory(root) {
-  const rows=[];
+// A cell's version follows the same precedence the engine uses: the platform's declared default wins
+// over the shared pointer. The judge is told the same version, so the snapshot and the reported rows
+// describe the same release; keeping them apart made the merge reject a matrix that had actually
+// passed for exactly this reason.
+export function certificationInventory(root,platformId=null) {
+  const rows=[],defaults=platformId?declaredDefaults({workspaceRoot:root,platformId}):null;
   for(const [repo,section,kind] of [['tool','workflows','workflow'],['agent','agents','agent'],['software','software','software']]) {
     const registry=readJson(targetPath(root,`${repo}/registry.json`));
     for(const entry of registry[section] || []) if(entry.enabled===true && (repo==='software' || entry.invocable!==false)) {
       const pointer=readJson(targetPath(root,`${repo}/${entry.current || `${entry.id}/current.json`}`));
-      rows.push({kind,id:entry.id,version:String(pointer.version)});
+      const version=resolvedCellVersion({workspaceRoot:root,platformId,kind,id:entry.id,pointerVersion:pointer.version,defaults});
+      rows.push({kind,id:entry.id,version:String(version)});
     }
   }
   if(new Set(rows.map(resourceKey)).size!==rows.length) throw Error('CERTIFICATION_DUPLICATE_RESOURCE');
   return rows;
 }
-export function certificationSnapshot(root,id,config,{persistCache=false,inventory=certificationInventory(root)}={}) {
+export function certificationSnapshot(root,id,config,{persistCache=false,inventory=certificationInventory(root,id)}={}) {
   const hasher=certificationHasher(root,id,{persist:persistCache}),verified=new Map(),contentCache=new Map(),definitionCache=new Map();
   const verifyDirectory=directory=>{
     if(!verified.has(directory)) verified.set(directory,verifyFrozenDirectory(directory,{hashFile:hasher.hashFile}));

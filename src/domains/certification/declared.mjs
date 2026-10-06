@@ -41,9 +41,11 @@ export function declarationTargets({workspaceRoot,platformId,keys=[]}) {
   return targets.sort();
 }
 
-// The version a cell is judged at, following the engine's precedence. Used by the inventory so the
-// snapshot and the judge agree about which release a cell describes.
-export function resolvedCellVersion({workspaceRoot,platformId,kind,id,pointerVersion,defaults=null}) {
-  const table=defaults || declaredDefaults({workspaceRoot,platformId});
+// The version a cell is judged at, following the engine's precedence. Callers that already loaded the
+// platform's defaults pass them; callers that have a platform id let this read them; callers with
+// neither (a tool-wide inventory) get the pointer version unchanged.
+export function resolvedCellVersion({workspaceRoot,platformId=null,kind,id,pointerVersion,defaults=null}) {
+  const table=defaults || (platformId?declaredDefaults({workspaceRoot,platformId}):null);
+  if(!table) return String(pointerVersion);
   return (table[kind] || {})[id] || String(pointerVersion);
 }
