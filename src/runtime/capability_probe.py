@@ -80,7 +80,10 @@ sys.exit(0 if all(value for key,value in checks.items() if key!="renderer") else
         result['checks']['script-environment-isolation-jail'] = answer.get('exitCode') == 0 and answer.get('processTreeEnded') is True and all(value for key,value in checks.items() if key!='renderer')
         if result['checks']['script-environment-isolation-jail']:
             candidate = load(config['capabilities'])
-            candidate['checks'] = {**candidate.get('checks', {}), 'manager-jail-probed': True}
+            # The engine requires every declared check to be true, so a stale false inherited from the
+            # platform's live table would gate this probe's own prepare and could never be cleared.
+            inherited = candidate.get('checks', {})
+            candidate['checks'] = {**{key: value for key, value in inherited.items() if value is True}, 'manager-jail-probed': True}
             candidate['permissionAdapters'] = [{'filesystem': f, 'network': 'deny', 'process': p, 'evidence': str(attempt)} for f,p in [('project-scoped','allowlisted-only'),('platform-runtime-write-shared-read-only','isolated-python'),('shared-read-only-platform-report-write','none')]]
             candidate.setdefault('descriptor', {}).setdefault('actions', {})['prompt'] = {'supported': True, 'enforcement': 'advisory'}
             candidate['descriptor']['actions']['script'] = {'supported': True, 'enforcement': 'kernel'}

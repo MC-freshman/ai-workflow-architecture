@@ -38,6 +38,10 @@ export function buildOnboardingAttestationPlan({ workspaceRoot, platformId, evid
     if (proof.checks[key] === true) { capabilities.checks[key] = true; capabilities.descriptor.actions[action] = { supported: true, enforcement: action === 'script' ? 'kernel' : 'mediated', evidencePath, evidenceSha256: sha256(readFileSync(evidencePath)) }; delete capabilities.declaredAbsent[`action:${action}`]; }
     else capabilities.gapPlan[`action:${action}`] = { path: '回到接入向导修复运行环境或 provider 后重新运行能力探针', costMinutes: 30 };
   }
+  // Reaching this point means the probe ran a real prepare/claim/stop, so those two legacy checks now
+  // hold evidence; any other stale false stays as it is and keeps the platform gated.
+  const legacyProof = { 'runner-protocol-prepare': proof.prompt?.prepareOk === true, 'terminal-stop-with-evidence': proof.prompt?.stopOk === true };
+  for (const [key, proven] of Object.entries(legacyProof)) if (capabilities.checks[key] === false && proven) capabilities.checks[key] = true;
   if (proof.checks['administrator-consent-denied']) { capabilities.descriptor.profiles.administrator = { declared: true, adapters: ['per-call-connector-consent'], evidencePath, elevatedDuringProbe: false }; delete capabilities.declaredAbsent['profile:administrator']; }
   if (proof.jail?.checks?.renderer === true) {
     capabilities.profiles ||= {};
