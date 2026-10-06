@@ -45,6 +45,7 @@ import {
   buildOnboardingFinalizePlan,
   buildAutomaticOnboardingPlan,
   executeOnboardingChecks,
+  executePostAlignmentChecks,
   cancelOnboarding,
   readOnboardingState,
   markOnboardingRecorded,
@@ -171,6 +172,13 @@ function registerIpc() {
   handleOperation('platform:check', (event, input) => owned(input, (registerCancel) => runPlatformCheck({ ...input, registerCancel, onProgress: (progress) => event.sender.send('transaction:progress', progress) })));
   handleOperation('plan:platform-view', (_event, input) => buildPlatformViewPlan(input));
   handleOperation('plan:resource-pointer', (_event, input) => buildResourcePointerPlan(input));
+  // The anchor surface has a declared backend for each channel, so the dispatcher runs the work and
+  // these handlers only have to exist: every operation needs a registered channel before it can be
+  // called from the renderer at all.
+  handleOperation('anchor:report', () => { throw Error('IPC_BACKEND_REQUIRED'); });
+  handleOperation('plan:anchor-generation', () => { throw Error('IPC_BACKEND_REQUIRED'); });
+  handleOperation('plan:platform-anchor-alignment', () => { throw Error('IPC_BACKEND_REQUIRED'); });
+  handleOperation('anchor:post-align-check', (event, input) => owned(input, (registerCancel) => executePostAlignmentChecks(input, { registerCancel, onProgress: (progress) => event.sender.send('transaction:progress', progress) })));
   handleOperation('catalog:read', (_event, input) => readCatalogEntry(input));
   handleOperation('skill:read', (_event, input) => readSkillContent(input));
   handleOperation('catalog:select', async (_event, input) => {

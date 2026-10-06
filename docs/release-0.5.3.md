@@ -61,12 +61,33 @@
 
 ## 六、本版产物（sha256）
 
-| 产物 | sha256 |
-|---|---|
-| `Architecture-Manager-0.5.3-portable-x64.exe` | `4b1d59d786d3d78810dc34e170d7f49f47eba7f1a7a9dc0e48c15cba61642a14` |
-| `Architecture-Manager-0.5.3-setup-x64.exe` | `096cbafdb15579a06d23605550b4a810f8d0c2fd3481a6d15ed36c2954d95a48` |
+| 产物 | sha256 | 状态 |
+|---|---|---|
+| `Architecture-Manager-0.5.3-setup-x64.exe` | `4753a1def90980c243972ccae43d597fdfd755d2f364f5889068979efca460be` | **当前可用**（含 0.5.3 全部修复） |
+| `Architecture-Manager-0.5.3-portable-x64.exe` | `4b1d59d786d3d78810dc34e170d7f49f47eba7f1a7a9dc0e48c15cba61642a14` | **陈旧，不要用**：缺 IPC 通道注册（见下），portable 版重出未完成 |
 
-清单文件：`release/SHA256SUMS-0.5.3.txt`。
+清单文件：`release/SHA256SUMS-0.5.3.txt`（只列当前可用的 setup）。
 
-**打包方式说明**：本机 electron-builder 缓存里没有 Electron 44.5.0 的分发包，在线下载两次超时，最终用 `node_modules/electron/dist` 里的本地分发离线出包（`--config.electronDist=node_modules/electron/dist`）。产物已核对：`release/win-unpacked/resources/app.asar` 内含本版新增的四个标志串（`anchor-generation` / `platform-anchor-alignment` / `anchor:post-align-check` / `readAnchorReport`）。
+### 6.1 关于 portable 包缺失的通道注册（0.5.3 首次出包的缺陷，已修）
+
+现象：点「读取锚定代」报 `No handler registered for 'anchor:report'`。
+
+根因：`src/main.mjs` 是**逐条手写**注册 IPC 通道的，不是从声明表自动派生；本版新增的四个操作只写进了声明表（`operations.json`）与 preload，**主进程没注册**，于是渲染端一调用就被 Electron 拒。同一批里还漏了 `executePostAlignmentChecks` 的导入与 worker 侧的进度/取消透传。
+
+修复：在 `main.mjs` 补齐四个通道；`executePostAlignmentChecks` 补导入并在 worker 里接上进度与取消。并新增**两道静态守卫**（`test/module-boundaries.test.mjs`）防止同类再犯：
+
+1. **声明表 ↔ 主进程 ↔ preload 三方通道集合必须一致**；
+2. **handler 里引用的绑定名必须是导入或局部定义**（含一条合成用例，证明守卫真的会报）。
+
+验收读数：**测试 201 通过 / 0 失败**；`eslint` 干净。包内核对：`app.asar` 里能看到
+`handleOperation('anchor:report', …)`、`handleOperation('plan:anchor-generation', …)`、
+`handleOperation('plan:platform-anchor-alignment', …)` 与
+`owned(input, (registerCancel) => executePostAlignmentChecks(…)`。
+
+**必须重启管理台**：旧实例的主进程没有这些通道，装完新 setup 后请完全退出再打开（正在运行的实例还会占住旧的 portable 文件，这也是旧包此刻改不了名的原因）。
+
+### 6.2 打包方式说明
+
+本机 electron-builder 缓存里没有 Electron 44.5.0 的分发包，在线下载两次超时，最终用 `node_modules/electron/dist` 里的本地分发离线出包（`--config.electronDist=node_modules/electron/dist`）。setup 包于 21:00 用补丁后的源码重出；portable 侧重出在本机多次停滞后未完成，故本版以 setup 交付。
+
 

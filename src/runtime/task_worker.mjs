@@ -19,7 +19,7 @@ try {
     progress(update);
   }};
   if(method==='runPlatformCheck') parameters[0]={...parameters[0],onProgress:progress,registerCancel};
-  if(['executeOnboardingChecks','probeOnboardingCapabilities','probeOnboardingClient'].includes(method)) parameters.push({onProgress:progress,registerCancel});
+  if(['executeOnboardingChecks','executePostAlignmentChecks','probeOnboardingCapabilities','probeOnboardingClient'].includes(method)) parameters.push({onProgress:progress,registerCancel});
   if(method==='buildSoftwareRecipePlan') parameters.push({});
   if(method==='healthSoftware') parameters.push({onProgress:progress,registerCancel});
   if(method==='scanExternalBody') parameters.push({onProgress:progress});
