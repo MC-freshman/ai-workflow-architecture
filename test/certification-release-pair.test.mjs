@@ -19,6 +19,14 @@ test('recommendation excludes candidates and requires the exact paired checker; 
   assert.equal(recommendedCertificationPair(root),null,'A stale staging label is not a performance recommendation');
   seedRelease(root,'tool','wf-runner','0.12.2',{'manifest.json':manifest,'SOURCE.json':{...source,releaseStatus:'published'},'cli.py':'# fixture only\n'});
   const pair=recommendedCertificationPair(root);assert.equal(pair.runnerVersion,'0.12.2');assert.equal(pair.scannerVersion,'0.6.5');assert.equal(pair.matrixVersion,'1.5.2');assert.equal(pair.adopted,false);
-  assert.throws(()=>buildOnboardingConfigPlan({workspaceRoot:root,platformId:'new-client',confirmed:true,fields:{runnerVersion:'0.12.2',scannerVersion:'0.6.3'}}),/VERSION_PAIR_MISMATCH/);
-  const plan=buildOnboardingConfigPlan({workspaceRoot:root,platformId:'new-client',confirmed:true,fields:pair});assert.equal(plan.writePerformed,false);const configuration=JSON.parse(plan.payload.files.find(file=>file.path.endsWith('/new-client-config.json')).content);assert(configuration.scannerRelease.endsWith('0.6.5'));assert(configuration.invocationMatrixRelease.endsWith('1.5.2'));
+  // A requested checker that disagrees with the engine's own declaration is a named warning, not a
+  // refusal: the declared pairing is what gets applied, and the request stays on the record.
+  const mismatched=buildOnboardingConfigPlan({workspaceRoot:root,platformId:'new-client',confirmed:true,fields:{runnerVersion:'0.12.2',scannerVersion:'0.6.3'}});
+  assert.equal(mismatched.warnings.length,1);assert.match(mismatched.warnings[0],/^VERSION_PAIR_MISMATCH: requested checker 0\.6\.3 differs from the checker the selected engine declares \(0\.6\.5\)/);
+  assert.equal(mismatched.target.pairing.mismatch,true);assert.equal(mismatched.target.pairing.requested,'0.6.3');assert.equal(mismatched.target.pairing.applied,'0.6.5');
+  const mismatchedConfig=JSON.parse(mismatched.payload.files.find(file=>file.path.endsWith('/new-client-config.json')).content);
+  assert(mismatchedConfig.scannerRelease.endsWith('0.6.5'),'the engine-declared checker is applied');
+  const mismatchedBridge=JSON.parse(mismatched.payload.files.find(file=>file.path.endsWith('/bridge.json')).content);
+  assert.equal(mismatchedBridge.defaults.workflowVersions['repo-lint'],'0.6.5','the platform default follows the applied checker, never the refused request');
+  const plan=buildOnboardingConfigPlan({workspaceRoot:root,platformId:'new-client',confirmed:true,fields:pair});assert.equal(plan.writePerformed,false);assert.deepEqual(plan.warnings,[]);const configuration=JSON.parse(plan.payload.files.find(file=>file.path.endsWith('/new-client-config.json')).content);assert(configuration.scannerRelease.endsWith('0.6.5'));assert(configuration.invocationMatrixRelease.endsWith('1.5.2'));
 });

@@ -80,9 +80,20 @@ export function buildOnboardingConfigPlan({ workspaceRoot, platformId, fields = 
   const contracts = release(root, 'tool', 'runtime-contracts', fields.contractsVersion);
   const scanner = release(root, 'tool', 'repo-lint', fields.scannerVersion);
   const scannerPin=read(join(runner.path,'manifest.json')).dependencies?.workflows?.['repo-lint'];
-  if(scannerPin && scannerPin!==scanner.version) throw Error('VERSION_PAIR_MISMATCH');
+  // The engine manifest records the generation that engine was tested with; a platform pin is a
+  // moving adoption target, and the two ends are not changed by the same action. So a mismatch is a
+  // named warning carried into the plan and the records, never a refusal. The declared checker still
+  // wins for the pair, because the engine's own declaration is the authority the runner enforces at
+  // resolve time; the requested version is reported rather than silently obeyed.
+  const pairingWarnings=[];
+  let scannerReleasePath=scanner.path,scannerVersion=scanner.version;
+  if(scannerPin && scannerPin!==scanner.version) {
+    const aligned=release(root,'tool','repo-lint',scannerPin);
+    pairingWarnings.push(`VERSION_PAIR_MISMATCH: requested checker ${scanner.version} differs from the checker the selected engine declares (${scannerPin}); the declared pairing was applied and the request is recorded`);
+    scannerReleasePath=aligned.path;scannerVersion=aligned.version;
+  }
   if (!existsSync(join(runner.path, 'cli.py')) || !existsSync(join(contracts.path, 'contracts/runtime/validate_contracts.py')) || !existsSync(join(scanner.path, 'scripts/repo_lint.py'))) throw new Error('ONBOARDING_RELEASE_ENTRY_MISSING');
-  const config = { ...ctx.config, platform: platformId, platformRoot: join(root, platformId), toolRoot: join(root, 'tool'), agentRoot: join(root, 'agent'), softwareRoot: join(root, 'software'), runsRoot: join(root, platformId, 'runtime/runs'), runner: runner.path, contracts: contracts.path, scannerRelease: scanner.path, bridge: join(root, platformId, 'bridge.json'), capabilities: join(root, platformId, 'bridge/capabilities.json'), softwareRuntimeRoot: join(root, platformId, 'runtime/software'), projectWriteRoots: ctx.config.projectWriteRoots || [join(root, platformId, 'workspaces')], inputRoots: ctx.config.inputRoots || [join(root, platformId, 'workspaces')] };
+  const config = { ...ctx.config, platform: platformId, platformRoot: join(root, platformId), toolRoot: join(root, 'tool'), agentRoot: join(root, 'agent'), softwareRoot: join(root, 'software'), runsRoot: join(root, platformId, 'runtime/runs'), runner: runner.path, contracts: contracts.path, scannerRelease: scannerReleasePath, bridge: join(root, platformId, 'bridge.json'), capabilities: join(root, platformId, 'bridge/capabilities.json'), softwareRuntimeRoot: join(root, platformId, 'runtime/software'), projectWriteRoots: ctx.config.projectWriteRoots || [join(root, platformId, 'workspaces')], inputRoots: ctx.config.inputRoots || [join(root, platformId, 'workspaces')] };
   const supportsSmoke=read(join(runner.path,'manifest.json')).interface?.['x-invocationSmoke']==='ai-invocation-smoke/v1';
   const matrixVersion=fields.matrixVersion || (supportsSmoke?recommendedMatrixVersion(root):null);
   if(matrixVersion) {
@@ -111,7 +122,7 @@ export function buildOnboardingConfigPlan({ workspaceRoot, platformId, fields = 
   } else if (!config.softwareGateway) config.softwareGateway = join(release(root, 'software', '_connector').path, 'connector.py');
   config.softwareGatewayConfig ||= join(root, platformId, 'bridge/software-gateway-config.json');
   ownPath(root, platformId, config.softwareGatewayConfig);
-  const bridge = { ...ctx.bridge, schema: 'ai-platform-bridge/v1.1', platform: platformId, displayName: fields.displayName || ctx.bridge.displayName || platformId, shared: { ...ctx.bridge.shared, toolRegistry: join(root, 'tool/registry.json'), agentRegistry: join(root, 'agent/registry.json'), softwareRegistry: join(root, 'software/registry.json'), architecturePrompt: join(root, 'AI_ARCHITECTURE_SYSTEM_PROMPT.md'), readOnly: true }, runtimeRoot: join(root, platformId, 'runtime'), modes: ['workflow', 'agent-workflow'], defaults: { ...ctx.bridge.defaults, workflowVersions: { ...ctx.bridge.defaults?.workflowVersions, 'repo-lint': scanner.version } }, runner: { ...ctx.bridge.runner, enabled: true, config: join(root, ctx.configPath), release: runner.path, ...(python ? { python } : {}) } };
+  const bridge = { ...ctx.bridge, schema: 'ai-platform-bridge/v1.1', platform: platformId, displayName: fields.displayName || ctx.bridge.displayName || platformId, shared: { ...ctx.bridge.shared, toolRegistry: join(root, 'tool/registry.json'), agentRegistry: join(root, 'agent/registry.json'), softwareRegistry: join(root, 'software/registry.json'), architecturePrompt: join(root, 'AI_ARCHITECTURE_SYSTEM_PROMPT.md'), readOnly: true }, runtimeRoot: join(root, platformId, 'runtime'), modes: ['workflow', 'agent-workflow'], defaults: { ...ctx.bridge.defaults, workflowVersions: { ...ctx.bridge.defaults?.workflowVersions, 'repo-lint': scannerVersion } }, runner: { ...ctx.bridge.runner, enabled: true, config: join(root, ctx.configPath), release: runner.path, ...(python ? { python } : {}) } };
   const capabilities = Object.keys(ctx.capabilities).length ? ctx.capabilities : { schema: 'ai-platform-capabilities/v1', platform: platformId, checks: {}, permissionAdapters: [], profiles: {}, descriptor: { schema: 'ai-platform-descriptor/v2', platformId, protocols: ['ai-run-protocol/v1.1', 'ai-run-protocol/v1.2', 'ai-run-protocol/v1.3'], operations: ['prepare', 'next', 'submit', 'status', 'stop'], actions: {}, profiles: {}, enforcement: 'mediated', recovery: ['replay'] }, declaredAbsent: {}, unverified: {}, gapPlan: {} };
   bridge.runner.version = runner.version;
   if (!['cli', 'mcp-stdio', 'manual-native'].includes(fields.clientKind || 'cli')) throw new Error('CLIENT_ADAPTER_UNSUPPORTED');
@@ -133,7 +144,8 @@ export function buildOnboardingConfigPlan({ workspaceRoot, platformId, fields = 
     const target = targetPath(root, file.path);
     return { ...file, beforeSha256: existsSync(target) ? sha256(readFileSync(target)) : null, newSha256: sha256(file.content) };
   });
-  return { schema: 'architecture-manager-plan/v1', kind: 'platform-configuration', planId: `onboard-config-${platformId}-${randomUUID()}`, workspaceRoot: root, generatedAt: now, applyMode: 'confirmation-required', writePerformed: false, target: { platformId, creating, userAuthorized: !creating || confirmed, inputs: fields, versions: { runner, contracts, scanner } }, steps: files.map((file) => ({ operation: file.beforeSha256 === null ? 'create-config' : 'replace-config', target: file.path, oldSha256: file.beforeSha256, newSha256: file.newSha256 })), payload: { files }, verification: ['validate the exact generated targets and baselines', 'preserve unrelated existing fields', 'read back every applied file; declarations alone are not certification'] };
+  const plan = { schema: 'architecture-manager-plan/v1', kind: 'platform-configuration', planId: `onboard-config-${platformId}-${randomUUID()}`, workspaceRoot: root, generatedAt: now, applyMode: 'confirmation-required', writePerformed: false, target: { platformId, creating, userAuthorized: !creating || confirmed, inputs: fields, versions: { runner, contracts, scanner }, pairing: { declaredByEngine: scannerPin || null, requested: scanner.version, applied: scannerVersion, mismatch: pairingWarnings.length > 0 } }, steps: files.map((file) => ({ operation: file.beforeSha256 === null ? 'create-config' : 'replace-config', target: file.path, oldSha256: file.beforeSha256, newSha256: file.newSha256 })), payload: { files }, warnings: pairingWarnings, verification: ['validate the exact generated targets and baselines', 'preserve unrelated existing fields', 'read back every applied file; declarations alone are not certification'] };
+  return plan;
 }
 
 export function applyOnboardingConfig(plan, { actor = 'local-user', auditRoot = defaultAuditRoot(), now = new Date().toISOString(), failAfterFiles = null } = {}) {
