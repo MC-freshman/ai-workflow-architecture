@@ -35,7 +35,7 @@ function seal(directory) {
   writeFileSync(join(directory,'SHA256SUMS'),entries.sort().join('\n')+'\n');
 }
 
-function seedEngine(root,version,{declares}={}) {
+function seedEngine(root,version,{declares,withInterface=false}={}) {
   const to=join(root,'tool/wf-runner/versions',version);
   mkdirSync(to,{recursive:true});
   copyDirectory(join(RELEASE_SOURCE,'wf-runner','versions',version),to);
@@ -47,6 +47,7 @@ function seedEngine(root,version,{declares}={}) {
     // checker it pulls in, so dropping it makes the fixture fail for a reason unrelated to the rule.
     manifest.dependencies={workflows:{'repo-lint':declares},skills:{},packs:{}};
   }
+  if(withInterface) manifest.interface={...(manifest.interface || {}),transport:'cli-json',execution:'prepare-next-stop-only','x-invocationSmoke':'ai-invocation-smoke/v1'};
   writeFileSync(manifestPath,JSON.stringify(manifest,null,2)+'\n');
   seal(to);
   return to;
@@ -84,7 +85,7 @@ function anchoredWorkspace() {
 test('anchor takes the newest frozen engine whose declared checker is present, and names why the rest lost',(t)=>{
   const root=anchoredWorkspace();t.after(()=>rmSync(root,{recursive:true,force:true}));
   seedEngine(root,'0.12.2');                                        // real bytes: declares repo-lint 0.6.5
-  seedEngine(root,'0.12.1');                                        // real bytes, older
+  seedEngine(root,'0.12.1',{declares:'0.6.5',withInterface:true});  // eligible on every count except order
   seedJudge(root,'1.5.2');
   seedPointer(root,'tool','architecture-ops','1.5.2');
   seedConformance(root,'1.5.1');
@@ -101,27 +102,23 @@ test('anchor takes the newest frozen engine whose declared checker is present, a
   assert.equal(anchor.engine.declares['repo-lint'],anchor.checker.version);
 
   const engineRejections=anchor.rejected.filter((row)=>row.axis==='engine');
-  assert.ok(engineRejections.some((row)=>row.version==='0.12.1' && row.reason==='ORDERED_BELOW_SELECTED'));
-  assert.ok(engineRejections.some((row)=>row.version==='0.12.0' && row.reason==='ORDERED_BELOW_SELECTED'));
+  assert.ok(engineRejections.some((row)=>row.version==='0.12.1' && row.reason==='ORDERED_BELOW_SELECTED'),'an eligible-but-older engine loses on order');
+  assert.ok(engineRejections.some((row)=>row.version==='0.12.0' && row.reason==='NO_INVOCATION_SMOKE_INTERFACE'),'each loser carries its own reason, not a blanket "older"');
   assert.match(anchor.selectionRule,/never auto-promoted/);
 });
 
 test('an engine whose declared checker is not on disk is named as the reason it lost',(t)=>{
   const root=anchoredWorkspace();t.after(()=>rmSync(root,{recursive:true,force:true}));
-  seedEngine(root,'0.12.2',{declares:'0.6.4'});                     // newest, has the interface, but 0.6.4 is not in this workspace
-  seedEngine(root,'0.12.1',{declares:'0.6.3'});                     // real 0.12.1 carries no invocation smoke interface
+  seedEngine(root,'0.12.2',{declares:'0.6.4',withInterface:true});  // newest and invocable, but 0.6.4 is not in this workspace
+  seedEngine(root,'0.12.1',{declares:'0.6.5',withInterface:true});  // the honest winner
   seedJudge(root,'1.5.2');
   seedPointer(root,'tool','architecture-ops','1.5.2');
   seedConformance(root,'1.5.1');
-  // Nothing may anchor here: the base engine fixture declares 0.6.3 but cannot answer the
-  // one-process interface, so the run must refuse and say why rather than fall back.
-  let error=null;
-  try { computeAnchor({workspaceRoot:root}); } catch (thrown) { error=thrown; }
-  assert.equal(error?.message,'ANCHOR_ENGINE_UNAVAILABLE');
-  const reasons=error.rejected || [];
-  assert.ok(reasons.some((row)=>row.version==='0.12.2' && /NOT_FROZEN_OR_INCOMPLETE/.test(row.reason)),
-    'a declared checker that is not on disk must be named, not silently passed over');
-  assert.ok(reasons.some((row)=>row.version==='0.12.1' && row.reason==='NO_INVOCATION_SMOKE_INTERFACE'));
+  const anchor=computeAnchor({workspaceRoot:root});
+  assert.equal(anchor.engine.version,'0.12.1');
+  assert.equal(anchor.checker.version,'0.6.5');
+  assert.ok(anchor.rejected.some((row)=>row.axis==='engine' && row.version==='0.12.2' && row.reason==='DECLARED_CHECKER_UNAVAILABLE:0.6.4:TARGET_VERSION_NOT_FROZEN'),
+    'a declared checker that is not on disk must be named as its own reason');
 });
 
 test('engines without the one-process interface cannot anchor, and a workspace without one refuses to anchor',(t)=>{

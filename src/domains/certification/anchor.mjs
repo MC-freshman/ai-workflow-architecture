@@ -83,42 +83,68 @@ export function computeAnchor({workspaceRoot,now=new Date().toISOString()}) {
   const root=targetPath(workspaceRoot,'.');
   const rejected=[];
   const engineCandidates=versionsOf(root,'tool','wf-runner');
-  let engine=null,checker=null;
-  for(const version of engineCandidates) {
+  const engineFacts=engineCandidates.map((version)=>{
+    const fact={version,manifest:null,staged:false,reason:null,declared:null};
     try {
-      const manifest=readJson(join(targetPath(root,'tool/wf-runner/versions'),version,'manifest.json'));
-      if(manifest.interface?.['x-invocationSmoke']!=='ai-invocation-smoke/v1') { rejected.push({axis:'engine',version,reason:'NO_INVOCATION_SMOKE_INTERFACE'}); continue; }
-      const declared=manifest.dependencies?.workflows?.['repo-lint'];
-      if(typeof declared!=='string' || !SEMVER.test(declared)) { rejected.push({axis:'engine',version,reason:'CHECKER_DEPENDENCY_NOT_PINNED'}); continue; }
-      if(stagedRelease(root,'tool','wf-runner',version)) { rejected.push({axis:'engine',version,reason:'STAGING_RELEASE_LABEL'}); continue; }
-      validateFrozenResource(root,'tool','wf-runner',version);
-      validateFrozenResource(root,'tool','repo-lint',declared);
-      engine={id:'wf-runner',version,path:`tool/wf-runner/versions/${version}`,declares:{'repo-lint':declared},selectedBecause:'newest frozen engine carrying the invocation smoke interface, with its declared checker present and frozen'};
-      checker={id:'repo-lint',version:declared,path:`tool/repo-lint/versions/${declared}`,selectedBecause:'exact pairing: the checker the selected engine declares'};
-      for(const other of engineCandidates) if(other!==version) rejected.push({axis:'engine',version:other,reason:'ORDERED_BELOW_SELECTED'});
-      break;
-    } catch (error) { rejected.push({axis:'engine',version,reason:`NOT_FROZEN_OR_INCOMPLETE:${error.message}`}); }
+      if(stagedRelease(root,'tool','wf-runner',version)) { fact.reason='STAGING_RELEASE_LABEL'; return fact; }
+      fact.manifest=readJson(join(targetPath(root,'tool/wf-runner/versions'),version,'manifest.json'));
+      if(fact.manifest.interface?.['x-invocationSmoke']!=='ai-invocation-smoke/v1') fact.reason='NO_INVOCATION_SMOKE_INTERFACE';
+      else {
+        const declared=fact.manifest.dependencies?.workflows?.['repo-lint'];
+        if(typeof declared!=='string' || !SEMVER.test(declared)) fact.reason='CHECKER_DEPENDENCY_NOT_PINNED';
+        else {
+          fact.declared=declared;
+          // The engine's own validation walks into its declared dependencies, so a checker that is
+          // absent shows up as a generic "engine not frozen". Judge the checker on its own first and
+          // let that verdict name the real cause; the ledger exists to be actionable.
+          let checkerFailure=null;
+          try { validateFrozenResource(root,'tool','repo-lint',declared); } catch (error) { checkerFailure=error.message; }
+          try { validateFrozenResource(root,'tool','wf-runner',version); }
+          catch (error) {
+            fact.reason=checkerFailure
+              ? `DECLARED_CHECKER_UNAVAILABLE:${declared}:${checkerFailure}`
+              : `NOT_FROZEN:${error.message}`;
+            return fact;
+          }
+          if(checkerFailure) fact.reason=`DECLARED_CHECKER_UNAVAILABLE:${declared}:${checkerFailure}`;
+        }
+      }
+    } catch (error) { fact.reason=`UNREADABLE:${error.message}`; }
+    return fact;
+  });
+  const chosenEngine=engineFacts.find((fact)=>fact.reason===null) || null;
+  for(const fact of engineFacts) {
+    if(fact===chosenEngine) continue;
+    rejected.push({axis:'engine',version:fact.version,reason:fact.reason || 'ORDERED_BELOW_SELECTED'});
   }
-  if(!engine) throw anchorRefusal('ANCHOR_ENGINE_UNAVAILABLE',rejected);
+  if(!chosenEngine) throw anchorRefusal('ANCHOR_ENGINE_UNAVAILABLE',rejected);
+  const engine={id:'wf-runner',version:chosenEngine.version,path:`tool/wf-runner/versions/${chosenEngine.version}`,declares:{'repo-lint':chosenEngine.declared},selectedBecause:'newest frozen engine carrying the invocation smoke interface, with its declared checker present and frozen'};
+  const checker={id:'repo-lint',version:chosenEngine.declared,path:`tool/repo-lint/versions/${chosenEngine.declared}`,selectedBecause:'exact pairing: the checker the selected engine declares'};
 
   const judgeCandidates=versionsOf(root,'tool','architecture-ops');
-  let judge=null;
-  for(const version of judgeCandidates) {
+  const judgeFacts=judgeCandidates.map((version)=>{
+    const fact={version,reason:null};
     try {
-      if(stagedRelease(root,'tool','architecture-ops',version)) { rejected.push({axis:'judge',version,reason:'STAGING_RELEASE_LABEL'}); continue; }
+      if(stagedRelease(root,'tool','architecture-ops',version)) { fact.reason='STAGING_RELEASE_LABEL'; return fact; }
       const frozen=validateFrozenResource(root,'tool','architecture-ops',version);
-      if(frozen.manifest.interface?.invocationSmoke!=='ai-invocation-smoke/v1') { rejected.push({axis:'judge',version,reason:'NO_MATRIX_SMOKE_INTERFACE'}); continue; }
-      judge={id:'architecture-ops',version,path:`tool/architecture-ops/versions/${version}`,selectedBecause:'newest frozen judge carrying the matrix invocation smoke interface'};
-      for(const other of judgeCandidates) if(other!==version) rejected.push({axis:'judge',version:other,reason:'ORDERED_BELOW_SELECTED'});
-      break;
-    } catch (error) { rejected.push({axis:'judge',version,reason:`NOT_FROZEN_OR_INCOMPLETE:${error.message}`}); }
+      if(frozen.manifest.interface?.invocationSmoke!=='ai-invocation-smoke/v1') fact.reason='NO_MATRIX_SMOKE_INTERFACE';
+    } catch (error) { fact.reason=`NOT_FROZEN:${error.message}`; }
+    return fact;
+  });
+  const chosenJudge=judgeFacts.find((fact)=>fact.reason===null) || null;
+  for(const fact of judgeFacts) {
+    if(fact===chosenJudge) continue;
+    rejected.push({axis:'judge',version:fact.version,reason:fact.reason || 'ORDERED_BELOW_SELECTED'});
   }
-  if(!judge) throw anchorRefusal('ANCHOR_JUDGE_UNAVAILABLE',rejected);
+  if(!chosenJudge) throw anchorRefusal('ANCHOR_JUDGE_UNAVAILABLE',rejected);
+  const judge={id:'architecture-ops',version:chosenJudge.version,path:`tool/architecture-ops/versions/${chosenJudge.version}`,selectedBecause:'newest frozen judge carrying the matrix invocation smoke interface'};
 
   const fromPointer=(axis,repository,id,note)=>{
-    const pointer=readJson(targetPath(root,`${repository}/${id}/current.json`));
-    const version=pointer.version;
-    validateFrozenResource(root,repository,id,version);
+    const pointerPath=targetPath(root,`${repository}/${id}/current.json`);
+    if(!existsSync(pointerPath)) throw anchorRefusal(`ANCHOR_${axis.toUpperCase()}_POINTER_MISSING`,rejected);
+    const version=readJson(pointerPath).version;
+    try { validateFrozenResource(root,repository,id,version); }
+    catch (error) { rejected.push({axis,version,reason:`POINTER_TARGET_NOT_FROZEN:${error.message}`}); throw anchorRefusal(`ANCHOR_${axis.toUpperCase()}_UNAVAILABLE`,rejected); }
     return {id,version,path:`${repository}/${id}/versions/${version}`,selectedBecause:note};
   };
   const contracts=fromPointer('contracts','tool','runtime-contracts','shared current pointer: the package generation the workspace declares as default');
@@ -164,7 +190,7 @@ export function anchorPairFacts(anchor) {
 export function anchorAlignment({workspaceRoot,platformId}) {
   const root=targetPath(workspaceRoot,'.');
   const state=readAnchorState({workspaceRoot:root});
-  if(!state.exists) return {platformId,anchor:null,aligned:false,differences:[],warning:['ANCHOR_NOT_MATERIALISED']};
+  if(!state.exists) return {platformId,anchor:null,aligned:false,differences:[],warnings:[],warning:['ANCHOR_NOT_MATERIALISED'],writePerformed:false};
   const anchor=state.anchor;
   const configCandidates=[`${platformId}/bridge/runner-config.json`,`${platformId}/bridge/${platformId}-config.json`];
   const configRelative=configCandidates.find((path)=>existsSync(targetPath(root,path)));
