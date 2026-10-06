@@ -190,7 +190,9 @@ export function anchorPairFacts(anchor) {
 export function anchorAlignment({workspaceRoot,platformId}) {
   const root=targetPath(workspaceRoot,'.');
   const state=readAnchorState({workspaceRoot:root});
-  if(!state.exists) return {platformId,anchor:null,aligned:false,differences:[],warnings:[],warning:['ANCHOR_NOT_MATERIALISED'],writePerformed:false};
+  // Nothing was compared, so this must never read as "aligned": an empty difference list means
+  // "no findings" only when a comparison actually happened.
+  if(!state.exists) return {platformId,anchor:null,materialised:false,compared:false,aligned:false,differences:[],warnings:[],warning:['ANCHOR_NOT_MATERIALISED'],writePerformed:false};
   const anchor=state.anchor;
   const configCandidates=[`${platformId}/bridge/runner-config.json`,`${platformId}/bridge/${platformId}-config.json`];
   const configRelative=configCandidates.find((path)=>existsSync(targetPath(root,path)));
@@ -220,7 +222,7 @@ export function anchorAlignment({workspaceRoot,platformId}) {
   }
   const bodyRows=softwareConfig && typeof softwareConfig.bodies==='object' && softwareConfig.bodies ? Object.entries(softwareConfig.bodies) : [];
   return {
-    platformId,anchorDigest:state.digest,aligned:differences.length===0,
+    platformId,anchorDigest:state.digest,materialised:true,compared:true,aligned:differences.length===0,
     configPath:configRelative,declaredByEngine,differences,warnings,
     software:{declaredKeys:['softwareRoot','softwareRuntimeRoot','softwareGateway','softwareGatewayConfig','softwareEnvironment','softwareProfiles','softwareConsentGrants'].filter((key)=>key in config),bodies:bodyRows.map(([id,bodyPath])=>({id,bodyPath:typeof bodyPath==='string'?bodyPath:null})),gateway:declined(config.softwareGateway)},
     writePerformed:false

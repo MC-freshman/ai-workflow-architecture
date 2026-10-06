@@ -188,6 +188,9 @@ test('without a materialised anchor the alignment says so instead of inventing o
   const state=readAnchorState({workspaceRoot:root});
   assert.equal(state.exists,false);assert.equal(state.anchor,null);assert.equal(state.digest,null);
   const alignment=anchorAlignment({workspaceRoot:root,platformId:'aligned'});
-  assert.equal(alignment.aligned,false);
+  assert.equal(alignment.materialised,false);
+  assert.equal(alignment.compared,false);
+  assert.equal(alignment.aligned,false,'an empty difference list from an absent anchor must never read as aligned');
+  assert.deepEqual(alignment.differences,[]);
   assert.deepEqual(alignment.warning,['ANCHOR_NOT_MATERIALISED']);
 });

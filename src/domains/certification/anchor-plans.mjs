@@ -41,6 +41,9 @@ export function applyAnchorMaterialisation(plan,{actor='local-user',auditRoot=de
   const file=plan.payload.files[0];
   const target=targetPath(plan.workspaceRoot,file.path);
   const actual=existsSync(target)?sha256(readFileSync(target)):null;
+  // Re-applying a plan whose bytes are already on disk is an answer, not a conflict: the baseline is
+  // only wrong when the file is neither what the plan expected nor what the plan wanted.
+  if(actual===file.newSha256) return output({schema:'architecture-manager-transaction/v1',status:'already-applied',planId:plan.planId,transactionId:makeId(plan,now),target:plan.target.anchorDigest,writePerformed:false},null);
   if(actual!==file.beforeSha256) throw new Error('INTEGRATION_BASELINE_MISMATCH');
   const previous=actual===null?null:readFileSync(target,'utf8');
   const id=makeId(plan,now);
@@ -162,9 +165,12 @@ export function applyAnchorAlignment(plan,{actor='local-user',auditRoot=defaultA
   const before=plan.payload.files.map((file)=>{
     const target=targetPath(plan.workspaceRoot,file.path);
     const actual=existsSync(target)?sha256(readFileSync(target)):null;
-    if(actual!==file.beforeSha256) throw new Error('INTEGRATION_BASELINE_MISMATCH');
-    return {...file,before:actual===null?null:readFileSync(target,'utf8')};
+    // Same rule as the anchor file: bytes that already equal the plan's target are idempotent, and
+    // anything else than the recorded baseline is a conflict.
+    if(actual!==file.beforeSha256 && actual!==file.newSha256) throw new Error('INTEGRATION_BASELINE_MISMATCH');
+    return {...file,before:actual===null?null:readFileSync(target,'utf8'),alreadyTarget:actual===file.newSha256};
   });
+  if(before.every((file)=>file.alreadyTarget)) return output({schema:'architecture-manager-transaction/v1',status:'already-applied',planId:plan.planId,transactionId:makeId(plan,now),target:plan.target.platformId,writePerformed:false},null);
   const id=makeId(plan,now);
   const checkpoint=saveCheckpoint(auditRoot,id,stringify({schema:'anchor-alignment-checkpoint/v1',workspaceRoot:plan.workspaceRoot,platformId:plan.target.platformId,files:before.map(({path,before:content})=>({path,before:content}))}));
   const written=[];

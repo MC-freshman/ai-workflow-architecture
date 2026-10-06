@@ -15,5 +15,6 @@ export function useWorkspaceState() {
     return {...current,[progress.jobId]:progress};
   }),[]);
   const [message,setMessage] = useState('请选择一个架构工作区开始只读扫描。');
-  return { workspace,setWorkspace,workspaceSession,inventory,setInventory:guard(setInventory),busy:busy || Object.keys(jobs).length>0,setBusy:guard(setBusy),message,setMessage:guard(setMessage),recordProgress };
+  const [anchorReport,setAnchorReport] = useState(null);
+  return { workspace,setWorkspace,workspaceSession,inventory,setInventory:guard(setInventory),busy:busy || Object.keys(jobs).length>0,setBusy:guard(setBusy),message,setMessage:guard(setMessage),anchorReport,setAnchorReport:guard(setAnchorReport),recordProgress };
 }
