@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 const STEPS = ['选择平台', '完整配置', '准备环境', '客户端入口', '检查与接入', '登记与恢复'];
+const MODULES={configuration:'配置',backend:'隔离后端',environment:'运行环境',providers:'平台 provider',capabilities:'能力实测',client:'客户端验证',software:'软件绑定',certification:'完整认证',governance:'治理登记',git:'Git 提交'};
 const EMPTY = { displayName: '', pythonExecutable: '', environmentManifest: '', scriptEnvironment: '', executionBackend: '', peerDispatcherModule: '', peerContentRoot: '', softwareGateway: '', softwareEnvironment: '', clientKind: 'cli', clientExecutable: '', clientArgs: [], probeTool: '', probeArguments: {} };
 
 export function OnboardPanel({ api, workspace, inventory, busy = false, setPlanPreview, setPlanPayload, setMessage, friendlyError }) {
@@ -18,6 +19,7 @@ export function OnboardPanel({ api, workspace, inventory, busy = false, setPlanP
   const [runtime, setRuntime] = useState(null);
   const [softwareBodies, setSoftwareBodies] = useState({});
   const [softwarePython, setSoftwarePython] = useState('');
+  const [deferred,setDeferred]=useState([]);
   const [backendFields, setBackendFields] = useState({ distro: '', guestInterpreter: '/usr/bin/python3', wslExecutable: '' });
   const platformId = selection === '__new__' ? newId : selection;
   const input = () => ({ workspaceRoot: workspace, platformId, fields, confirmed });
@@ -31,9 +33,9 @@ export function OnboardPanel({ api, workspace, inventory, busy = false, setPlanP
       if (data.pendingAutomatic) {
         const saved = data.pendingAutomatic.inputs;
         setBackendFields(saved.backendFields); setSoftwareBodies(saved.bodies);
-        setSoftwarePython(saved.interpreterAliases.PPython || ''); setConfirmed(saved.confirmed);
-        setResult({ status: `已恢复接入参数；上次停止在 ${data.pendingAutomatic.stoppedAt || '未完成步骤'}` });
-      }
+        setSoftwarePython(saved.interpreterAliases.PPython || ''); setConfirmed(saved.confirmed);setDeferred(saved.deferred || []);
+        setResult({ ...data.pendingAutomatic,status: data.pendingAutomatic.status==='configured-pending'?'本轮配置已保存 · 接入未完成':`已恢复接入参数；上次停止在 ${MODULES[data.pendingAutomatic.stoppedAt] || data.pendingAutomatic.stoppedAt || '未完成步骤'}` });
+      }else {setSoftwareBodies(data.registeredBodies || {});setSoftwarePython(data.registeredInterpreterAliases?.PPython || '');setDeferred([]);}
     }).catch((error) => { if (active) setLocalError(friendlyError(error)); });
     return () => { active = false; };
   }, [workspace, platformId, inventory]);
@@ -49,6 +51,11 @@ export function OnboardPanel({ api, workspace, inventory, busy = false, setPlanP
     finally { setWorking(false); }
   };
   const selectFile = async (key) => { const path = await api.selectOnboardingFile(); if (path) field(key, path); else setLocalError('已取消选择文件。'); };
+  const previewAutomatic=async resumeMode=>act(async()=>{
+    const latest=await api.readOnboardingConfig({workspaceRoot:workspace,platformId});
+    const current=resumeMode==='reconcile'?{...latest.fields,gitAuthorName:fields.gitAuthorName,gitAuthorEmail:fields.gitAuthorEmail}:fields;
+    return api.previewAutomaticOnboardingPlan({workspaceRoot:workspace,platformId,fields:current,confirmed,backendFields,bodies:resumeMode==='reconcile'?{...Object.fromEntries(Object.entries(softwareBodies).filter(([,path])=>path)),...latest.registeredBodies}:Object.fromEntries(Object.entries(softwareBodies).filter(([,path])=>path)),interpreterAliases:resumeMode==='reconcile'?{...(softwarePython?{PPython:softwarePython}:{}),...latest.registeredInterpreterAliases}:softwarePython?{PPython:softwarePython}:{},deferred,resumeMode});
+  },'接入计划已生成；暂缓项与配置差异在预览中列出，确认前不会修改日志。');
   const run = async () => {
     if (!await api.confirm(`开始 ${platformId} 的接入检查？将使用它自己的配置和环境，保存逐步记录。没有通过的能力不会被声明为已接入。`)) return;
     return act(() => api.runOnboardingPipeline({ workspaceRoot: workspace, platformId, includeMatrix: true }), '接入执行结果已返回。');
@@ -58,7 +65,7 @@ export function OnboardPanel({ api, workspace, inventory, busy = false, setPlanP
     <div className="panel-title"><span>平台接入向导</span><span className="muted">配置、环境、入口与验证由管理台执行</span></div>
     {!workspace ? <div className="empty">请先选择你的架构工作区。</div> : <>
       <nav className="onboarding-steps" aria-label="接入步骤">{STEPS.map((name, index) => <button className={`small-button ${step === index ? 'primary-small' : ''}`} key={name} onClick={() => setStep(index)}>{index + 1}. {name}</button>)}</nav>
-      <div className="onboarding-automatic"><strong>配置好必要位置后，确认一次即可连续接入</strong><p>管理台依次准备环境、绑定 provider、实测能力、安装标准 CLI/MCP 入口、检查、登记并提交配置。失败会保留恢复点；厂商原生客户端注册会另外显示。</p><button className="primary-small small-button" disabled={working || !snapshot || (selection === '__new__' && !confirmed)} onClick={() => act(() => api.previewAutomaticOnboardingPlan({ ...input(), backendFields, bodies: Object.fromEntries(Object.entries(softwareBodies).filter(([, path]) => path)), interpreterAliases: softwarePython ? { PPython: softwarePython } : {} }), '连续接入计划已生成；请核对平台、安装位置和版本后确认。')}>预览一键接入／继续</button></div>
+      <div className="onboarding-automatic"><strong>确认一次连续执行；暂不需要的模块可稍后补齐</strong><p>配置和安全边界必查。暂缓不会算通过，也不会显示完整接入；未满足地板时不启动完整矩阵，其它选中步骤仍可保存。</p><fieldset><legend>本次暂缓（可多选）</legend>{[['environment','运行环境与能力实测'],['software','软件本体绑定'],['client','客户端验证'],['certification','接入认证／首次矩阵'],['git','Git 提交']].map(([name,label])=><label key={name} className="sensitive-confirm"><input type="checkbox" disabled={working} checked={deferred.includes(name)} onChange={event=>setDeferred(old=>event.target.checked?[...old,name]:old.filter(item=>item!==name))} />暂缓{label}</label>)}<p>暂缓环境会连带暂缓依赖它的 provider/能力/客户端/认证；暂缓软件或客户端会连带暂缓完整认证。后续取消勾选并继续即可补齐。</p></fieldset><div className="git-actions"><button className="primary-small small-button" disabled={working || !snapshot || (selection === '__new__' && !confirmed)} onClick={()=>previewAutomatic('strict')}>预览一键接入／继续</button><button className="small-button" disabled={working || !snapshot?.exists} onClick={()=>previewAutomatic('reconcile')}>核对当前更改后续接</button><button className="small-button" disabled={working || !snapshot?.exists} onClick={()=>previewAutomatic('restart')}>预览重建接入记录</button></div>{snapshot?.resumePreview?.changes?.length>0 && <div className="notice">检测到 {snapshot.resumePreview.changes.length} 项配置更改；请用“核对当前更改后续接”。旧记录会留日期副本，受影响结果重新验证。</div>}</div>
       {localError && <div role="alert" className="onboarding-error">{localError}</div>}
       {step === 0 && <>
         <label className="onboarding-field"><span>操作对象</span><select value={selection} onChange={(event) => { setSelection(event.target.value); setResult(null); setConfirmed(false); }}><option value="__new__">新增平台</option>{(inventory?.platforms || []).map((item) => <option key={item.id} value={item.id}>{item.id} · 修复或升级接入</option>)}</select></label>
@@ -113,9 +120,9 @@ export function OnboardPanel({ api, workspace, inventory, busy = false, setPlanP
         <label className="onboarding-field"><span>Git 提交邮箱</span><input value={fields.gitAuthorEmail || ''} onChange={(event) => field('gitAuthorEmail', event.target.value)} /></label>
         <button className="small-button" disabled={working || !snapshot?.exists || !api.previewOnboardingGovernancePlan} onClick={() => act(() => api.previewOnboardingGovernancePlan({ workspaceRoot: workspace, platformId }), '治理文档计划已生成。')}>预览治理登记</button>
         <button className="small-button" disabled={working || !snapshot?.exists || !api.readOnboardingState} onClick={() => act(() => api.readOnboardingState({ workspaceRoot: workspace, platformId }))}>查看接入记录与恢复点</button>
-        <button className="small-button primary-small" disabled={working || !snapshot?.exists} onClick={() => act(() => api.previewOnboardingFinalizePlan({ workspaceRoot: workspace, platformId }), '接入入库计划已生成，提交后自动核验完成条件。')}>提交配置并完成接入</button>
+        <button className="small-button primary-small" disabled={working || !snapshot?.exists} onClick={() => act(async () => {const state=await api.readOnboardingState({workspaceRoot:workspace,platformId});return api.previewOnboardingFinalizePlan({ workspaceRoot: workspace, platformId,allowPending:state.status==='configured-pending' });}, '入库计划已生成；暂缓项不会因提交而记成接入完成。')}>提交当前配置／核验接入状态</button>
       </>}
-      {result && <div className="onboarding-result" role="status"><strong>{result.status || result.stage || (result.stoppedAt ? `停止在：${result.stoppedAt}` : '已返回')}</strong>{(result.steps || []).map((item) => <p key={item.step}>{item.step}：{item.status || item.result?.stage || '已返回'} {(item.result?.issues || []).join('；')}</p>)}{result.issues?.map((issue, index) => <p key={index}>{issue}</p>)}<details><summary>证据与读数</summary><pre>{JSON.stringify(result, null, 2)}</pre></details></div>}
+      {result && <div className="onboarding-result" role="status"><strong>{result.status==='configured-pending'?'本轮配置已保存 · 接入未完成':result.status || result.stage || (result.stoppedAt ? `停止在：${result.stoppedAt}` : '已返回')}</strong>{(result.steps || []).map((item) => <p key={item.step}>{MODULES[item.step] || item.step}：{item.status==='deferred'?'暂缓':item.status || item.result?.stage || '已返回'} {(item.result?.issues || []).join('；')}</p>)}{(result.pending || []).map(item=><p key={item.step}>{MODULES[item.step] || item.step}：{item.reason}</p>)}{result.pendingSoftware?.length>0 && <p>尚未绑定本体：{result.pendingSoftware.map(item=>item.id).join('、')}。可在“准备环境”的软件绑定区或软件中心补齐。</p>}{result.issues?.map((issue, index) => <p key={index}>{issue}</p>)}<details><summary>证据与读数</summary><pre>{JSON.stringify(result, null, 2)}</pre></details></div>}
       <div className="onboarding-footer"><button className="small-button" disabled={step === 0} onClick={() => setStep(step - 1)}>上一步</button><span>{step + 1} / {STEPS.length}</span><button className="small-button" disabled={step === STEPS.length - 1 || !platformId} onClick={() => setStep(step + 1)}>下一步</button></div>
     </>}
   </section>;

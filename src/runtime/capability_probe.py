@@ -7,6 +7,7 @@ from pathlib import Path
 import subprocess
 import sys
 import time
+from copy import deepcopy
 
 
 def load(path):
@@ -17,6 +18,17 @@ def module(name, path):
     spec = importlib.util.spec_from_file_location(name, path)
     result = importlib.util.module_from_spec(spec); sys.modules[name] = result; spec.loader.exec_module(result)
     return result
+
+
+def probe_candidate(live, attempt):
+    """Provisional declarations for actual probes; never mutate the production table."""
+    candidate = deepcopy(live)
+    inherited = candidate.get('checks', {})
+    candidate['checks'] = {**{key: value for key, value in inherited.items() if value is True}, 'manager-jail-probed': True}
+    candidate['permissionAdapters'] = [{'filesystem': f, 'network': 'deny', 'process': p, 'evidence': str(attempt)} for f,p in [('project-scoped','allowlisted-only'),('platform-runtime-write-shared-read-only','isolated-python'),('shared-read-only-platform-report-write','none')]]
+    candidate.setdefault('descriptor', {}).setdefault('actions', {})['prompt'] = {'supported': True, 'enforcement': 'advisory'}
+    candidate['descriptor']['actions']['script'] = {'supported': True, 'enforcement': 'kernel'}
+    return candidate
 
 
 def main(config_path, output_path):
@@ -79,14 +91,9 @@ sys.exit(0 if all(value for key,value in checks.items() if key!="renderer") else
         result['jail'] = {'result': answer, 'checks': checks, 'path': str(attempt)}
         result['checks']['script-environment-isolation-jail'] = answer.get('exitCode') == 0 and answer.get('processTreeEnded') is True and all(value for key,value in checks.items() if key!='renderer')
         if result['checks']['script-environment-isolation-jail']:
-            candidate = load(config['capabilities'])
+            candidate = probe_candidate(load(config['capabilities']), attempt)
             # The engine requires every declared check to be true, so a stale false inherited from the
             # platform's live table would gate this probe's own prepare and could never be cleared.
-            inherited = candidate.get('checks', {})
-            candidate['checks'] = {**{key: value for key, value in inherited.items() if value is True}, 'manager-jail-probed': True}
-            candidate['permissionAdapters'] = [{'filesystem': f, 'network': 'deny', 'process': p, 'evidence': str(attempt)} for f,p in [('project-scoped','allowlisted-only'),('platform-runtime-write-shared-read-only','isolated-python'),('shared-read-only-platform-report-write','none')]]
-            candidate.setdefault('descriptor', {}).setdefault('actions', {})['prompt'] = {'supported': True, 'enforcement': 'advisory'}
-            candidate['descriptor']['actions']['script'] = {'supported': True, 'enforcement': 'kernel'}
             # These are provisional declarations for actual probes, not floor evidence.
             provisional = root / 'candidate-capabilities.json'; provisional.write_text(json.dumps(candidate), encoding='utf-8')
             probe_config = {**config, 'capabilities': str(provisional), 'runsRoot': str(root / 'probe-runs')}
@@ -120,6 +127,8 @@ sys.exit(0 if all(value for key,value in checks.items() if key!="renderer") else
     # Provider actually starts a locked child and stops it awaiting authored business content.
     if config.get('peerDispatcherModule'):
         try:
+            if result.get('prompt', {}).get('prepareOk') is not True:
+                raise ValueError('DEPENDENCY_FAILED: prompt prepare did not pass; peer probe not started')
             peer = module('manager_peer_probe', config['peerDispatcherModule']).create({'callsLog': str(root / 'peer/calls.log'), 'configPath': str(probe_config_path)})
             ident = 'mastermind-triage'; peer_root = Path(config['agentRoot']) / ident; version = load(peer_root / 'current.json')['version']
             record = {'sequence': 'probe-' + str(time.time_ns()), 'parentRunId': result['prompt']['runId'], 'peers': [{'id': ident, 'version': version}], 'brief': 'Maintenance callable probe only; no business output', 'requestSha256': hashlib.sha256(b'manager-peer-readonly').hexdigest()}

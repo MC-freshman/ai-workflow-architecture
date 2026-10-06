@@ -27,6 +27,11 @@ export function readOnboardingState({ workspaceRoot, platformId }) {
   if (state.status === 'running' && !active.has(keyOf(workspaceRoot, platformId))) state.status = 'interrupted';
   return { ...state, writePerformed: false };
 }
+export function savePendingOnboarding({workspaceRoot,platformId,pending,pendingSoftware,steps}) {
+  const previous=readOnboardingState({workspaceRoot,platformId});
+  const state={...previous,...clientBinding(workspaceRoot,platformId),schema:'architecture-manager-onboarding/v1',platformId,status:'configured-pending',error:null,stoppedAt:null,currentStep:'pending',architectureComplete:false,pending,pendingSoftware,preparationSteps:steps,environmentBindingSha256:environmentBinding(workspaceRoot,platformId),updatedAt:new Date().toISOString()};
+  save(workspaceRoot,platformId,state);return state;
+}
 function save(root, id, value) { const path = pathOf(root, id); mkdirSync(join(path, '..'), { recursive: true }); atomicWrite(path, json(value), randomUUID()); }
 
 export function cancelOnboarding({ workspaceRoot, platformId }) {
@@ -102,12 +107,16 @@ function readFirstCertification(previous, root, id) {
   return { versionsSha256: previous.versionsSha256, checkedAt: old.checkedAt, configSha256: old.configSha256, matrixPath: old.matrixPath, matrixSha256: sha256(readFileSync(old.matrixPath)), conformPath: old.conformPath, conformSha256: sha256(readFileSync(old.conformPath)), counts: old.counts, migratedFromStoredStep: !old.evidencePath || old.evidencePath.endsWith('latest.json') };
 }
 
-export function markOnboardingRecorded({ workspaceRoot, platformId, gitReadback }) {
+export function markOnboardingRecorded({ workspaceRoot, platformId, gitReadback, allowPending=false }) {
   const state = readOnboardingState({ workspaceRoot, platformId }); const binding = clientBinding(workspaceRoot, platformId);
   const paths = onboardingGitPaths(workspaceRoot, platformId);
   const git = (args) => execFileSync('git', ['-C', workspaceRoot, ...args], { encoding: 'utf8', windowsHide: true, shell: false }).trim();
   const head = git(['rev-parse', 'HEAD']);
   const status = git(['status', '--porcelain', '--', ...paths]);
+  if(allowPending && state.status==='configured-pending') {
+    if(status || !head || state.configSha256!==binding.configSha256 || state.versionsSha256!==binding.versionsSha256 || state.adapterSha256!==binding.adapterSha256 || state.environmentBindingSha256!==environmentBinding(workspaceRoot,platformId))throw Error('ONBOARDING_NOT_VERIFIED');
+    for(const path of paths)git(['ls-files','--error-unmatch','--',path]);state.git={head,configurationStatusClean:true,recordedAt:new Date().toISOString(),paths,scope:'configuration-only'};save(workspaceRoot,platformId,state);return state;
+  }
   if (state.status !== 'verified-awaiting-governance-git' || state.configSha256 !== binding.configSha256 || state.versionsSha256 !== binding.versionsSha256 || state.adapterSha256 !== binding.adapterSha256 || state.environmentBindingSha256 !== environmentBinding(workspaceRoot, platformId) || !state.firstCertification || status || !head) throw new Error('ONBOARDING_NOT_VERIFIED');
   for (const path of paths) { git(['ls-files', '--error-unmatch', '--', path]); }
   gitReadback = { head, configurationStatusClean: true, recordedAt: new Date().toISOString(), paths };

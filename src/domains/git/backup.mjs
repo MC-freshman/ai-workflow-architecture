@@ -7,6 +7,7 @@ import {targetPath} from '../../core/paths.mjs';
 import {inside} from '../../core/json.mjs';
 import {gitRaw,gitText} from '../../infrastructure/git.mjs';
 import {parseGitStatus} from './state.mjs';
+import {archiveTool} from '../../infrastructure/archive-tool.mjs';
 
 function tree(root) {
   return gitRaw(root,['ls-tree','-rz','--full-tree','HEAD']).split('\0').filter(Boolean).map(record=>{
@@ -37,7 +38,7 @@ export function createGitBackup(root,plan) {
   if(mode==='snapshot') {
     gitRaw(root,['-c','core.autocrlf=false','archive','--format=zip','-o',join(destination,'repo.zip'),'HEAD']);
     mkdirSync(restore);
-    execFileSync('tar',['-xf',join(destination,'repo.zip'),'-C',restore],{windowsHide:true,timeout:120000,stdio:['ignore','pipe','pipe']});
+    execFileSync(archiveTool(),['-xf',join(destination,'repo.zip'),'-C',restore],{windowsHide:true,timeout:120000,stdio:['ignore','pipe','pipe']});
   } else {
     gitRaw(root,['bundle','create',join(destination,'source.bundle'),'--all']);
     writeFileSync(join(destination,'index.patch'),stagedPatch);

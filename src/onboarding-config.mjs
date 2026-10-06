@@ -9,6 +9,7 @@ import { targetPath, defaultAuditRoot } from './core/paths.mjs';
 import { validPlatformId } from './core/platforms.mjs';
 import { assertPublishedVersion } from './plans.mjs';
 import {recommendedCertificationPair,recommendedMatrixVersion} from './domains/certification/releases.mjs';
+import {onboardingResumePreview} from './domains/platforms/onboarding-resume.mjs';
 import { atomicWrite, makeId, output, requirePlan, saveCheckpoint, writeAudit } from './transactions/kernel.mjs';
 
 const stringify = (value) => `${JSON.stringify(value, null, 2)}\n`;
@@ -46,8 +47,9 @@ export function readOnboardingConfig({ workspaceRoot, platformId }) {
   const versions = Object.fromEntries(['wf-runner', 'runtime-contracts', 'repo-lint'].map((id) => [id, release(ctx.root, 'tool', id)]));
   const client = read(targetPath(ctx.root, `${platformId}/bridge/client-adapter.json`));
   const automatic = read(targetPath(ctx.root, `${platformId}/runtime/maintenance/manager-onboarding/automatic.json`), null);
-  const pendingAutomatic = automatic && automatic.status !== 'complete' && automatic.inputs && sha256(stringify(automatic.inputs)) === automatic.inputsSha256 ? { status: automatic.status, stoppedAt: automatic.stoppedAt, inputs: automatic.inputs } : null;
-  return { platformId, exists: existsSync(join(ctx.root, platformId)), configPath: ctx.configPath, config: ctx.config, versions, client, pendingAutomatic, performanceRecommendation:recommendedCertificationPair(ctx.root),fields: {
+  const pendingAutomatic = automatic && automatic.status !== 'complete' && automatic.inputs && sha256(stringify(automatic.inputs)) === automatic.inputsSha256 ? { status: automatic.status, stoppedAt: automatic.stoppedAt, inputs: automatic.inputs, pending:automatic.pending || [],pendingSoftware:automatic.pendingSoftware || [] } : null;
+  const gateway=read(targetPath(ctx.root,`${platformId}/bridge/software-gateway-config.json`));
+  return { platformId, exists: existsSync(join(ctx.root, platformId)), configPath: ctx.configPath, config: ctx.config, versions, client, pendingAutomatic, registeredBodies:gateway.bodies || {},registeredInterpreterAliases:gateway.interpreterAliases || {},resumePreview:onboardingResumePreview(ctx.root,platformId),performanceRecommendation:recommendedCertificationPair(ctx.root),fields: {
     displayName: ctx.bridge.displayName || platformId,
     pythonExecutable: ctx.bridge.runner?.python || ctx.config.interpreters?.['.py'] || '',
     environmentManifest: ctx.config.environmentManifest || '', scriptEnvironment: ctx.config.scriptEnvironment || '', executionBackend: ctx.config.executionBackend || (existsSync(join(ctx.root, platformId, 'bridge/backends/manager-sealed.json')) ? join(ctx.root, platformId, 'bridge/backends/manager-sealed.json') : ''),

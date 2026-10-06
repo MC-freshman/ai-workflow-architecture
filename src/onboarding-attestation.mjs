@@ -11,9 +11,22 @@ import { readOnboardingConfig } from './onboarding-config.mjs';
 import { plannedFiles, applyGeneratedFiles, verifyFiles } from './transactions/onboarding-files.mjs';
 import { runtimeFile } from './core/runtime-path.mjs';
 import { runOwnedProcess } from './core/owned-process.mjs';
+import {clientBinding,validateClientReceipt} from './onboarding-client.mjs';
+import {clearProvenLegacyGaps} from './domains/platforms/capability-evidence.mjs';
 const run = promisify(execFile);
 const json = (data) => `${JSON.stringify(data, null, 2)}\n`;
 const load = (path) => parseJsonText(readFileSync(path, 'utf8'));
+
+function verifiedClientEvidence(workspaceRoot,platformId) {
+  const path=targetPath(workspaceRoot,`${platformId}/runtime/maintenance/manager-onboarding/client-latest.json`);
+  if(!existsSync(path)) return null;
+  try {
+    const report=load(path),binding=clientBinding(workspaceRoot,platformId);
+    if(report.status!=='passed' || !['platformId','configSha256','versionsSha256','adapterSha256'].every(key=>report[key]===binding[key])) return null;
+    validateClientReceipt(report.receipt,{...binding,challenge:report.challenge,clientIdentity:report.clientIdentity});
+    return {evidencePath:path,evidenceSha256:sha256(readFileSync(path))};
+  } catch {return null;}
+}
 
 export async function probeOnboardingCapabilities({ workspaceRoot, platformId }, { onProgress = () => {}, registerCancel = () => {} } = {}) {
   const snapshot = readOnboardingConfig({ workspaceRoot, platformId });
@@ -57,6 +70,7 @@ export function buildOnboardingAttestationPlan({ workspaceRoot, platformId, evid
     for (const name of Object.keys(environment.packages || {})) delete capabilities.declaredAbsent[`python-package:${name}`];
   }
   for (const row of proof.software || []) if (!row.dispatchable) capabilities.gapPlan[`software:${row.softwareId}`] = { path: '在软件中心绑定正确版本本体并完成配方快照，回到向导重试', costMinutes: 20 };
+  clearProvenLegacyGaps(capabilities,{proof,evidencePath,evidenceSha256:sha256(readFileSync(evidencePath)),clientEvidence:verifiedClientEvidence(workspaceRoot,platformId),now});
   const environmentPath = `${platformId}/runtime/software/software-environment.json`;
   const previousEnvironment = existsSync(targetPath(workspaceRoot, environmentPath)) ? load(targetPath(workspaceRoot, environmentPath)) : { schema: 'ai-software-environment/v1', platformId, bodies: {} };
   const softwareEnvironment = { ...previousEnvironment, bodies: { ...previousEnvironment.bodies } };
