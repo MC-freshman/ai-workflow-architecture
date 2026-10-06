@@ -12,6 +12,7 @@ export {buildSoftwareCommandPlan} from '../domains/software/actions.mjs';
 export { buildRegistryPlan } from '../catalog.mjs';
 export { buildDefectBookEditPlan } from '../defects.mjs';
 export { buildPlatformViewPlan, buildResourcePointerPlan } from '../plans.mjs';
+export { buildAnchorMaterialisationPlan, applyAnchorMaterialisation, verifyAnchorMaterialisation, buildAnchorAlignmentPlan, applyAnchorAlignment, verifyAnchorAlignment } from '../domains/certification/anchor-plans.mjs';
 export { buildDocumentPlan } from '../documents.mjs';
 export { buildSoftwareLaunchPlan } from '../software.mjs';
 export { buildGitPlan } from '../git.mjs';
@@ -34,6 +35,7 @@ export { buildOnboardingGovernancePlan } from '../onboarding-governance.mjs';
 export { buildOnboardingFinalizePlan } from '../onboarding-finalize.mjs';
 export { buildAutomaticOnboardingPlan } from '../onboarding-auto.mjs';
 export { executeOnboardingChecks, cancelOnboarding, markOnboardingRecorded } from '../onboarding-state.mjs';
+export { executePostAlignmentChecks } from '../onboarding-state.mjs';
 export { buildWorkspaceClonePlan, applyWorkspaceClone } from '../workspace-bootstrap.mjs';
 
 

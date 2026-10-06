@@ -38,6 +38,7 @@ test('renderer domains stay split and write kinds remain centralized', () => {
     'platform-governance',
     'platform-finalize',
     'platform-onboarding',
+    'anchor-generation', 'platform-anchor-alignment',
     'document-edit', 'defect-book-edit', 'resource-pointer', 'platform-view', 'registry-edit',
     'integration-config', 'integration-registry', 'software-import', 'software-recipe-publish', 'software-revert',
     'git-commit', 'git-branch', 'git-tag', 'git-push', 'git-rollback', 'git-backup', 'release-publish', 'software-launch'

@@ -47,7 +47,10 @@ export function cancelAllOnboardingChecks() {
   for (const job of active.values()) { job.cancelled = true; job.cancel?.(); }
 }
 
-export async function executeOnboardingChecks({ workspaceRoot, platformId, only = null }, { onProgress = () => {}, check = runPlatformCheck, clientProbe = probeOnboardingClient } = {}) {
+// The preamble is shared by the ordinary check run and the post-alignment run: both must refuse a
+// configuration that changed while a record was running, and both must reuse the same execution when
+// nothing they depend on moved.
+function certifyPreamble({ workspaceRoot, platformId, only }) {
   const key = keyOf(workspaceRoot, platformId);
   if (active.has(key)) throw new Error('ONBOARDING_ALREADY_RUNNING');
   const precheck = inspectPlatformConnection({ workspaceRoot, platformId });
@@ -63,6 +66,11 @@ export async function executeOnboardingChecks({ workspaceRoot, platformId, only 
   state.firstCertification = firstCertification;
   state.pendingMatrixRecovery = recovery;
   const job = { cancelled: false, cancel: null }; active.set(key, job); save(workspaceRoot, platformId, state);
+  return { key, binding, firstCertification, recovery, job, state };
+}
+
+export async function executeOnboardingChecks({ workspaceRoot, platformId, only = null }, { onProgress = () => {}, check = runPlatformCheck, clientProbe = probeOnboardingClient } = {}) {
+  const { key, binding, firstCertification, recovery, job, state } = certifyPreamble({ workspaceRoot, platformId, only });
   const step = async (name, operation, passed) => {
     if (job.cancelled) throw new Error('ONBOARDING_CANCELLED');
     const prior = state.steps.find((item) => item.step === name && item.status === 'passed');
@@ -87,6 +95,44 @@ export async function executeOnboardingChecks({ workspaceRoot, platformId, only 
     if (checked.coverageComplete || (!only && !firstCertification)) { state.firstCertification = readFirstCertification({ ...state, firstCertification:null,steps: [{ status: 'passed', step: 'conform-and-first-matrix', result: checked }] }, workspaceRoot, platformId); state.pendingMatrixRecovery = null; }
     await step('client-tool-loop', () => clientProbe({ workspaceRoot, platformId }, { registerCancel: (cancel) => { job.cancel = cancel; } }), (result) => result.status === 'passed');
     state.status = 'verified-awaiting-governance-git'; state.currentStep = 'governance-git';
+  } catch (error) {
+    state.status = job.cancelled ? 'cancelled' : 'failed'; state.error = String(error.message); state.stoppedAt ||= state.currentStep;
+  } finally { active.delete(key); state.updatedAt = new Date().toISOString(); save(workspaceRoot, platformId, state); }
+  return state;
+}
+
+// After a platform is aligned to the anchor, the platform must re-certify itself against its new
+// configuration. This runs the same certification step with the same certification gate, but never
+// asserts a client loop: aligning a version does not re-verify a vendor client, and claiming it did
+// would be a claim this run did not earn. When a previous certification is still stored, the record
+// stays verified; otherwise it waits for the ordinary pipeline to finish the remaining steps.
+export async function executePostAlignmentChecks({ workspaceRoot, platformId, anchorDigestSha256 = null }, { onProgress = () => {}, check = runPlatformCheck } = {}) {
+  const { key, binding, firstCertification, recovery, job, state } = certifyPreamble({ workspaceRoot, platformId, only: null });
+  state.anchorDigestSha256 = anchorDigestSha256;
+  const step = async (name, operation, passed) => {
+    if (job.cancelled) throw new Error('ONBOARDING_CANCELLED');
+    state.currentStep = name; save(workspaceRoot, platformId, state); onProgress({ platformId, phase: name, reused: false });
+    const result = await operation();
+    if (job.cancelled) throw new Error('ONBOARDING_CANCELLED');
+    const fresh = clientBinding(workspaceRoot, platformId);
+    if (fresh.configSha256 !== state.configSha256) throw new Error('ONBOARDING_RESUME_DRIFT');
+    const valid = passed(result);
+    state.steps.push({ step: name, status: valid ? 'passed' : 'failed', result, evidencePath: result.evidencePath || null, evidenceSha256: result.evidencePath && existsSync(result.evidencePath) ? sha256(readFileSync(result.evidencePath)) : null });
+    save(workspaceRoot, platformId, state);
+    if (!valid) { state.stoppedAt = name; throw new Error('ONBOARDING_CHECK_FAILED'); }
+    return result;
+  };
+  try {
+    const checked = await step('post-alignment-check', async () => {
+      const result = await check({ workspaceRoot, platformId, mode: 'quick', only: null, stopOnFloorFailure: true, onProgress, registerCancel: (cancel) => { job.cancel = cancel; } });
+      if (recovery && !result.coverageComplete) return mergeFirstMatrix(recovery, result, workspaceRoot, platformId);
+      return result;
+    }, (result) => result.issues?.length === 0 && result.counts?.fail === 0 && !result.counts?.needsInput);
+    if (checked.coverageComplete) {
+      state.firstCertification = readFirstCertification({ ...state, firstCertification: null, steps: [{ status: 'passed', step: 'conform-and-first-matrix', result: checked }] }, workspaceRoot, platformId);
+      state.pendingMatrixRecovery = null;
+    }
+    state.status = firstCertification ? 'verified-awaiting-governance-git' : 'configured-pending';
   } catch (error) {
     state.status = job.cancelled ? 'cancelled' : 'failed'; state.error = String(error.message); state.stoppedAt ||= state.currentStep;
   } finally { active.delete(key); state.updatedAt = new Date().toISOString(); save(workspaceRoot, platformId, state); }

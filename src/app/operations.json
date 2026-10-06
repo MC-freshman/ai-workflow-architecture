@@ -149,6 +149,34 @@
       "argumentsStyle": "input",
       "taskMode": "owned"
     },
+    "readAnchorReport": {
+      "channel": "anchor:report",
+      "phase": "query",
+      "backend": "readAnchorReport",
+      "argumentsStyle": "input",
+      "taskMode": "owned"
+    },
+    "previewAnchorPlan": {
+      "channel": "plan:anchor-generation",
+      "phase": "plan",
+      "backend": "buildAnchorMaterialisationPlan",
+      "argumentsStyle": "input",
+      "taskMode": "owned"
+    },
+    "previewAnchorAlignmentPlan": {
+      "channel": "plan:platform-anchor-alignment",
+      "phase": "plan",
+      "backend": "buildAnchorAlignmentPlan",
+      "argumentsStyle": "input",
+      "taskMode": "owned"
+    },
+    "checkAfterAnchorAlignment": {
+      "channel": "anchor:post-align-check",
+      "phase": "execute",
+      "backend": "executePostAlignmentChecks",
+      "argumentsStyle": "input",
+      "taskMode": "owned"
+    },
     "readCatalogEntry": {
       "channel": "catalog:read",
       "phase": "query",
@@ -560,6 +588,8 @@
     "platform-governance",
     "platform-finalize",
     "platform-onboarding",
+    "anchor-generation",
+    "platform-anchor-alignment",
     "document-edit",
     "defect-book-edit",
     "resource-pointer",

@@ -13,6 +13,7 @@ import { applyRelease, verifyRelease } from './releases.mjs';
 import { applySoftwareLaunch, verifySoftwareLaunch } from './software-launch.mjs';
 import { applyPlatformScaffold, verifyPlatformScaffold } from './onboarding.mjs';
 import { applyOnboardingConfig, verifyOnboardingConfig } from './onboarding-config.mjs';
+import { applyAnchorAlignment, applyAnchorMaterialisation, verifyAnchorAlignment, verifyAnchorMaterialisation } from './domains/certification/anchor-plans.mjs';
 import { applyOnboardingRuntime, verifyOnboardingRuntime, applyOnboardingBackend, verifyOnboardingBackend } from './onboarding-runtime.mjs';
 import { applyOnboardingClient, verifyOnboardingClient } from './onboarding-client.mjs';
 import { applyOnboardingProviders, verifyOnboardingProviders } from './onboarding-providers.mjs';
@@ -61,6 +62,8 @@ export function applyPlan({ plan, afterText = null, credentialValue = null, acto
   if (plan.kind === 'software-import') return applySoftwareImport({ plan }, { actor, auditRoot, now, failAfterCheckpoint, onProgress });
   if (plan.kind === 'software-recipe-publish') return applySoftwareRecipe({ plan }, { actor, auditRoot, now, failAfterCheckpoint, onProgress });
   if (plan.kind === 'software-revert') return revertSoftwareTransaction({ plan, auditRoot, actor, now });
+  if (plan.kind === 'anchor-generation') return applyAnchorMaterialisation(plan, { actor, auditRoot, now });
+  if (plan.kind === 'platform-anchor-alignment') return applyAnchorAlignment(plan, { actor, auditRoot, now });
   throw new Error('TRANSACTION_KIND_UNSUPPORTED');
 }
 
@@ -317,6 +320,8 @@ export function verifyPlanTarget({ plan }) {
   if (plan.kind === 'software-import') return verifySoftwareImport({ plan });
   if (plan.kind === 'software-recipe-publish') return verifySoftwareRecipe({ plan });
   if (plan.kind === 'software-revert') return verifySoftwareRevert({ plan });
+  if (plan.kind === 'anchor-generation') return verifyAnchorMaterialisation(plan);
+  if (plan.kind === 'platform-anchor-alignment') return verifyAnchorAlignment(plan);
   if (plan.kind === 'document-edit') {
     const target = targetPath(plan.workspaceRoot, plan.target.path);
     const content = readFileSync(target, 'utf8');

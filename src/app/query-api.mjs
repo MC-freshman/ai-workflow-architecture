@@ -25,4 +25,5 @@ export { diffDocument } from '../docs-ops.mjs';
 export { governanceOnboardingDraft, buildOnboardingCard } from '../onboarding.mjs';
 export { readOnboardingConfig } from '../onboarding-config.mjs';
 export { readOnboardingState } from '../onboarding-state.mjs';
+export { readAnchorReport, listAnchorPlatforms } from '../domains/certification/anchor-report.mjs';
 
