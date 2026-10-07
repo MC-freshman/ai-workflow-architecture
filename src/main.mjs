@@ -1,3 +1,4 @@
+import {buildGatewayMigrationPlan} from './domains/software/gateway-migration.mjs';
 import {runDomainTask,cancelDomainTask,cancelAllDomainTasks} from './infrastructure/tasks.mjs';
 import {taskContext} from './app/task-context.mjs';
 import {buildExistingSoftwareBindingPlan} from './domains/intake/software-binding.mjs';
@@ -242,6 +243,7 @@ function registerIpc() {
   handleOperation('plan:platform-runtime', (_event, input) => buildOnboardingRuntimePlan(input));
   handleOperation('plan:platform-backend', (_event, input) => buildOnboardingBackendPlan(input));
   handleOperation('plan:platform-client', (_event, input) => buildOnboardingClientPlan(input));
+  handleOperation('plan:software-binding-migration', (_event,input)=>buildGatewayMigrationPlan(input));
   handleOperation('plan:platform-providers', (_event, input) => buildOnboardingProvidersPlan(input));
   handleOperation('onboarding:capability-probe', (event, input) => owned(input, (registerCancel) => probeOnboardingCapabilities(input, { registerCancel, onProgress: (progress) => event.sender.send('transaction:progress', progress) })));
   handleOperation('plan:platform-attestation', (_event, input) => buildOnboardingAttestationPlan(input));

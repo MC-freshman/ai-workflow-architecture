@@ -2,7 +2,7 @@ import {randomUUID} from 'node:crypto';
 import fs from 'node:fs';
 import {verifyRuntimeBody} from './runtime-body.mjs';
 import {validateFrozenResource} from '../resources/versions.mjs';
-import {gatewayBinding} from '../software/gateway-binding.mjs';
+import {gatewayBinding,assertGatewaySelection} from '../software/gateway-binding.mjs';
 import {readJson} from '../../core/json.mjs';
 import {targetPath} from '../../core/paths.mjs';
 import {assertConfigurationReferences} from '../../onboarding-config.mjs';
@@ -18,7 +18,7 @@ export function buildExistingSoftwareBindingPlan({placementPlan,now=new Date().t
   const pointerPath=targetPath(root,`software/${softwareId}/current.json`),current=readJson(pointerPath);
   const {manifest}=validateFrozenResource(root,'software',softwareId,current.version);
   if(!manifest.capabilities?.length)throw Error('SOFTWARE_CAPABILITY_UNAVAILABLE');
-  const config=platformConfig(root,platformId),binding=gatewayBinding(root,platformId,config);
+  const config=platformConfig(root,platformId),binding=assertGatewaySelection(gatewayBinding(root,platformId,config));
   const gateway={...binding.value,bodies:{...binding.value.bodies,[softwareId]:restored.entry}};
   assertConfigurationReferences(gateway);
   const files=plannedFiles(root,[{path:binding.relativePath,content:JSON.stringify(gateway,null,2)+'\n'}]);

@@ -65,9 +65,14 @@ export function archiveAutomaticJournal(file) {
   fs.writeFileSync(snapshot,bytes,{flag:'wx'});fs.writeFileSync(snapshot+'.SHA256SUMS',digest+'  '+name+'\n',{flag:'wx'});return {path:snapshot,sha256:digest};
 }
 export function reconcileAutomaticJournal(journal,preview) {
+  invalidateRuntimePlan(journal,preview.invalidatedSteps);
   const removed=journal.steps.filter(row=>preview.invalidatedSteps.includes(row.step));
   journal.steps=journal.steps.filter(row=>!preview.invalidatedSteps.includes(row.step));
   for(const row of preview.changes)if(row.newSha256)journal.finalTargets[row.path]=row.newSha256;else delete journal.finalTargets[row.path];
   (journal.reconciliations ||= []).push({at:new Date().toISOString(),approvedChanges:preview.changes,invalidatedSteps:preview.invalidatedSteps,removedResults:removed});
   return journal;
+}
+
+export function invalidateRuntimePlan(journal,steps) {
+  if(steps.includes('environment') && journal.runtimePlan){(journal.previousRuntimePlans ||= []).push({invalidatedAt:new Date().toISOString(),plan:journal.runtimePlan});delete journal.runtimePlan;}
 }

@@ -1,6 +1,7 @@
+import {platformPath} from './core/platform-path.mjs';
 import {reconcileHostManifest} from './domains/platforms/host-manifest.mjs';
 import {providerTemplateStatus} from './domains/platforms/provider-templates.mjs';
-import {gatewayBinding} from './domains/software/gateway-binding.mjs';
+import {gatewayBinding,assertGatewaySelection} from './domains/software/gateway-binding.mjs';
 import {parseJson as parseJsonText} from './core/json.mjs';
 // Configuration plans for an existing or new platform. All generated paths are
 // derived from the selected workspace; platform-specific state never becomes shared code.
@@ -52,9 +53,9 @@ export function readOnboardingConfig({ workspaceRoot, platformId }) {
   const automatic = read(targetPath(ctx.root, `${platformId}/runtime/maintenance/manager-onboarding/automatic.json`), null);
   const pendingAutomatic = automatic && automatic.status !== 'complete' && automatic.inputs && sha256(stringify(automatic.inputs)) === automatic.inputsSha256 ? { status: automatic.status, stoppedAt: automatic.stoppedAt, inputs: automatic.inputs, pending:automatic.pending || [],pendingSoftware:automatic.pendingSoftware || [] } : null;
   const binding=gatewayBinding(ctx.root,platformId,ctx.config),gateway=binding.value;
-  return { platformId, providerTemplates:providerTemplateStatus(ctx.root,platformId), backendFields:ctx.config.executionBackend && existsSync(ctx.config.executionBackend)?(()=>{const b=read(ctx.config.executionBackend);return {distro:b.distro || '',guestInterpreter:b.interpreter || '/usr/bin/python3',wslExecutable:b.wslExecutable || ''};})():{}, exists: existsSync(join(ctx.root, platformId)), configPath: ctx.configPath, config: ctx.config, versions, client, pendingAutomatic, gatewayBinding:{path:binding.path,recovered:binding.recovered},registeredBodies:gateway.bodies || {},registeredInterpreterAliases:gateway.interpreterAliases || {},resumePreview:onboardingResumePreview(ctx.root,platformId),performanceRecommendation:recommendedCertificationPair(ctx.root),fields: {
+  return { platformId, providerTemplates:providerTemplateStatus(ctx.root,platformId), backendFields:ctx.config.executionBackend && existsSync(platformPath(ctx.root,platformId,ctx.config.executionBackend))?(()=>{const b=read(platformPath(ctx.root,platformId,ctx.config.executionBackend));return {distro:b.distro || '',guestInterpreter:b.interpreter || '/usr/bin/python3',wslExecutable:b.wslExecutable || ''};})():{}, exists: existsSync(join(ctx.root, platformId)), configPath: ctx.configPath, config: ctx.config, versions, client, pendingAutomatic, gatewayBinding:{path:binding.path,recovered:binding.recovered,alternatives:binding.alternatives,selectionRequired:binding.selectionRequired},registeredBodies:gateway.bodies || {},registeredInterpreterAliases:gateway.interpreterAliases || {},resumePreview:onboardingResumePreview(ctx.root,platformId),performanceRecommendation:recommendedCertificationPair(ctx.root),fields: {
     displayName: ctx.bridge.displayName || platformId,
-    pythonExecutable: ctx.bridge.runner?.python || ctx.config.interpreters?.['.py'] || '',
+    pythonExecutable: ctx.config.interpreters?.['.py'] || ctx.bridge.runner?.python || '',
     environmentManifest: ctx.config.environmentManifest || '', scriptEnvironment: ctx.config.scriptEnvironment || '', executionBackend: ctx.config.executionBackend || (existsSync(join(ctx.root, platformId, 'bridge/backends/manager-sealed.json')) ? join(ctx.root, platformId, 'bridge/backends/manager-sealed.json') : ''),
     peerDispatcherModule: ctx.config.peerDispatcherModule || '', peerContentRoot: ctx.config.peerContentRoot || '',
     softwareGateway: ctx.config.softwareGateway?.replaceAll('\\', '/').includes('/_connector/versions/') ? ctx.config.softwareGateway : join(release(ctx.root, 'software', '_connector').path, 'connector.py'), softwareEnvironment: ctx.config.softwareEnvironment || '',
@@ -65,13 +66,7 @@ export function readOnboardingConfig({ workspaceRoot, platformId }) {
   }, writePerformed: false };
 }
 
-function ownPath(root, platformId, path) {
-  if (!path) return null;
-  const full = resolve(path);
-  const rel = full.slice(resolve(root).length + 1).replaceAll('\\', '/');
-  if (!rel.startsWith(`${platformId}/`)) throw new Error('PLATFORM_CONFIGURATION_PATH_MISMATCH');
-  return targetPath(root, rel);
-}
+function ownPath(root,platformId,path) {return path?platformPath(root,platformId,path):null;}
 
 export function buildOnboardingConfigPlan({ workspaceRoot, platformId, fields = {}, confirmed = false, now = new Date().toISOString() }) {
   const ctx = context(workspaceRoot, platformId);
@@ -112,7 +107,7 @@ export function buildOnboardingConfigPlan({ workspaceRoot, platformId, fields = 
       if (path) config[key] = path; else delete config[key];
     }
   }
-  const python = fields.pythonExecutable || ctx.bridge.runner?.python || config.interpreters?.['.py'];
+  const python = fields.pythonExecutable || config.interpreters?.['.py'] || ctx.bridge.runner?.python;
   const hostManifest=reconcileHostManifest(root,platformId,config,python);
   if(hostManifest.path)config.hostEnvironmentManifest=hostManifest.path;
   if (python) config.interpreters = { ...config.interpreters, '.py': python };
@@ -125,7 +120,7 @@ export function buildOnboardingConfigPlan({ workspaceRoot, platformId, fields = 
     if (!existsSync(gateway)) throw new Error('SOFTWARE_CONNECTOR_ENTRY_MISSING');
     config.softwareGateway = gateway;
   } else if (!config.softwareGateway) config.softwareGateway = join(release(root, 'software', '_connector').path, 'connector.py');
-  const gatewayRegistration=gatewayBinding(root,platformId,config);
+  const gatewayRegistration=assertGatewaySelection(gatewayBinding(root,platformId,config));
   config.softwareGatewayConfig = gatewayRegistration.path;
   ownPath(root, platformId, config.softwareGatewayConfig);
   const bridge = { ...ctx.bridge, schema: 'ai-platform-bridge/v1.1', platform: platformId, displayName: fields.displayName || ctx.bridge.displayName || platformId, shared: { ...ctx.bridge.shared, toolRegistry: join(root, 'tool/registry.json'), agentRegistry: join(root, 'agent/registry.json'), softwareRegistry: join(root, 'software/registry.json'), architecturePrompt: join(root, 'AI_ARCHITECTURE_SYSTEM_PROMPT.md'), readOnly: true }, runtimeRoot: join(root, platformId, 'runtime'), modes: ['workflow', 'agent-workflow'], defaults: { ...ctx.bridge.defaults, workflowVersions: { ...ctx.bridge.defaults?.workflowVersions, 'repo-lint': scannerVersion } }, runner: { ...ctx.bridge.runner, enabled: true, config: join(root, ctx.configPath), release: runner.path, ...(python ? { python } : {}) } };

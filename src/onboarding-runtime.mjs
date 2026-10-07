@@ -1,3 +1,4 @@
+import {platformPath} from './core/platform-path.mjs';
 import {parseJson as parseJsonText} from './core/json.mjs';
 import { execFile } from 'node:child_process';
 import { promisify } from 'node:util';
@@ -87,10 +88,9 @@ export function buildOnboardingRuntimePlan({ workspaceRoot, platformId, fields =
   if (!/^[a-f0-9-]{36}$/.test(installationId)) throw new Error('INVALID_INSTALLATION_ID');
   const python = fields.pythonExecutable || snapshot.fields.pythonExecutable;
   if (!python || !existsSync(python)) throw new Error('RUNTIME_PYTHON_REQUIRED');
-  const backendPath = fields.executionBackend || snapshot.fields.executionBackend;
+  const selectedBackend = fields.executionBackend || snapshot.fields.executionBackend;
+  const backendPath = selectedBackend?platformPath(root,platformId,selectedBackend):null;
   if (!backendPath || !existsSync(backendPath)) throw new Error('RUNTIME_BACKEND_REQUIRED');
-  const allowed = resolve(root, platformId) + '\\';
-  if (!resolve(backendPath).startsWith(allowed)) throw new Error('PLATFORM_CONFIGURATION_PATH_MISMATCH');
   const backend = load(backendPath);
   if (backend.kind !== 'wsl2' || !backend.distro || !backend.interpreter || !backend.wslExecutable) throw new Error('RUNTIME_SEALED_BACKEND_REQUIRED');
   if (!Array.isArray(backend.pathMap) || !backend.sharedReadOnlyBinds?.some((b) => resolve(b.windows) === join(root, 'software'))) throw new Error('RUNTIME_BACKEND_THREE_ROOTS_REQUIRED');

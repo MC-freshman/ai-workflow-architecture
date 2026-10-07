@@ -16,6 +16,7 @@ export function verifyFiles(plan) {
 export function applyGeneratedFiles(plan, rebuild, { actor = 'local-user', auditRoot = defaultAuditRoot(), now = new Date().toISOString(), failAfterFiles = null } = {}) {
   requirePlan(plan);
   const expected = rebuild();
+  if(expected.kind!==plan.kind || expected.target.platformId!==plan.target.platformId)throw Error('PLAN_PAYLOAD_MISMATCH');
   if (JSON.stringify(expected.payload) !== JSON.stringify(plan.payload)) throw new Error('PLAN_PAYLOAD_MISMATCH');
   for (const file of plan.payload.files) {
     const path = targetPath(plan.workspaceRoot, file.path);

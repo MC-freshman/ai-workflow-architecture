@@ -1,3 +1,4 @@
+import {platformPath} from '../../core/platform-path.mjs';
 import fs from 'node:fs';
 import {targetPath} from '../../core/paths.mjs';
 import {runtimeFile} from '../../core/runtime-path.mjs';
@@ -12,6 +13,6 @@ export function providerTemplateStatus(root,id) {
     const installedSha256=fs.existsSync(file)?sha256(fs.readFileSync(file)):null;
     return {path,expectedSha256,installedSha256,current:expectedSha256===installedSha256};
   });
-  const activePeerPath=config.peerDispatcherModule || null,activePeerSha256=activePeerPath && fs.existsSync(activePeerPath)?sha256(fs.readFileSync(activePeerPath)):null;
+  const activePeerPath=config.peerDispatcherModule?platformPath(root,id,config.peerDispatcherModule):null,activePeerSha256=activePeerPath && fs.existsSync(activePeerPath)?sha256(fs.readFileSync(activePeerPath)):null;
   return {current:files.every(row=>row.current) && activePeerSha256===files[1].expectedSha256,activePeerPath,activePeerSha256,files};
 }

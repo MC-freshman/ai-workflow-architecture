@@ -576,6 +576,13 @@
       "backend": "buildExistingSoftwareBindingPlan",
       "argumentsStyle": "input",
       "taskMode": "owned"
+    },
+    "previewGatewayMigrationPlan": {
+      "channel": "plan:software-binding-migration",
+      "phase": "plan",
+      "backend": "buildGatewayMigrationPlan",
+      "argumentsStyle": "input",
+      "taskMode": "owned"
     }
   },
   "planKinds": [
@@ -615,6 +622,7 @@
     "git-backup",
     "release-publish",
     "software-launch",
-    "software-binding"
+    "software-binding",
+    "software-binding-migration"
   ]
 }

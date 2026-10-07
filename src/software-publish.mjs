@@ -1,3 +1,4 @@
+import {platformPath} from './core/platform-path.mjs';
 import {runScopedProcess as execFileSync} from './infrastructure/process-scope.mjs';
 import {restoreOwnedFiles,removeOwnedDirectory} from './transactions/recovery.mjs';
 import {parseJson as parseJsonText} from './core/json.mjs';
@@ -37,7 +38,8 @@ export function runnerConfig(root, platformId) {
   const value = readJson(path);
   const gateway = String(value.softwareGateway || '').replaceAll('\\', '/');
   if (!gateway.includes('/software/_connector/versions/')) throw new Error('SOFTWARE_CONNECTOR_NOT_CONFIGURED');
-  const gatewayConfigPath = resolve(value.softwareGatewayConfig || '');
+  if(!value.softwareGatewayConfig)throw Error('SOFTWARE_CONNECTOR_CONFIG_MISSING');
+  const gatewayConfigPath = platformPath(root,platformId,value.softwareGatewayConfig);
   if (!inside(join(root, platformId, 'bridge'), gatewayConfigPath) || !existsSync(gatewayConfigPath)) throw new Error('SOFTWARE_CONNECTOR_CONFIG_MISSING');
   const gatewayConfig = readJson(gatewayConfigPath);
   if (!gatewayConfig.bodies || typeof gatewayConfig.bodies !== 'object') throw new Error('SOFTWARE_CONNECTOR_CONFIG_INVALID');

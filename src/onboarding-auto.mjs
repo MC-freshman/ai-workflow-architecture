@@ -12,7 +12,7 @@ import { buildOnboardingClientPlan, applyOnboardingClient,probeOnboardingClient,
 import { buildOnboardingGovernancePlan, applyOnboardingGovernance } from './onboarding-governance.mjs';
 import { buildOnboardingFinalizePlan, applyOnboardingFinalize } from './onboarding-finalize.mjs';
 import { executeOnboardingChecks, savePendingOnboarding } from './onboarding-state.mjs';
-import {onboardingDeferrals,onboardingResumePreview,assertResumePreview,archiveAutomaticJournal,reconcileAutomaticJournal,inputInvalidations} from './domains/platforms/onboarding-resume.mjs';
+import {onboardingDeferrals,onboardingResumePreview,assertResumePreview,archiveAutomaticJournal,reconcileAutomaticJournal,inputInvalidations,invalidateRuntimePlan} from './domains/platforms/onboarding-resume.mjs';
 import { targetPath } from './core/paths.mjs';
 import { sha256 } from './core/hash.mjs';
 import { atomicWrite, requirePlan } from './transactions/kernel.mjs';
@@ -72,6 +72,7 @@ export async function applyAutomaticOnboarding(plan, options = {}) {
       reconcileAutomaticJournal(journal,plan.target.recovery);
       if(preparationChanged){
         const invalidate=inputInvalidations(journal,inputs,plan.target.versions);
+        invalidateRuntimePlan(journal,invalidate);
         journal.steps=journal.steps.filter(item=>!invalidate.includes(item.step));
       }
     }

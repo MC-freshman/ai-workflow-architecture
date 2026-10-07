@@ -3,7 +3,7 @@ import React,{useEffect,useRef,useState} from 'react';
 import {friendlyError} from '../../presenter.mjs';
 const start={resourceId:'',version:'1.0.0',displayName:'',role:'',runnerWorkflow:'',dependencies:{workflows:{},skills:{},packs:{},profiles:{}},requires:[]};
 export function AgentSkillBodyForm({api,workspace,platformId,intake=null,resource=null,setPlanPreview,setPlanPayload,setMessage,onClose=null}) {
-  api=useSelectionApi(api,workspace+":"+platformId+":"+(intake?.sourceFingerprint || resource?.resourceId || ""));
+  api=useSelectionApi(api,workspace+":"+platformId+":"+(intake?.sourceFingerprint || resource?.resourceId || "")+":"+(intake?.selectedEntry || resource?.version || ""));
   const [editor,setEditor]=useState(null),[fields,setFields]=useState(start),[text,setText]=useState(''),[options,setOptions]=useState(null),[error,setError]=useState(''),[working,setWorking]=useState(false),[filter,setFilter]=useState('');
   const serial=useRef(0),type=intake?.type || resource?.type;
   useEffect(()=>{

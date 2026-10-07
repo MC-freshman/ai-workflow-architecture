@@ -1,5 +1,6 @@
+import {platformPath} from '../../core/platform-path.mjs';
 import fs from 'node:fs';
-import {relative,resolve,isAbsolute} from 'node:path';
+import {resolve} from 'node:path';
 import {runScopedProcess} from '../../infrastructure/process-scope.mjs';
 import {runtimeFile} from '../../core/runtime-path.mjs';
 import {targetPath} from '../../core/paths.mjs';
@@ -8,8 +9,7 @@ import {sha256} from '../../core/hash.mjs';
 
 export function reconcileHostManifest(root,id,config,python) {
   if(!config.hostEnvironmentManifest)return {files:[]};
-  const original=resolve(config.hostEnvironmentManifest),own=relative(targetPath(root,id),original);
-  if(!own || own.startsWith('..') || isAbsolute(own))throw Error('PLATFORM_CONFIGURATION_PATH_MISMATCH');
+  const original=platformPath(root,id,config.hostEnvironmentManifest);
   let valid=false;
   try {const old=readJson(original);valid=resolve(old.executable)===resolve(python) && old.files?.length>0 && old.files.every(row=>fs.existsSync(row.path) && sha256(fs.readFileSync(row.path))===row.sha256);}catch{/* A stale manifest is explicitly replaced in the preview, never erased. */}
   if(valid)return {files:[],path:original};

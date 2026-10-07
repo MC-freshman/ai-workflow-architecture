@@ -44,3 +44,5 @@ export { buildWorkspaceClonePlan, applyWorkspaceClone } from '../workspace-boots
 export { healthSoftware } from '../software.mjs';
 export { runOnboardingPipeline } from '../onboarding.mjs';
 export { detectRuntime } from '../onboarding-runtime.mjs';
+
+export {buildGatewayMigrationPlan} from '../domains/software/gateway-migration.mjs';

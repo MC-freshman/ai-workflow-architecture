@@ -1,4 +1,4 @@
-import {gatewayBinding} from './domains/software/gateway-binding.mjs';
+import {gatewayBinding,assertGatewaySelection} from './domains/software/gateway-binding.mjs';
 import {parseJson as parseJsonText} from './core/json.mjs';
 import { existsSync, readFileSync } from 'node:fs';
 import { fileURLToPath } from 'node:url';
@@ -7,6 +7,7 @@ import { readOnboardingConfig, assertConfigurationReferences } from './onboardin
 import { targetPath } from './core/paths.mjs';
 import { plannedFiles, applyGeneratedFiles, verifyFiles } from './transactions/onboarding-files.mjs';
 
+export function applyBindingEdits(previous={},edits={}) {const result={...previous};for(const [id,path] of Object.entries(edits)){if(path)result[id]=path;else delete result[id];}return result;}
 const json = (value) => `${JSON.stringify(value, null, 2)}\n`;
 export function buildOnboardingProvidersPlan({ workspaceRoot, platformId, bodies = {}, interpreterAliases = {}, now = new Date().toISOString() }) {
   const snapshot = readOnboardingConfig({ workspaceRoot, platformId }); const root = snapshot.config.platformRoot;
@@ -15,14 +16,14 @@ export function buildOnboardingProvidersPlan({ workspaceRoot, platformId, bodies
   if (!python || !existsSync(python)) throw new Error('RUNTIME_PYTHON_REQUIRED');
   const registered = parseJsonText(readFileSync(targetPath(workspaceRoot, 'software/registry.json'), 'utf8')).software || [];
   for (const [id, path] of Object.entries(bodies)) {
-    if (!registered.some((item) => item.id === id) || typeof path !== 'string' || !existsSync(path)) throw new Error('SOFTWARE_BODY_PATH_NOT_FOUND');
+    if (!registered.some((item) => item.id === id) || typeof path !== 'string' || (path && !existsSync(path))) throw new Error('SOFTWARE_BODY_PATH_NOT_FOUND');
   }
-  for (const path of Object.values(interpreterAliases)) if (!existsSync(path)) throw new Error('RUNTIME_PYTHON_REQUIRED');
+  for (const path of Object.values(interpreterAliases)) if (typeof path!=='string' || (path && !existsSync(path))) throw new Error('RUNTIME_PYTHON_REQUIRED');
   const providerPath = `${platformId}/bridge/manager-providers/platform_provider.py`;
   const providerRoot = targetPath(workspaceRoot, `${platformId}/runtime/software/provider-state`);
   const command = (operation) => [python, '-B', targetPath(workspaceRoot, providerPath), operation, providerRoot];
-  const binding=gatewayBinding(workspaceRoot,platformId,snapshot.config),gatewayPath=binding.relativePath,oldGateway=binding.value;
-  const gateway = { ...oldGateway, softwareRoot: snapshot.config.softwareRoot, lockRoot: targetPath(workspaceRoot, `${platformId}/runtime/software/locks`), evidenceRoot: targetPath(workspaceRoot, `${platformId}/runtime/software/evidence`), bodies: { ...oldGateway.bodies, ...bodies }, interpreterAliases: { ...oldGateway.interpreterAliases, ...interpreterAliases }, interpreters: { ...oldGateway.interpreters, '.py': python }, credentialProvider: command('credential'), sessionLaunch: command('launch'), sessionLiveness: command('liveness'), sessionTerminate: command('terminate'), credentialWorkspace: targetPath(workspaceRoot, `${platformId}/runtime/software/credentials`), allowGuiLaunch: false, projectWriteRoots: snapshot.config.projectWriteRoots, artifactRoots: [targetPath(workspaceRoot, `${platformId}/runtime/software`)], softwareProfiles: { ...oldGateway.softwareProfiles, 'readonly-version': { filesystem: ['none', 'read'], network: ['none'], credentials: ['none'] }, administrator: { filesystem: ['none', 'read', 'system'], network: ['none'], credentials: ['none'], consentPolicy: 'per-call-user-confirmation' } } };
+  const binding=assertGatewaySelection(gatewayBinding(workspaceRoot,platformId,snapshot.config)),gatewayPath=binding.relativePath,oldGateway=binding.value;
+  const gateway = { ...oldGateway, softwareRoot: snapshot.config.softwareRoot, lockRoot: targetPath(workspaceRoot, `${platformId}/runtime/software/locks`), evidenceRoot: targetPath(workspaceRoot, `${platformId}/runtime/software/evidence`), bodies: applyBindingEdits(oldGateway.bodies,bodies), interpreterAliases: applyBindingEdits(oldGateway.interpreterAliases,interpreterAliases), interpreters: { ...oldGateway.interpreters, '.py': python }, credentialProvider: command('credential'), sessionLaunch: command('launch'), sessionLiveness: command('liveness'), sessionTerminate: command('terminate'), credentialWorkspace: targetPath(workspaceRoot, `${platformId}/runtime/software/credentials`), allowGuiLaunch: false, projectWriteRoots: snapshot.config.projectWriteRoots, artifactRoots: [targetPath(workspaceRoot, `${platformId}/runtime/software`)], softwareProfiles: { ...oldGateway.softwareProfiles, 'readonly-version': { filesystem: ['none', 'read'], network: ['none'], credentials: ['none'] }, administrator: { filesystem: ['none', 'read', 'system'], network: ['none'], credentials: ['none'], consentPolicy: 'per-call-user-confirmation' } } };
   gateway.platformId = platformId;
   gateway.platform = process.platform === 'win32' ? 'windows' : process.platform === 'darwin' ? 'macos' : process.platform;
   const config = { ...snapshot.config, softwareGatewayConfig: targetPath(workspaceRoot, gatewayPath), softwareEnvironment: snapshot.config.softwareEnvironment || targetPath(workspaceRoot, `${platformId}/runtime/software/software-environment.json`), peerDispatcherModule: targetPath(workspaceRoot, `${platformId}/bridge/manager-providers/peer_dispatcher.py`), peerContentRoot: snapshot.config.peerContentRoot || targetPath(workspaceRoot, `${platformId}/runtime/peer-content`) };

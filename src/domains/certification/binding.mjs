@@ -1,3 +1,4 @@
+import {platformPath} from '../../core/platform-path.mjs';
 import {existsSync,readFileSync} from 'node:fs';
 import {targetPath} from '../../core/paths.mjs';
 import {readJson} from '../../core/json.mjs';
@@ -13,8 +14,8 @@ export function platformConfigPath(root,id) {
 export function platformConfig(root,id) {return readJson(platformConfigPath(root,id));}
 export function privateBindingHashes(root,id,config=platformConfig(root,id)) {
   const hashes={};
-  for(const [name,path] of Object.entries({capabilities:config.capabilities,gateway:config.softwareGatewayConfig,backend:config.executionBackend,manifest:config.environmentManifest}))hashes[name]=path && existsSync(path)?sha256(readFileSync(path)):null;
-  for(const [name,path] of Object.entries({hostManifest:config.hostEnvironmentManifest,peerProvider:config.peerDispatcherModule,platformProvider:targetPath(root,`${id}/bridge/manager-providers/platform_provider.py`)}))if(path && existsSync(path))hashes[name]=sha256(readFileSync(path));
+  for(const [name,path] of Object.entries({capabilities:config.capabilities,gateway:config.softwareGatewayConfig,backend:config.executionBackend,manifest:config.environmentManifest}))hashes[name]=path && existsSync(platformPath(root,id,path))?sha256(readFileSync(platformPath(root,id,path))):null;
+  for(const [name,path] of Object.entries({hostManifest:config.hostEnvironmentManifest,peerProvider:config.peerDispatcherModule,platformProvider:targetPath(root,`${id}/bridge/manager-providers/platform_provider.py`)}))if(path && existsSync(platformPath(root,id,path)))hashes[name]=sha256(readFileSync(platformPath(root,id,path)));
   return hashes;
 }
 export function environmentBinding(root,id) {
