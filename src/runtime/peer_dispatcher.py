@@ -46,7 +46,8 @@ class Dispatcher:
                 state = json.loads((child_root / 'state.json').read_text(encoding='utf-8'))
                 if state['status'] == 'succeeded':
                     output = json.loads((child_root / state['finalOutput']).read_text(encoding='utf-8')) if isinstance(state.get('finalOutput'), str) else state.get('finalOutput')
-                    children.append({**base, 'status': 'completed', 'resultSha256': hashlib.sha256(json.dumps(output, sort_keys=True, ensure_ascii=False).encode()).hexdigest()}); break
+                    # Callers test claimReached on every child, so the success branch must carry it too.
+                    children.append({**base, 'status': 'completed', 'claimReached': True, 'resultSha256': hashlib.sha256(json.dumps(output, sort_keys=True, ensure_ascii=False).encode()).hexdigest()}); break
                 stamp = str(time.time_ns())
                 next_request = {'schemaVersion': 'ai-run-protocol/v1.1', 'kind': 'request', 'operation': 'next', 'runId': child_id, 'requestId': 'next-' + stamp, 'idempotencyKey': 'next-' + stamp, 'expectedStateRevision': state['stateRevision'], 'payload': {}}
                 answer = self.request(next_request)
