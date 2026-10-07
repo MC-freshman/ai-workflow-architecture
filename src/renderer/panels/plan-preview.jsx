@@ -2,7 +2,7 @@ import React from 'react';
 
 export function PlanPreview({ planPreview, executePlan, closePlan, planWriteKinds,busy=false }) {
   if (!planPreview) return null;
-  const target = planPreview.target?.path || planPreview.target?.nativeBodyPath || planPreview.target?.bodyPath || planPreview.target?.softwareId || planPreview.target?.platformId || '所选对象';
+  const target = planPreview.target?.path || planPreview.target?.destination || planPreview.target?.nativeBodyPath || planPreview.target?.bodyPath || planPreview.target?.softwareId || planPreview.target?.platformId || '所选对象';
   const mode = planPreview.kind === 'software-action' ? planPreview.target?.mode : null;
   const recovery=planPreview.target?.recovery,deferrals=planPreview.target?.deferrals;
   const stepNames={configuration:'配置',backend:'隔离后端',environment:'运行环境',providers:'平台 provider',capabilities:'能力实测',client:'客户端验证',certification:'完整认证',governance:'治理登记',git:'Git 提交'};

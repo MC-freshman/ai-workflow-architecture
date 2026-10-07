@@ -49,8 +49,9 @@ export function validateClientReceipt(value, expected) {
   return true;
 }
 
-export async function probeOnboardingClient({ workspaceRoot, platformId }, { registerCancel = () => {} } = {}) {
-  const adapter = load(targetPath(workspaceRoot, `${platformId}/bridge/client-adapter.json`));
+export async function probeOnboardingClient({ workspaceRoot, platformId }, { registerCancel = () => {}, serviceOnly=false } = {}) {
+  let adapter = load(targetPath(workspaceRoot, `${platformId}/bridge/client-adapter.json`));
+  if(serviceOnly){if(!adapter.server?.executable)throw Error('NATIVE_SERVICE_REQUIRED');adapter={...adapter,kind:'mcp-stdio',executable:adapter.server.executable,args:adapter.server.args,sourceBody:null,probeTool:'architecture_probe'};}
   if(adapter.sourceBody) {
     const body=targetPath(workspaceRoot,relative(workspaceRoot,adapter.sourceBody.path)),own=relative(targetPath(workspaceRoot,`${platformId}/runtime`),body);
     if(own.startsWith('..') || /^[A-Za-z]:/.test(own) || sha256File(body,{onBlock:assertScopedActive})!==adapter.sourceBody.entrySha256)throw Error('CLIENT_BODY_DRIFT');
@@ -83,7 +84,7 @@ export async function probeOnboardingClient({ workspaceRoot, platformId }, { reg
   const receipt = parseJsonText(response.stdout); validateClientReceipt(receipt, expected);
   const fresh = clientBinding(workspaceRoot, platformId);
   if (fresh.configSha256 !== expected.configSha256 || fresh.versionsSha256 !== expected.versionsSha256 || fresh.adapterSha256 !== expected.adapterSha256) throw new Error('INTEGRATION_BASELINE_MISMATCH');
-  const result = { schema: 'architecture-manager-client-check/v1', status: 'passed', ...expected, receipt, checkedAt: new Date().toISOString(), nativeVendorClientVerified: false,importedClientVerified:Boolean(adapter.sourceBody && adapter.kind==='cli' && adapter.sourceBody.mode==='json-cli'),bodyEntrySha256:adapter.sourceBody?.entrySha256 || null, writePerformed: true };
+  const result = { schema: 'architecture-manager-client-check/v1', status: 'passed', ...expected, receipt, checkedAt: new Date().toISOString(), serviceOnly,nativeVendorClientVerified: false,importedClientVerified:Boolean(adapter.sourceBody && adapter.kind==='cli' && adapter.sourceBody.mode==='json-cli'),bodyEntrySha256:adapter.sourceBody?.entrySha256 || null, writePerformed: true };
   const evidencePath = join(directory, `client-${randomUUID()}.json`);
   atomicWrite(evidencePath, json(result), randomUUID());
   atomicWrite(targetPath(workspaceRoot, `${platformId}/runtime/maintenance/manager-onboarding/client-latest.json`), json(result), randomUUID()); return { ...result, evidencePath };

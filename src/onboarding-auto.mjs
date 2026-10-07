@@ -1,4 +1,6 @@
 import {providerTemplateStatus} from './domains/platforms/provider-templates.mjs';
+import {discoverOnboardingRuntime} from './domains/platforms/runtime-discovery.mjs';
+import {buildNativeClientPlan,applyNativeClient,nativeClientStatus} from './domains/platforms/native-client.mjs';
 import {gatewayBinding} from './domains/software/gateway-binding.mjs';
 import {parseJson as parseJsonText} from './core/json.mjs';
 import { existsSync, mkdirSync, readFileSync } from 'node:fs';
@@ -21,6 +23,17 @@ import { startOnboardingJob } from './core/onboarding-jobs.mjs';
 const active = new Set();
 const json = (value) => `${JSON.stringify(value, null, 2)}\n`;
 const load = (path) => parseJsonText(readFileSync(path, 'utf8'));
+export async function prepareAutomaticOnboardingPlan(input) {
+  if((input.deferred || []).includes('environment'))return buildAutomaticOnboardingPlan(input);
+  const discovery=await discoverOnboardingRuntime(input);
+  if(!discovery.pythonExecutable)throw Error('RUNTIME_COMPATIBLE_PYTHON_REQUIRED');
+  if(!discovery.backendFields)throw Error('RUNTIME_COMPATIBLE_BACKEND_REQUIRED');
+  const snapshot=readOnboardingConfig(input),ownBackend=snapshot.fields.executionBackend;
+  const sameBackend=ownBackend && existsSync(ownBackend) && snapshot.backendFields?.distro===discovery.backendFields.distro && snapshot.backendFields?.guestInterpreter===discovery.backendFields.guestInterpreter;
+  const legacyBackend=sameBackend && !ownBackend.endsWith('manager-sealed.json');
+  const plan=buildAutomaticOnboardingPlan({...input,fields:{...input.fields,pythonExecutable:discovery.pythonExecutable,...(legacyBackend?{executionBackend:ownBackend}:{})},backendFields:legacyBackend?{}:discovery.backendFields});
+  plan.preparation=discovery;return plan;
+}
 function preparationInputs(value) {
   if (!value) return null;
   const fields = { ...value.fields };
@@ -28,7 +41,7 @@ function preparationInputs(value) {
   const copy={...value,fields};delete copy.deferred;return copy;
 }
 
-export function buildAutomaticOnboardingPlan({ workspaceRoot, platformId, fields = {}, backendFields = {}, bodies = {}, interpreterAliases = {}, confirmed = false, deferred = [], resumeMode = 'strict', now = new Date().toISOString() }) {
+export function buildAutomaticOnboardingPlan({ workspaceRoot, platformId, fields = {}, backendFields = {}, bodies = {}, interpreterAliases = {}, nativeBodyPath='',confirmed = false, deferred = [], resumeMode = 'strict', now = new Date().toISOString() }) {
   const deferrals=onboardingDeferrals(deferred);
   const snapshot = readOnboardingConfig({ workspaceRoot, platformId });
   const executionBackend = backendFields.distro ? targetPath(workspaceRoot, `${platformId}/bridge/backends/manager-sealed.json`) : fields.executionBackend || snapshot.fields.executionBackend;
@@ -36,7 +49,7 @@ export function buildAutomaticOnboardingPlan({ workspaceRoot, platformId, fields
   if (!executionBackend && !deferrals.environment) throw new Error('RUNTIME_BACKEND_REQUIRED');
   const inputFields = { ...fields, executionBackend };
   for (const key of ['gitAuthorName', 'gitAuthorEmail']) if (!inputFields[key]) delete inputFields[key];
-  const inputs = { fields: inputFields, backendFields, bodies, interpreterAliases, confirmed: configuration.target.userAuthorized, deferred:[...new Set(deferred)].sort() };
+  const inputs = { fields: inputFields, backendFields, bodies, interpreterAliases,nativeBodyPath, confirmed: configuration.target.userAuthorized, deferred:[...new Set(deferred)].sort() };
   const requirements = runtimeRequirements(workspaceRoot);
   const recovery=onboardingResumePreview(workspaceRoot,platformId,resumeMode,configuration.target.versions);
   const oldPath=targetPath(workspaceRoot,`${platformId}/runtime/maintenance/manager-onboarding/automatic.json`);
@@ -86,7 +99,7 @@ export async function applyAutomaticOnboarding(plan, options = {}) {
     if(JSON.stringify(templates)!==JSON.stringify(plan.target.providerTemplates))throw Error('PROVIDER_TEMPLATE_CHANGED');
     if(!templates.current){journal.steps=journal.steps.filter(item=>!['providers','capabilities','client','certification','governance','git'].includes(item.step));journal.providerTemplateUpdate=templates;}
     journal.versions=plan.target.versions;
-    journal.steps=journal.steps.filter(item=>item.status!=='deferred' && !reasons[item.step] && !(item.step==='client' && !item.result?.clientProbe) && !['certification','governance','git'].includes(item.step));
+    journal.steps=journal.steps.filter(item=>!['deferred','pending'].includes(item.status) && !reasons[item.step] && !(item.step==='client' && !item.result?.clientProbe) && !['native','certification','governance','git'].includes(item.step));
     journal.inputsSha256 = plan.target.inputsSha256;
     journal.inputs = inputs;
     if (journal.error) (journal.previousAttempts ||= []).push({ status: journal.status, stoppedAt: journal.stoppedAt, error: journal.error, resumedAt: new Date().toISOString() });
@@ -116,8 +129,6 @@ export async function applyAutomaticOnboarding(plan, options = {}) {
       if (!journal.steps.length && JSON.stringify(candidate.payload) !== JSON.stringify(plan.payload.configuration.payload)) throw new Error('INTEGRATION_BASELINE_MISMATCH');
       return apply(candidate, applyOnboardingConfig);
     });
-    const selectedClient=load(targetPath(workspaceRoot,`${platformId}/bridge/client-adapter.json`));
-    if(selectedClient.sourceBody && selectedClient.kind==='manual-native' && !reasons.client)throw Error('CLIENT_ADAPTER_PENDING');
     await step('backend', async () => inputs.backendFields.distro ? apply(buildOnboardingBackendPlan({ workspaceRoot, platformId, fields: inputs.backendFields }), applyOnboardingBackend) : { status: 'existing-backend' });
     await step('environment', async () => {
       const snapshot = readOnboardingConfig({ workspaceRoot, platformId });
@@ -138,7 +149,7 @@ export async function applyAutomaticOnboarding(plan, options = {}) {
     if(reasons.software)pending.push({step:'software',reason:reasons.software});
     await step('client', async () => {
       const installed=await apply(buildOnboardingClientPlan({ workspaceRoot, platformId }), applyOnboardingClient);
-      const clientProbe=await probeOnboardingClient({workspaceRoot,platformId},{registerCancel:control.registerCancel});
+      const clientProbe=await probeOnboardingClient({workspaceRoot,platformId},{registerCancel:control.registerCancel,serviceOnly:true});
       if(clientProbe.status!=='passed')throw Error('CLIENT_CONNECTION_FAILED');
       return {...installed,clientProbe:{...clientProbe,evidenceSha256:sha256(readFileSync(clientProbe.evidencePath))}};
     });
@@ -147,12 +158,20 @@ export async function applyAutomaticOnboarding(plan, options = {}) {
       if (!['script-environment-isolation-jail', 'prompt-stage-claim', 'peerDispatch', 'administrator-consent-denied'].every((key) => proof.checks[key] === true)) throw new Error('ONBOARDING_CAPABILITY_PROBE_FAILED');
       return apply(buildOnboardingAttestationPlan({ workspaceRoot, platformId, evidencePath: proof.evidencePath }), applyOnboardingAttestation);
     });
+    if(!reasons.client){
+      await step('native',async()=>{
+        try{return await applyNativeClient(buildNativeClientPlan({workspaceRoot,platformId,bodyPath:inputs.nativeBodyPath}),{...options,registerCancel:control.registerCancel});}
+        catch(error){if(error.message==='ONBOARDING_CANCELLED')throw error;return {status:'native-pending',nativeVendorClientVerified:false,reason:error.message};}
+      });
+      journal.native=nativeClientStatus(workspaceRoot,platformId);
+      if(!journal.native.nativeVendorClientVerified){const row=journal.steps.find(item=>item.step==='native');row.status='pending';pending.push({step:'native',reason:row.result?.reason || journal.native.reason || '原生客户端尚未完成三仓真实调用验证'});}
+    }else {journal.native={nativeVendorClientVerified:false};pending.push({step:'native',reason:'客户端验证暂缓，原生调用尚未验证'});}
     await step('certification', async () => {
       const proof=journal.steps.find(item=>item.step==='client')?.result?.clientProbe;
       const clientProbe=async(input,options)=>{
         const binding=clientBinding(workspaceRoot,platformId);
         if(proof && ['platformId','configSha256','versionsSha256','adapterSha256'].every(key=>proof[key]===binding[key]) && proof.evidencePath && existsSync(proof.evidencePath) && sha256(readFileSync(proof.evidencePath))===proof.evidenceSha256)return proof;
-        return probeOnboardingClient(input,options);
+        return probeOnboardingClient(input,{...options,serviceOnly:true});
       };
       const result = await executeOnboardingChecks({ workspaceRoot, platformId }, { onProgress: progress,clientProbe });
       if (result.status === 'cancelled') throw new Error('ONBOARDING_CANCELLED');
@@ -179,4 +198,4 @@ export async function applyAutomaticOnboarding(plan, options = {}) {
   finally { active.delete(key); control.finish(); }
   return { ...journal, writePerformed: true };
 }
-export function verifyAutomaticOnboarding(plan) { const path = targetPath(plan.workspaceRoot, `${plan.target.platformId}/runtime/maintenance/manager-onboarding/automatic.json`),journal=existsSync(path)?load(path):null;return {ok:Boolean(journal && journal.lastAppliedPlanId===plan.planId && ['complete','configured-pending'].includes(journal.status)),architectureComplete:journal?.status==='complete',pending:journal?.pending || [],writePerformed:false}; }
+export function verifyAutomaticOnboarding(plan) { const path = targetPath(plan.workspaceRoot, `${plan.target.platformId}/runtime/maintenance/manager-onboarding/automatic.json`),journal=existsSync(path)?load(path):null,native=nativeClientStatus(plan.workspaceRoot,plan.target.platformId);return {ok:Boolean(journal && journal.lastAppliedPlanId===plan.planId && ['complete','configured-pending'].includes(journal.status)),architectureComplete:journal?.status==='complete' && native.nativeVendorClientVerified,native,pending:journal?.pending || [],writePerformed:false}; }

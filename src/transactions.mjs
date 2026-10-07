@@ -1,4 +1,5 @@
 import {applyGatewayMigration,verifyGatewayMigration} from './domains/software/gateway-migration.mjs';
+import {applyNativeClient,verifyNativeClient} from './domains/platforms/native-client.mjs';
 import {applyExistingSoftwareBinding,verifyExistingSoftwareBinding} from './domains/intake/software-binding.mjs';
 import {restoreOwnedFiles} from './transactions/recovery.mjs';
 import {applyNativeCredential,verifyNativeCredential,applyNativeCredentialProvider,verifyNativeCredentialProvider} from './domains/software/credentials.mjs';
@@ -36,6 +37,7 @@ import { atomicWrite, makeId, output, requirePlan, saveCheckpoint, writeAudit } 
 
 export function applyPlan({ plan, afterText = null, credentialValue = null, actor = 'local-user', auditRoot = defaultAuditRoot(), now = new Date().toISOString(), failAfterCheckpoint = false, onProgress = () => {} }) {
   requirePlan(plan);
+  if(plan.kind==='platform-native-client')return applyNativeClient(plan,{actor,auditRoot});
   if(plan.kind==='software-binding-migration')return applyGatewayMigration(plan,{actor,auditRoot,now});
   if(plan.kind==='software-binding')return applyExistingSoftwareBinding(plan,{actor,auditRoot,now});
   if(plan.kind==='mcp-credential')return applyNativeCredential(plan,{value:credentialValue,actor,auditRoot});
@@ -313,6 +315,7 @@ export function verifyPlanTarget({ plan }) {
   if (plan.kind === 'platform-runtime') return verifyOnboardingRuntime(plan);
   if (plan.kind === 'platform-backend') return verifyOnboardingBackend(plan);
   if (plan.kind === 'platform-client') return verifyOnboardingClient(plan);
+  if (plan.kind === 'platform-native-client') return verifyNativeClient(plan);
   if (plan.kind === 'platform-providers') return verifyOnboardingProviders(plan);
   if(plan.kind==='software-binding-migration')return verifyGatewayMigration(plan);
   if(plan.kind==='software-binding')return verifyExistingSoftwareBinding(plan);

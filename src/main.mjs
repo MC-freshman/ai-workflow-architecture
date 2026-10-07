@@ -1,4 +1,7 @@
 import {buildGatewayMigrationPlan} from './domains/software/gateway-migration.mjs';
+import {buildNativeClientPlan,probeNativeClient,nativeClientStatus} from './domains/platforms/native-client.mjs';
+import {probeNativeClientWithAi} from './domains/platforms/native-ai-probe.mjs';
+import {suggestBodyImport,buildAutomaticTextBodyPlan} from './domains/intake/automatic.mjs';
 import {runDomainTask,cancelDomainTask,cancelAllDomainTasks} from './infrastructure/tasks.mjs';
 import {taskContext} from './app/task-context.mjs';
 import {buildExistingSoftwareBindingPlan} from './domains/intake/software-binding.mjs';
@@ -45,7 +48,7 @@ import {
   buildOnboardingAttestationPlan,
   buildOnboardingGovernancePlan,
   buildOnboardingFinalizePlan,
-  buildAutomaticOnboardingPlan,
+  prepareAutomaticOnboardingPlan,
   executeOnboardingChecks,
   executePostAlignmentChecks,
   cancelOnboarding,
@@ -114,6 +117,7 @@ function registerIpc() {
       case 'references': parameters=[input.workspaceRoot,input.repository,input.resourceId];break;
       case 'health': parameters=[input.workspaceRoot,input.softwareId,input.platformId];break;
       case 'clone': parameters=[{plan:input.plan}];break;
+      case 'native-status':parameters=[input.workspaceRoot,input.platformId];break;
       default: parameters=args;
     }
     const mode=input?.plan?.kind==='software-launch' || input?.plan?.kind==='software-command' && input.plan.target.operation==='open'?'provider-session':declaration.taskMode;
@@ -260,7 +264,13 @@ function registerIpc() {
   handleOperation('onboarding:recorded', (_event, input) => markOnboardingRecorded(input));
   handleOperation('plan:platform-governance', (_event, input) => buildOnboardingGovernancePlan(input));
   handleOperation('plan:platform-finalize', (_event, input) => buildOnboardingFinalizePlan(input));
-  handleOperation('plan:platform-onboarding', (_event, input) => buildAutomaticOnboardingPlan(input));
+  handleOperation('plan:platform-onboarding', (_event, input) => prepareAutomaticOnboardingPlan(input));
+  handleOperation('plan:platform-native-client',(_event,input)=>buildNativeClientPlan(input));
+  handleOperation('onboarding:native-probe',(_event,input)=>probeNativeClient(input));
+  handleOperation('onboarding:native-status',(_event,input)=>nativeClientStatus(input.workspaceRoot,input.platformId));
+  handleOperation('onboarding:native-ai-probe',(_event,input)=>probeNativeClientWithAi(input));
+  handleOperation('intake:automatic-suggestions',(_event,input)=>suggestBodyImport(input));
+  handleOperation('plan:automatic-text-body',(_event,input)=>buildAutomaticTextBodyPlan(input));
   handleOperation('plan:workspace-clone', (_event, input) => buildWorkspaceClonePlan(input));
   handleOperation('workspace:clone', (_event, input) => applyWorkspaceClone({ plan: input.plan }, { actor: 'local-user', now: new Date().toISOString() }));
   handleOperation('transaction:apply', (event, input) => lifecycle.track(() => applyPlan({ ...input, onProgress: (progress) => event.sender.send('transaction:progress', progress) })));

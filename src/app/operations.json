@@ -1,6 +1,8 @@
 {
   "schema": "architecture-manager-operations/v1",
   "operations": {
+    "suggestBodyImport": {"channel":"intake:automatic-suggestions","phase":"query","backend":"suggestBodyImport","argumentsStyle":"input","taskMode":"owned"},
+    "previewAutomaticTextBody": {"channel":"plan:automatic-text-body","phase":"plan","backend":"buildAutomaticTextBodyPlan","argumentsStyle":"input","taskMode":"owned"},
     "listRuntimeBodies": {
       "channel": "intake:runtime-bodies",
       "phase": "query",
@@ -472,7 +474,38 @@
     },
     "previewAutomaticOnboardingPlan": {
       "channel": "plan:platform-onboarding",
-      "phase": "plan"
+      "phase": "plan",
+      "backend": "prepareAutomaticOnboardingPlan",
+      "argumentsStyle": "input",
+      "taskMode": "owned"
+    },
+    "previewNativeClientPlan": {
+      "channel": "plan:platform-native-client",
+      "phase": "plan",
+      "backend": "buildNativeClientPlan",
+      "argumentsStyle": "input",
+      "taskMode": "owned"
+    },
+    "probeNativeClient": {
+      "channel": "onboarding:native-probe",
+      "phase": "execute",
+      "backend": "probeNativeClient",
+      "argumentsStyle": "input",
+      "taskMode": "owned"
+    },
+    "probeNativeClientWithAi": {
+      "channel": "onboarding:native-ai-probe",
+      "phase": "execute",
+      "backend": "probeNativeClientWithAi",
+      "argumentsStyle": "input",
+      "taskMode": "owned"
+    },
+    "nativeClientStatus": {
+      "channel": "onboarding:native-status",
+      "phase": "query",
+      "backend": "nativeClientStatus",
+      "argumentsStyle": "native-status",
+      "taskMode": "owned"
     },
     "previewWorkspaceClonePlan": {
       "channel": "plan:workspace-clone",
@@ -597,6 +630,7 @@
     "platform-backend",
     "platform-runtime",
     "platform-client",
+    "platform-native-client",
     "platform-providers",
     "platform-attestation",
     "platform-governance",

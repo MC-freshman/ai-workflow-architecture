@@ -1,6 +1,6 @@
 {
   "name": "architecture-manager",
-  "version": "0.5.7",
+  "version": "0.6.0",
   "private": true,
   "type": "module",
   "main": "src/main.mjs",

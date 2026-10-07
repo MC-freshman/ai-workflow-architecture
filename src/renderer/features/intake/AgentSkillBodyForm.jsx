@@ -9,10 +9,10 @@ export function AgentSkillBodyForm({api,workspace,platformId,intake=null,resourc
   useEffect(()=>{
     const current=++serial.current;setEditor(null);setError('');
     if(!intake?.selectedEntry && !resource)return;
-    Promise.all([api.readBodyEditor({workspaceRoot:workspace,platformId,intake,...resource}),api.listBodyDependencies({workspaceRoot:workspace})]).then(([value,choices])=>{
+    Promise.all([api.readBodyEditor({workspaceRoot:workspace,platformId,intake,...resource}),api.listBodyDependencies({workspaceRoot:workspace}),intake?api.suggestBodyImport({workspaceRoot:workspace,platformId,intake}):null]).then(([value,choices,suggestion])=>{
       if(current!==serial.current)return;
-      const next={...start,...value.fields,dependencies:{...start.dependencies,...value.fields.dependencies}};
-      if(type==='agent' && !value.fields.updating) {const workflow=choices.workflows.find(row=>row.id==='expert-task') || choices.workflows[0];if(workflow){next.runnerWorkflow=workflow.id;next.dependencies={...next.dependencies,workflows:{[workflow.id]:workflow.version}};}}
+      const next={...start,...suggestion?.fields,...value.fields,dependencies:{...start.dependencies,...suggestion?.fields.dependencies,...value.fields.dependencies}};
+      if(type==='agent' && !next.runnerWorkflow) {const workflow=choices.workflows.find(row=>row.id==='expert-task') || choices.workflows[0];if(workflow){next.runnerWorkflow=workflow.id;next.dependencies={...next.dependencies,workflows:{[workflow.id]:workflow.version}};}}
       setEditor(value);setText(value.content);setFields(next);setOptions(choices);
     }).catch(error=>{if(current===serial.current)setError(friendlyError(error));});
     return ()=>{serial.current++;};

@@ -34,7 +34,7 @@ export { buildOnboardingProvidersPlan } from '../onboarding-providers.mjs';
 export { probeOnboardingCapabilities, buildOnboardingAttestationPlan } from '../onboarding-attestation.mjs';
 export { buildOnboardingGovernancePlan } from '../onboarding-governance.mjs';
 export { buildOnboardingFinalizePlan } from '../onboarding-finalize.mjs';
-export { buildAutomaticOnboardingPlan } from '../onboarding-auto.mjs';
+export { buildAutomaticOnboardingPlan, prepareAutomaticOnboardingPlan } from '../onboarding-auto.mjs';
 export { executeOnboardingChecks, cancelOnboarding, markOnboardingRecorded } from '../onboarding-state.mjs';
 export { executePostAlignmentChecks } from '../onboarding-state.mjs';
 export { buildWorkspaceClonePlan, applyWorkspaceClone } from '../workspace-bootstrap.mjs';
@@ -46,3 +46,6 @@ export { runOnboardingPipeline } from '../onboarding.mjs';
 export { detectRuntime } from '../onboarding-runtime.mjs';
 
 export {buildGatewayMigrationPlan} from '../domains/software/gateway-migration.mjs';
+export {buildNativeClientPlan,probeNativeClient,nativeClientStatus} from '../domains/platforms/native-client.mjs';
+export {probeNativeClientWithAi} from '../domains/platforms/native-ai-probe.mjs';
+export {suggestBodyImport,buildAutomaticTextBodyPlan} from '../domains/intake/automatic.mjs';

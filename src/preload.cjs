@@ -1,6 +1,8 @@
 // Generated from app/operations.json; sandbox preload must remain standalone.
 const { contextBridge, ipcRenderer } = require('electron');
 contextBridge.exposeInMainWorld('architectureManager', Object.freeze({
+  suggestBodyImport: (...args) => ipcRenderer.invoke("intake:automatic-suggestions", ...args),
+  previewAutomaticTextBody: (...args) => ipcRenderer.invoke("plan:automatic-text-body", ...args),
   listRuntimeBodies: (...args) => ipcRenderer.invoke("intake:runtime-bodies", ...args),
   previewSoftwareBodyPlacement: (...args) => ipcRenderer.invoke("intake:software-placement", ...args),
   previewSoftwareBody: (...args) => ipcRenderer.invoke("intake:software-body", ...args),
@@ -87,6 +89,10 @@ contextBridge.exposeInMainWorld('architectureManager', Object.freeze({
   markOnboardingRecorded: (...args) => ipcRenderer.invoke("onboarding:recorded", ...args),
   previewOnboardingFinalizePlan: (...args) => ipcRenderer.invoke("plan:platform-finalize", ...args),
   previewAutomaticOnboardingPlan: (...args) => ipcRenderer.invoke("plan:platform-onboarding", ...args),
+  previewNativeClientPlan: (...args) => ipcRenderer.invoke("plan:platform-native-client", ...args),
+  probeNativeClient: (...args) => ipcRenderer.invoke("onboarding:native-probe", ...args),
+  probeNativeClientWithAi: (...args) => ipcRenderer.invoke("onboarding:native-ai-probe", ...args),
+  nativeClientStatus: (...args) => ipcRenderer.invoke("onboarding:native-status", ...args),
   previewWorkspaceClonePlan: (...args) => ipcRenderer.invoke("plan:workspace-clone", ...args),
   applyWorkspaceClone: (...args) => ipcRenderer.invoke("workspace:clone", ...args),
   applyPlan: (...args) => ipcRenderer.invoke("transaction:apply", ...args),

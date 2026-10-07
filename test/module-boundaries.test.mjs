@@ -33,6 +33,7 @@ test('application boundary exposes the complete IPC domain surface', () => {
     'buildOnboardingGovernancePlan', 'executeOnboardingChecks', 'cancelOnboarding', 'readOnboardingState', 'markOnboardingRecorded', 'executePostAlignmentChecks',
     'buildOnboardingFinalizePlan',
     'buildAutomaticOnboardingPlan',
+    'prepareAutomaticOnboardingPlan','buildNativeClientPlan','probeNativeClient','probeNativeClientWithAi','nativeClientStatus','suggestBodyImport','buildAutomaticTextBodyPlan',
     'inspectRunDirectory', 'listPlatformRuns', 'listRunLedger',
     'readDefectBook', 'verifyDefectBook', 'inspectInbox', 'readAuditEvents',
     'runPlatformCheck', 'scanSensitiveFiles', 'scanWorkspace', 'suggestPlatformBridge', 'verifyPlanTarget', 'verifySoftwareImport', 'verifySoftwareRecipe'

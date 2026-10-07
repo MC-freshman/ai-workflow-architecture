@@ -4,7 +4,7 @@ import {useSelectionApi} from '../shared/useSelectionApi.mjs';
 import {OnboardingDraft} from '../shared/onboarding-draft.mjs';
 
 const STEPS = ['选择平台', '完整配置', '准备环境', '客户端入口', '检查与接入', '登记与恢复'];
-const MODULES={configuration:'配置',backend:'隔离后端',environment:'运行环境',providers:'平台 provider',capabilities:'能力实测',client:'客户端验证',software:'软件绑定',certification:'完整认证',governance:'治理登记',git:'Git 提交'};
+const MODULES={configuration:'配置',backend:'隔离后端',environment:'运行环境',providers:'平台 provider',capabilities:'能力实测',client:'服务通道验证',native:'厂商原生三仓验证',software:'软件绑定',certification:'完整认证',governance:'治理登记',git:'Git 提交'};
 const EMPTY = { displayName: '', pythonExecutable: '', environmentManifest: '', scriptEnvironment: '', executionBackend: '', peerDispatcherModule: '', peerContentRoot: '', softwareGateway: '', softwareEnvironment: '', clientKind: 'cli', clientExecutable: '', clientArgs: [], probeTool: '', probeArguments: {} };
 
 export function OnboardPanel({ api, workspace, inventory, busy = false, setPlanPreview, setPlanPayload, setMessage, friendlyError }) {
@@ -18,6 +18,8 @@ export function OnboardPanel({ api, workspace, inventory, busy = false, setPlanP
   const working = localWorking || busy;
   const [result, setResult] = useState(null);
   const [capabilityEvidence, setCapabilityEvidence] = useState(null);
+  const [nativeBodyPath,setNativeBodyPath]=useState('');
+  const [native,setNative]=useState(null);
   const [localError, setLocalError] = useState('');
   const [runtime, setRuntime] = useState(null);
   const [softwareBodies, setSoftwareBodies] = useState({});
@@ -37,7 +39,7 @@ export function OnboardPanel({ api, workspace, inventory, busy = false, setPlanP
   useEffect(() => {
     if (!workspace || !/^[a-z][a-z0-9-]{1,30}$/.test(platformId)) { setSnapshot(null); return; }
     const changed=draft.current.select(context),token=draft.current.begin();
-    if(changed){setFields(EMPTY);setSoftwareBodies({});setSoftwarePython('');setBackendFields({distro:'',guestInterpreter:'/usr/bin/python3',wslExecutable:''});setRuntime(null);setResult(null);setSnapshot(null);setWorking(false);setCapabilityEvidence(null);}
+    if(changed){setFields(EMPTY);setSoftwareBodies({});setSoftwarePython('');setBackendFields({distro:'',guestInterpreter:'/usr/bin/python3',wslExecutable:''});setRuntime(null);setResult(null);setSnapshot(null);setWorking(false);setCapabilityEvidence(null);setNativeBodyPath('');setNative(null);}
     let active = true;
     api.readOnboardingConfig({ workspaceRoot: workspace, platformId }).then((data) => {
       if (!active || !draft.current.accepts(token)) return;
@@ -48,12 +50,13 @@ export function OnboardPanel({ api, workspace, inventory, busy = false, setPlanP
       if (data.pendingAutomatic) {
         const saved = data.pendingAutomatic.inputs;
         if(!data.backendFields?.distro)setBackendFields(old=>draft.current.merge('backend',old,saved.backendFields || {}));
-        if(changed){setConfirmed(saved.confirmed);setDeferred(saved.deferred || []);}
+        if(changed){setConfirmed(saved.confirmed);setDeferred(saved.deferred || []);setNativeBodyPath(saved.nativeBodyPath || '');}
         setResult({ ...data.pendingAutomatic,status: data.pendingAutomatic.status==='configured-pending'?'本轮配置已保存 · 接入未完成':`已恢复接入参数；上次停止在 ${MODULES[data.pendingAutomatic.stoppedAt] || data.pendingAutomatic.stoppedAt || '未完成步骤'}` });
       }else if(changed)setDeferred([]);
     }).catch((error) => { if (active) setLocalError(friendlyError(error)); });
     return () => { active = false; };
   }, [workspace, platformId, inventory]);
+  useEffect(()=>{let active=true;if(workspace && platformId && selection!=='__new__')api.nativeClientStatus({workspaceRoot:workspace,platformId}).then(value=>{if(active)setNative(value);}).catch(()=>{});return ()=>{active=false;};},[workspace,platformId,inventory]);
   const act = async (operation, message) => {
     const identity=context;
     setWorking(true); setLocalError('');
@@ -72,11 +75,15 @@ export function OnboardPanel({ api, workspace, inventory, busy = false, setPlanP
   const previewAutomatic=async resumeMode=>act(async()=>{
     const latest=await api.readOnboardingConfig({workspaceRoot:workspace,platformId});
     const current=resumeMode==='reconcile'?draft.current.merge('fields',fields,latest.fields):fields;
-    return api.previewAutomaticOnboardingPlan({workspaceRoot:workspace,platformId,fields:current,confirmed,backendFields,bodies:resumeMode==='reconcile'?draft.current.merge('bodies',softwareBodies,latest.registeredBodies):softwareBodies,interpreterAliases:resumeMode==='reconcile'?{...latest.registeredInterpreterAliases,PPython:softwarePython}:{PPython:softwarePython},deferred,resumeMode});
+    return api.previewAutomaticOnboardingPlan({workspaceRoot:workspace,platformId,fields:current,confirmed,backendFields,nativeBodyPath,bodies:resumeMode==='reconcile'?draft.current.merge('bodies',softwareBodies,latest.registeredBodies):softwareBodies,interpreterAliases:resumeMode==='reconcile'?{...latest.registeredInterpreterAliases,PPython:softwarePython}:{PPython:softwarePython},deferred,resumeMode});
   },'接入计划已生成；暂缓项与配置差异在预览中列出，确认前不会修改日志。');
   const run = async () => {
     if (!await api.confirm(`开始 ${platformId} 的接入检查？将使用它自己的配置和环境，保存逐步记录。没有通过的能力不会被声明为已接入。`)) return;
     return act(() => api.runOnboardingPipeline({ workspaceRoot: workspace, platformId, includeMatrix: true }), '接入执行结果已返回。');
+  };
+  const nativeAiProbe=async()=>{
+    if(!await api.confirm('允许本次使用 WorkBuddy 原生模型验证一次吗？只允许一个只读工具读取三仓冻结文本，不执行业务、不自动重试，可能消耗厂商额度。'))return;
+    return act(async()=>{const value=await api.probeNativeClientWithAi({workspaceRoot:workspace,platformId,aiConsent:true});setNative(value);return value;},'本次原生 AI 验证已返回；是否通过以真实工具回执为准。');
   };
   const fileField = (key, label) => <label className="onboarding-field" key={key}><span>{label}</span><div className="onboarding-input"><input value={fields[key] || ''} onChange={(event) => field(key, event.target.value)} /><button className="small-button" disabled={working} onClick={() => selectFile(key)}>选择文件</button></div></label>;
   return <section className="panel onboarding-panel">
@@ -93,6 +100,8 @@ export function OnboardPanel({ api, workspace, inventory, busy = false, setPlanP
         <label className="onboarding-field"><span>显示名称</span><input value={fields.displayName || ''} onChange={(event) => field('displayName', event.target.value)} /></label>
         {selection === '__new__' && <label className="sensitive-confirm"><input type="checkbox" checked={confirmed} onChange={(event) => setConfirmed(event.target.checked)} /> 允许在本工作区创建该平台一级目录</label>}
         <p className="muted">已有平台会保留原配置和运行锁；预览中列出本轮要修改的文件。</p>
+        <label className="onboarding-field"><span>厂商平台本体（可自动识别本平台已有程序）</span><div className="onboarding-input"><input value={nativeBodyPath} onChange={event=>setNativeBodyPath(event.target.value)} placeholder="留空自动识别；多个程序时选择要接入的 EXE" /><button className="small-button" disabled={working} onClick={()=>pickFile(setNativeBodyPath)}>选择程序</button></div></label>
+        <p className="muted">一键预览会自动探测现有兼容 Python 与 WSL；无需先手填这些路径。厂商外部接口缺失时会保存准备结果并明确等待接口。</p>
         {snapshot?.exists && <button className="small-button" disabled={working} onClick={() => act(async()=>{const data=await api.readOnboardingConfig({workspaceRoot:workspace,platformId});draft.current.dirty.clear();setSnapshot(data);setFields(data.fields);setSoftwareBodies(data.registeredBodies || {});setSoftwarePython(data.registeredInterpreterAliases?.PPython || '');setBackendFields({distro:'',guestInterpreter:'/usr/bin/python3',wslExecutable:'',...data.backendFields});setRuntime(null);setCapabilityEvidence(null); setResult({ status: '已读取当前生效配置；重新预览会保留已激活的环境，并核对新的版本与能力。' });return data;})}>重新读取当前配置（放弃未保存编辑）</button>}
       </>}
       {step === 1 && <>
@@ -117,6 +126,7 @@ export function OnboardPanel({ api, workspace, inventory, busy = false, setPlanP
         <details><summary>绑定软件本体与平台 provider</summary>{(inventory?.repositories?.software?.entries || inventory?.software || []).filter((entry) => entry.id && !entry.id.startsWith('_')).map((entry) => <label className="onboarding-field" key={entry.id}><span>{entry.id} 的程序文件</span><div className="onboarding-input"><input value={softwareBodies[entry.id] || ''} onChange={(event) => editBodies({ ...softwareBodies, [entry.id]: event.target.value })} /><button className="small-button" disabled={working} onClick={()=>pickFile(path=>{draft.current.edit('bodies',entry.id);setSoftwareBodies(old=>({...old,[entry.id]:path}));})}>选择文件</button></div></label>)}<label className="onboarding-field"><span>软件配方 PPython 解释器（如需要）</span><div className="onboarding-input"><input value={softwarePython} onChange={(event) => editSoftwarePython(event.target.value)} /><button className="small-button" disabled={working} onClick={()=>pickFile(editSoftwarePython)}>选择文件</button></div></label><button className="small-button" disabled={working || !snapshot?.exists} onClick={() => act(() => api.previewOnboardingProvidersPlan({ workspaceRoot: workspace, platformId, bodies: softwareBodies, interpreterAliases: {PPython:softwarePython} }), 'provider 和软件位置计划已生成；保存后仍需真实探测。')}>保存软件位置与 provider</button></details>
       </>}
       {step === 3 && <>
+        <div className="notice"><strong>原生客户端接入</strong><p>先准备服务通道，再自动写入厂商支持的 MCP 配置并直接验证三仓。标准 CLI 自测通过只算服务可用。</p><label className="onboarding-field"><span>厂商程序</span><div className="onboarding-input"><input value={nativeBodyPath} onChange={event=>setNativeBodyPath(event.target.value)} placeholder={native?.profile?.bodyPath || '留空自动识别本平台程序'} /><button className="small-button" disabled={working} onClick={()=>pickFile(setNativeBodyPath)}>选择程序</button></div></label><button className="small-button primary-small" disabled={working || !snapshot?.exists} onClick={()=>act(()=>api.previewNativeClientPlan({workspaceRoot:workspace,platformId,bodyPath:nativeBodyPath}),'原生注册计划已生成；原配置有加密备份，真实调用单独判定。')}>预览注册原生客户端</button><button className="small-button" disabled={working || !native?.registered} onClick={()=>act(async()=>{const value=await api.probeNativeClient({workspaceRoot:workspace,platformId});setNative(value);return value;})}>验证原生三仓调用</button>{native?.profile?.kind==='workbuddy-cli' && <button className="small-button" disabled={working || !native?.registered} onClick={nativeAiProbe}>允许一次原生 AI 只读验证</button>}<button className="small-button" disabled={working || !snapshot?.exists} onClick={()=>act(async()=>{const value=await api.nativeClientStatus({workspaceRoot:workspace,platformId});setNative(value);return value;})}>刷新原生状态</button>{native && <p>配置注册：{native.registered?'已保存':'未注册'}；原生三仓调用：{native.nativeVendorClientVerified?'真实调用已验证':'待验证'}。{native.reason || ''}</p>}</div>
         <button className="small-button primary-small" disabled={working || !snapshot?.exists} onClick={() => act(() => api.previewOnboardingClientPlan({ workspaceRoot: workspace, platformId }), '标准 CLI 客户端和 MCP 服务安装计划已生成。')}>安装标准 CLI 客户端入口</button>
         <p>标准 CLI 入口通过真实 MCP 连接调用维护探针，无需模型生成回复。厂商原生客户端注册另行显示，不会由此标成通过。</p>
         <label className="onboarding-field"><span>客户端接口</span><select value={fields.clientKind} onChange={(event) => field('clientKind', event.target.value)}><option value="cli">JSON CLI 客户端入口</option><option value="mcp-stdio">MCP stdio 客户端入口</option><option value="manual-native">原生客户端测试回执</option></select></label>

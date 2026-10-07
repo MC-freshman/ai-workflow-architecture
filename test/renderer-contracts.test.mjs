@@ -33,6 +33,7 @@ test('renderer domains stay split and write kinds remain centralized', () => {
     'platform-backend',
     'platform-runtime',
     'platform-client',
+    'platform-native-client',
     'platform-providers',
     'platform-attestation',
     'platform-governance',

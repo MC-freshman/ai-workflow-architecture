@@ -4,7 +4,9 @@ export function clearProvenLegacyGaps(capabilities,{proof,evidencePath,evidenceS
     'runner-protocol-prepare':proof.prompt?.prepareOk===true,
     'terminal-stop-with-evidence':proof.prompt?.stopOk===true,
     'sealed-script-environment':proof.checks?.['script-environment-isolation-jail']===true,
+    'scriptEnvironment':proof.checks?.['script-environment-isolation-jail']===true,
     'peer-dispatch':proof.checks?.peerDispatch===true,
+    'peerDispatch':proof.checks?.peerDispatch===true,
     'software-face':proof.checks?.['software-call']===true,
     'action:prompt':proof.checks?.['prompt-stage-claim']===true,
     'action:script':proof.checks?.['script-environment-isolation-jail']===true,
@@ -12,6 +14,13 @@ export function clearProvenLegacyGaps(capabilities,{proof,evidencePath,evidenceS
     'action:software-call':proof.checks?.['software-call']===true,
     'mcp-tool-surface':Boolean(clientEvidence)
   };
+  // These exact triples are installed by the attestation builder only after a real jail proof.
+  // An unrelated/stronger permission declaration must keep its gap.
+  if(proof.checks?.['script-environment-isolation-jail']===true) for(const triple of [
+    'project-scoped/deny/allowlisted-only',
+    'platform-runtime-write-shared-read-only/deny/isolated-python',
+    'shared-read-only-platform-report-write/deny/none'
+  ]) proven['permission-triple:'+triple]=true;
   capabilities.resolvedLegacyGaps={...capabilities.resolvedLegacyGaps};
   for(const [key,passed] of Object.entries(proven)) {
     if(!passed) continue;
