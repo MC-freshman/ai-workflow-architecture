@@ -1,4 +1,6 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
+import {useSelectionApi} from '../shared/useSelectionApi.mjs';
+import {OnboardingDraft} from '../shared/onboarding-draft.mjs';
 
 const STEPS = ['选择平台', '完整配置', '准备环境', '客户端入口', '检查与接入', '登记与恢复'];
 const MODULES={configuration:'配置',backend:'隔离后端',environment:'运行环境',providers:'平台 provider',capabilities:'能力实测',client:'客户端验证',software:'软件绑定',certification:'完整认证',governance:'治理登记',git:'Git 提交'};
@@ -22,39 +24,53 @@ export function OnboardPanel({ api, workspace, inventory, busy = false, setPlanP
   const [deferred,setDeferred]=useState([]);
   const [backendFields, setBackendFields] = useState({ distro: '', guestInterpreter: '/usr/bin/python3', wslExecutable: '' });
   const platformId = selection === '__new__' ? newId : selection;
+  const draft=useRef(new OnboardingDraft());
+  const context=workspace+':'+platformId;
+  api=useSelectionApi(api,context);
+  const currentContext=useRef(context);currentContext.current=context;
+  const editBodies=values=>{for(const key of Object.keys(values))if(values[key]!==softwareBodies[key])draft.current.edit('bodies',key);setSoftwareBodies(values);};
+  const editBackend=(values,editedKey)=>{if(editedKey)draft.current.edit('backend',editedKey);for(const key of Object.keys(values))if(values[key]!==backendFields[key])draft.current.edit('backend',key);setBackendFields(values);};
+  const editSoftwarePython=value=>{draft.current.edit('softwarePython');setSoftwarePython(value);};
   const input = () => ({ workspaceRoot: workspace, platformId, fields, confirmed });
-  const field = (key, value) => setFields((old) => ({ ...old, [key]: value }));
+  const field = (key, value) => {draft.current.edit('fields',key);setFields(old=>({...old,[key]:value}));};
   useEffect(() => {
     if (!workspace || !/^[a-z][a-z0-9-]{1,30}$/.test(platformId)) { setSnapshot(null); return; }
+    const changed=draft.current.select(context),token=draft.current.begin();
+    if(changed){setFields(EMPTY);setSoftwareBodies({});setSoftwarePython('');setBackendFields({distro:'',guestInterpreter:'/usr/bin/python3',wslExecutable:''});setRuntime(null);setResult(null);setSnapshot(null);setWorking(false);setCapabilityEvidence(null);}
     let active = true;
     api.readOnboardingConfig({ workspaceRoot: workspace, platformId }).then((data) => {
-      if (!active) return;
-      setSnapshot(data); setFields(data.pendingAutomatic?.inputs.fields || data.fields); setLocalError('');
+      if (!active || !draft.current.accepts(token)) return;
+      setSnapshot(data);setFields(old=>draft.current.merge('fields',old,data.fields));setLocalError('');
+      setSoftwareBodies(old=>draft.current.merge('bodies',old,data.registeredBodies || {}));
+      setBackendFields(old=>draft.current.merge('backend',old,data.backendFields || {}));
+      if(draft.current.untouched('softwarePython'))setSoftwarePython(data.registeredInterpreterAliases?.PPython || '');
       if (data.pendingAutomatic) {
         const saved = data.pendingAutomatic.inputs;
-        setBackendFields(saved.backendFields); setSoftwareBodies(saved.bodies);
-        setSoftwarePython(saved.interpreterAliases.PPython || ''); setConfirmed(saved.confirmed);setDeferred(saved.deferred || []);
+        if(!data.backendFields?.distro)setBackendFields(old=>draft.current.merge('backend',old,saved.backendFields || {}));
+        if(changed){setConfirmed(saved.confirmed);setDeferred(saved.deferred || []);}
         setResult({ ...data.pendingAutomatic,status: data.pendingAutomatic.status==='configured-pending'?'本轮配置已保存 · 接入未完成':`已恢复接入参数；上次停止在 ${MODULES[data.pendingAutomatic.stoppedAt] || data.pendingAutomatic.stoppedAt || '未完成步骤'}` });
-      }else {setSoftwareBodies(data.registeredBodies || {});setSoftwarePython(data.registeredInterpreterAliases?.PPython || '');setDeferred([]);}
+      }else if(changed)setDeferred([]);
     }).catch((error) => { if (active) setLocalError(friendlyError(error)); });
     return () => { active = false; };
   }, [workspace, platformId, inventory]);
   const act = async (operation, message) => {
+    const identity=context;
     setWorking(true); setLocalError('');
     try {
       const value = await operation();
+      if(identity!==currentContext.current)return;
       if (value?.schema === 'architecture-manager-plan/v1') { setPlanPreview(value); setPlanPayload(null); }
       else setResult(value);
       if (message) setMessage(message);
       return value;
-    } catch (error) { const text = friendlyError(error); setLocalError(text); setMessage(text); }
-    finally { setWorking(false); }
+    } catch (error) { if(identity!==currentContext.current || error.message==='STALE_TASK_RESULT')return;const text = friendlyError(error); setLocalError(text); setMessage(text); }
+    finally { if(identity===currentContext.current)setWorking(false); }
   };
   const selectFile = async (key) => { const path = await api.selectOnboardingFile(); if (path) field(key, path); else setLocalError('已取消选择文件。'); };
   const previewAutomatic=async resumeMode=>act(async()=>{
     const latest=await api.readOnboardingConfig({workspaceRoot:workspace,platformId});
-    const current=resumeMode==='reconcile'?{...latest.fields,gitAuthorName:fields.gitAuthorName,gitAuthorEmail:fields.gitAuthorEmail}:fields;
-    return api.previewAutomaticOnboardingPlan({workspaceRoot:workspace,platformId,fields:current,confirmed,backendFields,bodies:resumeMode==='reconcile'?{...Object.fromEntries(Object.entries(softwareBodies).filter(([,path])=>path)),...latest.registeredBodies}:Object.fromEntries(Object.entries(softwareBodies).filter(([,path])=>path)),interpreterAliases:resumeMode==='reconcile'?{...(softwarePython?{PPython:softwarePython}:{}),...latest.registeredInterpreterAliases}:softwarePython?{PPython:softwarePython}:{},deferred,resumeMode});
+    const current=resumeMode==='reconcile'?draft.current.merge('fields',fields,latest.fields):fields;
+    return api.previewAutomaticOnboardingPlan({workspaceRoot:workspace,platformId,fields:current,confirmed,backendFields,bodies:resumeMode==='reconcile'?draft.current.merge('bodies',softwareBodies,latest.registeredBodies):Object.fromEntries(Object.entries(softwareBodies).filter(([,path])=>path)),interpreterAliases:resumeMode==='reconcile'?{...latest.registeredInterpreterAliases,...(softwarePython?{PPython:softwarePython}:{})}:softwarePython?{PPython:softwarePython}:{},deferred,resumeMode});
   },'接入计划已生成；暂缓项与配置差异在预览中列出，确认前不会修改日志。');
   const run = async () => {
     if (!await api.confirm(`开始 ${platformId} 的接入检查？将使用它自己的配置和环境，保存逐步记录。没有通过的能力不会被声明为已接入。`)) return;
@@ -66,6 +82,7 @@ export function OnboardPanel({ api, workspace, inventory, busy = false, setPlanP
     {!workspace ? <div className="empty">请先选择你的架构工作区。</div> : <>
       <nav className="onboarding-steps" aria-label="接入步骤">{STEPS.map((name, index) => <button className={`small-button ${step === index ? 'primary-small' : ''}`} key={name} onClick={() => setStep(index)}>{index + 1}. {name}</button>)}</nav>
       <div className="onboarding-automatic"><strong>确认一次连续执行；暂不需要的模块可稍后补齐</strong><p>配置和安全边界必查。暂缓不会算通过，也不会显示完整接入；未满足地板时不启动完整矩阵，其它选中步骤仍可保存。</p><fieldset><legend>本次暂缓（可多选）</legend>{[['environment','运行环境与能力实测'],['software','软件本体绑定'],['client','客户端验证'],['certification','接入认证／首次矩阵'],['git','Git 提交']].map(([name,label])=><label key={name} className="sensitive-confirm"><input type="checkbox" disabled={working} checked={deferred.includes(name)} onChange={event=>setDeferred(old=>event.target.checked?[...old,name]:old.filter(item=>item!==name))} />暂缓{label}</label>)}<p>暂缓环境会连带暂缓依赖它的 provider/能力/客户端/认证；暂缓软件或客户端会连带暂缓完整认证。后续取消勾选并继续即可补齐。</p></fieldset><div className="git-actions"><button className="primary-small small-button" disabled={working || !snapshot || (selection === '__new__' && !confirmed)} onClick={()=>previewAutomatic('strict')}>预览一键接入／继续</button><button className="small-button" disabled={working || !snapshot?.exists} onClick={()=>previewAutomatic('reconcile')}>核对当前更改后续接</button><button className="small-button" disabled={working || !snapshot?.exists} onClick={()=>previewAutomatic('restart')}>预览重建接入记录</button></div>{snapshot?.resumePreview?.changes?.length>0 && <div className="notice">检测到 {snapshot.resumePreview.changes.length} 项配置更改；请用“核对当前更改后续接”。旧记录会留日期副本，受影响结果重新验证。</div>}</div>
+      {snapshot?.providerTemplates && !snapshot.providerTemplates.current && <div className="notice"><strong>平台安装的组件需要更新</strong><p>旧组件不会因打开新版管理台而自动改变。确认下面的更新计划后，仅重验受影响能力。</p><button className="small-button" disabled={working || !snapshot.exists} onClick={()=>act(()=>api.previewOnboardingProvidersPlan({workspaceRoot:workspace,platformId}),'组件更新计划已生成；已有软件绑定保留。')}>预览更新已安装组件</button></div>}
       {localError && <div role="alert" className="onboarding-error">{localError}</div>}
       {step === 0 && <>
         <label className="onboarding-field"><span>操作对象</span><select value={selection} onChange={(event) => { setSelection(event.target.value); setResult(null); setConfirmed(false); }}><option value="__new__">新增平台</option>{(inventory?.platforms || []).map((item) => <option key={item.id} value={item.id}>{item.id} · 修复或升级接入</option>)}</select></label>
@@ -73,12 +90,12 @@ export function OnboardPanel({ api, workspace, inventory, busy = false, setPlanP
         <label className="onboarding-field"><span>显示名称</span><input value={fields.displayName || ''} onChange={(event) => field('displayName', event.target.value)} /></label>
         {selection === '__new__' && <label className="sensitive-confirm"><input type="checkbox" checked={confirmed} onChange={(event) => setConfirmed(event.target.checked)} /> 允许在本工作区创建该平台一级目录</label>}
         <p className="muted">已有平台会保留原配置和运行锁；预览中列出本轮要修改的文件。</p>
-        {snapshot?.exists && <button className="small-button" disabled={working} onClick={() => { setFields(snapshot.fields); setResult({ status: '已读取当前生效配置；重新预览会保留已激活的环境，并核对新的版本与能力。' }); }}>按当前配置重新生成接入</button>}
+        {snapshot?.exists && <button className="small-button" disabled={working} onClick={() => act(async()=>{const data=await api.readOnboardingConfig({workspaceRoot:workspace,platformId});draft.current.dirty.clear();setSnapshot(data);setFields(data.fields);setSoftwareBodies(data.registeredBodies || {});setSoftwarePython(data.registeredInterpreterAliases?.PPython || ''); setResult({ status: '已读取当前生效配置；重新预览会保留已激活的环境，并核对新的版本与能力。' });return data;})}>重新读取当前配置（放弃未保存编辑）</button>}
       </>}
       {step === 1 && <>
         <p>目标：{platformId || '未选平台'}。三仓根路径自动取当前工作区。</p>
         {snapshot && <div className="onboarding-versions">{Object.values(snapshot.versions).map((item) => <span className="pill" key={item.id}>共享默认：{item.id} {item.version}</span>)}</div>}
-        {snapshot?.performanceRecommendation && <div className="notice"><strong>可选择提速配对</strong><p>引擎 {snapshot.performanceRecommendation.runnerVersion} · 检查器 {snapshot.performanceRecommendation.scannerVersion} · 契约 {snapshot.performanceRecommendation.contractsVersion} · 调用判据 {snapshot.performanceRecommendation.matrixVersion}。选择后仍需预览并保存配置；现有默认不会自动改变。</p><button className="small-button" disabled={working} onClick={()=>setFields(current=>({...current,...snapshot.performanceRecommendation}))}>选择这套提速版本</button></div>}
+        {snapshot?.performanceRecommendation && <div className="notice"><strong>可选择提速配对</strong><p>引擎 {snapshot.performanceRecommendation.runnerVersion} · 检查器 {snapshot.performanceRecommendation.scannerVersion} · 契约 {snapshot.performanceRecommendation.contractsVersion} · 调用判据 {snapshot.performanceRecommendation.matrixVersion}。选择后仍需预览并保存配置；现有默认不会自动改变。</p><button className="small-button" disabled={working} onClick={()=>Object.entries(snapshot.performanceRecommendation).forEach(([key,value])=>field(key,value))}>选择这套提速版本</button></div>}
         {[['runnerVersion','wf-runner','运行引擎'],['contractsVersion','runtime-contracts','运行契约'],['scannerVersion','repo-lint','资源检查器']].map(([key,id,label]) => <label className="onboarding-field" key={key}><span>{label} · 当前使用 {snapshot?.config?.[key==='runnerVersion' ? 'runner':key==='contractsVersion' ? 'contracts':'scannerRelease']?.split(/[\\/]/).at(-1) || '未配置'}</span><select disabled={working} value={fields[key] || ''} onChange={(event)=>field(key,event.target.value || null)}><option value="">使用共享默认 {snapshot?.versions[id]?.version || ''}</option>{(inventory?.sharedRepositories?.find(repo=>repo.repository==='tool')?.pointers?.find(item=>item.resourceId===id)?.availableVersions || []).map(version=><option key={version} value={version}>{version}</option>)}</select></label>)}
         {fileField('pythonExecutable', 'Python 解释器')}
         <details><summary>高级配置：环境、委派与软件位置</summary>{[['environmentManifest', '环境清单'], ['executionBackend', '隔离后端配置'], ['peerDispatcherModule', '委派 provider'], ['softwareGateway', '软件连接器'], ['softwareEnvironment', '软件本体登记']].map(([key, label]) => fileField(key, label))}
@@ -89,12 +106,12 @@ export function OnboardPanel({ api, workspace, inventory, busy = false, setPlanP
       {step === 2 && <>
         <p>所需解释器和库安装在 {platformId || '所选平台'}/runtime 内；缺少系统设施时会暂停并告诉你需要点击什么。</p>
         {fileField('pythonExecutable', '用于准备环境的 Python')}
-        <button className="small-button" disabled={working} onClick={() => act(async () => { const value = await api.detectOnboardingRuntime({ pythonExecutable: fields.pythonExecutable }); setRuntime(value); setBackendFields((old) => ({ ...old, wslExecutable: value.wslExecutable || '', distro: value.distributions[0] || '' })); return value; })}>检测解释器与 WSL</button>
-        {runtime && <><label className="onboarding-field"><span>隔离环境</span><select value={backendFields.distro} onChange={(event) => setBackendFields({ ...backendFields, distro: event.target.value })}><option value="">选择已安装的 WSL 环境</option>{runtime.distributions.map((name) => <option key={name}>{name}</option>)}</select></label><button className="small-button" disabled={working || !backendFields.distro} onClick={() => act(() => api.previewOnboardingBackendPlan({ workspaceRoot: workspace, platformId, fields: backendFields }), '隔离后端计划已生成。')}>保存所选隔离后端</button></>}
+        <button className="small-button" disabled={working} onClick={() => act(async () => { const value = await api.detectOnboardingRuntime({ pythonExecutable: fields.pythonExecutable }); setRuntime(value); setBackendFields(old=>draft.current.merge('backend',old,{...old,wslExecutable:value.wslExecutable || '',distro:old.distro || value.distributions[0] || ''})); return value; })}>检测解释器与 WSL</button>
+        {runtime && <><label className="onboarding-field"><span>隔离环境</span><select value={backendFields.distro} onChange={(event) => editBackend({ ...backendFields, distro: event.target.value },'distro')}><option value="">选择已安装的 WSL 环境</option>{[...new Set([backendFields.distro,...runtime.distributions].filter(Boolean))].map((name) => <option key={name}>{name}</option>)}</select></label><button className="small-button" disabled={working || !backendFields.distro} onClick={() => act(() => api.previewOnboardingBackendPlan({ workspaceRoot: workspace, platformId, fields: backendFields }), '隔离后端计划已生成。')}>保存所选隔离后端</button></>}
         {fileField('executionBackend', '本平台隔离后端配置')}
         <button className="small-button primary-small" disabled={working || !snapshot || !snapshot.exists || !api.previewOnboardingRuntimePlan} onClick={() => act(() => api.previewOnboardingRuntimePlan(input()), '环境准备计划已生成；安装前先核对下载和磁盘位置。')}>准备独立运行环境</button>
         <p className="muted">软件本体位置与 provider 可在软件中心绑定；未安装的项目会保留明确缺口。</p>
-        <details><summary>绑定软件本体与平台 provider</summary>{(inventory?.repositories?.software?.entries || inventory?.software || []).filter((entry) => entry.id && !entry.id.startsWith('_')).map((entry) => <label className="onboarding-field" key={entry.id}><span>{entry.id} 的程序文件</span><div className="onboarding-input"><input value={softwareBodies[entry.id] || ''} onChange={(event) => setSoftwareBodies({ ...softwareBodies, [entry.id]: event.target.value })} /><button className="small-button" onClick={async () => { const path = await api.selectOnboardingFile(); if (path) setSoftwareBodies({ ...softwareBodies, [entry.id]: path }); }}>选择文件</button></div></label>)}<label className="onboarding-field"><span>软件配方 PPython 解释器（如需要）</span><div className="onboarding-input"><input value={softwarePython} onChange={(event) => setSoftwarePython(event.target.value)} /><button className="small-button" onClick={async () => { const path = await api.selectOnboardingFile(); if (path) setSoftwarePython(path); }}>选择文件</button></div></label><button className="small-button" disabled={working || !snapshot?.exists} onClick={() => act(() => api.previewOnboardingProvidersPlan({ workspaceRoot: workspace, platformId, bodies: Object.fromEntries(Object.entries(softwareBodies).filter(([, path]) => path)), interpreterAliases: softwarePython ? { PPython: softwarePython } : {} }), 'provider 和软件位置计划已生成；保存后仍需真实探测。')}>保存软件位置与 provider</button></details>
+        <details><summary>绑定软件本体与平台 provider</summary>{(inventory?.repositories?.software?.entries || inventory?.software || []).filter((entry) => entry.id && !entry.id.startsWith('_')).map((entry) => <label className="onboarding-field" key={entry.id}><span>{entry.id} 的程序文件</span><div className="onboarding-input"><input value={softwareBodies[entry.id] || ''} onChange={(event) => editBodies({ ...softwareBodies, [entry.id]: event.target.value })} /><button className="small-button" onClick={async () => { const path = await api.selectOnboardingFile(); if (path) editBodies({ ...softwareBodies, [entry.id]: path }); }}>选择文件</button></div></label>)}<label className="onboarding-field"><span>软件配方 PPython 解释器（如需要）</span><div className="onboarding-input"><input value={softwarePython} onChange={(event) => editSoftwarePython(event.target.value)} /><button className="small-button" onClick={async () => { const path = await api.selectOnboardingFile(); if (path) editSoftwarePython(path); }}>选择文件</button></div></label><button className="small-button" disabled={working || !snapshot?.exists} onClick={() => act(() => api.previewOnboardingProvidersPlan({ workspaceRoot: workspace, platformId, bodies: Object.fromEntries(Object.entries(softwareBodies).filter(([, path]) => path)), interpreterAliases: softwarePython ? { PPython: softwarePython } : {} }), 'provider 和软件位置计划已生成；保存后仍需真实探测。')}>保存软件位置与 provider</button></details>
       </>}
       {step === 3 && <>
         <button className="small-button primary-small" disabled={working || !snapshot?.exists} onClick={() => act(() => api.previewOnboardingClientPlan({ workspaceRoot: workspace, platformId }), '标准 CLI 客户端和 MCP 服务安装计划已生成。')}>安装标准 CLI 客户端入口</button>
@@ -122,7 +139,7 @@ export function OnboardPanel({ api, workspace, inventory, busy = false, setPlanP
         <button className="small-button" disabled={working || !snapshot?.exists || !api.readOnboardingState} onClick={() => act(() => api.readOnboardingState({ workspaceRoot: workspace, platformId }))}>查看接入记录与恢复点</button>
         <button className="small-button primary-small" disabled={working || !snapshot?.exists} onClick={() => act(async () => {const state=await api.readOnboardingState({workspaceRoot:workspace,platformId});return api.previewOnboardingFinalizePlan({ workspaceRoot: workspace, platformId,allowPending:state.status==='configured-pending' });}, '入库计划已生成；暂缓项不会因提交而记成接入完成。')}>提交当前配置／核验接入状态</button>
       </>}
-      {result && <div className="onboarding-result" role="status"><strong>{result.status==='configured-pending'?'本轮配置已保存 · 接入未完成':result.status || result.stage || (result.stoppedAt ? `停止在：${result.stoppedAt}` : '已返回')}</strong>{(result.steps || []).map((item) => <p key={item.step}>{MODULES[item.step] || item.step}：{item.status==='deferred'?'暂缓':item.status || item.result?.stage || '已返回'} {(item.result?.issues || []).join('；')}</p>)}{(result.pending || []).map(item=><p key={item.step}>{MODULES[item.step] || item.step}：{item.reason}</p>)}{result.pendingSoftware?.length>0 && <p>尚未绑定本体：{result.pendingSoftware.map(item=>item.id).join('、')}。可在“准备环境”的软件绑定区或软件中心补齐。</p>}{result.issues?.map((issue, index) => <p key={index}>{issue}</p>)}<details><summary>证据与读数</summary><pre>{JSON.stringify(result, null, 2)}</pre></details></div>}
+      {result && <div className="onboarding-result" role="status"><strong>{result.status==='configured-pending'?'本轮配置已保存 · 接入未完成':result.status || result.stage || (result.stoppedAt ? `停止在：${result.stoppedAt}` : '已返回')}</strong>{(result.steps || []).map((item) => <p key={item.step}>{MODULES[item.step] || item.step}：{item.status==='deferred'?'暂缓':item.status || item.result?.stage || '已返回'} {(item.result?.issues || []).join('；')}</p>)}{(result.pending || []).map(item=><p key={item.step}>{MODULES[item.step] || item.step}：{item.reason}</p>)}{result.pendingSoftware?.length>0 && <p>尚未绑定本体：{result.pendingSoftware.map(item=>item.id).join('、')}。可在“准备环境”的软件绑定区或软件中心补齐。</p>}{result.issues?.map((issue, index) => <p key={index}>{issue}</p>)}{result.readback && <div className="notice"><p>本次接入回读：{result.readback.onboardingVerified?'当前配置与证据一致':'需更新组件或重新验证'}；业务正文未由接入检查执行。</p><p>本次提交未纳入运行产物：{result.readback.privacy.currentCommitPrivateBytesExcluded?'通过':'未确认'}。历史 runtime 入库件：{result.readback.privacy.legacyTrackedCount ?? '未知'} 项，单独登记，不能据此伪造合规通过。</p></div>}<details><summary>证据与读数</summary><pre>{JSON.stringify(result, null, 2)}</pre></details></div>}
       <div className="onboarding-footer"><button className="small-button" disabled={step === 0} onClick={() => setStep(step - 1)}>上一步</button><span>{step + 1} / {STEPS.length}</span><button className="small-button" disabled={step === STEPS.length - 1 || !platformId} onClick={() => setStep(step + 1)}>下一步</button></div>
     </>}
   </section>;

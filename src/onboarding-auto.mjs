@@ -1,3 +1,5 @@
+import {providerTemplateStatus} from './domains/platforms/provider-templates.mjs';
+import {gatewayBinding} from './domains/software/gateway-binding.mjs';
 import {parseJson as parseJsonText} from './core/json.mjs';
 import { existsSync, mkdirSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
@@ -39,7 +41,7 @@ export function buildAutomaticOnboardingPlan({ workspaceRoot, platformId, fields
   const recovery=onboardingResumePreview(workspaceRoot,platformId,resumeMode,configuration.target.versions);
   const oldPath=targetPath(workspaceRoot,`${platformId}/runtime/maintenance/manager-onboarding/automatic.json`);
   const inputInvalidatedSteps=resumeMode==='reconcile' && existsSync(oldPath)?inputInvalidations(load(oldPath),inputs,configuration.target.versions):[];
-  return { schema: 'architecture-manager-plan/v1', kind: 'platform-onboarding', planId: `automatic-${randomUUID()}`, workspaceRoot, generatedAt: now, applyMode: 'confirmation-required', writePerformed: false, target: { platformId, inputs, inputsSha256: sha256(json(inputs)), creating: configuration.target.creating, versions: configuration.target.versions, recovery, deferrals,inputInvalidatedSteps }, payload: { configuration, requirements }, steps: ['配置与版本', '独立环境与恢复', '软件及 provider', '客户端工具入口与真实回执', '真实能力探针与声明', 'conform 与首次矩阵', '五件治理登记', '配置提交与完成回读'].map((operation) => ({ operation, target: platformId })), verification: ['one confirmed plan; no AI maintenance session', 'deferred items are pending, never passed or complete', 'changed baselines require explicit reconciliation and invalidate affected results', 'stop and resume at a persisted safe step', 'no completion before every real check and Git readback', 'system login/UAC/restart pause instead of bypass'] };
+  return { schema: 'architecture-manager-plan/v1', kind: 'platform-onboarding', planId: `automatic-${randomUUID()}`, workspaceRoot, generatedAt: now, applyMode: 'confirmation-required', writePerformed: false, target: { platformId, inputs, inputsSha256: sha256(json(inputs)), creating: configuration.target.creating, versions: configuration.target.versions, recovery, deferrals,inputInvalidatedSteps,providerTemplates:providerTemplateStatus(workspaceRoot,platformId) }, payload: { configuration, requirements }, steps: ['配置与版本', '独立环境与恢复', '软件及 provider', '客户端工具入口与真实回执', '真实能力探针与声明', 'conform 与首次矩阵', '五件治理登记', '配置提交与完成回读'].map((operation) => ({ operation, target: platformId })), verification: ['one confirmed plan; no AI maintenance session', 'deferred items are pending, never passed or complete', 'changed baselines require explicit reconciliation and invalidate affected results', 'stop and resume at a persisted safe step', 'no completion before every real check and Git readback', 'system login/UAC/restart pause instead of bypass'] };
 }
 
 export async function applyAutomaticOnboarding(plan, options = {}) {
@@ -79,6 +81,9 @@ export async function applyAutomaticOnboarding(plan, options = {}) {
       if (journal.steps.some((item) => item.step === 'configuration' && item.status === 'passed') && ['runner', 'contracts', 'scanner'].some((name) => configured[name === 'scanner' ? 'scannerRelease' : name] !== plan.target.versions[name].path)) throw new Error('ONBOARDING_RESUME_DRIFT');
     } else journal = { schema: 'architecture-manager-auto/v1', planId: plan.planId, platformId, inputsSha256: plan.target.inputsSha256, status: 'running', steps: [], finalTargets: {}, startedAt: new Date().toISOString() };
     if(history)(journal.history ||= []).push(history);
+    const templates=providerTemplateStatus(workspaceRoot,platformId);
+    if(JSON.stringify(templates)!==JSON.stringify(plan.target.providerTemplates))throw Error('PROVIDER_TEMPLATE_CHANGED');
+    if(!templates.current){journal.steps=journal.steps.filter(item=>!['providers','capabilities','client','certification','governance','git'].includes(item.step));journal.providerTemplateUpdate=templates;}
     journal.versions=plan.target.versions;
     journal.steps=journal.steps.filter(item=>item.status!=='deferred' && !reasons[item.step] && !(item.step==='client' && !item.result?.clientProbe) && !['certification','governance','git'].includes(item.step));
     journal.inputsSha256 = plan.target.inputsSha256;
@@ -160,7 +165,7 @@ export async function applyAutomaticOnboarding(plan, options = {}) {
       }return result;
     });
     for(const row of journal.steps)if(row.step==='certification' && row.result?.deferred)row.status='deferred';
-    const gateway=load(targetPath(workspaceRoot,`${platformId}/bridge/software-gateway-config.json`));
+    const gateway=gatewayBinding(workspaceRoot,platformId,readOnboardingConfig({workspaceRoot,platformId}).config).value;
     const registry=load(targetPath(workspaceRoot,'software/registry.json'));
     journal.pendingSoftware=(registry.software || []).filter(row=>row.enabled!==false && !row.id.startsWith('_') && !gateway.bodies?.[row.id]).map(row=>({id:row.id,reason:'本平台尚未绑定软件本体'}));
     journal.pending=pending;

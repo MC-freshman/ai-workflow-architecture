@@ -28,6 +28,7 @@ export { buildDocsSite, checkDocsLinks } from '../docs-ops.mjs';
 export { buildPlatformScaffoldPlan } from '../onboarding.mjs';
 export { buildOnboardingConfigPlan } from '../onboarding-config.mjs';
 export { buildOnboardingRuntimePlan, buildOnboardingBackendPlan } from '../onboarding-runtime.mjs';
+export {buildExistingSoftwareBindingPlan} from '../domains/intake/software-binding.mjs';
 export { buildOnboardingClientPlan, probeOnboardingClient } from '../onboarding-client.mjs';
 export { buildOnboardingProvidersPlan } from '../onboarding-providers.mjs';
 export { probeOnboardingCapabilities, buildOnboardingAttestationPlan } from '../onboarding-attestation.mjs';

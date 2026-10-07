@@ -34,6 +34,7 @@ class Dispatcher:
 
     def dispatch(self, record):
         children = []
+        probe = record.get('mode') == 'callable-probe'
         for peer in record['peers']:
             child_id = record['sequence'] + '-' + peer['id']
             child_root = Path(self.runner_config['runsRoot']) / child_id
@@ -42,6 +43,19 @@ class Dispatcher:
             prepared = self.request(request)
             if not prepared.get('ok'):
                 children.append({**base, 'status': 'rejected', 'reason': prepared.get('error', {})}); continue
+            if probe:
+                state = json.loads((child_root / 'state.json').read_text(encoding='utf-8'))
+                stamp = str(time.time_ns())
+                request = {'schemaVersion': 'ai-run-protocol/v1.1', 'kind': 'request', 'runId': child_id, 'expectedStateRevision': state['stateRevision'], 'payload': {}}
+                answer = self.request({**request, 'operation': 'next', 'requestId': 'next-' + stamp, 'idempotencyKey': 'next-' + stamp})
+                task = answer.get('result', {}).get('task') or {}
+                state = json.loads((child_root / 'state.json').read_text(encoding='utf-8'))
+                stopped = self.request({**request, 'operation': 'stop', 'requestId': 'stop-' + stamp, 'idempotencyKey': 'stop-' + stamp, 'expectedStateRevision': state['stateRevision'], 'payload': {'reason': 'Callable probe ended without business submission'}})
+                state = json.loads((child_root / 'state.json').read_text(encoding='utf-8'))
+                claimed = answer.get('ok') is True and bool(task.get('stageId'))
+                stop_ok = stopped.get('ok') is True and state['status'] in ('stopped', 'cancelled')
+                children.append({**base, 'status': 'callable' if claimed and stop_ok else 'failed', 'prepareOk': True, 'claimReached': claimed, 'stopOk': stop_ok, 'stageId': task.get('stageId'), 'businessExecuted': False})
+                continue
             for _ in range(30):
                 state = json.loads((child_root / 'state.json').read_text(encoding='utf-8'))
                 if state['status'] == 'succeeded':
@@ -55,8 +69,9 @@ class Dispatcher:
                 source = Path(self.runner_config['peerContentRoot']) / peer['id'] / (str(task.get('stageId')) + '.json')
                 if not answer.get('ok') or not task.get('stageId') or not source.is_file():
                     state = json.loads((child_root / 'state.json').read_text(encoding='utf-8'))
-                    self.request({**next_request, 'operation': 'stop', 'requestId': 'stop-' + stamp, 'idempotencyKey': 'stop-' + stamp, 'expectedStateRevision': state['stateRevision'], 'payload': {'reason': 'Awaiting authored business content; onboarding does not fabricate it'}})
-                    children.append({**base, 'status': 'failed', 'reason': 'authored business output required', 'claimReached': bool(task.get('stageId'))}); break
+                    stopped = self.request({**next_request, 'operation': 'stop', 'requestId': 'stop-' + stamp, 'idempotencyKey': 'stop-' + stamp, 'expectedStateRevision': state['stateRevision'], 'payload': {'reason': 'Awaiting authored business content; onboarding does not fabricate it'}})
+                    pending = answer.get('ok') is True and bool(task.get('stageId')) and stopped.get('ok') is True
+                    children.append({**base, 'status': 'awaiting-input' if pending else 'failed', 'reason': 'authored business output required' if pending else 'peer protocol failed', 'claimReached': answer.get('ok') is True and bool(task.get('stageId')), 'stopOk': stopped.get('ok') is True, 'businessExecuted': False}); break
                 data = source.read_bytes()
                 relative_output = 'evidence/%s/%s/output.json' % (task['stageId'], task['attempt'])
                 path = child_root / relative_output; path.parent.mkdir(parents=True, exist_ok=True); path.write_bytes(data)
@@ -66,7 +81,7 @@ class Dispatcher:
                     children.append({**base, 'status': 'failed', 'reason': submitted.get('error', {})}); break
             else:
                 children.append({**base, 'status': 'timeout'})
-        result = {'children': children, 'status': 'completed' if children and all(c['status'] == 'completed' for c in children) else 'partial', 'dispatcherVersion': 'architecture-manager-peer/0.4.0'}
+        result = {'children': children, 'status': ('callable' if probe else 'completed') if children and all(c['status'] == ('callable' if probe else 'completed') for c in children) else 'partial', 'dispatcherVersion': 'architecture-manager-peer/0.5.6', 'proofScope': 'prepare-claim-stop' if probe else 'business-execution', 'businessExecuted': not probe and bool(children) and all(c['status'] == 'completed' for c in children)}
         self.calls_log.parent.mkdir(parents=True, exist_ok=True)
         with self.calls_log.open('a', encoding='utf-8') as stream:
             stream.write(json.dumps({'parentRunId': record['parentRunId'], 'requestSha256': record['requestSha256'], 'result': result}) + '\n')

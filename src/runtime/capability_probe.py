@@ -31,6 +31,10 @@ def probe_candidate(live, attempt):
     return candidate
 
 
+def peer_callable(answer):
+    return bool(answer.get('children') and answer.get('proofScope') == 'prepare-claim-stop' and all(child.get('status') == 'callable' and child.get('prepareOk') is True and child.get('claimReached') is True and child.get('stopOk') is True and child.get('businessExecuted') is False for child in answer['children']))
+
+
 def main(config_path, output_path):
     config = load(config_path)
     output = Path(output_path); output.parent.mkdir(parents=True, exist_ok=True)
@@ -131,9 +135,9 @@ sys.exit(0 if all(value for key,value in checks.items() if key!="renderer") else
                 raise ValueError('DEPENDENCY_FAILED: prompt prepare did not pass; peer probe not started')
             peer = module('manager_peer_probe', config['peerDispatcherModule']).create({'callsLog': str(root / 'peer/calls.log'), 'configPath': str(probe_config_path)})
             ident = 'mastermind-triage'; peer_root = Path(config['agentRoot']) / ident; version = load(peer_root / 'current.json')['version']
-            record = {'sequence': 'probe-' + str(time.time_ns()), 'parentRunId': result['prompt']['runId'], 'peers': [{'id': ident, 'version': version}], 'brief': 'Maintenance callable probe only; no business output', 'requestSha256': hashlib.sha256(b'manager-peer-readonly').hexdigest()}
+            record = {'mode': 'callable-probe', 'sequence': 'probe-' + str(time.time_ns()), 'parentRunId': result['prompt']['runId'], 'peers': [{'id': ident, 'version': version}], 'brief': 'Maintenance callable probe only; no business output', 'requestSha256': hashlib.sha256(b'manager-peer-readonly').hexdigest()}
             answer = peer.dispatch(record); result['peer'] = answer
-            result['checks']['peerDispatch'] = bool(answer['children'] and all(child.get('claimReached') for child in answer['children']))
+            result['checks']['peerDispatch'] = peer_callable(answer)
         except Exception as error:
             result['issues'].append({'id': 'action:peer', 'reason': str(error)[:600]})
     try:

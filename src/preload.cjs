@@ -102,5 +102,6 @@ contextBridge.exposeInMainWorld('architectureManager', Object.freeze({
   previewMcpBody: (...args) => ipcRenderer.invoke("native-mcp:previewMcpBody", ...args),
   previewNativeCredential: (...args) => ipcRenderer.invoke("native-mcp:previewNativeCredential", ...args),
   previewNativeCredentialProvider: (...args) => ipcRenderer.invoke("native-mcp:previewNativeCredentialProvider", ...args),
+  previewExistingSoftwareBinding: (...args) => ipcRenderer.invoke("intake:software-binding", ...args),
   onTransactionProgress: (callback) => { const listener = (_event, progress) => callback(progress); ipcRenderer.on('transaction:progress', listener); return () => ipcRenderer.removeListener('transaction:progress', listener); }
 }));

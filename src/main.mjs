@@ -1,5 +1,6 @@
 import {runDomainTask,cancelDomainTask,cancelAllDomainTasks} from './infrastructure/tasks.mjs';
 import {taskContext} from './app/task-context.mjs';
+import {buildExistingSoftwareBindingPlan} from './domains/intake/software-binding.mjs';
 import {buildSoftwareBodyPlacementPlan,buildSoftwareBodyPlan,readSoftwareBodyActions} from './domains/intake/software-body.mjs';
 import {buildSoftwareCommandPlan} from './domains/software/actions.mjs';
 import {listRuntimeBodies} from './domains/intake/runtime-body.mjs';
@@ -192,6 +193,7 @@ function registerIpc() {
   handleOperation('plan:software', (_event, input) => buildSoftwareLaunchPlan(input));
   handleOperation('plan:software-import', (_event, input) => buildSoftwareImportPlan(input));
   handleOperation('intake:software-placement',(_event,input)=>buildSoftwareBodyPlacementPlan(input));
+  handleOperation('intake:software-binding',(_event,input)=>buildExistingSoftwareBindingPlan(input));
   handleOperation('intake:software-body',(_event,input)=>buildSoftwareBodyPlan(input));
   handleOperation('software:body-actions',(_event,input)=>readSoftwareBodyActions(input));
   handleOperation('intake:runtime-bodies',(_event,input)=>listRuntimeBodies(input));

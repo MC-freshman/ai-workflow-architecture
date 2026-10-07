@@ -569,6 +569,13 @@
       "backend": "buildNativeCredentialProviderPlan",
       "argumentsStyle": "input",
       "taskMode": "owned"
+    },
+    "previewExistingSoftwareBinding": {
+      "channel": "intake:software-binding",
+      "phase": "plan",
+      "backend": "buildExistingSoftwareBindingPlan",
+      "argumentsStyle": "input",
+      "taskMode": "owned"
     }
   },
   "planKinds": [
@@ -607,6 +614,7 @@
     "git-rollback",
     "git-backup",
     "release-publish",
-    "software-launch"
+    "software-launch",
+    "software-binding"
   ]
 }

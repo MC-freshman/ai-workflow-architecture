@@ -5,6 +5,10 @@ export function friendlyError(error) {
   const code = String(error?.message ?? error).replace(/^Error invoking remote method '[^']+':\s*/, '').replace(/^(?:Error:\s*)+/,'');
   const [key, ...details] = code.split(':');
   const hints = {
+    PROVIDER_UPDATE_REQUIRED:'平台安装的组件仍是旧版，请先在接入向导点“预览更新已安装组件”，确认后再测试。',
+    PROVIDER_TEMPLATE_CHANGED:'预览后组件字节改变，请重新预览更新计划。',
+    SOFTWARE_BINDING_CONFLICT:'两份软件配置存在冲突，请核对所列项目；原配置未被覆盖。',
+    HOST_ENVIRONMENT_SNAPSHOT_FAILED:'选中的解释器未能生成一致的主机清单，请重新选择解释器。',
     INTAKE_DISK_SPACE_REQUIRED:'当前剩余空间不足以完成备份和真实恢复，请释放空间或选择另一个工作区后再继续。已有安全步骤和原件保留。',
     SOFTWARE_GUI_EXECUTABLE_REQUIRED:'GUI 会话需要已安装的 EXE 入口；脚本或其它运行时请先选择 CLI 模式或明确的专用连接器。',
     SOFTWARE_RUNTIME_REQUIRED:'这个脚本需要解释器或运行程序，请选择它自己的 Python、Node 或 Java 程序。',

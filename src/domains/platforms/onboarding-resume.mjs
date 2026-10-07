@@ -35,10 +35,10 @@ function affected(path,id) {
   if(['AGENTS.md','AI_ARCHITECTURE_SYSTEM_PROMPT.md','HANDOFF.md','versions/平台接入清单.md','versions/更新日志.md','.gitignore'].includes(path))return ['governance','git'];
   if(path===`${id}/bridge/client-adapter.json` || path.startsWith(`${id}/bridge/manager-client/`))return ['client','certification','governance','git'];
   if(path===`${id}/bridge/capabilities.json`)return ['capabilities','certification','governance','git'];
-  if(path.includes('software-gateway-config.json') || path.includes('software-environment.json') || path.includes('/manager-providers/'))return ['providers','capabilities','certification','governance','git'];
+  if(path.includes('software-gateway-config.json') || path.includes('software-gateway.json') || path.includes('software-environment.json') || path.includes('/manager-providers/'))return ['providers','capabilities','certification','governance','git'];
   return [...ONBOARDING_STEPS];
 }
-function validTarget(path,id) {return path.startsWith(`${id}/bridge/`) || path===`${id}/bridge.json` || path===`${id}/runtime/software/software-environment.json` || ['AGENTS.md','AI_ARCHITECTURE_SYSTEM_PROMPT.md','HANDOFF.md','versions/平台接入清单.md','versions/更新日志.md','.gitignore'].includes(path);}
+function validTarget(path,id) {return path.startsWith(`${id}/bridge/`) || path===`${id}/bridge.json` || path===`${id}/runtime/software/software-environment.json` || (path.startsWith(id+'/runtime/manager-host/') && /^[a-f0-9]{64}$/.test(path.split('/').at(-2)) && path.endsWith('/manifest.json')) || ['AGENTS.md','AI_ARCHITECTURE_SYSTEM_PROMPT.md','HANDOFF.md','versions/平台接入清单.md','versions/更新日志.md','.gitignore'].includes(path);}
 export function onboardingResumePreview(root,id,mode='strict',versions=null) {
   if(!['strict','reconcile','restart'].includes(mode))throw Error('ONBOARDING_RESUME_MODE_INVALID');
   const file=automaticJournalPath(root,id);if(!fs.existsSync(file))return {mode,journalSha256:null,sourcePlanId:null,changes:[],invalidatedSteps:[],versionsChanged:false};

@@ -1,3 +1,4 @@
+import {onboardingReadback} from './domains/platforms/onboarding-readback.mjs';
 import {parseJson as parseJsonText} from './core/json.mjs';
 import { existsSync, mkdirSync, readFileSync } from 'node:fs';
 import { join, resolve } from 'node:path';
@@ -25,14 +26,14 @@ export function readOnboardingState({ workspaceRoot, platformId }) {
   if (!existsSync(path)) return { schema: 'architecture-manager-onboarding/v1', platformId, status: 'not-started', steps: [], writePerformed: false };
   const state = parseJsonText(readFileSync(path, 'utf8'));
   if (state.status === 'running' && !active.has(keyOf(workspaceRoot, platformId))) state.status = 'interrupted';
-  return { ...state, writePerformed: false };
+  return { ...state,readback:onboardingReadback(workspaceRoot,platformId,state), writePerformed: false };
 }
 export function savePendingOnboarding({workspaceRoot,platformId,pending,pendingSoftware,steps}) {
   const previous=readOnboardingState({workspaceRoot,platformId});
   const state={...previous,...clientBinding(workspaceRoot,platformId),schema:'architecture-manager-onboarding/v1',platformId,status:'configured-pending',error:null,stoppedAt:null,currentStep:'pending',architectureComplete:false,pending,pendingSoftware,preparationSteps:steps,environmentBindingSha256:environmentBinding(workspaceRoot,platformId),updatedAt:new Date().toISOString()};
   save(workspaceRoot,platformId,state);return state;
 }
-function save(root, id, value) { const path = pathOf(root, id); mkdirSync(join(path, '..'), { recursive: true }); atomicWrite(path, json(value), randomUUID()); }
+function save(root, id, value) { const path = pathOf(root, id); mkdirSync(join(path, '..'), { recursive: true });const stored={...value};delete stored.readback; atomicWrite(path, json(stored), randomUUID()); }
 
 export function cancelOnboarding({ workspaceRoot, platformId }) {
   const automaticCancelled = requestOnboardingCancellation(workspaceRoot, platformId);

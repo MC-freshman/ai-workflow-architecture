@@ -1,9 +1,8 @@
-import {existsSync,readFileSync} from 'node:fs';
 import {sha256} from '../../core/hash.mjs';
 import {parseJson} from '../../core/json.mjs';
 import {safeRelative} from '../../core/paths.mjs';
 import {gitRaw} from '../../infrastructure/git.mjs';
-import {platformConfig} from './binding.mjs';
+import {privateBindingHashes} from './binding.mjs';
 
 function sharedBlobs(root,commit,paths) {
   if(!/^[0-9a-f]{40}$/i.test(commit || '')) return null;
@@ -29,8 +28,7 @@ export function legacyBindingAtGit(root,id,previous,snapshot) {
   const commit=previous.git?.head;
   const registries=sharedBlobs(root,commit,['tool/registry.json','agent/registry.json','software/registry.json']);
   if(!registries || [...registries.values()].some(value=>!value)) return null;
-  const config=platformConfig(root,id),hashes={},pointers=[];
-  for(const [name,path] of Object.entries({capabilities:config.capabilities,gateway:config.softwareGatewayConfig,backend:config.executionBackend,manifest:config.environmentManifest})) hashes[name]=path && existsSync(path)?sha256(readFileSync(path)):null;
+  const privateHashes=privateBindingHashes(root,id),hashes={...privateHashes},pointers=[];
   const sections=[];
   for(const repo of ['tool','agent','software']) {
     const bytes=registries.get(repo+'/registry.json');hashes[repo]=sha256(bytes);const registry=parseJson(bytes.toString('utf8'));
@@ -39,7 +37,7 @@ export function legacyBindingAtGit(root,id,previous,snapshot) {
   const closurePaths=Object.values(snapshot.cells).flatMap(cell=>cell.closure.map(({key})=>{const [path,version]=key.split('@');return `${path}/versions/${version}/SHA256SUMS`;}));
   const blobs=sharedBlobs(root,commit,[...pointers,...closurePaths]);if(!blobs) return null;
   // Rebuild the original insertion order, including each repository's pointers.
-  const ordered={};for(const key of ['capabilities','gateway','backend','manifest']) ordered[key]=hashes[key];
+  const ordered={...privateHashes};
   for(const repo of ['tool','agent','software']) {ordered[repo]=hashes[repo];for(const row of sections.filter(row=>row.repo===repo)) if(blobs.get(row.path)) ordered[`${repo}:${row.entry.id}`]=sha256(blobs.get(row.path));}
   if(sha256(JSON.stringify(ordered))!==previous.environmentBindingSha256) return null;
   const unchanged=new Set();

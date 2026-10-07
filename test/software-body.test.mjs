@@ -12,6 +12,7 @@ import {applyPlan,verifyPlanTarget} from '../src/transactions.mjs';
 import {buildSoftwareCommandPlan} from '../src/domains/software/actions.mjs';
 import {buildIntakeRevertPlan} from '../src/domains/intake/journals.mjs';
 import {listRuntimeBodies} from '../src/domains/intake/runtime-body.mjs';
+import {buildExistingSoftwareBindingPlan} from '../src/domains/intake/software-binding.mjs';
 const connectorSource=process.env.ARCHITECTURE_MANAGER_TEST_CONNECTOR || resolve(dirname(fileURLToPath(import.meta.url)),'../../software/_connector/versions/1.0.7');
 function setup(t) {
   const f=intakeFixture(t),python=process.env.ARCHITECTURE_MANAGER_TEST_PYTHON || execFileSync('python',['-c','import sys;print(sys.executable)'],{encoding:'utf8',windowsHide:true}).trim(),gateway=join(f.root,f.platformId,'bridge/software-gateway.json'),connector=join(f.root,'software/_connector/versions/1.0.7');
@@ -38,5 +39,12 @@ test('desktop sessions start a real owned process, reuse it and close it without
   assert.equal((await applyPlan({plan:command('status'),auditRoot:f.auditRoot})).sessionState,'SESSION_CLOSED');
 });
 test('installation packages cannot become installed software recipes',{skip:!fs.existsSync(connectorSource)},async t=>{
-  const f=setup(t),source=join(f.base,'setup.exe');fs.writeFileSync(source,Buffer.from('MZ fake installer, never executed'));const intake=await scanExternalBody({workspaceRoot:f.root,type:'software',sourcePath:source}),placement=buildSoftwareBodyPlacementPlan({intake,platformId:f.platformId,softwareId:'installer-example'});await applyPlan({plan:placement,auditRoot:f.auditRoot});assert.throws(()=>buildSoftwareBodyPlan({placementPlan:placement,displayName:'Installer'}),/INSTALLER_NOT_INSTALLED/);assert(!fs.existsSync(join(f.root,'software/installer-example')));
+  const f=setup(t),source=join(f.base,'setup.exe');fs.writeFileSync(source,Buffer.from('MZ fake installer, never executed'));const intake=await scanExternalBody({workspaceRoot:f.root,type:'software',sourcePath:source}),placement=buildSoftwareBodyPlacementPlan({intake,platformId:f.platformId,softwareId:'installer-example'});await applyPlan({plan:placement,auditRoot:f.auditRoot});assert.throws(()=>buildSoftwareBodyPlan({placementPlan:placement,displayName:'Installer'}),/INSTALLER_NOT_INSTALLED/);assert.throws(()=>buildExistingSoftwareBindingPlan({placementPlan:placement}),/INSTALLER_NOT_INSTALLED/);assert(!fs.existsSync(join(f.root,'software/installer-example')));
+});
+
+test('a restored replacement binds to the existing recipe without republishing; pointer drift refuses execution',{skip:!fs.existsSync(connectorSource)},async t=>{
+ const f=setup(t),source=join(f.base,'existing.py');fs.writeFileSync(source,"print('Existing 1.0')\n");const intake=await scanExternalBody({workspaceRoot:f.root,type:'software',sourcePath:source});
+ const placement=buildSoftwareBodyPlacementPlan({intake,platformId:f.platformId,softwareId:'existing-cli'});await applyPlan({plan:placement,auditRoot:f.auditRoot});const published=buildSoftwareBodyPlan({placementPlan:placement,displayName:'Existing CLI',upstreamVersion:'1.0'});await applyPlan({plan:published,auditRoot:f.auditRoot});
+ const seal=fs.readFileSync(join(f.root,published.target.destination,'SHA256SUMS')),replacement=buildSoftwareBodyPlacementPlan({intake,platformId:f.platformId,softwareId:'existing-cli'});await applyPlan({plan:replacement,auditRoot:f.auditRoot});const binding=buildExistingSoftwareBindingPlan({placementPlan:replacement});await applyPlan({plan:binding,auditRoot:f.auditRoot});assert.equal((await verifyPlanTarget({plan:binding})).ok,true);assert.equal((await verifyPlanTarget({plan:binding})).functionExecuted,false);assert(fs.readFileSync(join(f.root,published.target.destination,'SHA256SUMS')).equals(seal));assert.equal(JSON.parse(fs.readFileSync(join(f.root,f.platformId,'bridge/software-gateway.json'))).bodies['existing-cli'],join(replacement.target.path,replacement.target.entry));
+ assert(fs.readdirSync(join(f.auditRoot,'checkpoints')).some(name=>name.startsWith(binding.planId)));const old=buildExistingSoftwareBindingPlan({placementPlan:replacement});seedPointer(f.root,'software','existing-cli','9.9.9');assert.throws(()=>applyPlan({plan:old,auditRoot:f.auditRoot}));assert.equal((await verifyPlanTarget({plan:binding})).ok,false);
 });

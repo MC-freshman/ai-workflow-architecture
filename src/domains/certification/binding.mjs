@@ -11,9 +11,14 @@ export function platformConfigPath(root,id) {
   return targetPath(root,relative);
 }
 export function platformConfig(root,id) {return readJson(platformConfigPath(root,id));}
+export function privateBindingHashes(root,id,config=platformConfig(root,id)) {
+  const hashes={};
+  for(const [name,path] of Object.entries({capabilities:config.capabilities,gateway:config.softwareGatewayConfig,backend:config.executionBackend,manifest:config.environmentManifest}))hashes[name]=path && existsSync(path)?sha256(readFileSync(path)):null;
+  for(const [name,path] of Object.entries({hostManifest:config.hostEnvironmentManifest,peerProvider:config.peerDispatcherModule,platformProvider:targetPath(root,`${id}/bridge/manager-providers/platform_provider.py`)}))if(path && existsSync(path))hashes[name]=sha256(readFileSync(path));
+  return hashes;
+}
 export function environmentBinding(root,id) {
-  const config=platformConfig(root,id),hashes={};
-  for(const [name,path] of Object.entries({capabilities:config.capabilities,gateway:config.softwareGatewayConfig,backend:config.executionBackend,manifest:config.environmentManifest})) hashes[name]=path && existsSync(path)?sha256(readFileSync(path)):null;
+  const hashes=privateBindingHashes(root,id);
   for(const repo of ['tool','agent','software']) {
     const registryPath=targetPath(root,`${repo}/registry.json`);
     if(!existsSync(registryPath)) {hashes[repo]=null;continue;}

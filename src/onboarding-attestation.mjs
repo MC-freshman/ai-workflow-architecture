@@ -1,3 +1,4 @@
+import {providerTemplateStatus} from './domains/platforms/provider-templates.mjs';
 import {parseJson as parseJsonText} from './core/json.mjs';
 import { execFile } from 'node:child_process';
 import { promisify } from 'node:util';
@@ -30,6 +31,7 @@ function verifiedClientEvidence(workspaceRoot,platformId) {
 
 export async function probeOnboardingCapabilities({ workspaceRoot, platformId }, { onProgress = () => {}, registerCancel = () => {} } = {}) {
   const snapshot = readOnboardingConfig({ workspaceRoot, platformId });
+  if(!providerTemplateStatus(workspaceRoot,platformId).current)throw Error('PROVIDER_UPDATE_REQUIRED');
   const directory = targetPath(workspaceRoot, `${platformId}/runtime/maintenance/manager-onboarding/capabilities/${randomUUID()}`); mkdirSync(directory, { recursive: true });
   const output = join(directory, 'probe.json'); onProgress({ platformId, phase: '验证隔离、调用、委派与软件边界' });
   const process = await runOwnedProcess({ python: snapshot.fields.pythonExecutable, args: ['-B', runtimeFile('capability_probe.py'), targetPath(workspaceRoot, snapshot.configPath), output], cwd: directory, timeout: 1800000, registerCancel });

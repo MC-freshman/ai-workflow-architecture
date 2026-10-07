@@ -1,3 +1,6 @@
+import {reconcileHostManifest} from './domains/platforms/host-manifest.mjs';
+import {providerTemplateStatus} from './domains/platforms/provider-templates.mjs';
+import {gatewayBinding} from './domains/software/gateway-binding.mjs';
 import {parseJson as parseJsonText} from './core/json.mjs';
 // Configuration plans for an existing or new platform. All generated paths are
 // derived from the selected workspace; platform-specific state never becomes shared code.
@@ -48,8 +51,8 @@ export function readOnboardingConfig({ workspaceRoot, platformId }) {
   const client = read(targetPath(ctx.root, `${platformId}/bridge/client-adapter.json`));
   const automatic = read(targetPath(ctx.root, `${platformId}/runtime/maintenance/manager-onboarding/automatic.json`), null);
   const pendingAutomatic = automatic && automatic.status !== 'complete' && automatic.inputs && sha256(stringify(automatic.inputs)) === automatic.inputsSha256 ? { status: automatic.status, stoppedAt: automatic.stoppedAt, inputs: automatic.inputs, pending:automatic.pending || [],pendingSoftware:automatic.pendingSoftware || [] } : null;
-  const gateway=read(targetPath(ctx.root,`${platformId}/bridge/software-gateway-config.json`));
-  return { platformId, exists: existsSync(join(ctx.root, platformId)), configPath: ctx.configPath, config: ctx.config, versions, client, pendingAutomatic, registeredBodies:gateway.bodies || {},registeredInterpreterAliases:gateway.interpreterAliases || {},resumePreview:onboardingResumePreview(ctx.root,platformId),performanceRecommendation:recommendedCertificationPair(ctx.root),fields: {
+  const binding=gatewayBinding(ctx.root,platformId,ctx.config),gateway=binding.value;
+  return { platformId, providerTemplates:providerTemplateStatus(ctx.root,platformId), backendFields:ctx.config.executionBackend && existsSync(ctx.config.executionBackend)?(()=>{const b=read(ctx.config.executionBackend);return {distro:b.distro || '',guestInterpreter:b.interpreter || '/usr/bin/python3',wslExecutable:b.wslExecutable || ''};})():{}, exists: existsSync(join(ctx.root, platformId)), configPath: ctx.configPath, config: ctx.config, versions, client, pendingAutomatic, gatewayBinding:{path:binding.path,recovered:binding.recovered},registeredBodies:gateway.bodies || {},registeredInterpreterAliases:gateway.interpreterAliases || {},resumePreview:onboardingResumePreview(ctx.root,platformId),performanceRecommendation:recommendedCertificationPair(ctx.root),fields: {
     displayName: ctx.bridge.displayName || platformId,
     pythonExecutable: ctx.bridge.runner?.python || ctx.config.interpreters?.['.py'] || '',
     environmentManifest: ctx.config.environmentManifest || '', scriptEnvironment: ctx.config.scriptEnvironment || '', executionBackend: ctx.config.executionBackend || (existsSync(join(ctx.root, platformId, 'bridge/backends/manager-sealed.json')) ? join(ctx.root, platformId, 'bridge/backends/manager-sealed.json') : ''),
@@ -110,6 +113,8 @@ export function buildOnboardingConfigPlan({ workspaceRoot, platformId, fields = 
     }
   }
   const python = fields.pythonExecutable || ctx.bridge.runner?.python || config.interpreters?.['.py'];
+  const hostManifest=reconcileHostManifest(root,platformId,config,python);
+  if(hostManifest.path)config.hostEnvironmentManifest=hostManifest.path;
   if (python) config.interpreters = { ...config.interpreters, '.py': python };
   if (config.executionBackend) config.scriptEnvironmentRungs = [{ execPath: 'kernel-sandbox', executionBackend: config.executionBackend, ...(config.scriptEnvironment ? { scriptEnvironment: config.scriptEnvironment } : {}), requiresSealedEnvironment: true }];
   else if ('executionBackend' in fields) config.scriptEnvironmentRungs = [];
@@ -120,7 +125,8 @@ export function buildOnboardingConfigPlan({ workspaceRoot, platformId, fields = 
     if (!existsSync(gateway)) throw new Error('SOFTWARE_CONNECTOR_ENTRY_MISSING');
     config.softwareGateway = gateway;
   } else if (!config.softwareGateway) config.softwareGateway = join(release(root, 'software', '_connector').path, 'connector.py');
-  config.softwareGatewayConfig ||= join(root, platformId, 'bridge/software-gateway-config.json');
+  const gatewayRegistration=gatewayBinding(root,platformId,config);
+  config.softwareGatewayConfig = gatewayRegistration.path;
   ownPath(root, platformId, config.softwareGatewayConfig);
   const bridge = { ...ctx.bridge, schema: 'ai-platform-bridge/v1.1', platform: platformId, displayName: fields.displayName || ctx.bridge.displayName || platformId, shared: { ...ctx.bridge.shared, toolRegistry: join(root, 'tool/registry.json'), agentRegistry: join(root, 'agent/registry.json'), softwareRegistry: join(root, 'software/registry.json'), architecturePrompt: join(root, 'AI_ARCHITECTURE_SYSTEM_PROMPT.md'), readOnly: true }, runtimeRoot: join(root, platformId, 'runtime'), modes: ['workflow', 'agent-workflow'], defaults: { ...ctx.bridge.defaults, workflowVersions: { ...ctx.bridge.defaults?.workflowVersions, 'repo-lint': scannerVersion } }, runner: { ...ctx.bridge.runner, enabled: true, config: join(root, ctx.configPath), release: runner.path, ...(python ? { python } : {}) } };
   const capabilities = Object.keys(ctx.capabilities).length ? ctx.capabilities : { schema: 'ai-platform-capabilities/v1', platform: platformId, checks: {}, permissionAdapters: [], profiles: {}, descriptor: { schema: 'ai-platform-descriptor/v2', platformId, protocols: ['ai-run-protocol/v1.1', 'ai-run-protocol/v1.2', 'ai-run-protocol/v1.3'], operations: ['prepare', 'next', 'submit', 'status', 'stop'], actions: {}, profiles: {}, enforcement: 'mediated', recovery: ['replay'] }, declaredAbsent: {}, unverified: {}, gapPlan: {} };
@@ -130,21 +136,21 @@ export function buildOnboardingConfigPlan({ workspaceRoot, platformId, fields = 
   const client = { ...oldClient, schema: 'architecture-manager-client/v1', platformId, kind: fields.clientKind || oldClient.kind || 'cli', executable: fields.clientExecutable || oldClient.executable || '', args: fields.clientArgs || oldClient.args || [], probeTool: fields.probeTool || oldClient.probeTool || '', probeArguments: fields.probeArguments || {}, nativeVerified: false };
   if (client.kind !== oldClient.kind || client.executable !== oldClient.executable || JSON.stringify(client.args) !== JSON.stringify(oldClient.args)) { delete client.preset; delete client.installedClient; delete client.server; }
   if (!Array.isArray(client.args) || client.args.some((value) => typeof value !== 'string')) throw new Error('CLIENT_ARGUMENTS_INVALID');
-  const proposed = [
+  const proposed = [...hostManifest.files,
     { path: `${platformId}/bridge.json`, content: stringify(bridge) },
     { path: ctx.configPath, content: stringify(config) },
     { path: `${platformId}/bridge/capabilities.json`, content: stringify(capabilities) },
     { path: `${platformId}/bridge/client-adapter.json`, content: stringify(client) }
   ];
   if (existsSync(targetPath(root, `${platformId}/bridge/bridge.json`))) proposed.push({ path: `${platformId}/bridge/bridge.json`, content: stringify(bridge) });
-  if (!existsSync(config.softwareGatewayConfig)) proposed.push({ path: `${platformId}/bridge/software-gateway-config.json`, content: stringify({ schema: 'ai-software-gateway-config/v1', platformId, platform: process.platform === 'win32' ? 'windows' : process.platform === 'darwin' ? 'macos' : process.platform, softwareRoot: join(root, 'software'), lockRoot: join(root, platformId, 'runtime/software/locks'), evidenceRoot: join(root, platformId, 'runtime/software/evidence'), bodies: {}, interpreters: python ? { '.py': python } : {} }) });
+  if (!existsSync(config.softwareGatewayConfig) || gatewayRegistration.recovered.length) proposed.push({ path: gatewayRegistration.relativePath, content: stringify({ schema: 'ai-software-gateway-config/v1', platformId, platform: process.platform === 'win32' ? 'windows' : process.platform === 'darwin' ? 'macos' : process.platform, softwareRoot: join(root, 'software'), lockRoot: join(root, platformId, 'runtime/software/locks'), evidenceRoot: join(root, platformId, 'runtime/software/evidence'), bodies: {}, interpreters: python ? { '.py': python } : {},...gatewayRegistration.value }) });
   if (!existsSync(join(root, platformId, 'bridge/platform.md'))) proposed.push({ path: `${platformId}/bridge/platform.md`, content: `# ${bridge.displayName}\n\n平台 ID：${platformId}。管理台创建配置；接入状态以本平台的环境、能力、矩阵与客户端回环证据为准。\n` });
   const files = proposed.map((file) => {
     assertConfigurationReferences(file.path.endsWith('.json') ? parseJsonText(file.content) : {});
     const target = targetPath(root, file.path);
     return { ...file, beforeSha256: existsSync(target) ? sha256(readFileSync(target)) : null, newSha256: sha256(file.content) };
   });
-  const plan = { schema: 'architecture-manager-plan/v1', kind: 'platform-configuration', planId: `onboard-config-${platformId}-${randomUUID()}`, workspaceRoot: root, generatedAt: now, applyMode: 'confirmation-required', writePerformed: false, target: { platformId, creating, userAuthorized: !creating || confirmed, inputs: fields, versions: { runner, contracts, scanner }, pairing: { declaredByEngine: scannerPin || null, requested: scanner.version, applied: scannerVersion, mismatch: pairingWarnings.length > 0 } }, steps: files.map((file) => ({ operation: file.beforeSha256 === null ? 'create-config' : 'replace-config', target: file.path, oldSha256: file.beforeSha256, newSha256: file.newSha256 })), payload: { files }, warnings: pairingWarnings, verification: ['validate the exact generated targets and baselines', 'preserve unrelated existing fields', 'read back every applied file; declarations alone are not certification'] };
+  const plan = { schema: 'architecture-manager-plan/v1', kind: 'platform-configuration', planId: `onboard-config-${platformId}-${randomUUID()}`, workspaceRoot: root, generatedAt: now, applyMode: 'confirmation-required', writePerformed: false, target: { platformId, creating, userAuthorized: !creating || confirmed, inputs: fields, versions: { runner, contracts, scanner }, pairing: { declaredByEngine: scannerPin || null, requested: scanner.version, applied: scannerVersion, mismatch: pairingWarnings.length > 0 } }, steps: files.map((file) => ({ operation: file.beforeSha256 === null ? 'create-config' : 'replace-config', target: file.path, oldSha256: file.beforeSha256, newSha256: file.newSha256 })), payload: { files }, hostManifest:{previousPath:hostManifest.previousPath || null,path:hostManifest.path || null,scope:hostManifest.scope || null},recoveredBindings:gatewayRegistration.recovered,warnings: pairingWarnings, verification: ['validate the exact generated targets and baselines', 'preserve unrelated existing fields', 'read back every applied file; declarations alone are not certification'] };
   return plan;
 }
 
