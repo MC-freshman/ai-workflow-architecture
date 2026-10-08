@@ -80,8 +80,14 @@ test('both anchor plan kinds apply and verify through the transaction dispatcher
 
   // The audit trail records both transactions, which is what makes the change readable afterwards.
   const events=readFileSync(join(audit,'events.jsonl'),'utf8').trim().split('\n').map((line)=>JSON.parse(line));
-  assert.deepEqual(events.map((event)=>event.action),['anchor-generation','platform-anchor-alignment']);
-  assert.equal(events.every((event)=>event.status==='applied' && event.writePerformed===true),true);
+  const domains=events.filter(event=>event.phase==='domain');
+  assert.deepEqual(domains.map((event)=>event.action),['anchor-generation','platform-anchor-alignment']);
+  assert.equal(domains.every((event)=>event.status==='applied' && event.writePerformed===true),true);
+  const operations=events.filter(event=>event.phase==='operation');
+  assert.deepEqual(operations.map(event=>event.status),['started','completed','started','already-applied','started','completed']);
+  for(let index=0;index<operations.length;index+=2)assert.equal(operations[index].operationId,operations[index+1].operationId);
+  assert.equal(new Set(operations.map(event=>event.operationId)).size,3);
+  assert(domains.every(event=>operations.some(operation=>operation.operationId===event.operationId)));
 });
 
 test('an alignment plan refuses to write when the platform changed after the plan was built',(t)=>{
