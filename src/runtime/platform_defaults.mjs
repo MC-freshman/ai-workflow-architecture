@@ -4,6 +4,7 @@ import nodeFs, { appendFileSync, existsSync, lstatSync, mkdirSync, readFileSync,
 import { dirname, join, normalize, relative, resolve, sep } from "node:path";
 import { createHash, randomUUID } from "node:crypto";
 import { tmpdir } from "node:os";
+import { AsyncLocalStorage } from "node:async_hooks";
 //#region \0rolldown/runtime.js
 var __create = Object.create;
 var __defProp = Object.defineProperty;
@@ -14004,6 +14005,58 @@ function declaredVersion(value) {
 	return /^\d+\.\d+\.\d+$/.test(tail) ? tail : null;
 }
 //#endregion
+//#region src/transactions/audit-context.mjs
+const auditContext = new AsyncLocalStorage();
+//#endregion
+//#region src/transactions/audit-content.mjs
+function redactAuditText(value, secrets = []) {
+	let text = String(value);
+	for (const secret of secrets) if (typeof secret === "string" && secret) text = text.split(secret).join("[REDACTED]");
+	text = text.replace(/(\b(?:password|passwd|secret|token|api[_-]?key|access[_-]?token|client[_-]?secret)["']?\s*[:=]\s*)(?:"[^"\r\n]*"|'[^'\r\n]*'|[^\s,;}]+)/gi, "$1[REDACTED]");
+	text = text.replace(/(\b(?:Authorization\s*[:=]\s*)?Bearer\s+)[A-Za-z0-9._~+/=-]+/gi, "$1[REDACTED]");
+	text = text.replace(/(https?:\/\/)[^/\s:@]+:[^/\s@]+@/gi, "$1[REDACTED]@");
+	text = text.replace(/\bsk-(?:sp-|ws-)?[A-Za-z0-9]{20,}\b/g, "[REDACTED]");
+	text = text.replace(/-----BEGIN [A-Z ]*PRIVATE KEY-----[\s\S]*?-----END [A-Z ]*PRIVATE KEY-----/g, "[REDACTED]");
+	return text.slice(0, 2048);
+}
+function sanitizeAuditEvent(event, secrets = []) {
+	let redacted = false;
+	const metadata = /* @__PURE__ */ new Set([
+		"schema",
+		"action",
+		"status",
+		"planId",
+		"transactionId",
+		"operationId",
+		"parentOperationId",
+		"phase",
+		"occurredAt",
+		"oldSha256",
+		"newSha256",
+		"checkpointSha256",
+		"eventSha256",
+		"writeState"
+	]);
+	const visit = (value, key = "") => {
+		if (metadata.has(key)) return value;
+		if (typeof value === "string") {
+			const clean = redactAuditText(value, secrets);
+			redacted ||= clean !== value;
+			return clean;
+		}
+		if (Array.isArray(value)) return value.map(visit);
+		if (value && typeof value === "object") return Object.fromEntries(Object.entries(value).map(([key, item]) => [key, visit(item, key)]));
+		return value;
+	};
+	const clean = visit(event);
+	clean.sensitiveRedacted = redacted || event.sensitiveRedacted === true;
+	return clean;
+}
+function auditEventHash(event) {
+	const { eventSha256: ignored, ...content } = event;
+	return sha256(JSON.stringify(content));
+}
+//#endregion
 //#region src/transactions/kernel.mjs
 function makeId(plan, now) {
 	return `${plan.planId}-${now.replace(/[^0-9]/g, "").slice(0, 17)}-${randomUUID().slice(0, 8)}`;
@@ -14012,8 +14065,9 @@ function auditPath(auditRoot) {
 	mkdirSync(auditRoot, { recursive: true });
 	return join(auditRoot, "events.jsonl");
 }
-function writeAudit({ auditRoot, transactionId, plan, actor, action, status, target, oldSha256 = null, newSha256 = null, checkpointSha256 = null, checkpointPath = null, connectorStatus = null, writePerformed = false, error = null, now }) {
-	const event = {
+function writeAudit({ auditRoot, transactionId, plan, actor, action, status, target, oldSha256 = null, newSha256 = null, checkpointSha256 = null, checkpointPath = null, connectorStatus = null, writePerformed = false, error = null, now = (/* @__PURE__ */ new Date()).toISOString(), phase = "domain" }) {
+	const context = auditContext.getStore();
+	const event = sanitizeAuditEvent({
 		schema: "architecture-manager-audit/v1",
 		transactionId,
 		planId: plan.planId,
@@ -14029,8 +14083,13 @@ function writeAudit({ auditRoot, transactionId, plan, actor, action, status, tar
 		connectorStatus,
 		writePerformed,
 		error,
-		occurredAt: now
-	};
+		occurredAt: typeof now === "string" && Number.isFinite(Date.parse(now)) ? now : (/* @__PURE__ */ new Date()).toISOString(),
+		operationId: context?.operationId || null,
+		parentOperationId: context?.parentOperationId || null,
+		phase,
+		writeState: writePerformed === true ? "performed" : writePerformed === false ? "not-performed" : "unknown"
+	}, context?.secrets || []);
+	event.eventSha256 = auditEventHash(event);
 	appendFileSync(auditPath(auditRoot), `${JSON.stringify(event)}\n`, "utf8");
 	return event;
 }
@@ -14039,10 +14098,13 @@ function saveCheckpoint(auditRoot, transactionId, content) {
 	mkdirSync(directory, { recursive: true });
 	const path = join(directory, `${transactionId}.before`);
 	writeFileSync(path, content, "utf8");
-	return {
+	const checkpoint = {
 		path,
 		sha256: sha256(content)
 	};
+	const context = auditContext.getStore();
+	if (context) (context.checkpoints ||= []).push(checkpoint);
+	return checkpoint;
 }
 function atomicWrite(target, content, transactionId) {
 	const temporary = `${target}.architecture-manager-${transactionId}.tmp`;
@@ -14063,6 +14125,82 @@ function output(event, checkpointPath = null) {
 		...event,
 		checkpointPath
 	};
+}
+//#endregion
+//#region src/transactions/operation-audit.mjs
+function auditPlanOperation(options, execute) {
+	const { plan, actor = "local-user", auditRoot = defaultAuditRoot(), credentialValue } = options || {};
+	const parent = auditContext.getStore();
+	const operationId = "operation-" + randomUUID();
+	const validId = (value) => typeof value === "string" && /^[A-Za-z0-9._-]{1,180}$/.test(value);
+	const safePlan = {
+		planId: validId(plan?.planId) ? plan.planId : "invalid-plan",
+		workspaceRoot: typeof plan?.workspaceRoot === "string" ? plan.workspaceRoot : null
+	};
+	const action = validId(plan?.kind) ? plan.kind : "invalid-plan";
+	const target = plan?.target?.path || plan?.target?.platformId || plan?.target?.resourceId || action;
+	const context = {
+		operationId,
+		parentOperationId: parent?.operationId || null,
+		planId: safePlan.planId,
+		secrets: [...parent?.secrets || [], credentialValue].filter((v) => typeof v === "string" && v)
+	};
+	return auditContext.run(context, () => {
+		const common = {
+			auditRoot,
+			transactionId: operationId,
+			plan: safePlan,
+			actor,
+			action,
+			target: typeof target === "string" ? target : action,
+			phase: "operation"
+		};
+		writeAudit({
+			...common,
+			status: "started",
+			writePerformed: false
+		});
+		const failed = (error) => {
+			const checkpoint = context.checkpoints?.at(-1);
+			try {
+				writeAudit({
+					...common,
+					status: error?.message === "TASK_CANCELLED" || error?.message === "ONBOARDING_CANCELLED" ? "cancelled" : "failed",
+					writePerformed: null,
+					checkpointPath: checkpoint?.path || null,
+					checkpointSha256: checkpoint?.sha256 || null,
+					error: String(error?.message ?? error)
+				});
+			} catch {}
+			throw error;
+		};
+		const succeeded = (result) => {
+			try {
+				const checkpoint = context.checkpoints?.at(-1);
+				writeAudit({
+					...common,
+					status: result?.status === "already-applied" ? "already-applied" : result?.status === "blocked" ? "blocked" : "completed",
+					writePerformed: typeof result?.writePerformed === "boolean" ? result.writePerformed : null,
+					checkpointPath: result?.checkpointPath || checkpoint?.path || null,
+					checkpointSha256: result?.checkpointSha256 || checkpoint?.sha256 || null,
+					newSha256: result?.newSha256 || null
+				});
+			} catch {
+				throw Object.assign(/* @__PURE__ */ new Error("AUDIT_FINALIZATION_FAILED"), {
+					writePerformed: result?.writePerformed ?? null,
+					operationId
+				});
+			}
+			return result;
+		};
+		let result;
+		try {
+			result = execute();
+		} catch (error) {
+			return failed(error);
+		}
+		return result && typeof result.then === "function" ? result.then(succeeded, failed) : succeeded(result);
+	});
 }
 //#endregion
 //#region src/domains/platforms/resource-defaults.mjs
@@ -14196,7 +14334,14 @@ function buildPlatformResourceDefaultPlan({ workspaceRoot, platformId, repositor
 		]
 	};
 }
-function applyPlatformResourceDefault(plan, { auditRoot = defaultAuditRoot(), actor = "local-user", now = (/* @__PURE__ */ new Date()).toISOString(), failAfterCheckpoint = false } = {}) {
+function applyPlatformResourceDefault(plan, options = {}) {
+	if (auditContext.getStore()?.planId === plan?.planId) return applyDefaultImplementation(plan, options);
+	return auditPlanOperation({
+		plan,
+		...options
+	}, () => applyDefaultImplementation(plan, options));
+}
+function applyDefaultImplementation(plan, { auditRoot = defaultAuditRoot(), actor = "local-user", now = (/* @__PURE__ */ new Date()).toISOString(), failAfterCheckpoint = false } = {}) {
 	requirePlan(plan);
 	if (plan.kind !== "platform-resource-default") throw Error("INVALID_TRANSACTION_PLAN");
 	const { workspaceRoot, target, payload } = plan, { file, bytes } = context(workspaceRoot, target.platformId), transactionId = makeId(plan, now);

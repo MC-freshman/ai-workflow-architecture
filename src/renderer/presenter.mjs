@@ -5,6 +5,7 @@ export function friendlyError(error) {
   const code = String(error?.message ?? error).replace(/^Error invoking remote method '[^']+':\s*/, '').replace(/^(?:Error:\s*)+/,'');
   const [key, ...details] = code.split(':');
   const hints = {
+    AUDIT_FINALIZATION_FAILED:'操作已返回，但最终审计未能保存；请检查恢复点和实际状态。可能已写入，不能盲目重复执行。',
     AUTOMATIC_SOFTWARE_MATCH_AMBIGUOUS:'来源可能对应多个软件配方，请在下方明确选择软件 ID 后接入。',
     AUTOMATIC_SOFTWARE_DECLARATION_REQUIRED:'未找到匹配配方。请在下方声明 CLI 功能，或导入现成 MCP；管理台不会猜测未知程序的动作和权限。',
     PLATFORM_SCOPE_MISMATCH:'这条请求不属于所选平台，未写入任何配置。',

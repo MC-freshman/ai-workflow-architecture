@@ -2,6 +2,8 @@ import { appendFileSync, existsSync, mkdirSync, renameSync, rmSync, writeFileSyn
 import { randomUUID } from 'node:crypto';
 import { join } from 'node:path';
 import { sha256 } from '../core/hash.mjs';
+import {auditContext} from './audit-context.mjs';
+import {auditEventHash,sanitizeAuditEvent} from './audit-content.mjs';
 
 export function makeId(plan, now) {
   return `${plan.planId}-${now.replace(/[^0-9]/g, '').slice(0, 17)}-${randomUUID().slice(0, 8)}`;
@@ -12,8 +14,9 @@ function auditPath(auditRoot) {
   return join(auditRoot, 'events.jsonl');
 }
 
-export function writeAudit({ auditRoot, transactionId, plan, actor, action, status, target, oldSha256 = null, newSha256 = null, checkpointSha256 = null, checkpointPath = null, connectorStatus = null, writePerformed = false, error = null, now }) {
-  const event = {
+export function writeAudit({ auditRoot, transactionId, plan, actor, action, status, target, oldSha256 = null, newSha256 = null, checkpointSha256 = null, checkpointPath = null, connectorStatus = null, writePerformed = false, error = null, now = new Date().toISOString(), phase = 'domain' }) {
+  const context = auditContext.getStore();
+  const event = sanitizeAuditEvent({
     schema: 'architecture-manager-audit/v1',
     transactionId,
     planId: plan.planId,
@@ -29,8 +32,13 @@ export function writeAudit({ auditRoot, transactionId, plan, actor, action, stat
     connectorStatus,
     writePerformed,
     error,
-    occurredAt: now
-  };
+    occurredAt: typeof now==='string' && Number.isFinite(Date.parse(now)) ? now : new Date().toISOString(),
+    operationId:context?.operationId || null,
+    parentOperationId:context?.parentOperationId || null,
+    phase,
+    writeState:writePerformed===true?'performed':writePerformed===false?'not-performed':'unknown'
+  },context?.secrets || []);
+  event.eventSha256 = auditEventHash(event);
   appendFileSync(auditPath(auditRoot), `${JSON.stringify(event)}\n`, 'utf8');
   return event;
 }
@@ -40,7 +48,10 @@ export function saveCheckpoint(auditRoot, transactionId, content) {
   mkdirSync(directory, { recursive: true });
   const path = join(directory, `${transactionId}.before`);
   writeFileSync(path, content, 'utf8');
-  return { path, sha256: sha256(content) };
+  const checkpoint = { path, sha256: sha256(content) };
+  const context=auditContext.getStore();
+  if(context) (context.checkpoints ||= []).push(checkpoint);
+  return checkpoint;
 }
 
 export function atomicWrite(target, content, transactionId) {

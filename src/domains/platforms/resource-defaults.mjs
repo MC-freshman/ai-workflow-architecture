@@ -7,6 +7,8 @@ import {sha256,sha256File} from '../../core/hash.mjs';
 import {validateFrozenResource} from '../resources/versions.mjs';
 import {declaredVersion} from '../certification/declared.mjs';
 import {atomicWrite,makeId,output,requirePlan,saveCheckpoint,writeAudit} from '../../transactions/kernel.mjs';
+import {auditContext} from '../../transactions/audit-context.mjs';
+import {auditPlanOperation} from '../../transactions/operation-audit.mjs';
 
 const json=value=>JSON.stringify(value,null,2)+'\n';
 const ID=/^[a-z0-9][a-z0-9._-]*$/i;
@@ -60,7 +62,11 @@ export function buildPlatformResourceDefaultPlan({workspaceRoot,platformId,repos
   const bindings=[...validated.resources].map(([id,value])=>({id,sumsSha256:value.sumsSha256})).sort((a,b)=>a.id.localeCompare(b.id));
   return {schema:'architecture-manager-plan/v1',kind:'platform-resource-default',planId:'platform-default-'+randomUUID(),workspaceRoot,generatedAt:now,applyMode:'confirmation-required',writePerformed:false,target:{platformId,repository,resourceId,targetVersion,previousVersion:declaredVersion(previous),effectiveVersion,scope:'platform-local'},payload:{relativePath:relative,beforeSha256:sha256(bytes),afterText:json(after),afterSha256:sha256(json(after)),sharedPointerSha256:pointerSha256,resourceBindings:bindings},steps:[{operation:targetVersion===null?'恢复跟随共享默认':'设置本平台默认版本',target:relative,oldValue:previous,newValue:targetVersion,oldSha256:sha256(bytes),checkpoint:true}],verification:['only the selected platform bridge default changes','shared current and frozen releases remain unchanged','exact agent dependency locks remain authoritative','future runs only; existing run locks remain unchanged']};
 }
-export function applyPlatformResourceDefault(plan,{auditRoot=defaultAuditRoot(),actor='local-user',now=new Date().toISOString(),failAfterCheckpoint=false}={}){
+export function applyPlatformResourceDefault(plan,options={}){
+  if(auditContext.getStore()?.planId===plan?.planId)return applyDefaultImplementation(plan,options);
+  return auditPlanOperation({plan,...options},()=>applyDefaultImplementation(plan,options));
+}
+function applyDefaultImplementation(plan,{auditRoot=defaultAuditRoot(),actor='local-user',now=new Date().toISOString(),failAfterCheckpoint=false}={}){
   requirePlan(plan);if(plan.kind!=='platform-resource-default')throw Error('INVALID_TRANSACTION_PLAN');
   const {workspaceRoot,target,payload}=plan,{file,bytes}=context(workspaceRoot,target.platformId),transactionId=makeId(plan,now);
   const common={auditRoot,actor,now,transactionId,plan,action:plan.kind,target:payload.relativePath};

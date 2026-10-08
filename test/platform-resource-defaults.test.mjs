@@ -6,8 +6,9 @@ import {tmpdir} from 'node:os';
 import {execFileSync,spawnSync} from 'node:child_process';
 import {seedRelease,seedPointer} from './support/resources.mjs';
 import {sha256File} from '../src/core/hash.mjs';
-import {readPlatformResourceVersions,buildPlatformResourceDefaultPlan} from '../src/domains/platforms/resource-defaults.mjs';
+import {readPlatformResourceVersions,buildPlatformResourceDefaultPlan,applyPlatformResourceDefault} from '../src/domains/platforms/resource-defaults.mjs';
 import {applyPlan,verifyPlanTarget} from '../src/transactions.mjs';
+import {readAuditEvents} from '../src/audit.mjs';
 
 function fixture(t){
   const root=fs.mkdtempSync(join(tmpdir(),'platform-defaults-'));t.after(()=>fs.rmSync(root,{recursive:true,force:true}));
@@ -25,6 +26,16 @@ test('platform choice and rollback affect only future runs of one platform; shar
   assert.equal(applyPlan({plan,auditRoot:f.auditRoot}).status,'already-applied');
   const reset=buildPlatformResourceDefaultPlan({...f.input,targetVersion:null});assert.equal(applyPlan({plan:reset,auditRoot:f.auditRoot}).effectiveVersion,'1.10.0');assert.equal(readPlatformResourceVersions(f.input).rows.find(row=>row.resourceId==='expert').platformVersion,null);
   for(const [name,hash] of unchanged)assert.equal(sha256File(join(f.root,name)),hash,name);
+});
+test('direct AI executor and manager replay each produce one correlated terminal operation',t=>{
+  const f=fixture(t),plan=buildPlatformResourceDefaultPlan(f.input);
+  applyPlatformResourceDefault(plan,{auditRoot:f.auditRoot});applyPlan({plan,auditRoot:f.auditRoot});
+  const report=readAuditEvents({auditRoot:f.auditRoot}),operations=report.events.filter(row=>row.phase==='operation');
+  assert.equal(report.ok,true);assert.deepEqual(operations.map(row=>row.status),['started','completed','started','already-applied']);
+  assert.equal(operations[0].operationId,operations[1].operationId);assert.equal(operations[2].operationId,operations[3].operationId);assert.notEqual(operations[0].operationId,operations[2].operationId);
+  const path=join(f.root,'first/bridge.json');fs.appendFileSync(path,' ');
+  assert.throws(()=>applyPlatformResourceDefault(plan,{auditRoot:f.auditRoot}),/BASELINE_MISMATCH|NO_CHANGE/);
+  assert.equal(readAuditEvents({auditRoot:f.auditRoot}).events.at(-1).status,'failed');
 });
 test('stale bridge, shared pointer and dependency bytes cannot be silently accepted',t=>{
   const f=fixture(t),plan=buildPlatformResourceDefaultPlan(f.input),before=fs.readFileSync(join(f.root,'first/bridge.json'));

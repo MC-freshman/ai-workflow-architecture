@@ -1,4 +1,5 @@
 import {applyPlatformResourceDefault,verifyPlatformResourceDefault} from './domains/platforms/resource-defaults.mjs';
+import {auditPlanOperation} from './transactions/operation-audit.mjs';
 import {applyAutomaticSoftware,verifyAutomaticSoftware} from './domains/intake/automatic-software.mjs';
 import {applyGatewayMigration,verifyGatewayMigration} from './domains/software/gateway-migration.mjs';
 import {applyNativeClient,verifyNativeClient} from './domains/platforms/native-client.mjs';
@@ -37,7 +38,11 @@ import { defaultAuditRoot, localViewPath, safeRelative, targetPath } from './cor
 import { sha256 } from './core/hash.mjs';
 import { atomicWrite, makeId, output, requirePlan, saveCheckpoint, writeAudit } from './transactions/kernel.mjs';
 
-export function applyPlan({ plan, afterText = null, credentialValue = null, actor = 'local-user', auditRoot = defaultAuditRoot(), now = new Date().toISOString(), failAfterCheckpoint = false, onProgress = () => {} }) {
+export function applyPlan(options) {
+  return auditPlanOperation(options, () => applyPlanImplementation(options));
+}
+
+function applyPlanImplementation({ plan, afterText = null, credentialValue = null, actor = 'local-user', auditRoot = defaultAuditRoot(), now = new Date().toISOString(), failAfterCheckpoint = false, onProgress = () => {} }) {
   requirePlan(plan);
   if(plan.kind==='automatic-software-intake')return applyAutomaticSoftware(plan,{actor,auditRoot,onProgress});
   if(plan.kind==='platform-resource-default')return applyPlatformResourceDefault(plan,{actor,auditRoot,now,failAfterCheckpoint});
