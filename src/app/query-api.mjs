@@ -1,4 +1,5 @@
 // Read-only application operations. These functions must not mutate workspace files.
+export {readPlatformResourceVersions} from '../domains/platforms/resource-defaults.mjs';
 export {readMcpConfiguration} from '../domains/software/mcp-config.mjs';
 export {scanExternalBody} from '../domains/intake/sources.mjs';
 export {readBodyEditor,listBodyDependencies} from '../domains/intake/shared-body.mjs';

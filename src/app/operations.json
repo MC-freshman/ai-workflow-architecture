@@ -1,8 +1,20 @@
 {
   "schema": "architecture-manager-operations/v1",
   "operations": {
-    "suggestBodyImport": {"channel":"intake:automatic-suggestions","phase":"query","backend":"suggestBodyImport","argumentsStyle":"input","taskMode":"owned"},
-    "previewAutomaticTextBody": {"channel":"plan:automatic-text-body","phase":"plan","backend":"buildAutomaticTextBodyPlan","argumentsStyle":"input","taskMode":"owned"},
+    "suggestBodyImport": {
+      "channel": "intake:automatic-suggestions",
+      "phase": "query",
+      "backend": "suggestBodyImport",
+      "argumentsStyle": "input",
+      "taskMode": "owned"
+    },
+    "previewAutomaticTextBody": {
+      "channel": "plan:automatic-text-body",
+      "phase": "plan",
+      "backend": "buildAutomaticTextBodyPlan",
+      "argumentsStyle": "input",
+      "taskMode": "owned"
+    },
     "listRuntimeBodies": {
       "channel": "intake:runtime-bodies",
       "phase": "query",
@@ -616,6 +628,27 @@
       "backend": "buildGatewayMigrationPlan",
       "argumentsStyle": "input",
       "taskMode": "owned"
+    },
+    "readPlatformResourceVersions": {
+      "channel": "platform:resource-versions",
+      "phase": "query",
+      "backend": "readPlatformResourceVersions",
+      "argumentsStyle": "input",
+      "taskMode": "owned"
+    },
+    "previewPlatformResourceDefault": {
+      "channel": "plan:platform-resource-default",
+      "phase": "plan",
+      "backend": "buildPlatformResourceDefaultPlan",
+      "argumentsStyle": "input",
+      "taskMode": "owned"
+    },
+    "previewAutomaticSoftware": {
+      "channel": "plan:automatic-software",
+      "phase": "plan",
+      "backend": "buildAutomaticSoftwarePlan",
+      "argumentsStyle": "input",
+      "taskMode": "owned"
     }
   },
   "planKinds": [
@@ -657,6 +690,8 @@
     "release-publish",
     "software-launch",
     "software-binding",
-    "software-binding-migration"
+    "software-binding-migration",
+    "platform-resource-default",
+    "automatic-software-intake"
   ]
 }

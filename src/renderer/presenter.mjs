@@ -5,6 +5,13 @@ export function friendlyError(error) {
   const code = String(error?.message ?? error).replace(/^Error invoking remote method '[^']+':\s*/, '').replace(/^(?:Error:\s*)+/,'');
   const [key, ...details] = code.split(':');
   const hints = {
+    AUTOMATIC_SOFTWARE_MATCH_AMBIGUOUS:'来源可能对应多个软件配方，请在下方明确选择软件 ID 后接入。',
+    AUTOMATIC_SOFTWARE_DECLARATION_REQUIRED:'未找到匹配配方。请在下方声明 CLI 功能，或导入现成 MCP；管理台不会猜测未知程序的动作和权限。',
+    PLATFORM_SCOPE_MISMATCH:'这条请求不属于所选平台，未写入任何配置。',
+    PLATFORM_VERSION_PAIRING_REQUIRED:'此资源与平台引擎、契约或检查器配对锁定，请使用平台版本对齐计划，不能单独切换。',
+    MANAGEMENT_NODE_REQUIRED:'未找到可用的 Node.js 18 或更新版本。请安装系统设施后重试；管理台将为各平台建立独立运行时及备份。',
+    MANAGEMENT_RUNTIME_DRIFT:'管理命令的程序或脚本已经变化，请更新本平台标准客户端入口后重试。',
+    MANAGEMENT_SERVICE_UPDATE_REQUIRED:'请先更新本平台标准客户端入口，安装与管理台相同的版本选择执行器。',
     NATIVE_CLIENT_BODY_REQUIRED:'请选择本平台目录内的厂商客户端程序；安装包需先安装，外部本体可先通过本体接入安置。',
     NATIVE_CLIENT_SELECTION_REQUIRED:'发现多个客户端本体，请在“客户端入口”选择本次要接入的程序。',
     NATIVE_CLIENT_PLATFORM_PATH_REQUIRED:'客户端本体与配置必须归所选平台；请先导入本体，不能借用其它平台程序。',
@@ -19,6 +26,7 @@ export function friendlyError(error) {
     NATIVE_AUTH_CONNECTION_CLOSED:'厂商 CLI 提前结束了认证连接；页面登录成功尚未成为工具回执。请保留当前配置，等待原生适配器处理，勿反复登录。',
     NATIVE_AUTH_REQUEST_REJECTED:'厂商 CLI 拒绝了认证协议请求；需要核对本体接口和适配版本，配置保留。',
     NATIVE_AUTHENTICATION_FAILED:'厂商 CLI 认证未完成；本次没有通过原生验证，配置保留，不自动重试。',
+    NATIVE_AUTHENTICATION_INCOMPLETE:'网页登录回调已收到，但厂商 CLI 尚未确认认证完成；本次停止，不发送模型请求，不自动重试。',
     NATIVE_WORKBUDDY_TOOL_AUTH_REJECTED:'厂商工具请求未接受已取得的认证；需要继续修复原生认证适配，重复网页登录不能作为通过证据。',
     NATIVE_SERVER_NAME_CONFLICT:'原生客户端中已存在非管理台创建的 architecture 服务，原配置保留；请先处理名称冲突。',
     NATIVE_CLIENT_BINDING_CHANGED:'原生程序、配置或架构服务已变化，请重新注册并验证；旧证据不能复用。',

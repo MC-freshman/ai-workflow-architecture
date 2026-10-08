@@ -10,6 +10,7 @@ import {runtimeFile} from '../../core/runtime-path.mjs';
 import {runOwnedProcess} from '../../core/owned-process.mjs';
 import {parseJsonc} from '../../core/jsonc.mjs';
 import {requirePlan,atomicWrite,saveCheckpoint,writeAudit,makeId} from '../../transactions/kernel.mjs';
+import {recordNativeAttempt,nativeAttemptBlocksProof} from './native-attempt.mjs';
 
 const json=value=>JSON.stringify(value,null,2)+'\n';
 const hash=path=>fs.existsSync(path)?sha256File(path):null;
@@ -21,7 +22,7 @@ export function buildNativeClientPlan({workspaceRoot,platformId,bodyPath='',now=
   const profile=selectNativeProfile(workspaceRoot,platformId,bodyPath);
   const descriptor=read(targetPath(workspaceRoot,`${platformId}/bridge/client-adapter.json`));
   if(profile.supportsRegistration && !descriptor.server?.executable)throw Error('NATIVE_SERVICE_REQUIRED');
-  const entry=profile.kind==='workbuddy-cli'?{type:'stdio',command:descriptor.server.executable,args:descriptor.server.args}:{command:descriptor.server?.executable,args:descriptor.server?.args,enabled:true};
+  const entry=profile.kind==='workbuddy-cli'?{type:'stdio',command:descriptor.server.executable,args:descriptor.server.args}:profile.kind==='workspace-mcp'&&profile.vendor==='Qoder'?{command:descriptor.server.executable,args:descriptor.server.args,type:'stdio',disabled:false}:{command:descriptor.server?.executable,args:descriptor.server?.args,enabled:true};
   const existing=fs.existsSync(statePath(workspaceRoot,platformId))?read(statePath(workspaceRoot,platformId)):null;
   return {schema:'architecture-manager-plan/v1',kind:'platform-native-client',planId:'native-'+randomUUID(),workspaceRoot,generatedAt:now,applyMode:'confirmation-required',writePerformed:false,target:{platformId,bodyPath:profile.bodyPath},payload:{profile,entry,python:snapshot.fields.pythonExecutable,nativeConfigBefore:profile.configPath?hash(profile.configPath):null,bindingBefore:hash(statePath(workspaceRoot,platformId)),configSha256:hash(targetPath(workspaceRoot,snapshot.configPath)),managed:Boolean(existing?.registered && existing.profile.bodyPath===profile.bodyPath && existing.nativeConfigSha256===hash(profile.configPath)),helperSha256:hash(runtimeFile('native_client.py'))},steps:[{operation:'识别原生本体',target:profile.bodyPath},{operation:profile.supportsRegistration?'通过厂商接口注册 MCP':'登记待补外部接口',target:profile.configPath || profile.bodyPath},{operation:'独立原生三仓只读调用验证',target:profile.label}],verification:['preserve all unrelated native settings','encrypted private backup and real restored-file comparison','native tool calls are distinct from facade loopback','no model turn; unsupported direct calls remain pending']};
 }
@@ -46,7 +47,7 @@ export async function applyNativeClient(plan,{auditRoot=defaultAuditRoot(),actor
   const transactionId=makeId(plan,new Date().toISOString());
   const checkpoint=saveCheckpoint(auditRoot,transactionId,json({kind:plan.kind,platformId,bindingBefore:fs.existsSync(statePath(workspaceRoot,platformId))?read(statePath(workspaceRoot,platformId)):null,nativeConfigSha256:plan.payload.nativeConfigBefore}));
   const backupPath=targetPath(workspaceRoot,`inbox/backup/${platformId}/manager-native/${plan.planId}/config.before.dpapi.json`);
-  const options={registerCancel};let registered=false;
+  const options={registerCancel};let registered=false,workspaceWrittenSha256=null;
   try {
     if(profile.kind==='codex-app-server') {
       fs.mkdirSync(profile.home,{recursive:true});
@@ -65,6 +66,16 @@ export async function applyNativeClient(plan,{auditRoot=defaultAuditRoot(),actor
       if(!native || !['command','args'].every(key=>json(native[key])===json(entry[key])))throw Error('NATIVE_CONFIGURATION_READBACK_FAILED');
       registered=true;
     }
+    else if(profile.kind==='workspace-mcp'){
+      const document=fs.existsSync(profile.configPath)?parseJsonc(fs.readFileSync(profile.configPath,'utf8')):{};
+      let table=document;for(const key of profile.configKeys){if(table[key]!=null&&(typeof table[key]!=='object'||Array.isArray(table[key])))throw Error('NATIVE_SERVER_NAME_CONFLICT');table[key] ||= {};table=table[key];}
+      const previous=table.architecture;
+      if(previous&&json(previous)!==json(entry)&&!plan.payload.managed)throw Error('NATIVE_SERVER_NAME_CONFLICT');
+      await helper(plan,{operation:'backup',configPath:profile.configPath,backupPath},options);
+      if(hash(profile.configPath)!==plan.payload.nativeConfigBefore)throw Error('INTEGRATION_BASELINE_MISMATCH');
+      table.architecture=entry;fs.mkdirSync(dirname(profile.configPath),{recursive:true});atomicWrite(profile.configPath,json(document),transactionId);workspaceWrittenSha256=hash(profile.configPath);
+      let returned=read(profile.configPath);for(const key of profile.configKeys)returned=returned[key];if(json(returned.architecture)!==json(entry))throw Error('NATIVE_CONFIGURATION_READBACK_FAILED');registered=true;
+    }
     const record={schema:'architecture-manager-native-client/v1',platformId,profile,entry,registered,nativeConfigSha256:profile.configPath?hash(profile.configPath):null,nativeVendorClientVerified:false,status:registered?'registered-pending-native-call':'interface-required',reason:profile.reason || (profile.supportsDirectProbe?'原生工具调用尚未执行':'厂商配置已注册；尚无已验证的无模型工具调用接口，不能标记完整接入。'),backupPath:registered?backupPath:null,registeredAt:new Date().toISOString()};
     fs.mkdirSync(dirname(statePath(workspaceRoot,platformId)),{recursive:true});atomicWrite(statePath(workspaceRoot,platformId),json(record),transactionId);
     if(registered) {
@@ -74,6 +85,7 @@ export async function applyNativeClient(plan,{auditRoot=defaultAuditRoot(),actor
     if(profile.supportsDirectProbe)return {...await probeNativeClient({workspaceRoot,platformId},{registerCancel}),registered:true,writePerformed:true};
     return {...record,architectureComplete:false,writePerformed:true};
   }catch(error){
+    if(profile.kind==='workspace-mcp'&&!registered&&workspaceWrittenSha256&&hash(profile.configPath)===workspaceWrittenSha256)await helper(plan,{operation:'restore',backupPath},options).catch(()=>{});
     // A failed tool probe does not undo valid registration. A failed registration restores it.
     // Codex's writer restores its own failed write. Never replace a concurrently edited file here.
     // WorkBuddy uses its atomic native writer; a failed registration keeps the encrypted checkpoint.
@@ -99,7 +111,14 @@ export function validateNativeReceipt(response,expected) {
   return {receipt,registriesRead:receipt.registriesRead,releases};
 }
 
-export async function probeNativeClient({workspaceRoot,platformId},{registerCancel=()=>{}}={}) {
+export async function probeNativeClient(input,options={}){
+  const record=read(statePath(input.workspaceRoot,input.platformId));
+  if(!record.profile.supportsDirectProbe)return performNativeProbe(input,options);
+  recordNativeAttempt(input.workspaceRoot,input.platformId,'pending');
+  try{const result=await performNativeProbe(input,options);recordNativeAttempt(input.workspaceRoot,input.platformId,'passed');return result;}
+  catch(error){recordNativeAttempt(input.workspaceRoot,input.platformId,'failed',error.message);throw error;}
+}
+async function performNativeProbe({workspaceRoot,platformId},{registerCancel=()=>{}}={}) {
   const record=read(statePath(workspaceRoot,platformId));
   if(!record.profile.supportsDirectProbe){const current=nativeClientStatus(workspaceRoot,platformId);if(current.nativeVendorClientVerified)return {...current,writePerformed:false};}
   if(!record.registered || !record.profile.supportsDirectProbe)return {...record,nativeVendorClientVerified:false,architectureComplete:false,writePerformed:false};
@@ -129,6 +148,8 @@ export function nativeClientStatus(workspaceRoot,platformId) {
   try{
     const record=read(statePath(workspaceRoot,platformId));
     const latest=read(targetPath(workspaceRoot,`${platformId}/runtime/maintenance/manager-native/latest.json`));
+    const attemptPath=targetPath(workspaceRoot,`${platformId}/runtime/maintenance/manager-native/last-attempt.json`),attempt=fs.existsSync(attemptPath)?read(attemptPath):null;
+    if(nativeAttemptBlocksProof(attempt,latest))return {registered:record.registered,nativeVendorClientVerified:false,status:attempt.status==='pending'?'native-probe-pending':'native-probe-failed',reason:attempt.error,lastSuccessfulProofAt:latest.checkedAt,profile:record.profile};
     const binding=clientBinding(workspaceRoot,platformId),service=read(targetPath(workspaceRoot,`${platformId}/bridge/client-adapter.json`)).server;
     const traceCurrent=latest.modelTurnStarted===false || (latest.transport==='vendor-cli-model-tool-trace' && hash(latest.tracePath)===latest.traceSha256);
     const current=record.registered && traceCurrent && latest.proofScope==='native-three-repository-frozen-release-read' && json(selectNativeProfile(workspaceRoot,platformId,record.profile.bodyPath))===json(latest.profile) && hash(record.profile.configPath)===latest.nativeConfigSha256 && hash(latest.evidencePath)===latest.evidenceSha256 && ['configSha256','versionsSha256','adapterSha256'].every(key=>binding[key]===latest[key]) && hash(service.args.find(path=>path.endsWith('mcp_service.py')))===latest.serviceSha256;

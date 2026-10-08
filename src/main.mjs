@@ -1,4 +1,6 @@
 import {buildGatewayMigrationPlan} from './domains/software/gateway-migration.mjs';
+import {readPlatformResourceVersions,buildPlatformResourceDefaultPlan} from './domains/platforms/resource-defaults.mjs';
+import {buildAutomaticSoftwarePlan} from './domains/intake/automatic-software.mjs';
 import {buildNativeClientPlan,probeNativeClient,nativeClientStatus} from './domains/platforms/native-client.mjs';
 import {probeNativeClientWithAi} from './domains/platforms/native-ai-probe.mjs';
 import {suggestBodyImport,buildAutomaticTextBodyPlan} from './domains/intake/automatic.mjs';
@@ -178,6 +180,9 @@ function registerIpc() {
   handleOperation('platform:check', (event, input) => owned(input, (registerCancel) => runPlatformCheck({ ...input, registerCancel, onProgress: (progress) => event.sender.send('transaction:progress', progress) })));
   handleOperation('plan:platform-view', (_event, input) => buildPlatformViewPlan(input));
   handleOperation('plan:resource-pointer', (_event, input) => buildResourcePointerPlan(input));
+  handleOperation('platform:resource-versions',(_event,input)=>readPlatformResourceVersions(input));
+  handleOperation('plan:platform-resource-default',(_event,input)=>buildPlatformResourceDefaultPlan(input));
+  handleOperation('plan:automatic-software',(_event,input)=>buildAutomaticSoftwarePlan(input));
   // The anchor surface has a declared backend for each channel, so the dispatcher runs the work and
   // these handlers only have to exist: every operation needs a registered channel before it can be
   // called from the renderer at all.

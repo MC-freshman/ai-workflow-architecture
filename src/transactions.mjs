@@ -1,3 +1,5 @@
+import {applyPlatformResourceDefault,verifyPlatformResourceDefault} from './domains/platforms/resource-defaults.mjs';
+import {applyAutomaticSoftware,verifyAutomaticSoftware} from './domains/intake/automatic-software.mjs';
 import {applyGatewayMigration,verifyGatewayMigration} from './domains/software/gateway-migration.mjs';
 import {applyNativeClient,verifyNativeClient} from './domains/platforms/native-client.mjs';
 import {applyExistingSoftwareBinding,verifyExistingSoftwareBinding} from './domains/intake/software-binding.mjs';
@@ -37,6 +39,8 @@ import { atomicWrite, makeId, output, requirePlan, saveCheckpoint, writeAudit } 
 
 export function applyPlan({ plan, afterText = null, credentialValue = null, actor = 'local-user', auditRoot = defaultAuditRoot(), now = new Date().toISOString(), failAfterCheckpoint = false, onProgress = () => {} }) {
   requirePlan(plan);
+  if(plan.kind==='automatic-software-intake')return applyAutomaticSoftware(plan,{actor,auditRoot,onProgress});
+  if(plan.kind==='platform-resource-default')return applyPlatformResourceDefault(plan,{actor,auditRoot,now,failAfterCheckpoint});
   if(plan.kind==='platform-native-client')return applyNativeClient(plan,{actor,auditRoot});
   if(plan.kind==='software-binding-migration')return applyGatewayMigration(plan,{actor,auditRoot,now});
   if(plan.kind==='software-binding')return applyExistingSoftwareBinding(plan,{actor,auditRoot,now});
@@ -349,6 +353,8 @@ export function verifyPlanTarget({ plan }) {
     let valid=true;try {assertPublishedVersion(plan.workspaceRoot,plan.target.repository,plan.target.resourceId,plan.target.targetVersion);} catch {valid=false;}
     return { schema: 'architecture-manager-verification/v1', ok: valid && current.version === plan.target.targetVersion, target: targetRelative, actualVersion: current.version, expectedVersion: plan.target.targetVersion, writePerformed: false };
   }
+  if(plan.kind==='platform-resource-default')return verifyPlatformResourceDefault(plan);
+  if(plan.kind==='automatic-software-intake')return verifyAutomaticSoftware(plan);
   if (plan.kind === 'platform-view') {
     const path = localViewPath(plan.workspaceRoot);
     const state = existsSync(path) ? parseJson(readFileSync(path, 'utf8')) : { enabled: {} };

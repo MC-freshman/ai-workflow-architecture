@@ -1,4 +1,5 @@
 import {parseJson as parseJsonText} from './core/json.mjs';
+import {managementRuntimePlan,installManagementRuntime} from './domains/platforms/management-runtime.mjs';
 import { spawn } from 'node:child_process';
 import { existsSync, mkdirSync, readFileSync } from 'node:fs';
 import { join,relative,extname } from 'node:path';
@@ -22,16 +23,23 @@ export function buildOnboardingClientPlan({ workspaceRoot, platformId, now = new
   const python = snapshot.fields.pythonExecutable;
   if (!snapshot.exists || !python || !existsSync(python)) throw new Error('RUNTIME_PYTHON_REQUIRED');
   const base = `${platformId}/bridge/manager-client`;
-  const files = ['mcp_service.py', 'cli_client.py'].map((name) => ({ path: `${base}/${name}`, content: readFileSync(fileURLToPath(new URL(`./runtime/${name}`, import.meta.url)), 'utf8') }));
+  const files = ['mcp_service.py', 'cli_client.py','platform_defaults.mjs'].map((name) => ({ path: `${base}/${name}`, content: readFileSync(runtimeFile(name), 'utf8') }));
+  const managementRuntime=managementRuntimePlan(workspaceRoot,platformId);
   const service = { executable: python, args: ['-B', targetPath(workspaceRoot, `${base}/mcp_service.py`), targetPath(workspaceRoot, snapshot.configPath)] };
   let descriptor = { schema: 'architecture-manager-client/v1', platformId, kind: 'cli', executable: python, args: ['-B', targetPath(workspaceRoot, `${base}/cli_client.py`), targetPath(workspaceRoot, `${platformId}/bridge/client-adapter.json`)], server: service, preset: 'architecture-json-cli', probeTool: 'architecture_probe', nativeVerified: false, installedClient: true };
   const previous=targetPath(workspaceRoot,`${platformId}/bridge/client-adapter.json`);
   if(existsSync(previous)) {const native=load(previous);if(native.sourceBody){descriptor={...native,server:service};if(extname(native.sourceBody.path)==='.py')descriptor.executable=python;}}
+  descriptor.management={executable:managementRuntime.target,executableSha256:managementRuntime.sha256,args:[targetPath(workspaceRoot,`${base}/platform_defaults.mjs`),targetPath(workspaceRoot,snapshot.configPath)],moduleSha256:sha256(files.find(file=>file.path.endsWith('platform_defaults.mjs')).content)};
   files.push({ path: `${platformId}/bridge/client-adapter.json`, content: json(descriptor) }, { path: `${base}/mcp-client-registration.json`, content: json({ mcpServers: { architecture: { command: service.executable, args: service.args } }, notes: 'Import this into a compatible native client. Export is not evidence of native registration.' }) });
   const planned = plannedFiles(workspaceRoot, files);
-  return { schema: 'architecture-manager-plan/v1', kind: 'platform-client', planId: `client-${randomUUID()}`, workspaceRoot, generatedAt: now, applyMode: 'confirmation-required', writePerformed: false, target: { platformId }, payload: { files: planned }, steps: planned.map((file) => ({ operation: 'install-client-entry', target: file.path, oldSha256: file.beforeSha256, newSha256: file.newSha256 })), verification: ['real independent CLI client connects to registered MCP service', 'challenge binds platform config and release seals', 'native vendor registration remains separate'] };
+  return { schema: 'architecture-manager-plan/v1', kind: 'platform-client', planId: `client-${randomUUID()}`, workspaceRoot, generatedAt: now, applyMode: 'confirmation-required', writePerformed: false, target: { platformId }, payload: { files: planned,managementRuntime }, steps: [{operation:'安装本平台管理命令运行时并恢复验证',target:managementRuntime.target},...planned.map((file) => ({ operation: 'install-client-entry', target: file.path, oldSha256: file.beforeSha256, newSha256: file.newSha256 }))], verification: ['real independent CLI client connects to registered MCP service', 'challenge binds platform config and release seals', 'native vendor registration remains separate','management runtime has an isolated body, backup manifest and real restore verification'] };
 }
-export function applyOnboardingClient(plan, options) { return applyGeneratedFiles(plan, () => buildOnboardingClientPlan({ workspaceRoot: plan.workspaceRoot, platformId: plan.target.platformId, now: plan.generatedAt }), options); }
+export function applyOnboardingClient(plan, options) {
+  const expected=buildOnboardingClientPlan({workspaceRoot:plan.workspaceRoot,platformId:plan.target.platformId,now:plan.generatedAt});
+  if(JSON.stringify(expected.payload)!==JSON.stringify(plan.payload))throw Error('PLAN_PAYLOAD_MISMATCH');
+  installManagementRuntime(plan);
+  return applyGeneratedFiles(plan,()=>expected,options);
+}
 export const verifyOnboardingClient = verifyFiles;
 
 export function clientBinding(workspaceRoot, platformId) {

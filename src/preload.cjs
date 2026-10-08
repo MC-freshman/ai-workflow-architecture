@@ -110,5 +110,8 @@ contextBridge.exposeInMainWorld('architectureManager', Object.freeze({
   previewNativeCredentialProvider: (...args) => ipcRenderer.invoke("native-mcp:previewNativeCredentialProvider", ...args),
   previewExistingSoftwareBinding: (...args) => ipcRenderer.invoke("intake:software-binding", ...args),
   previewGatewayMigrationPlan: (...args) => ipcRenderer.invoke("plan:software-binding-migration", ...args),
+  readPlatformResourceVersions: (...args) => ipcRenderer.invoke("platform:resource-versions", ...args),
+  previewPlatformResourceDefault: (...args) => ipcRenderer.invoke("plan:platform-resource-default", ...args),
+  previewAutomaticSoftware: (...args) => ipcRenderer.invoke("plan:automatic-software", ...args),
   onTransactionProgress: (callback) => { const listener = (_event, progress) => callback(progress); ipcRenderer.on('transaction:progress', listener); return () => ipcRenderer.removeListener('transaction:progress', listener); }
 }));

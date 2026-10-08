@@ -34,7 +34,12 @@ def get_release(config_path, arguments):
         raise ValueError('invalid shared resource')
     root = Path(config[repo + 'Root']).resolve()
     pointer = root / resource_id / 'current.json'
-    version = arguments.get('version') or json.loads(pointer.read_text(encoding='utf-8-sig'))['version']
+    bridge = json.loads((Path(config['platformRoot']) / 'bridge.json').read_text(encoding='utf-8-sig'))
+    key = 'workflowVersions' if repo == 'tool' else 'agentVersions'
+    local = bridge.get('defaults', {}).get(key, {}).get(resource_id) if repo in ('tool', 'agent') else None
+    if local and '/' in local.replace('\\', '/'):
+        local = local.replace('\\', '/').split('/')[-1]
+    version = arguments.get('version') or local or json.loads(pointer.read_text(encoding='utf-8-sig'))['version']
     if not re.fullmatch(r'(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)', version):
         raise ValueError('invalid frozen version')
     release = (root / resource_id / 'versions' / version).resolve()
@@ -60,6 +65,26 @@ def get_release(config_path, arguments):
     return {'repository': repo, 'id': resource_id, 'version': version, 'hashManifestSha256': digest(sums), 'files': files, 'readOnly': True, 'businessRunExecuted': False}
 
 
+def management_command(config_path, arguments, operation):
+    config = json.loads(Path(config_path).read_text(encoding='utf-8-sig'))
+    platform_root = Path(config['platformRoot']).resolve()
+    descriptor = json.loads((platform_root / 'bridge' / 'client-adapter.json').read_text(encoding='utf-8-sig'))
+    command = descriptor.get('management')
+    if not command:
+        raise ValueError('MANAGEMENT_SERVICE_UPDATE_REQUIRED')
+    module = Path(__file__).resolve().parent / 'platform_defaults.mjs'
+    executable = platform_root / 'runtime' / 'manager-node' / 'node.exe'
+    expected_args = [str(module), str(Path(config_path).resolve())]
+    if Path(command['executable']).resolve() != executable.resolve() or [str(Path(x).resolve()) for x in command['args']] != expected_args or digest(module) != command['moduleSha256'] or digest(executable) != command['executableSha256']:
+        raise ValueError('MANAGEMENT_RUNTIME_DRIFT')
+    payload = dict(arguments, operation=operation)
+    child = subprocess.run([str(executable), *expected_args], input=json.dumps(payload).encode(), capture_output=True, timeout=90)
+    response = json.loads(child.stdout.decode('utf-8'))
+    if child.returncode != 0 or not response.get('ok'):
+        raise ValueError(response.get('error', 'MANAGEMENT_COMMAND_FAILED'))
+    return response['result']
+
+
 def main():
     config_path = sys.argv[1]
     native_probe = None
@@ -79,6 +104,10 @@ def main():
             elif method == 'tools/list':
                 result = {'tools': [{'name': 'architecture_probe', 'description': 'Read-only onboarding challenge; no business run', 'inputSchema': {'type': 'object', 'required': ['challenge', 'platformId'], 'properties': {'challenge': {'type': 'string'}, 'platformId': {'type': 'string'}}}}, {'name': 'architecture_list', 'description': 'Read registered workflows, agents and software current pointers', 'inputSchema': {'type': 'object', 'properties': {}}}, {'name': 'architecture_run', 'description': 'Forward a pinned runner protocol request; prompt output is produced by the business client', 'inputSchema': {'type': 'object', 'required': ['request'], 'properties': {'request': {'type': 'object'}}}}]}
                 result['tools'].append({'name': 'architecture_get_release', 'description': 'Read a frozen workflow, agent or software recipe with SHA256SUMS verification', 'inputSchema': {'type': 'object', 'required': ['repository', 'id'], 'properties': {'repository': {'enum': ['tool', 'agent', 'software']}, 'id': {'type': 'string'}, 'version': {'type': 'string'}}}})
+                result['tools'].extend([
+                    {'name': 'architecture_get_platform_versions', 'description': 'Read this platform tool/agent shared default, local choice and effective version.', 'inputSchema': {'type': 'object', 'additionalProperties': False, 'properties': {}}},
+                    {'name': 'architecture_set_platform_default', 'description': 'On explicit user request, change ONLY this platform future tool/agent default. Does not change shared current, existing runs or agent dependency locks. version=null restores shared default. confirm=true is required.', 'inputSchema': {'type': 'object', 'additionalProperties': False, 'required': ['kind', 'resourceId', 'version', 'confirm'], 'properties': {'kind': {'enum': ['workflow', 'agent']}, 'resourceId': {'type': 'string'}, 'version': {'type': ['string', 'null']}, 'confirm': {'const': True}}}}
+                ])
                 if native_probe is not None:
                     result = {'tools': [{'name': 'architecture_verify', 'description': 'Call exactly once with the supplied challenge. Read and hash-verify three frozen repositories; cannot execute business runs or write shared files.', 'inputSchema': {'type': 'object', 'required': ['challenge', 'platformId'], 'additionalProperties': False, 'properties': {'challenge': {'type': 'string'}, 'platformId': {'type': 'string'}}}}]}
             elif native_probe is not None:
@@ -109,6 +138,10 @@ def main():
                 result = {'content': [{'type': 'text', 'text': json.dumps(value)}], 'isError': False}
             elif method == 'tools/call' and request.get('params', {}).get('name') == 'architecture_get_release':
                 value = get_release(config_path, request['params']['arguments'])
+                result = {'content': [{'type': 'text', 'text': json.dumps(value)}], 'isError': False}
+            elif method == 'tools/call' and request.get('params', {}).get('name') in ('architecture_get_platform_versions', 'architecture_set_platform_default'):
+                name = request['params']['name']
+                value = management_command(config_path, request['params'].get('arguments', {}), 'get' if name.endswith('versions') else 'set')
                 result = {'content': [{'type': 'text', 'text': json.dumps(value)}], 'isError': False}
             elif method == 'tools/call' and request.get('params', {}).get('name') == 'architecture_run':
                 config = json.loads(Path(config_path).read_text(encoding='utf-8-sig'))

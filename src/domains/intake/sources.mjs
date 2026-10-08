@@ -1,3 +1,4 @@
+import {selectDeclaredEntry} from './entry-selection.mjs';
 import {createReadStream,readdirSync,lstatSync,statSync,statfsSync} from '../../core/physical-fs.mjs';
 import {basename,join,extname} from 'node:path';
 import {createHash} from 'node:crypto';
@@ -75,7 +76,8 @@ export async function scanExternalBody({workspaceRoot,platformId=null,sourcePath
   let freeBytes=null;try{const disk=statfsSync(workspaceRoot);freeBytes=Number(disk.bavail)*Number(disk.bsize);}catch{ /* Read-only preview can still describe a source before target exists. */ }
   const candidates=files.filter(row=>row.included && (['agent','skill','tool'].includes(type)?row.sharedText:row.runnable || row.installer || /\.json$/i.test(row.path)));
   const choices=type==='skill'?candidates.filter(row=>/(^|\/)SKILL\.md$/i.test(row.path)):type==='agent'?candidates.filter(row=>/\.(md|txt)$/i.test(row.path)):type==='tool'?candidates.filter(row=>/workflow\.(yaml|yml|json)$|\.(md|py|js|mjs|ps1|sh)$/i.test(row.path)):candidates;
-  const selectedEntry=entryPath || (choices.length===1?choices[0].path:null),shared=['agent','skill','tool'].includes(type),bodyBytes=files.filter(row=>row.included).reduce((sum,row)=>sum+row.bytes,0);
+  let declaredManifest=null;const manifestRow=files.find(row=>row.path==='manifest.json'&&row.included&&row.text&&!row.previewTruncated);if(manifestRow){try{declaredManifest=JSON.parse(manifestRow.preview);}catch{/* Invalid manifests are handled by the publication validator. */}}
+  const selectedEntry=entryPath || selectDeclaredEntry(type,choices,declaredManifest),shared=['agent','skill','tool'].includes(type),bodyBytes=files.filter(row=>row.included).reduce((sum,row)=>sum+row.bytes,0);
   let archiveSha256=null;
   if(sourceKind==='zip'){const hash=createHash('sha256');for await(const chunk of createReadStream(source)){assertScopedActive();hash.update(chunk);}archiveSha256=hash.digest('hex');}
   assertScopedActive();

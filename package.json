@@ -1,6 +1,6 @@
 {
   "name": "architecture-manager",
-  "version": "0.6.0",
+  "version": "0.7.0",
   "private": true,
   "type": "module",
   "main": "src/main.mjs",
@@ -11,12 +11,13 @@
   "scripts": {
     "scan": "node src/cli.mjs",
     "test": "node --test",
-    "build:ui": "npm run generate:preload && npm run lint && vite build",
+    "build:ui": "npm run generate:preload && npm run build:bridge && npm run lint && vite build",
     "start": "npm run build:ui && electron .",
     "package:win": "npm run build:ui && electron-builder --win nsis portable --publish never",
     "generate:preload": "node scripts/generate-preload.mjs",
     "lint": "eslint src scripts",
-    "conform": "node scripts/conform.mjs"
+    "conform": "node scripts/conform.mjs",
+    "build:bridge": "node scripts/build-management-bridge.mjs"
   },
   "dependencies": {
     "ajv": "8.20.0",

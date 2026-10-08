@@ -45,9 +45,8 @@ def main():
                 break
         else:
             raise ValueError('NATIVE_WORKBUDDY_LOGIN_REQUIRED')
-        auth_token = cached_account.get('token')
-        auth_user_id = cached_account.get('userId') or cached_account.get('user_id')
-        authenticated = bool(auth_token and auth_user_id)
+        authenticated = bool(cached_account.get('token') and (cached_account.get('userId') or cached_account.get('user_id')))
+        cached_account = None
         if not authenticated:
             send({'type': 'control_request', 'request_id': 'auth', 'request': {'subtype': 'authenticate', 'methodId': spec.get('authMethodId', 'external')}})
         deadline = time.monotonic() + 240
@@ -59,7 +58,7 @@ def main():
                 if request.get('subtype') == 'auth_url_callback':
                     url = request.get('authState', {}).get('authUrl', '')
                     parsed = urlparse(url)
-                    if parsed.scheme != 'https' or parsed.hostname not in ('www.workbuddy.cn', 'www.workbuddy.ai', 'www.codebuddy.cn', 'www.codebuddy.ai') or parsed.path != '/login':
+                    if parsed.scheme != 'https' or parsed.hostname not in ('www.workbuddy.cn', 'www.workbuddy.ai', 'www.codebuddy.cn', 'www.codebuddy.ai') or parsed.path.rstrip('/') != '/login':
                         raise ValueError('NATIVE_LOGIN_URL_INVALID')
                     if spec.get('readinessOnly'):
                         raise ValueError('NATIVE_WORKBUDDY_LOGIN_REQUIRED')
@@ -67,13 +66,11 @@ def main():
                     webbrowser.open(url)
                     acknowledge(value)
                 if request.get('subtype') == 'auth_result_callback':
-                    authenticated = request.get('success') is True
-                    info = request.get('userinfo') or {}
-                    auth_token = info.get('token') or info.get('accessToken') or info.get('access_token')
-                    auth_user_id = info.get('userId') or info.get('user_id') or info.get('uid')
                     acknowledge(value)
-                    if authenticated:
-                        break
+                    # The callback is an intermediate event. The vendor must finish
+                    # the original authenticate request before accepting user input.
+                    if request.get('success') is False:
+                        raise ValueError('NATIVE_AUTHENTICATION_FAILED')
             if value.get('type') == 'control_response' and value.get('response', {}).get('request_id') == 'auth':
                 response = value.get('response', {})
                 if response.get('subtype') == 'error':
@@ -82,61 +79,26 @@ def main():
                 result = response.get('response', {})
                 if result.get('success') is True:
                     authenticated = True
-                    info = result.get('userinfo') or {}
-                    auth_token = info.get('token') or info.get('accessToken') or info.get('access_token') or auth_token
-                    auth_user_id = info.get('userId') or info.get('user_id') or info.get('uid') or auth_user_id
                     break
                 if result.get('success') is False:
                     raise ValueError('NATIVE_AUTHENTICATION_FAILED')
         if not authenticated:
-            raise ValueError('NATIVE_WORKBUDDY_LOGIN_REQUIRED')
-        print(json.dumps({'type': 'native_auth_ready', 'modelTurnStarted': False, 'credentialAvailable': bool(auth_token), 'identityAvailable': bool(auth_user_id)}), flush=True)
+            raise ValueError('NATIVE_AUTHENTICATION_INCOMPLETE')
+        print(json.dumps({'type': 'native_auth_ready', 'modelTurnStarted': False, 'sameNativeProcess': True, 'credentialRelay': False}), flush=True)
         if spec.get('readinessOnly'):
             return
-        if not auth_token:
-            raise ValueError('NATIVE_CREDENTIAL_RELAY_REQUIRED')
-        if auth_token:
-            # Official CLI CODEBUDDY_AUTH_TOKEN route. Keep vendor OAuth token in memory only.
-            child.stdin.close()
-            try:
-                child.wait(timeout=5)
-            except subprocess.TimeoutExpired:
-                child.kill()
-                child.wait(timeout=5)
-            collector.join(timeout=1)
-            messages = queue.Queue()
-            native_env = {**os.environ, 'CODEBUDDY_AUTH_TOKEN': auth_token}
-            if spec.get('authentication'):
-                authentication = dict(spec['authentication'])
-                authentication['type'] = 'custom-token'
-                authentication['attributes'] = {**authentication.get('attributes', {}), 'token': auth_token, 'username': auth_user_id}
-                # The vendor enables its custom-token storage through this native V3 overlay.
-                native_env['ACC_PRODUCT_CONFIG_V3'] = json.dumps({'authentication': authentication})
-            if auth_user_id:
-                if '\r' in str(auth_user_id) or '\n' in str(auth_user_id):
-                    raise ValueError('NATIVE_CLIENT_RECEIPT_MISMATCH')
-                native_env['CODEBUDDY_CUSTOM_HEADERS'] = 'X-User-Id: ' + str(auth_user_id)
-            child = subprocess.Popen(spec['argv'], cwd=spec['cwd'], env=native_env, stdin=subprocess.PIPE, stdout=subprocess.PIPE, stderr=subprocess.DEVNULL, creationflags=subprocess.CREATE_NO_WINDOW if os.name == 'nt' else 0)
-            auth_token = None
-            del native_env
-            collector = threading.Thread(target=collect, daemon=True)
-            collector.start()
-            send({'type': 'control_request', 'request_id': 'initialize-model', 'request': {'subtype': 'initialize'}})
-            deadline = time.monotonic() + 60
-            while time.monotonic() < deadline:
-                value = receive(deadline)
-                if value.get('type') == 'control_response' and value.get('response', {}).get('request_id') == 'initialize-model':
-                    break
-            else:
-                raise ValueError('NATIVE_WORKBUDDY_LOGIN_REQUIRED')
         print(json.dumps({'type': 'native_model_request', 'modelRequestSubmitted': True}), flush=True)
         send({'type': 'user', 'message': {'role': 'user', 'content': [{'type': 'text', 'text': spec['prompt']}]}})
         deadline = time.monotonic() + 120
         while time.monotonic() < deadline:
             value = receive(deadline)
             if value.get('type') == 'control_request':
-                # A readonly tool is preallowed; all other interactive actions are denied.
-                send({'type': 'control_response', 'response': {'subtype': 'success', 'request_id': value['request_id'], 'response': {'behavior': 'deny', 'message': 'Only the preallowed readonly verification tool is authorized.'}}})
+                request = value.get('request', {})
+                allowed = (request.get('subtype') == 'can_use_tool'
+                           and request.get('tool_name') == spec.get('readOnlyTool')
+                           and request.get('input') == spec.get('readOnlyArguments'))
+                response = {'behavior': 'allow', 'updatedInput': request['input']} if allowed else {'behavior': 'deny', 'message': 'Only the exact readonly verification call is authorized.'}
+                send({'type': 'control_response', 'response': {'subtype': 'success', 'request_id': value['request_id'], 'response': response}})
                 continue
             if value.get('type') in ('assistant', 'user', 'system', 'result'):
                 print(json.dumps(value), flush=True)
@@ -144,7 +106,8 @@ def main():
                 return
         raise ValueError('NATIVE_AI_ATTEMPT_STOPPED')
     finally:
-        child.stdin.close()
+        if not child.stdin.closed:
+            child.stdin.close()
         try:
             child.wait(timeout=5)
         except subprocess.TimeoutExpired:
