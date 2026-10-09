@@ -8,6 +8,7 @@ import {seedRelease,seedPointer,seedRuntimeReleases} from './support/resources.m
 import {buildGlobalUpdatePlan,applyGlobalUpdate,cancelGlobalUpdate,buildGlobalUpdateRestorePlan,applyGlobalUpdateRestore,readGlobalUpdateHistory,sharedUpdateTarget} from '../src/domains/platforms/global-update.mjs';
 import {collectResourceRequirements} from '../src/domains/platforms/resource-environment.mjs';
 import {sha256} from '../src/core/hash.mjs';
+import {withProcessScope} from '../src/infrastructure/process-scope.mjs';
 
 const encode=value=>JSON.stringify(value,null,2)+'\n';
 function fixture(t) {
@@ -62,6 +63,13 @@ test('cancel after activation settles its configuration before returning stopped
   const f=fixture(t),plan=buildGlobalUpdatePlan({workspaceRoot:f.root});f.services.check=async()=>{cancelGlobalUpdate({workspaceRoot:f.root});throw Error('ONBOARDING_CANCELLED');};
   const result=await applyGlobalUpdate(plan,{auditRoot:f.auditRoot,services:f.services});assert.equal(result.status,'stopped');
   const alpha=result.results.find(row=>row.platformId==='alpha');assert.equal(alpha.configurationSettlement,'saved-pending');assert.equal(f.git('status','--porcelain','--','alpha/bridge.json','alpha/bridge/runner-config.json'),'');assert.equal(result.results.find(row=>row.platformId==='beta').status,'not-started');
+});
+
+test('owned worker cancellation is observed even when the local onboarding job was not cancelled',async t=>{
+  const f=fixture(t),plan=buildGlobalUpdatePlan({workspaceRoot:f.root}),signal=new SharedArrayBuffer(4),original=f.services.check;
+  f.services.check=async input=>{const result=await original(input);Atomics.store(new Int32Array(signal),0,1);return result;};
+  const result=await withProcessScope({cwd:f.base,signal,cancelPath:join(f.base,'cancel.flag'),cancelEvent:null},()=>applyGlobalUpdate(plan,{auditRoot:f.auditRoot,services:f.services}));
+  assert.equal(result.status,'stopped');const alpha=result.results.find(row=>row.platformId==='alpha');assert.equal(alpha.configurationSettlement,'saved-pending');assert(alpha.git.head);assert.equal(f.git('status','--porcelain','--','alpha/bridge.json','alpha/bridge/runner-config.json'),'');
 });
 
 test('a check that edits configuration externally cannot have that edit committed or overwritten',async t=>{

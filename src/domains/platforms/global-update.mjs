@@ -22,7 +22,7 @@ import {buildGitPlan} from '../../git.mjs';
 import {applyGitTransaction} from '../../git-executor.mjs';
 import {assertConfigurationReferences} from '../../onboarding-config.mjs';
 import {bridgeCompatibility,bridgeFiles,normaliseRunner} from './bridge-compatibility.mjs';
-import {withScopedCleanup} from '../../infrastructure/process-scope.mjs';
+import {withScopedCleanup,assertScopedActive} from '../../infrastructure/process-scope.mjs';
 
 const encode=value=>JSON.stringify(value,null,2)+'\n';
 const digest=value=>sha256(encode(value));
@@ -224,7 +224,7 @@ function activationPlan(plan,row,state) {
 export async function applyGlobalUpdate(plan,{actor='local-user',auditRoot=defaultAuditRoot(),onProgress=()=>{},services={}}={}) {
   requirePlan(plan);if(plan.kind!=='platform-global-update' || digest(plan.payload)!==plan.target.payloadSha256)throw Error('PLAN_PAYLOAD_MISMATCH');
   const root=plan.workspaceRoot;assertShared(root,plan.payload.shared);
-  const control=startOnboardingJob(root,'global-update'),results=[],options={actor,auditRoot,onProgress};
+  const localControl=startOnboardingJob(root,'global-update'),control={...localControl,assertActive:()=>{localControl.assertActive();assertScopedActive();}},results=[],options={actor,auditRoot,onProgress};
   const history=historyPath(root,auditRoot),previousHistory=existsSync(history)?readJson(history):null;mkdirSync(join(history,'..'),{recursive:true});atomicWrite(history,encode({plan}),randomUUID());
   const governanceHashes=previousHistory?.plan?.planId===plan.planId?previousHistory.governanceHashes || {...plan.payload.governanceFiles}:{...plan.payload.governanceFiles};
   const persistHistory=()=>atomicWrite(history,encode({plan,governanceHashes}),randomUUID());
