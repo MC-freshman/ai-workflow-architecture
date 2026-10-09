@@ -1,0 +1,727 @@
+{
+  "schema": "architecture-manager-operations/v1",
+  "operations": {
+    "suggestBodyImport": {
+      "channel": "intake:automatic-suggestions",
+      "phase": "query",
+      "backend": "suggestBodyImport",
+      "argumentsStyle": "input",
+      "taskMode": "owned"
+    },
+    "previewAutomaticTextBody": {
+      "channel": "plan:automatic-text-body",
+      "phase": "plan",
+      "backend": "buildAutomaticTextBodyPlan",
+      "argumentsStyle": "input",
+      "taskMode": "owned"
+    },
+    "listRuntimeBodies": {
+      "channel": "intake:runtime-bodies",
+      "phase": "query",
+      "backend": "listRuntimeBodies",
+      "argumentsStyle": "input",
+      "taskMode": "owned"
+    },
+    "previewSoftwareBodyPlacement": {
+      "channel": "intake:software-placement",
+      "phase": "plan",
+      "backend": "buildSoftwareBodyPlacementPlan",
+      "argumentsStyle": "input",
+      "taskMode": "owned"
+    },
+    "previewSoftwareBody": {
+      "channel": "intake:software-body",
+      "phase": "plan",
+      "backend": "buildSoftwareBodyPlan",
+      "argumentsStyle": "input",
+      "taskMode": "owned"
+    },
+    "readSoftwareBodyActions": {
+      "channel": "software:body-actions",
+      "phase": "query",
+      "backend": "readSoftwareBodyActions",
+      "argumentsStyle": "input",
+      "taskMode": "owned"
+    },
+    "previewSoftwareCommand": {
+      "channel": "plan:software-command",
+      "phase": "plan",
+      "backend": "buildSoftwareCommandPlan",
+      "argumentsStyle": "input",
+      "taskMode": "owned"
+    },
+    "previewPlatformBody": {
+      "channel": "intake:platform-body",
+      "phase": "plan",
+      "backend": "buildPlatformBodyPlan",
+      "argumentsStyle": "input",
+      "taskMode": "owned"
+    },
+    "readToolBodyEditor": {
+      "channel": "intake:tool-editor",
+      "phase": "query",
+      "backend": "readToolBodyEditor",
+      "argumentsStyle": "input",
+      "taskMode": "owned"
+    },
+    "previewToolBody": {
+      "channel": "intake:tool-plan",
+      "phase": "plan",
+      "backend": "buildToolBodyPlan",
+      "argumentsStyle": "input",
+      "taskMode": "owned"
+    },
+    "checkSharedBody": {
+      "channel": "intake:body-smoke",
+      "phase": "execute",
+      "backend": "checkSharedBody",
+      "argumentsStyle": "input",
+      "taskMode": "owned"
+    },
+    "readBodyEditor": {
+      "channel": "intake:body-editor",
+      "phase": "query",
+      "backend": "readBodyEditor",
+      "argumentsStyle": "input",
+      "taskMode": "owned"
+    },
+    "listBodyDependencies": {
+      "channel": "intake:dependencies",
+      "phase": "query",
+      "backend": "listBodyDependencies",
+      "argumentsStyle": "input",
+      "taskMode": "owned"
+    },
+    "previewAgentSkillBody": {
+      "channel": "intake:agent-skill-plan",
+      "phase": "plan",
+      "backend": "buildAgentSkillBodyPlan",
+      "argumentsStyle": "input",
+      "taskMode": "owned"
+    },
+    "confirm": {
+      "channel": "ui:confirm",
+      "phase": "ui"
+    },
+    "getAppVersion": {
+      "channel": "ui:version",
+      "phase": "query"
+    },
+    "getDefaultWorkspace": {
+      "channel": "workspace:default",
+      "phase": "query"
+    },
+    "selectWorkspace": {
+      "channel": "workspace:select",
+      "phase": "ui"
+    },
+    "selectDirectory": {
+      "channel": "workspace:select-directory",
+      "phase": "ui"
+    },
+    "scanWorkspace": {
+      "channel": "workspace:scan",
+      "phase": "query",
+      "backend": "scanWorkspace",
+      "argumentsStyle": "root",
+      "taskMode": "owned"
+    },
+    "inspectPlatform": {
+      "channel": "platform:inspect",
+      "phase": "query"
+    },
+    "inspectPlatformConnection": {
+      "channel": "platform:connection",
+      "phase": "query"
+    },
+    "refreshPlatform": {
+      "channel": "platform:refresh",
+      "phase": "execute"
+    },
+    "runPlatformCheck": {
+      "channel": "platform:check",
+      "phase": "execute",
+      "backend": "runPlatformCheck",
+      "argumentsStyle": "input",
+      "taskMode": "owned"
+    },
+    "previewPlatformCheck": {
+      "channel": "platform:check-preview",
+      "phase": "query",
+      "backend": "previewPlatformCheck",
+      "argumentsStyle": "input",
+      "taskMode": "owned"
+    },
+    "previewPlatformPlan": {
+      "channel": "plan:platform-view",
+      "phase": "plan"
+    },
+    "previewResourcePlan": {
+      "channel": "plan:resource-pointer",
+      "phase": "plan",
+      "backend": "buildResourcePointerPlan",
+      "argumentsStyle": "input",
+      "taskMode": "owned"
+    },
+    "readAnchorReport": {
+      "channel": "anchor:report",
+      "phase": "query",
+      "backend": "readAnchorReport",
+      "argumentsStyle": "input",
+      "taskMode": "owned"
+    },
+    "previewAnchorPlan": {
+      "channel": "plan:anchor-generation",
+      "phase": "plan",
+      "backend": "buildAnchorMaterialisationPlan",
+      "argumentsStyle": "input",
+      "taskMode": "owned"
+    },
+    "previewAnchorAlignmentPlan": {
+      "channel": "plan:platform-anchor-alignment",
+      "phase": "plan",
+      "backend": "buildAnchorAlignmentPlan",
+      "argumentsStyle": "input",
+      "taskMode": "owned"
+    },
+    "checkAfterAnchorAlignment": {
+      "channel": "anchor:post-align-check",
+      "phase": "execute",
+      "backend": "executePostAlignmentChecks",
+      "argumentsStyle": "input",
+      "taskMode": "owned"
+    },
+    "readCatalogEntry": {
+      "channel": "catalog:read",
+      "phase": "query",
+      "backend": "readCatalogEntry",
+      "argumentsStyle": "input",
+      "taskMode": "owned"
+    },
+    "readSkillContent": {
+      "channel": "skill:read",
+      "phase": "query",
+      "backend": "readSkillContent",
+      "argumentsStyle": "input",
+      "taskMode": "owned"
+    },
+    "selectCatalog": {
+      "channel": "catalog:select",
+      "phase": "ui"
+    },
+    "previewRegistryPlan": {
+      "channel": "plan:registry",
+      "phase": "plan",
+      "backend": "buildRegistryPlan",
+      "argumentsStyle": "input",
+      "taskMode": "owned"
+    },
+    "readDocument": {
+      "channel": "document:read",
+      "phase": "query",
+      "backend": "readDocument",
+      "argumentsStyle": "document",
+      "taskMode": "owned"
+    },
+    "previewDocumentPlan": {
+      "channel": "plan:document",
+      "phase": "plan"
+    },
+    "softwareHealth": {
+      "channel": "software:health",
+      "phase": "execute",
+      "backend": "healthSoftware",
+      "argumentsStyle": "health",
+      "taskMode": "owned"
+    },
+    "previewSoftwarePlan": {
+      "channel": "plan:software",
+      "phase": "plan"
+    },
+    "previewSoftwareImportPlan": {
+      "channel": "plan:software-import",
+      "phase": "plan",
+      "backend": "buildSoftwareImportPlan",
+      "argumentsStyle": "input",
+      "taskMode": "owned"
+    },
+    "listSoftwareIntakes": {
+      "channel": "software:intakes",
+      "phase": "query"
+    },
+    "previewSoftwareRecipePlan": {
+      "channel": "plan:software-recipe",
+      "phase": "plan",
+      "backend": "buildSoftwareRecipePlan",
+      "argumentsStyle": "input",
+      "taskMode": "owned"
+    },
+    "listSoftwareRecoveries": {
+      "channel": "software:recoveries",
+      "phase": "query"
+    },
+    "previewSoftwareRevertPlan": {
+      "channel": "plan:software-revert",
+      "phase": "plan"
+    },
+    "selectSoftwareSource": {
+      "channel": "software:select-source",
+      "phase": "ui"
+    },
+    "openSoftwareLocation": {
+      "channel": "software:open-location",
+      "phase": "execute"
+    },
+    "inspectGit": {
+      "channel": "git:inspect",
+      "phase": "query",
+      "backend": "inspectGit",
+      "argumentsStyle": "root",
+      "taskMode": "owned"
+    },
+    "scanSensitiveFiles": {
+      "channel": "git:sensitive-scan",
+      "phase": "query",
+      "backend": "scanSensitiveFiles",
+      "argumentsStyle": "root",
+      "taskMode": "owned"
+    },
+    "previewGitPlan": {
+      "channel": "plan:git",
+      "phase": "plan",
+      "backend": "buildGitPlan",
+      "argumentsStyle": "input",
+      "taskMode": "owned"
+    },
+    "listIntegrationTargets": {
+      "channel": "integration:targets",
+      "phase": "query"
+    },
+    "readIntegrationTarget": {
+      "channel": "integration:read",
+      "phase": "query"
+    },
+    "suggestPlatformBridge": {
+      "channel": "platform:suggest-bridge",
+      "phase": "query"
+    },
+    "previewIntegrationPlan": {
+      "channel": "plan:integration",
+      "phase": "plan",
+      "backend": "buildIntegrationPlan",
+      "argumentsStyle": "input",
+      "taskMode": "owned"
+    },
+    "listRunLedger": {
+      "channel": "runs:ledger",
+      "phase": "query"
+    },
+    "readDefectBook": {
+      "channel": "defects:read",
+      "phase": "query",
+      "backend": "readDefectBook",
+      "argumentsStyle": "root",
+      "taskMode": "owned"
+    },
+    "verifyDefectBook": {
+      "channel": "defects:verify",
+      "phase": "verify"
+    },
+    "inspectInbox": {
+      "channel": "inbox:inspect",
+      "phase": "query"
+    },
+    "readAuditEvents": {
+      "channel": "audit:events",
+      "phase": "query"
+    },
+    "previewDefectBookEditPlan": {
+      "channel": "plan:defect-book-edit",
+      "phase": "plan"
+    },
+    "previewReleasePlan": {
+      "channel": "plan:release",
+      "phase": "plan",
+      "backend": "buildReleasePlan",
+      "argumentsStyle": "input",
+      "taskMode": "owned"
+    },
+    "listResourceReferences": {
+      "channel": "releases:references",
+      "phase": "query",
+      "backend": "listResourceReferences",
+      "argumentsStyle": "references",
+      "taskMode": "owned"
+    },
+    "readRegistryBaseline": {
+      "channel": "releases:registry-baseline",
+      "phase": "query"
+    },
+    "previewSoftwareConnectorLaunchPlan": {
+      "channel": "plan:software-launch",
+      "phase": "plan"
+    },
+    "parseImplementationTables": {
+      "channel": "plans:parse",
+      "phase": "query",
+      "backend": "parseImplementationTables",
+      "argumentsStyle": "root",
+      "taskMode": "owned"
+    },
+    "buildDocsSite": {
+      "channel": "docs:build",
+      "phase": "execute",
+      "backend": "buildDocsSite",
+      "argumentsStyle": "root",
+      "taskMode": "owned"
+    },
+    "checkDocsLinks": {
+      "channel": "docs:conform",
+      "phase": "execute",
+      "backend": "checkDocsLinks",
+      "argumentsStyle": "root",
+      "taskMode": "owned"
+    },
+    "documentDiff": {
+      "channel": "document:diff",
+      "phase": "query",
+      "backend": "diffDocument",
+      "argumentsStyle": "document",
+      "taskMode": "owned"
+    },
+    "previewPlatformScaffoldPlan": {
+      "channel": "plan:platform-scaffold",
+      "phase": "plan"
+    },
+    "onboardingDraft": {
+      "channel": "onboarding:draft",
+      "phase": "query"
+    },
+    "onboardingCard": {
+      "channel": "onboarding:card",
+      "phase": "query"
+    },
+    "runOnboardingPipeline": {
+      "channel": "onboarding:pipeline",
+      "phase": "execute",
+      "backend": "executeOnboardingChecks",
+      "argumentsStyle": "input",
+      "taskMode": "owned"
+    },
+    "readOnboardingConfig": {
+      "channel": "onboarding:config",
+      "phase": "query",
+      "backend": "readOnboardingConfig",
+      "argumentsStyle": "input",
+      "taskMode": "owned"
+    },
+    "previewOnboardingConfigPlan": {
+      "channel": "plan:platform-configuration",
+      "phase": "plan"
+    },
+    "selectOnboardingFile": {
+      "channel": "onboarding:select-file",
+      "phase": "ui"
+    },
+    "detectOnboardingRuntime": {
+      "channel": "onboarding:runtime-detect",
+      "phase": "execute"
+    },
+    "previewOnboardingRuntimePlan": {
+      "channel": "plan:platform-runtime",
+      "phase": "plan"
+    },
+    "previewOnboardingBackendPlan": {
+      "channel": "plan:platform-backend",
+      "phase": "plan"
+    },
+    "previewOnboardingClientPlan": {
+      "channel": "plan:platform-client",
+      "phase": "plan"
+    },
+    "probeOnboardingClient": {
+      "channel": "onboarding:client-probe",
+      "phase": "execute",
+      "backend": "probeOnboardingClient",
+      "argumentsStyle": "input",
+      "taskMode": "owned"
+    },
+    "previewOnboardingProvidersPlan": {
+      "channel": "plan:platform-providers",
+      "phase": "plan"
+    },
+    "probeOnboardingCapabilities": {
+      "channel": "onboarding:capability-probe",
+      "phase": "execute",
+      "backend": "probeOnboardingCapabilities",
+      "argumentsStyle": "input",
+      "taskMode": "owned"
+    },
+    "previewOnboardingAttestationPlan": {
+      "channel": "plan:platform-attestation",
+      "phase": "plan"
+    },
+    "previewOnboardingGovernancePlan": {
+      "channel": "plan:platform-governance",
+      "phase": "plan"
+    },
+    "readOnboardingState": {
+      "channel": "onboarding:state",
+      "phase": "query",
+      "backend": "readOnboardingState",
+      "argumentsStyle": "input",
+      "taskMode": "owned"
+    },
+    "cancelOnboarding": {
+      "channel": "onboarding:cancel",
+      "phase": "execute"
+    },
+    "markOnboardingRecorded": {
+      "channel": "onboarding:recorded",
+      "phase": "execute"
+    },
+    "previewOnboardingFinalizePlan": {
+      "channel": "plan:platform-finalize",
+      "phase": "plan"
+    },
+    "previewAutomaticOnboardingPlan": {
+      "channel": "plan:platform-onboarding",
+      "phase": "plan",
+      "backend": "prepareAutomaticOnboardingPlan",
+      "argumentsStyle": "input",
+      "taskMode": "owned"
+    },
+    "previewNativeClientPlan": {
+      "channel": "plan:platform-native-client",
+      "phase": "plan",
+      "backend": "buildNativeClientPlan",
+      "argumentsStyle": "input",
+      "taskMode": "owned"
+    },
+    "probeNativeClient": {
+      "channel": "onboarding:native-probe",
+      "phase": "execute",
+      "backend": "probeNativeClient",
+      "argumentsStyle": "input",
+      "taskMode": "owned"
+    },
+    "probeNativeClientWithAi": {
+      "channel": "onboarding:native-ai-probe",
+      "phase": "execute",
+      "backend": "probeNativeClientWithAi",
+      "argumentsStyle": "input",
+      "taskMode": "owned"
+    },
+    "nativeClientStatus": {
+      "channel": "onboarding:native-status",
+      "phase": "query",
+      "backend": "nativeClientStatus",
+      "argumentsStyle": "native-status",
+      "taskMode": "owned"
+    },
+    "previewWorkspaceClonePlan": {
+      "channel": "plan:workspace-clone",
+      "phase": "plan"
+    },
+    "applyWorkspaceClone": {
+      "channel": "workspace:clone",
+      "phase": "execute",
+      "backend": "applyWorkspaceClone",
+      "argumentsStyle": "clone",
+      "taskMode": "owned"
+    },
+    "applyPlan": {
+      "channel": "transaction:apply",
+      "phase": "execute",
+      "backend": "applyPlan",
+      "argumentsStyle": "input",
+      "taskMode": "owned"
+    },
+    "verifyPlan": {
+      "channel": "transaction:verify",
+      "phase": "verify",
+      "backend": "verifyPlanTarget",
+      "argumentsStyle": "input",
+      "taskMode": "owned"
+    },
+    "cancelTask": {
+      "channel": "task:cancel",
+      "phase": "execute"
+    },
+    "selectBodySource": {
+      "channel": "intake:select-source",
+      "phase": "ui"
+    },
+    "scanExternalBody": {
+      "channel": "intake:scan-source",
+      "phase": "query",
+      "backend": "scanExternalBody",
+      "argumentsStyle": "input",
+      "taskMode": "owned"
+    },
+    "listIntakeJournals": {
+      "channel": "intake:history",
+      "phase": "query",
+      "backend": "listIntakeJournals",
+      "argumentsStyle": "input",
+      "taskMode": "owned"
+    },
+    "readIntakeJournal": {
+      "channel": "intake:journal",
+      "phase": "query",
+      "backend": "readIntakeJournal",
+      "argumentsStyle": "input",
+      "taskMode": "owned"
+    },
+    "previewIntakeRevertPlan": {
+      "channel": "intake:revert-plan",
+      "phase": "plan",
+      "backend": "buildIntakeRevertPlan",
+      "argumentsStyle": "input",
+      "taskMode": "owned"
+    },
+    "readMcpConfiguration": {
+      "channel": "native-mcp:readMcpConfiguration",
+      "phase": "query",
+      "backend": "readMcpConfiguration",
+      "argumentsStyle": "input",
+      "taskMode": "owned"
+    },
+    "discoverNativeMcp": {
+      "channel": "native-mcp:discoverNativeMcp",
+      "phase": "execute",
+      "backend": "discoverNativeMcp",
+      "argumentsStyle": "input",
+      "taskMode": "owned"
+    },
+    "previewMcpBody": {
+      "channel": "native-mcp:previewMcpBody",
+      "phase": "plan",
+      "backend": "buildMcpBodyPlan",
+      "argumentsStyle": "input",
+      "taskMode": "owned"
+    },
+    "previewNativeCredential": {
+      "channel": "native-mcp:previewNativeCredential",
+      "phase": "plan",
+      "backend": "buildNativeCredentialPlan",
+      "argumentsStyle": "input",
+      "taskMode": "owned"
+    },
+    "previewNativeCredentialProvider": {
+      "channel": "native-mcp:previewNativeCredentialProvider",
+      "phase": "plan",
+      "backend": "buildNativeCredentialProviderPlan",
+      "argumentsStyle": "input",
+      "taskMode": "owned"
+    },
+    "previewExistingSoftwareBinding": {
+      "channel": "intake:software-binding",
+      "phase": "plan",
+      "backend": "buildExistingSoftwareBindingPlan",
+      "argumentsStyle": "input",
+      "taskMode": "owned"
+    },
+    "previewGatewayMigrationPlan": {
+      "channel": "plan:software-binding-migration",
+      "phase": "plan",
+      "backend": "buildGatewayMigrationPlan",
+      "argumentsStyle": "input",
+      "taskMode": "owned"
+    },
+    "readPlatformResourceVersions": {
+      "channel": "platform:resource-versions",
+      "phase": "query",
+      "backend": "readPlatformResourceVersions",
+      "argumentsStyle": "input",
+      "taskMode": "owned"
+    },
+    "previewPlatformResourceDefault": {
+      "channel": "plan:platform-resource-default",
+      "phase": "plan",
+      "backend": "buildPlatformResourceDefaultPlan",
+      "argumentsStyle": "input",
+      "taskMode": "owned"
+    },
+    "previewAutomaticSoftware": {
+      "channel": "plan:automatic-software",
+      "phase": "plan",
+      "backend": "buildAutomaticSoftwarePlan",
+      "argumentsStyle": "input",
+      "taskMode": "owned"
+    },
+    "previewGlobalUpdate": {
+      "channel": "global-update:previewGlobalUpdate",
+      "phase": "plan",
+      "backend": "buildGlobalUpdatePlan",
+      "argumentsStyle": "input",
+      "taskMode": "owned"
+    },
+    "previewGlobalUpdateRestore": {
+      "channel": "global-update:previewGlobalUpdateRestore",
+      "phase": "plan",
+      "backend": "buildGlobalUpdateRestorePlan",
+      "argumentsStyle": "input",
+      "taskMode": "owned"
+    },
+    "cancelGlobalUpdate": {
+      "channel": "global-update:cancelGlobalUpdate",
+      "phase": "execute",
+      "backend": "cancelGlobalUpdate",
+      "argumentsStyle": "input",
+      "taskMode": "owned"
+    },
+    "readGlobalUpdateHistory": {
+      "channel": "global-update:readGlobalUpdateHistory",
+      "phase": "query",
+      "backend": "readGlobalUpdateHistory",
+      "argumentsStyle": "input",
+      "taskMode": "owned"
+    }
+  },
+  "planKinds": [
+    "mcp-credential",
+    "mcp-credential-provider",
+    "software-command",
+    "platform-body",
+    "body-import",
+    "body-import-revert",
+    "platform-scaffold",
+    "platform-configuration",
+    "platform-backend",
+    "platform-runtime",
+    "platform-client",
+    "platform-native-client",
+    "platform-providers",
+    "platform-attestation",
+    "platform-governance",
+    "platform-finalize",
+    "platform-onboarding",
+    "anchor-generation",
+    "platform-anchor-alignment",
+    "document-edit",
+    "defect-book-edit",
+    "resource-pointer",
+    "platform-view",
+    "registry-edit",
+    "integration-config",
+    "integration-registry",
+    "software-import",
+    "software-recipe-publish",
+    "software-revert",
+    "git-commit",
+    "git-branch",
+    "git-tag",
+    "git-push",
+    "git-rollback",
+    "git-backup",
+    "release-publish",
+    "software-launch",
+    "software-binding",
+    "software-binding-migration",
+    "platform-resource-default",
+    "automatic-software-intake",
+    "platform-global-update",
+    "platform-global-update-restore"
+  ]
+}

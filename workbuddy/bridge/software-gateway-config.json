@@ -9,10 +9,11 @@
     "mysql-cli": "<local-tool-body-path>",
     "nmap": "<local-tool-body-path>",
     "veracrypt": "<local-tool-body-path>",
-    "wireshark-cli": "<local-tool-body-path>"
+    "wireshark-cli": "<local-tool-body-path>",
+    "burp-suite": "<local-tool-body-path> V2024.5.1/BurpSuite V2024.5.1/BurpSuite/burpsuite_pro_org.jar"
   },
   "interpreters": {
-    ".py": "E:\\ai\\workbuddy\\runtime\\py-env\\Scripts\\python.exe"
+    ".py": "E:\\ai\\workbuddy\\runtime\\manager-environments\\ff4bd95f-466c-4410-8851-059d5f2a3c51\\host\\Scripts\\python.exe"
   },
   "interpreterAliases": {
     "PPython": "D:\\Various_programming_languages\\PPython\\python.exe"
@@ -25,5 +26,70 @@
   "allowGuiLaunch": false,
   "x-allowed-hosts-note": "Standing policy of this platform: a mediated scan may only reach the loopback. Opening a desktop window is a per-call decision and allowGuiLaunch stays off, so without a session provider the honest answer to a session open is INTERACTIVE_REQUIRED.",
   "x-bodies-note": "burp-suite is deliberately absent from bodies: its recipe (kind mcp-http) declares no launch entrypoint - it is a licensed GUI body verified in place and never started by this platform. A call against it therefore answers SOFTWARE_NOT_INSTALLED naming bodies.burp-suite, which is the honest reading, not a platform claim about the licence.",
-  "x-cross-platform": "The lock table under lockRoot is platform-internal (C-8). A second platform on this host keeps its own table, so two platforms calling one singleton recipe would not see each other's locks. This is registered, not worked around."
+  "x-cross-platform": "The lock table under lockRoot is platform-internal (C-8). A second platform on this host keeps its own table, so two platforms calling one singleton recipe would not see each other's locks. This is registered, not worked around.",
+  "credentialProvider": [
+    "E:\\ai\\workbuddy\\runtime\\manager-environments\\ff4bd95f-466c-4410-8851-059d5f2a3c51\\host\\Scripts\\python.exe",
+    "-B",
+    "E:\\ai\\workbuddy\\bridge\\manager-providers\\platform_provider.py",
+    "credential",
+    "E:\\ai\\workbuddy\\runtime\\software\\provider-state"
+  ],
+  "sessionLaunch": [
+    "E:\\ai\\workbuddy\\runtime\\manager-environments\\ff4bd95f-466c-4410-8851-059d5f2a3c51\\host\\Scripts\\python.exe",
+    "-B",
+    "E:\\ai\\workbuddy\\bridge\\manager-providers\\platform_provider.py",
+    "launch",
+    "E:\\ai\\workbuddy\\runtime\\software\\provider-state"
+  ],
+  "sessionLiveness": [
+    "E:\\ai\\workbuddy\\runtime\\manager-environments\\ff4bd95f-466c-4410-8851-059d5f2a3c51\\host\\Scripts\\python.exe",
+    "-B",
+    "E:\\ai\\workbuddy\\bridge\\manager-providers\\platform_provider.py",
+    "liveness",
+    "E:\\ai\\workbuddy\\runtime\\software\\provider-state"
+  ],
+  "sessionTerminate": [
+    "E:\\ai\\workbuddy\\runtime\\manager-environments\\ff4bd95f-466c-4410-8851-059d5f2a3c51\\host\\Scripts\\python.exe",
+    "-B",
+    "E:\\ai\\workbuddy\\bridge\\manager-providers\\platform_provider.py",
+    "terminate",
+    "E:\\ai\\workbuddy\\runtime\\software\\provider-state"
+  ],
+  "credentialWorkspace": "E:\\ai\\workbuddy\\runtime\\software\\credentials",
+  "projectWriteRoots": [
+    "E:\\ai\\workbuddy\\workspaces"
+  ],
+  "artifactRoots": [
+    "E:\\ai\\workbuddy\\runtime\\software"
+  ],
+  "softwareProfiles": {
+    "readonly-version": {
+      "filesystem": [
+        "none",
+        "read"
+      ],
+      "network": [
+        "none"
+      ],
+      "credentials": [
+        "none"
+      ]
+    },
+    "administrator": {
+      "filesystem": [
+        "none",
+        "read",
+        "system"
+      ],
+      "network": [
+        "none"
+      ],
+      "credentials": [
+        "none"
+      ],
+      "consentPolicy": "per-call-user-confirmation"
+    }
+  },
+  "platformId": "workbuddy",
+  "platform": "windows"
 }

@@ -1,0 +1,18 @@
+{
+  "schema": "ai-architecture-public-release/v1",
+  "architectureVersion": "1.0.0",
+  "edition": "public-reference",
+  "license": "Apache-2.0",
+  "runtimeDependencies": [],
+  "exampleResources": {
+    "workflows": ["hello-world@1.0.0"],
+    "agents": ["reviewer@1.0.0"]
+  },
+  "provenance": {
+    "originalReferenceImplementation": true,
+    "vendoredThirdPartyTrees": false,
+    "productionResources": false,
+    "privateEvidence": false,
+    "credentialsOrPlatformState": false
+  }
+}

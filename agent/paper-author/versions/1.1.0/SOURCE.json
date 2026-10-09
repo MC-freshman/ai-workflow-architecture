@@ -1,0 +1,15 @@
+{
+  "schema": "ai-release-source/v1",
+  "id": "paper-author",
+  "version": "1.1.0",
+  "origin": "approved 20261009 domain boundary and maintainer authored operational method",
+  "sources": [
+    {
+      "resource": "domain-source-catalog",
+      "version": "1.0.0",
+      "path": "ecc/skills/research-ops/SKILL.md",
+      "sha256": "114d0e5480ce3ad263316c639ce0c401396e1d9fbec3cf15b3c962ae16f376db",
+      "when": "需要深入本领域步骤/示例时，先搜索对应小节，按行范围读取"
+    }
+  ]
+}

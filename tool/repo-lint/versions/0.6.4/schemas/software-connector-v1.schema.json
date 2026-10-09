@@ -1,0 +1,297 @@
+{
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "$id": "urn:ai:software-connector:v1",
+ "title": "ai-software-connector/v1 - per-release connector declaration for one software release",
+ "description": "A sibling file (connector.json) inside a software release directory, deliberately NOT a field of manifest.json: ai-software-manifest/v1 is additionalProperties:false over a fixed key set, so adding connector/transports/userModes/operations keys to the manifest would make all six published recipes unparseable and break the 3.2 judgement that legacy recipes stay byte-identical. This file says how a platform connector drives the release. Logical names only: absolute paths, interpreter executables and secret values stay in platform config.",
+ "type": "object",
+ "additionalProperties": false,
+ "required": [
+  "schema",
+  "softwareId",
+  "softwareVersion",
+  "adapter",
+  "transports",
+  "connectorRuntime",
+  "sessionModel",
+  "requiresConsent",
+  "operations"
+ ],
+ "properties": {
+  "schema": {
+   "const": "ai-software-connector/v1"
+  },
+  "softwareId": {
+   "$ref": "urn:ai:software-gateway-adapter:v1#/$defs/id"
+  },
+  "softwareVersion": {
+   "type": "string",
+   "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"
+  },
+  "adapter": {
+   "description": "Which connector adapter drives this release. This is the new axis; the wire form stays in transports below, whose vocabulary is the published ai-software/v1 kind enum.",
+   "enum": [
+    "generic-cli",
+    "mcp-proxy",
+    "desktop-session",
+    "http-adapter"
+   ]
+  },
+  "transports": {
+   "type": "array",
+   "minItems": 1,
+   "uniqueItems": true,
+   "items": {
+    "enum": [
+     "mcp-stdio",
+     "mcp-http",
+     "cli-wrapper",
+     "http-api",
+     "local-process"
+    ]
+   }
+  },
+  "connectorRuntime": {
+   "description": "Language the connector itself runs in (P3 builds it Python 3.9-compatible). A different thing from interpreterAlias, which is the software body's own interpreter resolved from the recipe and the frozen snapshot.",
+   "pattern": "^python-[0-9]+\\.[0-9]+$"
+  },
+  "interpreterAlias": {
+   "description": "Logical interpreter name for the software body, matching capabilities.snapshot.json runtime.interpreter. Null when the body is not a script. No absolute path here.",
+   "type": [
+    "string",
+    "null"
+   ],
+   "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$"
+  },
+  "userModes": {
+   "description": "How a human uses the same software without a workflow run. A desktop-session adapter must keep native-gui.",
+   "type": "array",
+   "uniqueItems": true,
+   "items": {
+    "enum": [
+     "direct-cli",
+     "native-gui",
+     "mediated-call"
+    ]
+   }
+  },
+  "sessionModel": {
+   "enum": [
+    "per-run",
+    "pooled",
+    "singleton"
+   ]
+  },
+  "requiresConsent": {
+   "type": "boolean"
+  },
+  "exclusiveResources": {
+   "type": "array",
+   "uniqueItems": true,
+   "items": {
+    "type": "string",
+    "minLength": 1
+   }
+  },
+  "credentialInjection": {
+   "description": "How a declared `reference:<name>` reaches this body, so no client's flag spelling lives in shared code (D-87: the shape had no home before 3.2 P4a). The connector writes the value into a mode-0600 file in its own credential workspace, passes only the argv slots below (with {file} substituted), and deletes the file in the same call - the value never enters argv, evidence, the call index or the artifact scan.",
+   "type": "object",
+   "additionalProperties": false,
+   "required": [
+    "format",
+    "argv"
+   ],
+   "properties": {
+    "format": {
+     "enum": [
+      "ini",
+      "env"
+     ]
+    },
+    "section": {
+     "type": "string",
+     "pattern": "^[A-Za-z0-9_.-]{1,32}$"
+    },
+    "filePrefix": {
+     "type": "string",
+     "pattern": "^[A-Za-z0-9_.-]{1,32}$"
+    },
+    "extension": {
+     "type": "string",
+     "pattern": "^[A-Za-z0-9]{1,8}$"
+    },
+    "userKey": {
+     "type": "string",
+     "pattern": "^[A-Za-z0-9_]{1,32}$"
+    },
+    "passwordKey": {
+     "type": "string",
+     "pattern": "^[A-Za-z0-9_]{1,32}$"
+    },
+    "argv": {
+     "type": "array",
+     "minItems": 1,
+     "items": {
+      "type": "string",
+      "minLength": 2,
+      "pattern": "^[A-Za-z0-9 ._/:{}=-]+$"
+     }
+    }
+   }
+  },
+  "operations": {
+   "type": "object",
+   "minProperties": 1,
+   "additionalProperties": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": [
+     "capability",
+     "inputSchemaRef",
+     "outputSchemaRef",
+     "credentials"
+    ],
+    "properties": {
+     "capability": {
+      "description": "Must equal a name in manifest.capabilities; checked in P2-b so this file cannot widen what a release offers.",
+      "$ref": "urn:ai:software-gateway-adapter:v1#/$defs/id"
+     },
+     "inputSchemaRef": {
+      "type": "string",
+      "pattern": "^schemas/[^/]+\\.json$"
+     },
+     "outputSchemaRef": {
+      "type": "string",
+      "pattern": "^schemas/[^/]+\\.json$"
+     },
+     "credentials": {
+      "description": "Logical credential needs, same vocabulary as permissionRequests.credentials in the published manifest schema.",
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+       "type": "string",
+       "pattern": "^(none|reference:[A-Za-z0-9._-]+)$"
+      }
+     },
+     "interactive": {
+      "type": "boolean"
+     },
+     "filesystemRoots": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": {
+       "enum": [
+        "none",
+        "workspace",
+        "project",
+        "system"
+       ]
+      }
+     },
+     "network": {
+      "enum": [
+       "none",
+       "loopback",
+       "scoped",
+       "external"
+      ],
+      "description": "D-84: per-operation network reach. dirsearch's scan is 'scoped'; profiles like local-only declare which of these they admit. Absent means 'none'."
+     }
+    }
+   }
+  },
+  "attestation": {
+   "enum": [
+    "snapshot-only",
+    "native-tools-list"
+   ],
+   "description": "D-84: which availability attestation this software's connector answers use. snapshot-only (default) = declared + frozen snapshot + body digest match; native-tools-list = the connector additionally asks tools/list once. The connector never invents a third mode."
+  },
+  "sessionGuidance": {
+   "type": "object",
+   "additionalProperties": false,
+   "required": [
+    "interactive"
+   ],
+   "properties": {
+    "interactive": {
+     "type": "boolean"
+    },
+    "notes": {
+     "type": "string"
+    }
+   },
+   "description": "D-84: how a human drives this software side by side with mediated calls."
+  }
+ },
+ "allOf": [
+  {
+   "if": {
+    "properties": {
+     "adapter": {
+      "const": "mcp-proxy"
+     }
+    },
+    "required": [
+     "adapter"
+    ]
+   },
+   "then": {
+    "properties": {
+     "transports": {
+      "items": {
+       "enum": [
+        "mcp-stdio",
+        "mcp-http"
+       ]
+      }
+     }
+    }
+   }
+  },
+  {
+   "if": {
+    "properties": {
+     "adapter": {
+      "const": "generic-cli"
+     }
+    },
+    "required": [
+     "adapter"
+    ]
+   },
+   "then": {
+    "properties": {
+     "transports": {
+      "contains": {
+       "const": "cli-wrapper"
+      }
+     }
+    }
+   }
+  },
+  {
+   "if": {
+    "properties": {
+     "adapter": {
+      "const": "desktop-session"
+     }
+    },
+    "required": [
+     "adapter"
+    ]
+   },
+   "then": {
+    "required": [
+     "userModes"
+    ],
+    "properties": {
+     "userModes": {
+      "contains": {
+       "const": "native-gui"
+      }
+     }
+    }
+   }
+  }
+ ]
+}

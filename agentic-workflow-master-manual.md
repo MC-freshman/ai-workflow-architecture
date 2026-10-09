@@ -104,3 +104,18 @@
 ## 2026-09-23 状态更正（3.1.0 采纳与整理）
 
 3.1.0 发布后的共享指针已完成切换，codex、workbuddy、zcode、qoder、doubao 的配置面已对齐；dsh 保持未接入。归档与逐文件哈希清单位于 `inbox/archive/20260923-optimization/MANIFEST.json`，收口证据位于 qoder 维护目录。历史发布目录没有被覆盖。
+
+
+## 2026-10-09 专家扩充资源轮
+
+P1–P14按批准判据执行，发布28主责专家、260新释放版和固定上下文预算控制。旧版本不改；Codex配对采纳，其余平台独立采纳。详见 versions/专家扩充与上下文控制-收口报告-20261009.md；业务草稿不称冻结，固定载荷估算不等于完整会话窗口读数。
+
+
+### 2026-10-09 联合治理修复
+
+用户批准P1–P12，发布wf-runner0.13.1与管理台0.8.1；Codex配对采纳、五平台预算按用户下限256000补齐，六平台独立检查保留能力与厂商待补；当前runtime索引0，历史隐私风险保留。详见 `versions/治理缺陷联合修复收口-20261009.md`（在versions目录内读同名文件）。本轮不改冻结历史基线、不代平台申报完整接入。
+
+
+## 2026-10-09 GitHub 仓库收敛
+
+现行维护源为私有 `MC-freshman/ai-workflow-architecture-governance`，公开入口为 `MC-freshman/ai-workflow-architecture`。管理台源码 `architecture-manager/` 已纳入根私有治理仓，不再作为独立远端或 submodule；旧源仓历史先经恢复校验备份并保留于私有 Git 祖先/归档 refs。tool、agent、software 仍是三个独立职责的共享仓，版本和冻结字节不变。旧独立远端及发行的迁移映射见 `versions/GitHub仓库收敛说明-20261009.md`；备份登记是历史证据，不是 inbox 内的现行依赖。平台配置、runtime 和业务环境不因托管调整改变。

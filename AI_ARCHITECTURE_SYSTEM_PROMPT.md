@@ -30,7 +30,7 @@ E:\ai 的一级目录固定为：
 - E:\ai\doubao
 - E:\ai\qoder
 - E:\ai\docs-site（2026-09-22 设立的静态文档站，2026-09-27 放行入根仓白名单、跟踪 29 件）
-- E:\ai\architecture-manager（3.4.0 独立架构管理台源仓，独立 git 仓，2026-09-27 登记入清单）
+- E:\ai\architecture-manager（3.4.0 架构管理台源码，2026-09-27 登记入清单；2026-10-09 纳入根私有治理仓）
 - E:\ai\inbox\ai学习笔记（用户内容区；2026-09-29 由用户迁入 `inbox`，**不再是根级一级目录**——它此前从未在根级建出实体，差异登记见 `versions/更新日志.md`）
 - E:\ai\versions（架构版本文档区，**上位原则 `架构基本原则.md`（BP-1~BP-7，BP-5 于 2026-09-19、BP-6 与 BP-7 由用户 2026-09-20 深夜授权、2026-09-21 落笔新增）**；当前基线 `架构3.0.0.md`（2026-09-21 定稿，判据载体 `架构3.0.0-定稿实施表-20260920.md`，账在 `平台接入清单.md` §8.17），其下 `架构2.0.0.md`（2026-09-18 定稿，配套 `架构2.0.0-迁移指南.md`、`架构2.0.0-恢复手册.md`；**§9 平台表与 §10 归属表仍是各平台状态的现行载体**）、`平台接入清单.md`；`架构1.0.0.md` 为冻结历史基线）
 
@@ -64,7 +64,7 @@ inbox 是待整理区，用于存放暂时无法归类、不确定是否保留�
 - 凭据和会话数据
 - 平台专属 bridge 或适配器
 
-一个平台不得直接修改另一个平台的配置、运行状态、缓存、日志、凭据或工作区。**该禁令按内容类型划界（BP-4）**：运行**私有**产物（配置、凭据、缓存、日志、run 私有一手证据、软件本体安装位）只写本平台目录；被声明为**项目状态**的内容（项目可写状态、跨 run/跨平台版本锁、续跑所需的阶段结论与产物摘要、exclusive 资源锁表）写**平台中立的项目层**，平台只经交接/仲裁接口访问，任何平台不得直读别平台 `runtime/`。中立项目层的位置须用户单独授权设立；未授权前只能以逐次交接包落在用户指定路径的形式临时实现。
+一个平台不得直接修改另一个平台的配置、运行状态、缓存、日志、凭据或工作区。**该禁令按内容类型划界（BP-4）**：运行**私有**产物（配置、凭据、缓存、日志、run 私有一手证据、软件本体安装位）只写本平台目录；被声明为**项目状态**的内容（项目可写状态、跨 run 版本锁、已完成阶段的结论与产物摘要）以带 sha256 的 `handoff-bundle/v1` 或用户指定共享路径承载，其他平台经交接接口读回，不得直读别平台 `runtime/`。exclusive 资源锁与网关锁表仅在所属平台内有效；不再要求设立中立状态层或提供跨平台仲裁。同一项目被两个客户端同时开工不会被发现，可能互相覆盖。
 
 已具备相应接入能力的平台可以读取并调用 E:\ai\tool、E:\ai\agent 以及 E:\ai\software（架构 3.0，只存软件配方）中的已发布内容，但默认只能以只读方式访问。目录或 bridge 配置存在不等于具备完整命令、MCP、提示词交接或委派能力；每个平台须分别验证。**按 BP-1/BP-2，三仓是同一共享层的三个对称成员：任何平台只接到其中两根属"接入未完成"，列待补台账，不得写成设计如此；能力面缺口一律用 `declaredAbsent` 登记，不得表述为平台分层。** **当前实状（2026-09-22 读盘更正）**：`softwareRoot` 已由 **qoder / codex / workbuddy 三家**接入并各自出证（三家深度不同，见 `平台接入清单.md` §8.18–§8.19），**zcode / doubao / dsh 仍是只接两根**——属时间差，不是分层。
 
@@ -313,3 +313,68 @@ Phase 0 发布的 `repo-lint 0.1.1` 目录本身保持只读不变（现已非�
 ## 2026-09-23 运行状态更正
 
 3.1.0 已完成采纳收口：共享 tool/agent current 已切到 0.10.0/1.4.0/0.5.1 代，codex、workbuddy、zcode、qoder、doubao 配置已对齐，dsh 保持未接入。具体版本、归档边界和验证限制以 `versions/平台接入清单.md` §8.23、`versions/架构3.1.0.md` §8 和 `qoder/runtime/maintenance/20260923-optimization/FINAL.md` 为准；旧发布目录仍不可改写。
+
+<!-- architecture-manager-platform:codex -->
+
+### 管理台登记：codex
+
+- 平台配置入口：`codex/bridge.json`；平台章：`codex/bridge/platform.md`。
+- 本平台接入记录位于自己的 runtime/maintenance/manager-onboarding；配置、环境、矩阵、客户端回环和 Git 读数全部通过才算完成。
+- 标准 CLI 入口无需维护型 AI 会话；业务模型输出与厂商原生客户端注册各自验证，不由目录存在推定。
+- 本轮钉版：0.12.0 / 1.5.0 / 0.6.3。
+
+<!-- /architecture-manager-platform:codex -->
+
+<!-- architecture-manager-platform:dsh -->
+
+### 管理台登记：dsh
+
+- 平台配置入口：`dsh/bridge.json`；平台章：`dsh/bridge/platform.md`。
+- 本平台接入记录位于自己的 runtime/maintenance/manager-onboarding；配置、环境、矩阵、客户端回环和 Git 读数全部通过才算完成。
+- 标准 CLI 入口无需维护型 AI 会话；业务模型输出与厂商原生客户端注册各自验证，不由目录存在推定。
+- 本轮钉版：0.12.2 / 1.5.2 / 0.6.5。
+
+<!-- /architecture-manager-platform:dsh -->
+
+<!-- architecture-manager-platform:qoder -->
+
+### 管理台登记：qoder
+
+- 平台配置入口：`qoder/bridge.json`；平台章：`qoder/bridge/platform.md`。
+- 本平台接入记录位于自己的 runtime/maintenance/manager-onboarding；配置、环境、矩阵、客户端回环和 Git 读数全部通过才算完成。
+- 标准 CLI 入口无需维护型 AI 会话；业务模型输出与厂商原生客户端注册各自验证，不由目录存在推定。
+- 本轮钉版：0.12.2 / 1.5.2 / 0.6.5。
+
+<!-- /architecture-manager-platform:qoder -->
+
+<!-- architecture-manager-platform:zcode -->
+
+### 管理台登记：zcode
+
+- 平台配置入口：`zcode/bridge.json`；平台章：`zcode/bridge/platform.md`。
+- 本平台接入记录位于自己的 runtime/maintenance/manager-onboarding；配置、环境、矩阵、客户端回环和 Git 读数全部通过才算完成。
+- 标准 CLI 入口无需维护型 AI 会话；业务模型输出与厂商原生客户端注册各自验证，不由目录存在推定。
+- 本轮钉版：0.12.2 / 1.5.2 / 0.6.5。
+
+<!-- /architecture-manager-platform:zcode -->
+
+<!-- architecture-manager-platform:workbuddy -->
+
+### 管理台登记：workbuddy
+
+- 平台配置入口：`workbuddy/bridge.json`；平台章：`workbuddy/bridge/platform.md`。
+- 本平台接入记录位于自己的 runtime/maintenance/manager-onboarding；配置、环境、矩阵、客户端回环和 Git 读数全部通过才算完成。
+- 标准 CLI 入口无需维护型 AI 会话；业务模型输出与厂商原生客户端注册各自验证，不由目录存在推定。
+- 本轮钉版：0.12.2 / 1.5.2 / 0.6.5。
+
+<!-- /architecture-manager-platform:workbuddy -->
+
+
+## 2026-10-09 共享专家现行面
+
+现行28主责专家（8升级、20新增），另保留7deprecated入口；一核心、一主流程、按任务辅助卡。固定预算守卫不清除外层会话历史；按范围读取深度引用。资源与Codex采纳读数见 versions/专家扩充与上下文控制-收口报告-20261009.md。三仓骨架、平台隔离及现有档位规则不变。
+
+
+## 2026-10-09 GitHub 仓库收敛
+
+现行维护源为私有 `MC-freshman/ai-workflow-architecture-governance`，公开入口为 `MC-freshman/ai-workflow-architecture`。管理台源码 `architecture-manager/` 已纳入根私有治理仓，不再作为独立远端或 submodule；旧源仓历史先经恢复校验备份并保留于私有 Git 祖先/归档 refs。tool、agent、software 仍是三个独立职责的共享仓，版本和冻结字节不变。旧独立远端及发行的迁移映射见 `versions/GitHub仓库收敛说明-20261009.md`；备份登记是历史证据，不是 inbox 内的现行依赖。平台配置、runtime 和业务环境不因托管调整改变。

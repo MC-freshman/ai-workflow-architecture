@@ -1,0 +1,11 @@
+{
+  "schema": "ai-release-source/v1",
+  "id": "wf-runner",
+  "version": "0.13.1",
+  "derivedFrom": "wf-runner@0.13.0",
+  "change": "approved unified P5: preserve discovered resolver for alias prepare; one budget implementation and delivery guard",
+  "sourceSha256": "c557637b050d4f01f9fd8fd01bd1dfc1ac1a755fdeb955803ce723576ccd45c9",
+  "generatorSha256": "5d9594d7ed714363b0a0159ad69f214ceecdcd0ae07858e611cb3521b2d13957",
+  "author": "workspace maintainer",
+  "license": "existing release terms for unchanged bytes; new operational implementation by workspace maintainer"
+}

@@ -5,13 +5,11 @@
     {
       "id": "game-builder",
       "current": "game-builder/current.json",
-      "version": "1.9.1",
       "enabled": true
     },
     {
       "id": "mastermind-api-validation",
       "current": "mastermind-api-validation/current.json",
-      "version": "1.1.0",
       "enabled": true,
       "deprecated": true,
       "supersededBy": "mastermind-bug-bounty",
@@ -20,13 +18,11 @@
     {
       "id": "mastermind-bug-bounty",
       "current": "mastermind-bug-bounty/current.json",
-      "version": "4.0.1",
       "enabled": true
     },
     {
       "id": "mastermind-crypto-analysis",
       "current": "mastermind-crypto-analysis/current.json",
-      "version": "1.1.0",
       "enabled": true,
       "deprecated": true,
       "supersededBy": "mastermind-bug-bounty",
@@ -35,7 +31,6 @@
     {
       "id": "mastermind-js-analysis",
       "current": "mastermind-js-analysis/current.json",
-      "version": "1.1.0",
       "enabled": true,
       "deprecated": true,
       "supersededBy": "mastermind-bug-bounty",
@@ -44,7 +39,6 @@
     {
       "id": "mastermind-recon",
       "current": "mastermind-recon/current.json",
-      "version": "1.1.0",
       "enabled": true,
       "deprecated": true,
       "supersededBy": "mastermind-bug-bounty",
@@ -53,7 +47,6 @@
     {
       "id": "mastermind-reporting",
       "current": "mastermind-reporting/current.json",
-      "version": "1.1.0",
       "enabled": true,
       "deprecated": true,
       "supersededBy": "mastermind-bug-bounty",
@@ -62,7 +55,6 @@
     {
       "id": "mastermind-triage",
       "current": "mastermind-triage/current.json",
-      "version": "1.1.0",
       "enabled": true,
       "deprecated": true,
       "supersededBy": "mastermind-bug-bounty",
@@ -71,19 +63,16 @@
     {
       "id": "math-modeling-programmer",
       "current": "math-modeling-programmer/current.json",
-      "version": "1.9.0",
       "enabled": true
     },
     {
       "id": "novel-writer",
       "current": "novel-writer/current.json",
-      "version": "1.5.1",
       "enabled": true
     },
     {
       "id": "security-researcher",
       "current": "security-researcher/current.json",
-      "version": "1.4.0",
       "enabled": true,
       "deprecated": true,
       "supersededBy": "mastermind-bug-bounty",
@@ -92,25 +81,121 @@
     {
       "id": "software-engineer",
       "current": "software-engineer/current.json",
-      "version": "1.5.2",
       "enabled": true
     },
     {
       "id": "visualization-engineer",
       "current": "visualization-engineer/current.json",
-      "version": "1.7.1",
       "enabled": true
     },
     {
       "id": "framework-author",
       "current": "framework-author/current.json",
-      "version": "1.0.0",
       "enabled": true
     },
     {
       "id": "paper-author",
       "current": "paper-author/current.json",
-      "version": "1.0.0",
+      "enabled": true
+    },
+    {
+      "id": "software-architect",
+      "current": "software-architect/current.json",
+      "enabled": true
+    },
+    {
+      "id": "frontend-engineer",
+      "current": "frontend-engineer/current.json",
+      "enabled": true
+    },
+    {
+      "id": "qa-engineer",
+      "current": "qa-engineer/current.json",
+      "enabled": true
+    },
+    {
+      "id": "database-engineer",
+      "current": "database-engineer/current.json",
+      "enabled": true
+    },
+    {
+      "id": "devops-engineer",
+      "current": "devops-engineer/current.json",
+      "enabled": true
+    },
+    {
+      "id": "automation-engineer",
+      "current": "automation-engineer/current.json",
+      "enabled": true
+    },
+    {
+      "id": "data-engineer",
+      "current": "data-engineer/current.json",
+      "enabled": true
+    },
+    {
+      "id": "data-analyst",
+      "current": "data-analyst/current.json",
+      "enabled": true
+    },
+    {
+      "id": "ml-engineer",
+      "current": "ml-engineer/current.json",
+      "enabled": true
+    },
+    {
+      "id": "llm-engineer",
+      "current": "llm-engineer/current.json",
+      "enabled": true
+    },
+    {
+      "id": "modeling-analyst",
+      "current": "modeling-analyst/current.json",
+      "enabled": true
+    },
+    {
+      "id": "ui-ux-designer",
+      "current": "ui-ux-designer/current.json",
+      "enabled": true
+    },
+    {
+      "id": "product-manager",
+      "current": "product-manager/current.json",
+      "enabled": true
+    },
+    {
+      "id": "game-designer",
+      "current": "game-designer/current.json",
+      "enabled": true
+    },
+    {
+      "id": "story-architect",
+      "current": "story-architect/current.json",
+      "enabled": true
+    },
+    {
+      "id": "research-analyst",
+      "current": "research-analyst/current.json",
+      "enabled": true
+    },
+    {
+      "id": "content-strategist",
+      "current": "content-strategist/current.json",
+      "enabled": true
+    },
+    {
+      "id": "document-engineer",
+      "current": "document-engineer/current.json",
+      "enabled": true
+    },
+    {
+      "id": "spreadsheet-engineer",
+      "current": "spreadsheet-engineer/current.json",
+      "enabled": true
+    },
+    {
+      "id": "presentation-designer",
+      "current": "presentation-designer/current.json",
       "enabled": true
     }
   ]

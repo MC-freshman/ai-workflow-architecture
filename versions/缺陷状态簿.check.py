@@ -1,7 +1,7 @@
 """R-P1 复算命令：python -B versions/缺陷状态簿.check.py
 机器可判：结构、状态集、红行点名、closed/absorbed/ruled 行的 source 必须在盘上存在。
 退出码 0 = 簿子纪律成立；1 = 有红线违规（逐条点名）。"""
-import hashlib, json, sys
+import hashlib, json, sys, re
 from pathlib import Path
 
 BOOK = Path(__file__).parent / "缺陷状态簿.json"
@@ -38,15 +38,19 @@ def main():
                 tok = part.strip().split()[0] if part.strip() else ""
                 if not tok:
                     continue
-                import re
                 tok = re.sub(r":\d+(-\d+)?$", "", tok)
                 cands.append(tok)
             hit = any((ROOT / c).exists() for c in cands)
             if not hit:
                 errors.append(f"{rid}: {st} row's source does not exist on disk: {src[:80]}")
-    # 号段连续性：D-25..D-97 每号都有一行（无跳号隐瞒）
-    have = {int(i.split("-")[1]) for i in ids if isinstance(i, str) and "-" in i}
-    missing = [f"D-{n}" for n in range(25, 98) if n not in have]
+    # 从当前合法 ID 派生上界；保留已有 D-25..D-97 基线，新增号段同样查跳号。
+    have = set()
+    for rid in ids:
+        if not isinstance(rid, str) or not re.fullmatch(r"D-[1-9][0-9]*", rid):
+            errors.append(f"illegal id: {rid!r}")
+        else:
+            have.add(int(rid[2:]))
+    missing = [f"D-{n}" for n in range(25, max({97, *have}) + 1) if n not in have]
     if missing:
         errors.append(f"range gaps (each number must have a row): {missing}")
     digest = hashlib.sha256(raw).hexdigest()

@@ -1,7 +1,7 @@
 {
-  "softwareRoot": "E:/ai/software",
-  "lockRoot": "E:/ai/codex/runtime/software/locks",
-  "evidenceRoot": "E:/ai/codex/runtime/software/evidence",
+  "softwareRoot": "E:\\ai\\software",
+  "lockRoot": "E:\\ai\\codex\\runtime\\software\\locks",
+  "evidenceRoot": "E:\\ai\\codex\\runtime\\software\\evidence",
   "bodies": {
     "burp-suite": "<local-tool-body-path> V2024.5.1/BurpSuite V2024.5.1/BurpSuite/burpsuite_pro_org.jar",
     "dirsearch": "D:/Various_programming_languages/PPython/dirsearch-master/dirsearch-master/dirsearch.py",
@@ -11,6 +11,73 @@
     "wireshark-cli": "<local-tool-body-path>"
   },
   "interpreters": {
-    ".py": "E:/ai/codex/workspaces/agentic-workflow-implementation/.venv/Scripts/python.exe"
+    ".py": "E:\\ai\\codex\\runtime\\manager-environments\\231fdee7-dcaf-45db-9ba8-cd9cfbe81cd5\\host\\Scripts\\python.exe"
+  },
+  "interpreterAliases": {
+    "PPython": "D:/Various_programming_languages/PPython/python.exe"
+  },
+  "credentialProvider": [
+    "E:\\ai\\codex\\runtime\\manager-environments\\231fdee7-dcaf-45db-9ba8-cd9cfbe81cd5\\host\\Scripts\\python.exe",
+    "-B",
+    "E:\\ai\\codex\\bridge\\manager-providers\\platform_provider.py",
+    "credential",
+    "E:\\ai\\codex\\runtime\\software\\provider-state"
+  ],
+  "sessionLaunch": [
+    "E:\\ai\\codex\\runtime\\manager-environments\\231fdee7-dcaf-45db-9ba8-cd9cfbe81cd5\\host\\Scripts\\python.exe",
+    "-B",
+    "E:\\ai\\codex\\bridge\\manager-providers\\platform_provider.py",
+    "launch",
+    "E:\\ai\\codex\\runtime\\software\\provider-state"
+  ],
+  "sessionLiveness": [
+    "E:\\ai\\codex\\runtime\\manager-environments\\231fdee7-dcaf-45db-9ba8-cd9cfbe81cd5\\host\\Scripts\\python.exe",
+    "-B",
+    "E:\\ai\\codex\\bridge\\manager-providers\\platform_provider.py",
+    "liveness",
+    "E:\\ai\\codex\\runtime\\software\\provider-state"
+  ],
+  "sessionTerminate": [
+    "E:\\ai\\codex\\runtime\\manager-environments\\231fdee7-dcaf-45db-9ba8-cd9cfbe81cd5\\host\\Scripts\\python.exe",
+    "-B",
+    "E:\\ai\\codex\\bridge\\manager-providers\\platform_provider.py",
+    "terminate",
+    "E:\\ai\\codex\\runtime\\software\\provider-state"
+  ],
+  "credentialWorkspace": "E:\\ai\\codex\\runtime\\software\\credentials",
+  "allowGuiLaunch": false,
+  "projectWriteRoots": [
+    "E:/ai/codex/workspaces"
+  ],
+  "artifactRoots": [
+    "E:\\ai\\codex\\runtime\\software"
+  ],
+  "softwareProfiles": {
+    "readonly-version": {
+      "filesystem": [
+        "none",
+        "read"
+      ],
+      "network": [
+        "none"
+      ],
+      "credentials": [
+        "none"
+      ]
+    },
+    "administrator": {
+      "filesystem": [
+        "none",
+        "read",
+        "system"
+      ],
+      "network": [
+        "none"
+      ],
+      "credentials": [
+        "none"
+      ],
+      "consentPolicy": "per-call-user-confirmation"
+    }
   }
 }

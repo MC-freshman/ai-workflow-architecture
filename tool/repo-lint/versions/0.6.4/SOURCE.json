@@ -1,0 +1,12 @@
+{
+  "schema": "ai-governance-source/v1",
+  "authorSession": "codex",
+  "derivedFrom": "repo-lint@0.6.3",
+  "supersedes": "0.6.3",
+  "version": "0.6.4",
+  "releaseScope": "Approved performance P1: content-hash metadata parsing and fresh-stat path identity reuse; global R2 retained for every current resource.",
+  "previousSource": "tool/repo-lint/versions/0.6.3/SOURCE.json",
+  "openDeferred": [
+    "Publication is not adoption; existing platform pins and old run locks are retained."
+  ]
+}

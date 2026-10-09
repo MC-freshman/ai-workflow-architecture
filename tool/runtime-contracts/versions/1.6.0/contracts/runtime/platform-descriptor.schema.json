@@ -1,0 +1,76 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://contracts.local/runtime/1.2/platform-descriptor.schema.json",
+  "title": "Declarative platform descriptor + capability facets (v2)",
+  "description": "ADR-0 / ADR-1 / gate 2. The shared architecture carries NO platform-name enum; a platform self-describes identity + faceted capabilities. platformId is a normative identifier validated against a trusted platform registry by the consumer (opening the enum does NOT authorize arbitrary platformRoot; root ownership, run root and platform declaration are still verified independently). Facets cannot be summed into one level: prompt L2 must not imply script L2.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema", "platformId", "protocols", "operations", "actions"],
+  "properties": {
+    "schema": { "const": "ai-platform-descriptor/v2" },
+    "platformId": { "$ref": "#/$defs/platformId" },
+    "protocols": {
+      "type": "array", "minItems": 1, "uniqueItems": true,
+      "items": { "enum": ["ai-run-protocol/v1.1", "ai-run-protocol/v1.2", "ai-run-protocol/v2"] }
+    },
+    "operations": {
+      "type": "array", "uniqueItems": true,
+      "items": { "enum": ["prepare", "next", "submit", "status", "stop", "delegate", "reconcile"] }
+    },
+    "actions": {
+      "type": "object",
+      "additionalProperties": false,
+      "minProperties": 1,
+      "properties": {
+        "prompt": { "$ref": "#/$defs/facet" },
+        "script": { "$ref": "#/$defs/facet" },
+        "peer": { "$ref": "#/$defs/facet" }
+      }
+    },
+    "gates": { "type": "array", "uniqueItems": true, "items": { "type": "string" } },
+    "profiles": {
+      "type": "object",
+      "additionalProperties": { "$ref": "#/$defs/profile" }
+    },
+    "enforcement": { "enum": ["kernel", "mediated", "advisory"] },
+    "recovery": { "type": "array", "uniqueItems": true, "items": { "enum": ["replay", "process-reconcile", "resume"] } },
+    "evidenceBindings": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["configDigest", "runnerDigest"],
+      "properties": {
+        "configDigest": { "$ref": "https://contracts.local/runtime/1.1/common.schema.json#/$defs/hash" },
+        "runnerDigest": { "$ref": "https://contracts.local/runtime/1.1/common.schema.json#/$defs/hash" },
+        "environmentDigest": { "oneOf": [{ "type": "null" }, { "$ref": "https://contracts.local/runtime/1.1/common.schema.json#/$defs/hash" }] },
+        "certificateRef": { "type": "string" }
+      },
+      "patternProperties": { "^x-": true }
+    }
+  },
+  "$defs": {
+    "platformId": { "type": "string", "pattern": "^[a-z0-9][a-z0-9._-]{0,63}$" },
+    "facet": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["supported"],
+      "properties": {
+        "supported": { "type": "boolean" },
+        "enforcement": { "enum": ["kernel", "mediated", "advisory"] },
+        "reason": { "type": "string", "description": "Required when supported=false (e.g. NO_VERIFIED_BACKEND)." }
+      },
+      "patternProperties": { "^x-": true }
+    },
+    "profile": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["declared"],
+      "properties": {
+        "declared": { "type": "boolean" },
+        "adapters": { "type": "array", "items": { "type": "string" } },
+        "requires": { "type": "array", "items": { "type": "string" } }
+      },
+      "patternProperties": { "^x-": true }
+    }
+  },
+  "patternProperties": { "^x-": true }
+}

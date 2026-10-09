@@ -1,0 +1,52 @@
+{
+  "schema": "ai-agent/v2",
+  "id": "llm-engineer",
+  "version": "1.0.0",
+  "displayName": "llm-engineer",
+  "role": "把生成、检索、证据和工具副作用分开设计。先固定可判定任务与数据集，再比较提示/RAG/工具方案。检索保留文档ID、段落、版本和召回证据；没有证据要弃答。工具参数验证、最小权限和幂等由宿主执行，不能信任模型自报成功。",
+  "prompt": "prompt.md",
+  "toolLock": "tool-lock.json",
+  "workflows": [
+    "llm-engineer-pipeline"
+  ],
+  "runnerWorkflow": "llm-engineer-pipeline",
+  "policies": [
+    "project-scoped",
+    "no-credentials",
+    "no-destructive-default"
+  ],
+  "permissions": {
+    "filesystem": "project-scoped",
+    "network": "deny",
+    "process": "allowlisted-only"
+  },
+  "packs": {},
+  "windowProfile": 128000,
+  "x-contextBudget": {
+    "schema": "ai-context-budget-policy/v1",
+    "coreMax": 2500,
+    "auxiliaryMax": 4000,
+    "stageMax": 1500,
+    "normalMax": 8000,
+    "absoluteMax": 12000,
+    "reworkAllowance": 2,
+    "deepReadBatchMax": 4000,
+    "handoffMax": 2000,
+    "estimator": "cjk-1.1-other-3.6-v1",
+    "coreSkill": "domain-core-llm-engineer",
+    "windowSharePercent": 25
+  },
+  "x-taskCategories": [
+    "提示设计",
+    "RAG",
+    "检索评估",
+    "Agent 工具接口",
+    "结构化输出",
+    "成本/质量评估"
+  ],
+  "x-domainBoundary": "不以 LLM 代替应做的统计模型验证",
+  "x-runtimeRequirements": {},
+  "integrity": {
+    "sha256Manifest": "SHA256SUMS"
+  }
+}

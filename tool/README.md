@@ -184,3 +184,7 @@ A domain is now **one expert + one general workflow + N scenario skills**. What 
 ## 当前状态更正（2026-09-23，3.1.0 采纳收口）
 
 共享默认已切换到 `wf-runner 0.10.0`、`runtime-contracts 1.4.0`、`repo-lint 0.5.1`、`architecture-ops 1.3.0`、`platform-conformance 1.4.0`、`visualization-qa 1.3.0`；安全工作流修复释放为 `3.0.1`。各平台的 bridge 配置由本轮统一对齐，平台能力矩阵仍须按各自证据维护。
+
+## 2026-10-09 专家场景与预算
+
+专家主流程始终带一份领域核心，仅注入当前任务卡。规范选取索引：_registry/skill-selection-index.json；新增skill目录的钉版目录在_registry/skills-domain-expansion.json。历史同文/语言变体保留，Source前缀不充当领域标签。预算由wf-runner0.13.0、repo-lint0.7.0、platform-conformance1.6.0按同一估算器计；长引用走runner的reference_reader.py并留哈希/范围receipt。详见versions/专家扩充-上下文预算契约-20261009.md。

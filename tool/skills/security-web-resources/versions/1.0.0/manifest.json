@@ -1,0 +1,608 @@
+{
+  "schema": "ai-skill/v1",
+  "id": "security-web-resources",
+  "version": "1.0.0",
+  "kind": "atomic",
+  "category": "skill",
+  "entry": "SKILL.md",
+  "input": {
+    "type": "text",
+    "contract": "exact task and selected resource path"
+  },
+  "output": {
+    "type": "text",
+    "contract": "referenced method or companion script output"
+  },
+  "permissions": [
+    "read-project"
+  ],
+  "requires": [],
+  "conflicts": [],
+  "source": {
+    "repository": "https://github.com/jeremylongshore/tons-of-skills-marketplace.git",
+    "snapshot": "80f86dfbdb02e5d74c625f411ba6834c66ca0705",
+    "license": "MIT"
+  },
+  "x-referenceIndex": [
+    {
+      "path": "upstream/skills/analyzing-tls-config/SKILL.md",
+      "sha256": "ae7e1571896257786254ef722daf9ff8e8604de2eca54b9af3f53dd36fd3a297",
+      "sourcePath": "skills/analyzing-tls-config/SKILL.md"
+    },
+    {
+      "path": "upstream/skills/analyzing-tls-config/references/AUTHORIZATION.md",
+      "sha256": "23b4283bc7f34a9e5b0fe659d9b6206ee42eb23ac1301a0281b9856af90db54d",
+      "sourcePath": "skills/analyzing-tls-config/references/AUTHORIZATION.md"
+    },
+    {
+      "path": "upstream/skills/analyzing-tls-config/references/PLAYBOOK.md",
+      "sha256": "9426b306a92554d173c6b77d17dd214c353203ef7f25e7a869c909acdebe0c98",
+      "sourcePath": "skills/analyzing-tls-config/references/PLAYBOOK.md"
+    },
+    {
+      "path": "upstream/skills/analyzing-tls-config/references/THEORY.md",
+      "sha256": "80fd89cdde63baf11e94bcb74436f42f305af4fb26acbab52603d847c3d6d3e5",
+      "sourcePath": "skills/analyzing-tls-config/references/THEORY.md"
+    },
+    {
+      "path": "upstream/skills/analyzing-tls-config/scripts/analyze_tls.py",
+      "sha256": "b701ed6a3ae2cb502e94f822c09ed5d2548db4c9784c997057189a0aa1f94f0a",
+      "sourcePath": "skills/analyzing-tls-config/scripts/analyze_tls.py"
+    },
+    {
+      "path": "upstream/skills/auditing-cors-policy/SKILL.md",
+      "sha256": "dae347af76eaddf998be1a85010ca9a0042ac085e0436bb751900183aa1d2ee0",
+      "sourcePath": "skills/auditing-cors-policy/SKILL.md"
+    },
+    {
+      "path": "upstream/skills/auditing-cors-policy/references/PLAYBOOK.md",
+      "sha256": "600ee6ffbf719ddcaa92118262266a814924921285d6818c5dfa0315b30d01e6",
+      "sourcePath": "skills/auditing-cors-policy/references/PLAYBOOK.md"
+    },
+    {
+      "path": "upstream/skills/auditing-cors-policy/references/THEORY.md",
+      "sha256": "5424caa52c120c212d23d1b26e2b3c996939f60065c00f450e4be551071c000a",
+      "sourcePath": "skills/auditing-cors-policy/references/THEORY.md"
+    },
+    {
+      "path": "upstream/skills/auditing-cors-policy/scripts/audit_cors.py",
+      "sha256": "99fea5e20e242a8146b43cc6c364dd2a393a0d3566f8ca6f64ed434cc295c95f",
+      "sourcePath": "skills/auditing-cors-policy/scripts/audit_cors.py"
+    },
+    {
+      "path": "upstream/skills/auditing-npm-dependencies/SKILL.md",
+      "sha256": "bbb92ee526aa7ff00072e89471a41080237099b20aaad5ca2392a61e337bc814",
+      "sourcePath": "skills/auditing-npm-dependencies/SKILL.md"
+    },
+    {
+      "path": "upstream/skills/auditing-npm-dependencies/references/PLAYBOOK.md",
+      "sha256": "018f6ce83045c37801c641a4b8ae158854a8c12595d67267823880d6a7682b9e",
+      "sourcePath": "skills/auditing-npm-dependencies/references/PLAYBOOK.md"
+    },
+    {
+      "path": "upstream/skills/auditing-npm-dependencies/references/THEORY.md",
+      "sha256": "06e2d2a0c1ae1eff761b55d5fb2df765609d996a8532ba9d0e20271b43552b66",
+      "sourcePath": "skills/auditing-npm-dependencies/references/THEORY.md"
+    },
+    {
+      "path": "upstream/skills/auditing-npm-dependencies/scripts/audit_npm.py",
+      "sha256": "58d1cc25499c2609497a43aa4acffe5cfad9f12f20607e8f2e8276c4a0969116",
+      "sourcePath": "skills/auditing-npm-dependencies/scripts/audit_npm.py"
+    },
+    {
+      "path": "upstream/skills/auditing-python-dependencies/SKILL.md",
+      "sha256": "44247a314f640652ef0da6ef16f4e98bc95781a06bce342ed657a8e5d9ad0fde",
+      "sourcePath": "skills/auditing-python-dependencies/SKILL.md"
+    },
+    {
+      "path": "upstream/skills/auditing-python-dependencies/references/PLAYBOOK.md",
+      "sha256": "828d1bab9d369c8af4de93e74111cb4d7f57971ff5b48cdaad9d1e0f17bc9362",
+      "sourcePath": "skills/auditing-python-dependencies/references/PLAYBOOK.md"
+    },
+    {
+      "path": "upstream/skills/auditing-python-dependencies/references/THEORY.md",
+      "sha256": "32c60c7f5d68c12d17166c89e2c85682732789165bf1b80f5ff65cbda67087af",
+      "sourcePath": "skills/auditing-python-dependencies/references/THEORY.md"
+    },
+    {
+      "path": "upstream/skills/auditing-python-dependencies/scripts/audit_python.py",
+      "sha256": "a4e35ca186ca6dcf8b844e5ef158549d5fb28a047fa1125d30a8c542ba0a9135",
+      "sourcePath": "skills/auditing-python-dependencies/scripts/audit_python.py"
+    },
+    {
+      "path": "upstream/skills/checking-http-security-headers/SKILL.md",
+      "sha256": "33516656eab1103c0876b7384b2c812b1cdda7851c2b0cf11610ffd9b96d4e6d",
+      "sourcePath": "skills/checking-http-security-headers/SKILL.md"
+    },
+    {
+      "path": "upstream/skills/checking-http-security-headers/references/PLAYBOOK.md",
+      "sha256": "ab7841b2535176af29251f3ef3d8d723d062b7c2f2ab15bf83cf8b84c6c77ec5",
+      "sourcePath": "skills/checking-http-security-headers/references/PLAYBOOK.md"
+    },
+    {
+      "path": "upstream/skills/checking-http-security-headers/references/THEORY.md",
+      "sha256": "a7a6956779032531f757765601875c06a1c6227238a9311c80f94ab5451a0f3b",
+      "sourcePath": "skills/checking-http-security-headers/references/THEORY.md"
+    },
+    {
+      "path": "upstream/skills/checking-http-security-headers/scripts/check_headers.py",
+      "sha256": "0aa91aa61cf7de3830bf948b4b5a08b70ac518ba87de1929baa21402eef44710",
+      "sourcePath": "skills/checking-http-security-headers/scripts/check_headers.py"
+    },
+    {
+      "path": "upstream/skills/checking-license-compliance/SKILL.md",
+      "sha256": "7c97b2383b27e9160a2a7d115d9295f9aaf957f7ff67a4cab923f202e777fcc4",
+      "sourcePath": "skills/checking-license-compliance/SKILL.md"
+    },
+    {
+      "path": "upstream/skills/checking-license-compliance/references/PLAYBOOK.md",
+      "sha256": "97abfc68ae10a23898879c7106e978a7f832b8f626b895c4aa33422e91a36d96",
+      "sourcePath": "skills/checking-license-compliance/references/PLAYBOOK.md"
+    },
+    {
+      "path": "upstream/skills/checking-license-compliance/references/THEORY.md",
+      "sha256": "4b07c42a4960f6b9caefa5406146af0e31b0c9a11a77fdc3dc0c51037e3b6ac0",
+      "sourcePath": "skills/checking-license-compliance/references/THEORY.md"
+    },
+    {
+      "path": "upstream/skills/checking-license-compliance/scripts/check_licenses.py",
+      "sha256": "f327f4b961899dbcbcbd04027972fb3906ba168691c2b9b7d80b00a411d42d56",
+      "sourcePath": "skills/checking-license-compliance/scripts/check_licenses.py"
+    },
+    {
+      "path": "upstream/skills/composing-vulnerability-report/SKILL.md",
+      "sha256": "a116e286b7a995aa6a3b9517c85d25a051748464616b858a587017ea65e7b016",
+      "sourcePath": "skills/composing-vulnerability-report/SKILL.md"
+    },
+    {
+      "path": "upstream/skills/composing-vulnerability-report/references/PLAYBOOK.md",
+      "sha256": "35c21be873d7aa593fca38cb94a0fb723218aedcbb9c646deb8f3f8fae22e20d",
+      "sourcePath": "skills/composing-vulnerability-report/references/PLAYBOOK.md"
+    },
+    {
+      "path": "upstream/skills/composing-vulnerability-report/references/THEORY.md",
+      "sha256": "15fedb1cdfec1d83ad706fe14f447879544e0c56fa32a41b6182269dbb35269c",
+      "sourcePath": "skills/composing-vulnerability-report/references/THEORY.md"
+    },
+    {
+      "path": "upstream/skills/composing-vulnerability-report/scripts/compose_report.py",
+      "sha256": "7415ffe6f22567c9371d85e4dd6f14f02362407388dda8d44447a9bb26e14126",
+      "sourcePath": "skills/composing-vulnerability-report/scripts/compose_report.py"
+    },
+    {
+      "path": "upstream/skills/confirming-pentest-authorization/SKILL.md",
+      "sha256": "d7b67979d8940a4ecbebd907834302194c8889ae642bf2060fb1add7d5210737",
+      "sourcePath": "skills/confirming-pentest-authorization/SKILL.md"
+    },
+    {
+      "path": "upstream/skills/confirming-pentest-authorization/references/PLAYBOOK.md",
+      "sha256": "888571a3adb35a7687a00a2dd99ed6d53e9dc4f9d01f47fa6f1fb78be36ca833",
+      "sourcePath": "skills/confirming-pentest-authorization/references/PLAYBOOK.md"
+    },
+    {
+      "path": "upstream/skills/confirming-pentest-authorization/references/THEORY.md",
+      "sha256": "fba2c0f06504b8e9db052cd9e0409dac11603ce3f93a156fb6fbdf360c847242",
+      "sourcePath": "skills/confirming-pentest-authorization/references/THEORY.md"
+    },
+    {
+      "path": "upstream/skills/confirming-pentest-authorization/scripts/check_authorization.py",
+      "sha256": "a7100b23a7c18b073eccb13906356b7a573ab97fed51d7ec23af033c1b9adfdb",
+      "sourcePath": "skills/confirming-pentest-authorization/scripts/check_authorization.py"
+    },
+    {
+      "path": "upstream/skills/defining-pentest-scope/SKILL.md",
+      "sha256": "f33af9b0c398afe81e1a78f2c8e3556abde2aeb99c635797462fff616482b1a5",
+      "sourcePath": "skills/defining-pentest-scope/SKILL.md"
+    },
+    {
+      "path": "upstream/skills/defining-pentest-scope/references/PLAYBOOK.md",
+      "sha256": "66881595cda051edad2ee13bb2af85cd9537de52747d411a25d9dfee4effa4e2",
+      "sourcePath": "skills/defining-pentest-scope/references/PLAYBOOK.md"
+    },
+    {
+      "path": "upstream/skills/defining-pentest-scope/references/THEORY.md",
+      "sha256": "78d4d425b6d7f86c03757f25caf50c204631b078e770e3eb93a90acfffe0462c",
+      "sourcePath": "skills/defining-pentest-scope/references/THEORY.md"
+    },
+    {
+      "path": "upstream/skills/defining-pentest-scope/scripts/define_scope.py",
+      "sha256": "b25d4d94d98f19b250cf1762bfb44ae0a1f6c2cd2765ead4c12a6d43ee620595",
+      "sourcePath": "skills/defining-pentest-scope/scripts/define_scope.py"
+    },
+    {
+      "path": "upstream/skills/detecting-command-injection-patterns/SKILL.md",
+      "sha256": "d0547216ae6e9b228559e90f524bfc5df0c0aca548d5f702a71a9f99f25af2b0",
+      "sourcePath": "skills/detecting-command-injection-patterns/SKILL.md"
+    },
+    {
+      "path": "upstream/skills/detecting-command-injection-patterns/references/PLAYBOOK.md",
+      "sha256": "00eba511c615bd2359866ebdff06dcd7fa96e0f5337efeb1c9d1f8c7be77f741",
+      "sourcePath": "skills/detecting-command-injection-patterns/references/PLAYBOOK.md"
+    },
+    {
+      "path": "upstream/skills/detecting-command-injection-patterns/references/THEORY.md",
+      "sha256": "3a6b6041643bc39a3d4e44eb02cfba3cbdd98b2066256b6681eabde57b41ac7d",
+      "sourcePath": "skills/detecting-command-injection-patterns/references/THEORY.md"
+    },
+    {
+      "path": "upstream/skills/detecting-command-injection-patterns/scripts/scan_cmdi.py",
+      "sha256": "01ab2fc606dff849aabd0bb6c96caf6500a8f0f3478dc05b215e1f004c7685b0",
+      "sourcePath": "skills/detecting-command-injection-patterns/scripts/scan_cmdi.py"
+    },
+    {
+      "path": "upstream/skills/detecting-debug-endpoints/SKILL.md",
+      "sha256": "544601e210c083c8362ac9c154953d9644f9090026c23ccabc4807daa5a46b35",
+      "sourcePath": "skills/detecting-debug-endpoints/SKILL.md"
+    },
+    {
+      "path": "upstream/skills/detecting-debug-endpoints/references/PLAYBOOK.md",
+      "sha256": "0478a4fbcef1fc4cda948dd5b7fb4a37e5455d5b61d5b01e53e71f88d3fc88a3",
+      "sourcePath": "skills/detecting-debug-endpoints/references/PLAYBOOK.md"
+    },
+    {
+      "path": "upstream/skills/detecting-debug-endpoints/references/THEORY.md",
+      "sha256": "de9c25d3c7804948627373b00e0f7d70261a0e10de4711c9ea329b86ba8463a9",
+      "sourcePath": "skills/detecting-debug-endpoints/references/THEORY.md"
+    },
+    {
+      "path": "upstream/skills/detecting-debug-endpoints/scripts/probe_debug.py",
+      "sha256": "3978b9827c4226b69715c35ebec03178e53f3b0ef61d619079abac3f55d1c957",
+      "sourcePath": "skills/detecting-debug-endpoints/scripts/probe_debug.py"
+    },
+    {
+      "path": "upstream/skills/detecting-directory-listing/SKILL.md",
+      "sha256": "139a5b1b088dd277c043b5ba689fac4e528823a74f55fcb99117169fffb25790",
+      "sourcePath": "skills/detecting-directory-listing/SKILL.md"
+    },
+    {
+      "path": "upstream/skills/detecting-directory-listing/references/PLAYBOOK.md",
+      "sha256": "a37e32161b7b9b55efdb01af88fe86b43a9e4733f655fcb982aad33e68d27303",
+      "sourcePath": "skills/detecting-directory-listing/references/PLAYBOOK.md"
+    },
+    {
+      "path": "upstream/skills/detecting-directory-listing/references/THEORY.md",
+      "sha256": "c974759481681725c084668c6d889a0cfd9b48c14fb4ffde0f65fbe9ca15902d",
+      "sourcePath": "skills/detecting-directory-listing/references/THEORY.md"
+    },
+    {
+      "path": "upstream/skills/detecting-directory-listing/scripts/probe_directory_listing.py",
+      "sha256": "b5dbde1ed478b532f2be066f888eaa87b02d05ef6abdc4d3a53fcbba0a8530f7",
+      "sourcePath": "skills/detecting-directory-listing/scripts/probe_directory_listing.py"
+    },
+    {
+      "path": "upstream/skills/detecting-eval-exec-usage/SKILL.md",
+      "sha256": "6913c0f8fbdabe4987cfbcbe8ecf474e26b7522ec30c5a04932bcdd09ead5a61",
+      "sourcePath": "skills/detecting-eval-exec-usage/SKILL.md"
+    },
+    {
+      "path": "upstream/skills/detecting-eval-exec-usage/references/PLAYBOOK.md",
+      "sha256": "c4c1d2f92b3ed6231943fdd3ecd9d6421152d1df45240d9aa6e9ff06d84e0763",
+      "sourcePath": "skills/detecting-eval-exec-usage/references/PLAYBOOK.md"
+    },
+    {
+      "path": "upstream/skills/detecting-eval-exec-usage/references/THEORY.md",
+      "sha256": "82565132bd279873667c56a732b2c91ea8e249abc87182f4222bb6ff656faced",
+      "sourcePath": "skills/detecting-eval-exec-usage/references/THEORY.md"
+    },
+    {
+      "path": "upstream/skills/detecting-eval-exec-usage/scripts/scan_eval.py",
+      "sha256": "ba2aa89aa85234924b3fdbbd046c6f7e963a8d8b0eadd54bf762ec145182184c",
+      "sourcePath": "skills/detecting-eval-exec-usage/scripts/scan_eval.py"
+    },
+    {
+      "path": "upstream/skills/detecting-exposed-secrets-files/SKILL.md",
+      "sha256": "1420b781d414a0cf02cb54a901cf9be82a03d58c3db9887aa5b6ccdf3de37379",
+      "sourcePath": "skills/detecting-exposed-secrets-files/SKILL.md"
+    },
+    {
+      "path": "upstream/skills/detecting-exposed-secrets-files/references/PLAYBOOK.md",
+      "sha256": "c562d11b2b83b4a7b0169749acbaf34c58401de2febce76bb572b3ecc1a13c4b",
+      "sourcePath": "skills/detecting-exposed-secrets-files/references/PLAYBOOK.md"
+    },
+    {
+      "path": "upstream/skills/detecting-exposed-secrets-files/references/THEORY.md",
+      "sha256": "2f9365de6b6bb4acdff58012d9ece1d01dfadf0f879119ea9f1c0fc27fc4fa95",
+      "sourcePath": "skills/detecting-exposed-secrets-files/references/THEORY.md"
+    },
+    {
+      "path": "upstream/skills/detecting-exposed-secrets-files/scripts/probe_secrets.py",
+      "sha256": "fe13ff396d4910b2cd4361af98792561b6644f75173bf4d74679edd9603c9366",
+      "sourcePath": "skills/detecting-exposed-secrets-files/scripts/probe_secrets.py"
+    },
+    {
+      "path": "upstream/skills/detecting-insecure-deserialization/SKILL.md",
+      "sha256": "44f4652e86ef768f098863731d5139e51712ed8b41aa412447467780d7e195e4",
+      "sourcePath": "skills/detecting-insecure-deserialization/SKILL.md"
+    },
+    {
+      "path": "upstream/skills/detecting-insecure-deserialization/references/PLAYBOOK.md",
+      "sha256": "a7e8b44fc2972427f67d1ce3a49b53d323fee919daa6f5eda5074d92d70e2976",
+      "sourcePath": "skills/detecting-insecure-deserialization/references/PLAYBOOK.md"
+    },
+    {
+      "path": "upstream/skills/detecting-insecure-deserialization/references/THEORY.md",
+      "sha256": "bc2f240279a2220629b81c1c7ad752e5848e67b8574b21752a29745d3e220d39",
+      "sourcePath": "skills/detecting-insecure-deserialization/references/THEORY.md"
+    },
+    {
+      "path": "upstream/skills/detecting-insecure-deserialization/scripts/scan_deserialization.py",
+      "sha256": "924ad4bfd90085647af7b7150698d94aedc75dc2dca50a0e6f2c70ec9a31487c",
+      "sourcePath": "skills/detecting-insecure-deserialization/scripts/scan_deserialization.py"
+    },
+    {
+      "path": "upstream/skills/detecting-sql-injection-patterns/SKILL.md",
+      "sha256": "b545f4edfa6c0f7d91c8f17f0a560912e0b9ab1ce55723395af27231f32ec16a",
+      "sourcePath": "skills/detecting-sql-injection-patterns/SKILL.md"
+    },
+    {
+      "path": "upstream/skills/detecting-sql-injection-patterns/references/PLAYBOOK.md",
+      "sha256": "c1b46436b81abe99952221b6a5f868608bf0754be63a79506778e6837753bbd9",
+      "sourcePath": "skills/detecting-sql-injection-patterns/references/PLAYBOOK.md"
+    },
+    {
+      "path": "upstream/skills/detecting-sql-injection-patterns/references/THEORY.md",
+      "sha256": "598e5ca36998c3645f5a83d5f4afda0c65aa6edb5c7ab88c971e8d1c7640850b",
+      "sourcePath": "skills/detecting-sql-injection-patterns/references/THEORY.md"
+    },
+    {
+      "path": "upstream/skills/detecting-sql-injection-patterns/scripts/scan_sqli.py",
+      "sha256": "ee0bc88e15606afaae27ef3be3c8a76e768691e50eb2683a0fd540b7cfaa5165",
+      "sourcePath": "skills/detecting-sql-injection-patterns/scripts/scan_sqli.py"
+    },
+    {
+      "path": "upstream/skills/detecting-ssl-cert-issues/SKILL.md",
+      "sha256": "86878f7bf3c756687a50cc84343ae33515973b555243417135609d6e9a85650c",
+      "sourcePath": "skills/detecting-ssl-cert-issues/SKILL.md"
+    },
+    {
+      "path": "upstream/skills/detecting-ssl-cert-issues/references/PLAYBOOK.md",
+      "sha256": "70a3c3d32e033a49586512ded78706a3ec9d6599f32875b9bb3fff986254cfd8",
+      "sourcePath": "skills/detecting-ssl-cert-issues/references/PLAYBOOK.md"
+    },
+    {
+      "path": "upstream/skills/detecting-ssl-cert-issues/references/THEORY.md",
+      "sha256": "7f866d3855d9a7deaaf0286f41ae1de30f51d0c80614695980e32cd8a76ad5a8",
+      "sourcePath": "skills/detecting-ssl-cert-issues/references/THEORY.md"
+    },
+    {
+      "path": "upstream/skills/detecting-ssl-cert-issues/scripts/check_cert_chain.py",
+      "sha256": "25faa739ec2625a17415891ab3b2b66f81e43efdab0a086fd614354567de7dcd",
+      "sourcePath": "skills/detecting-ssl-cert-issues/scripts/check_cert_chain.py"
+    },
+    {
+      "path": "upstream/skills/detecting-weak-cryptography/SKILL.md",
+      "sha256": "6602dd937c55ca511a382087d79614c367c41148104192cdb3869999c0827e18",
+      "sourcePath": "skills/detecting-weak-cryptography/SKILL.md"
+    },
+    {
+      "path": "upstream/skills/detecting-weak-cryptography/references/PLAYBOOK.md",
+      "sha256": "e5e1a39de36d849942a743e659906cddd183bd1f9498c66f88696695ae3de038",
+      "sourcePath": "skills/detecting-weak-cryptography/references/PLAYBOOK.md"
+    },
+    {
+      "path": "upstream/skills/detecting-weak-cryptography/references/THEORY.md",
+      "sha256": "e2ef6c6f0f7343ea505f907d8985b4df2449876f3ec5af7751bc852290c05eec",
+      "sourcePath": "skills/detecting-weak-cryptography/references/THEORY.md"
+    },
+    {
+      "path": "upstream/skills/detecting-weak-cryptography/scripts/scan_weak_crypto.py",
+      "sha256": "f1265242225c527f5779412ad383d64e46e6995072b5d0d429a0ce0f5b774d52",
+      "sourcePath": "skills/detecting-weak-cryptography/scripts/scan_weak_crypto.py"
+    },
+    {
+      "path": "upstream/skills/fingerprinting-server-software/SKILL.md",
+      "sha256": "a81d0c1f2911721b6557ab5fffa9547f29fc4f1368550e0f6c0f360f3308136d",
+      "sourcePath": "skills/fingerprinting-server-software/SKILL.md"
+    },
+    {
+      "path": "upstream/skills/fingerprinting-server-software/references/PLAYBOOK.md",
+      "sha256": "1c50cdb6f4ed432e8a38cf6e1cb43a64fd504d5e325a1cd0e710ffc12be8f9e5",
+      "sourcePath": "skills/fingerprinting-server-software/references/PLAYBOOK.md"
+    },
+    {
+      "path": "upstream/skills/fingerprinting-server-software/references/THEORY.md",
+      "sha256": "54c34f2c3e6632788def19dc0d0e2083e17226ed4406169d27dc3df27c9297e5",
+      "sourcePath": "skills/fingerprinting-server-software/references/THEORY.md"
+    },
+    {
+      "path": "upstream/skills/fingerprinting-server-software/scripts/fingerprint_server.py",
+      "sha256": "8db278481468c93151f894a6d26bcc755a38468cf33c6ec31e4dd3693a9b111e",
+      "sourcePath": "skills/fingerprinting-server-software/scripts/fingerprint_server.py"
+    },
+    {
+      "path": "upstream/skills/generating-executive-summary/SKILL.md",
+      "sha256": "a5477133c2f68dfab4de80932991254df5b70e6150e91f52b90c3f37a546a559",
+      "sourcePath": "skills/generating-executive-summary/SKILL.md"
+    },
+    {
+      "path": "upstream/skills/generating-executive-summary/references/PLAYBOOK.md",
+      "sha256": "c0dc33901a90687107e70be2e13b7d35c2eab877d656d013747241071dd75f8e",
+      "sourcePath": "skills/generating-executive-summary/references/PLAYBOOK.md"
+    },
+    {
+      "path": "upstream/skills/generating-executive-summary/references/THEORY.md",
+      "sha256": "d0fb1ab3127cdff28d6d1cf837d02c42d6dfb809228c5623d7b1d539c34dd866",
+      "sourcePath": "skills/generating-executive-summary/references/THEORY.md"
+    },
+    {
+      "path": "upstream/skills/generating-executive-summary/scripts/exec_summary.py",
+      "sha256": "a292630c2c7b7915ebe589ab14f26003ba74b7e0198be478107aa624817c12e8",
+      "sourcePath": "skills/generating-executive-summary/scripts/exec_summary.py"
+    },
+    {
+      "path": "upstream/skills/mapping-findings-to-owasp-top10/SKILL.md",
+      "sha256": "577f6916443e0e36d8013568aa196ea07c2644ac7d751aec99de3501261b2b3e",
+      "sourcePath": "skills/mapping-findings-to-owasp-top10/SKILL.md"
+    },
+    {
+      "path": "upstream/skills/mapping-findings-to-owasp-top10/references/PLAYBOOK.md",
+      "sha256": "a14ba7ac7554d19288ba8f389bba2714313d399f365e6fc0492b4a8a7e26d57b",
+      "sourcePath": "skills/mapping-findings-to-owasp-top10/references/PLAYBOOK.md"
+    },
+    {
+      "path": "upstream/skills/mapping-findings-to-owasp-top10/references/THEORY.md",
+      "sha256": "7e27961e32a175e9e89314a51d27e30f29f1e77e4e58b333a53e5dd1d6d59ff7",
+      "sourcePath": "skills/mapping-findings-to-owasp-top10/references/THEORY.md"
+    },
+    {
+      "path": "upstream/skills/mapping-findings-to-owasp-top10/scripts/map_owasp.py",
+      "sha256": "f91e3fc2dcf3ae46cf3b08a7d809db4d1aff9c9974ceacaa0d7cd1c82758ae8b",
+      "sourcePath": "skills/mapping-findings-to-owasp-top10/scripts/map_owasp.py"
+    },
+    {
+      "path": "upstream/skills/performing-penetration-testing/SKILL.md",
+      "sha256": "1ef1f32ad78926551069eef961eff42425a680e7bcd8447ccc0e9fa611b2a48c",
+      "sourcePath": "skills/performing-penetration-testing/SKILL.md"
+    },
+    {
+      "path": "upstream/skills/performing-penetration-testing/references/OWASP_TOP_10.md",
+      "sha256": "11e29b23d7c371bdd6ad7a81ee118008dd061dc23f31a7cd4a6fc3510f99bc02",
+      "sourcePath": "skills/performing-penetration-testing/references/OWASP_TOP_10.md"
+    },
+    {
+      "path": "upstream/skills/performing-penetration-testing/references/REMEDIATION_PLAYBOOK.md",
+      "sha256": "cfbf1ab0eeddcedae0606a43bd6f5ce9c06759993636fe482bc0864ec7127937",
+      "sourcePath": "skills/performing-penetration-testing/references/REMEDIATION_PLAYBOOK.md"
+    },
+    {
+      "path": "upstream/skills/performing-penetration-testing/references/SECURITY_HEADERS.md",
+      "sha256": "ec6fce5ae9dade286ad985e5fb680d76d6522b90c441552b583c1c6c23082f54",
+      "sourcePath": "skills/performing-penetration-testing/references/SECURITY_HEADERS.md"
+    },
+    {
+      "path": "upstream/skills/performing-penetration-testing/scripts/code_security_scanner.py",
+      "sha256": "37390834c4dc81b14800f3beee6ac65f001f0bc73385d3682193d34dc6699e88",
+      "sourcePath": "skills/performing-penetration-testing/scripts/code_security_scanner.py"
+    },
+    {
+      "path": "upstream/skills/performing-penetration-testing/scripts/dependency_auditor.py",
+      "sha256": "2bba20cc077cd845e42dcd7454575e3f6cb08b093750a4c513bac606e465e349",
+      "sourcePath": "skills/performing-penetration-testing/scripts/dependency_auditor.py"
+    },
+    {
+      "path": "upstream/skills/performing-penetration-testing/scripts/requirements.txt",
+      "sha256": "111e2f5874bb873e95c25e0138c9b60c10ccc07ed7f07c3807da7edba7cb2243",
+      "sourcePath": "skills/performing-penetration-testing/scripts/requirements.txt"
+    },
+    {
+      "path": "upstream/skills/performing-penetration-testing/scripts/security_scanner.py",
+      "sha256": "763693b63681e0e3f695568547292150ccb52f955999e5c7ef7ae8696a1eb9ba",
+      "sourcePath": "skills/performing-penetration-testing/scripts/security_scanner.py"
+    },
+    {
+      "path": "upstream/skills/performing-penetration-testing/scripts/setup_pentest_env.sh",
+      "sha256": "eedac67a530e15fa8c41099a11219f6256ff55e79d0620511e3a183d11a3647a",
+      "sourcePath": "skills/performing-penetration-testing/scripts/setup_pentest_env.sh"
+    },
+    {
+      "path": "upstream/skills/probing-dangerous-http-methods/SKILL.md",
+      "sha256": "af72d963589e1cafbc7e93366e324e39a9327020754e00f568485667786247d2",
+      "sourcePath": "skills/probing-dangerous-http-methods/SKILL.md"
+    },
+    {
+      "path": "upstream/skills/probing-dangerous-http-methods/references/PLAYBOOK.md",
+      "sha256": "8abd887727ae80d897978e1dd8d6f119e13c7ab4bb6b784fd0809e6f5466f75e",
+      "sourcePath": "skills/probing-dangerous-http-methods/references/PLAYBOOK.md"
+    },
+    {
+      "path": "upstream/skills/probing-dangerous-http-methods/references/THEORY.md",
+      "sha256": "1be42654c0abb3097e1afb8f4f50a86c1efabd872098b61f8aedeb86d127cc1e",
+      "sourcePath": "skills/probing-dangerous-http-methods/references/THEORY.md"
+    },
+    {
+      "path": "upstream/skills/probing-dangerous-http-methods/scripts/probe_methods.py",
+      "sha256": "806ac97d8b753a9cf2ce1498b55535939394a9c3ced2230ee63724318d06f527",
+      "sourcePath": "skills/probing-dangerous-http-methods/scripts/probe_methods.py"
+    },
+    {
+      "path": "upstream/skills/recording-pentest-engagement/SKILL.md",
+      "sha256": "9cfb6f903c3fad2f4c0a310cb1ae00bbbec219bcb6e9908454ce5546adba6bd9",
+      "sourcePath": "skills/recording-pentest-engagement/SKILL.md"
+    },
+    {
+      "path": "upstream/skills/recording-pentest-engagement/references/PLAYBOOK.md",
+      "sha256": "a38b5a26ae795ad41437b5e23411a08aa305aac82b1b536cd16387e585e4930e",
+      "sourcePath": "skills/recording-pentest-engagement/references/PLAYBOOK.md"
+    },
+    {
+      "path": "upstream/skills/recording-pentest-engagement/references/THEORY.md",
+      "sha256": "daf7132be4b6fa19d06e5852329e2b553cf6674c31424382851450f301578315",
+      "sourcePath": "skills/recording-pentest-engagement/references/THEORY.md"
+    },
+    {
+      "path": "upstream/skills/recording-pentest-engagement/scripts/record_engagement.py",
+      "sha256": "3764c57343edb7e9c8b79f3a4cbfac21d2596c6717fee517460b31c61e3fc07a",
+      "sourcePath": "skills/recording-pentest-engagement/scripts/record_engagement.py"
+    },
+    {
+      "path": "upstream/skills/scanning-for-hardcoded-secrets/SKILL.md",
+      "sha256": "a242271dedf0c4db4de8b9b6f732d6d39e3d38a5d2d80e4bffd4b4d1554e134d",
+      "sourcePath": "skills/scanning-for-hardcoded-secrets/SKILL.md"
+    },
+    {
+      "path": "upstream/skills/scanning-for-hardcoded-secrets/references/PLAYBOOK.md",
+      "sha256": "74f77a8c07e29d94142710108bfb555e221b25585a9b06d0bb0847c93d6b4f1f",
+      "sourcePath": "skills/scanning-for-hardcoded-secrets/references/PLAYBOOK.md"
+    },
+    {
+      "path": "upstream/skills/scanning-for-hardcoded-secrets/references/THEORY.md",
+      "sha256": "5a24cfdbdb4ae2f0272bb4027c373f10250375f3dda14438b1b860b5f4ee8c50",
+      "sourcePath": "skills/scanning-for-hardcoded-secrets/references/THEORY.md",
+      "upstreamSha256": "d93348ee0c0a4da1dcb742164ff5c0e2dac3fcecc19d3ac898fb49bf954c51a7"
+    },
+    {
+      "path": "upstream/skills/scanning-for-hardcoded-secrets/scripts/scan_secrets.py",
+      "sha256": "ca3026f0a3a96cb2986ed55e7db02cf1735db6c8c143de60a77aafbb68c70cde",
+      "sourcePath": "skills/scanning-for-hardcoded-secrets/scripts/scan_secrets.py"
+    },
+    {
+      "path": "upstream/skills/tracing-transitive-vulnerabilities/SKILL.md",
+      "sha256": "94ecee8188fc297327055e5f280d4e4b43327675cde2d5ec712b14ca0d6e6e64",
+      "sourcePath": "skills/tracing-transitive-vulnerabilities/SKILL.md"
+    },
+    {
+      "path": "upstream/skills/tracing-transitive-vulnerabilities/references/PLAYBOOK.md",
+      "sha256": "b40d7ffff421d5ef52826ddd0fcda00753885df09eed05200469ead388224751",
+      "sourcePath": "skills/tracing-transitive-vulnerabilities/references/PLAYBOOK.md"
+    },
+    {
+      "path": "upstream/skills/tracing-transitive-vulnerabilities/references/THEORY.md",
+      "sha256": "362713776afcbda2e372a9fea1579e3bd8171ea7d918f9bcdbaf38f21edd1e9a",
+      "sourcePath": "skills/tracing-transitive-vulnerabilities/references/THEORY.md"
+    },
+    {
+      "path": "upstream/skills/tracing-transitive-vulnerabilities/scripts/trace_vulns.py",
+      "sha256": "6b06a2e7acbb1618ae6e27b64eadb26ae619e3b96cb2e51979a696a8dca1cf29",
+      "sourcePath": "skills/tracing-transitive-vulnerabilities/scripts/trace_vulns.py"
+    },
+    {
+      "path": "upstream/lib/authz_check.py",
+      "sha256": "b1187302b652fccff87cb2cab0af6a5f699ee9ea619d997bc3892ff5c7bd2276",
+      "sourcePath": "lib/authz_check.py",
+      "upstreamSha256": "c55d07c1359232536226d1a891412a168d3be8a1c45e1243c907316885b2ac55"
+    },
+    {
+      "path": "upstream/lib/finding.py",
+      "sha256": "2274a32ae7aabf29e921c5f7571c2604446fef328e0108bea4dc6763d1260ad0",
+      "sourcePath": "lib/finding.py"
+    },
+    {
+      "path": "upstream/lib/http_client.py",
+      "sha256": "91438d6204ee0ddf485085146a15011b9f0c59f4d09675178ef4f1c1d88925c9",
+      "sourcePath": "lib/http_client.py"
+    },
+    {
+      "path": "upstream/lib/report.py",
+      "sha256": "16e77ed79d64780fd7220b3a43b2f3bdefadc7d603427a9d1634e48d068fdfcc",
+      "sourcePath": "lib/report.py"
+    },
+    {
+      "path": "upstream/lib/__init__.py",
+      "sha256": "659533c98ed7c599199a8662c4970804899431f34c670e4032585525b54e4f6c",
+      "sourcePath": "lib/__init__.py"
+    }
+  ],
+  "integrity": {
+    "sha256Manifest": "SHA256SUMS"
+  }
+}

@@ -1,0 +1,60 @@
+{
+  "schema": "ai-agent/v2",
+  "id": "visualization-engineer",
+  "version": "1.8.0",
+  "displayName": "visualization-engineer",
+  "role": "先锁数据语义和要表达的比较/趋势/关系，再选择图形编码；不修改数据来改善视觉。单位、尺度、基线与缺失显示必须透明。实际渲染后检查裁切、标签、图例、对比度和可读性，导出保留尺寸与数值来源。",
+  "prompt": "prompt.md",
+  "toolLock": "tool-lock.json",
+  "workflows": [
+    "visualization-qa"
+  ],
+  "runnerWorkflow": "visualization-qa",
+  "policies": [
+    "project-scoped",
+    "no-credentials",
+    "no-destructive-default"
+  ],
+  "permissions": {
+    "filesystem": "project-scoped",
+    "network": "deny",
+    "process": "allowlisted-only"
+  },
+  "packs": {},
+  "windowProfile": 128000,
+  "x-contextBudget": {
+    "schema": "ai-context-budget-policy/v1",
+    "coreMax": 2500,
+    "auxiliaryMax": 4000,
+    "stageMax": 1500,
+    "normalMax": 8000,
+    "absoluteMax": 12000,
+    "reworkAllowance": 2,
+    "deepReadBatchMax": 4000,
+    "handoffMax": 2000,
+    "estimator": "cjk-1.1-other-3.6-v1",
+    "coreSkill": "domain-core-visualization-engineer",
+    "windowSharePercent": 25
+  },
+  "x-taskCategories": [
+    "图表选择",
+    "科学图",
+    "交互图规格/实现",
+    "渲染",
+    "几何 QA",
+    "导出"
+  ],
+  "x-domainBoundary": "管表达与渲染；不改分析结论和数字",
+  "x-runtimeRequirements": {
+    "ownership": "platform/runtime",
+    "profile": "portable-resource-python",
+    "packages": {
+      "matplotlib": "3.9.4",
+      "PyMuPDF": "1.26.4"
+    },
+    "when": "执行相应库工具时必需；规格/计划任务可仅生成文本，不能据此声称工具已执行"
+  },
+  "integrity": {
+    "sha256Manifest": "SHA256SUMS"
+  }
+}

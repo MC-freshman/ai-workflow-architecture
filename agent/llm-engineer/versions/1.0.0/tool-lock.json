@@ -1,0 +1,18 @@
+{
+  "schema": "ai-tool-lock/v2",
+  "skills": {
+    "domain-core-llm-engineer": "1.0.0",
+    "llm-engineer-task-01": "1.0.0",
+    "llm-engineer-task-02": "1.0.0",
+    "llm-engineer-task-03": "1.0.0",
+    "llm-engineer-task-04": "1.0.0",
+    "llm-engineer-task-05": "1.0.0",
+    "llm-engineer-task-06": "1.0.0",
+    "domain-source-catalog": "1.0.0"
+  },
+  "workflows": {
+    "llm-engineer-pipeline": "1.0.0"
+  },
+  "packs": {},
+  "profiles": {}
+}

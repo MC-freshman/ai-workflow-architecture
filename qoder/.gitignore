@@ -63,3 +63,6 @@
 /runtime/**/preview/
 /runtime/maintenance/20260923-optimization/baseline.json
 /runtime/maintenance/20260923-optimization/baseline.pre.json
+
+# Approved unified P8: all private runtime stays outside the governance index
+/runtime/

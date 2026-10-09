@@ -1,0 +1,7 @@
+{
+  "schema": "ai-release-source/v1",
+  "id": "frontend-engineer-pipeline",
+  "version": "1.0.0",
+  "derivedFrom": "expert-task@1.1.0",
+  "change": "domain-specific core, task routes and explicit bounded scenarios; serial stage and gate semantics retained"
+}

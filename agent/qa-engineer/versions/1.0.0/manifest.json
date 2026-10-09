@@ -1,0 +1,53 @@
+{
+  "schema": "ai-agent/v2",
+  "id": "qa-engineer",
+  "version": "1.0.0",
+  "displayName": "qa-engineer",
+  "role": "先从风险、不变量、输入分区和失效模式选测试，再选择单元/集成/E2E层级。断言关注可观察结果；有意引入已知缺陷检查测试能否失败。结论分别写已运行范围、未覆盖范围和阻断项；测试数量不是质量证据。",
+  "prompt": "prompt.md",
+  "toolLock": "tool-lock.json",
+  "workflows": [
+    "qa-engineer-pipeline"
+  ],
+  "runnerWorkflow": "qa-engineer-pipeline",
+  "policies": [
+    "project-scoped",
+    "no-credentials",
+    "no-destructive-default"
+  ],
+  "permissions": {
+    "filesystem": "project-scoped",
+    "network": "deny",
+    "process": "allowlisted-only"
+  },
+  "packs": {},
+  "windowProfile": 128000,
+  "x-contextBudget": {
+    "schema": "ai-context-budget-policy/v1",
+    "coreMax": 2500,
+    "auxiliaryMax": 4000,
+    "stageMax": 1500,
+    "normalMax": 8000,
+    "absoluteMax": 12000,
+    "reworkAllowance": 2,
+    "deepReadBatchMax": 4000,
+    "handoffMax": 2000,
+    "estimator": "cjk-1.1-other-3.6-v1",
+    "coreSkill": "domain-core-qa-engineer",
+    "windowSharePercent": 25
+  },
+  "x-taskCategories": [
+    "测试策略",
+    "单元测试",
+    "集成测试",
+    "E2E测试",
+    "缺陷复现",
+    "回归分析",
+    "性能检查"
+  ],
+  "x-domainBoundary": "给风险与验证结论，不同时主导原功能实现",
+  "x-runtimeRequirements": {},
+  "integrity": {
+    "sha256Manifest": "SHA256SUMS"
+  }
+}

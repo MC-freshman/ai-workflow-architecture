@@ -1,0 +1,12 @@
+{
+  "schema": "ai-governance-source/v1",
+  "authorSession": "codex",
+  "derivedFrom": "architecture-ops@1.5.0",
+  "supersedes": "1.5.0",
+  "version": "1.5.1",
+  "releaseScope": "Approved performance P2: filter before software dispatch and real row progress/partial evidence.",
+  "previousSource": "tool/architecture-ops/versions/1.5.0/SOURCE.json",
+  "openDeferred": [
+    "Publication is not adoption; existing platform pins and old run locks are retained."
+  ]
+}

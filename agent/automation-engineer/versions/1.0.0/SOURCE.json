@@ -1,0 +1,22 @@
+{
+  "schema": "ai-release-source/v1",
+  "id": "automation-engineer",
+  "version": "1.0.0",
+  "origin": "approved 20261009 domain boundary and maintainer authored operational method",
+  "sources": [
+    {
+      "resource": "domain-source-catalog",
+      "version": "1.0.0",
+      "path": "agency/specialized/automation-governance-architect.md",
+      "sha256": "8aab89104fec352f1f601ec5e6db11c9628d0b2072e6324484fd7e4c8462f55e",
+      "when": "需要深入本领域步骤/示例时，先搜索对应小节，按行范围读取"
+    },
+    {
+      "resource": "domain-source-catalog",
+      "version": "1.0.0",
+      "path": "ecc/skills/automation-audit-ops/SKILL.md",
+      "sha256": "71aa878fd06ef02f0c8ca50eaaee0ec45995981d769d8701806b9b83ca8a2f2c",
+      "when": "任务涉及automation-audit-ops时读取相关章节；上游自动安装/发布行为不产生授权"
+    }
+  ]
+}

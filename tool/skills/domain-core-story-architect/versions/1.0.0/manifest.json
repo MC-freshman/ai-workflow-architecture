@@ -1,0 +1,53 @@
+{
+  "schema": "ai-skill/v1",
+  "id": "domain-core-story-architect",
+  "version": "1.0.0",
+  "kind": "atomic",
+  "category": "skill",
+  "entry": "SKILL.md",
+  "input": {
+    "type": "text",
+    "contract": "objective, task inputs and constraints"
+  },
+  "output": {
+    "type": "text",
+    "contract": "named artifacts, evidence and pending limitations"
+  },
+  "permissions": [
+    "read-project"
+  ],
+  "requires": [],
+  "conflicts": [],
+  "x-externalReferences": [
+    {
+      "resource": "domain-source-catalog",
+      "version": "1.0.0",
+      "path": "agency/game-development/narrative-designer.md",
+      "sha256": "7a5489c7b0502aa167030018137e3f349d2c32505c0ad7b9ec1de066a9a93f0d",
+      "when": "需要深入本领域步骤/示例时，先搜索对应小节，按行范围读取"
+    },
+    {
+      "resource": "novel-writing-resources",
+      "version": "1.0.0",
+      "path": "upstream/skills/story-long-write/references/workflow-daily.md",
+      "sha256": "bbf3eafa7bbfc90a75d78e24207fe21ced58cca937334f9c500500839412c298",
+      "when": "日更/修订分支按需读；正文技能只加载当前场景"
+    },
+    {
+      "resource": "novel-writing-resources",
+      "version": "1.0.0",
+      "path": "upstream/skills/story-long-write/references/workflow-revision.md",
+      "sha256": "faa13367b7ca95366ab74d598cb2a0bf01194ea7cd3a8778101aa9bc5f49078a",
+      "when": "日更/修订分支按需读；正文技能只加载当前场景"
+    }
+  ],
+  "x-runtimeRequirements": {},
+  "source": {
+    "repository": "workspace-authored operational guidance",
+    "snapshot": "approved 20261009",
+    "license": "workspace-authored"
+  },
+  "integrity": {
+    "sha256Manifest": "SHA256SUMS"
+  }
+}

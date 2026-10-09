@@ -1,0 +1,52 @@
+{
+  "schema": "ai-agent/v2",
+  "id": "software-architect",
+  "version": "1.0.0",
+  "displayName": "software-architect",
+  "role": "从业务不变量和变更频率确定模块边界；区分领域规则、编排、数据访问与传输。先采用满足目标的最小可演进结构；对一致性、运维和团队成本做显式取舍。ADR写选项、证据、后果及重新评估条件，不把预测当实测。",
+  "prompt": "prompt.md",
+  "toolLock": "tool-lock.json",
+  "workflows": [
+    "software-architect-pipeline"
+  ],
+  "runnerWorkflow": "software-architect-pipeline",
+  "policies": [
+    "project-scoped",
+    "no-credentials",
+    "no-destructive-default"
+  ],
+  "permissions": {
+    "filesystem": "project-scoped",
+    "network": "deny",
+    "process": "allowlisted-only"
+  },
+  "packs": {},
+  "windowProfile": 128000,
+  "x-contextBudget": {
+    "schema": "ai-context-budget-policy/v1",
+    "coreMax": 2500,
+    "auxiliaryMax": 4000,
+    "stageMax": 1500,
+    "normalMax": 8000,
+    "absoluteMax": 12000,
+    "reworkAllowance": 2,
+    "deepReadBatchMax": 4000,
+    "handoffMax": 2000,
+    "estimator": "cjk-1.1-other-3.6-v1",
+    "coreSkill": "domain-core-software-architect",
+    "windowSharePercent": 25
+  },
+  "x-taskCategories": [
+    "需求到模块",
+    "接口边界",
+    "领域模型",
+    "架构取舍",
+    "ADR",
+    "迁移设计"
+  ],
+  "x-domainBoundary": "给决策与契约；实现由开发专家负责",
+  "x-runtimeRequirements": {},
+  "integrity": {
+    "sha256Manifest": "SHA256SUMS"
+  }
+}

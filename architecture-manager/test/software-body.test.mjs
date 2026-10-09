@@ -1,0 +1,50 @@
+import assert from 'node:assert/strict';
+import test from 'node:test';
+import fs from 'node:fs';
+import {join,resolve,dirname} from 'node:path';
+import {fileURLToPath} from 'node:url';
+import {execFileSync} from 'node:child_process';
+import {intakeFixture} from './support/intake-fixture.mjs';
+import {seedPointer} from './support/resources.mjs';
+import {scanExternalBody} from '../src/domains/intake/sources.mjs';
+import {buildSoftwareBodyPlacementPlan,buildSoftwareBodyPlan,readSoftwareBodyActions} from '../src/domains/intake/software-body.mjs';
+import {applyPlan,verifyPlanTarget} from '../src/transactions.mjs';
+import {buildSoftwareCommandPlan} from '../src/domains/software/actions.mjs';
+import {buildIntakeRevertPlan} from '../src/domains/intake/journals.mjs';
+import {listRuntimeBodies} from '../src/domains/intake/runtime-body.mjs';
+import {buildExistingSoftwareBindingPlan} from '../src/domains/intake/software-binding.mjs';
+const connectorSource=process.env.ARCHITECTURE_MANAGER_TEST_CONNECTOR || resolve(dirname(fileURLToPath(import.meta.url)),'../../software/_connector/versions/1.0.7');
+function setup(t) {
+  const f=intakeFixture(t),python=process.env.ARCHITECTURE_MANAGER_TEST_PYTHON || execFileSync('python',['-c','import sys;print(sys.executable)'],{encoding:'utf8',windowsHide:true}).trim(),gateway=join(f.root,f.platformId,'bridge/software-gateway.json'),connector=join(f.root,'software/_connector/versions/1.0.7');
+  fs.cpSync(connectorSource,connector,{recursive:true});seedPointer(f.root,'software','_connector','1.0.7');fs.mkdirSync(dirname(gateway),{recursive:true});
+  fs.writeFileSync(join(f.root,f.platformId,'bridge.json'),JSON.stringify({schema:'ai-platform-bridge/v1',platform:f.platformId,shared:{readOnly:true},runner:{python}}));fs.writeFileSync(join(f.root,f.platformId,'bridge/runner-config.json'),JSON.stringify({platform:f.platformId,interpreters:{'.py':python},softwareGateway:join(connector,'connector.py'),softwareGatewayConfig:gateway}));
+  fs.writeFileSync(gateway,JSON.stringify({schema:'ai-software-gateway-config/v1',platformId:f.platformId,platform:'windows',softwareRoot:join(f.root,'software'),lockRoot:join(f.root,f.platformId,'runtime/software/locks'),evidenceRoot:join(f.root,f.platformId,'runtime/software/evidence'),bodies:{},interpreters:{'.py':python},artifactRoots:[join(f.root,f.platformId,'runtime/software')],projectWriteRoots:[join(f.root,f.platformId,'workspaces')],softwareProfiles:{'readonly-version':{filesystem:['none','read'],network:['none'],credentials:['none']}}}));
+  f.git('add','--','.');f.git('commit','-m','registered connector and platform baseline');return {...f,python};
+}
+test('generic CLI body publishes only observed capabilities and uses real connector calls, update and metadata rollback',{skip:!fs.existsSync(connectorSource)},async t=>{
+  const f=setup(t),source=join(f.base,'program.py');fs.writeFileSync(source,"import sys\nprint('Example 1.2.3' if '--version' in sys.argv else 'echo ' + sys.argv[-1])\n");
+  const intake=await scanExternalBody({workspaceRoot:f.root,type:'software',sourcePath:source}),placement=buildSoftwareBodyPlacementPlan({intake,platformId:f.platformId,softwareId:'sample-cli'});await applyPlan({plan:placement,auditRoot:f.auditRoot});assert.equal(listRuntimeBodies({workspaceRoot:f.root,platformId:f.platformId})[0].status,'complete');
+  assert.throws(()=>buildSoftwareBodyPlan({placementPlan:placement,displayName:'Sample CLI',upstreamVersion:'1.2.3',actions:[{name:'unsafe',sideEffects:'local-write',probeReadOnly:true}]}),/SOFTWARE_UNSAFE_PROBE/);
+  const plan=buildSoftwareBodyPlan({placementPlan:placement,displayName:'Sample CLI',upstreamVersion:'1.2.3',actions:[{name:'echo',args:['--echo'],parameters:[{name:'text',type:'string',style:'positional',required:true}],probeReadOnly:true,testArguments:{text:'hello'}},{name:'unverified',args:['--never'],sideEffects:'local-write'}]});await applyPlan({plan,auditRoot:f.auditRoot});assert((await verifyPlanTarget({plan})).ok);
+  const actions=readSoftwareBodyActions({workspaceRoot:f.root,softwareId:'sample-cli'});assert(actions.actions.find(row=>row.name==='echo').observed);assert.equal(actions.actions.find(row=>row.name==='unverified').observed,false);
+  const call=buildSoftwareCommandPlan({workspaceRoot:f.root,platformId:f.platformId,softwareId:'sample-cli',capability:'echo',arguments:{text:'hello'}}),reply=await applyPlan({plan:call,auditRoot:f.auditRoot});assert.equal(reply.reply.ok,true);assert(JSON.stringify(reply.reply).includes('echo hello'));assert.equal((await applyPlan({plan:call,auditRoot:f.auditRoot})).status,'already-applied');
+  const pending=buildSoftwareCommandPlan({workspaceRoot:f.root,platformId:f.platformId,softwareId:'sample-cli',capability:'unverified'});assert.equal((await applyPlan({plan:pending,auditRoot:f.auditRoot})).reply.error.code,'CAPABILITY_UNAVAILABLE');assert.throws(()=>buildSoftwareCommandPlan({workspaceRoot:f.root,platformId:f.platformId,softwareId:'sample-cli',capability:'echo',arguments:{text:3}}),/SOFTWARE_ARGUMENT_INVALID/);
+  const oldSeal=fs.readFileSync(join(f.root,plan.target.destination,'SHA256SUMS'));f.git('add','--','software',f.platformId+'/bridge');f.git('commit','-m','first recipe rollback baseline');const upgraded=buildSoftwareBodyPlan({placementPlan:placement,displayName:'Sample CLI',upstreamVersion:'1.2.3'});await applyPlan({plan:upgraded,auditRoot:f.auditRoot});assert.equal(upgraded.target.version,'1.0.1');assert(fs.readFileSync(join(f.root,plan.target.destination,'SHA256SUMS')).equals(oldSeal));
+  const revert=buildIntakeRevertPlan({workspaceRoot:f.root,platformId:f.platformId,planId:upgraded.planId});await applyPlan({plan:revert,auditRoot:f.auditRoot});assert.equal(JSON.parse(fs.readFileSync(join(f.root,'software/sample-cli/current.json'))).version,'1.0.0');assert(fs.existsSync(join(f.root,upgraded.target.destination,'SHA256SUMS')));assert(fs.existsSync(placement.target.backup));
+});
+test('desktop sessions start a real owned process, reuse it and close it without declaring native GUI functions',{skip:process.platform!=='win32' || !fs.existsSync(connectorSource)},async t=>{
+  const f=setup(t),intake=await scanExternalBody({workspaceRoot:f.root,type:'software',sourcePath:process.execPath}),placement=buildSoftwareBodyPlacementPlan({intake,platformId:f.platformId,softwareId:'session-example'});await applyPlan({plan:placement,auditRoot:f.auditRoot});
+  const plan=buildSoftwareBodyPlan({placementPlan:placement,displayName:'Real session process',mode:'gui',launchArgs:['-e','setInterval(()=>{},1000)']});await applyPlan({plan,auditRoot:f.auditRoot});const command=operation=>buildSoftwareCommandPlan({workspaceRoot:f.root,platformId:f.platformId,softwareId:'session-example',operation});
+  try{const first=await applyPlan({plan:command('open'),auditRoot:f.auditRoot});assert.equal(first.sessionState,'SESSION_READY');assert(Number.isInteger(first.sessionPid));const again=await applyPlan({plan:command('open'),auditRoot:f.auditRoot});assert.equal(again.sessionPid,first.sessionPid);assert.equal((await applyPlan({plan:command('status'),auditRoot:f.auditRoot})).sessionState,'SESSION_READY');assert.equal(readSoftwareBodyActions({workspaceRoot:f.root,softwareId:'session-example'}).actions[0].observed,false);}finally{await applyPlan({plan:command('close'),auditRoot:f.auditRoot});}
+  assert.equal((await applyPlan({plan:command('status'),auditRoot:f.auditRoot})).sessionState,'SESSION_CLOSED');
+});
+test('installation packages cannot become installed software recipes',{skip:!fs.existsSync(connectorSource)},async t=>{
+  const f=setup(t),source=join(f.base,'setup.exe');fs.writeFileSync(source,Buffer.from('MZ fake installer, never executed'));const intake=await scanExternalBody({workspaceRoot:f.root,type:'software',sourcePath:source}),placement=buildSoftwareBodyPlacementPlan({intake,platformId:f.platformId,softwareId:'installer-example'});await applyPlan({plan:placement,auditRoot:f.auditRoot});assert.throws(()=>buildSoftwareBodyPlan({placementPlan:placement,displayName:'Installer'}),/INSTALLER_NOT_INSTALLED/);assert.throws(()=>buildExistingSoftwareBindingPlan({placementPlan:placement}),/INSTALLER_NOT_INSTALLED/);assert(!fs.existsSync(join(f.root,'software/installer-example')));
+});
+
+test('a restored replacement binds to the existing recipe without republishing; pointer drift refuses execution',{skip:!fs.existsSync(connectorSource)},async t=>{
+ const f=setup(t),source=join(f.base,'existing.py');fs.writeFileSync(source,"print('Existing 1.0')\n");const intake=await scanExternalBody({workspaceRoot:f.root,type:'software',sourcePath:source});
+ const placement=buildSoftwareBodyPlacementPlan({intake,platformId:f.platformId,softwareId:'existing-cli'});await applyPlan({plan:placement,auditRoot:f.auditRoot});const published=buildSoftwareBodyPlan({placementPlan:placement,displayName:'Existing CLI',upstreamVersion:'1.0'});await applyPlan({plan:published,auditRoot:f.auditRoot});
+ const seal=fs.readFileSync(join(f.root,published.target.destination,'SHA256SUMS')),replacement=buildSoftwareBodyPlacementPlan({intake,platformId:f.platformId,softwareId:'existing-cli'});await applyPlan({plan:replacement,auditRoot:f.auditRoot});const binding=buildExistingSoftwareBindingPlan({placementPlan:replacement});await applyPlan({plan:binding,auditRoot:f.auditRoot});assert.equal((await verifyPlanTarget({plan:binding})).ok,true);assert.equal((await verifyPlanTarget({plan:binding})).functionExecuted,false);assert(fs.readFileSync(join(f.root,published.target.destination,'SHA256SUMS')).equals(seal));assert.equal(JSON.parse(fs.readFileSync(join(f.root,f.platformId,'bridge/software-gateway.json'))).bodies['existing-cli'],join(replacement.target.path,replacement.target.entry));
+ assert(fs.readdirSync(join(f.auditRoot,'checkpoints')).some(name=>name.startsWith(binding.planId)));const old=buildExistingSoftwareBindingPlan({placementPlan:replacement});seedPointer(f.root,'software','existing-cli','9.9.9');assert.throws(()=>applyPlan({plan:old,auditRoot:f.auditRoot}));assert.equal((await verifyPlanTarget({plan:binding})).ok,false);
+});

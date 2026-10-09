@@ -1,0 +1,67 @@
+{
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "$id": "urn:ai:software-connector-component:v1",
+ "title": "ai-software-connector-component/v1 - component release manifest schema (D-88)",
+ "description": "Components are the software repository's non-recipe program releases (software/_gateway, software/_connector). They carry the same seal discipline as recipes but were published under self-invented schema names with no published shape to validate against - software_lint never traversed them. This schema closes that gap: both existing components validate as-is, and a component release with a malformed manifest now goes red at scan time.",
+ "type": "object",
+ "additionalProperties": false,
+ "required": [
+  "schema",
+  "id",
+  "version",
+  "displayName",
+  "kind",
+  "invocable",
+  "runtime",
+  "contract",
+  "integrity"
+ ],
+ "properties": {
+  "adapters": {},
+  "attestation": {},
+  "concurrency": {},
+  "contract": {},
+  "credentialModel": {},
+  "displayName": {},
+  "docs": {},
+  "entries": {},
+  "envelopeTolerance": {},
+  "id": {
+   "type": "string",
+   "pattern": "^_[a-z][a-z0-9-]*$",
+   "description": "components are _-prefixed and are not registry entries"
+  },
+  "integrity": {
+   "type": "object",
+   "required": [
+    "sha256Manifest"
+   ],
+   "properties": {
+    "sha256Manifest": {
+     "const": "SHA256SUMS"
+    }
+   }
+  },
+  "invocable": {},
+  "kind": {
+   "type": "string",
+   "minLength": 1
+  },
+  "refusalRedaction": {},
+  "refusals": {},
+  "runtime": {},
+  "schema": {
+   "enum": [
+    "ai-software-connector-component/v1",
+    "ai-software-gateway/v1"
+   ]
+  },
+  "sessionLifecycle": {},
+  "transportsDeclaredNotImplemented": {},
+  "transportsImplemented": {},
+  "version": {
+   "type": "string",
+   "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"
+  }
+ }
+}

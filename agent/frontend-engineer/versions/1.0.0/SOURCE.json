@@ -1,0 +1,29 @@
+{
+  "schema": "ai-release-source/v1",
+  "id": "frontend-engineer",
+  "version": "1.0.0",
+  "origin": "approved 20261009 domain boundary and maintainer authored operational method",
+  "sources": [
+    {
+      "resource": "domain-source-catalog",
+      "version": "1.0.0",
+      "path": "agency/engineering/engineering-frontend-developer.md",
+      "sha256": "35961da50f408e00eb6189c87825ac5e62e6b1bf9de3dee198a95536c6d2619e",
+      "when": "需要深入本领域步骤/示例时，先搜索对应小节，按行范围读取"
+    },
+    {
+      "resource": "domain-source-catalog",
+      "version": "1.0.0",
+      "path": "ecc/skills/frontend-patterns/SKILL.md",
+      "sha256": "a5b971eb9e74cd763c7e3308bfd888e0d9cf69f8b88477659889d77182479740",
+      "when": "任务涉及frontend-patterns时读取相关章节；上游自动安装/发布行为不产生授权"
+    },
+    {
+      "resource": "domain-source-catalog",
+      "version": "1.0.0",
+      "path": "ecc/skills/accessibility/SKILL.md",
+      "sha256": "2762f21d09d199009ed4f95b28c911436b367c30963dc5ddb48b8e1ad7fc1585",
+      "when": "任务涉及accessibility时读取相关章节；上游自动安装/发布行为不产生授权"
+    }
+  ]
+}

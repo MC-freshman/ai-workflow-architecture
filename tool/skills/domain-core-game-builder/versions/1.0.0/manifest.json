@@ -1,0 +1,39 @@
+{
+  "schema": "ai-skill/v1",
+  "id": "domain-core-game-builder",
+  "version": "1.0.0",
+  "kind": "atomic",
+  "category": "skill",
+  "entry": "SKILL.md",
+  "input": {
+    "type": "text",
+    "contract": "objective, task inputs and constraints"
+  },
+  "output": {
+    "type": "text",
+    "contract": "named artifacts, evidence and pending limitations"
+  },
+  "permissions": [
+    "read-project"
+  ],
+  "requires": [],
+  "conflicts": [],
+  "x-externalReferences": [
+    {
+      "resource": "domain-source-catalog",
+      "version": "1.0.0",
+      "path": "agency/game-development/godot/godot-gameplay-scripter.md",
+      "sha256": "0cce0fc75b3a7eeec7221f4a6ac0ff7876fb2468cdb8fab5931951c26f18d539",
+      "when": "需要深入本领域步骤/示例时，先搜索对应小节，按行范围读取"
+    }
+  ],
+  "x-runtimeRequirements": {},
+  "source": {
+    "repository": "workspace-authored operational guidance",
+    "snapshot": "approved 20261009",
+    "license": "workspace-authored"
+  },
+  "integrity": {
+    "sha256Manifest": "SHA256SUMS"
+  }
+}

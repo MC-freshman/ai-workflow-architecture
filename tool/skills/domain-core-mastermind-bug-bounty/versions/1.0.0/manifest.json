@@ -1,0 +1,46 @@
+{
+  "schema": "ai-skill/v1",
+  "id": "domain-core-mastermind-bug-bounty",
+  "version": "1.0.0",
+  "kind": "atomic",
+  "category": "skill",
+  "entry": "SKILL.md",
+  "input": {
+    "type": "text",
+    "contract": "objective, task inputs and constraints"
+  },
+  "output": {
+    "type": "text",
+    "contract": "named artifacts, evidence and pending limitations"
+  },
+  "permissions": [
+    "read-project"
+  ],
+  "requires": [],
+  "conflicts": [],
+  "x-externalReferences": [
+    {
+      "resource": "security-web-resources",
+      "version": "1.0.0",
+      "path": "upstream/skills/analyzing-tls-config/references/PLAYBOOK.md",
+      "sha256": "9426b306a92554d173c6b77d17dd214c353203ef7f25e7a869c909acdebe0c98",
+      "when": "仅在明确授权的TLS/主动测试时读取；代码分析夹具无需主动请求"
+    },
+    {
+      "resource": "security-web-resources",
+      "version": "1.0.0",
+      "path": "upstream/lib/authz_check.py",
+      "sha256": "b1187302b652fccff87cb2cab0af6a5f699ee9ea619d997bc3892ff5c7bd2276",
+      "when": "仅在明确授权的TLS/主动测试时读取；代码分析夹具无需主动请求"
+    }
+  ],
+  "x-runtimeRequirements": {},
+  "source": {
+    "repository": "workspace-authored operational guidance",
+    "snapshot": "approved 20261009",
+    "license": "workspace-authored"
+  },
+  "integrity": {
+    "sha256Manifest": "SHA256SUMS"
+  }
+}

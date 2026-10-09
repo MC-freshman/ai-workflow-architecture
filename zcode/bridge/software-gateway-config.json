@@ -1,0 +1,85 @@
+{
+  "softwareRoot": "E:\\ai\\software",
+  "lockRoot": "E:\\ai\\zcode\\runtime\\software\\locks",
+  "evidenceRoot": "E:\\ai\\zcode\\runtime\\software\\evidence",
+  "bodies": {
+    "wireshark-cli": "<local-tool-body-path>",
+    "veracrypt": "<local-tool-body-path>",
+    "nmap": "<local-tool-body-path>",
+    "mysql-cli": "<local-tool-body-path>",
+    "dirsearch": "D:/Various_programming_languages/PPython/dirsearch-master/dirsearch-master/dirsearch.py",
+    "burp-suite": "<local-tool-body-path> V2024.5.1/BurpSuite V2024.5.1/BurpSuite/burpsuite_pro_org.jar"
+  },
+  "interpreterAliases": {
+    "PPython": "D:/Various_programming_languages/PPython/python.exe"
+  },
+  "interpreters": {
+    ".py": "E:\\ai\\zcode\\runtime\\manager-environments\\1247c7a9-da10-4227-a9a3-ff41b6110a6e\\host\\Scripts\\python.exe"
+  },
+  "credentialProvider": [
+    "E:\\ai\\zcode\\runtime\\manager-environments\\1247c7a9-da10-4227-a9a3-ff41b6110a6e\\host\\Scripts\\python.exe",
+    "-B",
+    "E:\\ai\\zcode\\bridge\\manager-providers\\platform_provider.py",
+    "credential",
+    "E:\\ai\\zcode\\runtime\\software\\provider-state"
+  ],
+  "sessionLaunch": [
+    "E:\\ai\\zcode\\runtime\\manager-environments\\1247c7a9-da10-4227-a9a3-ff41b6110a6e\\host\\Scripts\\python.exe",
+    "-B",
+    "E:\\ai\\zcode\\bridge\\manager-providers\\platform_provider.py",
+    "launch",
+    "E:\\ai\\zcode\\runtime\\software\\provider-state"
+  ],
+  "sessionLiveness": [
+    "E:\\ai\\zcode\\runtime\\manager-environments\\1247c7a9-da10-4227-a9a3-ff41b6110a6e\\host\\Scripts\\python.exe",
+    "-B",
+    "E:\\ai\\zcode\\bridge\\manager-providers\\platform_provider.py",
+    "liveness",
+    "E:\\ai\\zcode\\runtime\\software\\provider-state"
+  ],
+  "sessionTerminate": [
+    "E:\\ai\\zcode\\runtime\\manager-environments\\1247c7a9-da10-4227-a9a3-ff41b6110a6e\\host\\Scripts\\python.exe",
+    "-B",
+    "E:\\ai\\zcode\\bridge\\manager-providers\\platform_provider.py",
+    "terminate",
+    "E:\\ai\\zcode\\runtime\\software\\provider-state"
+  ],
+  "credentialWorkspace": "E:\\ai\\zcode\\runtime\\software\\credentials",
+  "allowGuiLaunch": false,
+  "projectWriteRoots": [
+    "E:\\ai\\zcode\\workspaces"
+  ],
+  "artifactRoots": [
+    "E:\\ai\\zcode\\runtime\\software"
+  ],
+  "softwareProfiles": {
+    "readonly-version": {
+      "filesystem": [
+        "none",
+        "read"
+      ],
+      "network": [
+        "none"
+      ],
+      "credentials": [
+        "none"
+      ]
+    },
+    "administrator": {
+      "filesystem": [
+        "none",
+        "read",
+        "system"
+      ],
+      "network": [
+        "none"
+      ],
+      "credentials": [
+        "none"
+      ],
+      "consentPolicy": "per-call-user-confirmation"
+    }
+  },
+  "platformId": "zcode",
+  "platform": "windows"
+}

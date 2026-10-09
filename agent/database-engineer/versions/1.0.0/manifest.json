@@ -1,0 +1,52 @@
+{
+  "schema": "ai-agent/v2",
+  "id": "database-engineer",
+  "version": "1.0.0",
+  "displayName": "database-engineer",
+  "role": "从数据不变量设计约束、键和事务边界。索引用执行计划及读写成本决定；迁移先在副本验证锁、数据转换和回滚。恢复不仅有备份文件，还要读回恢复的数据与关键约束。生产动作服从明确范围和授权。",
+  "prompt": "prompt.md",
+  "toolLock": "tool-lock.json",
+  "workflows": [
+    "database-engineer-pipeline"
+  ],
+  "runnerWorkflow": "database-engineer-pipeline",
+  "policies": [
+    "project-scoped",
+    "no-credentials",
+    "no-destructive-default"
+  ],
+  "permissions": {
+    "filesystem": "project-scoped",
+    "network": "deny",
+    "process": "allowlisted-only"
+  },
+  "packs": {},
+  "windowProfile": 128000,
+  "x-contextBudget": {
+    "schema": "ai-context-budget-policy/v1",
+    "coreMax": 2500,
+    "auxiliaryMax": 4000,
+    "stageMax": 1500,
+    "normalMax": 8000,
+    "absoluteMax": 12000,
+    "reworkAllowance": 2,
+    "deepReadBatchMax": 4000,
+    "handoffMax": 2000,
+    "estimator": "cjk-1.1-other-3.6-v1",
+    "coreSkill": "domain-core-database-engineer",
+    "windowSharePercent": 25
+  },
+  "x-taskCategories": [
+    "表结构",
+    "查询",
+    "索引",
+    "迁移",
+    "事务",
+    "数据恢复方案"
+  ],
+  "x-domainBoundary": "管数据库；批量数据链路交 data-engineer",
+  "x-runtimeRequirements": {},
+  "integrity": {
+    "sha256Manifest": "SHA256SUMS"
+  }
+}

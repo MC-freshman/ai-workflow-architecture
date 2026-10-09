@@ -1,0 +1,27 @@
+{
+  "schema": "architecture-manager-schema-source/v1",
+  "origin": "repo-lint@0.6.4",
+  "description": "Read-only contract copies for packaged validation, not a parallel resource registry or runtime.",
+  "files": [
+    {
+      "source": "tool/repo-lint/versions/0.6.4/schemas/manifest-v2.1.schema.json",
+      "sha256": "76c077bfbf3faf34509c40eaee12cfe4ba80cae17db56cfa2c87f914c4f87f35"
+    },
+    {
+      "source": "tool/repo-lint/versions/0.6.4/schemas/workflow-definition-v2.schema.json",
+      "sha256": "6f2bff7de7ffe6f1e71999c037e6411416e3a0ab4feb0b44017901c3f81f6100"
+    },
+    {
+      "source": "tool/repo-lint/versions/0.6.4/schemas/workflow-definition-v3.schema.json",
+      "sha256": "3d0dada82445278ebc44d4f586fffc9bb2a69f47a107f1908f147f0e7ac6de49"
+    },
+    {
+      "source": "tool/repo-lint/versions/0.6.4/schemas/software-manifest-v1.schema.json",
+      "sha256": "3eb03901587b8423ca4ff18393f6394305b8d0ffc9c5075f8395cdc712644c7b"
+    },
+    {
+      "source": "tool/repo-lint/versions/0.6.4/schemas/software-component-v1.schema.json",
+      "sha256": "9584ea77631e3cd426debb08360d8329f6539fffba3f2672f3e0f95281989a91"
+    }
+  ]
+}

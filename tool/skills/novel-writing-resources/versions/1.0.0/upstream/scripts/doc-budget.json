@@ -1,0 +1,2052 @@
+{
+  "_comment": [
+    "热路径文档预算。度量 = 去掉所有空白后的字符数（中英文都算，改标点/换行不影响）。",
+    "只登记「每次会话或每章都会进模型上下文」的文件；冷路径（story-setup 部署、UPGRADING、",
+    "拆文库模板）不在此表，按需增长不受限。",
+    "",
+    "预算超了怎么办：先删等量的旧文本，删不动再在本文件里调高 budget 并在 PR 里说明为什么",
+    "这段新规则值得每个用户每次会话都付。调 budget 是允许的，但必须是一次显式决定。",
+    "",
+    "新增热路径文件时把它加进来，否则它不受任何约束。"
+  ],
+  "files": [
+    {
+      "path": "skills/story-long-write/SKILL.md",
+      "budget": 6750,
+      "why": "长篇入口与阶段路由；目录/产物与完整资料索引按原文迁出，锁住无条件加载节省。 调高：新增「面向作者的汇报」通则（每个流程的汇报都受它约束，必须入口常驻）与「继续写」一句话确认规则；真机会话里作者看不懂脚本名、字段名、状态码，汇报口径只能放在每次都加载的入口。 v0.8.2：开书改为按时刻路由（写前必读第 1 条列三份时刻文件）。 v0.8.2 调高 300：规划、改稿任务的作者记忆 query 命令写进入口（不再为查询整读 author-memory.md 协议）；主会话自己写时本章技法只读路由指向的一节、日更一批一份；「定设定」进场景表与触发词；Notice/Fallback 只进技术备注行。 e2e（出细纲）：{PYTHON} 的探测顺序写进入口；各时刻文件自带交接规则；排纲底稿加「批次定位」；新书无追踪时视角取设定与卷纲。"
+    },
+    {
+      "path": "skills/story-long-write/references/workflow-daily.md",
+      "budget": 3400,
+      "why": "日更每次会话加载，且与 SKILL.md 叠加。+190：卷纲读取全部改走取段器（不整读）；批末「本章没写成的」按被挡原因四路分流（补纲扩产候选/分辨率与准入参考/当章查设定/并入三档处置），原「想要没拿到」单路汇集升级——不分流，四类输入会在下一批排纲时混作一团各自失效＋112：批末供给反馈汇集——把各章写手申报的「想要没拿到」汇成下一批供给自查的固定输入，补上正文→排纲的向上反馈通道。 调高：批末汇报改为白话模板（不再报漂移/供给反馈等内部词），「继续写」规划后一句话确认，事务 JSON 落工作目录。 v0.8 收紧：单章/日更工作流改为短手册（组装脚本代查作者记忆、追踪事务 draft 预填、收尾检测一次调用），锁住精简。 v0.8.3：缺 state 的修法移到 stop-and-fix，删掉与正文流程重复的常见问题表。"
+    },
+    {
+      "path": "skills/story-long-write/references/workflow-chapter.md",
+      "budget": 6550,
+      "why": "每章组装与质量流程；原 (a)-(g) 迁入 benchmark-recall，合计路径继续计入。 调高：新增「向作者汇报」四个白话模板（写完一章／字数不在范围／新增内容要拍板／停下）与书内工作目录 .story/work/ 约定；原先字数问法直接把 storyctl 动作名交给作者，临时文件无落点导致 /tmp 撞车和正文目录污染。 v0.8 收紧：单章/日更工作流改为短手册（组装脚本代查作者记忆、追踪事务 draft 预填、收尾检测一次调用），锁住精简。 v0.8.2：写手分组交付细节迁到 agent-calls；契约不过就地改法、缺文件停下修、主会话自己写时去味按检测器逐条提示改写进本文件，不再借读 reader-contract / project-files / deslop-gates。 恢复（+90）：主会话自己写正文也分两组、前组测一次 checkpoint、后组按剩余区间收——Wave 1 改成一次写完整章后，solo A/B 首检 3 例 demo 第 22 章有 2 例超带。 e2e（写第1章）：作者定了不对标时写前召回怎么走（原来三处都要求缺对标就停）；设定档案由主会话直接改、追踪事务不写设定。 e2e（继续写）：无对标看脚本降档行即可、补复沓锚句不算改大纲、新进场核心角色建快照、追踪体积超目标只提醒。 v0.8.3：缺文件的修法移到 stop-and-fix。 新书首章先初始化追踪一句留在正文流程（它和写作同一次调用）。 主会话自己写时写完查三类检测器抓不住的 AI 腔（对比试写里去掉写前去味预读后这三类变多）；删掉与入口重复的字数口径句。"
+    },
+    {
+      "path": "skills/story-long-write/references/workflow-setup.md",
+      "budget": 5900,
+      "why": "v0.8.2：只留开书时刻表、定方向与定设定（含设定模板）；卷纲、细纲拆到 workflow-volume / workflow-outline。 e2e 修正（+87）：定方向时书目录与 .active-book 怎么建、题材定位在定方向就建（原文三处说法相反）、作者已给方向时跳过扫榜追问。"
+    },
+    {
+      "path": "skills/story-short-write/SKILL.md",
+      "budget": 5150,
+      "why": "短篇入口；Phase 3/4 执行细则原文迁出，按阶段完整读取。 根据同稿实验恢复入口的小节完整性与完成门槛，原规则未增写。 v0.8.2：首屏改为三个作者时刻（定情绪/构思/写正文）的读取表与交接、换上下文规则；格式规范移入 workflow-draft（写正文时刻才用），删去与 workflow-draft 重复的「只加载必需信息」与阶段路由复述，总量不增。 v0.8.2 +50：短篇 e2e 回读——主会话自己写正文、去味是常态不报降级，只有作者要交给写作助手而它用不了时才一句白话告诉作者；作者记忆「有才查」与 style-resolution 同一措辞。"
+    },
+    {
+      "path": "skills/story-short-write/references/workflow-design.md",
+      "budget": 2550,
+      "why": "短篇 Phase 2 首屏门禁必读；原入口构思/设计/验收原文迁出，非新增技法，Phase 3/4 不预加载。 +50：向作者汇报构思只讲故事与待拍板问题，不报脚本、检查 ID 与表格列数。 v0.8.2 +100：构思交付前把平台基调、作者已定、冷门公式要点写进 设定.md（写正文时刻不再重读构思方法论，只靠落盘接上），汇报末尾建议新开对话写正文；同批删去与 writing-workflow 重复的 12 列说明。 v0.8.2 +150：设定.md 模板补「题材招式」小节与人设速写的声线／口头禅／禁忌、写明有反派时五字段放在设计校验块内，character-designer 结果在完成门禁前压进人设速写——写正文时刻只读设定.md，这些不落盘就丢。"
+    },
+    {
+      "path": "skills/story-setup/references/templates/agents/narrative-writer.md",
+      "budget": 6850,
+      "why": "共享写手定义；A-G 原文迁入同源 Gate 细则，保留创作铁律并按调用方分配检查。 v0.8.2 +250：本章技法改由写手按 prompt 类别自己读，读取表加一行对应文件；文风优先级与字数流程去重。（共享文件守衛要求写全 agent-references 前缀）"
+    },
+    {
+      "path": "skills/story-long-write/references/writing-craft.md",
+      "budget": 10250,
+      "why": "每章写作技法：场景交织、疏密、人物立场和收益刻度；质检用功能删除测试。 句子怎么连（+约 110）：作者读实测稿觉得电报体、句式不像中文；对照七猫人类语料，差在逗号罗列动作（2-3 倍）、「没A也没B」否定排比（3-14 倍）、对话语气词约一半。删感知素材库与物件类型速查腾出位置。"
+    },
+    {
+      "path": "skills/story-long-write/references/anti-ai-writing.md",
+      "budget": 14100,
+      "why": "去AI味每章读。+200：Show Don't Tell 不再强制情绪外化为身体动作，补充选择/台词/物件/后果优先与功能性保留边界"
+    },
+    {
+      "path": "skills/story/references/author-memory.md",
+      "budget": 5450,
+      "why": "v0.8.2：作者每说一条长期偏好就整读（共享副本同步到长短篇、去味、审稿）。按作者时刻拆分，只留记一条／确认／替换／忘掉、边界优先级与查询解释；整理、超编、单书布局、迁移、commit、check、冲突候选落定移到 author-memory-maintenance.md（冷路径，不登记）。8954→约 5350，锁住拆分收益。"
+    },
+    {
+      "path": "skills/story-long-write/references/banned-words.md",
+      "budget": 4100,
+      "why": "禁用词扫描每章读。+200：登记指尖轻叩、指节泛白、喉结滚动、声音放轻等成片反应簇及删除测试，不把单个身体词设为禁词 +100：禁用项服从作者明确表达选择，不再自称最高优先级。"
+    },
+    {
+      "path": "skills/story-long-write/references/long-format.md",
+      "budget": 1000,
+      "why": "长篇正文直接写作的无条件必读项；本轮按实际用量将预算从 1100 收紧到 1000。 +100：区分文件结构与可覆盖的表达建议。"
+    },
+    {
+      "path": "skills/story-long-write/references/long-chapter-quality.md",
+      "budget": 3300,
+      "why": "同上，写前必读；质量清单每章都进上下文"
+    },
+    {
+      "path": "skills/story-long-write/references/long-chapter-hooks.md",
+      "budget": 3400,
+      "why": "同上，写前必读；章首章尾钩子每章都用"
+    },
+    {
+      "path": "skills/story-short-write/references/writing-workflow.md",
+      "budget": 1800,
+      "why": "短篇 Phase 2 写前必读的无条件完整读取项 v0.8.2：删去指向不存在目录结构的旧指针与 Phase 3/4 操作原则，改为「设定.md 内容构成」一段，写明写正文只读它与小节大纲。"
+    },
+    {
+      "path": "skills/story-short-write/references/submission-craft.md",
+      "budget": 1760,
+      "why": "短篇 Phase 2 定平台基调的无条件必读项；本轮按实际用量将预算从 1850 收紧到 1760。"
+    },
+    {
+      "path": "skills/story-short-write/references/short-craft.md",
+      "budget": 4100,
+      "why": "同上，Phase 2 与 Phase 3 通用底座 v0.8.2：场景写法（三维度揉进、疏密与主语节奏）只在写正文时用，迁到 scene-craft.md，构思时刻不再付；补知乎盐选小节标记一行，导语长度与 submission-craft 统一。"
+    },
+    {
+      "path": "skills/story-short-write/references/short-reversal.md",
+      "budget": 6250,
+      "why": "同上，Phase 2 反转信息差验证必读"
+    },
+    {
+      "path": "skills/story-long-write/references/long-suspense.md",
+      "budget": 5650,
+      "why": "悬疑、惊悚或异常线索正文的条件必读项；文件级预算覆盖条件热路径。"
+    },
+    {
+      "path": "skills/story-long-write/references/long-reversal.md",
+      "budget": 5850,
+      "why": "身份、认知或立场反转正文的条件必读项；文件级预算覆盖条件热路径。"
+    },
+    {
+      "path": "skills/story-short-write/references/genre-writing-formulas.md",
+      "budget": 7950,
+      "why": "短篇 Phase 2 冷门题材分支必读的结构公式。"
+    },
+    {
+      "path": "skills/story-short-write/references/villain-and-reveal.md",
+      "budget": 2300,
+      "why": "短篇 Phase 2 有反派或真相揭露时的条件必读项。 v0.8.2：反转有效性自检不再另立一套时机百分比（与 writing-workflow、short-reversal 冲突），改指向「反转信息差验证」只补两条。"
+    },
+    {
+      "path": "skills/story-short-write/references/genre-styles/世情打脸.md",
+      "budget": 5700,
+      "why": "短篇 Phase 2 核心题材「世情打脸」分支必读。"
+    },
+    {
+      "path": "skills/story-short-write/references/genre-styles/双男主.md",
+      "budget": 4450,
+      "why": "短篇 Phase 2 核心题材「双男主」分支必读。"
+    },
+    {
+      "path": "skills/story-short-write/references/genre-styles/复仇打脸.md",
+      "budget": 5150,
+      "why": "短篇 Phase 2 核心题材「复仇打脸」分支必读。"
+    },
+    {
+      "path": "skills/story-short-write/references/genre-styles/宅斗宫斗.md",
+      "budget": 5500,
+      "why": "短篇 Phase 2 核心题材「宅斗宫斗」分支必读。"
+    },
+    {
+      "path": "skills/story-short-write/references/genre-styles/总裁豪门.md",
+      "budget": 6000,
+      "why": "短篇 Phase 2 核心题材「总裁豪门」分支必读。"
+    },
+    {
+      "path": "skills/story-short-write/references/genre-styles/悬疑.md",
+      "budget": 4750,
+      "why": "短篇 Phase 2 核心题材「悬疑」分支必读。"
+    },
+    {
+      "path": "skills/story-short-write/references/genre-styles/民俗怪谈.md",
+      "budget": 4550,
+      "why": "短篇 Phase 2 核心题材「民俗怪谈」分支必读。"
+    },
+    {
+      "path": "skills/story-short-write/references/genre-styles/沙雕脑洞.md",
+      "budget": 5100,
+      "why": "短篇 Phase 2 核心题材「沙雕脑洞」分支必读。"
+    },
+    {
+      "path": "skills/story-short-write/references/genre-styles/甜宠.md",
+      "budget": 4100,
+      "why": "短篇 Phase 2 核心题材「甜宠」分支必读。"
+    },
+    {
+      "path": "skills/story-short-write/references/genre-styles/追妻火葬场.md",
+      "budget": 5550,
+      "why": "短篇 Phase 2 核心题材「追妻火葬场」分支必读。"
+    },
+    {
+      "path": "skills/story-long-write/references/workflow-revision.md",
+      "budget": 3150,
+      "why": "大修 route 写前必读的强制完整读取项 调高：大修后白话汇报模板，字数对比不再报状态码。 v0.8.2：Step 3 加检测状态处置表、Step 4 加字数出带的作者问法（大修只读本文件，原先要借单章流程）。 e2e（改稿）：第 1 章局部修改没有前一章、改情绪对抗戏时读本章技法对应一节、篇幅行只在超阈值时写。"
+    },
+    {
+      "path": "skills/story-long-write/references/style-resolution.md",
+      "budget": 1450,
+      "why": "写作、去味、审稿共用的优先级与冲突裁决；替代分散的表达硬禁令，白名单只影响风格。"
+    },
+    {
+      "path": "skills/story-long-write/references/benchmark-recall.md",
+      "budget": 2500,
+      "why": "每章写前读取；原 workflow-chapter 的召回条件与 (a)-(g) 原文迁移。 v0.8.2 +50：多本对标的主对标兜底规则由 workflow-daily 迁入（日更文件同批减 900+）。 v0.8.2 收紧：explorer 快捷路径迁到 agent-calls；多对标按模块预算一句写清，不再为此读跨书召回；题材卡按组装脚本匹配结果读，不整读索引。 e2e（写第1章）：作者定了不对标时写前召回怎么走（原来三处都要求缺对标就停）；设定档案由主会话直接改、追踪事务不写设定。"
+    },
+    {
+      "path": "skills/story-long-write/references/project-files.md",
+      "budget": 4950,
+      "why": "首次定位/创建/缺失时加载；原目录与产物协议，续写不重复预加载。 调高：目录树登记书内临时工作目录 .story/work/。 v0.8.2：对标视图模板移除（手写摘要过不了主产物 fail-fast），改一句说明对标文件从哪来。 v0.8.2：定设定建主角与关键角色卡、题材定位 Phase 1 建的时间对齐（+5）；写正文与开书都不再预读本文件。"
+    },
+    {
+      "path": "skills/story-long-write/references/reference-index.md",
+      "budget": 3900,
+      "why": "定位额外参考时读取；保留原文件表与主题权威索引。"
+    },
+    {
+      "path": "skills/story-short-write/references/benchmark-recall.md",
+      "budget": 1700,
+      "why": "有对标/拆文库/用户参考时读取；原对标发现与主副预算。"
+    },
+    {
+      "path": "skills/story-short-write/references/reference-index.md",
+      "budget": 1450,
+      "why": "定位额外资料时读取，首屏阶段 Gate 不变。 v0.8.2 +50：登记 scene-craft 与 agent-calls。"
+    },
+    {
+      "path": "skills/story-deslop/SKILL.md",
+      "budget": 9400,
+      "why": "独立去味入口，Claude narrative-writer 也预加载；详细 Gate 移至同源文件。 v0.8.3：交给写手的 prompt 移到 agent-calls；两套定档标准合成一套。"
+    },
+    {
+      "path": "skills/story-deslop/references/deslop-gates.md",
+      "budget": 5400,
+      "why": "语义去味按任务读取所选 Gate；独立去味详版与写手判据均为 main 原文，共享副本同步检查。 v0.8.2 +700：「写法抽查」表由 writing-craft 迁入（写手每次少读 0.8K，审查不再整读 writing-craft 11K）。"
+    },
+    {
+      "path": "skills/story-short-write/references/workflow-draft.md",
+      "budget": 4650,
+      "why": "Phase 3 写作细则由原 SKILL 原文迁入；根据同稿实验将小节完整性与完成门槛保留入口，原规则未增写。 +150：写前参数验收写出完整命令并前置于动笔，计数改用交付验收脚本——#418 拆分后本文件只指向 Phase 4 命令，实测模型先写正文、从未写前验收，再用 40 轮自写计数挤进字数范围。 v0.8.2 +200：Phase 3 写前加载清单由 writing-workflow 迁入（该文件同批减 2.3K）。 v0.8.2：写正文时刻自带格式规范与「只靠落盘接上构思」；写作指令与场景揉进段不再复述 short-craft / short-format（同一时刻已加载），反派、揭露、钩子、对标召回改读 设定.md 与小节大纲，不再指向构思时的方法论。 v0.8.2：写前先跑构思完成门禁（新对话里构思没收口就请作者回到构思）；派写手的 prompt 迁到 agent-calls.md。"
+    },
+    {
+      "path": "skills/story-short-write/references/workflow-revision.md",
+      "budget": 2800,
+      "why": "Phase 4 精修细则由原 SKILL 原文迁入；含最终扫描与交付验收。 +150：给作者的交付说明模板（写了什么/待拍板问题附默认/下一步），自查结果收成一句大白话——实测交付报告逐条列脚本名与表格列数，作者看不懂。 v0.8.2 +1300：Phase 4 精修清单与常见问题由 writing-workflow 迁入，Phase 2 不再连带读取。 v0.8.2 +300：冷门题材公式核对清单放回精修时刻（原在 genre-writing-formulas，上一轮为凑上限误删）。 v0.8.2 −150：「像」与入口完成门槛统一为逐处复核功能、不设硬上限；交付说明的执行细节只进最后一行技术备注；格式清单改指 short-format 文末快速检查、删减原则改指 SKILL 执行规则 3（写正文时刻都已加载，不再复述）。 v0.8.2：派写手去味的 prompt 迁到 agent-calls.md（只在交给写手时读）；冷门公式核对删去要回读公式原文的篇幅与男女频两条（节数由大纲与交付检查守，男女频差异在构思时已记进题材招式）；精修必读项写明 short-format。 v0.8.2 −150：冷门公式核对收成一句（对照设定.md 题材招式核节拍、必选场景与规则，牵引与开头并入上方清单）；反转后收尾不再给 500 字硬线，按小节大纲分配；照搬检测报出的功能性台词登记进小节大纲末尾「复沓锚句」。"
+    },
+    {
+      "path": "skills/story-short-write/references/short-format.md",
+      "budget": 3800,
+      "why": "v0.8.2 登记：短篇写正文时刻的必读格式协议（字数统计命令与 test-charcount-portable 逐字绑定）。 v0.8.2 +50：盐言导语即正文开头几段、不另标；设定.md「平台基调」记下的小节标记与引号优先于平台表默认。"
+    },
+    {
+      "path": "skills/story-short-write/references/short-deslop.md",
+      "budget": 3050,
+      "why": "v0.8.2 登记：短篇 Phase 4 主会话自己去味时必读；写正文时不再预读，AI 腔由完成门槛的检测器兜底。"
+    },
+    {
+      "path": "skills/story-short-write/references/emotional-methods.md",
+      "budget": 2850,
+      "why": "v0.8.2 登记：短篇写正文时写羁绊铺设或余韵收尾的条件读取项。"
+    },
+    {
+      "path": "skills/story-long-write/references/agent-calls.md",
+      "budget": 3650,
+      "why": "v0.8.2：派子代理的 prompt 与契约摘要从 workflow-chapter/workflow-setup 迁出，只在要 spawn 时读。 另收写一章的填槽说明（原在 workflow-chapter 步骤 7）与改写一章、净删压缩的 prompt 骨架。 v0.8.2 调高 1000：写一章的前后两组交付细节从 workflow-chapter 迁入（主会话自己写时用不上）；story-explorer 写前召回的调用与 gaps 分流从 benchmark-recall 迁入（同理）；改写一章补 style_resolution 与作者偏好槽。只在 spawn 时读，主会话代写路径仍远低于 35K。"
+    },
+    {
+      "path": "skills/story-long-write/references/workflow-volume.md",
+      "budget": 6900,
+      "why": "v0.8.2：开书按时刻拆出的流程文件，只在该时刻读（也进 story-architect 任务包）。 e2e 修正（+177）：没有子代理时先提案、作者确认后落盘与新开对话建议写进本时刻文件（原来只在 workflow-setup 开头，出卷纲时读不到）；无对标自排的八节点占比就地给出；出卷纲时新增物三级怎么用。"
+    },
+    {
+      "path": "skills/story-long-write/references/workflow-outline.md",
+      "budget": 8100,
+      "why": "v0.8.2：开书按时刻拆出的流程文件，只在该时刻读（也进 story-architect 任务包）。 e2e（出细纲）：{PYTHON} 的探测顺序写进入口；各时刻文件自带交接规则；排纲底稿加「批次定位」；新书无追踪时视角取设定与卷纲。"
+    },
+    {
+      "path": "skills/story-short-write/references/scene-craft.md",
+      "budget": 1150,
+      "why": "v0.8.2：写正文时刻必读的场景写法（三维度揉进、疏密与主语节奏），由 short-craft 迁出，构思不读。 句子怎么连（+约 110）：作者读实测稿觉得电报体、句式不像中文；对照七猫人类语料，差在逗号罗列动作（2-3 倍）、「没A也没B」否定排比（3-14 倍）、对话语气词约一半。删感知素材库与物件类型速查腾出位置。"
+    },
+    {
+      "path": "skills/story-short-write/references/agent-calls.md",
+      "budget": 1100,
+      "why": "v0.8.2：短篇派 narrative-writer 写正文或精修去味的 prompt，只在交给写手时读；由 workflow-draft／workflow-revision 迁出。"
+    },
+    {
+      "path": "skills/story-review/references/batch-review.md",
+      "budget": 1000,
+      "why": "v0.8.2：多章分批审查才读的跨批状态、连续性与乱序提醒，由审稿入口迁出。"
+    }
+  ],
+  "paths": [
+    {
+      "label": "长篇日更主会话（写手代写）",
+      "files": [
+        "skills/story-long-write/SKILL.md",
+        "skills/story-long-write/references/workflow-daily.md",
+        "skills/story-long-write/references/workflow-chapter.md",
+        "skills/story-long-write/references/style-resolution.md",
+        "skills/story-long-write/references/agent-calls.md"
+      ],
+      "branches": [
+        {
+          "label": "常规",
+          "files": [],
+          "budget": 21650
+        },
+        {
+          "label": "召回全量",
+          "files": [
+            "skills/story-long-write/references/benchmark-recall.md"
+          ],
+          "budget": 24100
+        },
+        {
+          "label": "新书首章：生成题材正文提示卡（两张最大的卡）",
+          "files": [
+            "skills/story-long-write/references/genre-prose-cards/都市日常.md",
+            "skills/story-long-write/references/genre-prose-cards/都市脑洞.md",
+            "skills/story-long-write/references/tracking-initialization.md"
+          ],
+          "budget": 24950
+        },
+        {
+          "label": "缺文件停下修（本轮不写，不与写作叠加）",
+          "files": [
+            "skills/story-long-write/references/stop-and-fix.md",
+            "skills/story-long-write/references/project-files.md"
+          ],
+          "budget": 27050
+        }
+      ],
+      "stacking": {
+        "budget": 27400,
+        "slots": [
+          [
+            "召回全量"
+          ],
+          [
+            "新书首章：生成题材正文提示卡（两张最大的卡）"
+          ]
+        ]
+      },
+      "why": "v0.8.2：只计无条件读取；本章技法由写手读、主会话不读（只在 prompt 填类别）。召回全量与新书首章生成题材卡可叠加；契约不过按步骤 9 的改法就地改，不读 reference；缺文件停下修、本轮不写。派子代理的 prompt 在 agent-calls.md。 v0.8.3：缺文件、追踪对不上时的修法移到 stop-and-fix（只在停下修时读，计入该分支）；日更删掉与正文流程重复的常见问题表。 v0.8.3：新书首章会先读 tracking-initialization 初始化追踪，此前漏登，补进新书首章分支。"
+    },
+    {
+      "label": "写手写正文（narrative-writer 每次调用）",
+      "agent": "skills/story-setup/references/templates/agents/narrative-writer.md",
+      "files": [
+        "skills/story-setup/references/agent-references/writing-craft.md",
+        "skills/story-setup/references/agent-references/emotion-on-page.md",
+        "skills/story-setup/references/agent-references/dialogue-mastery.md"
+      ],
+      "branches": [
+        {
+          "label": "常规章",
+          "files": [],
+          "budget": 23000
+        },
+        {
+          "label": "前三章",
+          "files": [
+            "skills/story-setup/references/agent-references/opening-design.md"
+          ],
+          "budget": 27750
+        },
+        {
+          "label": "本章技法·打脸",
+          "files": [
+            "skills/story-setup/references/agent-references/style-combat-face.md"
+          ],
+          "budget": 29150
+        },
+        {
+          "label": "本章技法·反转",
+          "files": [
+            "skills/story-setup/references/agent-references/long-reversal.md"
+          ],
+          "budget": 28750
+        },
+        {
+          "label": "本章技法·感情",
+          "files": [
+            "skills/story-setup/references/agent-references/long-emotional-methods.md"
+          ],
+          "budget": 26650
+        },
+        {
+          "label": "本章技法·悬疑",
+          "files": [
+            "skills/story-setup/references/agent-references/long-suspense.md"
+          ],
+          "budget": 28550
+        },
+        {
+          "label": "本章技法·日常",
+          "files": [
+            "skills/story-setup/references/agent-references/long-chapter-hooks.md"
+          ],
+          "budget": 26300
+        }
+      ],
+      "why": "v0.8.2：写一章时读写作技法、情绪落到纸面（弧线规划留给排纲）、对话；本章技法由写手按 prompt 类别自己读一份；前三章加读开篇设计。",
+      "stacking": {
+        "budget": 33900,
+        "slots": [
+          [
+            "前三章"
+          ],
+          [
+            "本章技法·打脸",
+            "本章技法·反转",
+            "本章技法·感情",
+            "本章技法·悬疑",
+            "本章技法·日常"
+          ]
+        ]
+      }
+    },
+    {
+      "label": "长篇开书·定方向（主会话）",
+      "files": [
+        "skills/story-long-write/SKILL.md",
+        "skills/story-long-write/references/workflow-setup.md"
+      ],
+      "branches": [
+        {
+          "label": "常规",
+          "files": [],
+          "budget": 12550
+        },
+        {
+          "label": "没方向：查题材目录",
+          "files": [
+            "skills/story-long-write/references/long-genre-catalog.md"
+          ],
+          "budget": 19300
+        },
+        {
+          "label": "女频",
+          "files": [
+            "skills/story-long-write/references/female-audience-writing.md"
+          ],
+          "budget": 16800
+        },
+        {
+          "label": "市场与读者",
+          "files": [
+            "skills/story-long-write/references/genre-readers.md"
+          ],
+          "budget": 16650
+        },
+        {
+          "label": "特殊题材（决策路由表＋指向的一节）",
+          "files": [
+            "skills/story-long-write/references/plot-special-topics.md#决策路由表",
+            "skills/story-long-write/references/plot-special-topics.md#脑洞文完整写作框架"
+          ],
+          "budget": 14400
+        },
+        {
+          "label": "派子代理编排后续时刻",
+          "files": [
+            "skills/story-long-write/references/agent-calls.md"
+          ],
+          "budget": 16150
+        }
+      ],
+      "stacking": {
+        "budget": 28900,
+        "slots": [
+          [
+            "没方向：查题材目录",
+            "女频"
+          ],
+          [
+            "市场与读者"
+          ],
+          [
+            "特殊题材（决策路由表＋指向的一节）"
+          ],
+          [
+            "派子代理编排后续时刻"
+          ]
+        ]
+      },
+      "why": "v0.8.2：开书按作者确认点分时刻；主会话做定方向并编排后续时刻，技法按问题各读一次（题材目录与女频二选一，特殊题材只读路由指向的一节），对标的代际识别与复制规则已写进 workflow-setup，不再整读 project-files / artifact-protocols。写第 1 章换新对话，不与定方向叠加。"
+    },
+    {
+      "label": "长篇开书·定设定（主会话自己做）",
+      "files": [
+        "skills/story-long-write/SKILL.md",
+        "skills/story-long-write/references/workflow-setup.md",
+        "skills/story-long-write/references/character-basics.md",
+        "skills/story-long-write/references/reader-contract-and-progression.md",
+        "skills/story-long-write/references/long-genre-mechanics.md#核心梗三层递进设计",
+        "skills/story-long-write/references/character-relations.md#人物关系类型"
+      ],
+      "branches": [
+        {
+          "label": "常规",
+          "files": [],
+          "budget": 24500
+        },
+        {
+          "label": "女频",
+          "files": [
+            "skills/story-long-write/references/female-audience-writing.md"
+          ],
+          "budget": 28750
+        },
+        {
+          "label": "对标登记 ≥2 本",
+          "files": [
+            "skills/story-long-write/references/cross-book-recall.md"
+          ],
+          "budget": 27700
+        },
+        {
+          "label": "有灵感库",
+          "files": [
+            "skills/story-long-write/references/cross-book-recall.md#公共灵感标签召回"
+          ],
+          "budget": 25450
+        }
+      ],
+      "stacking": {
+        "budget": 31950,
+        "slots": [
+          [
+            "女频"
+          ],
+          [
+            "对标登记 ≥2 本"
+          ],
+          [
+            "有灵感库"
+          ]
+        ]
+      },
+      "why": "v0.8.2：没有子代理时的定设定；核心梗、关系只读指定小节；女频、多对标、灵感库按条件叠加。"
+    },
+    {
+      "label": "长篇开书·定设定（story-architect 任务包）",
+      "agent": "skills/story-setup/references/templates/agents/story-architect.md",
+      "files": [],
+      "generated": [
+        {
+          "script": "skills/story-long-write/scripts/build_architect_brief.py",
+          "args": [
+            "--task",
+            "world",
+            "--rules-only"
+          ]
+        }
+      ],
+      "branches": [
+        {
+          "label": "常规",
+          "files": [],
+          "budget": 21450
+        },
+        {
+          "label": "女频",
+          "files": [
+            "skills/story-long-write/references/female-audience-writing.md"
+          ],
+          "budget": 25700
+        },
+        {
+          "label": "对标登记 ≥2 本",
+          "files": [
+            "skills/story-long-write/references/cross-book-recall.md"
+          ],
+          "budget": 24650
+        },
+        {
+          "label": "有灵感库",
+          "files": [
+            "skills/story-long-write/references/cross-book-recall.md#公共灵感标签召回"
+          ],
+          "budget": 22400
+        }
+      ],
+      "stacking": {
+        "budget": 28900,
+        "slots": [
+          [
+            "女频"
+          ],
+          [
+            "对标登记 ≥2 本"
+          ],
+          [
+            "有灵感库"
+          ]
+        ]
+      },
+      "why": "v0.8.2：任务包由 build_architect_brief.py 拼出，守卫直接运行它计量（含新增物三级与包外按条件可读的清单；包里写绝对路径，预算留 300 字给不同安装路径）；包外条件读取按 stacking 叠加。"
+    },
+    {
+      "label": "长篇出卷纲（story-architect 任务包）",
+      "agent": "skills/story-setup/references/templates/agents/story-architect.md",
+      "files": [],
+      "generated": [
+        {
+          "script": "skills/story-long-write/scripts/build_architect_brief.py",
+          "args": [
+            "--task",
+            "volume",
+            "--volume",
+            "1",
+            "--rules-only"
+          ]
+        }
+      ],
+      "branches": [
+        {
+          "label": "常规",
+          "files": [],
+          "budget": 24550
+        },
+        {
+          "label": "对标登记 ≥2 本",
+          "files": [
+            "skills/story-long-write/references/cross-book-recall.md"
+          ],
+          "budget": 27750
+        },
+        {
+          "label": "弧线速查",
+          "files": [
+            "skills/story-long-write/references/emotional-arc-design.md#六种弧线速查"
+          ],
+          "budget": 26400
+        },
+        {
+          "label": "本卷有反转",
+          "files": [
+            "skills/story-long-write/references/long-reversal.md#反转类型"
+          ],
+          "budget": 27400
+        },
+        {
+          "label": "有灵感库",
+          "files": [
+            "skills/story-long-write/references/cross-book-recall.md#公共灵感标签召回"
+          ],
+          "budget": 25500
+        }
+      ],
+      "stacking": {
+        "budget": 32450,
+        "slots": [
+          [
+            "对标登记 ≥2 本"
+          ],
+          [
+            "弧线速查"
+          ],
+          [
+            "本卷有反转"
+          ],
+          [
+            "有灵感库"
+          ]
+        ]
+      },
+      "why": "v0.8.2：卷纲时刻的流程、模板与技法由 build_architect_brief.py 拼包，守卫直接运行它计量；情绪方法只带「长篇单元情绪引擎」一节；多对标、弧线速查、反转类型、灵感库在包外按条件读，按 stacking 叠加。"
+    },
+    {
+      "label": "长篇出卷纲（主会话自己做）",
+      "files": [
+        "skills/story-long-write/SKILL.md",
+        "skills/story-long-write/references/workflow-volume.md",
+        "skills/story-long-write/references/artifact-protocols.md",
+        "skills/story-long-write/references/emotional-methods.md#长篇单元情绪引擎",
+        "skills/story-long-write/references/reader-contract-and-progression.md"
+      ],
+      "branches": [
+        {
+          "label": "常规",
+          "files": [],
+          "budget": 24450
+        },
+        {
+          "label": "对标登记 ≥2 本",
+          "files": [
+            "skills/story-long-write/references/cross-book-recall.md"
+          ],
+          "budget": 27650
+        },
+        {
+          "label": "弧线速查",
+          "files": [
+            "skills/story-long-write/references/emotional-arc-design.md#六种弧线速查"
+          ],
+          "budget": 26300
+        },
+        {
+          "label": "本卷有反转",
+          "files": [
+            "skills/story-long-write/references/long-reversal.md#反转类型"
+          ],
+          "budget": 27350
+        },
+        {
+          "label": "有灵感库",
+          "files": [
+            "skills/story-long-write/references/cross-book-recall.md#公共灵感标签召回"
+          ],
+          "budget": 25400
+        }
+      ],
+      "stacking": {
+        "budget": 32400,
+        "slots": [
+          [
+            "对标登记 ≥2 本"
+          ],
+          [
+            "弧线速查"
+          ],
+          [
+            "本卷有反转"
+          ],
+          [
+            "有灵感库"
+          ]
+        ]
+      },
+      "why": "v0.8.2：没有子代理时的卷纲时刻（建议新开对话）；条件读取同任务包。"
+    },
+    {
+      "label": "长篇出一批细纲（story-architect 任务包）",
+      "agent": "skills/story-setup/references/templates/agents/story-architect.md",
+      "files": [],
+      "generated": [
+        {
+          "script": "skills/story-long-write/scripts/build_architect_brief.py",
+          "args": [
+            "--task",
+            "outline",
+            "--chapters",
+            "1-10",
+            "--rules-only"
+          ]
+        }
+      ],
+      "branches": [
+        {
+          "label": "首批含前 3 章（最重的包）",
+          "files": [],
+          "budget": 19900
+        },
+        {
+          "label": "对标登记 ≥2 本",
+          "files": [
+            "skills/story-long-write/references/cross-book-recall.md"
+          ],
+          "budget": 23100
+        },
+        {
+          "label": "有灵感库",
+          "files": [
+            "skills/story-long-write/references/cross-book-recall.md#公共灵感标签召回"
+          ],
+          "budget": 20850
+        }
+      ],
+      "stacking": {
+        "budget": 23100,
+        "slots": [
+          [
+            "对标登记 ≥2 本"
+          ],
+          [
+            "有灵感库"
+          ]
+        ]
+      },
+      "why": "v0.8.2：细纲时刻的流程、模板与验收由 build_architect_brief.py 拼包，守卫按最重的首批（含开篇设计）运行计量；本书卷纲取段属项目资料不计。"
+    },
+    {
+      "label": "长篇出一批细纲或补纲（主会话自己做）",
+      "files": [
+        "skills/story-long-write/SKILL.md",
+        "skills/story-long-write/references/workflow-outline.md",
+        "skills/story-long-write/references/character-basics.md"
+      ],
+      "branches": [
+        {
+          "label": "常规",
+          "files": [],
+          "budget": 20950
+        },
+        {
+          "label": "首批含前 3 章",
+          "files": [
+            "skills/story-long-write/references/opening-design.md"
+          ],
+          "budget": 25700
+        },
+        {
+          "label": "对标登记 ≥2 本",
+          "files": [
+            "skills/story-long-write/references/cross-book-recall.md"
+          ],
+          "budget": 24150
+        },
+        {
+          "label": "有灵感库",
+          "files": [
+            "skills/story-long-write/references/cross-book-recall.md#公共灵感标签召回"
+          ],
+          "budget": 21900
+        }
+      ],
+      "stacking": {
+        "budget": 28900,
+        "slots": [
+          [
+            "首批含前 3 章"
+          ],
+          [
+            "对标登记 ≥2 本"
+          ],
+          [
+            "有灵感库"
+          ]
+        ]
+      },
+      "why": "v0.8.2：没有子代理时的细纲时刻，也是日常补纲的加载。"
+    },
+    {
+      "label": "写手去味审查（narrative-writer 审查调用）",
+      "agent": "skills/story-setup/references/templates/agents/narrative-writer.md",
+      "budget": 31800,
+      "files": [
+        "skills/story-setup/references/agent-references/style-resolution.md",
+        "skills/story-setup/references/agent-references/anti-ai-writing.md",
+        "skills/story-setup/references/agent-references/deslop-gates.md",
+        "skills/story-setup/references/agent-references/banned-words.md"
+      ],
+      "why": "v0.8：去味审查按需调用时的实际加载量（原「正文 agent 基础规则」混算了写作与审查两种调用）。v0.8.2：「写法抽查」并入 deslop-gates，审查不再整读 writing-craft；评分文件只在打分任务读。"
+    },
+    {
+      "label": "一致性检查（consistency-checker 每次调用）",
+      "agent": "skills/story-setup/references/templates/agents/consistency-checker.md",
+      "budget": 6300,
+      "files": [
+        "skills/story-setup/references/agent-references/agent-quality.md"
+      ],
+      "why": "v0.8：规则部分；书内资料按检查范围定点读，不在此计。"
+    },
+    {
+      "label": "长篇大修主会话（写手代写）",
+      "files": [
+        "skills/story-long-write/SKILL.md",
+        "skills/story-long-write/references/workflow-revision.md",
+        "skills/story-long-write/references/agent-calls.md"
+      ],
+      "branches": [
+        {
+          "label": "常规",
+          "files": [],
+          "budget": 13400
+        },
+        {
+          "label": "追踪提交报错",
+          "files": [
+            "skills/story-long-write/references/tracking-transaction.md"
+          ],
+          "budget": 21100
+        }
+      ],
+      "why": "v0.8.2：大修按时刻走——先定范围，按范围加载，改写交写手，追踪协议只在报错时读；字数出带、缺 Node 的处置与作者问法写进 workflow-revision，不再借读单章流程。"
+    },
+    {
+      "label": "长篇单章 direct/solo（主会话自己写正文）",
+      "files": [
+        "skills/story-long-write/SKILL.md",
+        "skills/story-long-write/references/workflow-chapter.md",
+        "skills/story-long-write/references/style-resolution.md",
+        "skills/story-long-write/references/writing-craft.md",
+        "skills/story-long-write/references/long-format.md"
+      ],
+      "branches": [
+        {
+          "label": "常规",
+          "files": [],
+          "budget": 25800
+        },
+        {
+          "label": "召回全量",
+          "files": [
+            "skills/story-long-write/references/benchmark-recall.md"
+          ],
+          "budget": 28250
+        },
+        {
+          "label": "新书首章：生成题材正文提示卡（两张最大的卡）",
+          "files": [
+            "skills/story-long-write/references/genre-prose-cards/都市日常.md",
+            "skills/story-long-write/references/genre-prose-cards/都市脑洞.md",
+            "skills/story-long-write/references/tracking-initialization.md"
+          ],
+          "budget": 29100
+        },
+        {
+          "label": "缺文件停下修（本轮不写，不与写作叠加）",
+          "files": [
+            "skills/story-long-write/references/stop-and-fix.md",
+            "skills/story-long-write/references/project-files.md"
+          ],
+          "budget": 31200
+        },
+        {
+          "label": "本章技法·打脸",
+          "files": [
+            "skills/story-long-write/references/style-combat-face.md#决策路由",
+            "skills/story-long-write/references/style-combat-face.md#打斗/智斗写作"
+          ],
+          "budget": 27500
+        },
+        {
+          "label": "本章技法·反转",
+          "files": [
+            "skills/story-long-write/references/long-reversal.md#决策路由",
+            "skills/story-long-write/references/long-reversal.md#6. 认知反转"
+          ],
+          "budget": 26700
+        },
+        {
+          "label": "本章技法·感情",
+          "files": [
+            "skills/story-long-write/references/emotional-methods.md#决策路由",
+            "skills/story-long-write/references/emotional-methods.md#情感虐心三板斧",
+            "skills/story-long-write/references/emotion-on-page.md"
+          ],
+          "budget": 28750
+        },
+        {
+          "label": "本章技法·悬疑",
+          "files": [
+            "skills/story-long-write/references/long-suspense.md#决策路由表",
+            "skills/story-long-write/references/long-suspense.md#拉期待手法速查"
+          ],
+          "budget": 27200
+        },
+        {
+          "label": "本章技法·日常",
+          "files": [
+            "skills/story-long-write/references/long-chapter-hooks.md#决策路由",
+            "skills/story-long-write/references/long-chapter-hooks.md#章尾实战模板"
+          ],
+          "budget": 27250
+        }
+      ],
+      "stacking": {
+        "budget": 34500,
+        "slots": [
+          [
+            "召回全量"
+          ],
+          [
+            "新书首章：生成题材正文提示卡（两张最大的卡）"
+          ],
+          [
+            "本章技法·打脸",
+            "本章技法·反转",
+            "本章技法·感情",
+            "本章技法·悬疑",
+            "本章技法·日常"
+          ]
+        ]
+      },
+      "why": "v0.8.2：主会话自己写正文，与写手读同一套技法（writing-craft + long-format）。本章技法只读「决策路由」和它指向的那一节，日更一批只读一份；召回全量（无自定义文风的书几乎每章都走）、新书首章生成题材卡与本章技法会在同一次调用里叠加，登记进 stacking；契约不过按 workflow-chapter 步骤 9 的改法就地改、去味兜底按检测器逐条提示改，都不再读 reference；缺文件停下修、本轮不写，不与写作叠加。 v0.8.3：缺文件、追踪对不上时的修法移到 stop-and-fix（只在停下修时读，计入该分支）；日更删掉与正文流程重复的常见问题表。 v0.8.3：新书首章会先读 tracking-initialization 初始化追踪，此前漏登，补进新书首章分支。"
+    },
+    {
+      "label": "长篇日更 direct/solo（主会话自己写正文）",
+      "files": [
+        "skills/story-long-write/SKILL.md",
+        "skills/story-long-write/references/workflow-daily.md",
+        "skills/story-long-write/references/workflow-chapter.md",
+        "skills/story-long-write/references/style-resolution.md",
+        "skills/story-long-write/references/writing-craft.md",
+        "skills/story-long-write/references/long-format.md"
+      ],
+      "branches": [
+        {
+          "label": "常规",
+          "files": [],
+          "budget": 29150
+        },
+        {
+          "label": "召回全量",
+          "files": [
+            "skills/story-long-write/references/benchmark-recall.md"
+          ],
+          "budget": 31600
+        },
+        {
+          "label": "缺文件停下修（本轮不写，不与写作叠加）",
+          "files": [
+            "skills/story-long-write/references/stop-and-fix.md",
+            "skills/story-long-write/references/project-files.md"
+          ],
+          "budget": 34550
+        },
+        {
+          "label": "本章技法·打脸",
+          "files": [
+            "skills/story-long-write/references/style-combat-face.md#决策路由",
+            "skills/story-long-write/references/style-combat-face.md#打斗/智斗写作"
+          ],
+          "budget": 30850
+        },
+        {
+          "label": "本章技法·反转",
+          "files": [
+            "skills/story-long-write/references/long-reversal.md#决策路由",
+            "skills/story-long-write/references/long-reversal.md#6. 认知反转"
+          ],
+          "budget": 30050
+        },
+        {
+          "label": "本章技法·感情",
+          "files": [
+            "skills/story-long-write/references/emotional-methods.md#决策路由",
+            "skills/story-long-write/references/emotional-methods.md#情感虐心三板斧",
+            "skills/story-long-write/references/emotion-on-page.md"
+          ],
+          "budget": 32100
+        },
+        {
+          "label": "本章技法·悬疑",
+          "files": [
+            "skills/story-long-write/references/long-suspense.md#决策路由表",
+            "skills/story-long-write/references/long-suspense.md#拉期待手法速查"
+          ],
+          "budget": 30550
+        },
+        {
+          "label": "本章技法·日常",
+          "files": [
+            "skills/story-long-write/references/long-chapter-hooks.md#决策路由",
+            "skills/story-long-write/references/long-chapter-hooks.md#章尾实战模板"
+          ],
+          "budget": 30600
+        }
+      ],
+      "stacking": {
+        "budget": 34550,
+        "slots": [
+          [
+            "召回全量"
+          ],
+          [
+            "本章技法·打脸",
+            "本章技法·反转",
+            "本章技法·感情",
+            "本章技法·悬疑",
+            "本章技法·日常"
+          ]
+        ]
+      },
+      "why": "v0.8.2：主会话自己写正文，与写手读同一套技法（writing-craft + long-format）。本章技法只读「决策路由」和它指向的那一节，日更一批只读一份；召回全量（无自定义文风的书几乎每章都走）、新书首章生成题材卡与本章技法会在同一次调用里叠加，登记进 stacking；契约不过按 workflow-chapter 步骤 9 的改法就地改、去味兜底按检测器逐条提示改，都不再读 reference；缺文件停下修、本轮不写，不与写作叠加。 日更项目已有正文与题材卡，不计新书首章。 v0.8.3：缺文件、追踪对不上时的修法移到 stop-and-fix（只在停下修时读，计入该分支）；日更删掉与正文流程重复的常见问题表。"
+    },
+    {
+      "label": "长篇大修 direct/solo（主会话自己写正文）",
+      "files": [
+        "skills/story-long-write/SKILL.md",
+        "skills/story-long-write/references/workflow-revision.md",
+        "skills/story-long-write/references/style-resolution.md",
+        "skills/story-long-write/references/writing-craft.md",
+        "skills/story-long-write/references/long-format.md"
+      ],
+      "branches": [
+        {
+          "label": "常规",
+          "files": [],
+          "budget": 22400
+        },
+        {
+          "label": "追踪提交报错",
+          "files": [
+            "skills/story-long-write/references/tracking-transaction.md"
+          ],
+          "budget": 30100
+        },
+        {
+          "label": "本章技法·打脸",
+          "files": [
+            "skills/story-long-write/references/style-combat-face.md#决策路由",
+            "skills/story-long-write/references/style-combat-face.md#打斗/智斗写作"
+          ],
+          "budget": 24100
+        },
+        {
+          "label": "本章技法·反转",
+          "files": [
+            "skills/story-long-write/references/long-reversal.md#决策路由",
+            "skills/story-long-write/references/long-reversal.md#6. 认知反转"
+          ],
+          "budget": 23300
+        },
+        {
+          "label": "本章技法·感情",
+          "files": [
+            "skills/story-long-write/references/emotional-methods.md#决策路由",
+            "skills/story-long-write/references/emotional-methods.md#情感虐心三板斧",
+            "skills/story-long-write/references/emotion-on-page.md"
+          ],
+          "budget": 25300
+        },
+        {
+          "label": "本章技法·悬疑",
+          "files": [
+            "skills/story-long-write/references/long-suspense.md#决策路由表",
+            "skills/story-long-write/references/long-suspense.md#拉期待手法速查"
+          ],
+          "budget": 23750
+        },
+        {
+          "label": "本章技法·日常",
+          "files": [
+            "skills/story-long-write/references/long-chapter-hooks.md#决策路由",
+            "skills/story-long-write/references/long-chapter-hooks.md#章尾实战模板"
+          ],
+          "budget": 23850
+        }
+      ],
+      "stacking": {
+        "budget": 33050,
+        "slots": [
+          [
+            "追踪提交报错"
+          ],
+          [
+            "本章技法·打脸",
+            "本章技法·反转",
+            "本章技法·感情",
+            "本章技法·悬疑",
+            "本章技法·日常"
+          ]
+        ]
+      },
+      "why": "v0.8.2：主会话自己改稿；不再读整份单章流程，字数出带与缺 Node 的处置已写进 workflow-revision；追踪协议只在报错时读，可与本章技法叠加。"
+    },
+    {
+      "label": "短篇构思（Phase 1–2，主会话）",
+      "files": [
+        "skills/story-short-write/SKILL.md",
+        "skills/story-short-write/references/workflow-design.md",
+        "skills/story-short-write/references/writing-workflow.md",
+        "skills/story-short-write/references/submission-craft.md",
+        "skills/story-short-write/references/short-craft.md",
+        "skills/story-short-write/references/short-reversal.md",
+        "skills/story-long-write/references/style-resolution.md"
+      ],
+      "branches": [
+        {
+          "label": "世情打脸，无反派/揭露",
+          "budget": 28550,
+          "files": [
+            "skills/story-short-write/references/genre-styles/世情打脸.md"
+          ]
+        },
+        {
+          "label": "世情打脸，含反派/揭露",
+          "budget": 30800,
+          "files": [
+            "skills/story-short-write/references/genre-styles/世情打脸.md",
+            "skills/story-short-write/references/villain-and-reveal.md"
+          ]
+        },
+        {
+          "label": "双男主，无反派/揭露",
+          "budget": 27300,
+          "files": [
+            "skills/story-short-write/references/genre-styles/双男主.md"
+          ]
+        },
+        {
+          "label": "双男主，含反派/揭露",
+          "budget": 29550,
+          "files": [
+            "skills/story-short-write/references/genre-styles/双男主.md",
+            "skills/story-short-write/references/villain-and-reveal.md"
+          ]
+        },
+        {
+          "label": "复仇打脸，无反派/揭露",
+          "budget": 28050,
+          "files": [
+            "skills/story-short-write/references/genre-styles/复仇打脸.md"
+          ]
+        },
+        {
+          "label": "复仇打脸，含反派/揭露",
+          "budget": 30250,
+          "files": [
+            "skills/story-short-write/references/genre-styles/复仇打脸.md",
+            "skills/story-short-write/references/villain-and-reveal.md"
+          ]
+        },
+        {
+          "label": "宅斗宫斗，无反派/揭露",
+          "budget": 28350,
+          "files": [
+            "skills/story-short-write/references/genre-styles/宅斗宫斗.md"
+          ]
+        },
+        {
+          "label": "宅斗宫斗，含反派/揭露",
+          "budget": 30600,
+          "files": [
+            "skills/story-short-write/references/genre-styles/宅斗宫斗.md",
+            "skills/story-short-write/references/villain-and-reveal.md"
+          ]
+        },
+        {
+          "label": "总裁豪门，无反派/揭露",
+          "budget": 28850,
+          "files": [
+            "skills/story-short-write/references/genre-styles/总裁豪门.md"
+          ]
+        },
+        {
+          "label": "总裁豪门，含反派/揭露",
+          "budget": 31100,
+          "files": [
+            "skills/story-short-write/references/genre-styles/总裁豪门.md",
+            "skills/story-short-write/references/villain-and-reveal.md"
+          ]
+        },
+        {
+          "label": "悬疑，无反派/揭露",
+          "budget": 27650,
+          "files": [
+            "skills/story-short-write/references/genre-styles/悬疑.md"
+          ]
+        },
+        {
+          "label": "悬疑，含反派/揭露",
+          "budget": 29900,
+          "files": [
+            "skills/story-short-write/references/genre-styles/悬疑.md",
+            "skills/story-short-write/references/villain-and-reveal.md"
+          ]
+        },
+        {
+          "label": "民俗怪谈，无反派/揭露",
+          "budget": 27450,
+          "files": [
+            "skills/story-short-write/references/genre-styles/民俗怪谈.md"
+          ]
+        },
+        {
+          "label": "民俗怪谈，含反派/揭露",
+          "budget": 29650,
+          "files": [
+            "skills/story-short-write/references/genre-styles/民俗怪谈.md",
+            "skills/story-short-write/references/villain-and-reveal.md"
+          ]
+        },
+        {
+          "label": "沙雕脑洞，无反派/揭露",
+          "budget": 27950,
+          "files": [
+            "skills/story-short-write/references/genre-styles/沙雕脑洞.md"
+          ]
+        },
+        {
+          "label": "沙雕脑洞，含反派/揭露",
+          "budget": 30200,
+          "files": [
+            "skills/story-short-write/references/genre-styles/沙雕脑洞.md",
+            "skills/story-short-write/references/villain-and-reveal.md"
+          ]
+        },
+        {
+          "label": "甜宠，无反派/揭露",
+          "budget": 27000,
+          "files": [
+            "skills/story-short-write/references/genre-styles/甜宠.md"
+          ]
+        },
+        {
+          "label": "甜宠，含反派/揭露",
+          "budget": 29250,
+          "files": [
+            "skills/story-short-write/references/genre-styles/甜宠.md",
+            "skills/story-short-write/references/villain-and-reveal.md"
+          ]
+        },
+        {
+          "label": "追妻火葬场，无反派/揭露",
+          "budget": 28400,
+          "files": [
+            "skills/story-short-write/references/genre-styles/追妻火葬场.md"
+          ]
+        },
+        {
+          "label": "追妻火葬场，含反派/揭露",
+          "budget": 30650,
+          "files": [
+            "skills/story-short-write/references/genre-styles/追妻火葬场.md",
+            "skills/story-short-write/references/villain-and-reveal.md"
+          ]
+        },
+        {
+          "label": "冷门题材公式，无反派/揭露",
+          "budget": 30500,
+          "files": [
+            "skills/story-short-write/references/genre-writing-formulas.md"
+          ]
+        },
+        {
+          "label": "冷门题材公式，含反派/揭露",
+          "budget": 32750,
+          "files": [
+            "skills/story-short-write/references/genre-writing-formulas.md",
+            "skills/story-short-write/references/villain-and-reveal.md"
+          ]
+        },
+        {
+          "label": "冷门题材，含反派/揭露，有对标",
+          "files": [
+            "skills/story-short-write/references/genre-writing-formulas.md",
+            "skills/story-short-write/references/villain-and-reveal.md",
+            "skills/story-short-write/references/benchmark-recall.md"
+          ],
+          "budget": 34400
+        },
+        {
+          "label": "冷门题材，含反派/揭露，查参考索引",
+          "files": [
+            "skills/story-short-write/references/genre-writing-formulas.md",
+            "skills/story-short-write/references/villain-and-reveal.md",
+            "skills/story-short-write/references/reference-index.md"
+          ],
+          "budget": 34150
+        }
+      ],
+      "why": "迁出文件保守全额计入（即使条件未命中）；拆分不计作同阶段总量节省。 路径预算显式 +500：迁移入口、路径修正和检查职责传递的路由文字；原技法未扩写。 v0.8.2：对标召回与参考索引只在有对标或选其他资料时读，改为条件分支；Phase 4 精修清单移入 workflow-revision。 v0.8.2：改名为作者时刻「构思」；构思交付把写正文要用的信息写进 设定.md，写正文时刻另计一条路径。 v0.8.2：场景写法迁出（构思不读）；腾出的字数给设定.md 模板的题材招式、人设速写与各处反转／贯穿道具／导语口径统一。"
+    },
+    {
+      "label": "短篇写正文（Phase 3–4，主会话）",
+      "files": [
+        "skills/story-short-write/SKILL.md",
+        "skills/story-short-write/references/workflow-draft.md",
+        "skills/story-short-write/references/short-format.md",
+        "skills/story-short-write/references/short-craft.md",
+        "skills/story-short-write/references/scene-craft.md",
+        "skills/story-long-write/references/style-resolution.md",
+        "skills/story-short-write/references/workflow-revision.md"
+      ],
+      "branches": [
+        {
+          "label": "世情打脸，主会话自己去味",
+          "budget": 31550,
+          "files": [
+            "skills/story-short-write/references/genre-styles/世情打脸.md",
+            "skills/story-short-write/references/short-deslop.md"
+          ]
+        },
+        {
+          "label": "双男主，主会话自己去味",
+          "budget": 30300,
+          "files": [
+            "skills/story-short-write/references/genre-styles/双男主.md",
+            "skills/story-short-write/references/short-deslop.md"
+          ]
+        },
+        {
+          "label": "复仇打脸，主会话自己去味",
+          "budget": 31000,
+          "files": [
+            "skills/story-short-write/references/genre-styles/复仇打脸.md",
+            "skills/story-short-write/references/short-deslop.md"
+          ]
+        },
+        {
+          "label": "宅斗宫斗，主会话自己去味",
+          "budget": 31350,
+          "files": [
+            "skills/story-short-write/references/genre-styles/宅斗宫斗.md",
+            "skills/story-short-write/references/short-deslop.md"
+          ]
+        },
+        {
+          "label": "总裁豪门，主会话自己去味",
+          "budget": 31850,
+          "files": [
+            "skills/story-short-write/references/genre-styles/总裁豪门.md",
+            "skills/story-short-write/references/short-deslop.md"
+          ]
+        },
+        {
+          "label": "悬疑，主会话自己去味",
+          "budget": 30650,
+          "files": [
+            "skills/story-short-write/references/genre-styles/悬疑.md",
+            "skills/story-short-write/references/short-deslop.md"
+          ]
+        },
+        {
+          "label": "民俗怪谈，主会话自己去味",
+          "budget": 30400,
+          "files": [
+            "skills/story-short-write/references/genre-styles/民俗怪谈.md",
+            "skills/story-short-write/references/short-deslop.md"
+          ]
+        },
+        {
+          "label": "沙雕脑洞，主会话自己去味",
+          "budget": 30950,
+          "files": [
+            "skills/story-short-write/references/genre-styles/沙雕脑洞.md",
+            "skills/story-short-write/references/short-deslop.md"
+          ]
+        },
+        {
+          "label": "甜宠，主会话自己去味",
+          "budget": 30000,
+          "files": [
+            "skills/story-short-write/references/genre-styles/甜宠.md",
+            "skills/story-short-write/references/short-deslop.md"
+          ]
+        },
+        {
+          "label": "追妻火葬场，主会话自己去味",
+          "budget": 31400,
+          "files": [
+            "skills/story-short-write/references/genre-styles/追妻火葬场.md",
+            "skills/story-short-write/references/short-deslop.md"
+          ]
+        },
+        {
+          "label": "冷门题材（按设定.md 记下的公式要点写），主会话自己去味",
+          "budget": 25900,
+          "files": [
+            "skills/story-short-write/references/short-deslop.md"
+          ]
+        },
+        {
+          "label": "最重题材包＋情感桥段，去味交给写手",
+          "budget": 32800,
+          "files": [
+            "skills/story-short-write/references/genre-styles/总裁豪门.md",
+            "skills/story-short-write/references/emotional-methods.md",
+            "skills/story-short-write/references/agent-calls.md"
+          ]
+        },
+        {
+          "label": "最重题材包＋情感桥段，主会话自己去味（最重组合）",
+          "budget": 34700,
+          "files": [
+            "skills/story-short-write/references/genre-styles/总裁豪门.md",
+            "skills/story-short-write/references/emotional-methods.md",
+            "skills/story-short-write/references/short-deslop.md"
+          ]
+        }
+      ],
+      "why": "v0.8.2：取代「短篇执行指令（不含技法参考）」——那条没算写正文时真正读的格式、底座、题材包与去味清单。写正文是构思之后的新时刻：只读两份设计文件（项目资料，不计）、本条文件与一个题材包；反转、反派、平台基调、冷门公式、对标召回都从 设定.md 取，不重读构思方法论。去味交给写手时主会话不读 short-deslop；emotional-methods 只在写羁绊或余韵时读。参考索引列出的其他按需资料未登记。 v0.8.2：场景写法随写正文时刻读 scene-craft；派写手的 prompt 只在去味交给写手时读 agent-calls（该分支计入）。"
+    },
+    {
+      "label": "拆文每批（chapter-extractor 每次调用）",
+      "agent": "skills/story-setup/references/templates/agents/chapter-extractor.md",
+      "budget": 6900,
+      "files": [],
+      "why": "v0.8：长篇拆文每批调用一次，一本书几十到上百次；#446 让它自读原文、自写批次输入并机械自查后涨到约 6.7K，锁住。"
+    },
+    {
+      "label": "查资料（story-explorer 每次调用）",
+      "agent": "skills/story-setup/references/templates/agents/story-explorer.md",
+      "files": [],
+      "branches": [
+        {
+          "label": "普通查询（角色 / 伏笔 / 设定 / 时间线 / 进度 / 关系）",
+          "files": [],
+          "budget": 5400
+        },
+        {
+          "label": "写前对标召回（benchmark_style_load）",
+          "files": [
+            "skills/story-setup/references/agent-references/benchmark-style-load.md"
+          ],
+          "budget": 10400
+        }
+      ],
+      "why": "v0.8：日更查旧信息、写前对标召回与审查查设定时调用；书内资料按查询定点读，不在此计。 v0.8.2：对标召回流程与输出结构迁入 benchmark-style-load.md，只在该查询类型读（普通查询 10.7K→5.3K）；无调用方的 context_load 删除。"
+    },
+    {
+      "label": "审稿 full/lean 主会话",
+      "files": [
+        "skills/story-review/SKILL.md",
+        "skills/story-review/references/style-resolution.md",
+        "skills/story-review/references/agent-prompts.md"
+      ],
+      "branches": [
+        {
+          "label": "通用 rubric",
+          "files": [
+            "skills/story-review/references/quality-rubric.md"
+          ],
+          "budget": 20400
+        },
+        {
+          "label": "平台 rubric",
+          "files": [
+            "skills/story-review/references/quality-rubric.md",
+            "skills/story-review/references/rubrics/zhihu.md"
+          ],
+          "budget": 20850
+        },
+        {
+          "label": "长篇收尾维护追踪",
+          "files": [
+            "skills/story-review/references/quality-rubric.md",
+            "skills/story-review/references/review-tracking.md"
+          ],
+          "budget": 21300
+        },
+        {
+          "label": "分批审查（平台 rubric＋长篇收尾维护追踪）",
+          "files": [
+            "skills/story-review/references/quality-rubric.md",
+            "skills/story-review/references/rubrics/zhihu.md",
+            "skills/story-review/references/review-tracking.md",
+            "skills/story-review/references/batch-review.md"
+          ],
+          "budget": 22700
+        }
+      ],
+      "why": "v0.8.2：审稿按时刻加载——派子代理的 prompt、solo 流程、追踪维护各自成文件，子代理的去味判据由它自己的读取表读，主会话不摘抄。 作者记忆拆分后参考表多一行维护文件指路。 v0.8.2：综合裁决、full/lean 报告模板与 story-explorer 预查询只在派子代理时用，随 agent-prompts 读；分批审查的跨批规则拆到 batch-review，另计分支。"
+    },
+    {
+      "label": "审稿 solo（主会话一人审）",
+      "files": [
+        "skills/story-review/SKILL.md",
+        "skills/story-review/references/style-resolution.md",
+        "skills/story-review/references/solo.md",
+        "skills/story-review/references/anti-ai-writing.md#AI写作指纹（必须避免）",
+        "skills/story-review/references/anti-ai-writing.md#10 种 AI 写作模式检测",
+        "skills/story-review/references/quality-rubric.md",
+        "skills/story-review/references/banned-words.md"
+      ],
+      "branches": [
+        {
+          "label": "通用 rubric",
+          "files": [],
+          "budget": 26500
+        },
+        {
+          "label": "平台 rubric",
+          "files": [
+            "skills/story-review/references/rubrics/zhihu.md"
+          ],
+          "budget": 26950
+        },
+        {
+          "label": "分批审查（平台 rubric）",
+          "files": [
+            "skills/story-review/references/rubrics/zhihu.md",
+            "skills/story-review/references/batch-review.md"
+          ],
+          "budget": 27900
+        }
+      ],
+      "why": "v0.8.2：一人审恢复读 banned-words——预检脚本对高频套话只做密度统计，一级词不逐个报；AI 味判断读 anti-ai-writing 的「AI写作指纹」「10 种 AI 写作模式检测」。为容纳它，审稿入口把只在派子代理时用的综合裁决、报告模板、story-explorer 预查询迁到 agent-prompts，把只在分批时用的跨批规则迁到 batch-review（另计分支）。 作者记忆拆分后参考表多一行维护文件指路。 v0.8.3：solo.md 只让读 anti-ai-writing 的两节，按这两节计（原先按整份计，多算约 5K）。"
+    },
+    {
+      "label": "去AI味主会话",
+      "files": [
+        "skills/story-deslop/SKILL.md",
+        "skills/story-deslop/references/style-resolution.md"
+      ],
+      "branches": [
+        {
+          "label": "只检测或交给写手",
+          "files": [
+            "skills/story-deslop/references/agent-calls.md"
+          ],
+          "budget": 11550
+        },
+        {
+          "label": "主会话自己改",
+          "files": [
+            "skills/story-deslop/references/deslop-gates.md",
+            "skills/story-deslop/references/anti-ai-writing.md",
+            "skills/story-deslop/references/banned-words.md"
+          ],
+          "budget": 34250
+        }
+      ],
+      "why": "v0.8.2：交给 narrative-writer 时主会话不读去味规则（写手自己的审查路径另有登记）；主会话自己改时读删除保护、改写方法与词表。 合并后 +45：降级提示改白话＋技术备注行、作者记忆维护文件指路。 v0.8.3：交给写手的 prompt 移到 agent-calls（只在交给写手时读，计入该分支）；两套定档标准合成一套。"
+    },
+    {
+      "label": "部署写作环境（story-setup）",
+      "files": [
+        "skills/story-setup/SKILL.md",
+        "skills/story-setup/references/diagnostics.md"
+      ],
+      "branches": [
+        {
+          "label": "antigravity",
+          "files": [
+            "skills/story-setup/references/deploy-antigravity.md"
+          ],
+          "budget": 18500
+        },
+        {
+          "label": "claude-code",
+          "files": [
+            "skills/story-setup/references/deploy-claude-code.md"
+          ],
+          "budget": 17450
+        },
+        {
+          "label": "codex",
+          "files": [
+            "skills/story-setup/references/deploy-codex.md"
+          ],
+          "budget": 16100
+        },
+        {
+          "label": "generic",
+          "files": [
+            "skills/story-setup/references/deploy-generic.md"
+          ],
+          "budget": 13650
+        },
+        {
+          "label": "openclaw",
+          "files": [
+            "skills/story-setup/references/deploy-openclaw.md"
+          ],
+          "budget": 14050
+        },
+        {
+          "label": "opencode",
+          "files": [
+            "skills/story-setup/references/deploy-opencode.md"
+          ],
+          "budget": 19900
+        },
+        {
+          "label": "reasonix",
+          "files": [
+            "skills/story-setup/references/deploy-reasonix.md"
+          ],
+          "budget": 14250
+        },
+        {
+          "label": "zcode",
+          "files": [
+            "skills/story-setup/references/deploy-zcode.md"
+          ],
+          "budget": 16500
+        }
+      ],
+      "why": "v0.8.2：部署按宿主拆分，入口只读当前宿主那一份。"
+    },
+    {
+      "label": "长篇扫榜",
+      "files": [
+        "skills/story-long-scan/SKILL.md",
+        "skills/story-long-scan/references/genre-trends.md",
+        "skills/story-long-scan/references/reader-profiling.md",
+        "skills/story-long-scan/references/topic-decision.md",
+        "skills/story-long-scan/references/publishing-guide.md"
+      ],
+      "branches": [
+        {
+          "label": "起点",
+          "files": [
+            "skills/story-long-scan/references/platform-qidian.md"
+          ],
+          "budget": 13950
+        },
+        {
+          "label": "番茄",
+          "files": [
+            "skills/story-long-scan/references/platform-fanqie.md"
+          ],
+          "budget": 14800
+        },
+        {
+          "label": "晋江",
+          "files": [
+            "skills/story-long-scan/references/platform-jjwxc.md"
+          ],
+          "budget": 13600
+        }
+      ],
+      "why": "v0.8.2：先聚合再读，结论落盘交给选题与写作；按平台只读一份平台说明（上界：全部通用参考一起读）。 番茄参考加书库「最热」一节（+500）：阅读榜被老书占住时，连载中 30 万字以下的热度才看得出新书里什么题材在冒头。"
+    },
+    {
+      "label": "短篇扫榜",
+      "files": [
+        "skills/story-short-scan/SKILL.md",
+        "skills/story-short-scan/references/real-market-data.md",
+        "skills/story-short-scan/references/topic-match.md",
+        "skills/story-short-scan/references/manual-rank-input.md"
+      ],
+      "branches": [
+        {
+          "label": "点众",
+          "files": [
+            "skills/story-short-scan/references/platform-dianzhong.md"
+          ],
+          "budget": 8000
+        },
+        {
+          "label": "黑岩",
+          "files": [
+            "skills/story-short-scan/references/platform-heiyan.md"
+          ],
+          "budget": 8100
+        }
+      ],
+      "why": "v0.8.2：同上，短篇。"
+    },
+    {
+      "label": "导入·确认来源与范围",
+      "files": [
+        "skills/story-import/SKILL.md",
+        "skills/story-import/references/length-routing.md"
+      ],
+      "branches": [
+        {
+          "label": "常规",
+          "files": [],
+          "budget": 8400
+        },
+        {
+          "label": "特殊情况",
+          "files": [
+            "skills/story-import/references/import-special-cases.md"
+          ],
+          "budget": 10100
+        }
+      ],
+      "why": "v0.8.2：导入按作者确认点分时刻，作者的决定落盘到导入记录，时刻之间只靠文件交接。 +50：导入记录加「首期深拆」一栏、细纲进度改成「已验收到第 B 章」以便续跑整批重做；超过 200 章时简化摘要的固定落点。"
+    },
+    {
+      "label": "导入·深度分析（导入部分+拆文入口）",
+      "files": [
+        "skills/story-import/SKILL.md",
+        "skills/story-import/references/deep-analysis.md",
+        "skills/story-long-analyze/SKILL.md",
+        "skills/story-long-analyze/references/author-facing.md",
+        "skills/story-long-analyze/references/pipeline-ops.md"
+      ],
+      "branches": [
+        {
+          "label": "常规",
+          "files": [],
+          "budget": 25550
+        }
+      ],
+      "why": "v0.8.2：导入交给拆文流程，拆文自己后续各 Stage 另有登记。 +50：写明导入场景不用拆书流程自带的完工汇报，由导入的交付句代替（原先两套收尾会对作者说两遍、短篇还会引去写下一篇）。"
+    },
+    {
+      "label": "导入·结构迁移",
+      "files": [
+        "skills/story-import/SKILL.md",
+        "skills/story-import/references/format-and-structure.md"
+      ],
+      "branches": [
+        {
+          "label": "长篇",
+          "files": [
+            "skills/story-import/references/structure-mapping-long.md"
+          ],
+          "budget": 19250
+        },
+        {
+          "label": "短篇",
+          "files": [
+            "skills/story-import/references/structure-mapping-short.md"
+          ],
+          "budget": 14500
+        }
+      ],
+      "why": "v0.8.2：结构迁移只读对应篇幅的映射规则。"
+    },
+    {
+      "label": "导入·追踪初始化",
+      "files": [
+        "skills/story-import/SKILL.md",
+        "skills/story-import/references/import-tracking.md",
+        "skills/story-import/references/character-state-reverse.md",
+        "skills/story-import/references/state-tracking.md"
+      ],
+      "branches": [
+        {
+          "label": "常规",
+          "files": [],
+          "budget": 12450
+        }
+      ],
+      "why": "v0.8.2：追踪初始化从结构迁移里独立出来，只读初始化约束，不整读追踪事务协议。"
+    },
+    {
+      "label": "导入·汇报与激活",
+      "files": [
+        "skills/story-import/SKILL.md",
+        "skills/story-import/references/import-report.md"
+      ],
+      "branches": [
+        {
+          "label": "常规",
+          "files": [],
+          "budget": 7800
+        }
+      ],
+      "why": "v0.8.2：汇报只读汇报模板。 +50：收尾自检对全部细纲再跑一次契约检查（续跑整批重做后兜底）。"
+    },
+    {
+      "label": "长篇拆文 Stage 0–1 开头三章",
+      "files": [
+        "skills/story-long-analyze/SKILL.md",
+        "skills/story-long-analyze/references/author-facing.md",
+        "skills/story-long-analyze/references/stage1-golden-chapters.md"
+      ],
+      "branches": [
+        {
+          "label": "常规",
+          "files": [],
+          "budget": 14500
+        },
+        {
+          "label": "章号对不上",
+          "files": [
+            "skills/story-long-analyze/references/index-rebuild.md"
+          ],
+          "budget": 15850
+        }
+      ],
+      "why": "v0.8.2：拆文按 Stage 分时刻，每个时刻只读自己那一行。"
+    },
+    {
+      "label": "长篇拆文 Stage 2 逐批提取",
+      "files": [
+        "skills/story-long-analyze/SKILL.md",
+        "skills/story-long-analyze/references/author-facing.md",
+        "skills/story-long-analyze/references/pipeline-ops.md"
+      ],
+      "branches": [
+        {
+          "label": "交给子代理",
+          "files": [],
+          "budget": 17100
+        },
+        {
+          "label": "主会话自己写批次",
+          "files": [
+            "skills/story-long-analyze/references/stage2-extraction.md"
+          ],
+          "budget": 22650
+        }
+      ],
+      "why": "v0.8.2：同上。"
+    },
+    {
+      "label": "长篇拆文 Stage 3 剧情与节奏",
+      "files": [
+        "skills/story-long-analyze/SKILL.md",
+        "skills/story-long-analyze/references/author-facing.md",
+        "skills/story-long-analyze/references/synthesis-inputs.md",
+        "skills/story-long-analyze/references/stage3-plot-rhythm.md"
+      ],
+      "branches": [
+        {
+          "label": "常规",
+          "files": [],
+          "budget": 25500
+        },
+        {
+          "label": "打桥段标签",
+          "files": [
+            "skills/story-long-analyze/references/deconstruction-notes.md"
+          ],
+          "budget": 29550
+        }
+      ],
+      "why": "v0.8.2：同上。"
+    },
+    {
+      "label": "长篇拆文 Stage 4 角色与设定",
+      "files": [
+        "skills/story-long-analyze/SKILL.md",
+        "skills/story-long-analyze/references/author-facing.md",
+        "skills/story-long-analyze/references/synthesis-inputs.md",
+        "skills/story-long-analyze/references/stage4-characters-settings.md"
+      ],
+      "branches": [
+        {
+          "label": "常规",
+          "files": [],
+          "budget": 18350
+        }
+      ],
+      "why": "v0.8.2：同上。"
+    },
+    {
+      "label": "长篇拆文 Stage 5 主报告",
+      "files": [
+        "skills/story-long-analyze/SKILL.md",
+        "skills/story-long-analyze/references/author-facing.md",
+        "skills/story-long-analyze/references/synthesis-inputs.md",
+        "skills/story-long-analyze/references/stage5-report.md"
+      ],
+      "branches": [
+        {
+          "label": "常规",
+          "files": [],
+          "budget": 15050
+        }
+      ],
+      "why": "v0.8.2：同上。"
+    },
+    {
+      "label": "长篇拆文 Stage 6 文风",
+      "files": [
+        "skills/story-long-analyze/SKILL.md",
+        "skills/story-long-analyze/references/author-facing.md",
+        "skills/story-long-analyze/references/style-profile-generator.md",
+        "skills/story-long-analyze/references/style-profile-protocol.md"
+      ],
+      "branches": [
+        {
+          "label": "常规",
+          "files": [],
+          "budget": 16650
+        }
+      ],
+      "why": "v0.8.2：同上。"
+    },
+    {
+      "label": "长篇拆文 全部拆完",
+      "files": [
+        "skills/story-long-analyze/SKILL.md",
+        "skills/story-long-analyze/references/author-facing.md",
+        "skills/story-long-analyze/references/final-checks.md"
+      ],
+      "branches": [
+        {
+          "label": "常规",
+          "files": [],
+          "budget": 12400
+        }
+      ],
+      "why": "v0.8.2：同上。"
+    },
+    {
+      "label": "短篇拆文 Stage 2–3",
+      "files": [
+        "skills/story-short-analyze/SKILL.md",
+        "skills/story-short-analyze/references/output-contract.md",
+        "skills/story-short-analyze/references/analysis-method.md",
+        "skills/story-short-analyze/references/stage2-3-structure-emotion.md",
+        "skills/story-short-analyze/references/quality-checklist.md",
+        "skills/story-short-analyze/references/analysis-report-style.md"
+      ],
+      "branches": [
+        {
+          "label": "常规",
+          "files": [],
+          "budget": 20150
+        }
+      ],
+      "why": "v0.8.2：短篇拆文分两个时刻。"
+    },
+    {
+      "label": "短篇拆文 Stage 4–6",
+      "files": [
+        "skills/story-short-analyze/SKILL.md",
+        "skills/story-short-analyze/references/output-contract.md",
+        "skills/story-short-analyze/references/analysis-method.md",
+        "skills/story-short-analyze/references/stage4-6-reversal-summary.md",
+        "skills/story-short-analyze/references/quality-checklist.md",
+        "skills/story-short-analyze/references/analysis-report-style.md"
+      ],
+      "branches": [
+        {
+          "label": "常规",
+          "files": [],
+          "budget": 27000
+        },
+        {
+          "label": "判断源文好坏",
+          "files": [
+            "skills/story-short-analyze/references/source-story-quality.md"
+          ],
+          "budget": 31100
+        },
+        {
+          "label": "查写作技法表",
+          "files": [
+            "skills/story-short-analyze/references/analysis-writing-techniques.md#感情线四阶段推进法"
+          ],
+          "budget": 27500
+        },
+        {
+          "label": "细拆人物反差",
+          "files": [
+            "skills/story-short-analyze/references/analysis-character-design.md"
+          ],
+          "budget": 33050
+        },
+        {
+          "label": "查人设要素",
+          "files": [
+            "skills/story-short-analyze/references/analysis-character-basics.md"
+          ],
+          "budget": 33200
+        },
+        {
+          "label": "查关系类型",
+          "files": [
+            "skills/story-short-analyze/references/analysis-character-relations.md"
+          ],
+          "budget": 32750
+        }
+      ],
+      "why": "v0.8.2：同上；写作技法只查需要的那一张表，按整份计上界。Stage 5 的人物标尺一次只查一份，各计一条分支；数「有反差人物」的判定已搬进 stage4-6，不再为计数整读人物设计标尺。 v0.8.3：入口写明写作技法只按标题查「感情线四阶段推进法」一节，按这一节计（原先按整份计上界）。"
+    },
+    {
+      "label": "导入·逐批反推细纲（主会话自己做）",
+      "files": [
+        "skills/story-import/SKILL.md",
+        "skills/story-import/references/outline-reverse.md",
+        "skills/story-import/references/outline-reverse-rules.md"
+      ],
+      "branches": [
+        {
+          "label": "常规",
+          "files": [],
+          "budget": 9450
+        }
+      ],
+      "why": "v0.8.2：细纲分批，每批的规则与本批数据由 build_outline_brief.py 拼包；数据表随批次变化不计入，由脚本把执行者一次要读的总量（包 + 缺摘要章的正文）卡在约 25K。 +50：写明按总量少排章与续跑整批重做；执行者不再整读每章约 4K 字的摘要，一批从 80K+ 降到 25K 内。"
+    },
+    {
+      "label": "导入·逐批反推细纲（story-architect 任务包）",
+      "agent": "skills/story-setup/references/templates/agents/story-architect.md",
+      "files": [
+        "skills/story-import/references/outline-reverse-rules.md"
+      ],
+      "branches": [
+        {
+          "label": "常规",
+          "files": [],
+          "budget": 7350
+        }
+      ],
+      "why": "v0.8.2：同上，交给 story-architect 在新上下文里做。"
+    }
+  ],
+  "path_ceiling": {
+    "limit": 35000,
+    "exempt": [],
+    "why": "v0.8.2：每个角色每次调用（含条件分支与 stacking 登记的叠加组合）的加载不超 35K。开书按作者确认点分时刻，重的时刻换新上下文。"
+  }
+}

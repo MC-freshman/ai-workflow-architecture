@@ -1,0 +1,6 @@
+{
+  "schema": "ai-agent-pointer/v1",
+  "id": "data-engineer",
+  "hashManifest": "SHA256SUMS",
+  "version": "1.0.0"
+}

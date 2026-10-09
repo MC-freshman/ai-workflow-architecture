@@ -1,0 +1,330 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://contracts.local/runtime/1.1/state.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "runId",
+    "lockSha256",
+    "stateRevision",
+    "lastEventSequence",
+    "lastEventSha256",
+    "status",
+    "outcome",
+    "stopRequested",
+    "activeAttempt",
+    "completed",
+    "managedProcesses",
+    "finalOutput",
+    "error",
+    "updatedAt"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "enum": [
+        "ai-run-state/v1.1",
+        "ai-run-state/v1.2"
+      ]
+    },
+    "runId": {
+      "$ref": "common.schema.json#/$defs/id"
+    },
+    "lockSha256": {
+      "$ref": "common.schema.json#/$defs/hash"
+    },
+    "stateRevision": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "lastEventSequence": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "lastEventSha256": {
+      "$ref": "common.schema.json#/$defs/hash"
+    },
+    "status": {
+      "$ref": "common.schema.json#/$defs/status"
+    },
+    "outcome": {
+      "enum": [
+        "known",
+        "unknown-outcome"
+      ]
+    },
+    "stopRequested": {
+      "type": "boolean"
+    },
+    "activeAttempt": {
+      "oneOf": [
+        {
+          "type": "null"
+        },
+        {
+          "$ref": "common.schema.json#/$defs/attempt"
+        }
+      ]
+    },
+    "completed": {
+      "type": "array",
+      "items": {
+        "$ref": "common.schema.json#/$defs/completion"
+      }
+    },
+    "managedProcesses": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "pid",
+          "startedAt",
+          "identitySha256"
+        ],
+        "properties": {
+          "pid": {
+            "type": "integer",
+            "minimum": 1
+          },
+          "startedAt": {
+            "$ref": "common.schema.json#/$defs/time"
+          },
+          "identitySha256": {
+            "$ref": "common.schema.json#/$defs/hash"
+          }
+        },
+        "patternProperties": {
+          "^x-": true
+        }
+      }
+    },
+    "finalOutput": {
+      "type": "array",
+      "items": {
+        "$ref": "common.schema.json#/$defs/file"
+      }
+    },
+    "error": {
+      "oneOf": [
+        {
+          "type": "null"
+        },
+        {
+          "$ref": "common.schema.json#/$defs/error"
+        }
+      ]
+    },
+    "updatedAt": {
+      "$ref": "common.schema.json#/$defs/time"
+    },
+    "repairLedger": {
+      "type": "object",
+      "additionalProperties": {
+        "type": "object",
+        "additionalProperties": false,
+        "patternProperties": {
+          "^x-": true
+        },
+        "required": [
+          "attemptsUsed",
+          "exhausted"
+        ],
+        "properties": {
+          "attemptsUsed": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 10
+          },
+          "lastFailures": {
+            "type": "array",
+            "items": {
+              "$ref": "common.schema.json#/$defs/id"
+            },
+            "uniqueItems": true
+          },
+          "exhausted": {
+            "type": "boolean"
+          }
+        }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "enum": [
+              "failed",
+              "succeeded",
+              "stopped"
+            ]
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "activeAttempt": {
+            "type": "null"
+          },
+          "managedProcesses": {
+            "maxItems": 0
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "waiting-for-input"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "activeAttempt": {
+            "type": "object",
+            "properties": {
+              "action": {
+                "const": "prompt"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "prepared"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "activeAttempt": {
+            "type": "null"
+          },
+          "completed": {
+            "maxItems": 0
+          },
+          "managedProcesses": {
+            "maxItems": 0
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "succeeded"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "outcome": {
+            "const": "known"
+          },
+          "stopRequested": {
+            "const": false
+          },
+          "error": {
+            "type": "null"
+          },
+          "finalOutput": {
+            "minItems": 1
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "const": "stopped"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "stopRequested": {
+            "const": true
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "status": {
+            "enum": [
+              "blocked",
+              "failed"
+            ]
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "error": {
+            "type": "object"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "outcome": {
+            "const": "unknown-outcome"
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "status": {
+            "enum": [
+              "blocked",
+              "stopped"
+            ]
+          },
+          "error": {
+            "type": "object",
+            "properties": {
+              "code": {
+                "const": "UNKNOWN_OUTCOME"
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "schemaVersion": {
+            "const": "ai-run-state/v1.1"
+          }
+        },
+        "required": [
+          "schemaVersion"
+        ]
+      },
+      "then": {
+        "not": {
+          "required": [
+            "repairLedger"
+          ]
+        }
+      }
+    }
+  ],
+  "patternProperties": {
+    "^x-": true
+  }
+}

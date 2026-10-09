@@ -1,0 +1,1407 @@
+{
+  "schema": "ai-skill-catalog/v1",
+  "sourceId": "20261009-domain-expansion",
+  "snapshot": "approved 20261009",
+  "skills": [
+    {
+      "id": "automation-engineer-task-01",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "automation-engineer-task-01/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "automation-engineer-task-02",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "automation-engineer-task-02/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "automation-engineer-task-03",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "automation-engineer-task-03/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "automation-engineer-task-04",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "automation-engineer-task-04/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "automation-engineer-task-05",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "automation-engineer-task-05/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "automation-engineer-task-06",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "automation-engineer-task-06/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "content-strategist-task-01",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "content-strategist-task-01/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "content-strategist-task-02",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "content-strategist-task-02/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "content-strategist-task-03",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "content-strategist-task-03/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "content-strategist-task-04",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "content-strategist-task-04/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "content-strategist-task-05",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "content-strategist-task-05/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "content-strategist-task-06",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "content-strategist-task-06/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "data-analyst-task-01",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "data-analyst-task-01/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "data-analyst-task-02",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "data-analyst-task-02/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "data-analyst-task-03",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "data-analyst-task-03/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "data-analyst-task-04",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "data-analyst-task-04/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "data-analyst-task-05",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "data-analyst-task-05/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "data-analyst-task-06",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "data-analyst-task-06/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "data-engineer-task-01",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "data-engineer-task-01/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "data-engineer-task-02",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "data-engineer-task-02/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "data-engineer-task-03",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "data-engineer-task-03/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "data-engineer-task-04",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "data-engineer-task-04/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "data-engineer-task-05",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "data-engineer-task-05/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "data-engineer-task-06",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "data-engineer-task-06/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "database-engineer-task-01",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "database-engineer-task-01/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "database-engineer-task-02",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "database-engineer-task-02/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "database-engineer-task-03",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "database-engineer-task-03/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "database-engineer-task-04",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "database-engineer-task-04/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "database-engineer-task-05",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "database-engineer-task-05/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "database-engineer-task-06",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "database-engineer-task-06/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "devops-engineer-task-01",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "devops-engineer-task-01/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "devops-engineer-task-02",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "devops-engineer-task-02/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "devops-engineer-task-03",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "devops-engineer-task-03/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "devops-engineer-task-04",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "devops-engineer-task-04/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "devops-engineer-task-05",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "devops-engineer-task-05/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "devops-engineer-task-06",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "devops-engineer-task-06/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "document-engineer-task-01",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "document-engineer-task-01/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "document-engineer-task-02",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "document-engineer-task-02/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "document-engineer-task-03",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "document-engineer-task-03/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "document-engineer-task-04",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "document-engineer-task-04/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "document-engineer-task-05",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "document-engineer-task-05/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "document-engineer-task-06",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "document-engineer-task-06/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "domain-core-automation-engineer",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "domain-core-automation-engineer/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "domain-core-content-strategist",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "domain-core-content-strategist/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "domain-core-data-analyst",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "domain-core-data-analyst/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "domain-core-data-engineer",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "domain-core-data-engineer/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "domain-core-database-engineer",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "domain-core-database-engineer/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "domain-core-devops-engineer",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "domain-core-devops-engineer/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "domain-core-document-engineer",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "domain-core-document-engineer/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "domain-core-framework-author",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "domain-core-framework-author/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "domain-core-frontend-engineer",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "domain-core-frontend-engineer/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "domain-core-game-builder",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "domain-core-game-builder/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "domain-core-game-designer",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "domain-core-game-designer/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "domain-core-llm-engineer",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "domain-core-llm-engineer/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "domain-core-mastermind-bug-bounty",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "domain-core-mastermind-bug-bounty/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "domain-core-math-modeling-programmer",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "domain-core-math-modeling-programmer/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "domain-core-ml-engineer",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "domain-core-ml-engineer/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "domain-core-modeling-analyst",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "domain-core-modeling-analyst/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "domain-core-novel-writer",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "domain-core-novel-writer/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "domain-core-paper-author",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "domain-core-paper-author/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "domain-core-presentation-designer",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "domain-core-presentation-designer/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "domain-core-product-manager",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "domain-core-product-manager/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "domain-core-qa-engineer",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "domain-core-qa-engineer/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "domain-core-research-analyst",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "domain-core-research-analyst/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "domain-core-software-architect",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "domain-core-software-architect/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "domain-core-software-engineer",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "domain-core-software-engineer/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "domain-core-spreadsheet-engineer",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "domain-core-spreadsheet-engineer/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "domain-core-story-architect",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "domain-core-story-architect/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "domain-core-ui-ux-designer",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "domain-core-ui-ux-designer/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "domain-core-visualization-engineer",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "domain-core-visualization-engineer/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "domain-source-catalog",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "domain-source-catalog/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "framework-author-task-01",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "framework-author-task-01/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "framework-author-task-02",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "framework-author-task-02/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "framework-author-task-03",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "framework-author-task-03/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "framework-author-task-04",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "framework-author-task-04/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "framework-author-task-05",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "framework-author-task-05/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "framework-author-task-06",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "framework-author-task-06/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "frontend-engineer-task-01",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "frontend-engineer-task-01/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "frontend-engineer-task-02",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "frontend-engineer-task-02/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "frontend-engineer-task-03",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "frontend-engineer-task-03/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "frontend-engineer-task-04",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "frontend-engineer-task-04/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "frontend-engineer-task-05",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "frontend-engineer-task-05/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "frontend-engineer-task-06",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "frontend-engineer-task-06/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "game-builder-task-01",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "game-builder-task-01/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "game-builder-task-02",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "game-builder-task-02/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "game-builder-task-03",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "game-builder-task-03/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "game-builder-task-04",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "game-builder-task-04/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "game-builder-task-05",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "game-builder-task-05/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "game-builder-task-06",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "game-builder-task-06/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "game-designer-task-01",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "game-designer-task-01/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "game-designer-task-02",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "game-designer-task-02/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "game-designer-task-03",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "game-designer-task-03/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "game-designer-task-04",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "game-designer-task-04/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "game-designer-task-05",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "game-designer-task-05/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "game-designer-task-06",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "game-designer-task-06/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "llm-engineer-task-01",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "llm-engineer-task-01/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "llm-engineer-task-02",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "llm-engineer-task-02/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "llm-engineer-task-03",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "llm-engineer-task-03/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "llm-engineer-task-04",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "llm-engineer-task-04/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "llm-engineer-task-05",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "llm-engineer-task-05/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "llm-engineer-task-06",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "llm-engineer-task-06/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "mastermind-bug-bounty-task-01",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "mastermind-bug-bounty-task-01/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "mastermind-bug-bounty-task-02",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "mastermind-bug-bounty-task-02/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "mastermind-bug-bounty-task-03",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "mastermind-bug-bounty-task-03/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "mastermind-bug-bounty-task-04",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "mastermind-bug-bounty-task-04/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "mastermind-bug-bounty-task-05",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "mastermind-bug-bounty-task-05/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "mastermind-bug-bounty-task-06",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "mastermind-bug-bounty-task-06/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "math-modeling-programmer-task-01",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "math-modeling-programmer-task-01/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "math-modeling-programmer-task-02",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "math-modeling-programmer-task-02/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "math-modeling-programmer-task-03",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "math-modeling-programmer-task-03/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "math-modeling-programmer-task-04",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "math-modeling-programmer-task-04/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "math-modeling-programmer-task-05",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "math-modeling-programmer-task-05/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "math-modeling-programmer-task-06",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "math-modeling-programmer-task-06/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "ml-engineer-task-01",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "ml-engineer-task-01/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "ml-engineer-task-02",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "ml-engineer-task-02/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "ml-engineer-task-03",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "ml-engineer-task-03/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "ml-engineer-task-04",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "ml-engineer-task-04/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "ml-engineer-task-05",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "ml-engineer-task-05/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "ml-engineer-task-06",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "ml-engineer-task-06/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "modeling-analyst-task-01",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "modeling-analyst-task-01/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "modeling-analyst-task-02",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "modeling-analyst-task-02/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "modeling-analyst-task-03",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "modeling-analyst-task-03/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "modeling-analyst-task-04",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "modeling-analyst-task-04/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "modeling-analyst-task-05",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "modeling-analyst-task-05/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "modeling-analyst-task-06",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "modeling-analyst-task-06/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "novel-writer-task-01",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "novel-writer-task-01/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "novel-writer-task-02",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "novel-writer-task-02/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "novel-writer-task-03",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "novel-writer-task-03/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "novel-writer-task-04",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "novel-writer-task-04/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "novel-writer-task-05",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "novel-writer-task-05/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "novel-writer-task-06",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "novel-writer-task-06/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "novel-writing-resources",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "novel-writing-resources/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "paper-author-task-01",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "paper-author-task-01/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "paper-author-task-02",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "paper-author-task-02/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "paper-author-task-03",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "paper-author-task-03/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "paper-author-task-04",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "paper-author-task-04/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "paper-author-task-05",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "paper-author-task-05/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "paper-author-task-06",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "paper-author-task-06/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "presentation-designer-task-01",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "presentation-designer-task-01/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "presentation-designer-task-02",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "presentation-designer-task-02/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "presentation-designer-task-03",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "presentation-designer-task-03/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "presentation-designer-task-04",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "presentation-designer-task-04/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "presentation-designer-task-05",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "presentation-designer-task-05/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "presentation-designer-task-06",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "presentation-designer-task-06/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "product-manager-task-01",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "product-manager-task-01/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "product-manager-task-02",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "product-manager-task-02/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "product-manager-task-03",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "product-manager-task-03/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "product-manager-task-04",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "product-manager-task-04/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "product-manager-task-05",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "product-manager-task-05/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "product-manager-task-06",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "product-manager-task-06/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "qa-engineer-task-01",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "qa-engineer-task-01/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "qa-engineer-task-02",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "qa-engineer-task-02/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "qa-engineer-task-03",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "qa-engineer-task-03/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "qa-engineer-task-04",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "qa-engineer-task-04/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "qa-engineer-task-05",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "qa-engineer-task-05/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "qa-engineer-task-06",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "qa-engineer-task-06/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "qa-engineer-task-07",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "qa-engineer-task-07/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "research-analyst-task-01",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "research-analyst-task-01/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "research-analyst-task-02",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "research-analyst-task-02/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "research-analyst-task-03",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "research-analyst-task-03/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "research-analyst-task-04",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "research-analyst-task-04/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "research-analyst-task-05",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "research-analyst-task-05/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "research-analyst-task-06",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "research-analyst-task-06/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "security-web-resources",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "security-web-resources/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "software-architect-task-01",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "software-architect-task-01/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "software-architect-task-02",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "software-architect-task-02/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "software-architect-task-03",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "software-architect-task-03/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "software-architect-task-04",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "software-architect-task-04/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "software-architect-task-05",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "software-architect-task-05/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "software-architect-task-06",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "software-architect-task-06/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "software-engineer-task-01",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "software-engineer-task-01/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "software-engineer-task-02",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "software-engineer-task-02/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "software-engineer-task-03",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "software-engineer-task-03/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "software-engineer-task-04",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "software-engineer-task-04/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "software-engineer-task-05",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "software-engineer-task-05/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "software-engineer-task-06",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "software-engineer-task-06/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "spreadsheet-engineer-task-01",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "spreadsheet-engineer-task-01/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "spreadsheet-engineer-task-02",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "spreadsheet-engineer-task-02/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "spreadsheet-engineer-task-03",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "spreadsheet-engineer-task-03/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "spreadsheet-engineer-task-04",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "spreadsheet-engineer-task-04/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "spreadsheet-engineer-task-05",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "spreadsheet-engineer-task-05/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "spreadsheet-engineer-task-06",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "spreadsheet-engineer-task-06/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "story-architect-task-01",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "story-architect-task-01/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "story-architect-task-02",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "story-architect-task-02/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "story-architect-task-03",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "story-architect-task-03/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "story-architect-task-04",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "story-architect-task-04/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "story-architect-task-05",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "story-architect-task-05/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "story-architect-task-06",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "story-architect-task-06/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "ui-ux-designer-task-01",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "ui-ux-designer-task-01/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "ui-ux-designer-task-02",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "ui-ux-designer-task-02/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "ui-ux-designer-task-03",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "ui-ux-designer-task-03/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "ui-ux-designer-task-04",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "ui-ux-designer-task-04/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "ui-ux-designer-task-05",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "ui-ux-designer-task-05/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "ui-ux-designer-task-06",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "ui-ux-designer-task-06/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "visualization-engineer-task-01",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "visualization-engineer-task-01/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "visualization-engineer-task-02",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "visualization-engineer-task-02/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "visualization-engineer-task-03",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "visualization-engineer-task-03/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "visualization-engineer-task-04",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "visualization-engineer-task-04/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "visualization-engineer-task-05",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "visualization-engineer-task-05/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "visualization-engineer-task-06",
+      "version": "1.0.0",
+      "sourceId": "20261009-domain-expansion",
+      "sourcePath": "visualization-engineer-task-06/SKILL.md",
+      "category": "skill"
+    }
+  ]
+}

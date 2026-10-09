@@ -1,0 +1,213 @@
+{
+  "schema": "ai-workflow-definition/v3",
+  "id": "mastermind-bug-bounty",
+  "version": "3.2.0",
+  "mode": "pipeline",
+  "maxParallel": 1,
+  "roles": [
+    "expert"
+  ],
+  "outputWorker": "expert",
+  "gateDefinitions": {
+    "report-complete": {
+      "type": "output-schema"
+    },
+    "work-integrity": {
+      "type": "process",
+      "cwd": "evidence",
+      "argv": [
+        "workflow:scripts/validate_expert_work.py"
+      ],
+      "expectExit": [
+        0
+      ],
+      "expectArtifacts": [
+        {
+          "target": "evidence:expert-work-check.json",
+          "minBytes": 2
+        }
+      ],
+      "reasonFrom": "evidence:expert-work-check.json"
+    }
+  },
+  "stages": [
+    {
+      "id": "INTAKE",
+      "action": "prompt",
+      "worker": "expert",
+      "dependsOn": [],
+      "promptRef": "workflow.md#stage:INTAKE",
+      "outputs": "schemas/intake.schema.json"
+    },
+    {
+      "id": "WORK",
+      "action": "prompt",
+      "worker": "expert",
+      "dependsOn": [
+        "INTAKE"
+      ],
+      "promptRef": "workflow.md#stage:WORK",
+      "outputs": "schemas/work.schema.json",
+      "onFail": "repair",
+      "maxIterations": 2,
+      "repairPromptRef": "workflow.md#stage:repair",
+      "gates": [
+        "work-integrity"
+      ]
+    },
+    {
+      "id": "REPORT",
+      "action": "prompt",
+      "worker": "expert",
+      "dependsOn": [
+        "WORK"
+      ],
+      "promptRef": "workflow.md#stage:REPORT",
+      "outputs": "schemas/report.schema.json",
+      "gates": [
+        "report-complete"
+      ]
+    }
+  ],
+  "defaultScenario": "standard",
+  "requiredStages": [
+    "INTAKE",
+    "WORK",
+    "REPORT"
+  ],
+  "scenarios": {
+    "standard": {
+      "summary": "本域默认常见任务；始终包含本域核心",
+      "skills": [
+        "domain-core-mastermind-bug-bounty@1.0.0",
+        "mastermind-bug-bounty-task-01@1.0.0"
+      ]
+    },
+    "task-01": {
+      "summary": "已授权 Web/API 测试",
+      "skills": [
+        "domain-core-mastermind-bug-bounty@1.0.0",
+        "mastermind-bug-bounty-task-01@1.0.0"
+      ]
+    },
+    "task-02": {
+      "summary": "范围",
+      "skills": [
+        "domain-core-mastermind-bug-bounty@1.0.0",
+        "mastermind-bug-bounty-task-02@1.0.0"
+      ]
+    },
+    "task-03": {
+      "summary": "侦察",
+      "skills": [
+        "domain-core-mastermind-bug-bounty@1.0.0",
+        "mastermind-bug-bounty-task-03@1.0.0"
+      ]
+    },
+    "task-04": {
+      "summary": "最小验证",
+      "skills": [
+        "domain-core-mastermind-bug-bounty@1.0.0",
+        "mastermind-bug-bounty-task-04@1.0.0"
+      ]
+    },
+    "task-05": {
+      "summary": "分诊",
+      "skills": [
+        "domain-core-mastermind-bug-bounty@1.0.0",
+        "mastermind-bug-bounty-task-05@1.0.0"
+      ]
+    },
+    "task-06": {
+      "summary": "报告",
+      "skills": [
+        "domain-core-mastermind-bug-bounty@1.0.0",
+        "mastermind-bug-bounty-task-06@1.0.0"
+      ]
+    },
+    "full": {
+      "summary": "兼容场景 full；任务按核心路由选择辅助引用",
+      "skills": [
+        "domain-core-mastermind-bug-bounty@1.0.0",
+        "mastermind-bug-bounty-task-01@1.0.0"
+      ]
+    },
+    "recon": {
+      "summary": "兼容场景 recon；任务按核心路由选择辅助引用",
+      "skills": [
+        "domain-core-mastermind-bug-bounty@1.0.0",
+        "mastermind-bug-bounty-task-01@1.0.0"
+      ]
+    },
+    "triage": {
+      "summary": "兼容场景 triage；任务按核心路由选择辅助引用",
+      "skills": [
+        "domain-core-mastermind-bug-bounty@1.0.0",
+        "mastermind-bug-bounty-task-01@1.0.0"
+      ]
+    },
+    "api": {
+      "summary": "兼容场景 api；任务按核心路由选择辅助引用",
+      "skills": [
+        "domain-core-mastermind-bug-bounty@1.0.0",
+        "mastermind-bug-bounty-task-01@1.0.0"
+      ]
+    },
+    "js": {
+      "summary": "兼容场景 js；任务按核心路由选择辅助引用",
+      "skills": [
+        "domain-core-mastermind-bug-bounty@1.0.0",
+        "mastermind-bug-bounty-task-01@1.0.0"
+      ]
+    },
+    "crypto": {
+      "summary": "兼容场景 crypto；任务按核心路由选择辅助引用",
+      "skills": [
+        "domain-core-mastermind-bug-bounty@1.0.0",
+        "mastermind-bug-bounty-task-01@1.0.0"
+      ]
+    },
+    "report": {
+      "summary": "兼容场景 report；任务按核心路由选择辅助引用",
+      "skills": [
+        "domain-core-mastermind-bug-bounty@1.0.0",
+        "mastermind-bug-bounty-task-01@1.0.0"
+      ]
+    },
+    "engagement-gate": {
+      "summary": "兼容场景 engagement-gate；任务按核心路由选择辅助引用",
+      "skills": [
+        "domain-core-mastermind-bug-bounty@1.0.0",
+        "mastermind-bug-bounty-task-01@1.0.0"
+      ]
+    },
+    "injection-detect": {
+      "summary": "兼容场景 injection-detect；任务按核心路由选择辅助引用",
+      "skills": [
+        "domain-core-mastermind-bug-bounty@1.0.0",
+        "mastermind-bug-bounty-task-01@1.0.0"
+      ]
+    },
+    "surface-hygiene": {
+      "summary": "兼容场景 surface-hygiene；任务按核心路由选择辅助引用",
+      "skills": [
+        "domain-core-mastermind-bug-bounty@1.0.0",
+        "mastermind-bug-bounty-task-01@1.0.0"
+      ]
+    },
+    "secrets-supply-chain": {
+      "summary": "兼容场景 secrets-supply-chain；任务按核心路由选择辅助引用",
+      "skills": [
+        "domain-core-mastermind-bug-bounty@1.0.0",
+        "mastermind-bug-bounty-task-01@1.0.0"
+      ]
+    },
+    "evidence-pack": {
+      "summary": "兼容场景 evidence-pack；任务按核心路由选择辅助引用",
+      "skills": [
+        "domain-core-mastermind-bug-bounty@1.0.0",
+        "mastermind-bug-bounty-task-01@1.0.0"
+      ]
+    }
+  }
+}

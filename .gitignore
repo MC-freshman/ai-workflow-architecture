@@ -59,20 +59,7 @@
 !/dsh/bridge/
 !/dsh/bridge.json
 
-# ── 平台侧 provider 代码（BP-7 例外，2026-09-27 X-P2 裁定）：被生产 config 以绝对路径引用的
-#    平台运行位代码随仓保护（先例 b1c74165 的 session-process-windows.py），一次性维护脚本
-#    不入库（已有 inbox/archive 镜像 + 逐文件哈希）。其余 runtime 证据仍整体排除。
-!/zcode/runtime/
-/zcode/runtime/*
-!/zcode/runtime/software/
-/zcode/runtime/software/*
-!/zcode/runtime/software/session-process-windows.py
-!/qoder/runtime/
-/qoder/runtime/*
-!/qoder/runtime/software/
-/qoder/runtime/software/*
-!/qoder/runtime/software/credential-provider-windows.py
-!/qoder/runtime/software/session-process-windows.py
+# 2026-10-09 P8：runtime 运行位代码以所属平台备份恢复，不再入根仓索引。
 
 # ── 静态文档站（Docusaurus 3.10；2026-09-27 经用户批准放行，只放文本与配置）
 #    依赖、缓存与生成物由 docs-site/.gitignore 自行排除（node_modules、.docusaurus、
@@ -107,9 +94,102 @@ software/phpStudy_64/
 *.sqlite
 *.db
 
-# ── publication files added by export-governance-public.mjs
+# architecture-manager platform codex
+!/codex/
+/codex/*
+!/codex/bridge.json
+!/codex/bridge/
+/codex/bridge/**
+!/codex/bridge/**/
+!/codex/bridge/**/*.json
+!/codex/bridge/**/*.md
+!/codex/bridge/**/*.py
+!/codex/bridge/**/*.mjs
+/codex/bridge/**/credentials*
+/codex/bridge/**/secrets*
+/codex/bridge/**/.env*
+
+# architecture-manager platform dsh
+!/dsh/
+/dsh/*
+!/dsh/bridge.json
+!/dsh/bridge/
+/dsh/bridge/**
+!/dsh/bridge/**/
+!/dsh/bridge/**/*.json
+!/dsh/bridge/**/*.md
+!/dsh/bridge/**/*.py
+!/dsh/bridge/**/*.mjs
+/dsh/bridge/**/credentials*
+/dsh/bridge/**/secrets*
+/dsh/bridge/**/.env*
+
+# architecture-manager platform qoder
+!/qoder/
+/qoder/*
+!/qoder/bridge.json
+!/qoder/bridge/
+/qoder/bridge/**
+!/qoder/bridge/**/
+!/qoder/bridge/**/*.json
+!/qoder/bridge/**/*.md
+!/qoder/bridge/**/*.py
+!/qoder/bridge/**/*.mjs
+/qoder/bridge/**/credentials*
+/qoder/bridge/**/secrets*
+/qoder/bridge/**/.env*
+
+# architecture-manager platform zcode
+!/zcode/
+/zcode/*
+!/zcode/bridge.json
+!/zcode/bridge/
+/zcode/bridge/**
+!/zcode/bridge/**/
+!/zcode/bridge/**/*.json
+!/zcode/bridge/**/*.md
+!/zcode/bridge/**/*.py
+!/zcode/bridge/**/*.mjs
+/zcode/bridge/**/credentials*
+/zcode/bridge/**/secrets*
+/zcode/bridge/**/.env*
+
+# architecture-manager platform workbuddy
+!/workbuddy/
+/workbuddy/*
+!/workbuddy/bridge.json
+!/workbuddy/bridge/
+/workbuddy/bridge/**
+!/workbuddy/bridge/**/
+!/workbuddy/bridge/**/*.json
+!/workbuddy/bridge/**/*.md
+!/workbuddy/bridge/**/*.py
+!/workbuddy/bridge/**/*.mjs
+/workbuddy/bridge/**/credentials*
+/workbuddy/bridge/**/secrets*
+/workbuddy/bridge/**/.env*
+
+# Approved unified P8: private runtime never re-enters the root index
+/codex/runtime/
+/qoder/runtime/
+/zcode/runtime/
+/dsh/runtime/
+/doubao/runtime/
+/workbuddy/runtime/
+
+# 2026-10-09: Architecture Manager source is maintained in the root governance repository
+!/architecture-manager/
+/architecture-manager/node_modules/
+/architecture-manager/dist/
+/architecture-manager/release/
+/architecture-manager/.git/
+/architecture-manager/*.log
+
+# Public export metadata
 !/LICENSE
 !/README.md
 !/PUBLICATION-BOUNDARY.md
 !/REPOSITORY-SHA256SUMS
 !/EXPORT-MANIFEST.json
+!/PUBLIC-RELEASE-PROVENANCE.json
+!/GITHUB-REPOSITORIES.md

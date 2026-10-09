@@ -72,3 +72,68 @@
 # 2026-09-27 运行状态（以本段为准，此前各段按其日期为历史快照）
 
 共享 current 现值：**wf-runner 0.12.0 / runtime-contracts 1.5.0 / repo-lint 0.6.3 / architecture-ops 1.5.0 / platform-conformance 1.5.1**；software：**_connector 1.0.7**、_gateway 1.0.1、nmap/veracrypt/burp-suite 各 1.0.1（指针 09-27 抬）。平台状态：**zcode** 全量采纳 0.12.0/1.5.0/0.6.3（矩阵 50/1/1/0）；**qoder** 0.10.1/1.4.1/0.5.2（落后，待其会话采纳）；**codex/doubao** 落后一代且 codex 仍绑 _gateway（待各自会话）；**workbuddy** 连接器已绑；**dsh** 配置面在配对代、能力面诚实 fail-closed。缺陷账：`versions/缺陷状态簿.json`（open 6→本轮后清零 D-45/46/65/67/75/76/83，D-81/D-83-83 已定义；剩 unverified=0）。一级目录新增登记：**`architecture-manager`**（3.4.0 管理台源仓，独立 git 仓）。本段由 3.x 维护缺陷修复轮写入，账见 `versions/平台接入清单.md` §8.30。
+
+<!-- architecture-manager-platform:codex -->
+
+### 管理台登记：codex
+
+- 平台配置入口：`codex/bridge.json`；平台章：`codex/bridge/platform.md`。
+- 本平台接入记录位于自己的 runtime/maintenance/manager-onboarding；配置、环境、矩阵、客户端回环和 Git 读数全部通过才算完成。
+- 标准 CLI 入口无需维护型 AI 会话；业务模型输出与厂商原生客户端注册各自验证，不由目录存在推定。
+- 本轮钉版：0.12.0 / 1.5.0 / 0.6.3。
+
+<!-- /architecture-manager-platform:codex -->
+
+<!-- architecture-manager-platform:dsh -->
+
+### 管理台登记：dsh
+
+- 平台配置入口：`dsh/bridge.json`；平台章：`dsh/bridge/platform.md`。
+- 本平台接入记录位于自己的 runtime/maintenance/manager-onboarding；配置、环境、矩阵、客户端回环和 Git 读数全部通过才算完成。
+- 标准 CLI 入口无需维护型 AI 会话；业务模型输出与厂商原生客户端注册各自验证，不由目录存在推定。
+- 本轮钉版：0.12.2 / 1.5.2 / 0.6.5。
+
+<!-- /architecture-manager-platform:dsh -->
+
+<!-- architecture-manager-platform:qoder -->
+
+### 管理台登记：qoder
+
+- 平台配置入口：`qoder/bridge.json`；平台章：`qoder/bridge/platform.md`。
+- 本平台接入记录位于自己的 runtime/maintenance/manager-onboarding；配置、环境、矩阵、客户端回环和 Git 读数全部通过才算完成。
+- 标准 CLI 入口无需维护型 AI 会话；业务模型输出与厂商原生客户端注册各自验证，不由目录存在推定。
+- 本轮钉版：0.12.2 / 1.5.2 / 0.6.5。
+
+<!-- /architecture-manager-platform:qoder -->
+
+<!-- architecture-manager-platform:zcode -->
+
+### 管理台登记：zcode
+
+- 平台配置入口：`zcode/bridge.json`；平台章：`zcode/bridge/platform.md`。
+- 本平台接入记录位于自己的 runtime/maintenance/manager-onboarding；配置、环境、矩阵、客户端回环和 Git 读数全部通过才算完成。
+- 标准 CLI 入口无需维护型 AI 会话；业务模型输出与厂商原生客户端注册各自验证，不由目录存在推定。
+- 本轮钉版：0.12.2 / 1.5.2 / 0.6.5。
+
+<!-- /architecture-manager-platform:zcode -->
+
+<!-- architecture-manager-platform:workbuddy -->
+
+### 管理台登记：workbuddy
+
+- 平台配置入口：`workbuddy/bridge.json`；平台章：`workbuddy/bridge/platform.md`。
+- 本平台接入记录位于自己的 runtime/maintenance/manager-onboarding；配置、环境、矩阵、客户端回环和 Git 读数全部通过才算完成。
+- 标准 CLI 入口无需维护型 AI 会话；业务模型输出与厂商原生客户端注册各自验证，不由目录存在推定。
+- 本轮钉版：0.12.2 / 1.5.2 / 0.6.5。
+
+<!-- /architecture-manager-platform:workbuddy -->
+
+
+## 2026-10-09 专家扩充采纳
+
+按已批准P1–P14发布28主责专家与预算控制；8升级、20新增，7旧入口保留。治理入口 versions/专家扩充与上下文控制-收口报告-20261009.md。Codex配对采纳0.13.0 / 0.7.0 / 1.6.0 / 1.6.0，其他平台各自接线自证；不改变本文上位原则或一级目录清单。
+
+
+## 2026-10-09 GitHub 仓库收敛
+
+现行维护源为私有 `MC-freshman/ai-workflow-architecture-governance`，公开入口为 `MC-freshman/ai-workflow-architecture`。管理台源码 `architecture-manager/` 已纳入根私有治理仓，不再作为独立远端或 submodule；旧源仓历史先经恢复校验备份并保留于私有 Git 祖先/归档 refs。tool、agent、software 仍是三个独立职责的共享仓，版本和冻结字节不变。旧独立远端及发行的迁移映射见 `versions/GitHub仓库收敛说明-20261009.md`；备份登记是历史证据，不是 inbox 内的现行依赖。平台配置、runtime 和业务环境不因托管调整改变。

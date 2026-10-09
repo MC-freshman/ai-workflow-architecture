@@ -1,0 +1,18 @@
+{
+  "schema": "ai-tool-lock/v2",
+  "skills": {
+    "domain-core-math-modeling-programmer": "1.0.0",
+    "math-modeling-programmer-task-01": "1.0.0",
+    "math-modeling-programmer-task-02": "1.0.0",
+    "math-modeling-programmer-task-03": "1.0.0",
+    "math-modeling-programmer-task-04": "1.0.0",
+    "math-modeling-programmer-task-05": "1.0.0",
+    "math-modeling-programmer-task-06": "1.0.0",
+    "domain-source-catalog": "1.0.0"
+  },
+  "workflows": {
+    "math-modeling-programmer": "1.8.0"
+  },
+  "packs": {},
+  "profiles": {}
+}

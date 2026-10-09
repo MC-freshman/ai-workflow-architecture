@@ -105,3 +105,9 @@ Codex 执行：
 - 已创建 run：按 `status` 与 `stateRevision` 恢复，不重读默认版本覆盖 run-lock。
 - 未知副作用：不要自动重放；先读取事务回执与事件。
 - 接入回滚：使用 `E:\ai\codex\runtime\runs\20260915-codex-architecture-100\backups` 恢复 Codex bridge 文件，再重启 `ai_shared`；共享仓库无需回滚，因为本次没有改动。
+
+## 2026-10-09 领域任务场景
+
+原生ai_run_agent/ai_run_workflow的input可带{parameters,inputSources,scenario,rigor}；scenario和rigor均可省略，缺省档位仍按草稿语义。按主流程manifest.x-taskRoutes的category选scenario；task-01…task-06/07与该专家任务表一一对应，所有选择均包含领域核心。不要将scenario塞进工作流parameters。未知场景明确拒绝。调用者不能替Agent选Workflow。
+
+例：软件调试input.scenario="task-04"；先从ai_get_agent_release读当前Agent与精确锁，由适配器解析current再把精确版入锁。直接向引擎prepare发送current别名的旧缺陷已登记EXP-01，原生入口已逐项验证。运行锁/claim的contextBudget为固定载荷估算，不能声称清除了外层历史。

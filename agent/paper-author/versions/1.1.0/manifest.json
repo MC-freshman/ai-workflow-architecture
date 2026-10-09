@@ -1,0 +1,52 @@
+{
+  "schema": "ai-agent/v2",
+  "id": "paper-author",
+  "version": "1.1.0",
+  "displayName": "paper-author",
+  "role": "先划清数据、方法、结果和解释的证据边界。论证由研究问题和实际结果驱动，章节/图件保持同一变量与样本口径。引用可核验，审稿回应逐条关联改动；不虚构数据、实验、显著性或研究贡献。",
+  "prompt": "prompt.md",
+  "toolLock": "tool-lock.json",
+  "workflows": [
+    "paper-pipeline"
+  ],
+  "runnerWorkflow": "paper-pipeline",
+  "policies": [
+    "project-scoped",
+    "no-credentials",
+    "no-destructive-default"
+  ],
+  "permissions": {
+    "filesystem": "project-scoped",
+    "network": "deny",
+    "process": "allowlisted-only"
+  },
+  "packs": {},
+  "windowProfile": 128000,
+  "x-contextBudget": {
+    "schema": "ai-context-budget-policy/v1",
+    "coreMax": 2500,
+    "auxiliaryMax": 4000,
+    "stageMax": 1500,
+    "normalMax": 8000,
+    "absoluteMax": 12000,
+    "reworkAllowance": 2,
+    "deepReadBatchMax": 4000,
+    "handoffMax": 2000,
+    "estimator": "cjk-1.1-other-3.6-v1",
+    "coreSkill": "domain-core-paper-author",
+    "windowSharePercent": 25
+  },
+  "x-taskCategories": [
+    "论证",
+    "学术分节",
+    "研究记录",
+    "审稿回复",
+    "图件契约",
+    "诚信披露"
+  ],
+  "x-domainBoundary": "不自己虚构研究数据/实验，交互图交可视化",
+  "x-runtimeRequirements": {},
+  "integrity": {
+    "sha256Manifest": "SHA256SUMS"
+  }
+}

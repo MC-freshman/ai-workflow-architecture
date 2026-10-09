@@ -1,0 +1,77 @@
+{
+  "platform": "zcode",
+  "contracts": "E:/ai/tool/runtime-contracts/versions/1.5.0",
+  "toolRoot": "E:/ai/tool",
+  "agentRoot": "E:/ai/agent",
+  "bridge": "E:\\ai\\zcode\\bridge.json",
+  "runner": "E:/ai/tool/wf-runner/versions/0.11.0",
+  "scannerRelease": "E:/ai/tool/repo-lint/versions/0.6.1",
+  "peerDispatcherModule": "E:/ai/zcode/bridge/ops/peer_dispatcher.py",
+  "peerContentRoot": "E:/ai/zcode/runtime/maintenance/2.0-unlock/v6/content",
+  "environmentManifest": "E:\\ai\\zcode\\bridge\\script-environment.json",
+  "hostEnvironmentManifest": "E:\\ai\\zcode\\bridge\\host-environment.json",
+  "scriptEnvironment": "E:\\ai\\zcode\\runtime\\script-env\\py310",
+  "executionBackend": "E:\\ai\\zcode\\bridge\\backends\\wsl2-ubuntu.json",
+  "scriptEnvironmentRungs": [
+    {
+      "execPath": "kernel-sandbox",
+      "executionBackend": "E:\\ai\\zcode\\bridge\\backends\\wsl2-ubuntu.json",
+      "requiresSealedEnvironment": true
+    }
+  ],
+  "capabilities": "E:\\ai\\zcode\\bridge\\capabilities.json",
+  "runsRoot": "matrix-runs-0110\\runs",
+  "platformRoot": "E:\\ai\\zcode",
+  "inputRoots": [
+    "E:\\ai\\zcode"
+  ],
+  "softwareRoot": "E:/ai/software",
+  "softwareRuntimeRoot": "E:/ai/zcode/runtime/software",
+  "softwareGateway": "E:/ai/software/_connector/versions/1.0.7/connector.py",
+  "softwareGatewayConfig": "E:/ai/zcode/bridge/software-gateway.json",
+  "softwareEnvironment": "E:/ai/zcode/runtime/software/software-environment.json",
+  "softwareProfiles": {
+    "local-only": {
+      "sideEffects": [
+        "none",
+        "local-write",
+        "external"
+      ],
+      "filesystem": [
+        "none",
+        "workspace"
+      ],
+      "network": [
+        "none",
+        "loopback"
+      ],
+      "process": [
+        "none",
+        "self"
+      ],
+      "credentials": [
+        "none"
+      ],
+      "consent": "auto",
+      "hosts": [
+        "127.0.0.1",
+        "localhost"
+      ],
+      "pathRoots": [
+        "/work"
+      ],
+      "ports": [
+        8080
+      ]
+    }
+  },
+  "softwareConsentGrants": [],
+  "interpreters": {
+    ".py": "E:/ai/zcode/runtime/py-env/Scripts/python.exe"
+  },
+  "notes": "PRODUCTION target staged 2026-09-19 ~01:40(+08) by zcode session: 2.0 stack carried over from pilot (2.0-unlock items 3/4) with runner raised pilot 0.7.6 -> 0.7.7 (framework-closure generation: wire delegate, pre-write VERSION_CONFLICT, permission early-check, verify-timeout split). Prompt actions remain session-executed; permissions per declared adapters.",
+  "notes_20260923": "2026-09-23整理：本配置已对齐 wf-runner 0.10.0、runtime-contracts 1.4.0、repo-lint 0.5.1；旧 notes 是历史快照。",
+  "notes_20260926": "2026-09-26 完全接入轮（Z-P2/Z-P3，台账 zcode/runtime/maintenance/20260926-3.2-adopt/）：runner/contracts/scannerRelease 成套切到 3.2.0 配对代 wf-runner 0.10.1 + runtime-contracts 1.4.1 + repo-lint 0.5.2（用户指令「将zcode完全接入新架构」为本表授权；checkpoint = 同目录 pre-adoption/ 逐字节 + SHA256SUMS，回滚=按清单复制回去）。新增显式 scriptEnvironmentRungs（kernel-sandbox，引既有 WSL2+Landlock backend 与 environmentManifest）——conform 1.4.1 test_script_rungs 要求声明 script 的平台必须给出显式 rung，既单键 executionBackend 形态被判 unverified。同轮新增 software 面（3.2.0 P7 本格）：softwareRoot 第三根只读绑进 jail backend、softwareGateway 钉共享连接器 _connector/1.0.6、softwareGatewayConfig/softwareEnvironment 落本平台自查（Z3/body-survey.json 逐文件实测哈希）；softwareProfiles.local-only 为常备回环-only 档，softwareConsentGrants 留空，credentialProvider 未声明（凭据调用如实答 CAPABILITY_UNAVAILABLE，补齐路径见台账）。切换前基线读数与改后判据见同目录 Z2/、Z3/。",
+  "notes_sha": "pre-adoption checkpoint of this file: a63134583402a2d63e0dfe251364be1193b14e686f931e638e39b8a1c33b0901",
+  "notes_20260927": "2026-09-27 修复轮重采纳（R-P6，台账 zcode/runtime/maintenance/20260927-3x-repair/）：成套切到 wf-runner 0.11.0 + runtime-contracts 1.5.0 + repo-lint 0.6.1（D-97：锁内记 contracts 代并在续跑路径复验）；softwareGateway 抬到共享连接器 _connector/1.0.7（D-90 attach），session provider 正式入 zcode/runtime/software/session-process-windows.py，allowGuiLaunch 保持 false；共享 current 抬针批与 3.3.0 域指针采纳见 r-p6-raise-ledger.json。"
+}

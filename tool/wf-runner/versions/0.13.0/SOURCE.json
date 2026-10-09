@@ -1,0 +1,9 @@
+{
+  "schema": "ai-release-source/v1",
+  "id": "wf-runner",
+  "version": "0.13.0",
+  "derivedFrom": "wf-runner@0.12.2",
+  "change": "approved 20261009 P2: estimated context budgets and selected agent content conformance",
+  "author": "workspace maintainer",
+  "license": "existing release terms for unchanged bytes; new operational implementation by workspace maintainer"
+}

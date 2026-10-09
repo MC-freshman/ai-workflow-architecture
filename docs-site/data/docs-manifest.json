@@ -14,7 +14,7 @@
       "status": "current",
       "visibility": "public",
       "locale": "zh-CN",
-      "reviewedAt": "2026-09-22",
+      "reviewedAt": "2026-10-08",
       "summary": "本站是什么、不是什么：事实来源、生成物口径、两种构建产物、如何核对页面与原文一致。"
     },
     {
@@ -632,6 +632,90 @@
       "locale": "zh-CN",
       "reviewedAt": "2026-09-22",
       "summary": "合并未完成项的历史台账；现行读数只看平台接入清单与基线文档。"
+    },
+    {
+      "id": "manager-050-manual",
+      "kind": "source",
+      "source": "versions/架构管理台0.5.0使用手册-20261004.md",
+      "title": "管理台 0.5.0 使用手册（历史版）",
+      "section": "history",
+      "order": 110,
+      "slug": "/docs/quick-start/manager-0.5.0",
+      "status": "history",
+      "visibility": "public",
+      "locale": "zh-CN",
+      "reviewedAt": "2026-10-08",
+      "summary": "0.5.0 历史操作说明；保留原文和旧路由，现行操作看 0.7.0 操作与排错手册。"
+    },
+    {
+      "id": "manager-050-architecture",
+      "kind": "source",
+      "source": "versions/架构管理台0.5.0架构说明-20261004.md",
+      "title": "管理台模块、本体接入和认证机制",
+      "section": "architecture",
+      "order": 5,
+      "slug": "/docs/architecture/manager-0.5.0",
+      "status": "history",
+      "visibility": "public",
+      "locale": "zh-CN",
+      "reviewedAt": "2026-10-08",
+      "summary": "0.5.0 阶段的模块、本体接入和认证说明，按历史读；当前操作边界看 0.7.0 手册。"
+    },
+    {
+      "id": "manager-unified-progress",
+      "kind": "source",
+      "source": "versions/架构管理台统一实施进度-20261003.md",
+      "title": "管理台统一实施进度与维护项",
+      "section": "architecture",
+      "order": 6,
+      "slug": "/docs/architecture/manager-unified-progress",
+      "status": "current",
+      "visibility": "internal",
+      "locale": "zh-CN",
+      "reviewedAt": "2026-10-04",
+      "summary": "P1–P18 判据进度、版本读数和本轮新发现登记。"
+    },
+    {
+      "id": "manager-operations",
+      "kind": "source",
+      "source": "versions/架构管理台操作手册-20261008.md",
+      "title": "管理台操作手册（0.7.0）",
+      "section": "quick-start",
+      "order": 1,
+      "slug": "/docs/quick-start/manager-operations",
+      "status": "current",
+      "visibility": "public",
+      "locale": "zh-CN",
+      "reviewedAt": "2026-10-08",
+      "summary": "按实际按钮完成平台、本体、三仓资源、软件、平台独立选版、计划文档和 Git/备份；标明原生待补。"
+    },
+    {
+      "id": "manager-errors",
+      "kind": "source",
+      "source": "versions/架构管理台报错排查手册-20261008.md",
+      "title": "管理台报错排查与恢复（0.7.0）",
+      "section": "quick-start",
+      "order": 2,
+      "slug": "/docs/quick-start/manager-errors",
+      "status": "current",
+      "visibility": "public",
+      "locale": "zh-CN",
+      "reviewedAt": "2026-10-08",
+      "summary": "按症状定位配置冲突、续接漂移、环境/矩阵、原生登录、软件/MCP、版本与 Git；含187个界面错误码索引。"
+    },
+    {
+      "id": "manager-070-progress",
+      "kind": "source",
+      "source": "versions/管理台0.7.0-自动接入与平台独立选版执行记录-20261008.md",
+      "title": "管理台 0.7.0 阶段进度与未完成项",
+      "section": "architecture",
+      "order": 4,
+      "slug": "/docs/architecture/manager-0.7.0-progress",
+      "status": "current",
+      "visibility": "internal",
+      "locale": "zh-CN",
+      "reviewedAt": "2026-10-08",
+      "summary": "原生全自动接入仍有待补；逐P状态、独立验证、限制与发行证据，不以配置注册当完成。"
     }
   ]
 }

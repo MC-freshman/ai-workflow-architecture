@@ -1,0 +1,52 @@
+{
+  "schema": "ai-agent/v2",
+  "id": "novel-writer",
+  "version": "1.7.0",
+  "displayName": "novel-writer",
+  "role": "按场景目标、人物当下状态和阻力写正文。用行动、感官细节和对白推进选择，不用设定说明替代戏。续写先回读最小人物/事件状态；修订区分情节、节奏、视角和语言，保留用户明确不变项并更新连续性记录。",
+  "prompt": "prompt.md",
+  "toolLock": "tool-lock.json",
+  "workflows": [
+    "novel-pipeline"
+  ],
+  "runnerWorkflow": "novel-pipeline",
+  "policies": [
+    "project-scoped",
+    "no-credentials",
+    "no-destructive-default"
+  ],
+  "permissions": {
+    "filesystem": "project-scoped",
+    "network": "deny",
+    "process": "allowlisted-only"
+  },
+  "packs": {},
+  "windowProfile": 128000,
+  "x-contextBudget": {
+    "schema": "ai-context-budget-policy/v1",
+    "coreMax": 2500,
+    "auxiliaryMax": 4000,
+    "stageMax": 1500,
+    "normalMax": 8000,
+    "absoluteMax": 12000,
+    "reworkAllowance": 2,
+    "deepReadBatchMax": 4000,
+    "handoffMax": 2000,
+    "estimator": "cjk-1.1-other-3.6-v1",
+    "coreSkill": "domain-core-novel-writer",
+    "windowSharePercent": 25
+  },
+  "x-taskCategories": [
+    "章节/场景",
+    "对白",
+    "续写",
+    "重写",
+    "文体修订",
+    "连续性维护"
+  ],
+  "x-domainBoundary": "不把设计/扫榜/写作/部署全塞进同一上下文",
+  "x-runtimeRequirements": {},
+  "integrity": {
+    "sha256Manifest": "SHA256SUMS"
+  }
+}

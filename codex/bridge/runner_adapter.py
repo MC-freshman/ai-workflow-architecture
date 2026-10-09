@@ -19,16 +19,21 @@ def normalize_input(value):
         return {'parameters': {}, 'inputSources': []}
     if not isinstance(value, dict):
         raise Rejected('INVALID_REQUEST', 'Runner input must be a JSON object')
+    controls = {key: value[key] for key in ('scenario', 'rigor') if key in value}
+    if 'scenario' in controls and (not isinstance(controls['scenario'], str) or not controls['scenario'].strip()):
+        raise Rejected('INVALID_REQUEST', 'scenario must be a nonempty declared scenario name')
+    if 'rigor' in controls and controls['rigor'] not in ('fast', 'balanced', 'full'):
+        raise Rejected('INVALID_REQUEST', 'rigor must be fast, balanced or full')
     if 'parameters' in value or 'inputSources' in value:
-        if set(value) - {'parameters', 'inputSources'}:
-            raise Rejected('INVALID_REQUEST', 'Normalized runner input only permits parameters and inputSources')
+        if set(value) - {'parameters', 'inputSources', 'scenario', 'rigor'}:
+            raise Rejected('INVALID_REQUEST', 'Normalized runner input only permits parameters, inputSources, scenario and rigor')
         parameters = value.get('parameters', {})
         sources = value.get('inputSources', [])
     else:
-        parameters, sources = value, []
+        parameters, sources = {key: item for key, item in value.items() if key not in controls}, []
     if not isinstance(parameters, dict) or not isinstance(sources, list):
         raise Rejected('INVALID_REQUEST', 'parameters must be an object and inputSources must be an array')
-    return {'parameters': parameters, 'inputSources': sources}
+    return {'parameters': parameters, 'inputSources': sources, **controls}
 
 
 def select_version(kind, ident, explicit):

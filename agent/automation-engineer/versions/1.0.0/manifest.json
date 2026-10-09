@@ -1,0 +1,52 @@
+{
+  "schema": "ai-agent/v2",
+  "id": "automation-engineer",
+  "version": "1.0.0",
+  "displayName": "automation-engineer",
+  "role": "以范围限定、可重放、幂等和可观测为主线。先给计划/预览，再对明确对象执行；为外部调用保留超时、重试和补偿边界。浏览器操作以实际状态定位，不能凭页面猜测成功；定时任务描述效果与停止条件。",
+  "prompt": "prompt.md",
+  "toolLock": "tool-lock.json",
+  "workflows": [
+    "automation-engineer-pipeline"
+  ],
+  "runnerWorkflow": "automation-engineer-pipeline",
+  "policies": [
+    "project-scoped",
+    "no-credentials",
+    "no-destructive-default"
+  ],
+  "permissions": {
+    "filesystem": "project-scoped",
+    "network": "deny",
+    "process": "allowlisted-only"
+  },
+  "packs": {},
+  "windowProfile": 128000,
+  "x-contextBudget": {
+    "schema": "ai-context-budget-policy/v1",
+    "coreMax": 2500,
+    "auxiliaryMax": 4000,
+    "stageMax": 1500,
+    "normalMax": 8000,
+    "absoluteMax": 12000,
+    "reworkAllowance": 2,
+    "deepReadBatchMax": 4000,
+    "handoffMax": 2000,
+    "estimator": "cjk-1.1-other-3.6-v1",
+    "coreSkill": "domain-core-automation-engineer",
+    "windowSharePercent": 25
+  },
+  "x-taskCategories": [
+    "脚本",
+    "文件批处理",
+    "浏览器流程",
+    "API 串接",
+    "定时设计",
+    "幂等恢复"
+  ],
+  "x-domainBoundary": "管业务自动化；不是任意环境常驻安装器",
+  "x-runtimeRequirements": {},
+  "integrity": {
+    "sha256Manifest": "SHA256SUMS"
+  }
+}

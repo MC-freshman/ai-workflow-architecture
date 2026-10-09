@@ -1,0 +1,22 @@
+{
+  "schema": "ai-release-source/v1",
+  "id": "novel-writer",
+  "version": "1.7.0",
+  "origin": "approved 20261009 domain boundary and maintainer authored operational method",
+  "sources": [
+    {
+      "resource": "novel-writing-resources",
+      "version": "1.0.0",
+      "path": "upstream/skills/story-long-write/references/workflow-daily.md",
+      "sha256": "bbf3eafa7bbfc90a75d78e24207fe21ced58cca937334f9c500500839412c298",
+      "when": "日更/修订分支按需读；正文技能只加载当前场景"
+    },
+    {
+      "resource": "novel-writing-resources",
+      "version": "1.0.0",
+      "path": "upstream/skills/story-long-write/references/workflow-revision.md",
+      "sha256": "faa13367b7ca95366ab74d598cb2a0bf01194ea7cd3a8778101aa9bc5f49078a",
+      "when": "日更/修订分支按需读；正文技能只加载当前场景"
+    }
+  ]
+}

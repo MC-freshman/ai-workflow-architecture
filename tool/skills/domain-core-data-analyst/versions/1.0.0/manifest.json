@@ -1,0 +1,46 @@
+{
+  "schema": "ai-skill/v1",
+  "id": "domain-core-data-analyst",
+  "version": "1.0.0",
+  "kind": "atomic",
+  "category": "skill",
+  "entry": "SKILL.md",
+  "input": {
+    "type": "text",
+    "contract": "objective, task inputs and constraints"
+  },
+  "output": {
+    "type": "text",
+    "contract": "named artifacts, evidence and pending limitations"
+  },
+  "permissions": [
+    "read-project"
+  ],
+  "requires": [],
+  "conflicts": [],
+  "x-externalReferences": [
+    {
+      "resource": "domain-source-catalog",
+      "version": "1.0.0",
+      "path": "agency/specialized/data-consolidation-agent.md",
+      "sha256": "7e7de097ff27e3aa2732a9f1ab0bd7acaaef73dabf53fc7be6c90c8ab6afab11",
+      "when": "需要深入本领域步骤/示例时，先搜索对应小节，按行范围读取"
+    }
+  ],
+  "x-runtimeRequirements": {
+    "ownership": "platform/runtime",
+    "profile": "portable-resource-python",
+    "packages": {
+      "pandas": "2.3.3"
+    },
+    "when": "执行相应库工具时必需；规格/计划任务可仅生成文本，不能据此声称工具已执行"
+  },
+  "source": {
+    "repository": "workspace-authored operational guidance",
+    "snapshot": "approved 20261009",
+    "license": "workspace-authored"
+  },
+  "integrity": {
+    "sha256Manifest": "SHA256SUMS"
+  }
+}

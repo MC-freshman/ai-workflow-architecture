@@ -1,0 +1,17 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "type": "object",
+  "required": ["volumePath", "size", "passwordRef"],
+  "properties": {
+    "volumePath": { "type": "string", "description": "新卷文件路径（/create）；会创建或覆盖目标，不可逆" },
+    "size": { "type": "string", "description": "卷大小（/size），如 100M、2G", "pattern": "^[0-9]+[KMG]?$" },
+    "passwordRef": { "type": "string", "description": "平台密钥位中卷密码的引用名（/password）" },
+    "encryption": { "type": "string", "default": "AES", "description": "/encryption，如 AES、Serpent、Camellia 或组合" },
+    "hash": { "type": "string", "default": "SHA-512", "description": "/hash，如 SHA-256、SHA-512、Whirlpool" },
+    "filesystem": { "type": "string", "enum": ["NTFS", "FAT", "exFAT", "ReFS", "none"], "default": "exFAT" },
+    "keyfiles": { "type": "array", "items": { "type": "string" } },
+    "volumeType": { "type": "string", "enum": ["file", "partition"], "default": "file" },
+    "extraArgs": { "type": "array", "items": { "type": "string" } }
+  },
+  "additionalProperties": false
+}

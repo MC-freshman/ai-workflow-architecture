@@ -1,6 +1,6 @@
 {
   "schema": "ai-agent-pointer/v1",
   "id": "visualization-engineer",
-  "version": "1.7.1",
+  "version": "1.8.0",
   "hashManifest": "SHA256SUMS"
 }

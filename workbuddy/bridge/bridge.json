@@ -1,11 +1,12 @@
 {
-  "schema": "ai-platform-bridge/v1",
+  "schema": "ai-platform-bridge/v1.1",
   "platform": "workbuddy",
   "shared": {
     "agentRegistry": "E:\\ai\\agent\\registry.json",
     "toolRegistry": "E:\\ai\\tool\\registry.json",
     "architecturePrompt": "E:\\ai\\AI_ARCHITECTURE_SYSTEM_PROMPT.md",
-    "readOnly": true
+    "readOnly": true,
+    "softwareRegistry": "E:\\ai\\software\\registry.json"
   },
   "runtimeRoot": "E:\\ai\\workbuddy\\runtime",
   "modes": [
@@ -14,7 +15,15 @@
   ],
   "defaults": {
     "workflowVersions": {
-      "repo-lint": "0.5.2"
+      "repo-lint": "0.6.5"
     }
+  },
+  "displayName": "workbuddy",
+  "runner": {
+    "enabled": true,
+    "config": "E:\\ai\\workbuddy\\bridge\\workbuddy-config.json",
+    "release": "E:\\ai\\tool\\wf-runner\\versions\\0.12.2",
+    "version": "0.12.2",
+    "python": "E:\\ai\\workbuddy\\runtime\\manager-environments\\ff4bd95f-466c-4410-8851-059d5f2a3c51\\host\\Scripts\\python.exe"
   }
 }

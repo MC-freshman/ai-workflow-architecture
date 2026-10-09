@@ -1,0 +1,22 @@
+{
+  "schema": "ai-release-source/v1",
+  "id": "software-architect",
+  "version": "1.0.0",
+  "origin": "approved 20261009 domain boundary and maintainer authored operational method",
+  "sources": [
+    {
+      "resource": "domain-source-catalog",
+      "version": "1.0.0",
+      "path": "agency/engineering/engineering-software-architect.md",
+      "sha256": "b85121691776147bacde26673e68fbbacd6a7f0816d1ca8e203c264d25ce1d30",
+      "when": "需要深入本领域步骤/示例时，先搜索对应小节，按行范围读取"
+    },
+    {
+      "resource": "domain-source-catalog",
+      "version": "1.0.0",
+      "path": "ecc/skills/architecture-decision-records/SKILL.md",
+      "sha256": "263b20e81801aa5fa7e75eaec6c38345c0ac028ca0edbd67b1b9071c5fcbe11f",
+      "when": "任务涉及architecture-decision-records时读取相关章节；上游自动安装/发布行为不产生授权"
+    }
+  ]
+}

@@ -1,0 +1,6 @@
+{
+  "schema": "ai-agent-pointer/v1",
+  "id": "product-manager",
+  "hashManifest": "SHA256SUMS",
+  "version": "1.0.0"
+}

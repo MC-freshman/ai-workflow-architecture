@@ -1,11 +1,12 @@
 {
-  "schema": "ai-platform-bridge/v1",
+  "schema": "ai-platform-bridge/v1.1",
   "platform": "codex",
   "shared": {
     "agentRegistry": "E:\\ai\\agent\\registry.json",
     "toolRegistry": "E:\\ai\\tool\\registry.json",
     "architecturePrompt": "E:\\ai\\AI_ARCHITECTURE_SYSTEM_PROMPT.md",
-    "readOnly": true
+    "readOnly": true,
+    "softwareRegistry": "E:\\ai\\software\\registry.json"
   },
   "runtimeRoot": "E:\\ai\\codex\\runtime",
   "server": {
@@ -18,12 +19,9 @@
   },
   "defaults": {
     "workflowVersions": {
-      "game-sprint-plan": "2.1.1",
-      "repo-lint": "0.5.1"
+      "repo-lint": "0.7.0"
     },
-    "agentVersions": {
-      "visualization-engineer": "1.6.0"
-    }
+    "agentVersions": {}
   },
   "modes": [
     "workflow",
@@ -31,9 +29,11 @@
   ],
   "runner": {
     "enabled": true,
-    "version": "0.10.0",
-    "python": "E:\\ai\\codex\\workspaces\\agentic-workflow-implementation\\.venv\\Scripts\\python.exe",
+    "version": "0.13.1",
+    "python": "E:\\ai\\codex\\runtime\\manager-environments\\231fdee7-dcaf-45db-9ba8-cd9cfbe81cd5\\host\\Scripts\\python.exe",
     "adapter": "E:/ai/codex/bridge/runner_adapter.py",
-    "config": "E:/ai/codex/bridge/runner-config.json"
-  }
+    "config": "E:\\ai\\codex\\bridge\\runner-config.json",
+    "release": "E:\\ai\\tool\\wf-runner\\versions\\0.13.1"
+  },
+  "displayName": "codex"
 }

@@ -1,0 +1,17 @@
+{
+  "schema": "ai-workflow-contract-test/v1",
+  "id": "expert-task",
+  "version": "1.1.0",
+  "expect": {
+    "manifestMode": "pipeline",
+    "definitionSchema": "ai-workflow-definition/v2",
+    "stages": [
+      "INTAKE",
+      "WORK",
+      "REPORT"
+    ],
+    "gate": "work-integrity (process, evidence:expert-work-check.json) + report-complete (output-schema)",
+    "repair": "WORK onFail=repair maxIterations=2 via the work-integrity process gate (1.0.0 declared repair with no gate, so it was unreachable)",
+    "gateScript": "scripts/validate_expert_work.py"
+  }
+}

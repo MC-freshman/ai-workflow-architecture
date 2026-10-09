@@ -1,0 +1,124 @@
+{
+  "schema": "ai-workflow/v2.1",
+  "id": "paper-pipeline",
+  "displayName": "paper-author 领域任务通用流程",
+  "version": "1.1.0",
+  "mode": "pipeline",
+  "entry": "workflow.yaml",
+  "inputSchema": "schemas/input.schema.json",
+  "outputSchema": "schemas/output.schema.json",
+  "permissions": {
+    "network": "deny",
+    "process": "allowlisted-only",
+    "filesystem": "project-scoped"
+  },
+  "dependencies": {
+    "skills": {
+      "domain-core-paper-author": "1.0.0",
+      "paper-author-task-01": "1.0.0",
+      "paper-author-task-02": "1.0.0",
+      "paper-author-task-03": "1.0.0",
+      "paper-author-task-04": "1.0.0",
+      "paper-author-task-05": "1.0.0",
+      "paper-author-task-06": "1.0.0",
+      "domain-source-catalog": "1.0.0"
+    },
+    "workflows": {},
+    "packs": {}
+  },
+  "integrity": {
+    "sha256Manifest": "SHA256SUMS"
+  },
+  "x-taskRoutes": [
+    {
+      "category": "论证",
+      "scenario": "task-01",
+      "skills": [
+        "domain-core-paper-author",
+        "paper-author-task-01"
+      ],
+      "dependencyPath": {
+        "ownership": "platform/runtime",
+        "profile": "existing prompt and project tools; extra tools declared per task"
+      },
+      "deliverables": [
+        "论文分节、证据索引、图件契约与审稿轨迹"
+      ]
+    },
+    {
+      "category": "学术分节",
+      "scenario": "task-02",
+      "skills": [
+        "domain-core-paper-author",
+        "paper-author-task-02"
+      ],
+      "dependencyPath": {
+        "ownership": "platform/runtime",
+        "profile": "existing prompt and project tools; extra tools declared per task"
+      },
+      "deliverables": [
+        "论文分节、证据索引、图件契约与审稿轨迹"
+      ]
+    },
+    {
+      "category": "研究记录",
+      "scenario": "task-03",
+      "skills": [
+        "domain-core-paper-author",
+        "paper-author-task-03"
+      ],
+      "dependencyPath": {
+        "ownership": "platform/runtime",
+        "profile": "existing prompt and project tools; extra tools declared per task"
+      },
+      "deliverables": [
+        "论文分节、证据索引、图件契约与审稿轨迹"
+      ]
+    },
+    {
+      "category": "审稿回复",
+      "scenario": "task-04",
+      "skills": [
+        "domain-core-paper-author",
+        "paper-author-task-04"
+      ],
+      "dependencyPath": {
+        "ownership": "platform/runtime",
+        "profile": "existing prompt and project tools; extra tools declared per task"
+      },
+      "deliverables": [
+        "论文分节、证据索引、图件契约与审稿轨迹"
+      ]
+    },
+    {
+      "category": "图件契约",
+      "scenario": "task-05",
+      "skills": [
+        "domain-core-paper-author",
+        "paper-author-task-05"
+      ],
+      "dependencyPath": {
+        "ownership": "platform/runtime",
+        "profile": "existing prompt and project tools; extra tools declared per task"
+      },
+      "deliverables": [
+        "论文分节、证据索引、图件契约与审稿轨迹"
+      ]
+    },
+    {
+      "category": "诚信披露",
+      "scenario": "task-06",
+      "skills": [
+        "domain-core-paper-author",
+        "paper-author-task-06"
+      ],
+      "dependencyPath": {
+        "ownership": "platform/runtime",
+        "profile": "existing prompt and project tools; extra tools declared per task"
+      },
+      "deliverables": [
+        "论文分节、证据索引、图件契约与审稿轨迹"
+      ]
+    }
+  ]
+}

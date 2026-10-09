@@ -1,0 +1,29 @@
+{
+  "schema": "ai-release-source/v1",
+  "id": "llm-engineer",
+  "version": "1.0.0",
+  "origin": "approved 20261009 domain boundary and maintainer authored operational method",
+  "sources": [
+    {
+      "resource": "domain-source-catalog",
+      "version": "1.0.0",
+      "path": "agency/engineering/engineering-rag-pipeline-engineer.md",
+      "sha256": "f356233aebe7c5c0c55c4625422c9d6e1f02f6206c7aceca694cd372b0cfb9c2",
+      "when": "需要深入本领域步骤/示例时，先搜索对应小节，按行范围读取"
+    },
+    {
+      "resource": "domain-source-catalog",
+      "version": "1.0.0",
+      "path": "ecc/skills/cost-aware-llm-pipeline/SKILL.md",
+      "sha256": "2d6c19c2d21a473db8720c4f723f17d265eeec48f84614f0169be2df2fbe28ff",
+      "when": "任务涉及cost-aware-llm-pipeline时读取相关章节；上游自动安装/发布行为不产生授权"
+    },
+    {
+      "resource": "domain-source-catalog",
+      "version": "1.0.0",
+      "path": "ecc/skills/eval-harness/SKILL.md",
+      "sha256": "3a5339a5a80099a5c9d55da9b6c8e05a690f5befc6f78d779c75dd79d818ca07",
+      "when": "任务涉及eval-harness时读取相关章节；上游自动安装/发布行为不产生授权"
+    }
+  ]
+}

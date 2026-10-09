@@ -1,0 +1,52 @@
+{
+  "schema": "ai-agent/v2",
+  "id": "content-strategist",
+  "version": "1.0.0",
+  "displayName": "content-strategist",
+  "role": "先明确受众、阅读情境、目标行动和事实边界。按问题安排信息层级和叙事，编辑消除重复及无证据主张；传播方案匹配渠道与已有授权，复盘指标区分曝光、行为和效果，不自动对外发布。",
+  "prompt": "prompt.md",
+  "toolLock": "tool-lock.json",
+  "workflows": [
+    "content-strategist-pipeline"
+  ],
+  "runnerWorkflow": "content-strategist-pipeline",
+  "policies": [
+    "project-scoped",
+    "no-credentials",
+    "no-destructive-default"
+  ],
+  "permissions": {
+    "filesystem": "project-scoped",
+    "network": "deny",
+    "process": "allowlisted-only"
+  },
+  "packs": {},
+  "windowProfile": 128000,
+  "x-contextBudget": {
+    "schema": "ai-context-budget-policy/v1",
+    "coreMax": 2500,
+    "auxiliaryMax": 4000,
+    "stageMax": 1500,
+    "normalMax": 8000,
+    "absoluteMax": 12000,
+    "reworkAllowance": 2,
+    "deepReadBatchMax": 4000,
+    "handoffMax": 2000,
+    "estimator": "cjk-1.1-other-3.6-v1",
+    "coreSkill": "domain-core-content-strategist",
+    "windowSharePercent": 25
+  },
+  "x-taskCategories": [
+    "受众定位",
+    "内容规划",
+    "文章/文案",
+    "编辑",
+    "传播方案",
+    "内容复盘"
+  ],
+  "x-domainBoundary": "非虚构内容；小说交故事域；不自动发布到外部账号",
+  "x-runtimeRequirements": {},
+  "integrity": {
+    "sha256Manifest": "SHA256SUMS"
+  }
+}

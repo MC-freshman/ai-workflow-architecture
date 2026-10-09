@@ -1,0 +1,19 @@
+{
+  "schema": "ai-tool-lock/v2",
+  "skills": {
+    "domain-core-novel-writer": "1.0.0",
+    "novel-writer-task-01": "1.0.0",
+    "novel-writer-task-02": "1.0.0",
+    "novel-writer-task-03": "1.0.0",
+    "novel-writer-task-04": "1.0.0",
+    "novel-writer-task-05": "1.0.0",
+    "novel-writer-task-06": "1.0.0",
+    "domain-source-catalog": "1.0.0",
+    "novel-writing-resources": "1.0.0"
+  },
+  "workflows": {
+    "novel-pipeline": "1.2.0"
+  },
+  "packs": {},
+  "profiles": {}
+}

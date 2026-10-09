@@ -46,7 +46,7 @@ build/<profile>/ ← 产物
 data/{source-lock,inventory,generated-report,redact-report,conform-report,build-*}.json ← 生成物
 ```
 
-当前白名单共 45 篇：原有 30 篇精选治理文档、10 篇已接入平台的操作/调用说明、3 篇稳定治理工具说明，以及软件工程专家的提示词和运行策略各 1 篇。dsh 只保留自动生成的状态页，因其仍在排除清单中而不复制平台原文。
+当前白名单共 51 篇。新增现行管理台 0.7.0 操作手册、报错排查手册（187 个界面错误码索引），两页为 public；0.7.0 阶段进度只进 internal。0.5.0 手册原文与旧路由仍保留，状态改为历史。操作手册来源固定在 versions，不依赖 release 目录中的旧包。首页、导航和“快速开始”均有新入口。dsh 仍按既有白名单/排除规则处理，不在本轮改变平台收录边界。
 
 要改正文：改 `E:\ai` 原文，然后重跑 `npm run build`。**不要**改 `docs/` 或 `generated/`，会在下次生成时被覆盖。
 要加一页：在 `data/docs-manifest.json` 加条目（`status` / `visibility` / `section` / `order` / `slug` 必填）。
@@ -75,7 +75,7 @@ data/{source-lock,inventory,generated-report,redact-report,conform-report,build-
 
 - **BP-1 三仓骨架不可变**：本站只**读**三仓 registry 并复算展示，不建平行版本面、不改任何指针。
 - **BP-3 验收最小量**：全部机器可判项收敛进 `npm run conform` 一条命令；只保留能抓真失败的检查（例如"提到 `runtime/runs/`"在治理文本里属正常引述，故记为提示而非阻断）。
-- **BP-6 入库先行**：`docs-site/**` 是否纳入根仓 git 白名单属**待授权**动作（要改根级治理文本）。本目录自带 `.gitignore`，不会把 `node_modules/`、`build/` 带进去。
+- **BP-6 入库先行**：`docs-site/**` 已获授权并纳入根仓白名单；源文档/配置/脚本入库，`node_modules/`、`build/` 及生成的来源锁/报告由本目录 `.gitignore` 排除，不混入发布。
 - **BP-7 不可入库件**：`node_modules/`（1,409 包）与 `build/` 都是**可重建件**，重建配方 = `package.json` + `package-lock.json` + 一条 `npm ci`；`data/` 下的报告与来源锁是文本，随目录入库即可复算。
 - **红线**：不发布各平台 `runtime/` 一手证据、凭据、软件本体；`software/phpStudy_64/` 明文禁止随任何产物分发（`data/exclude.json` 已登记）。
 
@@ -88,7 +88,14 @@ data/{source-lock,inventory,generated-report,redact-report,conform-report,build-
 
 - 搜索需要静态服务器；`file://` 直开可浏览但搜索不可用。
 - 英文未建：中文是事实版本，翻译单独维护状态，避免两语言语义漂移。
-- 当前白名单为精选治理层（30 条）＋六个平台操作文档＋3 个稳定治理工具说明＋1 个稳定通用专家说明；工作流与其它专家正文暂缓扩列，三仓仍以自动目录展示。
+- 当前白名单为精选治理层及必要平台/资源说明，加管理台使用手册、架构说明和进度；工作流与其它专家正文暂缓扩列，三仓仍以自动目录展示。
 - Mermaid 图由 `@docusaurus/theme-mermaid` 在构建期打包，产物离线可用；原文里几乎没有 Mermaid，图是本站在导览页里补的。渲染在浏览器端完成，静态 HTML 骨架里只有容器。
 - 中文正文的 `**粗体**，` 收尾按 CommonMark 的 flanking 规则不成立（后面跟全角标点时星号会原样露出），故两个文档实例都挂了 `remark-cjk-friendly`。这是中文站的必需件，不是可选美化。
 - 治理文本里的 `~` 用来写范围（`BP-1~BP-4`、`P0~P10`），同段两个单 `~` 会被 remark-gfm 解析成删除线并吞掉中间整段。同步期由 `scripts/lib.mjs` 的 `escapeLoneTildes()` 把单个 `~` 转成 `\~`，所以同步下来的 Markdown 一个字都不用改；作者真要的 `~~删除线~~` 不受影响。`npm run probe:tilde` 会用文件形式复核这条语义边界。
+
+## 管理台操作与排错入口（2026-10-08）
+
+- 原文：[操作手册](../versions/架构管理台操作手册-20261008.md)、[报错排查手册](../versions/架构管理台报错排查手册-20261008.md)。
+- 站内：`/docs/quick-start/manager-operations`、`/docs/quick-start/manager-errors`。
+- 日常修改原文后运行 `npm run build`，紧接 `npm run conform`；可分享档用 `npm run build:shareable`，紧接 `npm run conform -- --profile shareable`。最后构建 internal，保留本机当前来源锁与输入。
+- 普通管理台使用者打开 EXE 即可；本站维护命令不属于平台接入步骤。0.7.0 是阶段发行，不声称六平台原生接入均已完成。

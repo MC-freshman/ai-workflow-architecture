@@ -1,0 +1,26 @@
+{
+  "type": "object",
+  "required": [
+    "schemaVersion",
+    "operation",
+    "runId"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": "ai-run-protocol/v1.1"
+    },
+    "operation": {
+      "enum": [
+        "prepare",
+        "next",
+        "submit",
+        "status",
+        "stop"
+      ]
+    },
+    "runId": {
+      "type": "string",
+      "minLength": 1
+    }
+  }
+}

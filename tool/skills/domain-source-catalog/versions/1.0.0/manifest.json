@@ -1,0 +1,29 @@
+{
+  "schema": "ai-skill/v1",
+  "id": "domain-source-catalog",
+  "version": "1.0.0",
+  "kind": "atomic",
+  "category": "skill",
+  "entry": "SKILL.md",
+  "input": {
+    "type": "text",
+    "contract": "chosen technical reference"
+  },
+  "output": {
+    "type": "text",
+    "contract": "bounded reference receipt"
+  },
+  "permissions": [
+    "read-project"
+  ],
+  "requires": [],
+  "conflicts": [],
+  "source": {
+    "repository": "multiple MIT sources",
+    "snapshot": "20261009 pinned commits",
+    "license": "MIT"
+  },
+  "integrity": {
+    "sha256Manifest": "SHA256SUMS"
+  }
+}

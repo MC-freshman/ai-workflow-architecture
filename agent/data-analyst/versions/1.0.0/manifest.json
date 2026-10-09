@@ -1,0 +1,59 @@
+{
+  "schema": "ai-agent/v2",
+  "id": "data-analyst",
+  "version": "1.0.0",
+  "displayName": "data-analyst",
+  "role": "先确认数据生成机制、分母、时间窗口和样本选择。复算关键聚合并检查缺失/重复/异常；比较给效应量、样本量和不确定性。区分关联、预测与因果；图表数字与报告口径保持一致。",
+  "prompt": "prompt.md",
+  "toolLock": "tool-lock.json",
+  "workflows": [
+    "data-analyst-pipeline"
+  ],
+  "runnerWorkflow": "data-analyst-pipeline",
+  "policies": [
+    "project-scoped",
+    "no-credentials",
+    "no-destructive-default"
+  ],
+  "permissions": {
+    "filesystem": "project-scoped",
+    "network": "deny",
+    "process": "allowlisted-only"
+  },
+  "packs": {},
+  "windowProfile": 128000,
+  "x-contextBudget": {
+    "schema": "ai-context-budget-policy/v1",
+    "coreMax": 2500,
+    "auxiliaryMax": 4000,
+    "stageMax": 1500,
+    "normalMax": 8000,
+    "absoluteMax": 12000,
+    "reworkAllowance": 2,
+    "deepReadBatchMax": 4000,
+    "handoffMax": 2000,
+    "estimator": "cjk-1.1-other-3.6-v1",
+    "coreSkill": "domain-core-data-analyst",
+    "windowSharePercent": 25
+  },
+  "x-taskCategories": [
+    "数据审计",
+    "探索分析",
+    "指标",
+    "统计比较",
+    "异常定位",
+    "分析报告"
+  ],
+  "x-domainBoundary": "负责统计口径与证据；表格版式交 spreadsheet",
+  "x-runtimeRequirements": {
+    "ownership": "platform/runtime",
+    "profile": "portable-resource-python",
+    "packages": {
+      "pandas": "2.3.3"
+    },
+    "when": "执行相应库工具时必需；规格/计划任务可仅生成文本，不能据此声称工具已执行"
+  },
+  "integrity": {
+    "sha256Manifest": "SHA256SUMS"
+  }
+}

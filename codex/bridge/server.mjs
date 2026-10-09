@@ -1,3 +1,4 @@
+import {spawn} from 'node:child_process';
 import {maybeRunner, runnerTools} from './runner_bridge.mjs';
 import fs from 'node:fs/promises';
 import path from 'node:path';
@@ -92,7 +93,7 @@ const tools = [
       properties: {
         kind: { enum: ['workflow', 'agent'] },
         id: { type: 'string', minLength: 1 },
-        version: { type: 'string', minLength: 1 }
+        version: { type: ['string', 'null'], minLength: 1 }
       },
       required: ['kind', 'id', 'version']
     }
@@ -502,37 +503,23 @@ async function setPlatformDefault(args) {
   const kind = args.kind;
   if (!['workflow', 'agent'].includes(kind)) throw new Error('kind must be workflow or agent');
   const id = assertId(args.id, 'id');
-  const version = assertId(args.version, 'version');
-  const release = await resolveRelease(kind, id, version);
-  return serializeBridgeWrite(async () => {
-    const beforeSha256 = await sha256(BRIDGE_CONFIG);
-    const config = await loadBridgeConfig();
-    if (config.platform !== PLATFORM) throw new Error('Bridge platform does not match this server');
-    const key = kind === 'agent' ? 'agentVersions' : 'workflowVersions';
-    config.defaults = config.defaults || {};
-    config.defaults.workflowVersions = config.defaults.workflowVersions || {};
-    config.defaults.agentVersions = config.defaults.agentVersions || {};
-    const previousVersion = config.defaults[key][id] || null;
-    config.defaults[key][id] = version;
-    await writeAtomicJson(BRIDGE_CONFIG, config);
-    const result = {
-      platform: PLATFORM,
-      kind,
-      id,
-      previousVersion,
-      version,
-      releaseManifestSha256: await sha256(path.join(release.releaseDir, 'manifest.json')),
-      configBeforeSha256: beforeSha256,
-      configAfterSha256: await sha256(BRIDGE_CONFIG),
-      scope: 'platform-local',
-      effectiveFor: 'future-runs-only',
-      sharedCurrentChanged: false
-    };
-    const receiptName = `${new Date().toISOString().replace(/[:.]/g, '-')}-${kind}-${id}-${crypto.randomUUID()}.json`;
-    const receiptPath = path.join(RUNTIME_ROOT, 'default-switches', receiptName);
-    await writeAtomicJson(receiptPath, result);
-    return { ...result, receiptPath };
-  });
+  const version = args.version === null ? null : assertId(args.version, 'version');
+  const descriptor = await readJson(path.join(ROOT, PLATFORM, 'bridge', 'client-adapter.json'));
+  const management = descriptor.management;
+  if (!management) throw new Error('MANAGEMENT_SERVICE_UPDATE_REQUIRED');
+  const executable = path.join(ROOT, PLATFORM, 'runtime', 'manager-node', 'node.exe');
+  const module = path.join(ROOT, PLATFORM, 'bridge', 'manager-client', 'platform_defaults.mjs');
+  if (path.resolve(management.executable) !== path.resolve(executable) || path.resolve(management.args[0]) !== path.resolve(module) || await sha256(executable) !== management.executableSha256 || await sha256(module) !== management.moduleSha256) throw new Error('MANAGEMENT_RUNTIME_DRIFT');
+  return serializeBridgeWrite(() => new Promise((resolve, reject) => {
+    const child = spawn(executable, management.args, {windowsHide: true, stdio: ['pipe', 'pipe', 'pipe']});
+    let stdout = ''; const timer = setTimeout(() => {child.kill(); reject(new Error('MANAGEMENT_COMMAND_TIMEOUT'));}, 90000);
+    child.stdout.on('data', bytes => {stdout += bytes;});
+    child.stderr.on('data', () => {});
+    child.on('error', error => {clearTimeout(timer); reject(error);});
+    child.on('close', code => {clearTimeout(timer); try {const value = JSON.parse(stdout); if (code !== 0 || !value.ok) throw new Error(value.error || 'MANAGEMENT_COMMAND_FAILED'); resolve(value.result);} catch (error) {reject(error);}});
+    child.stdin.on('error', error => {clearTimeout(timer); reject(error);});
+    child.stdin.end(JSON.stringify({operation: 'set', kind, resourceId: id, version, confirm: true}));
+  }));
 }
 
 async function dispatch(name, args = {}) {

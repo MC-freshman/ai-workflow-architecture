@@ -1,0 +1,68 @@
+{
+  "name": "architecture-manager",
+  "version": "0.8.1",
+  "private": true,
+  "type": "module",
+  "main": "src/main.mjs",
+  "description": "Standalone local architecture workspace manager",
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "scan": "node src/cli.mjs",
+    "test": "node --test",
+    "build:ui": "npm run generate:preload && npm run build:bridge && npm run lint && vite build",
+    "start": "npm run build:ui && electron .",
+    "package:win": "npm run build:ui && electron-builder --win nsis portable --publish never",
+    "generate:preload": "node scripts/generate-preload.mjs",
+    "lint": "eslint src scripts",
+    "conform": "node scripts/conform.mjs",
+    "build:bridge": "node scripts/build-management-bridge.mjs"
+  },
+  "dependencies": {
+    "ajv": "8.20.0",
+    "react": "^19.3.0",
+    "react-dom": "^19.3.0",
+    "yaml": "2.9.1"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^6.1.1",
+    "electron": "^44.5.0",
+    "electron-builder": "^26.15.3",
+    "eslint": "10.12.0",
+    "vite": "^8.3.1"
+  },
+  "build": {
+    "appId": "local.codex.architecturemanager",
+    "productName": "Architecture Manager",
+    "directories": {
+      "output": "release"
+    },
+    "files": [
+      "dist/**/*",
+      "src/**/*",
+      "package.json"
+    ],
+    "asarUnpack": [
+      "src/runtime/**/*"
+    ],
+    "win": {
+      "target": [
+        "nsis",
+        "portable"
+      ]
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "perMachine": false,
+      "artifactName": "Architecture-Manager-${version}-setup-${arch}.${ext}"
+    },
+    "portable": {
+      "artifactName": "Architecture-Manager-${version}-portable-${arch}.${ext}"
+    }
+  },
+  "allowScripts": {
+    "electron@44.5.0": true
+  }
+}

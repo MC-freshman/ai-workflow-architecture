@@ -1,0 +1,8 @@
+{
+  "schema": "ai-governance-source/v1",
+  "authorSession": "codex",
+  "derivedFrom": "runtime-contracts@1.5.0",
+  "version": "1.5.2",
+  "releaseScope": "Architecture 3.6.0 P3/P9 actual new platform identifier compatibility repair; no runtime privilege from identity",
+  "previousSource": "tool/runtime-contracts/versions/1.5.0/SOURCE.json"
+}

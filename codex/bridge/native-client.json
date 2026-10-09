@@ -1,0 +1,32 @@
+{
+  "schema": "architecture-manager-native-client/v1",
+  "platformId": "codex",
+  "profile": {
+    "kind": "codex-app-server",
+    "label": "Codex 原生 app-server",
+    "bodyPath": "E:\\ai\\codex\\chatgpt\\app\\Codex.exe",
+    "bodySha256": "ae707859ddde05404d9c763b064c8746cf05be4b9b6eb1ef382fa3d7e6acf7fa",
+    "executable": "E:\\ai\\codex\\chatgpt\\app\\resources\\codex.exe",
+    "executableSha256": "86e8ef1013f98df51fdeea446597f7e3ca32e454d1d4d8c0402a68b03c311d70",
+    "home": "E:\\ai\\codex\\chatgpt\\userdata\\codex-home",
+    "configPath": "E:\\ai\\codex\\chatgpt\\userdata\\codex-home\\config.toml",
+    "supportsRegistration": true,
+    "supportsDirectProbe": true
+  },
+  "entry": {
+    "command": "E:\\ai\\codex\\runtime\\manager-environments\\231fdee7-dcaf-45db-9ba8-cd9cfbe81cd5\\host\\Scripts\\python.exe",
+    "args": [
+      "-B",
+      "E:\\ai\\codex\\bridge\\manager-client\\mcp_service.py",
+      "E:\\ai\\codex\\bridge\\runner-config.json"
+    ],
+    "enabled": true
+  },
+  "registered": true,
+  "nativeConfigSha256": "2e789896532cb060fc2c27c77b5f068513ef62e343a5da4330808e7c5289b4a2",
+  "nativeVendorClientVerified": false,
+  "status": "registered-pending-native-call",
+  "reason": "原生工具调用尚未执行",
+  "backupPath": "E:\\ai\\inbox\\backup\\codex\\manager-native\\native-514bb8d9-4638-473d-9005-fdb75f5e0a78\\config.before.dpapi.json",
+  "registeredAt": "2026-10-08T03:25:19.265Z"
+}

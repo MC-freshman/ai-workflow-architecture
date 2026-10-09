@@ -1,0 +1,13 @@
+{
+  "mcpServers": {
+    "architecture": {
+      "command": "D:/Various_programming_languages/PPython/python.exe",
+      "args": [
+        "-B",
+        "E:\\ai\\doubao\\bridge\\manager-client\\mcp_service.py",
+        "E:\\ai\\doubao\\bridge\\doubao-config.json"
+      ]
+    }
+  },
+  "notes": "Import this into a compatible native client. Export is not evidence of native registration."
+}

@@ -75,3 +75,9 @@ node scripts/docs-conform.mjs       # C1…C11 一条命令出 PASS/FAIL 与摘�
 - 英文不是自动翻译。要出英文版时单独维护翻译状态，避免两语言语义漂移；届时把 `'en'` 加进 `docusaurus.config.ts` 的 `i18n.locales`。
 - Docusaurus 的**版本选择器**（`docs:version`）目前没启用：架构版本在这里是**文档主题**而不是站点快照，靠状态徽章区分更准。真要冻结某一天的整站阅读面时，再切一次 site version。
 - `node_modules/`（1,409 个包）与 `build/` 都不入库，重建配方是 `package.json` + `package-lock.json` + 一条 `npm ci`；按 BP-7 这属于"可重建件"。
+
+## 七、管理台使用者从哪里开始
+
+先打开 [管理台操作手册（0.7.0）](/docs/quick-start/manager-operations)，按实际按钮完成选工作区、导入、暂缓/续接、软件会话和平台独立选版。遇到错误打开 [报错排查与恢复](/docs/quick-start/manager-errors)，可搜索错误码及187个界面解释。两页同时收录在 internal 与 shareable。
+
+0.5.0 手册保留为历史版；0.7.0 的厂商原生全自动接入仍有待补。配置存在、标准服务回环或网页登录成功都不能代替真实工具回执。站点只同步原文，不替平台执行接入。

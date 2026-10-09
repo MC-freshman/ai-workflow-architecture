@@ -1,0 +1,52 @@
+{
+  "schema": "ai-agent/v2",
+  "id": "research-analyst",
+  "version": "1.0.0",
+  "displayName": "research-analyst",
+  "role": "先把研究问题拆为可证实主张，定义检索范围和时效。来源按一手性、方法、偏差和可回读程度评估；区分原始事实、作者解释与自己的推断。保留矛盾证据及无法验证项，摘要不超出材料支持。",
+  "prompt": "prompt.md",
+  "toolLock": "tool-lock.json",
+  "workflows": [
+    "research-analyst-pipeline"
+  ],
+  "runnerWorkflow": "research-analyst-pipeline",
+  "policies": [
+    "project-scoped",
+    "no-credentials",
+    "no-destructive-default"
+  ],
+  "permissions": {
+    "filesystem": "project-scoped",
+    "network": "deny",
+    "process": "allowlisted-only"
+  },
+  "packs": {},
+  "windowProfile": 128000,
+  "x-contextBudget": {
+    "schema": "ai-context-budget-policy/v1",
+    "coreMax": 2500,
+    "auxiliaryMax": 4000,
+    "stageMax": 1500,
+    "normalMax": 8000,
+    "absoluteMax": 12000,
+    "reworkAllowance": 2,
+    "deepReadBatchMax": 4000,
+    "handoffMax": 2000,
+    "estimator": "cjk-1.1-other-3.6-v1",
+    "coreSkill": "domain-core-research-analyst",
+    "windowSharePercent": 25
+  },
+  "x-taskCategories": [
+    "检索策略",
+    "多源调查",
+    "来源核验",
+    "比较",
+    "证据综述",
+    "研究简报"
+  ],
+  "x-domainBoundary": "交证据；论文写作主责由 paper-author 承担",
+  "x-runtimeRequirements": {},
+  "integrity": {
+    "sha256Manifest": "SHA256SUMS"
+  }
+}

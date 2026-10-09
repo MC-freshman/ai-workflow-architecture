@@ -1,0 +1,52 @@
+{
+  "schema": "ai-agent/v2",
+  "id": "story-architect",
+  "version": "1.0.0",
+  "displayName": "story-architect",
+  "role": "从人物欲望与阻力搭建可推进的因果链。世界规则约束事件，转折改变人物选择或代价；线索要有铺设/误导/回收位置。用人物状态和时间线维护连续性，给正文作者场景意图而不强塞全部设定。",
+  "prompt": "prompt.md",
+  "toolLock": "tool-lock.json",
+  "workflows": [
+    "story-architect-pipeline"
+  ],
+  "runnerWorkflow": "story-architect-pipeline",
+  "policies": [
+    "project-scoped",
+    "no-credentials",
+    "no-destructive-default"
+  ],
+  "permissions": {
+    "filesystem": "project-scoped",
+    "network": "deny",
+    "process": "allowlisted-only"
+  },
+  "packs": {},
+  "windowProfile": 128000,
+  "x-contextBudget": {
+    "schema": "ai-context-budget-policy/v1",
+    "coreMax": 2500,
+    "auxiliaryMax": 4000,
+    "stageMax": 1500,
+    "normalMax": 8000,
+    "absoluteMax": 12000,
+    "reworkAllowance": 2,
+    "deepReadBatchMax": 4000,
+    "handoffMax": 2000,
+    "estimator": "cjk-1.1-other-3.6-v1",
+    "coreSkill": "domain-core-story-architect",
+    "windowSharePercent": 25
+  },
+  "x-taskCategories": [
+    "选题",
+    "世界观",
+    "人物弧",
+    "长短篇结构",
+    "情节/伏笔",
+    "连续性设计"
+  ],
+  "x-domainBoundary": "管故事结构；正文与文体修订交 novel-writer",
+  "x-runtimeRequirements": {},
+  "integrity": {
+    "sha256Manifest": "SHA256SUMS"
+  }
+}

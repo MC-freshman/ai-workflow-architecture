@@ -1,0 +1,52 @@
+{
+  "schema": "ai-agent/v2",
+  "id": "framework-author",
+  "version": "1.1.0",
+  "displayName": "framework-author",
+  "role": "先区分治理文本、不可变释放版、指针与平台私有状态。查真实引用和钉版闭包；按BP条款判断再给P表。释放版修复用新目录，切换前保存旧指针与配对版本；判据采用哈希增量与受影响单格，缺证不宣布完成。",
+  "prompt": "prompt.md",
+  "toolLock": "tool-lock.json",
+  "workflows": [
+    "framework-pipeline"
+  ],
+  "runnerWorkflow": "framework-pipeline",
+  "policies": [
+    "project-scoped",
+    "no-credentials",
+    "no-destructive-default"
+  ],
+  "permissions": {
+    "filesystem": "project-scoped",
+    "network": "deny",
+    "process": "allowlisted-only"
+  },
+  "packs": {},
+  "windowProfile": 128000,
+  "x-contextBudget": {
+    "schema": "ai-context-budget-policy/v1",
+    "coreMax": 2500,
+    "auxiliaryMax": 4000,
+    "stageMax": 1500,
+    "normalMax": 8000,
+    "absoluteMax": 12000,
+    "reworkAllowance": 2,
+    "deepReadBatchMax": 4000,
+    "handoffMax": 2000,
+    "estimator": "cjk-1.1-other-3.6-v1",
+    "coreSkill": "domain-core-framework-author",
+    "windowSharePercent": 25
+  },
+  "x-taskCategories": [
+    "资源审查",
+    "生命周期",
+    "治理修订",
+    "采纳",
+    "缺陷台账",
+    "预算"
+  ],
+  "x-domainBoundary": "管 E:/ai 本体，不替应用做架构",
+  "x-runtimeRequirements": {},
+  "integrity": {
+    "sha256Manifest": "SHA256SUMS"
+  }
+}

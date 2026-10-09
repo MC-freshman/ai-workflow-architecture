@@ -1,0 +1,9 @@
+{
+  "schema": "ai-release-source/v1",
+  "id": "repo-lint",
+  "version": "0.7.0",
+  "derivedFrom": "repo-lint@0.6.5",
+  "change": "approved 20261009 P2: estimated context budgets and selected agent content conformance",
+  "author": "workspace maintainer",
+  "license": "existing release terms for unchanged bytes; new operational implementation by workspace maintainer"
+}

@@ -1,0 +1,15 @@
+{
+  "schema": "ai-release-source/v1",
+  "id": "math-modeling-programmer",
+  "version": "1.10.0",
+  "origin": "approved 20261009 domain boundary and maintainer authored operational method",
+  "sources": [
+    {
+      "resource": "domain-source-catalog",
+      "version": "1.0.0",
+      "path": "ecc/skills/benchmark-methodology/SKILL.md",
+      "sha256": "f24585262b9c3e106dc27d45f75c4b965501680a16ff6dc5a9995a53322549df",
+      "when": "需要深入本领域步骤/示例时，先搜索对应小节，按行范围读取"
+    }
+  ]
+}

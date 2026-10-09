@@ -216,3 +216,68 @@
 5. **一级目录白名单**：新增一级目录须用户授权，并同步 AGENTS.md / 系统提示词 / HANDOFF 三处清单；白名单外的根级新增文件一律视为越界。
 6. **删除分级**：零风险死文件（过期安装暂存、缓存、空壳、临时文件、升级残留）可在证据（时间戳、进程不依赖、正式版完好）齐备后直接清理；入 `trash/` 的对象与大体积批次必须逐批列清单、逐批授权后才物理删除；已发布版本、bridge、凭据、客户端本体、密封环境为红线只读。
 7. **已与远端同步的嵌套 Git 仓**：删除本地副本前必须复核工作树 clean 且本地 HEAD 等于远端跟踪分支，留下 remote URL 与 commit sha 登记后才删；未同步或无远端的不得删。
+
+<!-- architecture-manager-platform:codex -->
+
+### 管理台登记：codex
+
+- 平台配置入口：`codex/bridge.json`；平台章：`codex/bridge/platform.md`。
+- 本平台接入记录位于自己的 runtime/maintenance/manager-onboarding；配置、环境、矩阵、客户端回环和 Git 读数全部通过才算完成。
+- 标准 CLI 入口无需维护型 AI 会话；业务模型输出与厂商原生客户端注册各自验证，不由目录存在推定。
+- 本轮钉版：0.12.0 / 1.5.0 / 0.6.3。
+
+<!-- /architecture-manager-platform:codex -->
+
+<!-- architecture-manager-platform:dsh -->
+
+### 管理台登记：dsh
+
+- 平台配置入口：`dsh/bridge.json`；平台章：`dsh/bridge/platform.md`。
+- 本平台接入记录位于自己的 runtime/maintenance/manager-onboarding；配置、环境、矩阵、客户端回环和 Git 读数全部通过才算完成。
+- 标准 CLI 入口无需维护型 AI 会话；业务模型输出与厂商原生客户端注册各自验证，不由目录存在推定。
+- 本轮钉版：0.12.2 / 1.5.2 / 0.6.5。
+
+<!-- /architecture-manager-platform:dsh -->
+
+<!-- architecture-manager-platform:qoder -->
+
+### 管理台登记：qoder
+
+- 平台配置入口：`qoder/bridge.json`；平台章：`qoder/bridge/platform.md`。
+- 本平台接入记录位于自己的 runtime/maintenance/manager-onboarding；配置、环境、矩阵、客户端回环和 Git 读数全部通过才算完成。
+- 标准 CLI 入口无需维护型 AI 会话；业务模型输出与厂商原生客户端注册各自验证，不由目录存在推定。
+- 本轮钉版：0.12.2 / 1.5.2 / 0.6.5。
+
+<!-- /architecture-manager-platform:qoder -->
+
+<!-- architecture-manager-platform:zcode -->
+
+### 管理台登记：zcode
+
+- 平台配置入口：`zcode/bridge.json`；平台章：`zcode/bridge/platform.md`。
+- 本平台接入记录位于自己的 runtime/maintenance/manager-onboarding；配置、环境、矩阵、客户端回环和 Git 读数全部通过才算完成。
+- 标准 CLI 入口无需维护型 AI 会话；业务模型输出与厂商原生客户端注册各自验证，不由目录存在推定。
+- 本轮钉版：0.12.2 / 1.5.2 / 0.6.5。
+
+<!-- /architecture-manager-platform:zcode -->
+
+<!-- architecture-manager-platform:workbuddy -->
+
+### 管理台登记：workbuddy
+
+- 平台配置入口：`workbuddy/bridge.json`；平台章：`workbuddy/bridge/platform.md`。
+- 本平台接入记录位于自己的 runtime/maintenance/manager-onboarding；配置、环境、矩阵、客户端回环和 Git 读数全部通过才算完成。
+- 标准 CLI 入口无需维护型 AI 会话；业务模型输出与厂商原生客户端注册各自验证，不由目录存在推定。
+- 本轮钉版：0.12.2 / 1.5.2 / 0.6.5。
+
+<!-- /architecture-manager-platform:workbuddy -->
+
+
+## 2026-10-09 专家资源更新
+
+共享current为28主责专家（另保留7兼容入口），每专家一核心、一主流程、多任务卡；Codex已配对采纳新预算栈，其他平台的工具环境与版本采纳归各自会话。续跑仍按原run锁，不静默换版。版本表和证据入口见 versions/专家扩充与上下文控制-收口报告-20261009.md。
+
+
+## 2026-10-09 GitHub 仓库收敛
+
+现行维护源为私有 `MC-freshman/ai-workflow-architecture-governance`，公开入口为 `MC-freshman/ai-workflow-architecture`。管理台源码 `architecture-manager/` 已纳入根私有治理仓，不再作为独立远端或 submodule；旧源仓历史先经恢复校验备份并保留于私有 Git 祖先/归档 refs。tool、agent、software 仍是三个独立职责的共享仓，版本和冻结字节不变。旧独立远端及发行的迁移映射见 `versions/GitHub仓库收敛说明-20261009.md`；备份登记是历史证据，不是 inbox 内的现行依赖。平台配置、runtime 和业务环境不因托管调整改变。

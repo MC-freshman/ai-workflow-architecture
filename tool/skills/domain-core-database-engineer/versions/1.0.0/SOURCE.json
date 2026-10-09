@@ -1,0 +1,29 @@
+{
+  "schema": "ai-release-source/v1",
+  "id": "domain-core-database-engineer",
+  "version": "1.0.0",
+  "origin": "maintainer authored; permitted upstream material remains in exact pinned reference resources",
+  "references": [
+    {
+      "resource": "domain-source-catalog",
+      "version": "1.0.0",
+      "path": "agency/engineering/engineering-database-optimizer.md",
+      "sha256": "6d773003e3b9251068ab537be94d6827c118201e0e17c11d789cb29dc245bf99",
+      "when": "需要深入本领域步骤/示例时，先搜索对应小节，按行范围读取"
+    },
+    {
+      "resource": "domain-source-catalog",
+      "version": "1.0.0",
+      "path": "ecc/skills/postgres-patterns/SKILL.md",
+      "sha256": "9c8c391ae9e9aa87faa7ca091e1d395c97766df14080d0bfbea8a97721776163",
+      "when": "任务涉及postgres-patterns时读取相关章节；上游自动安装/发布行为不产生授权"
+    },
+    {
+      "resource": "domain-source-catalog",
+      "version": "1.0.0",
+      "path": "ecc/skills/database-migrations/SKILL.md",
+      "sha256": "dad2f1964295eee14a96e06213ce3f60992bbcdc1f37a50c828bbc2e1abd79dd",
+      "when": "任务涉及database-migrations时读取相关章节；上游自动安装/发布行为不产生授权"
+    }
+  ]
+}

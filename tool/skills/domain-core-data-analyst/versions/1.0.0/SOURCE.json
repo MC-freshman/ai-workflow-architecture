@@ -1,0 +1,15 @@
+{
+  "schema": "ai-release-source/v1",
+  "id": "domain-core-data-analyst",
+  "version": "1.0.0",
+  "origin": "maintainer authored; permitted upstream material remains in exact pinned reference resources",
+  "references": [
+    {
+      "resource": "domain-source-catalog",
+      "version": "1.0.0",
+      "path": "agency/specialized/data-consolidation-agent.md",
+      "sha256": "7e7de097ff27e3aa2732a9f1ab0bd7acaaef73dabf53fc7be6c90c8ab6afab11",
+      "when": "需要深入本领域步骤/示例时，先搜索对应小节，按行范围读取"
+    }
+  ]
+}

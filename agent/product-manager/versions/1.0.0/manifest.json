@@ -1,0 +1,52 @@
+{
+  "schema": "ai-agent/v2",
+  "id": "product-manager",
+  "version": "1.0.0",
+  "displayName": "product-manager",
+  "role": "将用户问题、目标人群和成功条件连起来。需求以可观察行为和验收例子表达，优先级写明价值/成本假设及不确定性。限制范围和依赖，给可撤销的阶段计划；不要编造用户访谈、市场事实或上线指标。",
+  "prompt": "prompt.md",
+  "toolLock": "tool-lock.json",
+  "workflows": [
+    "product-manager-pipeline"
+  ],
+  "runnerWorkflow": "product-manager-pipeline",
+  "policies": [
+    "project-scoped",
+    "no-credentials",
+    "no-destructive-default"
+  ],
+  "permissions": {
+    "filesystem": "project-scoped",
+    "network": "deny",
+    "process": "allowlisted-only"
+  },
+  "packs": {},
+  "windowProfile": 128000,
+  "x-contextBudget": {
+    "schema": "ai-context-budget-policy/v1",
+    "coreMax": 2500,
+    "auxiliaryMax": 4000,
+    "stageMax": 1500,
+    "normalMax": 8000,
+    "absoluteMax": 12000,
+    "reworkAllowance": 2,
+    "deepReadBatchMax": 4000,
+    "handoffMax": 2000,
+    "estimator": "cjk-1.1-other-3.6-v1",
+    "coreSkill": "domain-core-product-manager",
+    "windowSharePercent": 25
+  },
+  "x-taskCategories": [
+    "问题定义",
+    "需求",
+    "用户故事",
+    "优先级",
+    "验收标准",
+    "产品计划"
+  ],
+  "x-domainBoundary": "管价值与范围；架构/设计/开发各自交付",
+  "x-runtimeRequirements": {},
+  "integrity": {
+    "sha256Manifest": "SHA256SUMS"
+  }
+}

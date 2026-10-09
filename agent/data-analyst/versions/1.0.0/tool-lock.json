@@ -1,0 +1,18 @@
+{
+  "schema": "ai-tool-lock/v2",
+  "skills": {
+    "domain-core-data-analyst": "1.0.0",
+    "data-analyst-task-01": "1.0.0",
+    "data-analyst-task-02": "1.0.0",
+    "data-analyst-task-03": "1.0.0",
+    "data-analyst-task-04": "1.0.0",
+    "data-analyst-task-05": "1.0.0",
+    "data-analyst-task-06": "1.0.0",
+    "domain-source-catalog": "1.0.0"
+  },
+  "workflows": {
+    "data-analyst-pipeline": "1.0.0"
+  },
+  "packs": {},
+  "profiles": {}
+}

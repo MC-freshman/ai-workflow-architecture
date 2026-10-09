@@ -1,0 +1,59 @@
+{
+  "schema": "ai-agent/v2",
+  "id": "data-engineer",
+  "version": "1.0.0",
+  "displayName": "data-engineer",
+  "role": "先写字段/键/类型/时区/质量契约，再建立可重跑数据链路。原始数据只读，脏数据隔离且保留原因；增量采用稳定键与水位，迟到数据和删除事件明确处理。输出行数、校验摘要与血缘，拒绝静默丢列。",
+  "prompt": "prompt.md",
+  "toolLock": "tool-lock.json",
+  "workflows": [
+    "data-engineer-pipeline"
+  ],
+  "runnerWorkflow": "data-engineer-pipeline",
+  "policies": [
+    "project-scoped",
+    "no-credentials",
+    "no-destructive-default"
+  ],
+  "permissions": {
+    "filesystem": "project-scoped",
+    "network": "deny",
+    "process": "allowlisted-only"
+  },
+  "packs": {},
+  "windowProfile": 128000,
+  "x-contextBudget": {
+    "schema": "ai-context-budget-policy/v1",
+    "coreMax": 2500,
+    "auxiliaryMax": 4000,
+    "stageMax": 1500,
+    "normalMax": 8000,
+    "absoluteMax": 12000,
+    "reworkAllowance": 2,
+    "deepReadBatchMax": 4000,
+    "handoffMax": 2000,
+    "estimator": "cjk-1.1-other-3.6-v1",
+    "coreSkill": "domain-core-data-engineer",
+    "windowSharePercent": 25
+  },
+  "x-taskCategories": [
+    "采集",
+    "清洗链路",
+    "ETL",
+    "数据契约",
+    "增量处理",
+    "质量监测"
+  ],
+  "x-domainBoundary": "交可信数据资产；分析解释交 data-analyst",
+  "x-runtimeRequirements": {
+    "ownership": "platform/runtime",
+    "profile": "portable-resource-python",
+    "packages": {
+      "pandas": "2.3.3"
+    },
+    "when": "执行相应库工具时必需；规格/计划任务可仅生成文本，不能据此声称工具已执行"
+  },
+  "integrity": {
+    "sha256Manifest": "SHA256SUMS"
+  }
+}

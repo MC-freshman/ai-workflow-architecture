@@ -1,0 +1,6 @@
+{
+  "schema": "ai-agent-registry/v2",
+  "agents": [
+    {"id": "reviewer", "current": "reviewer/current.json", "enabled": true}
+  ]
+}

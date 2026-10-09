@@ -74,3 +74,38 @@ multi-Agent run-lock alone does not demonstrate prior authorization or successfu
 ## 当前状态更正（2026-09-23，3.1.0 采纳收口）
 
 专家默认已切到 `game-builder 1.9.1`、`mastermind-bug-bounty 4.0.0`、`novel-writer 1.5.1`、`software-engineer 1.5.1`、`visualization-engineer 1.7.1`。旧释放目录保持只读；1.9.1/1.5.1/1.7.1 是对历史元数据或哈希完整性的新增修复释放。
+
+## 2026-10-09 现行专家面
+
+现行主责28位，另保留7个deprecated入口。每位1领域核心+1主流程+按任务辅助卡，见上位治理文档 versions/专家扩充与上下文控制-收口报告-20261009.md。目录ID不等于覆盖职业全集，未验证外部接入不能写成功。
+
+| 主责 | 专家 | 主流程 / 版本 | 核心与辅助 |
+|---|---|---|---|
+| 治理 | framework-author@1.1.0 | framework-pipeline@1.1.0 | 1核心 + 6辅助 |
+| 研发 | software-architect@1.0.0 | software-architect-pipeline@1.0.0 | 1核心 + 6辅助 |
+| 研发 | software-engineer@1.7.0 | se-pipeline@1.2.0 | 1核心 + 6辅助 |
+| 研发 | frontend-engineer@1.0.0 | frontend-engineer-pipeline@1.0.0 | 1核心 + 6辅助 |
+| 研发 | qa-engineer@1.0.0 | qa-engineer-pipeline@1.0.0 | 1核心 + 7辅助 |
+| 研发 | database-engineer@1.0.0 | database-engineer-pipeline@1.0.0 | 1核心 + 6辅助 |
+| 运维 | devops-engineer@1.0.0 | devops-engineer-pipeline@1.0.0 | 1核心 + 6辅助 |
+| 运维 | automation-engineer@1.0.0 | automation-engineer-pipeline@1.0.0 | 1核心 + 6辅助 |
+| 数据 | data-engineer@1.0.0 | data-engineer-pipeline@1.0.0 | 1核心 + 6辅助 |
+| 数据 | data-analyst@1.0.0 | data-analyst-pipeline@1.0.0 | 1核心 + 6辅助 |
+| AI | ml-engineer@1.0.0 | ml-engineer-pipeline@1.0.0 | 1核心 + 6辅助 |
+| AI | llm-engineer@1.0.0 | llm-engineer-pipeline@1.0.0 | 1核心 + 6辅助 |
+| 数模 | modeling-analyst@1.0.0 | modeling-analyst-pipeline@1.0.0 | 1核心 + 6辅助 |
+| 数模 | math-modeling-programmer@1.10.0 | math-modeling-programmer@1.8.0 | 1核心 + 6辅助 |
+| 设计 | ui-ux-designer@1.0.0 | ui-ux-designer-pipeline@1.0.0 | 1核心 + 6辅助 |
+| 设计 | visualization-engineer@1.8.0 | visualization-qa@1.4.0 | 1核心 + 6辅助 |
+| 产品 | product-manager@1.0.0 | product-manager-pipeline@1.0.0 | 1核心 + 6辅助 |
+| 游戏 | game-designer@1.0.0 | game-designer-pipeline@1.0.0 | 1核心 + 6辅助 |
+| 游戏 | game-builder@1.11.0 | game-pipeline@1.2.0 | 1核心 + 6辅助 |
+| 故事 | story-architect@1.0.0 | story-architect-pipeline@1.0.0 | 1核心 + 6辅助 |
+| 故事 | novel-writer@1.7.0 | novel-pipeline@1.2.0 | 1核心 + 6辅助 |
+| 研究 | research-analyst@1.0.0 | research-analyst-pipeline@1.0.0 | 1核心 + 6辅助 |
+| 研究 | paper-author@1.1.0 | paper-pipeline@1.1.0 | 1核心 + 6辅助 |
+| 内容 | content-strategist@1.0.0 | content-strategist-pipeline@1.0.0 | 1核心 + 6辅助 |
+| 办公 | document-engineer@1.0.0 | document-engineer-pipeline@1.0.0 | 1核心 + 6辅助 |
+| 办公 | spreadsheet-engineer@1.0.0 | spreadsheet-engineer-pipeline@1.0.0 | 1核心 + 6辅助 |
+| 办公 | presentation-designer@1.0.0 | presentation-designer-pipeline@1.0.0 | 1核心 + 6辅助 |
+| 安全 | mastermind-bug-bounty@4.2.0 | mastermind-bug-bounty@3.2.0 | 1核心 + 6辅助 |

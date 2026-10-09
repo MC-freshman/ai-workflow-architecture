@@ -1,0 +1,580 @@
+{
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "$id": "urn:ai:software-manifest:v1",
+ "title": "ai-software/v1 - a published software recipe (shared repository software/)",
+ "description": "Written to the bytes already published under software/: C-1 says the six releases have to pass this validator unchanged, so every key and value form below is the form the published recipes use. Anything the proposal wanted but the published bytes do not carry is expressed as an optional constraint, never as a new required key.",
+ "type": "object",
+ "additionalProperties": false,
+ "required": [
+  "schema",
+  "id",
+  "version",
+  "displayName",
+  "upstreamVersion",
+  "kind",
+  "transport",
+  "capabilities",
+  "concurrency",
+  "platformSupport",
+  "requiredProfiles",
+  "snapshot",
+  "integrity",
+  "docs"
+ ],
+ "properties": {
+  "schema": {
+   "const": "ai-software/v1"
+  },
+  "id": {
+   "type": "string",
+   "pattern": "^[a-z0-9][a-z0-9._-]*$"
+  },
+  "version": {
+   "type": "string",
+   "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$"
+  },
+  "displayName": {
+   "type": "string",
+   "minLength": 1
+  },
+  "upstreamVersion": {
+   "type": "string",
+   "minLength": 1
+  },
+  "kind": {
+   "enum": [
+    "mcp-stdio",
+    "mcp-http",
+    "cli-wrapper",
+    "http-api",
+    "local-process"
+   ]
+  },
+  "transport": {
+   "type": "object",
+   "minProperties": 1
+  },
+  "capabilities": {
+   "type": "array",
+   "minItems": 1,
+   "items": {
+    "$ref": "#/$defs/capability"
+   }
+  },
+  "concurrency": {
+   "$ref": "#/$defs/concurrency"
+  },
+  "platformSupport": {
+   "type": "object",
+   "additionalProperties": false,
+   "required": [
+    "windows",
+    "linux",
+    "macos"
+   ],
+   "properties": {
+    "windows": {
+     "$ref": "#/$defs/osSupport"
+    },
+    "linux": {
+     "$ref": "#/$defs/osSupport"
+    },
+    "macos": {
+     "$ref": "#/$defs/osSupport"
+    }
+   }
+  },
+  "requiredProfiles": {
+   "type": "array",
+   "maxItems": 16,
+   "uniqueItems": true,
+   "items": {
+    "type": "string",
+    "minLength": 1
+   }
+  },
+  "snapshot": {
+   "const": "capabilities.snapshot.json"
+  },
+  "integrity": {
+   "type": "object",
+   "additionalProperties": false,
+   "required": [
+    "sha256Manifest"
+   ],
+   "properties": {
+    "sha256Manifest": {
+     "const": "SHA256SUMS"
+    }
+   }
+  },
+  "docs": {
+   "type": "string",
+   "minLength": 1
+  },
+  "credentialInjection": {
+   "description": "D-87: how the connector materializes credentials for this software. Declared here because mysql-cli@1.0.2 already ships a connector.json carrying it and no published schema had a place for the shape. Values never appear here - only the injection mechanics.",
+   "type": "object",
+   "additionalProperties": false,
+   "required": [
+    "format",
+    "argv"
+   ],
+   "properties": {
+    "format": {
+     "type": "string",
+     "minLength": 1
+    },
+    "section": {
+     "type": "string"
+    },
+    "filePrefix": {
+     "type": "string"
+    },
+    "extension": {
+     "type": "string"
+    },
+    "userKey": {
+     "type": "string"
+    },
+    "passwordKey": {
+     "type": "string"
+    },
+    "argv": {
+     "type": "array",
+     "minItems": 1,
+     "items": {
+      "type": "string",
+      "minLength": 1
+     }
+    }
+   }
+  }
+ },
+ "$defs": {
+  "osSupport": {
+   "enum": [
+    "supported",
+    "unsupported",
+    "untested"
+   ]
+  },
+  "capability": {
+   "type": "object",
+   "additionalProperties": false,
+   "required": [
+    "name",
+    "nativeName",
+    "inputSchemaRef",
+    "outputSchemaRef",
+    "sideEffects",
+    "permissionRequests",
+    "consent",
+    "idempotent",
+    "safeForSelftest",
+    "invocation"
+   ],
+   "properties": {
+    "name": {
+     "type": "string",
+     "pattern": "^[a-zA-Z0-9][a-zA-Z0-9._-]*$"
+    },
+    "nativeName": {
+     "type": "string",
+     "minLength": 1
+    },
+    "inputSchemaRef": {
+     "type": "string",
+     "pattern": "^schemas/[^/]+\\.json$"
+    },
+    "outputSchemaRef": {
+     "type": "string",
+     "pattern": "^schemas/[^/]+\\.json$"
+    },
+    "sideEffects": {
+     "enum": [
+      "none",
+      "local-write",
+      "external"
+     ]
+    },
+    "permissionRequests": {
+     "type": "object",
+     "additionalProperties": false,
+     "required": [
+      "filesystem",
+      "network",
+      "process",
+      "credentials"
+     ],
+     "properties": {
+      "filesystem": {
+       "type": "string",
+       "pattern": "^(none|read|workspace|system|paths:.+)$"
+      },
+      "network": {
+       "type": "string",
+       "pattern": "^(none|loopback|public|scoped(:.+)?)$"
+      },
+      "process": {
+       "enum": [
+        "none",
+        "self",
+        "children"
+       ]
+      },
+      "credentials": {
+       "type": "string",
+       "pattern": "^(none|reference:[A-Za-z0-9._-]+)$"
+      }
+     }
+    },
+    "consent": {
+     "enum": [
+      "auto",
+      "confirm-stage",
+      "confirm-call"
+     ]
+    },
+    "idempotent": {
+     "type": "boolean"
+    },
+    "safeForSelftest": {
+     "type": "boolean"
+    },
+    "invocation": {
+     "$ref": "#/$defs/invocation"
+    }
+   },
+   "allOf": [
+    {
+     "if": {
+      "properties": {
+       "sideEffects": {
+        "const": "none"
+       }
+      },
+      "required": [
+       "sideEffects"
+      ]
+     },
+     "then": {
+      "properties": {
+       "consent": {
+        "const": "auto"
+       }
+      }
+     }
+    },
+    {
+     "if": {
+      "properties": {
+       "sideEffects": {
+        "const": "external"
+       }
+      },
+      "required": [
+       "sideEffects"
+      ]
+     },
+     "then": {
+      "properties": {
+       "consent": {
+        "enum": [
+         "confirm-stage",
+         "confirm-call",
+         "auto"
+        ]
+       }
+      }
+     }
+    }
+   ]
+  },
+  "invocation": {
+   "description": "Three shapes are in use on disk and each is closed: an unknown key here is refused (C-1's judgement runs the other way - the published bytes define the schema).",
+   "anyOf": [
+    {
+     "type": "object",
+     "additionalProperties": false,
+     "required": [
+      "executable",
+      "baseArgv",
+      "argMapping",
+      "outputCapture",
+      "outputFormat",
+      "timeout",
+      "successExitCodes"
+     ],
+     "properties": {
+      "executable": {
+       "type": "string",
+       "minLength": 1
+      },
+      "baseArgv": {
+       "type": "array",
+       "items": {
+        "type": "string"
+       }
+      },
+      "argMapping": {
+       "type": "array",
+       "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+         "param"
+        ],
+        "properties": {
+         "param": {
+          "type": "string",
+          "minLength": 1
+         },
+         "style": {
+          "type": "string",
+          "minLength": 1
+         },
+         "flag": {
+          "type": "string"
+         },
+         "join": {
+          "type": "string"
+         },
+         "default": {},
+         "enum": {
+          "type": "array"
+         },
+         "required": {
+          "type": "boolean"
+         },
+         "type": {
+          "type": "string"
+         },
+         "notes": {
+          "type": "string"
+         },
+         "appliesWhen": {},
+         "conflictsWith": {},
+         "credential": {},
+         "examples": {},
+         "position": {},
+         "prefix": {},
+         "repeating": {},
+         "valueWhenTrue": {}
+        }
+       }
+      },
+      "outputCapture": {
+       "type": "string",
+       "minLength": 1
+      },
+      "outputFormat": {
+       "type": "string",
+       "minLength": 1
+      },
+      "timeout": {
+       "type": "integer",
+       "minimum": 1,
+       "maximum": 36000
+      },
+      "successExitCodes": {
+       "type": "array",
+       "minItems": 1,
+       "items": {
+        "type": "integer"
+       }
+      },
+      "outputNote": {
+       "type": "string"
+      },
+      "credentialHandling": {
+       "type": "object",
+       "additionalProperties": false,
+       "required": [
+        "mechanism"
+       ],
+       "properties": {
+        "mechanism": {},
+        "injectArgv": {},
+        "injectPosition": {},
+        "deleteAfterCall": {},
+        "tempFilePermissions": {},
+        "notes": {}
+       }
+      },
+      "postCheck": {},
+      "notes": {
+       "type": "string"
+      }
+     }
+    },
+    {
+     "type": "object",
+     "additionalProperties": false,
+     "required": [
+      "transport",
+      "endpoint",
+      "mcpMethod"
+     ],
+     "properties": {
+      "transport": {
+       "enum": [
+        "mcp-http",
+        "mcp-stdio",
+        "json-rpc"
+       ]
+      },
+      "endpoint": {
+       "type": "string",
+       "minLength": 1
+      },
+      "mcpMethod": {
+       "type": "string",
+       "minLength": 1
+      },
+      "toolNameParam": {
+       "type": "string"
+      },
+      "argumentsParam": {
+       "type": "string"
+      },
+      "frozenToolName": {
+       "type": [
+        "string",
+        "null"
+       ]
+      },
+      "healthCheck": {},
+      "successCondition": {},
+      "timeout": {
+       "type": "integer",
+       "minimum": 1,
+       "maximum": 36000
+      },
+      "notes": {
+       "type": "string"
+      }
+     }
+    },
+    {
+     "type": "object",
+     "additionalProperties": false,
+     "required": [
+      "kind",
+      "target",
+      "versionField"
+     ],
+     "properties": {
+      "kind": {
+       "type": "string",
+       "minLength": 1
+      },
+      "target": {
+       "type": "string",
+       "minLength": 1
+      },
+      "versionField": {
+       "type": "string",
+       "minLength": 1
+      },
+      "timeout": {
+       "type": "integer",
+       "minimum": 1,
+       "maximum": 36000
+      },
+      "notes": {
+       "type": "string"
+      }
+     }
+    }
+   ]
+  },
+  "concurrency": {
+   "type": "object",
+   "additionalProperties": false,
+   "required": [
+    "instanceMode",
+    "poolSize",
+    "exclusiveResources",
+    "whenBusy"
+   ],
+   "properties": {
+    "instanceMode": {
+     "enum": [
+      "per-run",
+      "pooled",
+      "singleton"
+     ]
+    },
+    "poolSize": {
+     "type": [
+      "integer",
+      "null"
+     ],
+     "minimum": 1,
+     "maximum": 64
+    },
+    "exclusiveResources": {
+     "type": "array",
+     "uniqueItems": true,
+     "items": {
+      "type": "string",
+      "minLength": 1
+     }
+    },
+    "whenBusy": {
+     "enum": [
+      "queue",
+      "reject-retryable"
+     ]
+    },
+    "notes": {
+     "type": "string"
+    }
+   },
+   "allOf": [
+    {
+     "if": {
+      "properties": {
+       "instanceMode": {
+        "const": "pooled"
+       }
+      },
+      "required": [
+       "instanceMode"
+      ]
+     },
+     "then": {
+      "properties": {
+       "poolSize": {
+        "type": "integer"
+       }
+      }
+     }
+    },
+    {
+     "if": {
+      "properties": {
+       "instanceMode": {
+        "const": "per-run"
+       }
+      },
+      "required": [
+       "instanceMode"
+      ]
+     },
+     "then": {
+      "properties": {
+       "poolSize": {
+        "type": "null"
+       },
+       "exclusiveResources": {
+        "maxItems": 0
+       }
+      }
+     }
+    }
+   ]
+  }
+ }
+}

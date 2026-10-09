@@ -1,0 +1,13 @@
+{
+  "mcpServers": {
+    "architecture": {
+      "command": "E:\\ai\\dsh\\runtime\\manager-environments\\b6b90a56-2e47-42fc-84eb-a9f52e9be577\\host\\Scripts\\python.exe",
+      "args": [
+        "-B",
+        "E:\\ai\\dsh\\bridge\\manager-client\\mcp_service.py",
+        "E:\\ai\\dsh\\bridge\\runner-config.json"
+      ]
+    }
+  },
+  "notes": "Import this into a compatible native client. Export is not evidence of native registration."
+}

@@ -5,9 +5,25 @@
     "agentRegistry": "E:\\ai\\agent\\registry.json",
     "toolRegistry": "E:\\ai\\tool\\registry.json",
     "architecturePrompt": "E:\\ai\\AI_ARCHITECTURE_SYSTEM_PROMPT.md",
-    "readOnly": true
+    "readOnly": true,
+    "softwareRegistry": "E:\\ai\\software\\registry.json"
   },
   "runtimeRoot": "E:\\ai\\doubao\\runtime",
-  "runner": "E:\\ai\\tool\\wf-runner",
-  "modes": ["workflow", "agent-workflow"]
+  "runner": {
+    "enabled": true,
+    "config": "E:\\ai\\doubao\\bridge\\doubao-config.json",
+    "release": "E:\\ai\\tool\\wf-runner\\versions\\0.12.2",
+    "version": "0.12.2",
+    "python": "D:/Various_programming_languages/PPython/python.exe"
+  },
+  "modes": [
+    "workflow",
+    "agent-workflow"
+  ],
+  "displayName": "doubao",
+  "defaults": {
+    "workflowVersions": {
+      "repo-lint": "0.6.5"
+    }
+  }
 }

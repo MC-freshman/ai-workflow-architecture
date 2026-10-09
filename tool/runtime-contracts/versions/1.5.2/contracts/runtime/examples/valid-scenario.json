@@ -1,0 +1,10 @@
+{
+  "description": "Synthetic declarations only; hashes are materialized into positive-example-bundles.json in R/reports by the static validator. No listed runtime, workflow, evidence file or script is executed.",
+  "runId": "contract-fixture-001",
+  "platform": "codex",
+  "createdAt": "2026-09-05T00:00:00Z",
+  "parameters": {"precision": "0.001", "seed": 17},
+  "input": {"path": "inputs/source.txt", "content": "synthetic input\n"},
+  "output": {"path": "evidence/draft/1/result.txt", "content": "synthetic output\n"},
+  "gateEvidence": {"path": "evidence/draft/1/check.json", "content": "{\"pass\":true}\n"}
+}

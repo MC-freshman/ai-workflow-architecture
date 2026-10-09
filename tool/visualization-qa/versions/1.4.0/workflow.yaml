@@ -1,0 +1,157 @@
+{
+  "schema": "ai-workflow-definition/v3",
+  "id": "visualization-qa",
+  "version": "1.4.0",
+  "mode": "pipeline",
+  "maxParallel": 1,
+  "roles": [
+    "expert"
+  ],
+  "outputWorker": "expert",
+  "gateDefinitions": {
+    "report-complete": {
+      "type": "output-schema"
+    },
+    "work-integrity": {
+      "type": "process",
+      "cwd": "evidence",
+      "argv": [
+        "workflow:scripts/validate_expert_work.py"
+      ],
+      "expectExit": [
+        0
+      ],
+      "expectArtifacts": [
+        {
+          "target": "evidence:expert-work-check.json",
+          "minBytes": 2
+        }
+      ],
+      "reasonFrom": "evidence:expert-work-check.json"
+    }
+  },
+  "stages": [
+    {
+      "id": "INTAKE",
+      "action": "prompt",
+      "worker": "expert",
+      "dependsOn": [],
+      "promptRef": "workflow.md#stage:INTAKE",
+      "outputs": "schemas/intake.schema.json"
+    },
+    {
+      "id": "WORK",
+      "action": "prompt",
+      "worker": "expert",
+      "dependsOn": [
+        "INTAKE"
+      ],
+      "promptRef": "workflow.md#stage:WORK",
+      "outputs": "schemas/work.schema.json",
+      "onFail": "repair",
+      "maxIterations": 2,
+      "repairPromptRef": "workflow.md#stage:repair",
+      "gates": [
+        "work-integrity"
+      ]
+    },
+    {
+      "id": "REPORT",
+      "action": "prompt",
+      "worker": "expert",
+      "dependsOn": [
+        "WORK"
+      ],
+      "promptRef": "workflow.md#stage:REPORT",
+      "outputs": "schemas/report.schema.json",
+      "gates": [
+        "report-complete"
+      ]
+    }
+  ],
+  "defaultScenario": "standard",
+  "requiredStages": [
+    "INTAKE",
+    "WORK",
+    "REPORT"
+  ],
+  "scenarios": {
+    "standard": {
+      "summary": "本域默认常见任务；始终包含本域核心",
+      "skills": [
+        "domain-core-visualization-engineer@1.0.0",
+        "visualization-engineer-task-01@1.0.0"
+      ]
+    },
+    "task-01": {
+      "summary": "图表选择",
+      "skills": [
+        "domain-core-visualization-engineer@1.0.0",
+        "visualization-engineer-task-01@1.0.0"
+      ]
+    },
+    "task-02": {
+      "summary": "科学图",
+      "skills": [
+        "domain-core-visualization-engineer@1.0.0",
+        "visualization-engineer-task-02@1.0.0"
+      ]
+    },
+    "task-03": {
+      "summary": "交互图规格/实现",
+      "skills": [
+        "domain-core-visualization-engineer@1.0.0",
+        "visualization-engineer-task-03@1.0.0"
+      ]
+    },
+    "task-04": {
+      "summary": "渲染",
+      "skills": [
+        "domain-core-visualization-engineer@1.0.0",
+        "visualization-engineer-task-04@1.0.0"
+      ]
+    },
+    "task-05": {
+      "summary": "几何 QA",
+      "skills": [
+        "domain-core-visualization-engineer@1.0.0",
+        "visualization-engineer-task-05@1.0.0"
+      ]
+    },
+    "task-06": {
+      "summary": "导出",
+      "skills": [
+        "domain-core-visualization-engineer@1.0.0",
+        "visualization-engineer-task-06@1.0.0"
+      ]
+    },
+    "axes": {
+      "summary": "兼容场景 axes；任务按核心路由选择辅助引用",
+      "skills": [
+        "domain-core-visualization-engineer@1.0.0",
+        "visualization-engineer-task-02@1.0.0"
+      ]
+    },
+    "citation": {
+      "summary": "兼容场景 citation；任务按核心路由选择辅助引用",
+      "skills": [
+        "domain-core-visualization-engineer@1.0.0",
+        "visualization-engineer-task-01@1.0.0"
+      ]
+    },
+    "color": {
+      "summary": "兼容场景 color；任务按核心路由选择辅助引用",
+      "skills": [
+        "domain-core-visualization-engineer@1.0.0",
+        "visualization-engineer-task-01@1.0.0"
+      ]
+    },
+    "export": {
+      "summary": "兼容场景 export；任务按核心路由选择辅助引用",
+      "skills": [
+        "domain-core-visualization-engineer@1.0.0",
+        "visualization-engineer-task-01@1.0.0"
+      ]
+    }
+  }
+}

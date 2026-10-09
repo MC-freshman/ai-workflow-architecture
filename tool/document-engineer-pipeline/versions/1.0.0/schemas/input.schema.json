@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "expert-task input",
+  "type": "object",
+  "anyOf": [
+    {
+      "required": [
+        "objective"
+      ]
+    }
+  ],
+  "properties": {
+    "objective": {
+      "type": "string",
+      "minLength": 20
+    },
+    "brief": {
+      "type": "string",
+      "minLength": 20
+    },
+    "inputs": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "constraints": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    }
+  },
+  "additionalProperties": false
+}

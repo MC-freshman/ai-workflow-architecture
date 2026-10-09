@@ -1,3 +1,5 @@
+Consolidation scope: this inherited license applies to the original public architecture export. The architecture-manager subtree retains its former licensing status (no separate license was supplied); no new grant is made here. versions/reference-1.0.0 retains Apache-2.0, and third-party LICENSE/NOTICE files take precedence.
+
 MIT License (code) + CC-BY-4.0 (documentation)
 
 Code files (scripts, .mjs/.js/.ts/.py) are licensed under the MIT License:

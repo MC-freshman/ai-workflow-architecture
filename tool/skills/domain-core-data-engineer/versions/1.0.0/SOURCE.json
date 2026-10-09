@@ -1,0 +1,22 @@
+{
+  "schema": "ai-release-source/v1",
+  "id": "domain-core-data-engineer",
+  "version": "1.0.0",
+  "origin": "maintainer authored; permitted upstream material remains in exact pinned reference resources",
+  "references": [
+    {
+      "resource": "domain-source-catalog",
+      "version": "1.0.0",
+      "path": "agency/engineering/engineering-data-engineer.md",
+      "sha256": "f8437b1ec78d428a103e5db72ce21fc1ec991ee79f8b3f4f54a05888d9488cf6",
+      "when": "需要深入本领域步骤/示例时，先搜索对应小节，按行范围读取"
+    },
+    {
+      "resource": "domain-source-catalog",
+      "version": "1.0.0",
+      "path": "ecc/skills/data-scraper-agent/SKILL.md",
+      "sha256": "662e884d58f4089bd8e090ef8d32042b85a5d9b4715906a89072002704451c0a",
+      "when": "任务涉及data-scraper-agent时读取相关章节；上游自动安装/发布行为不产生授权"
+    }
+  ]
+}

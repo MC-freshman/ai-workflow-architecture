@@ -1,0 +1,19 @@
+{
+  "schema": "ai-tool-lock/v2",
+  "skills": {
+    "domain-core-qa-engineer": "1.0.0",
+    "qa-engineer-task-01": "1.0.0",
+    "qa-engineer-task-02": "1.0.0",
+    "qa-engineer-task-03": "1.0.0",
+    "qa-engineer-task-04": "1.0.0",
+    "qa-engineer-task-05": "1.0.0",
+    "qa-engineer-task-06": "1.0.0",
+    "qa-engineer-task-07": "1.0.0",
+    "domain-source-catalog": "1.0.0"
+  },
+  "workflows": {
+    "qa-engineer-pipeline": "1.0.0"
+  },
+  "packs": {},
+  "profiles": {}
+}

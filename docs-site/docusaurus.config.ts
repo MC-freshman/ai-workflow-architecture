@@ -35,6 +35,8 @@ function routeOk(to) {
 }
 
 const NAVBAR_ITEMS = [
+  { to: '/docs/quick-start/manager-operations', label: '操作手册', position: 'left' },
+  { to: '/docs/quick-start/manager-errors', label: '报错排查', position: 'left' },
   { type: 'doc', docId: 'quick-start/site-intro', position: 'left', label: '文档' },
   { to: '/reference', label: '共享资源（自动生成）', position: 'left' },
   { to: '/docs/architecture/basic-principles', label: '基本原则 BP-1~7', position: 'left' },

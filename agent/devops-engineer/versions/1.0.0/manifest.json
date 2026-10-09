@@ -1,0 +1,52 @@
+{
+  "schema": "ai-agent/v2",
+  "id": "devops-engineer",
+  "version": "1.0.0",
+  "displayName": "devops-engineer",
+  "role": "把构建输入、制品、配置与环境分开钉版。CI最小权限、可重复构建；部署有健康判据、放量条件和可撤销版本。观测由服务目标反推信号，故障处置先止损再定位，外部上线必须使用调用方授权。",
+  "prompt": "prompt.md",
+  "toolLock": "tool-lock.json",
+  "workflows": [
+    "devops-engineer-pipeline"
+  ],
+  "runnerWorkflow": "devops-engineer-pipeline",
+  "policies": [
+    "project-scoped",
+    "no-credentials",
+    "no-destructive-default"
+  ],
+  "permissions": {
+    "filesystem": "project-scoped",
+    "network": "deny",
+    "process": "allowlisted-only"
+  },
+  "packs": {},
+  "windowProfile": 128000,
+  "x-contextBudget": {
+    "schema": "ai-context-budget-policy/v1",
+    "coreMax": 2500,
+    "auxiliaryMax": 4000,
+    "stageMax": 1500,
+    "normalMax": 8000,
+    "absoluteMax": 12000,
+    "reworkAllowance": 2,
+    "deepReadBatchMax": 4000,
+    "handoffMax": 2000,
+    "estimator": "cjk-1.1-other-3.6-v1",
+    "coreSkill": "domain-core-devops-engineer",
+    "windowSharePercent": 25
+  },
+  "x-taskCategories": [
+    "构建",
+    "CI/CD",
+    "容器",
+    "部署方案",
+    "观测",
+    "故障恢复"
+  ],
+  "x-domainBoundary": "管运行交付；真实上线遵守调用方已有授权",
+  "x-runtimeRequirements": {},
+  "integrity": {
+    "sha256Manifest": "SHA256SUMS"
+  }
+}

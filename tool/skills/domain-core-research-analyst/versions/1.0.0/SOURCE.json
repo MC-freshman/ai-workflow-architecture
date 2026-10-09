@@ -1,0 +1,22 @@
+{
+  "schema": "ai-release-source/v1",
+  "id": "domain-core-research-analyst",
+  "version": "1.0.0",
+  "origin": "maintainer authored; permitted upstream material remains in exact pinned reference resources",
+  "references": [
+    {
+      "resource": "domain-source-catalog",
+      "version": "1.0.0",
+      "path": "agency/research/research-synthesist.md",
+      "sha256": "3618b4a2a73523147731ae38ac4096cea0e83a7de930f55ea9ea6c69e3c77f30",
+      "when": "需要深入本领域步骤/示例时，先搜索对应小节，按行范围读取"
+    },
+    {
+      "resource": "domain-source-catalog",
+      "version": "1.0.0",
+      "path": "ecc/skills/research-ops/SKILL.md",
+      "sha256": "114d0e5480ce3ad263316c639ce0c401396e1d9fbec3cf15b3c962ae16f376db",
+      "when": "任务涉及research-ops时读取相关章节；上游自动安装/发布行为不产生授权"
+    }
+  ]
+}

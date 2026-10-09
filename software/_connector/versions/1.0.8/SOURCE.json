@@ -1,0 +1,10 @@
+{
+  "schema": "ai-software-connector-source/v1",
+  "version": "1.0.8",
+  "releaseStatus": "published",
+  "publishedAt": "2026-10-03T23:29:50.313Z",
+  "derivedFrom": "software/_connector/versions/1.0.7",
+  "scope": "approved architecture-manager unified P15",
+  "evidenceDigest": "6d27ce448b02df87ab8875bac3e32fd84b7573f81c042e50084efdece5445c45",
+  "sharedCurrentChanged": false
+}

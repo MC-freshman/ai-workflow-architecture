@@ -1,0 +1,70 @@
+{
+  "schema": "ai-software-capability-snapshot/v1",
+  "softwareId": "veracrypt",
+  "softwareVersion": "1.0.2",
+  "upstreamVersion": "1.26.7",
+  "generatedAt": "2026-09-30T13:51:24.695Z",
+  "generationMethod": "live-readonly-PE-version-and-body-digest; volume actions remain pending",
+  "upstreamHelpSource": "VeraCrypt 命令行参考（User Guide.chm / veracrypt.fr）；/? 弹 GUI 不输出 stdout",
+  "capabilities": [
+    {
+      "name": "version",
+      "nativeName": "PE ProductVersion",
+      "sideEffects": "none",
+      "consent": "auto",
+      "idempotent": true,
+      "safeForSelftest": true,
+      "inputSchemaRef": "schemas/empty.input.json",
+      "outputSchemaRef": "schemas/version.output.json",
+      "frozen": true,
+      "liveConfirmation": {
+        "observed": {
+          "ProductVersion": "1.26.7",
+          "FileVersion": "1.26.7"
+        },
+        "bodySha256": "aee0d6f335e4346c57e60bbcc74a9207d4400e027f0b83771f5de63df86e132d",
+        "askedThrough": "Windows PE version resource"
+      }
+    },
+    {
+      "name": "mount",
+      "nativeName": "VeraCrypt.exe /v <vol> /l <letter> /p <pwd> /q",
+      "sideEffects": "external",
+      "consent": "confirm-call",
+      "idempotent": false,
+      "safeForSelftest": false,
+      "inputSchemaRef": "schemas/mount.input.json",
+      "outputSchemaRef": "schemas/mount.output.json",
+      "argvSummary": "/q /v volume /l letter /p passwordRef [/k keyfiles] [/m ro|rm] [/a] [/b]",
+      "frozen": false,
+      "pendingReason": "No volume operation executed; not dispatchable"
+    },
+    {
+      "name": "dismount",
+      "nativeName": "VeraCrypt.exe /d [letter] /q",
+      "sideEffects": "external",
+      "consent": "confirm-call",
+      "idempotent": true,
+      "safeForSelftest": false,
+      "inputSchemaRef": "schemas/dismount.input.json",
+      "outputSchemaRef": "schemas/dismount.output.json",
+      "argvSummary": "/q /d [letter] [/f]",
+      "frozen": false,
+      "pendingReason": "No volume operation executed; not dispatchable"
+    },
+    {
+      "name": "createVolume",
+      "nativeName": "VeraCrypt Format.exe /create <vol> /size ... /q",
+      "sideEffects": "external",
+      "consent": "confirm-call",
+      "idempotent": false,
+      "safeForSelftest": false,
+      "inputSchemaRef": "schemas/createVolume.input.json",
+      "outputSchemaRef": "schemas/createVolume.output.json",
+      "argvSummary": "/q /create volume /size N[KMG] /password passwordRef [/encryption AES] [/hash SHA-512] [/filesystem exFAT] [/keyfiles k] [/volume-type file]",
+      "frozen": false,
+      "pendingReason": "No volume operation executed; not dispatchable"
+    }
+  ],
+  "frozen": true
+}

@@ -1,0 +1,52 @@
+{
+  "schema": "ai-agent/v2",
+  "id": "game-designer",
+  "version": "1.0.0",
+  "displayName": "game-designer",
+  "role": "从玩家决策、反馈与目标定义核心循环。规则明确可计算状态及胜负/失败条件；关卡和经济系统用约束及数值表验证。平衡是假设直到试玩有证据；将机制规格交给实现专家，不将引擎堆砌当设计。",
+  "prompt": "prompt.md",
+  "toolLock": "tool-lock.json",
+  "workflows": [
+    "game-designer-pipeline"
+  ],
+  "runnerWorkflow": "game-designer-pipeline",
+  "policies": [
+    "project-scoped",
+    "no-credentials",
+    "no-destructive-default"
+  ],
+  "permissions": {
+    "filesystem": "project-scoped",
+    "network": "deny",
+    "process": "allowlisted-only"
+  },
+  "packs": {},
+  "windowProfile": 128000,
+  "x-contextBudget": {
+    "schema": "ai-context-budget-policy/v1",
+    "coreMax": 2500,
+    "auxiliaryMax": 4000,
+    "stageMax": 1500,
+    "normalMax": 8000,
+    "absoluteMax": 12000,
+    "reworkAllowance": 2,
+    "deepReadBatchMax": 4000,
+    "handoffMax": 2000,
+    "estimator": "cjk-1.1-other-3.6-v1",
+    "coreSkill": "domain-core-game-designer",
+    "windowSharePercent": 25
+  },
+  "x-taskCategories": [
+    "核心循环",
+    "规则",
+    "关卡",
+    "经济平衡",
+    "叙事体验",
+    "试玩设计"
+  ],
+  "x-domainBoundary": "交机制规格；引擎与代码由 game-builder 承担",
+  "x-runtimeRequirements": {},
+  "integrity": {
+    "sha256Manifest": "SHA256SUMS"
+  }
+}

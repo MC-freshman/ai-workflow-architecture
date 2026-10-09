@@ -1,0 +1,164 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://contracts.local/runtime/1.1/event.schema.json",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "runId",
+    "lockSha256",
+    "sequence",
+    "transactionId",
+    "previousRevision",
+    "newRevision",
+    "previousEventSha256",
+    "eventSha256",
+    "type",
+    "status",
+    "at",
+    "evidence"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "enum": [
+        "ai-run-event/v1.1",
+        "ai-run-event/v1.2"
+      ]
+    },
+    "runId": {
+      "$ref": "common.schema.json#/$defs/id"
+    },
+    "lockSha256": {
+      "$ref": "common.schema.json#/$defs/hash"
+    },
+    "sequence": {
+      "type": "integer",
+      "minimum": 1
+    },
+    "transactionId": {
+      "$ref": "common.schema.json#/$defs/id"
+    },
+    "previousRevision": {
+      "type": [
+        "integer",
+        "null"
+      ],
+      "minimum": 0
+    },
+    "newRevision": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "previousEventSha256": {
+      "oneOf": [
+        {
+          "type": "null"
+        },
+        {
+          "$ref": "common.schema.json#/$defs/hash"
+        }
+      ]
+    },
+    "eventSha256": {
+      "$ref": "common.schema.json#/$defs/hash"
+    },
+    "type": {
+      "enum": [
+        "prepared",
+        "stage-claimed",
+        "prompt-delivered",
+        "result-accepted",
+        "stage-completed",
+        "blocked",
+        "failed",
+        "succeeded",
+        "stop-requested",
+        "process-exited",
+        "stopped",
+        "unknown-outcome",
+        "attempt-failed"
+      ]
+    },
+    "status": {
+      "$ref": "common.schema.json#/$defs/status"
+    },
+    "at": {
+      "$ref": "common.schema.json#/$defs/time"
+    },
+    "evidence": {
+      "type": "array",
+      "items": {
+        "$ref": "common.schema.json#/$defs/file"
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "sequence": {
+            "const": 1
+          }
+        }
+      },
+      "then": {
+        "properties": {
+          "type": {
+            "const": "prepared"
+          },
+          "status": {
+            "const": "prepared"
+          },
+          "previousRevision": {
+            "type": "null"
+          },
+          "newRevision": {
+            "const": 0
+          },
+          "previousEventSha256": {
+            "type": "null"
+          }
+        }
+      },
+      "else": {
+        "properties": {
+          "previousRevision": {
+            "type": "integer"
+          },
+          "previousEventSha256": {
+            "$ref": "common.schema.json#/$defs/hash"
+          },
+          "type": {
+            "not": {
+              "const": "prepared"
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "schemaVersion": {
+            "const": "ai-run-event/v1.1"
+          }
+        },
+        "required": [
+          "schemaVersion"
+        ]
+      },
+      "then": {
+        "properties": {
+          "type": {
+            "not": {
+              "const": "attempt-failed"
+            }
+          }
+        }
+      }
+    }
+  ],
+  "patternProperties": {
+    "^x-": true
+  }
+}

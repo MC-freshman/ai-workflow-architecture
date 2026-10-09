@@ -1,0 +1,22 @@
+{
+  "schema": "ai-release-source/v1",
+  "id": "ui-ux-designer",
+  "version": "1.0.0",
+  "origin": "approved 20261009 domain boundary and maintainer authored operational method",
+  "sources": [
+    {
+      "resource": "domain-source-catalog",
+      "version": "1.0.0",
+      "path": "agency/design/design-ux-architect.md",
+      "sha256": "736fc90bad95314bfe74376a6f5483d44bb337ef0c3988280e8cabe65e36d111",
+      "when": "需要深入本领域步骤/示例时，先搜索对应小节，按行范围读取"
+    },
+    {
+      "resource": "domain-source-catalog",
+      "version": "1.0.0",
+      "path": "ecc/skills/design-system/SKILL.md",
+      "sha256": "1969e4cb6cd13cdafff5f84353047d6e55cebc24e1a595ec48e6e2c666f3d8b1",
+      "when": "任务涉及design-system时读取相关章节；上游自动安装/发布行为不产生授权"
+    }
+  ]
+}

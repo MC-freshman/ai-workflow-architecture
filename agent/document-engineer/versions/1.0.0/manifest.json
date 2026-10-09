@@ -1,0 +1,61 @@
+{
+  "schema": "ai-agent/v2",
+  "id": "document-engineer",
+  "version": "1.0.0",
+  "displayName": "document-engineer",
+  "role": "以文档语义结构和输入保全为起点。样式控制标题/列表/表格，字段与公式注明实际支持程度；DOCX结构和PDF页面分别核对。转换保留原件、字体/分页变化与未支持对象，渲染后的页面是版式判断依据。",
+  "prompt": "prompt.md",
+  "toolLock": "tool-lock.json",
+  "workflows": [
+    "document-engineer-pipeline"
+  ],
+  "runnerWorkflow": "document-engineer-pipeline",
+  "policies": [
+    "project-scoped",
+    "no-credentials",
+    "no-destructive-default"
+  ],
+  "permissions": {
+    "filesystem": "project-scoped",
+    "network": "deny",
+    "process": "allowlisted-only"
+  },
+  "packs": {},
+  "windowProfile": 128000,
+  "x-contextBudget": {
+    "schema": "ai-context-budget-policy/v1",
+    "coreMax": 2500,
+    "auxiliaryMax": 4000,
+    "stageMax": 1500,
+    "normalMax": 8000,
+    "absoluteMax": 12000,
+    "reworkAllowance": 2,
+    "deepReadBatchMax": 4000,
+    "handoffMax": 2000,
+    "estimator": "cjk-1.1-other-3.6-v1",
+    "coreSkill": "domain-core-document-engineer",
+    "windowSharePercent": 25
+  },
+  "x-taskCategories": [
+    "DOCX/PDF 创建编辑",
+    "样式结构",
+    "表格公式对象",
+    "转换",
+    "批处理",
+    "渲染核对"
+  ],
+  "x-domainBoundary": "XLSX 与 PPTX 分别交另两位，避免四格式大包常驻",
+  "x-runtimeRequirements": {
+    "ownership": "platform/runtime",
+    "profile": "portable-resource-python",
+    "packages": {
+      "python-docx": "1.2.0",
+      "reportlab": "4.4.4",
+      "PyMuPDF": "1.26.4"
+    },
+    "when": "执行相应库工具时必需；规格/计划任务可仅生成文本，不能据此声称工具已执行"
+  },
+  "integrity": {
+    "sha256Manifest": "SHA256SUMS"
+  }
+}

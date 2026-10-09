@@ -14,6 +14,18 @@ const inventory: any = invJson as any;
 
 const CARDS = [
   {
+    kicker: '管理台操作',
+    to: '/docs/quick-start/manager-operations',
+    title: '0.7.0 操作手册',
+    desc: '从选路径、接入和暂缓续接，到软件会话、平台独立选版、Git 与恢复，按实际按钮操作。',
+  },
+  {
+    kicker: '遇到报错',
+    to: '/docs/quick-start/manager-errors',
+    title: '报错排查与恢复',
+    desc: '按症状找处理步骤，搜索187个界面错误码；原生待适配和用户可修问题分别说明。',
+  },
+  {
     kicker: '快速开始',
     to: '/docs/quick-start/site-intro',
     title: '文档站说明',
@@ -93,8 +105,8 @@ export default function Home(): JSX.Element {
             ))}
           </div>
           <div>
-            <a className="button button--primary button--lg margin-right--sm" href="/docs/quick-start/overview">
-              从「当前架构概览」开始
+            <a className="button button--primary button--lg margin-right--sm" href="/docs/quick-start/manager-operations">
+              打开管理台操作手册
             </a>
             <a className="button button--outline button--lg" href="/reference">
               看自动生成的目录

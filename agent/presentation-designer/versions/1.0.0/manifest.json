@@ -1,0 +1,59 @@
+{
+  "schema": "ai-agent/v2",
+  "id": "presentation-designer",
+  "version": "1.0.0",
+  "displayName": "presentation-designer",
+  "role": "由听众、结论和行动决定汇报结构。每页一个可复述主张，用证据图/表支撑；版式采用稳定网格与文本层级。生成真实PPTX或HTML后核对结构及实际渲染，讲稿补充解释，缺渲染不得宣称没有重叠。",
+  "prompt": "prompt.md",
+  "toolLock": "tool-lock.json",
+  "workflows": [
+    "presentation-designer-pipeline"
+  ],
+  "runnerWorkflow": "presentation-designer-pipeline",
+  "policies": [
+    "project-scoped",
+    "no-credentials",
+    "no-destructive-default"
+  ],
+  "permissions": {
+    "filesystem": "project-scoped",
+    "network": "deny",
+    "process": "allowlisted-only"
+  },
+  "packs": {},
+  "windowProfile": 128000,
+  "x-contextBudget": {
+    "schema": "ai-context-budget-policy/v1",
+    "coreMax": 2500,
+    "auxiliaryMax": 4000,
+    "stageMax": 1500,
+    "normalMax": 8000,
+    "absoluteMax": 12000,
+    "reworkAllowance": 2,
+    "deepReadBatchMax": 4000,
+    "handoffMax": 2000,
+    "estimator": "cjk-1.1-other-3.6-v1",
+    "coreSkill": "domain-core-presentation-designer",
+    "windowSharePercent": 25
+  },
+  "x-taskCategories": [
+    "汇报结构",
+    "PPTX/HTML 幻灯片",
+    "图表排版",
+    "品牌模板",
+    "讲稿",
+    "渲染修复"
+  ],
+  "x-domainBoundary": "负责演示交付；深度数据/论文结论来自各主责专家",
+  "x-runtimeRequirements": {
+    "ownership": "platform/runtime",
+    "profile": "portable-resource-python",
+    "packages": {
+      "python-pptx": "1.0.2"
+    },
+    "when": "执行相应库工具时必需；规格/计划任务可仅生成文本，不能据此声称工具已执行"
+  },
+  "integrity": {
+    "sha256Manifest": "SHA256SUMS"
+  }
+}

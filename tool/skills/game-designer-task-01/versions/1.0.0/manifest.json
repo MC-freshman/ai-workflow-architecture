@@ -1,0 +1,31 @@
+{
+  "schema": "ai-skill/v1",
+  "id": "game-designer-task-01",
+  "version": "1.0.0",
+  "kind": "atomic",
+  "category": "skill",
+  "entry": "SKILL.md",
+  "input": {
+    "type": "text",
+    "contract": "objective, task inputs and constraints"
+  },
+  "output": {
+    "type": "text",
+    "contract": "named artifacts, evidence and pending limitations"
+  },
+  "permissions": [
+    "read-project"
+  ],
+  "requires": [],
+  "conflicts": [],
+  "x-externalReferences": [],
+  "x-runtimeRequirements": {},
+  "source": {
+    "repository": "workspace-authored operational guidance",
+    "snapshot": "approved 20261009",
+    "license": "workspace-authored"
+  },
+  "integrity": {
+    "sha256Manifest": "SHA256SUMS"
+  }
+}

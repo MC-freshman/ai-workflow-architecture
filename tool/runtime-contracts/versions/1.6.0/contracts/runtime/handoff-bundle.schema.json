@@ -1,0 +1,209 @@
+{
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "$id": "https://contracts.local/runtime/1.1/handoff-bundle.schema.json",
+ "title": "Platform-neutral handoff bundle (2.1.0 §3.6 / BP-4)",
+ "description": "The only channel through which project state may cross a run boundary: a run exports its completed-stage conclusions and artifact digests together with the version view a continuing run must reproduce. Nothing in here is a host path, a runtime directory or an in-flight state machine - a bundle always starts a NEW run, which re-pins its own versions.",
+ "type": "object",
+ "additionalProperties": false,
+ "required": [
+  "schema",
+  "runId",
+  "platform",
+  "exportedAt",
+  "lockSha256",
+  "versions",
+  "stages",
+  "artifacts",
+  "integrity"
+ ],
+ "properties": {
+  "schema": {
+   "const": "handoff-bundle/v1"
+  },
+  "runId": {
+   "$ref": "common.schema.json#/$defs/id"
+  },
+  "parentRunId": {
+   "oneOf": [
+    {
+     "type": "null"
+    },
+    {
+     "$ref": "common.schema.json#/$defs/id"
+    }
+   ]
+  },
+  "platform": {
+   "type": "string",
+   "minLength": 1,
+   "maxLength": 64
+  },
+  "exportedAt": {
+   "$ref": "common.schema.json#/$defs/time"
+  },
+  "lockSha256": {
+   "$ref": "common.schema.json#/$defs/hash"
+  },
+  "rigor": {
+   "enum": [
+    "fast",
+    "balanced",
+    "full"
+   ]
+  },
+  "execPath": {
+   "enum": [
+    "kernel-sandbox",
+    "platform-venv",
+    "host-controlled"
+   ]
+  },
+  "arbitrationKey": {
+   "type": [
+    "string",
+    "null"
+   ],
+   "maxLength": 200
+  },
+  "versions": {
+   "type": "object",
+   "additionalProperties": false,
+   "required": [
+    "selection",
+    "pinned"
+   ],
+   "properties": {
+    "selection": {
+     "type": "object",
+     "additionalProperties": false,
+     "required": [
+      "agent",
+      "workflow",
+      "runner"
+     ],
+     "properties": {
+      "agent": {
+       "type": [
+        "string",
+        "null"
+       ]
+      },
+      "workflow": {
+       "type": "string"
+      },
+      "runner": {
+       "type": "string"
+      },
+      "environment": {
+       "type": "array",
+       "items": {
+        "type": "string"
+       }
+      }
+     },
+     "patternProperties": {
+      "^x-": true
+     }
+    },
+    "pinned": {
+     "type": "array",
+     "minItems": 1,
+     "items": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+       "key",
+       "kind",
+       "id",
+       "version"
+      ],
+      "properties": {
+       "key": {
+        "$ref": "common.schema.json#/$defs/id"
+       },
+       "kind": {
+        "enum": [
+         "agent",
+         "workflow",
+         "runner",
+         "skill",
+         "pack",
+         "interpreter",
+         "library",
+         "renderer"
+        ]
+       },
+       "id": {
+        "$ref": "common.schema.json#/$defs/id"
+       },
+       "version": {
+        "$ref": "common.schema.json#/$defs/version"
+       }
+      },
+      "patternProperties": {
+       "^x-": true
+      }
+     }
+    }
+   },
+   "patternProperties": {
+    "^x-": true
+   }
+  },
+  "stages": {
+   "type": "array",
+   "minItems": 1,
+   "items": {
+    "allOf": [
+     {
+      "$ref": "common.schema.json#/$defs/completion"
+     },
+     {
+      "anyOf": [
+       {
+        "properties": {
+         "outputs": {
+          "minItems": 1
+         }
+        }
+       },
+       {
+        "properties": {
+         "gates": {
+          "minItems": 1
+         }
+        }
+       }
+      ]
+     }
+    ]
+   }
+  },
+  "artifacts": {
+   "type": "array",
+   "minItems": 1,
+   "items": {
+    "$ref": "common.schema.json#/$defs/file"
+   }
+  },
+  "integrity": {
+   "type": "object",
+   "additionalProperties": false,
+   "required": [
+    "manifestSha256",
+    "canonicalization"
+   ],
+   "properties": {
+    "manifestSha256": {
+     "$ref": "common.schema.json#/$defs/hash"
+    },
+    "canonicalization": {
+     "const": "sha256-cjson-safe-v1"
+    }
+   }
+  }
+ },
+ "patternProperties": {
+  "^x-": true
+ }
+}

@@ -1,0 +1,19 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "ai-peer-lock/v1 exact peer version lock (M5-01)",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema", "peers"],
+  "properties": {
+    "schema": { "const": "ai-peer-lock/v1" },
+    "peers": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": {
+        "type": "string",
+        "pattern": "^(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)(?:-[0-9A-Za-z.-]+(?:\\.[0-9A-Za-z.-]+)*)?$"
+      }
+    },
+    "notes": { "type": "string" }
+  }
+}

@@ -1,0 +1,127 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://contracts.local/runtime/1.2/error-envelope.schema.json",
+  "title": "Unified machine-readable error envelope (v2)",
+  "description": "ADR-2. Every failure at any boundary (config read, engine init, contract/schema, resolution, capability match, prepare, execution, gate, response) is emitted as exactly one of these on stdout. Supersedes bare tracebacks. v1 protocol keeps its {code,message,retryable} error shape (common.$defs.error); this v2 envelope is additive and is only produced for v2 negotiation.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "requestId",
+    "operation",
+    "phase",
+    "code",
+    "message",
+    "retryable",
+    "outcome"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": "ai-run-error/v2"
+    },
+    "requestId": {
+      "$ref": "https://contracts.local/runtime/1.1/common.schema.json#/$defs/id"
+    },
+    "runId": {
+      "description": "Null before a run exists (config/resolve/capability-phase rejections).",
+      "oneOf": [
+        {
+          "type": "null"
+        },
+        {
+          "$ref": "https://contracts.local/runtime/1.1/common.schema.json#/$defs/id"
+        }
+      ]
+    },
+    "operation": {
+      "enum": [
+        "prepare",
+        "next",
+        "submit",
+        "status",
+        "stop",
+        "delegate",
+        "reconcile",
+        "config"
+      ]
+    },
+    "phase": {
+      "enum": [
+        "request",
+        "config",
+        "contract",
+        "resolve",
+        "capability",
+        "prepare",
+        "execution",
+        "gate",
+        "response",
+        "internal"
+      ]
+    },
+    "code": {
+      "description": "Machine-readable family; stable across CLI/MCP/Skill entrances.",
+      "enum": [
+        "INVALID_REQUEST",
+        "CONTRACT_VIOLATION",
+        "UNSUPPORTED_SCHEMA",
+        "UNSUPPORTED_PROTOCOL",
+        "UNSUPPORTED_OPERATION",
+        "CAPABILITY_UNAVAILABLE",
+        "VERSION_CONFLICT",
+        "INTEGRITY_MISMATCH",
+        "CONTEXT_UNRESOLVED",
+        "HANDOFF_VERSION_MISMATCH",
+        "CONTEXT_UNRESOLVED",
+        "HANDOFF_VERSION_MISMATCH",
+        "REVISION_CONFLICT",
+        "RESOURCE_BUSY",
+        "IDEMPOTENCY_CONFLICT",
+        "STALE_ATTEMPT",
+        "INPUT_MISMATCH",
+        "HASH_MISMATCH",
+        "ENVIRONMENT_VERIFY_TIMEOUT",
+        "EXECUTION_TIMEOUT",
+        "EXECUTION_FAILED",
+        "REQUIRED_GATE_MISSING",
+        "GATE_FAILED",
+        "UNAUTHORIZED",
+        "TERMINAL_RUN",
+        "STOP_REQUESTED",
+        "UNKNOWN_OUTCOME",
+        "PERSISTENCE_ERROR",
+        "TIMEOUT",
+        "INTERNAL_ERROR",
+        "SOFTWARE_NOT_INSTALLED",
+        "SOFTWARE_DRIFT",
+        "SOFTWARE_BUSY",
+        "PROFILE_NOT_DECLARED",
+        "CONSENT_REQUIRED",
+        "EGRESS_DENIED",
+        "SOFTWARE_CALL_FAILED"
+      ]
+    },
+    "message": {
+      "type": "string",
+      "minLength": 1
+    },
+    "retryable": {
+      "type": "boolean",
+      "description": "false when the same configuration must not be retried (CAPABILITY_UNAVAILABLE, VERSION_CONFLICT, INTEGRITY_MISMATCH, IDEMPOTENCY_CONFLICT)."
+    },
+    "outcome": {
+      "enum": [
+        "known",
+        "unknown"
+      ],
+      "description": "unknown = external action result indeterminate; requires reconciliation, never auto-redo (ADR-3)."
+    },
+    "diagnosticRef": {
+      "type": "string",
+      "description": "Platform-local, de-identified diagnostic pointer. Never contains secrets or full traceback."
+    }
+  },
+  "patternProperties": {
+    "^x-": true
+  }
+}

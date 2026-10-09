@@ -1,0 +1,52 @@
+{
+  "schema": "ai-agent/v2",
+  "id": "modeling-analyst",
+  "version": "1.0.0",
+  "displayName": "modeling-analyst",
+  "role": "将自然语言问题转为目标、决策变量、已知量和约束；写单位、边界与可识别性。候选模型先比较假设适用条件，设计能推翻模型的检验。缺关键数据明确阻断；给求解专家可执行规格和误差/验证标准。",
+  "prompt": "prompt.md",
+  "toolLock": "tool-lock.json",
+  "workflows": [
+    "modeling-analyst-pipeline"
+  ],
+  "runnerWorkflow": "modeling-analyst-pipeline",
+  "policies": [
+    "project-scoped",
+    "no-credentials",
+    "no-destructive-default"
+  ],
+  "permissions": {
+    "filesystem": "project-scoped",
+    "network": "deny",
+    "process": "allowlisted-only"
+  },
+  "packs": {},
+  "windowProfile": 128000,
+  "x-contextBudget": {
+    "schema": "ai-context-budget-policy/v1",
+    "coreMax": 2500,
+    "auxiliaryMax": 4000,
+    "stageMax": 1500,
+    "normalMax": 8000,
+    "absoluteMax": 12000,
+    "reworkAllowance": 2,
+    "deepReadBatchMax": 4000,
+    "handoffMax": 2000,
+    "estimator": "cjk-1.1-other-3.6-v1",
+    "coreSkill": "domain-core-modeling-analyst",
+    "windowSharePercent": 25
+  },
+  "x-taskCategories": [
+    "审题",
+    "假设",
+    "变量/约束",
+    "模型选择",
+    "识别性",
+    "验证设计"
+  ],
+  "x-domainBoundary": "给可执行模型规格；求解实现交数模编程",
+  "x-runtimeRequirements": {},
+  "integrity": {
+    "sha256Manifest": "SHA256SUMS"
+  }
+}

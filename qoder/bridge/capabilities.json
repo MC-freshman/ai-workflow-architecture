@@ -1,7 +1,7 @@
 {
   "schema": "ai-platform-capabilities/v1",
   "platform": "qoder",
-  "attestedAt": "2026-09-29T04:50:30Z",
+  "attestedAt": "2026-10-07T03:15:04.014Z",
   "checks": {
     "python-runtime": true,
     "runner-dependency-resolution": true,
@@ -16,45 +16,27 @@
     "peerDispatch": true,
     "script-environment-isolation-jail": true,
     "renderer-matplotlib-agg-in-jail": true,
-    "process-gate-on-0.12.0": true
+    "process-gate-on-0.12.0": true,
+    "software-call": true
   },
   "permissionAdapters": [
     {
       "filesystem": "project-scoped",
       "network": "deny",
       "process": "allowlisted-only",
-      "evidence": "prompt 阶段由本会话执行，运行产物只落 runsRoot（引擎强制 runsRoot ⊂ platformRoot）。分面口径——脚本阶段：由 wf-runner 的 WSL2 隔离控制器执行，`unshare --net` + Landlock ABI 3 实测为**内核级强制**（探针内 network 得 gaierror、/bin/sh 未绑定故 subprocess 起不来、主机盘不可见）；prompt 阶段：network=deny 与 process=allowlisted-only 仍是**会话自律**，Qoder 具备网络与任意命令能力，不要把脚本面的强制当作全平台保证。0.7.6 注入路径下的复认证见 runtime/maintenance/2.0-B/baseline/K1a-execution-backend.json（26 项），生产面复验已结（2.0-C/baseline/）；0.7.7 的框架面复验见 runtime/maintenance/2.0-D/baseline/W-framework-published-077.json（38 项）。"
-    },
-    {
-      "filesystem": "shared-read-only-platform-report-write",
-      "network": "deny",
-      "process": "none",
-      "evidence": "本平台专属的 D04 授权（用户，2026-09-18）：bridge/backends/wsl2-ubuntu.json 的 sharedReadOnlyBinds 声明 tool + agent 只读绑进 jail。0.7.6 实测 /shared/tool 与 /shared/agent 可见且拒写、主机盘不可见、无网无 shell；repo-lint 0.3.0 每次 live 扫描前自带 sharedWriteProbe（{tool: denied, agent: denied}），并真过 /wf 跑到 succeeded（resourceCount 1824 / checkedFiles 6879 / errors 0，单趟 32.6 分钟）。证据 runtime/maintenance/2.0-B/baseline/K1b-repolint-live.json。与 zcode 的 D04 授权互相独立、结论不互抄。"
+      "evidence": "Target-platform jail probe E:\\ai\\qoder\\runtime\\maintenance\\manager-onboarding\\capabilities\\a97b9ddf-a034-4ad7-ba53-0f83e130b88e\\probe.json sha256=cb6d8bf5cc399ff0a4e31d3eb663eea9c4e113c8e0364fde7846b82f4d010b6f"
     },
     {
       "filesystem": "platform-runtime-write-shared-read-only",
       "network": "deny",
       "process": "isolated-python",
-      "evidence": "3.0-Q Q-P1 and Q-P2 measured exactly this shape and the bytes are in the two evidence files named here: writes stay inside this platform (runsRoot is under platformRoot and every run of this round landed there), the three shared repositories are bound read-only into the jail and a create into any of them is refused by the kernel with EROFS rather than by a permission bit, and the script stage runs in an isolated interpreter with no network. Unlike the prompt-stage adapters this triple is kernel-enforced for the stage it covers: it is declared for script dispatch, not for the conversation.",
-      "scopeOfEnforcement": "script stages executed through wf-runner on the declared scriptEnvironmentRungs rung kernel-sandbox; the prompt face stays session-discipline and is not covered by this triple",
-      "measurements": {
-        "jailThreeRootsScratchDoc": {
-          "file": "qoder/runtime/maintenance/3.0-Q/baseline/q1-environment.json",
-          "cell": "S-Q1-05",
-          "sha256": "c0817e28730a176e58d3594e9d75c2a1941072e0d19076f4db26dfa04b72cf09",
-          "reading": "tool/agent/software visible and populated, every create refused with errno 30 (EROFS), /work writable, measured on the rebuilt seal in 1.0 s"
-        },
-        "jailThreeRootsProductionDoc": {
-          "file": "qoder/runtime/maintenance/3.0-Q/runs/q2-switch/jail-probe-report.json",
-          "sha256": "86a82cea715a7552857ea64c31f4afcf280c927e3bed56e7d2fb67a066bbc7ad",
-          "reading": "the same three roots under the production backend document; /proc/mounts shows all three as 9p `ro,nosuid,noatime` binds, and the seal was verified before dispatch (55.9 s clean)"
-        },
-        "isolatedInterpreter": {
-          "file": "qoder/bridge/backends/wsl2-ubuntu.json",
-          "sha256": "e95485aad8a878c7807c561e6d2760ee942214b9ef82b65b899099a8e84292b0",
-          "reading": "script stages run in the WSL2 jail on the sealed venv interpreter with no network namespace and Landlock; measured through a real script stage that reached `succeeded` (S-Q1-03) and refused on a one-line tamper (S-Q1-04)"
-        }
-      }
+      "evidence": "Target-platform jail probe E:\\ai\\qoder\\runtime\\maintenance\\manager-onboarding\\capabilities\\a97b9ddf-a034-4ad7-ba53-0f83e130b88e\\probe.json sha256=cb6d8bf5cc399ff0a4e31d3eb663eea9c4e113c8e0364fde7846b82f4d010b6f"
+    },
+    {
+      "filesystem": "shared-read-only-platform-report-write",
+      "network": "deny",
+      "process": "none",
+      "evidence": "Target-platform jail probe E:\\ai\\qoder\\runtime\\maintenance\\manager-onboarding\\capabilities\\a97b9ddf-a034-4ad7-ba53-0f83e130b88e\\probe.json sha256=cb6d8bf5cc399ff0a4e31d3eb663eea9c4e113c8e0364fde7846b82f4d010b6f"
     }
   ],
   "profiles": {
@@ -64,7 +46,17 @@
       ],
       "requires": [
         "matplotlib"
-      ]
+      ],
+      "evidencePath": "E:\\ai\\qoder\\runtime\\maintenance\\manager-onboarding\\capabilities\\a97b9ddf-a034-4ad7-ba53-0f83e130b88e\\probe.json",
+      "evidenceSha256": "cb6d8bf5cc399ff0a4e31d3eb663eea9c4e113c8e0364fde7846b82f4d010b6f"
+    },
+    "portable-resource-python": {
+      "declared": true,
+      "adapters": [
+        "verified-resource-environment"
+      ],
+      "evidencePath": "E:\\ai\\qoder\\runtime\\manager-resources\\6b088d89-39c0-482e-9faa-261403425166\\RESTORE-VERIFIED.json",
+      "evidenceSha256": "c6e514f3aaa8bcb7ffe463195cfda611c77e31c403207fad329e688df064cc7f"
     }
   },
   "descriptor": {
@@ -84,30 +76,27 @@
     "actions": {
       "prompt": {
         "supported": true,
-        "enforcement": "advisory"
+        "enforcement": "mediated",
+        "evidencePath": "E:\\ai\\qoder\\runtime\\maintenance\\manager-onboarding\\capabilities\\a97b9ddf-a034-4ad7-ba53-0f83e130b88e\\probe.json",
+        "evidenceSha256": "cb6d8bf5cc399ff0a4e31d3eb663eea9c4e113c8e0364fde7846b82f4d010b6f"
       },
       "script": {
         "supported": true,
         "enforcement": "kernel",
-        "note": "〔2026-09-19 2.0-G 重新出证后翻回〕密封脚本环境按本平台文档形态重建为 venv（`bin/python` + `pyvenv.cfg` + `lib/python3.10/site-packages`，2545 件 / 193 MB，含渲染栈），jail 边界与 jail 内 Agg 出图逐项机检 25 项全绿（qoder/runtime/maintenance/2.0-G/baseline/G3-jail-boundary.json）。09-18 那轮的同名结论按 D-2 不可回读，不作为本条依据。"
+        "evidencePath": "E:\\ai\\qoder\\runtime\\maintenance\\manager-onboarding\\capabilities\\a97b9ddf-a034-4ad7-ba53-0f83e130b88e\\probe.json",
+        "evidenceSha256": "cb6d8bf5cc399ff0a4e31d3eb663eea9c4e113c8e0364fde7846b82f4d010b6f"
       },
       "peer": {
         "supported": true,
-        "enforcement": "mediated"
+        "enforcement": "mediated",
+        "evidencePath": "E:\\ai\\qoder\\runtime\\maintenance\\manager-onboarding\\capabilities\\a97b9ddf-a034-4ad7-ba53-0f83e130b88e\\probe.json",
+        "evidenceSha256": "cb6d8bf5cc399ff0a4e31d3eb663eea9c4e113c8e0364fde7846b82f4d010b6f"
       },
       "software-call": {
         "supported": true,
-        "enforcement": "kernel",
-        "note": "adopted with 3.0-Q Q-P2/Q-P3: the action exists in the engine this platform now runs, the software root is declared and bound read-only, the gateway is the published sealed bytes, and three recipes have frozen snapshots. Enforcement is kernel-level in the sense that the gate chain and the jail decide, not the conversation; what the platform does NOT claim is that a dispatch of a real CLI body succeeds today - the reference gateway asks `--tools`, which third-party CLIs do not answer (that gap is registered as D-60).",
-        "evidence": {
-          "engine": "tool/wf-runner/versions/0.12.0（生产钉版，2026-09-29 采纳轮；切换前字节 qoder/runtime/maintenance/20260929-0.12-adoption/checkpoint/qoder-config.json）",
-          "softwareRoot": "declared in qoder/bridge/qoder-config.json and bound read-only as the third jail root - measured EROFS on three roots under the production backend document (3.0-Q Q-P2 jail probe, baseline/q2-switch.json)",
-          "gateway": "software/_connector/versions/1.0.7/connector.py（连接器形态，2026-09-22 用户方向裁定的落点；1.0.7 带 D-90 attachPid，旧条目写的 _gateway 1.0.0 是 3.0 代字节，已按实况更正）",
-          "frozenSnapshots": "mysql-cli@1.0.1, wireshark-cli@1.0.1, dirsearch@1.0.1 frozen from live read-only inquiry (3.0-Q Q-P3, baseline/q3-freeze.json)",
-          "gateChain": "the eight-step chain is exercised up to prepare by 3.0-Q Q-P5 cell S-Q5-06, which pins execution.software in the lock and stops before dispatch",
-          "declaredAbsentAt": "3.0-A S-P7",
-          "adoptionRound": "qoder/runtime/maintenance/20260929-0.12-adoption"
-        }
+        "enforcement": "mediated",
+        "evidencePath": "E:\\ai\\qoder\\runtime\\maintenance\\manager-onboarding\\capabilities\\a97b9ddf-a034-4ad7-ba53-0f83e130b88e\\probe.json",
+        "evidenceSha256": "cb6d8bf5cc399ff0a4e31d3eb663eea9c4e113c8e0364fde7846b82f4d010b6f"
       }
     },
     "profiles": {
@@ -116,26 +105,30 @@
         "adapters": [
           "matplotlib-adapter-first"
         ],
-        "requires": [
-          "matplotlib"
-        ]
+        "evidencePath": "E:\\ai\\qoder\\runtime\\maintenance\\manager-onboarding\\capabilities\\a97b9ddf-a034-4ad7-ba53-0f83e130b88e\\probe.json"
       },
       "python>=3.8": {
         "declared": true,
         "adapters": [
-          "sealed-venv-python-3.10.12"
+          "verified-platform-python"
         ],
-        "requires": [
-          "python>=3.8"
+        "evidencePath": "E:\\ai\\qoder\\runtime\\maintenance\\manager-onboarding\\capabilities\\a97b9ddf-a034-4ad7-ba53-0f83e130b88e\\probe.json"
+      },
+      "administrator": {
+        "declared": true,
+        "adapters": [
+          "per-call-connector-consent"
         ],
-        "evidence": {
-          "file": "qoder/bridge/script-environment.json",
-          "sha256": "1ceb85f2be86bf55fbfe84cb23fbaed1f959286ee2d519d2af82c626e05192dd",
-          "reading": "the sealed script environment resolves 3.10.12 inside the jail; measured by importing the render stack there and by `sys.version` in the stage that reached `succeeded` (Q-P1 battery, S-Q1-02 and S-Q1-03)",
-          "pythonVersion": "3.10.12",
-          "atLeast38": true
-        },
-        "namingNote": "declared under the literal key the recipes already name (C-3 keeps requiredProfiles an opaque string set), so no published recipe byte had to change: dirsearch@1.0.1 still asks for `python>=3.8` verbatim. Renaming the axis is a shared-repo change and belongs with C-3 naming hygiene, not to this platform adoption."
+        "evidencePath": "E:\\ai\\qoder\\runtime\\maintenance\\manager-onboarding\\capabilities\\a97b9ddf-a034-4ad7-ba53-0f83e130b88e\\probe.json",
+        "elevatedDuringProbe": false
+      },
+      "portable-resource-python": {
+        "declared": true,
+        "adapters": [
+          "verified-resource-environment"
+        ],
+        "evidencePath": "E:\\ai\\qoder\\runtime\\manager-resources\\6b088d89-39c0-482e-9faa-261403425166\\RESTORE-VERIFIED.json",
+        "evidenceSha256": "c6e514f3aaa8bcb7ffe463195cfda611c77e31c403207fad329e688df064cc7f"
       }
     },
     "enforcement": "mediated",
@@ -190,7 +183,6 @@
     "profiles.renderer": "已声明并实证渲染：matplotlib 3.10.9/Agg 在 jail 内出图（两次跑哈希相同=渲染确定）。矩阵据此放行数模工作流与两专家的图/PDF 面。"
   },
   "declaredAbsent": {
-    "mcp-tool-surface": "Qoder 客户端支持 MCP，但未注册过指向 tool/agent 的工作流服务 → 不声明；传输面按规范 §9 以 CLI 成立",
     "hostEnvironmentManifest": "不声明：本平台在机器级 Windows 解释器（D 盘 python 3.9.13）上跑 cli.py 进程本身，从未建过钉版主机清单，故 verify_host 与 controllerSha256 交叉校验在本平台不生效。如实陈述后果：0.12.0 因此未向引擎证明「本平台接受的正是这份隔离控制器字节」；控制器哈希仍记录在 2.0-B 的观测里。"
   },
   "gapPlan": {
@@ -207,8 +199,28 @@
       "costMinutes": 25
     },
     "software:veracrypt": {
-      "path": "本平台不冻结 veracrypt 快照：它是 GUI 本体、没有可安全自动询问的 stdout，且真会话属红线 5 的当次同意面。补齐形态＝在本平台 descriptor.profiles 声明 desktop-session 适配器、经 _connector 的 sessionLaunch/Liveness/Terminate 三面起一次真会话并把会话生命周期与attachPid 绑成证据（0.12.0 时代由 _connector 1.0.7 的 D-90 attachPid 支撑），随后重跑 `conform --only veracrypt` 单格。不补则该行维持 unverified，不得写成已可调用。",
-      "costMinutes": 75
+      "path": "在软件中心绑定正确版本本体并完成配方快照，回到向导重试",
+      "costMinutes": 20
+    },
+    "software:burp-suite": {
+      "path": "在软件中心绑定正确版本本体并完成配方快照，回到向导重试",
+      "costMinutes": 20
+    },
+    "software:dirsearch": {
+      "path": "在软件中心绑定正确版本本体并完成配方快照，回到向导重试",
+      "costMinutes": 20
+    },
+    "software:mysql-cli": {
+      "path": "在软件中心绑定正确版本本体并完成配方快照，回到向导重试",
+      "costMinutes": 20
+    },
+    "software:nmap": {
+      "path": "在软件中心绑定正确版本本体并完成配方快照，回到向导重试",
+      "costMinutes": 20
+    },
+    "software:wireshark-cli": {
+      "path": "在软件中心绑定正确版本本体并完成配方快照，回到向导重试",
+      "costMinutes": 20
     }
   },
   "unverified": {
@@ -263,6 +275,18 @@
         "path": "声明缺口而不是能力缺口：本平台 jail 内正是「写本平台运行面 + 共享仓只读 + 隔离 python 进程」这一形态，2.0-G 的 G3-jail-boundary.json（25/25）逐项实测过可见/拒写/无网，但 `permissionAdapters` 里从未把它写成第三个三元组，所以 `conform` 只能按无适配器判 `declaredAbsent`。补齐＝在 `permissionAdapters` 追加该三元组声明（附本轮边界电池的证据路径）并复跑 `conform` + G3 面；不改共享仓、不改生产钉版。",
         "costMinutes": 30
       }
+    }
+  },
+  "resolvedLegacyGaps": {
+    "mcp-tool-surface": {
+      "resolvedAt": "2026-10-07T02:40:02.423Z",
+      "evidencePath": "E:\\ai\\qoder\\runtime\\maintenance\\manager-onboarding\\client-latest.json",
+      "evidenceSha256": "4f9c19e7ed5bb447793b5b9d7be99310948581510a7870bf52542baf19d2ce43"
+    },
+    "action:software-call": {
+      "resolvedAt": "2026-10-07T03:15:04.014Z",
+      "evidencePath": "E:\\ai\\qoder\\runtime\\maintenance\\manager-onboarding\\capabilities\\a97b9ddf-a034-4ad7-ba53-0f83e130b88e\\probe.json",
+      "evidenceSha256": "cb6d8bf5cc399ff0a4e31d3eb663eea9c4e113c8e0364fde7846b82f4d010b6f"
     }
   }
 }

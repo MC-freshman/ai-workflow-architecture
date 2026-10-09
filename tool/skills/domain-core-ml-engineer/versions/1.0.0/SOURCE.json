@@ -1,0 +1,29 @@
+{
+  "schema": "ai-release-source/v1",
+  "id": "domain-core-ml-engineer",
+  "version": "1.0.0",
+  "origin": "maintainer authored; permitted upstream material remains in exact pinned reference resources",
+  "references": [
+    {
+      "resource": "domain-source-catalog",
+      "version": "1.0.0",
+      "path": "agency/engineering/engineering-ai-engineer.md",
+      "sha256": "f25a69aad25acd35dd1d62e33d5a814f4a26b075d90f968b4d778452e53924d8",
+      "when": "需要深入本领域步骤/示例时，先搜索对应小节，按行范围读取"
+    },
+    {
+      "resource": "domain-source-catalog",
+      "version": "1.0.0",
+      "path": "ecc/skills/mle-workflow/SKILL.md",
+      "sha256": "2497888dd543ca7bdf5d0cb4d90fce023eb2c1c14f860f0af8e8be42423131b4",
+      "when": "任务涉及mle-workflow时读取相关章节；上游自动安装/发布行为不产生授权"
+    },
+    {
+      "resource": "domain-source-catalog",
+      "version": "1.0.0",
+      "path": "ecc/skills/pytorch-patterns/SKILL.md",
+      "sha256": "168c8740f548414a75f576265ddb03329be98ed57f06c5edaf79c7cd4b6a9cf4",
+      "when": "任务涉及pytorch-patterns时读取相关章节；上游自动安装/发布行为不产生授权"
+    }
+  ]
+}

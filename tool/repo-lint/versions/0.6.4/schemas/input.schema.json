@@ -1,0 +1,107 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "type": "object",
+  "required": [
+    "toolRoot",
+    "agentRoot",
+    "report",
+    "scope"
+  ],
+  "properties": {
+    "toolRoot": {
+      "type": "string",
+      "minLength": 1
+    },
+    "agentRoot": {
+      "type": "string",
+      "minLength": 1
+    },
+    "report": {
+      "type": "string",
+      "pattern": "^/work/reports/[^/]+\\.json$"
+    },
+    "markdown": {
+      "type": "string",
+      "pattern": "^/work/reports/[^/]+\\.md$"
+    },
+    "bridge": {
+      "type": "string",
+      "minLength": 1
+    },
+    "select": {
+      "type": "string",
+      "pattern": "^(workflow|agent|skill|pack):[a-z0-9][a-z0-9._-]*@.+$"
+    },
+    "scope": {
+      "enum": [
+        "live",
+        "snapshot"
+      ]
+    },
+    "softwareRoot": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Optional third shared repository (3.0). Absent means the software face is not inspected; it is never silently treated as clean."
+    },
+    "governanceRoot": {
+      "type": "string",
+      "description": "Governance repository root; when present the R16 restatement-vs-authority check runs (3.1-A F-3, D-66)."
+    },
+    "softwareNewRelease": {
+      "type": "boolean",
+      "description": "Declare that the software release being staged is new; strict software checks switch on."
+    },
+    "newRelease": {
+      "type": "string",
+      "pattern": "^(workflow|agent|skill|pack):[a-z0-9][a-z0-9._-]*@[0-9]+\\.[0-9]+\\.[0-9]+$",
+      "description": "kind:id@semver of a release being staged; it must carry SOURCE.json and SHA256SUMS (3.1-A F-3)."
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "scope": {
+            "const": "live"
+          }
+        },
+        "required": [
+          "scope"
+        ]
+      },
+      "then": {
+        "properties": {
+          "toolRoot": {
+            "const": "/shared/tool"
+          },
+          "agentRoot": {
+            "const": "/shared/agent"
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "scope": {
+            "const": "snapshot"
+          }
+        },
+        "required": [
+          "scope"
+        ]
+      },
+      "then": {
+        "properties": {
+          "toolRoot": {
+            "pattern": "/work/snapshot/tool$"
+          },
+          "agentRoot": {
+            "pattern": "/work/snapshot/agent$"
+          }
+        }
+      }
+    }
+  ],
+  "additionalProperties": false
+}

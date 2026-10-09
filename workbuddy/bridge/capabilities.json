@@ -1,7 +1,7 @@
 {
   "schema": "ai-platform-capabilities/v1",
   "platform": "workbuddy",
-  "attestedAt": "2026-09-25",
+  "attestedAt": "2026-10-09T00:57:42.428Z",
   "checks": {
     "python-runtime": true,
     "runner-dependency-resolution": true,
@@ -11,14 +11,29 @@
     "runner-protocol-prepare": true,
     "prompt-stage-claim": true,
     "prompt-stage-submit": true,
-    "terminal-stop-with-evidence": true
+    "terminal-stop-with-evidence": true,
+    "script-environment-isolation-jail": true,
+    "peerDispatch": true,
+    "software-call": true
   },
   "permissionAdapters": [
     {
       "filesystem": "project-scoped",
       "network": "deny",
       "process": "allowlisted-only",
-      "evidence": "workbuddy 自证（2026-09-16，接入轮实测）：prompt 阶段由本会话执行，运行产物只落 runsRoot（引擎强制 runsRoot ⊂ platformRoot；写探针 runtime\\runs\\probe-20260916\\write-probe.txt）。分面口径——脚本阶段：本平台未提供脚本隔离沙箱，协议内 action:script 阶段不可执行（见 declaredAbsent.scriptEnvironment），矩阵 claim+stop 不依赖脚本阶段；prompt 阶段：network=deny 与 process=allowlisted-only 是会话自律，WorkBuddy 会话具备网络与任意命令能力，不要把自律当作内核级强制。可调用性以 invocation 矩阵实测为准。"
+      "evidence": "Target-platform jail probe E:\\ai\\workbuddy\\runtime\\maintenance\\manager-onboarding\\capabilities\\87a8d798-fe8c-4e7e-a085-2e850d401ff7\\probe.json sha256=755f4cce431753fe80957c79a299fc2ecb22240c4b3fff902e10c3dba1b4c94a"
+    },
+    {
+      "filesystem": "platform-runtime-write-shared-read-only",
+      "network": "deny",
+      "process": "isolated-python",
+      "evidence": "Target-platform jail probe E:\\ai\\workbuddy\\runtime\\maintenance\\manager-onboarding\\capabilities\\87a8d798-fe8c-4e7e-a085-2e850d401ff7\\probe.json sha256=755f4cce431753fe80957c79a299fc2ecb22240c4b3fff902e10c3dba1b4c94a"
+    },
+    {
+      "filesystem": "shared-read-only-platform-report-write",
+      "network": "deny",
+      "process": "none",
+      "evidence": "Target-platform jail probe E:\\ai\\workbuddy\\runtime\\maintenance\\manager-onboarding\\capabilities\\87a8d798-fe8c-4e7e-a085-2e850d401ff7\\probe.json sha256=755f4cce431753fe80957c79a299fc2ecb22240c4b3fff902e10c3dba1b4c94a"
     }
   ],
   "profiles": {
@@ -28,7 +43,9 @@
       ],
       "requires": [
         "matplotlib"
-      ]
+      ],
+      "evidencePath": "E:\\ai\\workbuddy\\runtime\\maintenance\\manager-onboarding\\capabilities\\87a8d798-fe8c-4e7e-a085-2e850d401ff7\\probe.json",
+      "evidenceSha256": "755f4cce431753fe80957c79a299fc2ecb22240c4b3fff902e10c3dba1b4c94a"
     }
   },
   "attested": {
@@ -49,34 +66,9 @@
     "platform-write": "runtime\\runs\\probe-20260916\\write-probe.txt 写入成功（53 字节）"
   },
   "declaredAbsent": {
-    "peerDispatch": "未声明 peerDispatch，也不提供 peerDispatcherModule / peerChildExecutor；checks 内不放 false（all(checks.values()) 是运行前置门禁）。委派请求按协议不匹配任何操作支，本平台不声称 peer 派发能力。",
-    "mcp-tool-surface": "WorkBuddy 客户端未注册指向 tool/agent 的工作流 MCP 服务 → 不声明；传输面按 §9 以 CLI + 用户级 Skill 成立",
-    "scriptEnvironment": "未提供脚本隔离沙箱（无 WSL/容器隔离）；协议内 action:script 阶段与 --tool render-figure / record-visual-review 的一格执行不可用。矩阵默认 claim+stop 不受影响；含脚本阶段的工作流（如 repo-lint）因此在其脚本面不可执行。",
-    "math-solver-chain": "数模工作流可 prepare/claim prompt，但脚本阶段不可执行（无脚本隔离环境）→ 求解器链不承接；任何交稿级数模要求应转 zcode（比赛备份平台）。",
-    "profile:administrator": "veracrypt 的 mount / dismount / createVolume 要求管理员权限（recipe requiredProfiles=[administrator]）。WorkBuddy 会话以普通用户运行，未注册提权适配器 → 不声明。只读类 capability（含 veracrypt version）不受影响，它们不要求该 profile。",
-    "action:script": "并集项名（platform-conformance 的键形）。本平台未提供脚本隔离沙箱（无 WSL/容器隔离、无 scriptEnvironmentRungs），协议内 action:script 阶段不可执行；权威登记与出处同上一条 scriptEnvironment。",
-    "action:peer": "并集项名。本平台未声明 peerDispatch，也不提供 peerDispatcherModule / peerChildExecutor → 委派不可用；权威登记与出处同上一条 peerDispatch。",
-    "permission-triple:platform-runtime-write-shared-read-only/deny/isolated-python": "并集项名。这是 wf-runner 自己声明的脚本面策略（平台运行期可写、共享仓只读、隔离解释器）：本平台没有密封脚本环境，故无法兑现该三元组。与 action:script 同一根因（W1）。",
-    "permission-triple:shared-read-only-platform-report-write/deny/none": "并集项名。这是 repo-lint 声明的只读共享根策略：需要 D04 只读 jail 挂载与脚本隔离环境。本平台实测被 repo-lint 0.5.1 自身拒绝——`--scope live` 报文原文『live scope requires the platform's read-only jail mounts for every root it is given: /shared/tool, /shared/agent and, when a software root is passed, /shared/software (D04 declaration; BP-1: one binding set for all three roots)』（P-TABLE P4 记录，tmp/p4-repo-lint-live.u8.txt）。",
-    "python-package:pymupdf": "并集项名。math-modeling-programmer 的 environmentLock 钉了 PyMuPDF，而本平台声明的主机侧环境清单（bridge/environment.json 20 包）不含它，且本平台没有密封脚本环境 ⇒ 数模求解链的脚本面不承接。这是 W1 的存在面，不是漏装。"
+    "math-solver-chain": "数模工作流可 prepare/claim prompt，但脚本阶段不可执行（无脚本隔离环境）→ 求解器链不承接；任何交稿级数模要求应转 zcode（比赛备份平台）。"
   },
   "gapPlan": {
-    "action:script": {
-      "path": "建脚本隔离环境（参考 qoder 的 WSL2 jail 或容器方案），随后在 config 里声明 scriptEnvironmentRungs 与指向密封环境清单的 environmentManifest，并按 runner 的脚本门链在真字节上出证。本轮不做：建沙箱需用户单独授权（bridge/platform.md 待办 W1）。",
-      "costMinutes": 600
-    },
-    "action:peer": {
-      "path": "声明 peerDispatch 并落地 config.peerDispatcherModule / peerChildExecutor 两个键，再按 peer-lock 语义实测一次委派闭环；在此之前不声明（未实测面不写成支持）。",
-      "costMinutes": 480
-    },
-    "permission-triple:platform-runtime-write-shared-read-only/deny/isolated-python": {
-      "path": "与 action:script 同一根因（无密封脚本环境）：W1 解决后该三元组随即被满足，不需要单独的动作。",
-      "costMinutes": 0
-    },
-    "permission-triple:shared-read-only-platform-report-write/deny/none": {
-      "path": "同上再加 D04 只读 jail 挂载（/shared/tool、/shared/agent、/shared/software 三个根一套绑定，BP-1 要求三仓同构）。W1 解决后按 snapshot 或 live 口径重跑 repo-lint 并留报告。",
-      "costMinutes": 600
-    },
     "python-package:pymupdf": {
       "path": "在密封脚本环境内按 math-modeling-programmer 的 environmentLock 补上 PyMuPDF；主机侧 venv 装它并无意义（没有密封环境就没有『密封环境内的依赖』这一语义）。与 W1 同批解决。",
       "costMinutes": 120
@@ -96,6 +88,10 @@
     "union-source-gap:software": {
       "path": "同上（software 仓）。",
       "costMinutes": 30
+    },
+    "software:burp-suite": {
+      "path": "在软件中心绑定正确版本本体并完成配方快照，回到向导重试",
+      "costMinutes": 20
     }
   },
   "unverified": {
@@ -122,24 +118,51 @@
     "actions": {
       "prompt": {
         "supported": true,
-        "evidence": "checks.prompt-stage-claim / prompt-stage-submit / terminal-stop-with-evidence 三项实证；矩阵 42 个工作流/专家格里 41 格 PASS（唯一非 PASS 是 repo-lint 的合成参数不足与共享侧 mastermind-bug-bounty 锁缺陷，两者都不在 prompt 能力面上）"
+        "enforcement": "mediated",
+        "evidencePath": "E:\\ai\\workbuddy\\runtime\\maintenance\\manager-onboarding\\capabilities\\87a8d798-fe8c-4e7e-a085-2e850d401ff7\\probe.json",
+        "evidenceSha256": "755f4cce431753fe80957c79a299fc2ecb22240c4b3fff902e10c3dba1b4c94a"
       },
       "script": {
-        "supported": false,
-        "evidence": "无脚本隔离沙箱（declaredAbsent.scriptEnvironment）"
+        "supported": true,
+        "enforcement": "kernel",
+        "evidencePath": "E:\\ai\\workbuddy\\runtime\\maintenance\\manager-onboarding\\capabilities\\87a8d798-fe8c-4e7e-a085-2e850d401ff7\\probe.json",
+        "evidenceSha256": "755f4cce431753fe80957c79a299fc2ecb22240c4b3fff902e10c3dba1b4c94a"
       },
       "peer": {
-        "supported": false,
-        "evidence": "未声明 peerDispatch、无 peerDispatcherModule / peerChildExecutor（declaredAbsent.peerDispatch）"
+        "supported": true,
+        "enforcement": "mediated",
+        "evidencePath": "E:\\ai\\workbuddy\\runtime\\maintenance\\manager-onboarding\\capabilities\\87a8d798-fe8c-4e7e-a085-2e850d401ff7\\probe.json",
+        "evidenceSha256": "755f4cce431753fe80957c79a299fc2ecb22240c4b3fff902e10c3dba1b4c94a"
+      },
+      "software-call": {
+        "supported": true,
+        "enforcement": "mediated",
+        "evidencePath": "E:\\ai\\workbuddy\\runtime\\maintenance\\manager-onboarding\\capabilities\\87a8d798-fe8c-4e7e-a085-2e850d401ff7\\probe.json",
+        "evidenceSha256": "755f4cce431753fe80957c79a299fc2ecb22240c4b3fff902e10c3dba1b4c94a"
       }
     },
     "profiles": {
       "python>=3.8": {
         "declared": true,
         "adapters": [
-          "workbuddy-venv-python"
+          "verified-platform-python"
         ],
-        "evidence": "runtime/py-env（Windows venv，python 3.9.13）即 config.interpreters[\".py\"] 所指；逐包版本见 bridge/environment.json"
+        "evidencePath": "E:\\ai\\workbuddy\\runtime\\maintenance\\manager-onboarding\\capabilities\\87a8d798-fe8c-4e7e-a085-2e850d401ff7\\probe.json"
+      },
+      "administrator": {
+        "declared": true,
+        "adapters": [
+          "per-call-connector-consent"
+        ],
+        "evidencePath": "E:\\ai\\workbuddy\\runtime\\maintenance\\manager-onboarding\\capabilities\\87a8d798-fe8c-4e7e-a085-2e850d401ff7\\probe.json",
+        "elevatedDuringProbe": false
+      },
+      "renderer": {
+        "declared": true,
+        "adapters": [
+          "matplotlib-adapter-first"
+        ],
+        "evidencePath": "E:\\ai\\workbuddy\\runtime\\maintenance\\manager-onboarding\\capabilities\\87a8d798-fe8c-4e7e-a085-2e850d401ff7\\probe.json"
       }
     }
   },
@@ -188,6 +211,43 @@
       "bodyFilesMatched": 17,
       "rootsPresent": 3,
       "bodyDetectedPathsPresent": 6
+    }
+  },
+  "resolvedLegacyGaps": {
+    "action:script": {
+      "resolvedAt": "2026-10-07T08:57:58.824Z",
+      "evidencePath": "E:\\ai\\workbuddy\\runtime\\maintenance\\manager-onboarding\\capabilities\\dccd0fb1-6663-4681-af4b-8977eff47126\\probe.json",
+      "evidenceSha256": "30258f443b15492c4c9f79a40f8af5865e07196b6f446a4e05027bc21747f968"
+    },
+    "action:peer": {
+      "resolvedAt": "2026-10-07T08:57:58.824Z",
+      "evidencePath": "E:\\ai\\workbuddy\\runtime\\maintenance\\manager-onboarding\\capabilities\\dccd0fb1-6663-4681-af4b-8977eff47126\\probe.json",
+      "evidenceSha256": "30258f443b15492c4c9f79a40f8af5865e07196b6f446a4e05027bc21747f968"
+    },
+    "mcp-tool-surface": {
+      "resolvedAt": "2026-10-07T08:57:58.824Z",
+      "evidencePath": "E:\\ai\\workbuddy\\runtime\\maintenance\\manager-onboarding\\client-latest.json",
+      "evidenceSha256": "2865ba902dc3e22c116adf48ae95074e5b129d1b35a5d48eae523dd93649151a"
+    },
+    "scriptEnvironment": {
+      "resolvedAt": "2026-10-07T11:27:46.772Z",
+      "evidencePath": "E:\\ai\\workbuddy\\runtime\\maintenance\\manager-onboarding\\capabilities\\dccd0fb1-6663-4681-af4b-8977eff47126\\probe.json",
+      "evidenceSha256": "30258f443b15492c4c9f79a40f8af5865e07196b6f446a4e05027bc21747f968"
+    },
+    "peerDispatch": {
+      "resolvedAt": "2026-10-07T11:27:46.772Z",
+      "evidencePath": "E:\\ai\\workbuddy\\runtime\\maintenance\\manager-onboarding\\capabilities\\dccd0fb1-6663-4681-af4b-8977eff47126\\probe.json",
+      "evidenceSha256": "30258f443b15492c4c9f79a40f8af5865e07196b6f446a4e05027bc21747f968"
+    },
+    "permission-triple:platform-runtime-write-shared-read-only/deny/isolated-python": {
+      "resolvedAt": "2026-10-07T11:27:46.772Z",
+      "evidencePath": "E:\\ai\\workbuddy\\runtime\\maintenance\\manager-onboarding\\capabilities\\dccd0fb1-6663-4681-af4b-8977eff47126\\probe.json",
+      "evidenceSha256": "30258f443b15492c4c9f79a40f8af5865e07196b6f446a4e05027bc21747f968"
+    },
+    "permission-triple:shared-read-only-platform-report-write/deny/none": {
+      "resolvedAt": "2026-10-07T11:27:46.772Z",
+      "evidencePath": "E:\\ai\\workbuddy\\runtime\\maintenance\\manager-onboarding\\capabilities\\dccd0fb1-6663-4681-af4b-8977eff47126\\probe.json",
+      "evidenceSha256": "30258f443b15492c4c9f79a40f8af5865e07196b6f446a4e05027bc21747f968"
     }
   }
 }

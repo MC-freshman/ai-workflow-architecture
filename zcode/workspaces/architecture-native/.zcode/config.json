@@ -1,0 +1,15 @@
+{
+  "mcp": {
+    "servers": {
+      "architecture": {
+        "command": "E:\\ai\\zcode\\runtime\\manager-environments\\1247c7a9-da10-4227-a9a3-ff41b6110a6e\\host\\Scripts\\python.exe",
+        "args": [
+          "-B",
+          "E:\\ai\\zcode\\bridge\\manager-client\\mcp_service.py",
+          "E:\\ai\\zcode\\bridge\\zcode-config.json"
+        ],
+        "enabled": true
+      }
+    }
+  }
+}

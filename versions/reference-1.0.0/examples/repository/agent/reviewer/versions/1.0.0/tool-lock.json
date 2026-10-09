@@ -1,0 +1,5 @@
+{
+  "schema": "ai-tool-lock/v1",
+  "workflow": {"id": "hello-world", "version": "1.0.0"}
+}
+

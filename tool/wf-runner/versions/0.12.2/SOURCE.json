@@ -1,0 +1,12 @@
+{
+  "schema": "ai-governance-source/v1",
+  "authorSession": "codex",
+  "version": "0.12.2",
+  "derivedFrom": "wf-runner@0.12.1",
+  "previousSource": "tool/wf-runner/versions/0.12.1/SOURCE.json",
+  "originalHashManifestSha256": "eb26bf1eeeb703f4df10503f702a34b3bcb56a3e0d2369347ff2e7b92a46940e",
+  "releaseStatus": "published",
+  "releaseScope": "Approved unified P7: official one-process invocation smoke and paired checker identity correction; no production adoption.",
+  "plan": "versions/架构管理台全面修复模块化接入与提速方案P表-20261003.md",
+  "releasedAt": "2026-10-03T10:41:26.075Z"
+}

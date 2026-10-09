@@ -1,0 +1,19 @@
+{
+  "schema": "ai-tool-lock/v2",
+  "skills": {
+    "domain-core-mastermind-bug-bounty": "1.0.0",
+    "mastermind-bug-bounty-task-01": "1.0.0",
+    "mastermind-bug-bounty-task-02": "1.0.0",
+    "mastermind-bug-bounty-task-03": "1.0.0",
+    "mastermind-bug-bounty-task-04": "1.0.0",
+    "mastermind-bug-bounty-task-05": "1.0.0",
+    "mastermind-bug-bounty-task-06": "1.0.0",
+    "domain-source-catalog": "1.0.0",
+    "security-web-resources": "1.0.0"
+  },
+  "workflows": {
+    "mastermind-bug-bounty": "3.2.0"
+  },
+  "packs": {},
+  "profiles": {}
+}

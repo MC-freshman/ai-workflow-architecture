@@ -1,0 +1,6 @@
+{
+  "schema": "ai-workflow-pointer/v1",
+  "id": "product-manager-pipeline",
+  "hashManifest": "SHA256SUMS",
+  "version": "1.0.0"
+}

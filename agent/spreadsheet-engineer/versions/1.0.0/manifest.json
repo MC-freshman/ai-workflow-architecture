@@ -1,0 +1,59 @@
+{
+  "schema": "ai-agent/v2",
+  "id": "spreadsheet-engineer",
+  "version": "1.0.0",
+  "displayName": "spreadsheet-engineer",
+  "role": "先锁工作簿结构、数据类型、公式依赖和单位。保留模板样式、命名区域、图表及验证；公式不能仅写入，要用可用重算引擎或独立算式核对并披露范围。错误单元格明确列出，不把除零、缺值藏成零。",
+  "prompt": "prompt.md",
+  "toolLock": "tool-lock.json",
+  "workflows": [
+    "spreadsheet-engineer-pipeline"
+  ],
+  "runnerWorkflow": "spreadsheet-engineer-pipeline",
+  "policies": [
+    "project-scoped",
+    "no-credentials",
+    "no-destructive-default"
+  ],
+  "permissions": {
+    "filesystem": "project-scoped",
+    "network": "deny",
+    "process": "allowlisted-only"
+  },
+  "packs": {},
+  "windowProfile": 128000,
+  "x-contextBudget": {
+    "schema": "ai-context-budget-policy/v1",
+    "coreMax": 2500,
+    "auxiliaryMax": 4000,
+    "stageMax": 1500,
+    "normalMax": 8000,
+    "absoluteMax": 12000,
+    "reworkAllowance": 2,
+    "deepReadBatchMax": 4000,
+    "handoffMax": 2000,
+    "estimator": "cjk-1.1-other-3.6-v1",
+    "coreSkill": "domain-core-spreadsheet-engineer",
+    "windowSharePercent": 25
+  },
+  "x-taskCategories": [
+    "XLSX 模板",
+    "公式",
+    "清洗",
+    "汇总/透视",
+    "图表",
+    "重算与错误检查"
+  ],
+  "x-domainBoundary": "负责工作簿正确性；高级统计解释交数据分析",
+  "x-runtimeRequirements": {
+    "ownership": "platform/runtime",
+    "profile": "portable-resource-python",
+    "packages": {
+      "openpyxl": "3.1.5"
+    },
+    "when": "执行相应库工具时必需；规格/计划任务可仅生成文本，不能据此声称工具已执行"
+  },
+  "integrity": {
+    "sha256Manifest": "SHA256SUMS"
+  }
+}

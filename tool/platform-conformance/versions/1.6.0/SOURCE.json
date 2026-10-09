@@ -1,0 +1,9 @@
+{
+  "schema": "ai-release-source/v1",
+  "id": "platform-conformance",
+  "version": "1.6.0",
+  "derivedFrom": "platform-conformance@1.5.1",
+  "change": "approved 20261009 P2: estimated context budgets and selected agent content conformance",
+  "author": "workspace maintainer",
+  "license": "existing release terms for unchanged bytes; new operational implementation by workspace maintainer"
+}

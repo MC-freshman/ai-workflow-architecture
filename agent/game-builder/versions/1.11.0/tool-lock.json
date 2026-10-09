@@ -1,0 +1,18 @@
+{
+  "schema": "ai-tool-lock/v2",
+  "skills": {
+    "domain-core-game-builder": "1.0.0",
+    "game-builder-task-01": "1.0.0",
+    "game-builder-task-02": "1.0.0",
+    "game-builder-task-03": "1.0.0",
+    "game-builder-task-04": "1.0.0",
+    "game-builder-task-05": "1.0.0",
+    "game-builder-task-06": "1.0.0",
+    "domain-source-catalog": "1.0.0"
+  },
+  "workflows": {
+    "game-pipeline": "1.2.0"
+  },
+  "packs": {},
+  "profiles": {}
+}

@@ -1,0 +1,496 @@
+[
+  {
+    "id": "N01",
+    "description": "Unknown lock property",
+    "path": [
+      "lock",
+      "progress"
+    ],
+    "value": "done",
+    "expect": "schema:"
+  },
+  {
+    "id": "N02",
+    "description": "Old v1 is not v1.1",
+    "path": [
+      "lock",
+      "schemaVersion"
+    ],
+    "value": "ai-run-lock/v1",
+    "expect": "schema:"
+  },
+  {
+    "id": "N03",
+    "description": "Mutable workflow version selector",
+    "path": [
+      "lock",
+      "resources",
+      0,
+      "version"
+    ],
+    "value": "current",
+    "expect": "schema:"
+  },
+  {
+    "id": "N04",
+    "description": "Unresolved dependency",
+    "path": [
+      "lock",
+      "resources",
+      0,
+      "dependencies"
+    ],
+    "value": [
+      {
+        "key": "missing",
+        "version": "1.0.0",
+        "source": {
+          "kind": "dependency-lock",
+          "path": "E:/ai/codex/fixtures/lock.json",
+          "sha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+        }
+      }
+    ],
+    "expect": "dependency:"
+  },
+  {
+    "id": "N05",
+    "description": "Changed initial parameter digest",
+    "path": [
+      "lock",
+      "input",
+      "parameters",
+      "seed"
+    ],
+    "value": 18,
+    "expect": "hash:parameters"
+  },
+  {
+    "id": "N06",
+    "description": "Input path traversal",
+    "path": [
+      "lock",
+      "input",
+      "files",
+      0,
+      "path"
+    ],
+    "value": "inputs/../other.txt",
+    "expect": "schema:"
+  },
+  {
+    "id": "N07",
+    "description": "State points at a different lock",
+    "path": [
+      "states",
+      0,
+      "lockSha256"
+    ],
+    "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "expect": "hash:lock"
+  },
+  {
+    "id": "N08",
+    "description": "Terminal state while process remains alive",
+    "path": [
+      "states",
+      4,
+      "managedProcesses"
+    ],
+    "value": [
+      {
+        "pid": 100,
+        "startedAt": "2026-09-05T00:00:00Z",
+        "identitySha256": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+      }
+    ],
+    "expect": "schema:"
+  },
+  {
+    "id": "N09",
+    "description": "Success without all completed stages",
+    "path": [
+      "states",
+      4,
+      "completed"
+    ],
+    "value": [],
+    "expect": "success:incomplete"
+  },
+  {
+    "id": "N10",
+    "description": "Missing required gate",
+    "path": [
+      "states",
+      4,
+      "completed",
+      0,
+      "gates"
+    ],
+    "value": [],
+    "expect": "gate:required"
+  },
+  {
+    "id": "N11",
+    "description": "Stale gate input binding",
+    "path": [
+      "states",
+      4,
+      "completed",
+      0,
+      "gates",
+      0,
+      "inputSha256"
+    ],
+    "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "expect": "gate:input"
+  },
+  {
+    "id": "N12",
+    "description": "Event hash changed",
+    "path": [
+      "events",
+      1,
+      "eventSha256"
+    ],
+    "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "expect": "hash:event"
+  },
+  {
+    "id": "N13",
+    "description": "Revision skipped",
+    "path": [
+      "events",
+      1,
+      "newRevision"
+    ],
+    "value": 7,
+    "expect": "event:revision"
+  },
+  {
+    "id": "N14",
+    "description": "Unknown protocol operation",
+    "path": [
+      "messages",
+      0,
+      "operation"
+    ],
+    "value": "resume",
+    "expect": "schema:"
+  },
+  {
+    "id": "N15",
+    "description": "Mutation missing idempotency key",
+    "path": [
+      "messages",
+      2,
+      "idempotencyKey"
+    ],
+    "delete": true,
+    "expect": "schema:"
+  },
+  {
+    "id": "N16",
+    "description": "Submit stale input",
+    "path": [
+      "messages",
+      4,
+      "payload",
+      "inputSha256"
+    ],
+    "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "expect": "submit:input"
+  },
+  {
+    "id": "N17",
+    "description": "Response correlation mismatch",
+    "path": [
+      "messages",
+      3,
+      "requestId"
+    ],
+    "value": "different-id",
+    "expect": "protocol:correlation"
+  },
+  {
+    "id": "N18",
+    "description": "Committed receipt missing response",
+    "path": [
+      "transactions",
+      0,
+      "response"
+    ],
+    "value": null,
+    "expect": "schema:"
+  },
+  {
+    "id": "N19",
+    "description": "Receipt payload hash mismatch",
+    "path": [
+      "transactions",
+      0,
+      "requestSha256"
+    ],
+    "value": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "expect": "transaction:hash"
+  },
+  {
+    "id": "N20",
+    "description": "Future peer execution is rejected",
+    "path": [
+      "lock",
+      "execution",
+      "stages",
+      0,
+      "action"
+    ],
+    "value": "peer-agent",
+    "expect": "schema:"
+  },
+  {
+    "id": "N21",
+    "description": "Required parallel execution unsupported",
+    "path": [
+      "lock",
+      "execution",
+      "maxParallel"
+    ],
+    "value": 2,
+    "expect": "schema:"
+  },
+  {
+    "id": "N22",
+    "description": "Success cannot claim an unknown outcome",
+    "path": [
+      "states",
+      4,
+      "outcome"
+    ],
+    "value": "unknown-outcome",
+    "expect": "schema:"
+  },
+  {
+    "id": "N23",
+    "description": "Prompt handoff requires a prompt task",
+    "path": [
+      "messages",
+      3,
+      "result",
+      "task",
+      "prompt"
+    ],
+    "delete": true,
+    "expect": "schema:"
+  },
+  {
+    "id": "N24",
+    "description": "Stage dependency cycle",
+    "path": [
+      "lock",
+      "execution",
+      "stages",
+      0,
+      "dependsOn"
+    ],
+    "value": [
+      "draft"
+    ],
+    "expect": "stage:cycle"
+  },
+  {
+    "id": "N25",
+    "description": "Changing terminal status in the event chain",
+    "operation": "append-after-terminal",
+    "expect": "event:terminal"
+  },
+  {
+    "id": "N26",
+    "description": "Idempotency key reused with a different payload",
+    "operation": "conflicting-receipt",
+    "expect": "transaction:idempotency"
+  },
+  {
+    "id": "N27",
+    "description": "Internal workflow edge must come from tool-lock",
+    "operation": "agent-without-tool-lock",
+    "expect": "authority:tool-lock"
+  },
+  {
+    "id": "N28",
+    "description": "Generated evidence must not enter initial inputs",
+    "path": [
+      "lock",
+      "input",
+      "files",
+      0,
+      "path"
+    ],
+    "value": "work/project/generated.py",
+    "expect": "input:prefix"
+  },
+  {
+    "id": "N29",
+    "description": "Unpaired surrogate prohibited in canonical JSON",
+    "path": [
+      "lock",
+      "input",
+      "parameters",
+      "bad"
+    ],
+    "value": "\ud800",
+    "expect": "canonical:"
+  },
+  {
+    "id": "N30",
+    "description": "Integer outside portable range",
+    "path": [
+      "lock",
+      "input",
+      "parameters",
+      "seed"
+    ],
+    "value": 9007199254740992,
+    "expect": "canonical:"
+  },
+  {
+    "id": "N31",
+    "description": "Stale attempt submitted",
+    "path": [
+      "messages",
+      4,
+      "payload",
+      "attempt"
+    ],
+    "value": 2,
+    "expect": "submit:attempt"
+  },
+  {
+    "id": "N32",
+    "description": "Receipt references another transaction event",
+    "path": [
+      "transactions",
+      0,
+      "eventSequences"
+    ],
+    "value": [
+      2
+    ],
+    "expect": "transaction:event-link"
+  },
+  {
+    "id": "N33",
+    "description": "Invalid date-time rejected with format checking",
+    "path": [
+      "lock",
+      "createdAt"
+    ],
+    "value": "2026-99-99",
+    "expect": "schema:"
+  },
+  {
+    "id": "N34",
+    "description": "Submitted output is outside immutable evidence",
+    "path": [
+      "states",
+      4,
+      "completed",
+      0,
+      "outputs",
+      0,
+      "path"
+    ],
+    "value": "work/project/result.txt",
+    "expect": "evidence:prefix"
+  },
+  {
+    "id": "N35",
+    "description": "Status cannot take a mutation key",
+    "path": [
+      "messages",
+      6,
+      "idempotencyKey"
+    ],
+    "value": "poll-key",
+    "expect": "schema:"
+  },
+  {
+    "id": "N36",
+    "description": "Prompt task cannot be newly issued after stop request",
+    "path": [
+      "messages",
+      3,
+      "result",
+      "state",
+      "stopRequested"
+    ],
+    "value": true,
+    "expect": "next:stop-requested"
+  },
+  {
+    "id": "N37",
+    "description": "A succeeded event cannot describe running state",
+    "path": [
+      "events",
+      4,
+      "status"
+    ],
+    "value": "running",
+    "expect": "event:type-status"
+  },
+  {
+    "id": "N38",
+    "description": "Claimed no-task reason contradicts terminal state",
+    "path": [
+      "messages",
+      11,
+      "result",
+      "reason"
+    ],
+    "value": "waiting",
+    "expect": "next:reason-state"
+  },
+  {
+    "id": "N39",
+    "description": "Unknown rigor tier",
+    "path": [
+      "lock",
+      "execution",
+      "rigor"
+    ],
+    "value": "turbo",
+    "expect": "schema:"
+  },
+  {
+    "id": "N40",
+    "description": "A run may not claim it is frozen while gated is false",
+    "path": [
+      "lock",
+      "execution",
+      "gated"
+    ],
+    "value": false,
+    "expect": "schema:"
+  },
+  {
+    "id": "N41",
+    "description": "Host-controlled execution without a consent record",
+    "path": [
+      "lock",
+      "execution",
+      "execPath"
+    ],
+    "value": "host-controlled",
+    "expect": "schema:"
+  },
+  {
+    "id": "N42",
+    "description": "A platform that declares no sealed environment may not still name environments",
+    "path": [
+      "lock",
+      "execution",
+      "environmentSealed"
+    ],
+    "value": false,
+    "expect": "schema:"
+  }
+]

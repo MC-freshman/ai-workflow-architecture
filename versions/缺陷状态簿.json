@@ -694,6 +694,540 @@
    "costMinutes": 90,
    "source": "tool/wf-runner/versions/0.11.0/engine.py",
    "evidence": "runner 0.11.0 records contracts:runtime-contracts in the lock and re-validates on resume (VERSION_CONFLICT); contracts 1.5.0 grants kind=contracts; mixed-generation prepare refused with zero disk"
+  },
+  {
+   "id": "D-98",
+   "title": "能力探针继承旧 false，prepare 自指拒绝；peer 二次报 KeyError",
+   "location": "architecture-manager/src/runtime/capability_probe.py",
+   "status": "closed",
+   "owner": "Codex，管理台接入续跑与暂缓修复 P1–P5（2026-10-06）",
+   "costMinutes": 0,
+   "source": "architecture-manager/src/runtime/capability_probe.py",
+   "evidence": "0.5.1 候选表修复已在 dsh 16:07 实测；0.5.2 回归验证生产表不被临时候选改写，peer 给出依赖失败原因。"
+  },
+  {
+   "id": "D-99",
+   "title": "独立安装客户端或软件绑定后自动接入无法续接",
+   "location": "architecture-manager/src/domains/platforms/onboarding-resume.mjs",
+   "status": "closed",
+   "owner": "Codex，管理台接入续跑与暂缓修复 P1–P5（2026-10-06）",
+   "costMinutes": 0,
+   "source": "architecture-manager/src/domains/platforms/onboarding-resume.mjs",
+   "evidence": "显式差异确认、受影响步骤失效、旧日志 SHA 日期副本；等待候选 EXE 回读。 最终 0.5.2 实际 EXE 的暂缓保存、严格拒绝、差异续接、显式重建及 Git 回读全通过；完整回归 183 项：182 PASS/0 FAIL/1 WSL 未执行。"
+  },
+  {
+   "id": "D-100",
+   "title": "能力实测通过后旧 unverified/declaredAbsent 名仍残留",
+   "location": "architecture-manager/src/domains/platforms/capability-evidence.mjs",
+   "status": "closed",
+   "owner": "Codex，管理台接入续跑与暂缓修复 P1–P5（2026-10-06）",
+   "costMinutes": 0,
+   "source": "architecture-manager/src/domains/platforms/capability-evidence.mjs",
+   "evidence": "只清有对应证据的旧名；真实客户端回执绑定漂移则保留 MCP 缺口。生产 dsh 尚未执行新登记。"
+  },
+  {
+   "id": "D-101",
+   "title": "Windows Git Bash tar 把盘符 ZIP 路径当远程主机",
+   "location": "architecture-manager/src/infrastructure/archive-tool.mjs",
+   "status": "closed",
+   "owner": "Codex，管理台接入续跑与暂缓修复 P1–P5（2026-10-06）",
+   "costMinutes": 0,
+   "source": "architecture-manager/src/infrastructure/archive-tool.mjs",
+   "evidence": "GNU tar 在 PATH 前置真实复现拒绝；显式系统 tar 真实 ZIP 恢复逐哈希通过。原 PowerShell 基线 14/14，通过与失败由 PATH 区分。"
+  },
+  {
+   "id": "D-102",
+   "title": "缺陷状态簿连续性检查固定上界 D-97，漏查新增号段",
+   "location": "versions/缺陷状态簿.check.py",
+   "status": "closed",
+   "owner": "Codex，管理台接入续跑与暂缓修复 P1–P5（2026-10-06）",
+   "costMinutes": 0,
+   "source": "versions/缺陷状态簿.check.py",
+   "evidence": "合法 ID 动态上界；D-98 漏号与非法 ID 负例须返回结构化失败。"
+  },
+  {
+   "id": "D-103",
+   "title": "automatic.json 没有带日期 SHA 历史，续接来源无法回读",
+   "location": "architecture-manager/src/domains/platforms/onboarding-resume.mjs",
+   "status": "closed",
+   "owner": "Codex，管理台接入续跑与暂缓修复 P1–P5（2026-10-06）",
+   "costMinutes": 0,
+   "source": "architecture-manager/src/domains/platforms/onboarding-resume.mjs",
+   "evidence": "每次获批尝试/重建前按原始字节留历史与完整 SHA；拒绝的未批准差异不换日志。"
+  },
+  {
+   "id": "D-104",
+   "title": "一键接入不能暂缓不需要的软件/环境/客户端/认证/Git",
+   "location": "architecture-manager/src/onboarding-auto.mjs",
+   "status": "closed",
+   "owner": "Codex，管理台接入续跑与暂缓修复 P1–P5（2026-10-06）",
+   "costMinutes": 0,
+   "source": "architecture-manager/src/onboarding-auto.mjs",
+   "evidence": "配置与安全校验不可跳，依赖自动暂缓；配置保存成功保持 configured-pending，未测不算 PASS 或完整接入。等待实际 EXE。 最终 0.5.2 实际 EXE 的暂缓保存、严格拒绝、差异续接、显式重建及 Git 回读全通过；完整回归 183 项：182 PASS/0 FAIL/1 WSL 未执行。"
+  },
+  {
+   "id": "D-105",
+   "title": "接入向导异步回读/扫描刷新可能覆盖尚未保存的表单",
+   "location": "architecture-manager/src/renderer/panels/onboard.jsx:27–43",
+   "status": "closed",
+   "owner": "Codex，管理台0.5.6接入链路修复P1–P6",
+   "costMinutes": 0,
+   "source": "versions/管理台0.5.6-接入链路修复记录-20261007.md",
+   "evidence": "215项214PASS/0FAIL/1WSL未测；实际便携EXE验证草稿保护、模板更新、现行配方绑定。旧平台日志保持原SHA；业务未执行与历史runtime入库另列，不刷绿。"
+  },
+  {
+   "id": "D-106",
+   "title": "peer 实测判据只检查 claimReached，已安装副本仍为旧字节",
+   "status": "closed",
+   "owner": "Codex，管理台0.5.6接入链路修复P1–P6",
+   "costMinutes": 0,
+   "location": "architecture-manager/src/",
+   "source": "versions/管理台0.5.6-接入链路修复记录-20261007.md",
+   "evidence": "215项214PASS/0FAIL/1WSL未测；实际便携EXE验证草稿保护、模板更新、现行配方绑定。旧平台日志保持原SHA；业务未执行与历史runtime入库另列，不刷绿。"
+  },
+  {
+   "id": "D-107",
+   "title": "Python 环境切换后 hostEnvironmentManifest 仍锁旧解释器",
+   "status": "closed",
+   "owner": "Codex，管理台0.5.6接入链路修复P1–P6",
+   "costMinutes": 0,
+   "location": "architecture-manager/src/",
+   "source": "versions/管理台0.5.6-接入链路修复记录-20261007.md",
+   "evidence": "215项214PASS/0FAIL/1WSL未测；实际便携EXE验证草稿保护、模板更新、现行配方绑定。旧平台日志保持原SHA；业务未执行与历史runtime入库另列，不刷绿。"
+  },
+  {
+   "id": "D-108",
+   "title": "软件网关改名后旧 bodies 与解释器绑定丢失",
+   "status": "closed",
+   "owner": "Codex，管理台0.5.6接入链路修复P1–P6",
+   "costMinutes": 0,
+   "location": "architecture-manager/src/",
+   "source": "versions/管理台0.5.6-接入链路修复记录-20261007.md",
+   "evidence": "215项214PASS/0FAIL/1WSL未测；实际便携EXE验证草稿保护、模板更新、现行配方绑定。旧平台日志保持原SHA；业务未执行与历史runtime入库另列，不刷绿。；0.5.7 调整为当前指针权威、显式迁移，避免历史文件每次合并形成新冲突，见 D-113。"
+  },
+  {
+   "id": "D-109",
+   "title": "软件本体安置后缺少绑定到现行配方的明确入口",
+   "status": "closed",
+   "owner": "Codex，管理台0.5.6接入链路修复P1–P6",
+   "costMinutes": 0,
+   "location": "architecture-manager/src/",
+   "source": "versions/管理台0.5.6-接入链路修复记录-20261007.md",
+   "evidence": "215项214PASS/0FAIL/1WSL未测；实际便携EXE验证草稿保护、模板更新、现行配方绑定。旧平台日志保持原SHA；业务未执行与历史runtime入库另列，不刷绿。"
+  },
+  {
+   "id": "D-110",
+   "title": "临时接入回读混淆本次提交与历史 runtime 入库违规",
+   "status": "closed",
+   "owner": "Codex，管理台0.5.6接入链路修复P1–P6",
+   "costMinutes": 0,
+   "location": "architecture-manager/src/",
+   "source": "versions/管理台0.5.6-接入链路修复记录-20261007.md",
+   "evidence": "215项214PASS/0FAIL/1WSL未测；实际便携EXE验证草稿保护、模板更新、现行配方绑定。旧平台日志保持原SHA；业务未执行与历史runtime入库另列，不刷绿。"
+  },
+  {
+   "id": "D-111",
+   "title": "peer 协议可调用被报告为业务执行完成",
+   "status": "closed",
+   "owner": "Codex，管理台0.5.6接入链路修复P1–P6",
+   "costMinutes": 0,
+   "location": "architecture-manager/src/",
+   "source": "versions/管理台0.5.6-接入链路修复记录-20261007.md",
+   "evidence": "215项214PASS/0FAIL/1WSL未测；实际便携EXE验证草稿保护、模板更新、现行配方绑定。旧平台日志保持原SHA；业务未执行与历史runtime入库另列，不刷绿。"
+  },
+  {
+   "id": "D-112",
+   "title": "历史 runtime 运行产物已入根仓：qoder 1114 件、zcode 1 件",
+   "status": "open",
+   "owner": "后续历史隐私维护：本机私密复核，确认真实凭据再轮换；历史改写须另立批准P表",
+   "costMinutes": 120,
+   "location": "qoder/runtime/ 与 zcode/runtime/（git ls-files 实读）",
+   "source": "versions/治理缺陷联合修复收口-20261009.md",
+   "evidence": "当前索引半闭合：1115件工作/Git原版完整备份并实际恢复；六平台runtime索引0，原件和用户字节不变。旧Git历史保留，9处疑似敏感命中仍需私密复核及必要轮换。",
+   "substatuses": {
+    "currentIndex": "closed",
+    "workingFiles": "preserved",
+    "backupRestore": "passed",
+    "historicalPrivacy": "open"
+   }
+  },
+  {
+   "id": "D-113",
+   "title": "当前软件网关被历史文件差异阻断，旧 bridge Python 优先于 runner 配置",
+   "status": "closed",
+   "owner": "Codex，管理台0.5.7 P1–P5",
+   "costMinutes": 0,
+   "location": "architecture-manager/src/",
+   "source": "versions/管理台0.5.7-软件配置冲突与排查修复记录-20261007.md",
+   "evidence": "conform 221/220PASS/0FAIL/1WSL SKIP；实际0.5.7便携EXE六项界面读数通过；198文件与两包内代码一致；zcode生产只读回读6件绑定。旧原件和历史发行包保留。"
+  },
+  {
+   "id": "D-114",
+   "title": "清空软件/解释器路径保存不解除绑定",
+   "status": "closed",
+   "owner": "Codex，管理台0.5.7 P1–P5",
+   "costMinutes": 0,
+   "location": "architecture-manager/src/",
+   "source": "versions/管理台0.5.7-软件配置冲突与排查修复记录-20261007.md",
+   "evidence": "conform 221/220PASS/0FAIL/1WSL SKIP；实际0.5.7便携EXE六项界面读数通过；198文件与两包内代码一致；zcode生产只读回读6件绑定。旧原件和历史发行包保留。"
+  },
+  {
+   "id": "D-115",
+   "title": "明确重新读取未重置隔离后端、环境检测与能力回执",
+   "status": "closed",
+   "owner": "Codex，管理台0.5.7 P1–P5",
+   "costMinutes": 0,
+   "location": "architecture-manager/src/",
+   "source": "versions/管理台0.5.7-软件配置冲突与排查修复记录-20261007.md",
+   "evidence": "conform 221/220PASS/0FAIL/1WSL SKIP；实际0.5.7便携EXE六项界面读数通过；198文件与两包内代码一致；zcode生产只读回读6件绑定。旧原件和历史发行包保留。"
+  },
+  {
+   "id": "D-116",
+   "title": "续跑环境失效仍复用旧安装计划",
+   "status": "closed",
+   "owner": "Codex，管理台0.5.7 P1–P5",
+   "costMinutes": 0,
+   "location": "architecture-manager/src/",
+   "source": "versions/管理台0.5.7-软件配置冲突与排查修复记录-20261007.md",
+   "evidence": "conform 221/220PASS/0FAIL/1WSL SKIP；实际0.5.7便携EXE六项界面读数通过；198文件与两包内代码一致；zcode生产只读回读6件绑定。旧原件和历史发行包保留。"
+  },
+  {
+   "id": "D-117",
+   "title": "延迟文件选择与本体/MCP 请求上下文不完整可串操作对象",
+   "status": "closed",
+   "owner": "Codex，管理台0.5.7 P1–P5",
+   "costMinutes": 0,
+   "location": "architecture-manager/src/",
+   "source": "versions/管理台0.5.7-软件配置冲突与排查修复记录-20261007.md",
+   "evidence": "conform 221/220PASS/0FAIL/1WSL SKIP；实际0.5.7便携EXE六项界面读数通过；198文件与两包内代码一致；zcode生产只读回读6件绑定。旧原件和历史发行包保留。"
+  },
+  {
+   "id": "D-118",
+   "title": "平台私有路径归属、相对路径与目录联接校验不统一",
+   "status": "closed",
+   "owner": "Codex，管理台0.5.7 P1–P5",
+   "costMinutes": 0,
+   "location": "architecture-manager/src/",
+   "source": "versions/管理台0.5.7-软件配置冲突与排查修复记录-20261007.md",
+   "evidence": "conform 221/220PASS/0FAIL/1WSL SKIP；实际0.5.7便携EXE六项界面读数通过；198文件与两包内代码一致；zcode生产只读回读6件绑定。旧原件和历史发行包保留。"
+  },
+  {
+   "id": "D-119",
+   "title": "真实隔离证据通过但旧 permission-triple 缺口仍阻断地板",
+   "status": "closed",
+   "owner": "Codex，0.6.0 原生自动接入轮",
+   "costMinutes": 0,
+   "location": "architecture-manager/src/domains/platforms/capability-evidence.mjs",
+   "source": "versions/管理台0.6.0-自动接入与原生验证修复记录-20261007.md",
+   "evidence": "精确清理有现行证据覆盖的旧名；WorkBuddy 独立 conform 33/0/0。"
+  },
+  {
+   "id": "D-120",
+   "title": "接入准备依赖用户手填兼容 Python 与 WSL 客机版本",
+   "status": "closed",
+   "owner": "Codex，0.6.0 原生自动接入轮",
+   "costMinutes": 0,
+   "location": "architecture-manager/src/domains/platforms/runtime-discovery.mjs",
+   "source": "versions/管理台0.6.0-自动接入与原生验证修复记录-20261007.md",
+   "evidence": "独立实际探测兼容解释器和已安装设施；不足时待准备，不借用别平台环境。"
+  },
+  {
+   "id": "D-121",
+   "title": "管理台服务回环可被混同为厂商原生客户端已接入",
+   "status": "closed",
+   "owner": "Codex，0.6.0 原生自动接入轮",
+   "costMinutes": 0,
+   "location": "architecture-manager/src/domains/platforms/native-client.mjs",
+   "source": "versions/管理台0.6.0-自动接入与原生验证修复记录-20261007.md",
+   "evidence": "单独注册/原生/完整认证状态；Codex 原生 app-server 真读三仓冻结版本，未知接口不会刷绿。"
+  },
+  {
+   "id": "D-122",
+   "title": "本体导入需重复填可推断身份且资源切版默认显示不清",
+   "status": "closed",
+   "owner": "Codex，0.6.0 原生自动接入轮",
+   "costMinutes": 0,
+   "location": "architecture-manager/src/domains/intake/automatic.mjs",
+   "source": "versions/管理台0.6.0-自动接入与原生验证修复记录-20261007.md",
+   "evidence": "自动读取元数据、按 semver 递增；current 默认选中，真实 EXE 已验证 agent 回退/切回与 tool 发布。"
+  },
+  {
+   "id": "D-123",
+   "title": "WorkBuddy 原生 CLI 注册成功后无模型直接调用接口仍未验证",
+   "status": "open",
+   "owner": "所属平台原生接入维护，等待合法接口或当次模型挑战确认",
+   "costMinutes": 30,
+   "location": "architecture-manager/src/domains/platforms/native-client.mjs",
+   "source": "versions/治理缺陷联合修复收口-20261009.md",
+   "evidence": "P10按当前本体/已登记接口核查，未取得新的原生工具回执，未发起模型请求；注册/历史认证不等于tools/call成功。具体平台状态与补齐路径见本收口表。"
+  },
+  {
+   "id": "D-124",
+   "title": "当前豆包本体尚未找到可配置自建 MCP 的原生入口",
+   "status": "open",
+   "owner": "所属平台原生接入维护，等待合法接口或当次模型挑战确认",
+   "costMinutes": 90,
+   "location": "doubao/Doubao.exe",
+   "source": "versions/治理缺陷联合修复收口-20261009.md",
+   "evidence": "P10按当前本体/已登记接口核查，未取得新的原生工具回执，未发起模型请求；注册/历史认证不等于tools/call成功。具体平台状态与补齐路径见本收口表。"
+  },
+  {
+   "id": "D-125",
+   "title": "新工作区本体导入平台默认可选到未配置的已知模板 ID",
+   "status": "closed",
+   "owner": "联合治理修复 P1–P12 已执行",
+   "costMinutes": 0,
+   "location": "architecture-manager/src/renderer/features/intake/BodyIntakePanel.jsx",
+   "source": "versions/治理缺陷联合修复收口-20261009.md",
+   "evidence": "导入默认为空；切换工作区清归属；真实0.8.1 EXE验证模板存在时仍为稍后选择。",
+   "closedAt": "2026-10-09T12:47:58.067717+00:00",
+   "originalSource": "versions/管理台0.6.0-自动接入与原生验证修复记录-20261007.md"
+  },
+  {
+   "id": "D-126",
+   "title": "兼容旧 runner 字符串时对象展开产生数字字符属性",
+   "status": "closed",
+   "owner": "联合治理修复 P1–P12 已执行",
+   "costMinutes": 0,
+   "location": "architecture-manager/src/onboarding-config.mjs",
+   "source": "versions/治理缺陷联合修复收口-20261009.md",
+   "evidence": "normaliseRunner保留有效对象数据，只删除可证明字符串展开残留；doubao/qoder/zcode实际配置通过管理台事务修订。",
+   "closedAt": "2026-10-09T12:47:58.067717+00:00",
+   "originalSource": "versions/管理台0.6.0-自动接入与原生验证修复记录-20261007.md"
+  },
+  {
+   "id": "D-127",
+   "title": "WorkBuddy 内置工具仍被列出且认证成功不代表工具通道已认证",
+   "status": "open",
+   "owner": "所属平台原生接入维护，等待合法接口或当次模型挑战确认",
+   "costMinutes": 30,
+   "location": "architecture-manager/src/runtime/native_workbuddy.py",
+   "source": "versions/治理缺陷联合修复收口-20261009.md",
+   "evidence": "P10按当前本体/已登记接口核查，未取得新的原生工具回执，未发起模型请求；注册/历史认证不等于tools/call成功。具体平台状态与补齐路径见本收口表。"
+  },
+  {
+   "id": "D-128",
+   "title": "新原生验证失败未显式撤销旧原生成功标志",
+   "status": "closed",
+   "owner": "Codex，0.7.0 P2失败态修复",
+   "costMinutes": 0,
+   "location": "architecture-manager/src/domains/platforms/native-client.mjs",
+   "source": "versions/管理台0.7.0-自动接入与平台独立选版执行记录-20261008.md",
+   "evidence": "新增last-attempt pending/passed/failed，pending或新失败阻断旧成功复用，历史证明保留。native-onboarding失败覆盖测试和WorkBuddy实际失败状态可回读。"
+  },
+  {
+   "id": "D-129",
+   "title": "Codex历史agent默认指向已不存在的冻结版本",
+   "status": "closed",
+   "owner": "联合治理修复 P1–P12 已执行",
+   "costMinutes": 0,
+   "location": "codex/bridge.json defaults.agentVersions.visualization-engineer",
+   "source": "versions/治理缺陷联合修复收口-20261009.md",
+   "evidence": "按实际runner config引用保留用户已选标准bridge；Codex两个bridge现为同字节、无旧visualization覆盖；配置已入库。",
+   "closedAt": "2026-10-09T12:47:58.067717+00:00",
+   "originalSource": "versions/管理台0.7.0-自动接入与平台独立选版执行记录-20261008.md"
+  },
+  {
+   "id": "D-130",
+   "title": "审计未传now时缺少occurredAt",
+   "status": "closed",
+   "owner": "Codex，管理台0.7.1审计测试轮",
+   "costMinutes": 0,
+   "location": "architecture-manager/src/transactions/kernel.mjs",
+   "source": "versions/管理台0.7.1-审计与测试补强执行记录-20261008.md",
+   "evidence": "默认时间戳和事件封条；旧日志保留缺失事实，测试不伪造历史时间；完整回归261/259/0/2，digest 759b2dee3e4d9781d6cd17c3a4aa3917e56e25b6e6cdd8114596bf6b5ff702e2。"
+  },
+  {
+   "id": "D-131",
+   "title": "执行异常或重试没有关联最终审计事件",
+   "status": "closed",
+   "owner": "Codex，管理台0.7.1审计测试轮",
+   "costMinutes": 0,
+   "location": "architecture-manager/src/transactions/operation-audit.mjs",
+   "source": "versions/管理台0.7.1-审计与测试补强执行记录-20261008.md",
+   "evidence": "applyPlan与AI选版统一开始/结果/异常/取消关联；checkpoint损坏、写日志失败、并行及重试反例通过；完整回归261/259/0/2，digest 759b2dee3e4d9781d6cd17c3a4aa3917e56e25b6e6cdd8114596bf6b5ff702e2。"
+  },
+  {
+   "id": "D-132",
+   "title": "合法JSON非事件及非法展示字段进入审计列表",
+   "status": "closed",
+   "owner": "Codex，管理台0.7.1审计测试轮",
+   "costMinutes": 0,
+   "location": "architecture-manager/src/audit.mjs",
+   "source": "versions/管理台0.7.1-审计与测试补强执行记录-20261008.md",
+   "evidence": "拒绝null/标量/数组/非法展示字段，界面过滤与事件/checkpoint完整性问题可见；完整回归261/259/0/2，digest 759b2dee3e4d9781d6cd17c3a4aa3917e56e25b6e6cdd8114596bf6b5ff702e2。"
+  },
+  {
+   "id": "D-133",
+   "title": "conform可零测试假绿且证据未绑定测试与包配置",
+   "status": "closed",
+   "owner": "Codex，管理台0.7.1审计测试轮",
+   "costMinutes": 0,
+   "location": "architecture-manager/scripts/conform-proof.mjs",
+   "source": "versions/管理台0.7.1-审计与测试补强执行记录-20261008.md",
+   "evidence": "拒绝零行/全跳过/缺汇总/失败/取消；绑定测试和包源码，验证期间源变化导致失败；完整回归261/259/0/2，digest 759b2dee3e4d9781d6cd17c3a4aa3917e56e25b6e6cdd8114596bf6b5ff702e2。"
+  },
+  {
+   "id": "D-134",
+   "title": "anchor-dispatch测试结束后未清理独立审计临时目录",
+   "status": "closed",
+   "owner": "联合治理修复 P1–P12 已执行",
+   "costMinutes": 0,
+   "location": "architecture-manager/test/anchor-dispatch.test.mjs auditRoot()/t.after",
+   "source": "versions/治理缺陷联合修复收口-20261009.md",
+   "evidence": "每次anchor审计临时父目录有明确t.after所有者清理；旧遗留不进行全盘前缀扫删。",
+   "closedAt": "2026-10-09T12:47:58.067717+00:00",
+   "originalSource": "versions/管理台0.7.1-审计与测试补强执行记录-20261008.md"
+  },
+  {
+   "id": "D-135",
+   "aliases": [
+    "EXP-01"
+   ],
+   "title": "Agent current/省略入口的解析目录不能被 prepare 内新解析器复用",
+   "status": "closed",
+   "owner": "联合治理修复 P1–P12 已执行",
+   "costMinutes": 0,
+   "location": "tool/wf-runner/versions/0.13.0/engine.py _entry_resolution/prepare",
+   "source": "versions/治理缺陷联合修复收口-20261009.md",
+   "evidence": "新wf-runner0.13.1复用已discover解析器；省略/current/显式三入口精确结果一致、来源分别可回读；坏封条与未知资源零run拒绝。",
+   "closedAt": "2026-10-09T12:47:58.067717+00:00",
+   "originalSource": "versions/治理缺陷联合盘点与修复P表-20261009.md"
+  },
+  {
+   "id": "D-136",
+   "aliases": [
+    "EXP-02"
+   ],
+   "title": "预算候选重复插入函数与守卫",
+   "status": "closed",
+   "owner": "联合治理修复 P1–P12 已执行",
+   "costMinutes": 0,
+   "location": "codex/runtime/maintenance/20261009-agent-expansion/execution/build_support.py；wf-runner 0.13.0 engine.py",
+   "source": "versions/治理缺陷联合修复收口-20261009.md",
+   "evidence": "候选从固定0.13.0干净来源生成两次同字节；保留最后生效的一份预算实现；两处交付路径各一次守卫，累计/单次超限和旧锁形状通过。",
+   "closedAt": "2026-10-09T12:47:58.067717+00:00",
+   "originalSource": "versions/治理缺陷联合盘点与修复P表-20261009.md"
+  },
+  {
+   "id": "D-137",
+   "aliases": [
+    "EXP-03"
+   ],
+   "title": "Codex 入口说明及旧能力缺口与当前声明不一致",
+   "status": "closed",
+   "owner": "联合治理修复 P1–P12 已执行",
+   "costMinutes": 0,
+   "location": "codex-local wfa；codex/bridge/capabilities.json",
+   "source": "versions/治理缺陷联合修复收口-20261009.md",
+   "evidence": "Codex-local wfa与入库来源同步，peer说明限定真实子run创建/claim而不冒充业务完成；删除过时不声明别名并改写当前gap指导、平台内仲裁说明。",
+   "closedAt": "2026-10-09T12:47:58.067717+00:00",
+   "originalSource": "versions/治理缺陷联合盘点与修复P表-20261009.md"
+  },
+  {
+   "id": "D-138",
+   "aliases": [
+    "G-01"
+   ],
+   "title": "标准 bridge 与既存兼容副本不在同一配对事务",
+   "status": "closed",
+   "owner": "联合治理修复 P1–P12 已执行",
+   "costMinutes": 0,
+   "location": "architecture-manager/src/domains/platforms/global-update.mjs baseFiles/activationPlan",
+   "source": "versions/治理缺陷联合修复收口-20261009.md",
+   "evidence": "anchor/onboarding/global及通用配置入口共用实际引用策略；旧副本进入配对写入与恢复，未知权威拒绝，外部编辑受哈希守卫保护。",
+   "closedAt": "2026-10-09T12:47:58.067717+00:00",
+   "originalSource": "versions/治理缺陷联合盘点与修复P表-20261009.md"
+  },
+  {
+   "id": "D-139",
+   "aliases": [
+    "G-02"
+   ],
+   "title": "上下文缺项及来源在更新预览中不够清楚",
+   "status": "closed",
+   "owner": "联合治理修复 P1–P12 已执行",
+   "costMinutes": 0,
+   "location": "architecture-manager/src/renderer/panels/global-update.jsx；platformPlan",
+   "source": "versions/治理缺陷联合修复收口-20261009.md",
+   "evidence": "更新前在同一面板收集窗口与来源；五平台使用用户确认范围下限256000，Codex保留128000；不推定模型与平台对应关系。",
+   "closedAt": "2026-10-09T12:47:58.067717+00:00",
+   "originalSource": "versions/治理缺陷联合盘点与修复P表-20261009.md"
+  },
+  {
+   "id": "D-140",
+   "aliases": [
+    "G-03"
+   ],
+   "title": "配置激活后检查异常未安全入库或恢复",
+   "status": "closed",
+   "owner": "联合治理修复 P1–P12 已执行",
+   "costMinutes": 0,
+   "location": "architecture-manager/src/domains/platforms/global-update.mjs exception/cancellation branch",
+   "source": "versions/治理缺陷联合修复收口-20261009.md",
+   "evidence": "激活后异常/取消先保存仍归本次的配置为待补；不能安全保存时恢复拥有字节，保留外部新改；后台工作进程停止信号也被检查。跨平台治理文件恢复按变化链。",
+   "closedAt": "2026-10-09T12:47:58.067717+00:00",
+   "originalSource": "versions/治理缺陷联合盘点与修复P表-20261009.md"
+  },
+  {
+   "id": "D-141",
+   "aliases": [
+    "G-04"
+   ],
+   "title": "配置更新对象与完整接入状态混称",
+   "status": "closed",
+   "owner": "联合治理修复 P1–P12 已执行",
+   "costMinutes": 0,
+   "location": "architecture-manager/src/renderer/panels/global-update.jsx eligibility/result",
+   "source": "versions/治理缺陷联合修复收口-20261009.md",
+   "evidence": "配置更新、地板验证、厂商原生回执各自展示；配置模板不自动称为完整接入。",
+   "closedAt": "2026-10-09T12:47:58.067717+00:00",
+   "originalSource": "versions/治理缺陷联合盘点与修复P表-20261009.md"
+  },
+  {
+   "id": "D-142",
+   "aliases": [
+    "G-05"
+   ],
+   "title": "现行说明仍包含已撤销的中立层与跨平台仲裁义务",
+   "status": "closed",
+   "owner": "联合治理修复 P1–P12 已执行",
+   "costMinutes": 0,
+   "location": "AI_ARCHITECTURE_SYSTEM_PROMPT.md §二；Codex capability annotations",
+   "source": "versions/治理缺陷联合修复收口-20261009.md",
+   "evidence": "修订系统提示词和现行接口规范的废止义务；AGENTS/HANDOFF/总手册已符合两项规则故不重写；日期历史与冻结基线保留。",
+   "closedAt": "2026-10-09T12:47:58.067717+00:00",
+   "originalSource": "versions/治理缺陷联合盘点与修复P表-20261009.md"
+  },
+  {
+   "id": "D-143",
+   "aliases": [
+    "G-06"
+   ],
+   "title": "资源环境复用不验证恢复证明的存在与哈希",
+   "status": "closed",
+   "owner": "联合治理修复 P1–P12 已执行",
+   "costMinutes": 0,
+   "location": "architecture-manager/src/domains/platforms/resource-environment.mjs resourceEnvironmentMatches",
+   "source": "versions/治理缺陷联合修复收口-20261009.md",
+   "evidence": "资源复用校验平台归属、恢复文件存在/哈希/pass/文件数及真实安装版本；合法旧备份证明沿用；同路径证明变化只使依赖格失效。",
+   "closedAt": "2026-10-09T12:47:58.067717+00:00",
+   "originalSource": "versions/治理缺陷联合盘点与修复P表-20261009.md"
+  },
+  {
+   "id": "D-144",
+   "title": "platform-conformance 1.6.0 的 --only Agent 内容审计块重复",
+   "status": "open",
+   "owner": "后续共享判据补丁，另立P表",
+   "costMinutes": 30,
+   "location": "tool/platform-conformance/versions/1.6.0/conformance/conform.py:348-434",
+   "source": "versions/治理缺陷联合修复收口-20261009.md",
+   "evidence": "P11实读重复audit_agent块；同一Agent被重复计算，当前单格结果仍正确。属执行期非阻断新发现，本轮只登记、不改已发布字节。",
+   "suggestedHandling": "从固定来源发布后续补丁，保留同样预算负例与空选择拒绝，去掉等价重复块。"
   }
- ]
+ ],
+ "updatedAt": "2026-10-08T12:00:18.523Z",
+ "lastUpdatedAt": "2026-10-09T12:47:58.067717+00:00",
+ "activeRepairPlan": null,
+ "completedRepairPlan": "治理缺陷联合盘点与修复P表-20261009.md"
 }

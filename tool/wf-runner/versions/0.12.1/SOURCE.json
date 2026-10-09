@@ -1,0 +1,12 @@
+{
+  "schema": "ai-governance-source/v1",
+  "authorSession": "codex",
+  "derivedFrom": "wf-runner@0.12.0",
+  "supersedes": "0.12.0",
+  "version": "0.12.1",
+  "releaseScope": "Approved performance P1: lazy registered selection and exact selected current; exact dependency integrity retained. Resume explicitly rejects a different runner or scanner even without a host environment manifest.",
+  "previousSource": "tool/wf-runner/versions/0.12.0/SOURCE.json",
+  "openDeferred": [
+    "Publication is not adoption; existing platform pins and old run locks are retained."
+  ]
+}
