@@ -1,3 +1,4 @@
+import {GlobalUpdatePanel} from '../../panels/global-update.jsx';
 import {TaskProgress} from '../../shared/TaskProgress.jsx';
 import {BodyIntakePanel} from '../../features/intake/BodyIntakePanel.jsx';
 import React from 'react';
@@ -44,6 +45,7 @@ const renderView = (active) => {
       case 'intake': return <BodyIntakePanel key={workspaceSession} api={api} workspace={workspace} inventory={inventory} setMessage={setMessage} setPlanPreview={setPlanPreview} setPlanPayload={setPlanPayload} />;
       case 'platform': return <>
         {!workspace && <ClonePanel api={api} onCloned={(root) => scan(root)} setMessage={setMessage} friendlyError={friendlyError} />}
+        <GlobalUpdatePanel api={api} workspace={workspace} inventory={inventory} busy={busy} setPlanPreview={setPlanPreview} setPlanPayload={setPlanPayload} setMessage={setMessage} />
         <OnboardPanel api={api} workspace={workspace} inventory={inventory} busy={busy} setPlanPreview={setPlanPreview} setPlanPayload={setPlanPayload} setMessage={setMessage} friendlyError={friendlyError} />
         <AnchorPanel api={api} workspace={workspace} report={anchorReport} inspectAnchor={inspectAnchor} previewAnchor={previewAnchor} previewAnchorAlignment={previewAnchorAlignment} busy={busy} />
         <PlatformPanel inventory={inventory} showExcluded={showExcluded} setShowExcluded={setShowExcluded} addPlatformDirectory={addPlatformDirectory} previewPlatform={previewPlatform} checkPlatform={checkPlatform} busy={busy} />

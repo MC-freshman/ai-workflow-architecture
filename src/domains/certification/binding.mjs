@@ -15,6 +15,7 @@ export function platformConfig(root,id) {return readJson(platformConfigPath(root
 export function privateBindingHashes(root,id,config=platformConfig(root,id)) {
   const hashes={};
   for(const [name,path] of Object.entries({capabilities:config.capabilities,gateway:config.softwareGatewayConfig,backend:config.executionBackend,manifest:config.environmentManifest}))hashes[name]=path && existsSync(platformPath(root,id,path))?sha256(readFileSync(platformPath(root,id,path))):null;
+  if(config.resourceEnvironmentManifest)hashes.resourceManifest=existsSync(platformPath(root,id,config.resourceEnvironmentManifest))?sha256(readFileSync(platformPath(root,id,config.resourceEnvironmentManifest))):null;
   for(const [name,path] of Object.entries({hostManifest:config.hostEnvironmentManifest,peerProvider:config.peerDispatcherModule,platformProvider:targetPath(root,`${id}/bridge/manager-providers/platform_provider.py`)}))if(path && existsSync(platformPath(root,id,path)))hashes[name]=sha256(readFileSync(platformPath(root,id,path)));
   return hashes;
 }

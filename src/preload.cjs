@@ -113,5 +113,9 @@ contextBridge.exposeInMainWorld('architectureManager', Object.freeze({
   readPlatformResourceVersions: (...args) => ipcRenderer.invoke("platform:resource-versions", ...args),
   previewPlatformResourceDefault: (...args) => ipcRenderer.invoke("plan:platform-resource-default", ...args),
   previewAutomaticSoftware: (...args) => ipcRenderer.invoke("plan:automatic-software", ...args),
+  previewGlobalUpdate: (...args) => ipcRenderer.invoke("global-update:previewGlobalUpdate", ...args),
+  previewGlobalUpdateRestore: (...args) => ipcRenderer.invoke("global-update:previewGlobalUpdateRestore", ...args),
+  cancelGlobalUpdate: (...args) => ipcRenderer.invoke("global-update:cancelGlobalUpdate", ...args),
+  readGlobalUpdateHistory: (...args) => ipcRenderer.invoke("global-update:readGlobalUpdateHistory", ...args),
   onTransactionProgress: (callback) => { const listener = (_event, progress) => callback(progress); ipcRenderer.on('transaction:progress', listener); return () => ipcRenderer.removeListener('transaction:progress', listener); }
 }));

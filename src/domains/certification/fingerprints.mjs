@@ -33,6 +33,7 @@ export function certificationInventory(root,platformId=null) {
   return rows;
 }
 export function certificationSnapshot(root,id,config,{persistCache=false,inventory=certificationInventory(root,id)}={}) {
+  excludedConfig.add('resourceEnvironmentManifest');excludedConfig.add('contextWindowTokens');excludedConfig.add('contextWindowSource');
   const hasher=certificationHasher(root,id,{persist:persistCache}),verified=new Map(),contentCache=new Map(),definitionCache=new Map();
   const verifyDirectory=directory=>{
     if(!verified.has(directory)) verified.set(directory,verifyFrozenDirectory(directory,{hashFile:hasher.hashFile}));
@@ -76,6 +77,7 @@ export function certificationSnapshot(root,id,config,{persistCache=false,invento
     const profiles=new Set(),actions=new Set(),closure=[];
     for(const [key,value] of context.resources) {
       const manifest=value.manifest;closure.push({key,sha256:value.sumsSha256});
+      if(manifest['x-runtimeRequirements']?.profile)profiles.add(manifest['x-runtimeRequirements'].profile);
       for(const profile of manifest.requiredProfiles || []) profiles.add(String(profile));
       if(manifest.toolLock) {const lock=readJson(join(value.directory,manifest.toolLock));for(const key of Object.keys(lock.profiles || {})) profiles.add(key);}
       if(manifest.schema?.startsWith('ai-workflow/')) {
@@ -86,6 +88,8 @@ export function certificationSnapshot(root,id,config,{persistCache=false,invento
       }
     }
     const settings={base,profiles:Object.fromEntries([...profiles].sort().map(key=>[key,{profile:capability.profiles?.[key] ?? null,descriptor:capability.descriptor?.profiles?.[key] ?? null}])),actions:Object.fromEntries([...actions].sort().map(key=>[key,capability.descriptor?.actions?.[key] ?? capability.checks?.[key] ?? null]))};
+    if(actions.has('prompt') || row.kind==='agent')settings.contextBudget={window:config.contextWindowTokens ?? null,source:config.contextWindowSource ?? null};
+    if([...context.resources.values()].some(value=>Object.keys(value.manifest['x-runtimeRequirements']?.packages || {}).length))settings.resourceEnvironment=ownArtifact(config.resourceEnvironmentManifest);
     if(actions.has('script') || [...profiles].some(profile=>/python|sealed|sandbox/i.test(profile))) settings.script={backend:ownArtifact(config.executionBackend),manifest:ownArtifact(config.environmentManifest),environment:config.scriptEnvironment,rungs:config.scriptEnvironmentRungs,interpreters:Object.fromEntries(Object.entries(config.interpreters || {}).map(([key,path])=>[key,program(path)]))};
     if(actions.has('delegate')) settings.peer={module:ownArtifact(config.peerDispatcherModule),root:config.peerContentRoot};
     const programs=value=>Array.isArray(value)?value.map(program):value;

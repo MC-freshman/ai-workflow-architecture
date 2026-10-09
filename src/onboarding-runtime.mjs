@@ -104,7 +104,7 @@ export function buildOnboardingRuntimePlan({ workspaceRoot, platformId, fields =
     payload: { backend, ...runtimeRequirements(root), helperSha256: sha256(readFileSync(helper)), supportingHelpers: Object.fromEntries(['guest_controller.py', 'restore_env.py'].map((name) => [name, sha256(readFileSync(runtimeFile(name)))])) }, verification: ['exact pinned requirements', 'target platform only', 'full environment verification', 'isolated restored copy hash and execution'] };
 }
 
-export async function applyOnboardingRuntime(plan, { onProgress = () => {}, registerCancel = () => {}, actor = 'local-user', auditRoot = defaultAuditRoot(), now = new Date().toISOString() } = {}) {
+export async function applyOnboardingRuntime(plan, { onProgress = () => {}, registerCancel = () => {}, actor = 'local-user', auditRoot = defaultAuditRoot(), now = new Date().toISOString(),activateConfiguration=true } = {}) {
   requirePlan(plan);
   const rebuilt = buildOnboardingRuntimePlan({ workspaceRoot: plan.workspaceRoot, platformId: plan.target.platformId, fields: { pythonExecutable: plan.target.python, executionBackend: plan.target.backendPath }, now: plan.generatedAt, installationId: plan.target.installationId });
   if (JSON.stringify(rebuilt.target) !== JSON.stringify(plan.target) || JSON.stringify(rebuilt.payload) !== JSON.stringify(plan.payload)) throw new Error('INTEGRATION_BASELINE_MISMATCH');
@@ -130,6 +130,11 @@ export async function applyOnboardingRuntime(plan, { onProgress = () => {}, regi
     if (processResult.exitCode !== 0) throw new Error('RUNTIME_PREPARATION_FAILED');
     const result = load(join(base, 'result.json'));
     if (!result.ok || !result.restoreVerified || !result.environmentVerified) throw new Error('RUNTIME_VERIFICATION_FAILED');
+    if(!activateConfiguration) {
+      const preparedFields={pythonExecutable:result.hostPython,environmentManifest:join(base,'script-environment.json'),scriptEnvironment:join(base,'sealed'),executionBackend:plan.target.backendPath};
+      atomicWrite(join(base,'prepared.json'),json({preparedFields,result}),transactionId);
+      return {status:'prepared',preparedFields,result};
+    }
     onProgress({ phase: '激活已验证环境', completed: 3, total: 4 });
     const activation = buildOnboardingConfigPlan({ workspaceRoot: plan.workspaceRoot, platformId: plan.target.platformId, fields: { ...readOnboardingConfig({ workspaceRoot: plan.workspaceRoot, platformId: plan.target.platformId }).fields, pythonExecutable: result.hostPython, environmentManifest: join(base, 'script-environment.json'), scriptEnvironment: join(base, 'sealed'), executionBackend: plan.target.backendPath } });
     const applied = applyOnboardingConfig(activation, { actor, auditRoot, now });

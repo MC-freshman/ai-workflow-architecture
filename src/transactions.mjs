@@ -1,4 +1,5 @@
 import {applyPlatformResourceDefault,verifyPlatformResourceDefault} from './domains/platforms/resource-defaults.mjs';
+import {applyGlobalUpdate,verifyGlobalUpdate,applyGlobalUpdateRestore} from './domains/platforms/global-update.mjs';
 import {auditPlanOperation} from './transactions/operation-audit.mjs';
 import {applyAutomaticSoftware,verifyAutomaticSoftware} from './domains/intake/automatic-software.mjs';
 import {applyGatewayMigration,verifyGatewayMigration} from './domains/software/gateway-migration.mjs';
@@ -43,6 +44,8 @@ export function applyPlan(options) {
 }
 
 function applyPlanImplementation({ plan, afterText = null, credentialValue = null, actor = 'local-user', auditRoot = defaultAuditRoot(), now = new Date().toISOString(), failAfterCheckpoint = false, onProgress = () => {} }) {
+  if(plan.kind==='platform-global-update')return applyGlobalUpdate(plan,{actor,auditRoot,onProgress});
+  if(plan.kind==='platform-global-update-restore')return applyGlobalUpdateRestore(plan,{actor,auditRoot});
   requirePlan(plan);
   if(plan.kind==='automatic-software-intake')return applyAutomaticSoftware(plan,{actor,auditRoot,onProgress});
   if(plan.kind==='platform-resource-default')return applyPlatformResourceDefault(plan,{actor,auditRoot,now,failAfterCheckpoint});
@@ -312,6 +315,8 @@ function applyIntegration(plan, afterText, context) {
 }
 
 export function verifyPlanTarget({ plan }) {
+  if(plan.kind==='platform-global-update')return verifyGlobalUpdate(plan);
+  if(plan.kind==='platform-global-update-restore')return {ok:plan.payload.files.every(file=>(existsSync(targetPath(plan.workspaceRoot,file.path))?sha256(readFileSync(targetPath(plan.workspaceRoot,file.path))):null)===(file.before===null?null:sha256(file.before))),writePerformed:false};
   if(plan.kind==='mcp-credential')return verifyNativeCredential(plan);
   if(plan.kind==='mcp-credential-provider')return verifyNativeCredentialProvider(plan);
   if(plan.kind==='software-command')return verifySoftwareCommand(plan);

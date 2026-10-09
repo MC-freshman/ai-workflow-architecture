@@ -1,4 +1,5 @@
 import {buildGatewayMigrationPlan} from './domains/software/gateway-migration.mjs';
+import {buildGlobalUpdatePlan,buildGlobalUpdateRestorePlan,cancelGlobalUpdate,readGlobalUpdateHistory} from './domains/platforms/global-update.mjs';
 import {readPlatformResourceVersions,buildPlatformResourceDefaultPlan} from './domains/platforms/resource-defaults.mjs';
 import {buildAutomaticSoftwarePlan} from './domains/intake/automatic-software.mjs';
 import {buildNativeClientPlan,probeNativeClient,nativeClientStatus} from './domains/platforms/native-client.mjs';
@@ -130,6 +131,10 @@ function registerIpc() {
     });
   }});
   handleOperation('task:cancel',(_event,input)=>cancelDomainTask(input));
+  handleOperation('global-update:previewGlobalUpdate',(_event,input)=>buildGlobalUpdatePlan(input));
+  handleOperation('global-update:previewGlobalUpdateRestore',(_event,input)=>buildGlobalUpdateRestorePlan(input));
+  handleOperation('global-update:cancelGlobalUpdate',(_event,input)=>cancelGlobalUpdate(input));
+  handleOperation('global-update:readGlobalUpdateHistory',(_event,input)=>readGlobalUpdateHistory(input));
   const owned = async (input, operation) => {
     const control = startOnboardingJob(input.workspaceRoot, input.platformId);
     try { return await lifecycle.track(() => operation(control.registerCancel)); } finally { control.finish(); }
@@ -298,7 +303,7 @@ function createWindow() {
       sandbox: true
     }
   });
-  window.once('ready-to-show', () => window.show());
+  window.once('ready-to-show', () => {if(process.env.ARCHITECTURE_MANAGER_TEST_HIDDEN!=='1')window.show();});
   window.on('close', (event) => {
     if (!quitReady && lifecycle.pending) { event.preventDefault(); void safeQuit(); }
   });

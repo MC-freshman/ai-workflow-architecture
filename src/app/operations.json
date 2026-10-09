@@ -649,6 +649,34 @@
       "backend": "buildAutomaticSoftwarePlan",
       "argumentsStyle": "input",
       "taskMode": "owned"
+    },
+    "previewGlobalUpdate": {
+      "channel": "global-update:previewGlobalUpdate",
+      "phase": "plan",
+      "backend": "buildGlobalUpdatePlan",
+      "argumentsStyle": "input",
+      "taskMode": "owned"
+    },
+    "previewGlobalUpdateRestore": {
+      "channel": "global-update:previewGlobalUpdateRestore",
+      "phase": "plan",
+      "backend": "buildGlobalUpdateRestorePlan",
+      "argumentsStyle": "input",
+      "taskMode": "owned"
+    },
+    "cancelGlobalUpdate": {
+      "channel": "global-update:cancelGlobalUpdate",
+      "phase": "execute",
+      "backend": "cancelGlobalUpdate",
+      "argumentsStyle": "input",
+      "taskMode": "owned"
+    },
+    "readGlobalUpdateHistory": {
+      "channel": "global-update:readGlobalUpdateHistory",
+      "phase": "query",
+      "backend": "readGlobalUpdateHistory",
+      "argumentsStyle": "input",
+      "taskMode": "owned"
     }
   },
   "planKinds": [
@@ -692,6 +720,8 @@
     "software-binding",
     "software-binding-migration",
     "platform-resource-default",
-    "automatic-software-intake"
+    "automatic-software-intake",
+    "platform-global-update",
+    "platform-global-update-restore"
   ]
 }

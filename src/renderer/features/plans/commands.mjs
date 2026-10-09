@@ -17,14 +17,14 @@ export function createCommands() {
       return;
     }
     if (!PLAN_WRITE_KINDS.includes(planPreview.kind)) return;
-    const target = planPreview.target?.path || (planPreview.target?.platformId ? `平台：${planPreview.target.platformId}` : `${planPreview.target?.repository}/${planPreview.target?.resourceId}/current.json`);
+    const target = planPreview.target?.path || (planPreview.target?.platformIds ? `所有已接入平台：${planPreview.target.platformIds.join('、')}` : planPreview.target?.platformId ? `平台：${planPreview.target.platformId}` : `${planPreview.target?.repository}/${planPreview.target?.resourceId}/current.json`);
     if (!await api.confirm(`确认执行此计划？\n\n目标：${target}\n\n执行前会再次核对文件状态，失败会阻止覆盖。`)) return;
     setBusy(true);
     setTransactionProgress(null);
     try {
       const applied = await api.applyPlan({ plan: planPreview, afterText: planPayload?.afterText, credentialValue:planPayload?.credentialValue, actor: 'local-user' });
       if(planPreview.kind==='mcp-credential')setPlanPayload(null);
-      if(applied.stoppedAfterCompletion) {
+      if(applied.stoppedAfterCompletion && planPreview.kind!=='platform-global-update') {
         setMessage('停止请求到达时当前原子步骤已完成；结果已保留，后续验证尚未运行。请重新扫描并查看审计记录。');
         setPlanPreview(null);setPlanPayload(null);return;
       }
@@ -33,6 +33,14 @@ export function createCommands() {
         return;
       }
       const verification = await api.verifyPlan({ plan: planPreview });
+      if(planPreview.kind==='platform-global-update') {
+        window.dispatchEvent(new window.CustomEvent('global-update-result',{detail:{workspaceRoot:workspace,plan:planPreview,result:applied}}));
+        const complete=(applied.results || []).filter(row=>['complete','no-change'].includes(row.status)).length;
+        setMessage(`本次所有平台更新结果：${complete} 个完成，${(applied.results || []).length-complete} 个待补或已停止，${(applied.skipped || []).length} 个跳过。各平台结果和继续入口见更新面板。`);
+        setInventory(await api.scanWorkspace(workspace));setPlanPreview(null);setPlanPayload(null);return;
+      }
+      if(planPreview.kind==='platform-global-update-restore'){const history=await api.readGlobalUpdateHistory({workspaceRoot:workspace});if(history)window.dispatchEvent(new window.CustomEvent('global-update-result',{detail:{workspaceRoot:workspace,plan:history.plan,result:history.result}}));setInventory(await api.scanWorkspace(workspace));setMessage(verification.ok?'本次旧接入配置已恢复。新环境和证据保留。':'恢复未通过，请查看外部变化和审计记录。');setPlanPreview(null);setPlanPayload(null);return;}
+
       const refreshed = await api.scanWorkspace(workspace);
       setInventory(refreshed);
       if (refreshed.git) setGitDetails(refreshed.git);

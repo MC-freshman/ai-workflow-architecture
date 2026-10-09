@@ -1,3 +1,4 @@
+export {readGlobalUpdateHistory} from '../domains/platforms/global-update.mjs';
 // Read-only application operations. These functions must not mutate workspace files.
 export {readPlatformResourceVersions} from '../domains/platforms/resource-defaults.mjs';
 export {readMcpConfiguration} from '../domains/software/mcp-config.mjs';

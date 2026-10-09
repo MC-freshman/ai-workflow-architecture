@@ -6,7 +6,8 @@
 // cannot be applied to this one.
 import {existsSync,readFileSync,mkdirSync} from 'node:fs';
 import {randomUUID} from 'node:crypto';
-import {dirname,join} from 'node:path';
+import {dirname,join,relative} from 'node:path';
+import {platformConfigPath} from './binding.mjs';
 import {sha256} from '../../core/hash.mjs';
 import {readJson} from '../../core/json.mjs';
 import {targetPath} from '../../core/paths.mjs';
@@ -74,12 +75,12 @@ export function verifyAnchorMaterialisation(plan) {
 
 // Align a platform's version pins to the anchor. Only the keys that name a version are planned;
 // every other key, and every other file, stays untouched.
-export function buildAnchorAlignmentPlan({workspaceRoot,platformId,now=new Date().toISOString()}) {
+export function buildAnchorAlignmentPlan({workspaceRoot,platformId,now=new Date().toISOString(),targetAnchor=null}) {
   const root=targetPath(workspaceRoot,'.');
-  const state=readAnchorState({workspaceRoot:root});
+  const state=targetAnchor?{exists:true,anchor:targetAnchor,digest:anchorDigest(targetAnchor)}:readAnchorState({workspaceRoot:root});
   if(!state.exists) throw new Error('ANCHOR_NOT_MATERIALISED');
   const anchor=state.anchor;
-  const alignment=anchorAlignment({workspaceRoot:root,platformId});
+  const alignment=targetAnchor?{configPath:relative(root,platformConfigPath(root,platformId)).replaceAll('\\','/'),warnings:[]}:anchorAlignment({workspaceRoot:root,platformId});
   const configRelative=alignment.configPath || `${platformId}/bridge/${platformId}-config.json`;
   const bridgeRelative=[`${platformId}/bridge.json`,`${platformId}/bridge/bridge.json`].find((path)=>existsSync(targetPath(root,path))) || `${platformId}/bridge.json`;
   const configPath=targetPath(root,configRelative),bridgePath=targetPath(root,bridgeRelative);
@@ -135,7 +136,7 @@ export function buildAnchorAlignmentPlan({workspaceRoot,platformId,now=new Date(
   add(bridgeRelative,stringify(nextBridge));
 
   const plan=replaceConfigPlan({workspaceRoot:root,platformId,anchorDigest:state.digest,files,now});
-  plan.payload={files,anchor,alignment,warnings,notes};
+  plan.payload={files,anchor,alignment,warnings,notes,targetIsExplicit:Boolean(targetAnchor)};
   plan.changed=files.length>0;
   plan.target.before=Object.fromEntries(files.map((file)=>[file.path,file.beforeSha256]));
   plan.target.after=Object.fromEntries(files.map((file)=>[file.path,file.newSha256]));
@@ -154,13 +155,18 @@ export function verifyAnchorAlignment(plan) {
   if(!files.every((file)=>file.ok)) return {schema:'architecture-manager-verification/v1',ok:false,files,writePerformed:false};
   // The decisive read-back is not the file hash but the resolved comparison: after the write, the
   // platform must line up with the anchor on every key the anchor names.
+  if(plan.payload.targetIsExplicit) {
+    const config=readJson(platformConfigPath(plan.workspaceRoot,plan.target.platformId)),anchor=plan.payload.anchor;
+    const differences=['runner','contracts','scannerRelease','invocationMatrixRelease'].filter((key)=>config[key]!==join(plan.workspaceRoot,anchor[{runner:'engine',contracts:'contracts',scannerRelease:'checker',invocationMatrixRelease:'judge'}[key]].path));
+    return {schema:'architecture-manager-verification/v1',ok:files.length>0 && !differences.length,files,differences,writePerformed:false};
+  }
   const alignment=anchorAlignment({workspaceRoot:plan.workspaceRoot,platformId:plan.target.platformId});
   return {schema:'architecture-manager-verification/v1',ok:files.length>0 && alignment.differences.length===0,files,alignment,differences:alignment.differences,warnings:alignment.warnings,writePerformed:false};
 }
 
 export function applyAnchorAlignment(plan,{actor='local-user',auditRoot=defaultAuditRoot(),now=new Date().toISOString(),failAfterFiles=null}={}) {
   requirePlan(plan);
-  const rebuilt=buildAnchorAlignmentPlan({workspaceRoot:plan.workspaceRoot,platformId:plan.target.platformId,now:plan.generatedAt});
+  const rebuilt=buildAnchorAlignmentPlan({workspaceRoot:plan.workspaceRoot,platformId:plan.target.platformId,now:plan.generatedAt,targetAnchor:plan.payload.targetIsExplicit?plan.payload.anchor:null});
   if(sha256(stringify(rebuilt.payload.files))!==sha256(stringify(plan.payload.files))) throw new Error('PLAN_PAYLOAD_MISMATCH');
   const before=plan.payload.files.map((file)=>{
     const target=targetPath(plan.workspaceRoot,file.path);

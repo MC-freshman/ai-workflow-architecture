@@ -23,7 +23,7 @@ const SECRET = /password|passwd|secret|token|api[_-]?key|private[_-]?key/i;
 export function assertConfigurationReferences(value) {
   if (!value || typeof value !== 'object') return;
   for (const [key, item] of Object.entries(value)) {
-    if (SECRET.test(key) && typeof item === 'string' && item && !item.startsWith('reference:') && !item.startsWith('${')) throw new Error(`RAW_SECRET_NOT_ALLOWED:${key}`);
+    if (key !== 'contextWindowTokens' && SECRET.test(key) && typeof item === 'string' && item && !item.startsWith('reference:') && !item.startsWith('${')) throw new Error(`RAW_SECRET_NOT_ALLOWED:${key}`);
     if (item && typeof item === 'object') assertConfigurationReferences(item);
   }
 }
@@ -62,6 +62,7 @@ export function readOnboardingConfig({ workspaceRoot, platformId }) {
     clientKind: client.kind || 'cli', clientExecutable: client.executable || '', clientArgs: client.args || [],
     probeTool: client.probeTool || '', probeArguments: client.probeArguments || {},
     gitAuthorName: ctx.config.commitIdentity?.name || '', gitAuthorEmail: ctx.config.commitIdentity?.email || '',
+    contextWindowTokens:ctx.config.contextWindowTokens ?? '',contextWindowSource:ctx.config.contextWindowSource || '',resourceEnvironmentManifest:ctx.config.resourceEnvironmentManifest || '',
     runnerVersion: ctx.config.runner?.split(/[\\/]/).at(-1) || null, contractsVersion: ctx.config.contracts?.split(/[\\/]/).at(-1) || null, scannerVersion: ctx.config.scannerRelease?.split(/[\\/]/).at(-1) || null,matrixVersion:ctx.config.invocationMatrixRelease?.split(/[\\/]/).at(-1) || null
   }, writePerformed: false };
 }
@@ -100,8 +101,12 @@ export function buildOnboardingConfigPlan({ workspaceRoot, platformId, fields = 
     config.invocationMatrixRelease=judge.path;
   } else if(supportsSmoke) throw Error('VERSION_PAIR_MISMATCH');
   delete config.pendingKeys;
+  if('contextWindowTokens' in fields && fields.contextWindowTokens!=='') {
+    const tokens=Number(fields.contextWindowTokens);if(!Number.isSafeInteger(tokens) || tokens<=0)throw Error('CONTEXT_WINDOW_REQUIRED');
+    config.contextWindowTokens=tokens;config.contextWindowSource=fields.contextWindowSource || config.contextWindowSource || 'user-declared';
+  }
   if (fields.gitAuthorName || fields.gitAuthorEmail) config.commitIdentity = { name: fields.gitAuthorName || '', email: fields.gitAuthorEmail || '' };
-  for (const key of ['environmentManifest', 'scriptEnvironment', 'executionBackend', 'peerDispatcherModule', 'peerContentRoot', 'softwareEnvironment']) {
+  for (const key of ['environmentManifest', 'scriptEnvironment', 'executionBackend', 'peerDispatcherModule', 'peerContentRoot', 'softwareEnvironment','resourceEnvironmentManifest']) {
     if (key in fields) {
       const path = ownPath(root, platformId, fields[key]);
       if (path) config[key] = path; else delete config[key];

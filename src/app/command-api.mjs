@@ -1,4 +1,5 @@
 // Mutating operations always return a plan or pass through plan -> apply -> verify.
+export {buildGlobalUpdatePlan,buildGlobalUpdateRestorePlan,cancelGlobalUpdate} from '../domains/platforms/global-update.mjs';
 export {buildPlatformResourceDefaultPlan} from '../domains/platforms/resource-defaults.mjs';
 export {buildAutomaticSoftwarePlan} from '../domains/intake/automatic-software.mjs';
 export {buildMcpBodyPlan} from '../domains/intake/mcp-body.mjs';
