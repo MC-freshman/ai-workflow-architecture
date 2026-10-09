@@ -40,6 +40,35 @@ function fixture(t) {
   }};
   return {base,root,put,git,services,counts,auditRoot};
 }
+
+test('preflight collects window and explicit source without writing configuration',t=>{
+  const f=fixture(t),path='alpha/bridge/runner-config.json',config=JSON.parse(readFileSync(join(f.root,path)));delete config.contextWindowTokens;f.put(path,config);
+  const before=readFileSync(join(f.root,path));
+  const plan=buildGlobalUpdatePlan({workspaceRoot:f.root});assert(plan.payload.preflight.find(row=>row.platformId==='alpha').pending.includes('CONTEXT_WINDOW_REQUIRED'));
+  const bad=buildGlobalUpdatePlan({workspaceRoot:f.root,settings:{alpha:{contextWindowTokens:256000,contextWindowSource:'unknown'}}});assert(bad.payload.preflight[0].pending.includes('CONTEXT_WINDOW_SOURCE_REQUIRED'));
+  const good=buildGlobalUpdatePlan({workspaceRoot:f.root,settings:{alpha:{contextWindowTokens:256000,contextWindowSource:'user-declared lower bound 256K'}}});assert.equal(good.payload.preflight[0].contextWindowTokens,256000);assert.equal(good.payload.preflight[0].pending.length,0);assert.deepEqual(readFileSync(join(f.root,path)),before);
+});
+
+test('post-activation throw is committed as pending, resumes without reinstall and remains restorable',async t=>{
+  const f=fixture(t),plan=buildGlobalUpdatePlan({workspaceRoot:f.root}),original=f.services.check;
+  f.services.check=async input=>{if(input.platformId==='alpha')throw Error('REAL_CHECK_THROW');return original(input);};
+  const result=await applyGlobalUpdate(plan,{auditRoot:f.auditRoot,services:f.services});const alpha=result.results.find(row=>row.platformId==='alpha');
+  assert.equal(alpha.status,'pending');assert.equal(alpha.configurationSettlement,'saved-pending');assert(alpha.git.head);assert.equal(f.git('status','--porcelain','--','alpha/bridge.json','alpha/bridge/runner-config.json'),'');
+  f.services.check=original;await applyGlobalUpdate(plan,{auditRoot:f.auditRoot,services:f.services});assert.equal(f.counts.prepare,2);
+  assert.equal(applyGlobalUpdateRestore(buildGlobalUpdateRestorePlan({workspaceRoot:f.root,updatePlan:plan}),{auditRoot:f.auditRoot}).ok,true);
+});
+
+test('cancel after activation settles its configuration before returning stopped',async t=>{
+  const f=fixture(t),plan=buildGlobalUpdatePlan({workspaceRoot:f.root});f.services.check=async()=>{cancelGlobalUpdate({workspaceRoot:f.root});throw Error('ONBOARDING_CANCELLED');};
+  const result=await applyGlobalUpdate(plan,{auditRoot:f.auditRoot,services:f.services});assert.equal(result.status,'stopped');
+  const alpha=result.results.find(row=>row.platformId==='alpha');assert.equal(alpha.configurationSettlement,'saved-pending');assert.equal(f.git('status','--porcelain','--','alpha/bridge.json','alpha/bridge/runner-config.json'),'');assert.equal(result.results.find(row=>row.platformId==='beta').status,'not-started');
+});
+
+test('a check that edits configuration externally cannot have that edit committed or overwritten',async t=>{
+  const f=fixture(t),plan=buildGlobalUpdatePlan({workspaceRoot:f.root});const original=f.services.check;
+  f.services.check=async input=>{if(input.platformId==='alpha'){f.put('alpha/bridge.json',{platform:'alpha',external:true});throw Error('CHECK_THROW_AFTER_EXTERNAL_EDIT');}return original(input);};
+  const result=await applyGlobalUpdate(plan,{auditRoot:f.auditRoot,services:f.services}),alpha=result.results[0];assert.equal(alpha.status,'external-change');assert.equal(alpha.configurationSettlement,'owned-restored-external-preserved');assert.deepEqual(JSON.parse(readFileSync(join(f.root,'alpha/bridge.json'))),{platform:'alpha',external:true});
+});
 test('global update fixes current once, updates two isolated platforms, keeps current and in-flight locks, and reuses unchanged evidence',async t=>{
   const f=fixture(t),before=sha256(readFileSync(join(f.root,'agent/writer/current.json'))),lock=readFileSync(join(f.root,'alpha/runtime/runs/in-flight/run-lock.json'));
   const plan=buildGlobalUpdatePlan({workspaceRoot:f.root,push:true});assert.deepEqual(plan.target.platformIds,['alpha','beta']);assert.equal(plan.payload.shared.resources.find(row=>row.id==='writer').version,'1.1.0');
@@ -75,4 +104,12 @@ test('dependency closure reads x-runtimeRequirements and rejects actual version 
   seedRelease(f.root,'agent','other','1.0.0',{'manifest.json':{...manifest,id:'other',version:'1.0.0','x-runtimeRequirements':{ownership:'platform/runtime',packages:{numpy:'2.0.0'}}}});
   assert.throws(()=>collectResourceRequirements(f.root,[{repository:'agent',id:'writer',version:'1.1.0'},{repository:'agent',id:'other',version:'1.0.0'}]),/RUNTIME_DEPENDENCY_CONFLICT/);
   f.put('agent/writer/versions/1.1.0/prompt.md','tamper');assert.throws(()=>collectResourceRequirements(f.root,sharedUpdateTarget(f.root).resources),/RELEASE_HASH_MISMATCH/);
+});
+
+test('global update includes and restores an existing legacy bridge without breaking the paired configuration',async t=>{
+  const f=fixture(t),config=JSON.parse(readFileSync(join(f.root,'alpha/bridge/runner-config.json')));config.bridge=join(f.root,'alpha/bridge.json');f.put('alpha/bridge/runner-config.json',config);
+  const old={platform:'alpha',runner:{version:'0.11.0'},legacyCustom:'saved-in-checkpoint'};f.put('alpha/bridge/bridge.json',old);
+  const plan=buildGlobalUpdatePlan({workspaceRoot:f.root});const row=plan.payload.platforms.find(r=>r.platformId==='alpha');assert.equal(row.compatibility.conflicted,true);assert.ok(row.baseFiles.some(file=>file.path==='alpha/bridge/bridge.json'));
+  await applyGlobalUpdate(plan,{auditRoot:f.auditRoot,services:f.services});assert.deepEqual(readFileSync(join(f.root,'alpha/bridge.json')),readFileSync(join(f.root,'alpha/bridge/bridge.json')));
+  const restore=buildGlobalUpdateRestorePlan({workspaceRoot:f.root,updatePlan:plan});assert.equal(applyGlobalUpdateRestore(restore,{auditRoot:f.auditRoot}).ok,true);assert.deepEqual(JSON.parse(readFileSync(join(f.root,'alpha/bridge/bridge.json'))),old);
 });

@@ -1,4 +1,4 @@
-import React,{useState} from 'react';
+import React,{useEffect,useRef,useState} from 'react';
 import {friendlyError} from '../../presenter.mjs';
 import {ImportHistoryPanel} from './ImportHistoryPanel.jsx';
 import {AgentSkillBodyForm} from './AgentSkillBodyForm.jsx';
@@ -9,11 +9,13 @@ import {McpBodyForm} from './McpBodyForm.jsx';
 const labels={agent:'智能体（agent）',skill:'技能（skill）',tool:'工具／工作流（tool）',platform:'平台客户端',software:'软件／现成 MCP'};
 const size=value=>value>=1024*1024*1024?(value/(1024*1024*1024)).toFixed(2)+' GB':value>=1024*1024?(value/(1024*1024)).toFixed(1)+' MB':value>=1024?(value/1024).toFixed(1)+' KB':value+' B';
 export function BodyIntakePanel({api,workspace,inventory,setMessage,setPlanPreview,setPlanPayload,onIntake=null}) {
-  const [type,setType]=useState('agent'),[platformId,setPlatformId]=useState(inventory?.platforms?.[0]?.id || ''),[sourcePath,setSourcePath]=useState(''),[result,setResult]=useState(null),[working,setWorking]=useState(false),[error,setError]=useState(''),[page,setPage]=useState(0);
+  const [type,setType]=useState('agent'),[platformId,setPlatformId]=useState(''),[sourcePath,setSourcePath]=useState(''),[result,setResult]=useState(null),[working,setWorking]=useState(false),[error,setError]=useState(''),[page,setPage]=useState(0);
+  const scope=useRef(workspace);scope.current=workspace;
+  useEffect(()=>{setPlatformId('');setSourcePath('');setResult(null);setError('');setPage(0);setWorking(false);},[workspace]);
   const choose=async kind=>{try{const path=await api.selectBodySource({kind});if(path){setSourcePath(path);setResult(null);setError('');}else setMessage('已取消选择，原来源未改变。');}catch(error){setError(friendlyError(error));}};
   const scan=async()=>{
-    setWorking(true);setError('');setPage(0);
-    try{const value=await api.scanExternalBody({workspaceRoot:workspace,platformId:platformId || null,type,sourcePath});setResult(value);onIntake?.(value);setMessage('来源已识别；尚未安置、发布或启动本体。');}
+    const origin=workspace;setWorking(true);setError('');setPage(0);
+    try{const value=await api.scanExternalBody({workspaceRoot:workspace,platformId:platformId || null,type,sourcePath});if(scope.current!==origin)return;setResult(value);onIntake?.(value);setMessage('来源已识别；尚未安置、发布或启动本体。');}
     catch(error){setResult(null);const message=friendlyError(error);setError(message);setMessage(message);}
     finally{setWorking(false);}
   };

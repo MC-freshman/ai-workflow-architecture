@@ -8,6 +8,8 @@ import {sha256} from '../../core/hash.mjs';
 import {runtimeFile} from '../../core/runtime-path.mjs';
 import {runOwnedProcess} from '../../core/owned-process.mjs';
 import {validateFrozenResource} from '../resources/versions.mjs';
+import {resourceProofBinding} from './resource-proof.mjs';
+import {runScopedProcess} from '../../infrastructure/process-scope.mjs';
 
 const normal=name=>name.toLowerCase().replace(/[-_.]+/g,'-');
 const version=/^[A-Za-z0-9][A-Za-z0-9.+-]*$/;
@@ -45,11 +47,17 @@ export function collectResourceRequirements(root,resources) {
 }
 export function resourceEnvironmentMatches(root,id,path,requirements) {
   if(!Object.keys(requirements.packages).length)return true;
-  if(!path || !existsSync(platformPath(root,id,path)))return false;
-  const env=readJson(platformPath(root,id,path));
-  const packages=Object.fromEntries(Object.entries(env.packages || {}).map(([name,pin])=>[normal(name),pin]));
-  if(!Object.entries(requirements.packages).every(([name,pin])=>packages[name]===pin))return false;
-  return Boolean(env.python && existsSync(platformPath(root,id,env.python)));
+  try {
+    if(!path || !existsSync(platformPath(root,id,path)))return false;
+    const env=readJson(platformPath(root,id,path));
+    if(!resourceProofBinding(root,id,env).valid)return false;
+    const packages=Object.fromEntries(Object.entries(env.packages || {}).map(([name,pin])=>[normal(name),pin]));
+    if(!Object.entries(requirements.packages).every(([name,pin])=>packages[name]===pin))return false;
+    const python=platformPath(root,id,env.python);if(!existsSync(python))return false;
+    const actual=JSON.parse(runScopedProcess(python,['-B','-c',"import importlib.metadata as m,json;print(json.dumps({d.metadata['Name']:d.version for d in m.distributions()}))"],{encoding:'utf8',timeout:30000,env:{...process.env,PYTHONDONTWRITEBYTECODE:'1'}}));
+    const installed=Object.fromEntries(Object.entries(actual).map(([name,pin])=>[normal(name),pin]));
+    return Object.entries(requirements.packages).every(([name,pin])=>installed[name]===pin);
+  }catch(error){if(error.message==='TASK_CANCELLED')throw error;return false;}
 }
 export async function prepareResourceEnvironment({workspaceRoot,platformId,python,requirements,installationId=randomUUID(),wheelhouse=null},options={}) {
   if(!Object.keys(requirements.packages).length)return {status:'not-required',manifest:null};

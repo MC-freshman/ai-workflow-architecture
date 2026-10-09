@@ -5,6 +5,13 @@ export function friendlyError(error) {
   const code = String(error?.message ?? error).replace(/^Error invoking remote method '[^']+':\s*/, '').replace(/^(?:Error:\s*)+/,'');
   const [key, ...details] = code.split(':');
   const hints = {
+    CONTEXT_WINDOW_REQUIRED:'缺少有效上下文窗口，请填写本平台本次使用的 token 预算。',
+    CONTEXT_WINDOW_SOURCE_REQUIRED:'请填写窗口来源（模型设置或用户确认）；未知值不能自动采纳。',
+    PLATFORM_BRIDGE_AUTHORITY_REQUIRED:'两份接入配置冲突且来源不明，请先明确实际生效的 bridge。',
+    PLATFORM_BRIDGE_REFERENCE_UNKNOWN:'当前配置引用了未知的 bridge，请核对实际入口后重新预览。',
+    PLATFORM_NOT_PREVIOUSLY_CONNECTED:'尚无有效接入配置，请先完成接入向导。',
+    CAPABILITY_FLOOR_OR_CALL_CHECK_PENDING:'配置已更新，能力地板或调用检查仍待补，请查看本平台记录。',
+    NATIVE_CLIENT_VERIFICATION_REQUIRED:'配置已更新，厂商原生工具调用仍待验证，请使用客户端验证入口。',
     AUDIT_FINALIZATION_FAILED:'操作已返回，但最终审计未能保存；请检查恢复点和实际状态。可能已写入，不能盲目重复执行。',
     AUTOMATIC_SOFTWARE_MATCH_AMBIGUOUS:'来源可能对应多个软件配方，请在下方明确选择软件 ID 后接入。',
     AUTOMATIC_SOFTWARE_DECLARATION_REQUIRED:'未找到匹配配方。请在下方声明 CLI 功能，或导入现成 MCP；管理台不会猜测未知程序的动作和权限。',

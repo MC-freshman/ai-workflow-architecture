@@ -11,7 +11,7 @@ import {anchorAlignment} from '../src/domains/certification/anchor.mjs';
 
 // The UI never calls a plan's apply function directly: it goes through the transaction dispatcher
 // that also owns the audit trail. This test drives exactly that path for both anchor kinds.
-const auditRoot=()=>join(mkdtempSync(join(tmpdir(),'anchor-dispatch-audit-')),'audit');
+const auditRoot=t=>{const base=mkdtempSync(join(tmpdir(),'anchor-dispatch-audit-'));t.after(()=>rmSync(base,{recursive:true,force:true}));return join(base,'audit');};
 
 function copyDirectory(from,to){for(const entry of readdirSync(from,{withFileTypes:true})){const source=join(from,entry.name),target=join(to,entry.name);if(entry.isDirectory()){mkdirSync(target,{recursive:true});copyDirectory(source,target);}else if(entry.isFile())writeFileSync(target,readFileSync(source));}}
 
@@ -35,7 +35,7 @@ function seedWorkspace() {
 
 test('both anchor plan kinds apply and verify through the transaction dispatcher the UI uses',(t)=>{
   const root=seedWorkspace();t.after(()=>rmSync(root,{recursive:true,force:true}));
-  const audit=auditRoot();
+  const audit=auditRoot(t);
 
   // The alignment plan must refuse while no anchor is on disk: there is nothing to align to.
   assert.throws(()=>buildAnchorAlignmentPlan({workspaceRoot:root,platformId:'lagging'}),/ANCHOR_NOT_MATERIALISED/);
@@ -92,7 +92,7 @@ test('both anchor plan kinds apply and verify through the transaction dispatcher
 
 test('an alignment plan refuses to write when the platform changed after the plan was built',(t)=>{
   const root=seedWorkspace();t.after(()=>rmSync(root,{recursive:true,force:true}));
-  const audit=auditRoot();
+  const audit=auditRoot(t);
   applyPlan({plan:buildAnchorMaterialisationPlan({workspaceRoot:root,now:'2026-10-06T12:00:00.000Z'}),auditRoot:audit});
   const plan=buildAnchorAlignmentPlan({workspaceRoot:root,platformId:'lagging'});
   // Somebody edits the platform configuration between preview and confirmation.

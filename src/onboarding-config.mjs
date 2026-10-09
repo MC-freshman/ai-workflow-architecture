@@ -1,4 +1,5 @@
 import {platformPath} from './core/platform-path.mjs';
+import {bridgeCompatibility,normaliseRunner} from './domains/platforms/bridge-compatibility.mjs';
 import {reconcileHostManifest} from './domains/platforms/host-manifest.mjs';
 import {providerTemplateStatus} from './domains/platforms/provider-templates.mjs';
 import {gatewayBinding,assertGatewaySelection} from './domains/software/gateway-binding.mjs';
@@ -33,7 +34,8 @@ function context(workspaceRoot, platformId) {
   if (!validPlatformId(platformId)) throw new Error('INVALID_PLATFORM_ID');
   targetPath(root, platformId);
   const configPath = [`${platformId}/bridge/runner-config.json`, `${platformId}/bridge/${platformId}-config.json`].find((path) => existsSync(targetPath(root, path))) || `${platformId}/bridge/${platformId}-config.json`;
-  return { root, platformId, configPath, config: read(targetPath(root, configPath)), bridge: read(targetPath(root, `${platformId}/bridge.json`), read(targetPath(root, `${platformId}/bridge/bridge.json`))), capabilities: read(targetPath(root, `${platformId}/bridge/capabilities.json`)) };
+  const config=read(targetPath(root,configPath));
+  return { root, platformId, configPath, config, bridge: bridgeCompatibility(root,platformId,config).value, capabilities: read(targetPath(root, `${platformId}/bridge/capabilities.json`)) };
 }
 
 function release(root, repository, id, requested) {
@@ -128,7 +130,7 @@ export function buildOnboardingConfigPlan({ workspaceRoot, platformId, fields = 
   const gatewayRegistration=assertGatewaySelection(gatewayBinding(root,platformId,config));
   config.softwareGatewayConfig = gatewayRegistration.path;
   ownPath(root, platformId, config.softwareGatewayConfig);
-  const bridge = { ...ctx.bridge, schema: 'ai-platform-bridge/v1.1', platform: platformId, displayName: fields.displayName || ctx.bridge.displayName || platformId, shared: { ...ctx.bridge.shared, toolRegistry: join(root, 'tool/registry.json'), agentRegistry: join(root, 'agent/registry.json'), softwareRegistry: join(root, 'software/registry.json'), architecturePrompt: join(root, 'AI_ARCHITECTURE_SYSTEM_PROMPT.md'), readOnly: true }, runtimeRoot: join(root, platformId, 'runtime'), modes: ['workflow', 'agent-workflow'], defaults: { ...ctx.bridge.defaults, workflowVersions: { ...ctx.bridge.defaults?.workflowVersions, 'repo-lint': scannerVersion } }, runner: { ...ctx.bridge.runner, enabled: true, config: join(root, ctx.configPath), release: runner.path, ...(python ? { python } : {}) } };
+  const bridge = { ...ctx.bridge, schema: 'ai-platform-bridge/v1.1', platform: platformId, displayName: fields.displayName || ctx.bridge.displayName || platformId, shared: { ...ctx.bridge.shared, toolRegistry: join(root, 'tool/registry.json'), agentRegistry: join(root, 'agent/registry.json'), softwareRegistry: join(root, 'software/registry.json'), architecturePrompt: join(root, 'AI_ARCHITECTURE_SYSTEM_PROMPT.md'), readOnly: true }, runtimeRoot: join(root, platformId, 'runtime'), modes: ['workflow', 'agent-workflow'], defaults: { ...ctx.bridge.defaults, workflowVersions: { ...ctx.bridge.defaults?.workflowVersions, 'repo-lint': scannerVersion } }, runner: { ...normaliseRunner(ctx.bridge.runner), enabled: true, config: join(root, ctx.configPath), release: runner.path, ...(python ? { python } : {}) } };
   const capabilities = Object.keys(ctx.capabilities).length ? ctx.capabilities : { schema: 'ai-platform-capabilities/v1', platform: platformId, checks: {}, permissionAdapters: [], profiles: {}, descriptor: { schema: 'ai-platform-descriptor/v2', platformId, protocols: ['ai-run-protocol/v1.1', 'ai-run-protocol/v1.2', 'ai-run-protocol/v1.3'], operations: ['prepare', 'next', 'submit', 'status', 'stop'], actions: {}, profiles: {}, enforcement: 'mediated', recovery: ['replay'] }, declaredAbsent: {}, unverified: {}, gapPlan: {} };
   bridge.runner.version = runner.version;
   if (!['cli', 'mcp-stdio', 'manual-native'].includes(fields.clientKind || 'cli')) throw new Error('CLIENT_ADAPTER_UNSUPPORTED');

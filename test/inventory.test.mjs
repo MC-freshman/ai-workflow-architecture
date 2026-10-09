@@ -521,7 +521,7 @@ test('migrates a legacy bridge and its runner reference together without deletin
   try {
     const suggestion = suggestPlatformBridge({ workspaceRoot: root, platformId: 'codex' });
     const plan = buildIntegrationPlan({ workspaceRoot: root, kind: 'platform', targetId: 'codex', afterText: suggestion.afterText });
-    assert.equal(plan.steps.length, 2);
+    assert.equal(plan.steps.length, 3);
     assert.equal(JSON.parse(readFileSync(runner, 'utf8')).bridge, oldBridge);
     const applied = applyPlan({ plan, auditRoot: join(root, 'audit') });
     assert.equal(applied.status, 'applied');
@@ -596,7 +596,7 @@ test('prefers root bridge and reports divergent legacy bridge without a duplicat
     assert.equal(inspected.bridgeConflict, true);
     assert.equal(inspected.status, 'bridge-conflict');
     assert.equal(inspected.markers.filter((item) => item.label === 'bridge.json').length, 1);
-    assert.throws(() => buildIntegrationPlan({ workspaceRoot: root, kind: 'platform', targetId: 'codex', afterText: '{"platform":"codex","x":1}', baselineSha256: readIntegrationTarget({ workspaceRoot: root, kind: 'platform', targetId: 'codex' }).sha256 }), /PLATFORM_BRIDGE_CONFLICT/);
+    assert.throws(() => buildIntegrationPlan({ workspaceRoot: root, kind: 'platform', targetId: 'codex', afterText: '{"platform":"codex","x":1}', baselineSha256: readIntegrationTarget({ workspaceRoot: root, kind: 'platform', targetId: 'codex' }).sha256 }), /PLATFORM_BRIDGE_AUTHORITY_REQUIRED/);
   } finally {
     rmSync(root, { recursive: true, force: true });
   }

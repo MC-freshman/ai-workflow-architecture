@@ -15,6 +15,7 @@ import {createAnchorPlan,replaceConfigPlan} from '../../plans.mjs';
 import {requirePlan,atomicWrite,saveCheckpoint,makeId,writeAudit,output} from '../../transactions/kernel.mjs';
 import {defaultAuditRoot} from '../../core/paths.mjs';
 import {ANCHOR_RELATIVE_PATH,anchorAlignment,anchorContent,anchorDigest,computeAnchor,readAnchorState} from './anchor.mjs';
+import {bridgeCompatibility,bridgeFiles,normaliseRunner} from '../platforms/bridge-compatibility.mjs';
 
 const stringify=(value)=>`${JSON.stringify(value,null,2)}\n`;
 
@@ -82,10 +83,10 @@ export function buildAnchorAlignmentPlan({workspaceRoot,platformId,now=new Date(
   const anchor=state.anchor;
   const alignment=targetAnchor?{configPath:relative(root,platformConfigPath(root,platformId)).replaceAll('\\','/'),warnings:[]}:anchorAlignment({workspaceRoot:root,platformId});
   const configRelative=alignment.configPath || `${platformId}/bridge/${platformId}-config.json`;
-  const bridgeRelative=[`${platformId}/bridge.json`,`${platformId}/bridge/bridge.json`].find((path)=>existsSync(targetPath(root,path))) || `${platformId}/bridge.json`;
-  const configPath=targetPath(root,configRelative),bridgePath=targetPath(root,bridgeRelative);
+  const configPath=targetPath(root,configRelative);
   const config=existsSync(configPath)?readJson(configPath):{};
-  const bridge=existsSync(bridgePath)?readJson(bridgePath):{};
+  const compatibility=bridgeCompatibility(root,platformId,config);
+  const bridge=compatibility.value;
   const declined=(value)=>typeof value==='string' && value ? value.replaceAll('\\','/').split('/').pop() : null;
   const warnings=[...alignment.warnings];
   const notes=[];
@@ -98,7 +99,7 @@ export function buildAnchorAlignmentPlan({workspaceRoot,platformId,now=new Date(
   nextConfig.agentRoot ??= join(root,'agent');
   nextConfig.softwareRoot ??= join(root,'software');
   nextConfig.runsRoot ??= join(root,platformId,'runtime/runs');
-  nextConfig.bridge=join(root,bridgeRelative);
+  nextConfig.bridge=join(root,compatibility.canonical);
   nextConfig.runner=join(root,anchor.engine.path);
   nextConfig.contracts=join(root,anchor.contracts.path);
   nextConfig.scannerRelease=join(root,anchor.checker.path);
@@ -122,7 +123,7 @@ export function buildAnchorAlignmentPlan({workspaceRoot,platformId,now=new Date(
   nextBridge.runtimeRoot ??= join(root,platformId,'runtime');
   nextBridge.modes ??= ['workflow','agent-workflow'];
   nextBridge.defaults={...bridge.defaults,workflowVersions:{...(bridge.defaults?.workflowVersions || {}),'repo-lint':anchor.checker.version}};
-  nextBridge.runner={...bridge.runner,enabled:bridge.runner?.enabled ?? true,config:join(root,configRelative),release:join(root,anchor.engine.path)};
+  nextBridge.runner={...normaliseRunner(bridge.runner),enabled:bridge.runner?.enabled ?? true,config:join(root,configRelative),release:join(root,anchor.engine.path)};
   nextBridge.runner.version=anchor.engine.version;
 
   const files=[];
@@ -133,10 +134,10 @@ export function buildAnchorAlignmentPlan({workspaceRoot,platformId,now=new Date(
     if(before!==next) files.push({path:relative,content,beforeSha256:before,newSha256:next});
   };
   add(configRelative,stringify(nextConfig));
-  add(bridgeRelative,stringify(nextBridge));
+  for(const file of bridgeFiles(root,platformId,nextBridge,config))add(file.path,file.content);
 
   const plan=replaceConfigPlan({workspaceRoot:root,platformId,anchorDigest:state.digest,files,now});
-  plan.payload={files,anchor,alignment,warnings,notes,targetIsExplicit:Boolean(targetAnchor)};
+  plan.payload={files,anchor,alignment,warnings,notes,compatibility:{authority:compatibility.authority,conflicted:compatibility.conflicted,mirrors:compatibility.mirrors},targetIsExplicit:Boolean(targetAnchor)};
   plan.changed=files.length>0;
   plan.target.before=Object.fromEntries(files.map((file)=>[file.path,file.beforeSha256]));
   plan.target.after=Object.fromEntries(files.map((file)=>[file.path,file.newSha256]));

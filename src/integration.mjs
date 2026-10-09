@@ -7,6 +7,7 @@ import { join, relative, resolve, sep } from 'node:path';
 const RESOURCE_KINDS = new Set(['tool', 'agent', 'software']);
 import { isRegisteredPlatform } from './core/platforms.mjs';
 import { buildResourcePointerPlan } from './plans.mjs';
+import {bridgeCompatibility} from './domains/platforms/bridge-compatibility.mjs';
 const ID = /^[A-Za-z0-9][A-Za-z0-9._-]*$/;
 const SECRET_KEYS = /(password|passwd|secret|token|api[_-]?key|private[_-]?key|access[_-]?key)/i;
 
@@ -152,7 +153,11 @@ export function suggestPlatformBridge({ workspaceRoot, platformId }) {
   if (!paths.length) throw new Error('PLATFORM_DIRECTORY_NOT_FOUND');
   const canonical = readText(root, paths[0]);
   const legacy = readText(root, `${platformId}/bridge/bridge.json`);
-  if (canonical.exists && legacy.exists && canonical.content !== legacy.content) throw new Error('PLATFORM_BRIDGE_CONFLICT');
+  if (canonical.exists && legacy.exists && canonical.content !== legacy.content) {
+    const configPath=[`${platformId}/bridge/runner-config.json`,`${platformId}/bridge/${platformId}-config.json`].find(path=>existsSync(pathFor(root,path)));
+    const binding=bridgeCompatibility(root,platformId,configPath?parseJson(readText(root,configPath).content):{});
+    return {platformId,path:paths[0],source:binding.authority,afterText:readText(root,binding.authority).content,nextStep:'review-migration',writePerformed:false};
+  }
   if (canonical.exists) return { platformId, path: paths[0], source: 'canonical', afterText: canonical.content, nextStep: 'verify', writePerformed: false };
   if (legacy.exists) {
     const parsed = parseJson(legacy.content);
@@ -189,20 +194,19 @@ export function buildIntegrationPlan({ workspaceRoot, kind, targetId, mode = 'co
     const path = targetPathFor(root, kind, targetId, relativePath);
     const current = readText(root, path);
     const legacy = readText(root, `${targetId}/bridge/bridge.json`);
-    if (current.exists && legacy.exists && current.content !== legacy.content) throw new Error('PLATFORM_BRIDGE_CONFLICT');
+    const configCandidates=[`${targetId}/bridge/runner-config.json`,`${targetId}/bridge/${targetId}-config.json`];
+    const configPath=configCandidates.find(candidate=>existsSync(pathFor(root,candidate)));
+    const binding=(current.exists || legacy.exists)?bridgeCompatibility(root,targetId,configPath?parseJson(readText(root,configPath).content):{}):null;
     const before = beforeText ?? current.content;
     if (current.sha256 !== (baselineSha256 ?? current.sha256) || current.content !== before) throw new Error('INTEGRATION_BASELINE_MISMATCH');
     const next = parseJson(afterText);
     if (next.platform !== targetId) throw new Error('PLATFORM_ID_MISMATCH');
     if (!['ai-platform-bridge/v1', 'ai-platform-bridge/v1.1'].includes(next.schema) || !next.shared || next.shared.readOnly !== true || typeof next.shared.agentRegistry !== 'string' || typeof next.shared.toolRegistry !== 'string' || typeof next.shared.architecturePrompt !== 'string' || typeof next.runtimeRoot !== 'string' || !Array.isArray(next.modes)) throw new Error('PLATFORM_BRIDGE_INCOMPLETE');
-    if (before === afterText) throw new Error('NO_INTEGRATION_CHANGE');
+    if (before === afterText && (!legacy.exists || legacy.content===afterText)) throw new Error('NO_INTEGRATION_CHANGE');
     const plan = basePlan('config', root, now);
     plan.target = { kind, targetId, mode, path };
     plan.steps.push({ operation: 'replace-platform-config', target: path, oldSha256: current.sha256, newSha256: sha256(afterText), oldExists: current.exists, checkpoint: true });
     plan.payload = { afterText };
-    const bridgeRoot = `${targetId}/bridge/`;
-    const configCandidates = [`${bridgeRoot}runner-config.json`, `${bridgeRoot}${targetId}-config.json`];
-    const configPath = configCandidates.find((candidate) => existsSync(pathFor(root, candidate)));
     if (configPath) {
       const configBefore = readText(root, configPath);
       const config = parseJson(configBefore.content);
@@ -218,6 +222,9 @@ export function buildIntegrationPlan({ workspaceRoot, kind, targetId, mode = 'co
         plan.verification.push('verify the client runner points to the canonical bridge');
       }
     }
+    plan.payload.compatibility=binding?{authority:binding.authority,conflicted:binding.conflicted}:null;
+    plan.payload.mirrors=(binding?.mirrors || []).map(path=>({path,afterText}));
+    for(const mirror of plan.payload.mirrors)plan.steps.push({operation:'sync-bridge-mirror',target:mirror.path,oldSha256:readText(root,mirror.path).sha256,newSha256:sha256(afterText),checkpoint:true});
     return plan;
   }
   if (!RESOURCE_KINDS.has(kind)) throw new Error('INVALID_INTEGRATION_KIND');

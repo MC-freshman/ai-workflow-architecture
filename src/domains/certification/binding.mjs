@@ -3,6 +3,7 @@ import {existsSync,readFileSync} from 'node:fs';
 import {targetPath} from '../../core/paths.mjs';
 import {readJson} from '../../core/json.mjs';
 import {sha256} from '../../core/hash.mjs';
+import {resourceProofBinding} from '../platforms/resource-proof.mjs';
 
 // Compatibility binding for previously stored onboarding evidence. No import of
 // the onboarding state machine or platform checker is allowed in this module.
@@ -15,7 +16,7 @@ export function platformConfig(root,id) {return readJson(platformConfigPath(root
 export function privateBindingHashes(root,id,config=platformConfig(root,id)) {
   const hashes={};
   for(const [name,path] of Object.entries({capabilities:config.capabilities,gateway:config.softwareGatewayConfig,backend:config.executionBackend,manifest:config.environmentManifest}))hashes[name]=path && existsSync(platformPath(root,id,path))?sha256(readFileSync(platformPath(root,id,path))):null;
-  if(config.resourceEnvironmentManifest)hashes.resourceManifest=existsSync(platformPath(root,id,config.resourceEnvironmentManifest))?sha256(readFileSync(platformPath(root,id,config.resourceEnvironmentManifest))):null;
+  if(config.resourceEnvironmentManifest){const path=platformPath(root,id,config.resourceEnvironmentManifest);hashes.resourceManifest=existsSync(path)?sha256(readFileSync(path)):null;if(existsSync(path)){const binding=resourceProofBinding(root,id,readJson(path));hashes.resourceRestore={valid:binding.valid,sha256:binding.sha256 || null};}}
   for(const [name,path] of Object.entries({hostManifest:config.hostEnvironmentManifest,peerProvider:config.peerDispatcherModule,platformProvider:targetPath(root,`${id}/bridge/manager-providers/platform_provider.py`)}))if(path && existsSync(platformPath(root,id,path)))hashes[name]=sha256(readFileSync(platformPath(root,id,path)));
   return hashes;
 }

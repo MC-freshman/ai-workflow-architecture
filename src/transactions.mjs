@@ -270,15 +270,21 @@ function applyIntegration(plan, afterText, context) {
   const exists = existsSync(target);
   const before = exists ? readFileSync(target, 'utf8') : '';
   const currentSha = exists ? sha256(before) : null;
-  const companionStep = plan.kind === 'integration-config' ? plan.steps?.[1] : null;
+  const companionStep = plan.kind === 'integration-config' ? plan.steps.find(step=>step.operation==='update-runner-bridge-reference') : null;
   if (companionStep && ![`${plan.target.targetId}/bridge/runner-config.json`, `${plan.target.targetId}/bridge/${plan.target.targetId}-config.json`].includes(companionStep.target)) throw new Error('INVALID_TRANSACTION_PLAN');
   const companion = companionStep ? targetPath(plan.workspaceRoot, safeRelative(companionStep.target)) : null;
   const companionBefore = companion ? readFileSync(companion, 'utf8') : null;
   const companionSha = companion ? sha256(companionBefore) : null;
+  const mirrors=(plan.payload?.mirrors || []).map(file=>{
+    if(plan.target.kind!=='platform' || file.path!==`${plan.target.targetId}/bridge/bridge.json`)throw Error('INVALID_TRANSACTION_PLAN');
+    const target=targetPath(plan.workspaceRoot,file.path),step=plan.steps.find(row=>row.operation==='sync-bridge-mirror' && row.target===file.path),before=readFileSync(target,'utf8');
+    if(!step || sha256(file.afterText)!==step.newSha256)throw Error('PLAN_PAYLOAD_MISMATCH');
+    return {...file,target,step,before,sha256:sha256(before)};
+  });
   if (companion && sha256(plan.payload?.companionAfterText || '') !== companionStep.newSha256) throw new Error('PLAN_PAYLOAD_MISMATCH');
   const id = makeId(plan, context.now);
-  if (currentSha === expectedNew && (!companion || companionSha === companionStep.newSha256)) return output(writeAudit({ ...context, transactionId: id, plan, action: plan.kind, status: 'already-applied', target: targetRelative, oldSha256: expectedOld, newSha256: expectedNew }));
-  if (currentSha !== expectedOld || (companion && companionSha !== companionStep.oldSha256)) {
+  if (currentSha === expectedNew && (!companion || companionSha === companionStep.newSha256) && mirrors.every(file=>file.sha256===file.step.newSha256)) return output(writeAudit({ ...context, transactionId: id, plan, action: plan.kind, status: 'already-applied', target: targetRelative, oldSha256: expectedOld, newSha256: expectedNew }));
+  if (currentSha !== expectedOld || (companion && companionSha !== companionStep.oldSha256) || mirrors.some(file=>file.sha256!==file.step.oldSha256)) {
     const event = writeAudit({ ...context, transactionId: id, plan, action: plan.kind, status: 'blocked-external-change', target: targetRelative, oldSha256: expectedOld, newSha256: expectedNew, error: 'EXTERNAL_CHANGE_DETECTED' });
     throw Object.assign(new Error('EXTERNAL_CHANGE_DETECTED'), { audit: event });
   }
@@ -287,11 +293,12 @@ function applyIntegration(plan, afterText, context) {
   if (sha256(afterText) !== expectedNew) throw new Error('PLAN_PAYLOAD_MISMATCH');
   const validated = buildIntegrationPlan({ workspaceRoot: plan.workspaceRoot, kind: plan.target.kind, targetId: plan.target.targetId, mode: plan.target.mode, relativePath: targetRelative, beforeText: before, afterText, baselineSha256: currentSha });
   if (validated.steps[0].newSha256 !== expectedNew) throw new Error('PLAN_PAYLOAD_MISMATCH');
-  if (JSON.stringify(validated.steps[1] || null) !== JSON.stringify(companionStep || null) || (validated.payload?.companionAfterText || null) !== (plan.payload?.companionAfterText || null)) throw new Error('PLAN_PAYLOAD_MISMATCH');
+  if (JSON.stringify(validated.steps) !== JSON.stringify(plan.steps) || JSON.stringify(validated.payload) !== JSON.stringify(plan.payload)) throw new Error('PLAN_PAYLOAD_MISMATCH');
   const parent = resolve(target, '..');
   if (!existsSync(parent) || !statSync(parent).isDirectory()) throw new Error('INTEGRATION_PARENT_NOT_FOUND');
   const saved = saveCheckpoint(context.auditRoot, id, before);
   const companionSaved = companion ? saveCheckpoint(context.auditRoot, `${id}-runner`, companionBefore) : null;
+  for(const file of mirrors)saveCheckpoint(context.auditRoot,`${id}-mirror`,file.before);
   if (context.failAfterCheckpoint) {
     const event = writeAudit({ ...context, transactionId: id, plan, action: plan.kind, status: 'interrupted-before-write', target: targetRelative, oldSha256: expectedOld, newSha256: expectedNew, checkpointSha256: saved.sha256, checkpointPath: saved.path, error: 'SIMULATED_INTERRUPT' });
     throw Object.assign(new Error('SIMULATED_INTERRUPT'), { audit: event, checkpointPath: saved.path });
@@ -304,10 +311,11 @@ function applyIntegration(plan, afterText, context) {
       atomicWrite(companion, plan.payload.companionAfterText, `${id}-runner`);
       if (sha256(readFileSync(companion, 'utf8')) !== companionStep.newSha256) throw new Error('VERIFY_FAILED');
     }
+    for(const file of mirrors){if(sha256(readFileSync(file.target))!==file.sha256)throw Error('EXTERNAL_CHANGE_DETECTED');atomicWrite(file.target,file.afterText,`${id}-mirror`);if(sha256(readFileSync(file.target))!==file.step.newSha256)throw Error('VERIFY_FAILED');}
     const event = writeAudit({ ...context, transactionId: id, plan, action: plan.kind, status: 'applied', target: targetRelative, oldSha256: expectedOld, newSha256: expectedNew, checkpointSha256: saved.sha256, checkpointPath: saved.path, writePerformed: true });
     return output(event, saved.path);
   } catch (error) {
-    const recovered=restoreOwnedFiles([{target,before:exists?before:null,afterSha256:expectedNew},...(companion?[{target:companion,before:companionBefore,afterSha256:companionStep.newSha256}]:[])],id);
+    const recovered=restoreOwnedFiles([{target,before:exists?before:null,afterSha256:expectedNew},...(companion?[{target:companion,before:companionBefore,afterSha256:companionStep.newSha256}]:[]),...mirrors.map(file=>({target:file.target,before:file.before,afterSha256:file.step.newSha256}))],id);
     if(!recovered.ok) {writeAudit({...context,transactionId:id,plan,action:plan.kind,status:'failed-external-change',target:targetRelative,checkpointPath:saved.path,error:'RECOVERY_EXTERNAL_CHANGE'});throw Object.assign(new Error('RECOVERY_EXTERNAL_CHANGE'),{checkpointPath:saved.path,recovery:recovered});}
     const event = writeAudit({ ...context, transactionId: id, plan, action: plan.kind, status: 'recovered-after-failure', target: targetRelative, oldSha256: expectedOld, newSha256: expectedNew, checkpointSha256: saved.sha256, checkpointPath: saved.path, error: String(error?.message ?? error) });
     throw Object.assign(new Error(String(error?.message ?? error)), { audit: event, checkpointPath: saved.path });
@@ -383,6 +391,7 @@ export function verifyPlanTarget({ plan }) {
     const target = targetPath(plan.workspaceRoot, plan.target.path);
     const actual = sha256(readFileSync(target, 'utf8'));
     let valid=true;
+    if(plan.kind==='integration-config')valid=plan.steps.every(step=>existsSync(targetPath(plan.workspaceRoot,step.target)) && sha256(readFileSync(targetPath(plan.workspaceRoot,step.target)))===step.newSha256);
     if(plan.kind==='integration-registry') try {validateRegistry(plan.workspaceRoot,plan.target.kind,readFileSync(target,'utf8'));} catch {valid=false;}
     return { schema: 'architecture-manager-verification/v1', ok: valid && actual === plan.steps[0].newSha256, target: plan.target.path, actualSha256: actual, expectedSha256: plan.steps[0].newSha256, writePerformed: false };
   }

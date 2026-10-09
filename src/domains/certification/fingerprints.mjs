@@ -9,6 +9,7 @@ import {parseDefinition} from '../resources/contracts.mjs';
 import {certificationHasher} from './content-cache.mjs';
 import {platformConfigPath} from './binding.mjs';
 import {declaredDefaults,resolvedCellVersion} from './declared.mjs';
+import {resourceProofBinding} from '../platforms/resource-proof.mjs';
 
 export {stableJson} from '../../core/json.mjs';
 const digest=value=>sha256(stableJson(value));
@@ -89,7 +90,10 @@ export function certificationSnapshot(root,id,config,{persistCache=false,invento
     }
     const settings={base,profiles:Object.fromEntries([...profiles].sort().map(key=>[key,{profile:capability.profiles?.[key] ?? null,descriptor:capability.descriptor?.profiles?.[key] ?? null}])),actions:Object.fromEntries([...actions].sort().map(key=>[key,capability.descriptor?.actions?.[key] ?? capability.checks?.[key] ?? null]))};
     if(actions.has('prompt') || row.kind==='agent')settings.contextBudget={window:config.contextWindowTokens ?? null,source:config.contextWindowSource ?? null};
-    if([...context.resources.values()].some(value=>Object.keys(value.manifest['x-runtimeRequirements']?.packages || {}).length))settings.resourceEnvironment=ownArtifact(config.resourceEnvironmentManifest);
+    if([...context.resources.values()].some(value=>Object.keys(value.manifest['x-runtimeRequirements']?.packages || {}).length)) {
+      const proof=resourceProofBinding(root,id,readOwn(config.resourceEnvironmentManifest));
+      settings.resourceEnvironment={manifest:ownArtifact(config.resourceEnvironmentManifest),restore:{valid:proof.valid,sha256:proof.sha256 || null}};
+    }
     if(actions.has('script') || [...profiles].some(profile=>/python|sealed|sandbox/i.test(profile))) settings.script={backend:ownArtifact(config.executionBackend),manifest:ownArtifact(config.environmentManifest),environment:config.scriptEnvironment,rungs:config.scriptEnvironmentRungs,interpreters:Object.fromEntries(Object.entries(config.interpreters || {}).map(([key,path])=>[key,program(path)]))};
     if(actions.has('delegate')) settings.peer={module:ownArtifact(config.peerDispatcherModule),root:config.peerContentRoot};
     const programs=value=>Array.isArray(value)?value.map(program):value;

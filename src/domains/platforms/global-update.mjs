@@ -21,6 +21,8 @@ import {nativeClientStatus,probeNativeClient} from './native-client.mjs';
 import {buildGitPlan} from '../../git.mjs';
 import {applyGitTransaction} from '../../git-executor.mjs';
 import {assertConfigurationReferences} from '../../onboarding-config.mjs';
+import {bridgeCompatibility,bridgeFiles,normaliseRunner} from './bridge-compatibility.mjs';
+import {withScopedCleanup} from '../../infrastructure/process-scope.mjs';
 
 const encode=value=>JSON.stringify(value,null,2)+'\n';
 const digest=value=>sha256(encode(value));
@@ -70,12 +72,13 @@ function platformRows(root) {
 }
 function platformPlan(root,id,target,settings={}) {
   const bridgePath=`${id}/bridge.json`,configPath=relative(root,platformConfigPath(root,id)).replaceAll('\\','/');
-  const config=readJson(targetPath(root,configPath)),bridge=readJson(targetPath(root,bridgePath));
+  const config=readJson(targetPath(root,configPath)),compatibility=bridgeCompatibility(root,id,config),bridge=compatibility.value;
   if(bridge.platform!==id || !config.runner || !existsSync(join(config.runner,'cli.py')) || !config.capabilities)throw Error('PLATFORM_NOT_PREVIOUSLY_CONNECTED');
   assertConfigurationReferences(config);assertConfigurationReferences(bridge);
   const alignment=buildAnchorAlignmentPlan({workspaceRoot:root,platformId:id,targetAnchor:target.anchor});
   const proposed=Object.fromEntries(alignment.payload.files.map(file=>[file.path,JSON.parse(file.content)]));
   const nextConfig=proposed[configPath] || structuredClone(config),nextBridge=proposed[bridgePath] || structuredClone(bridge);
+  nextBridge.runner=normaliseRunner(nextBridge.runner);
   const retained=settings.retain || [];
   nextBridge.defaults ||= {};
   const overrides=[];
@@ -91,17 +94,22 @@ function platformPlan(root,id,target,settings={}) {
   }
   const resources=target.resources.map(row=>({...row,version:nextBridge.defaults[row.repository==='agent'?'agentVersions':'workflowVersions']?.[row.id] || row.version}));
   const requirements=collectResourceRequirements(root,resources);
-  const window=Number(settings.contextWindowTokens || config.contextWindowTokens);
+  const supplied=settings.contextWindowTokens!==undefined && settings.contextWindowTokens!=='';
+  const window=Number(supplied?settings.contextWindowTokens:config.contextWindowTokens);
   const pending=[];
   if(!Number.isSafeInteger(window) || window<=0)pending.push('CONTEXT_WINDOW_REQUIRED');
-  else {nextConfig.contextWindowTokens=window;nextConfig.contextWindowSource=settings.contextWindowSource || config.contextWindowSource || 'existing-platform-declaration';}
+  else {
+    const source=supplied?settings.contextWindowSource:(config.contextWindowSource || 'existing-platform-declaration');
+    if(typeof source!=='string' || !source.trim() || /^(unknown|auto|猜测|未知)$/i.test(source.trim()))pending.push('CONTEXT_WINDOW_SOURCE_REQUIRED');
+    else {nextConfig.contextWindowTokens=window;nextConfig.contextWindowSource=source.trim();}
+  }
   const python=settings.pythonExecutable || config.interpreters?.['.py'] || bridge.runner?.python;
   if(!python || !existsSync(python))pending.push('RUNTIME_COMPATIBLE_PYTHON_REQUIRED');
-  const basePaths=[bridgePath,configPath];
+  const basePaths=[bridgePath,configPath,...compatibility.mirrors];
   const privateBindings=privateBindingHashes(root,id,config);
   for(const profile of requirements.profiles)if(profile!=='portable-resource-python')pending.push('RESOURCE_PROFILE_ADAPTER_REQUIRED:'+profile);
   return {platformId:id,targetDigest:target.digest,configPath,bridgePath,python,nextConfig,nextBridge,requirements,overrides,pending,privateBindings,
-    wheelhouse:settings.wheelhouse || null,settings,baseFiles:basePaths.map(path=>({path,beforeSha256:hashFile(targetPath(root,path))})),
+    compatibility:{authority:compatibility.authority,conflicted:compatibility.conflicted,mirrors:compatibility.mirrors},wheelhouse:settings.wheelhouse || null,settings,baseFiles:basePaths.map(path=>({path,beforeSha256:hashFile(targetPath(root,path))})),
     resources,sourceDigest:digest({target:target.digest,privateBindings,config:hashFile(targetPath(root,configPath)),bridge:hashFile(targetPath(root,bridgePath)),settings})};
 }
 export function buildGlobalUpdatePlan({workspaceRoot,settings={},push=null,resumePlan=null,now=new Date().toISOString()}) {
@@ -118,7 +126,8 @@ export function buildGlobalUpdatePlan({workspaceRoot,settings={},push=null,resum
   }
   if(!platforms.length)throw Error('GLOBAL_UPDATE_NO_CONNECTED_PLATFORMS');
   const governanceFiles=Object.fromEntries(['AGENTS.md','AI_ARCHITECTURE_SYSTEM_PROMPT.md','HANDOFF.md','versions/平台接入清单.md','versions/更新日志.md','.gitignore'].map(path=>[path,hashFile(targetPath(workspaceRoot,path))]));
-  const payload={shared,platforms,skipped,push:push===true,governanceFiles};
+  const preflight=platforms.map(row=>({platformId:row.platformId,pending:row.pending,contextWindowTokens:row.nextConfig.contextWindowTokens || null,contextWindowSource:row.nextConfig.contextWindowSource || null,authority:row.compatibility.authority,bridgeConflict:row.compatibility.conflicted}));
+  const payload={shared,platforms,skipped,push:push===true,governanceFiles,preflight};
   return {schema:'architecture-manager-plan/v1',kind:'platform-global-update',planId:'global-update-'+randomUUID(),workspaceRoot,generatedAt:now,applyMode:'confirmation-required',writePerformed:false,
     target:{platformIds:platforms.map(row=>row.platformId),sharedDigest:shared.digest,payloadSha256:digest(payload),scope:'all-existing-platforms'},payload,
     steps:platforms.map(row=>({operation:'更新三仓接入',target:row.platformId,pending:row.pending,overrides:row.overrides,resourcePackages:row.requirements.packages})),verification:['one confirmation for all existing platforms','independent real evidence and rollback','no changes to shared current or in-flight run locks']};
@@ -154,6 +163,22 @@ function baselineUnchanged(root,row,state) {
   if(expected.some(file=>hashFile(targetPath(root,file.path))!==(state?.activated?file.newSha256:file.beforeSha256)))throw Error('EXTERNAL_CHANGE_DETECTED');
   if(!state?.activated && digest(privateBindingHashes(root,row.platformId,readJson(targetPath(root,row.configPath))))!==digest(row.privateBindings))throw Error('EXTERNAL_CHANGE_DETECTED');
 }
+function settleActivated(root,row,state,plan,options) {
+  return withScopedCleanup(()=>{
+    const files=state.finalFiles || [],conflicts=files.filter(file=>hashFile(targetPath(root,file.path))!==file.newSha256);
+    if(!conflicts.length) {
+      try {state.git=commitFiles(root,files.map(file=>file.path),'Save '+row.platformId+' update pending interrupted validation',options);state.configurationSettlement='saved-pending';return;}
+      catch(error){state.settlementError=error.message;}
+    }
+    const owned=(state.beforeFiles || []).filter(file=>{
+      const hash=hashFile(targetPath(root,file.path));return hash===file.newSha256 || hash===(file.before===null?null:sha256(file.before));
+    });
+    state.recovery=restoreOwnedFiles(owned.map(file=>({target:targetPath(root,file.path),before:file.before,afterSha256:file.newSha256})),plan.planId);
+    state.externalChanges=conflicts.map(file=>file.path);
+    state.configurationSettlement=conflicts.length?'owned-restored-external-preserved':state.recovery.ok?'restored':'restore-incomplete';
+    if(state.recovery.ok && !conflicts.length)state.activated=false;
+  });
+}
 async function prepareEnvironments(plan,row,state,control,options) {
   const root=plan.workspaceRoot;
   if(!state.foundation) {
@@ -183,7 +208,7 @@ function activationPlan(plan,row,state) {
     config.scriptEnvironmentRungs=[{execPath:'kernel-sandbox',executionBackend:f.executionBackend,scriptEnvironment:f.scriptEnvironment,requiresSealedEnvironment:true}];
   }
   if(state.resource?.manifest)config.resourceEnvironmentManifest=state.resource.manifest;
-  for(const [path,value] of [[row.configPath,config],[row.bridgePath,bridge]])if(hashFile(targetPath(root,path))!==sha256(encode(value)))files.push({path,content:encode(value)});
+  for(const file of [{path:row.configPath,content:encode(config)},...bridgeFiles(root,row.platformId,bridge,row.nextConfig)])if(hashFile(targetPath(root,file.path))!==sha256(file.content))files.push(file);
   if(state.resource?.result) {
     const path=relative(root,platformPath(root,row.platformId,config.capabilities)).replaceAll('\\','/'),caps=readJson(targetPath(root,path));
     caps.profiles ||= {};caps.descriptor ||= {};caps.descriptor.profiles ||= {};caps.declaredAbsent ||= {};
@@ -264,14 +289,15 @@ export async function applyGlobalUpdate(plan,{actor='local-user',auditRoot=defau
         state.status='validated-awaiting-push';saveState(root,row,state);
         results.push(state);
       } catch(error) {
-        if(cancelled(error)){state.status='stopped';saveState(root,row,state);throw error;}
-        if(error.message==='GLOBAL_UPDATE_SHARED_CHANGED')throw error;
+        state.error=error.message;
+        if(state.activated)settleActivated(root,row,state,plan,options);
         if(state.status==='activating' && state.beforeFiles) {
           state.recovery=restoreOwnedFiles(state.beforeFiles.map(file=>({target:targetPath(root,file.path),before:file.before,afterSha256:file.newSha256})),plan.planId);
           state.activated=false;
         }
-        state.status=state.recovery?.ok?'failed-restored':/EXTERNAL_CHANGE/.test(error.message)?'external-change':'pending';state.error=error.message;
+        state.status=cancelled(error)?'stopped':state.externalChanges?.length || /EXTERNAL_CHANGE/.test(error.message)?'external-change':state.recovery?.ok?'failed-restored':'pending';
         saveState(root,row,state);results.push(state);
+        if(cancelled(error) || error.message==='GLOBAL_UPDATE_SHARED_CHANGED')throw error;
       }
     }
     const ready=results.filter(row=>row.status==='validated-awaiting-push');
@@ -306,8 +332,15 @@ export function verifyGlobalUpdate(plan) {
 export function buildGlobalUpdateRestorePlan({workspaceRoot,updatePlan}) {
   requirePlan(updatePlan);if(updatePlan.workspaceRoot!==workspaceRoot)throw Error('INVALID_TRANSACTION_PLAN');
   const byPath=new Map();
-  for(const row of updatePlan.payload.platforms){const path=statePath(workspaceRoot,row.platformId,updatePlan.planId);if(!existsSync(path))continue;const state=readJson(path);for(const file of state.beforeFiles || [])byPath.set(file.path,{...file,platformId:row.platformId,before:byPath.has(file.path)?byPath.get(file.path).before:file.before});}
-  const files=[...byPath.values()];
+  for(const row of updatePlan.payload.platforms){const path=statePath(workspaceRoot,row.platformId,updatePlan.planId);if(!existsSync(path))continue;const state=readJson(path);for(const file of state.beforeFiles || []){const values=byPath.get(file.path) || [];values.push({...file,platformId:row.platformId});byPath.set(file.path,values);}}
+  const files=[...byPath.values()].map(values=>{
+    const unique=[...new Map(values.map(file=>[(file.before===null?'null':sha256(file.before))+':'+file.newSha256,file])).values()];
+    if(unique.length===1)return unique[0];
+    const starts=unique.filter(file=>!unique.some(other=>other!==file && other.newSha256===(file.before===null?null:sha256(file.before))));
+    const ends=unique.filter(file=>!unique.some(other=>other!==file && (other.before===null?null:sha256(other.before))===file.newSha256));
+    if(starts.length!==1 || ends.length!==1)throw Error('GLOBAL_UPDATE_RESTORE_CHAIN_CONFLICT');
+    return {...ends[0],before:starts[0].before};
+  });
   return {schema:'architecture-manager-plan/v1',kind:'platform-global-update-restore',planId:'restore-'+randomUUID(),workspaceRoot,generatedAt:new Date().toISOString(),applyMode:'confirmation-required',writePerformed:false,target:{updatePlanId:updatePlan.planId,payloadSha256:digest(files)},payload:{files},steps:files.map(file=>({operation:'恢复旧接入配置',target:file.path}))};
 }
 export function applyGlobalUpdateRestore(plan,options={}) {
