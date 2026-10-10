@@ -1,0 +1,35 @@
+/* ── base: reset / 字体 / 网格底纹 / 滚动条 / 焦点 ─────────────── */
+
+:root {
+  font-family: var(--font-sans);
+  color: var(--text);
+  background: var(--bg);
+  font-synthesis: none;
+}
+
+body.dark { color-scheme: dark; }
+
+* { box-sizing: border-box; }
+
+/* 底层网格背景：暗色 rgba(76,194,255,.04) 线，亮色降级为更淡的蓝线 */
+body {
+  margin: 0;
+  min-width: 0;
+  color: var(--text);
+  background:
+    repeating-linear-gradient(0deg, var(--grid-line) 0 1px, transparent 1px 32px),
+    repeating-linear-gradient(90deg, var(--grid-line) 0 1px, transparent 1px 32px),
+    var(--bg);
+}
+
+button { font: inherit; }
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: transparent; }
+::-webkit-scrollbar-thumb { background: var(--sb-thumb); border-radius: var(--r-full); }
+::-webkit-scrollbar-thumb:hover { background: var(--sb-thumb-hover); }

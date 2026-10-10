@@ -1,0 +1,140 @@
+{
+  "schema": "ai-architecture-anchor/v1",
+  "generatedAt": "2026-10-10T11:56:05.823Z",
+  "source": {
+    "kind": "derived-from-workspace-pointers-and-frozen-manifests",
+    "workspaceRoot": "."
+  },
+  "engine": {
+    "id": "wf-runner",
+    "version": "0.13.1",
+    "path": "tool/wf-runner/versions/0.13.1",
+    "declares": {
+      "repo-lint": "0.7.0"
+    },
+    "selectedBecause": "newest frozen engine carrying the invocation smoke interface, with its declared checker present and frozen"
+  },
+  "checker": {
+    "id": "repo-lint",
+    "version": "0.7.0",
+    "path": "tool/repo-lint/versions/0.7.0",
+    "selectedBecause": "exact pairing: the checker the selected engine declares"
+  },
+  "judge": {
+    "id": "architecture-ops",
+    "version": "1.5.2",
+    "path": "tool/architecture-ops/versions/1.5.2",
+    "selectedBecause": "newest frozen judge carrying the matrix invocation smoke interface"
+  },
+  "contracts": {
+    "id": "runtime-contracts",
+    "version": "1.6.0",
+    "path": "tool/runtime-contracts/versions/1.6.0",
+    "selectedBecause": "shared current pointer: the package generation the workspace declares as default"
+  },
+  "conformance": {
+    "id": "platform-conformance",
+    "version": "1.6.2",
+    "path": "tool/platform-conformance/versions/1.6.2",
+    "selectedBecause": "shared current pointer: the capability-floor judge the workspace declares as default"
+  },
+  "software": {
+    "connector": "1.0.7",
+    "gateway": "1.0.1",
+    "recipes": [
+      {
+        "id": "burp-suite",
+        "version": "1.0.1",
+        "path": "software/burp-suite/versions/1.0.1"
+      },
+      {
+        "id": "dirsearch",
+        "version": "1.0.1",
+        "path": "software/dirsearch/versions/1.0.1"
+      },
+      {
+        "id": "mysql-cli",
+        "version": "1.0.2",
+        "path": "software/mysql-cli/versions/1.0.2"
+      },
+      {
+        "id": "nmap",
+        "version": "1.0.1",
+        "path": "software/nmap/versions/1.0.1"
+      },
+      {
+        "id": "veracrypt",
+        "version": "1.0.2",
+        "path": "software/veracrypt/versions/1.0.2"
+      },
+      {
+        "id": "wireshark-cli",
+        "version": "1.0.1",
+        "path": "software/wireshark-cli/versions/1.0.1"
+      }
+    ]
+  },
+  "selectionRule": "engine: newest frozen wf-runner with the invocation smoke interface whose declared checker is present and frozen; checker: that declared version (exact pair); judge: newest frozen architecture-ops with the matrix smoke interface; contracts/conformance/software: shared current pointers. Released-but-unadopted candidates are never auto-promoted.",
+  "rejected": [
+    {
+      "axis": "engine",
+      "version": "0.13.0",
+      "reason": "ORDERED_BELOW_SELECTED"
+    },
+    {
+      "axis": "engine",
+      "version": "0.12.2",
+      "reason": "ORDERED_BELOW_SELECTED"
+    },
+    {
+      "axis": "engine",
+      "version": "0.12.1",
+      "reason": "NO_INVOCATION_SMOKE_INTERFACE"
+    },
+    {
+      "axis": "engine",
+      "version": "0.12.0",
+      "reason": "NO_INVOCATION_SMOKE_INTERFACE"
+    },
+    {
+      "axis": "engine",
+      "version": "0.11.0",
+      "reason": "NO_INVOCATION_SMOKE_INTERFACE"
+    },
+    {
+      "axis": "engine",
+      "version": "0.10.1",
+      "reason": "NO_INVOCATION_SMOKE_INTERFACE"
+    },
+    {
+      "axis": "engine",
+      "version": "0.10.0",
+      "reason": "NO_INVOCATION_SMOKE_INTERFACE"
+    },
+    {
+      "axis": "engine",
+      "version": "0.1.0",
+      "reason": "NO_INVOCATION_SMOKE_INTERFACE"
+    },
+    {
+      "axis": "judge",
+      "version": "1.5.1",
+      "reason": "NO_MATRIX_SMOKE_INTERFACE"
+    },
+    {
+      "axis": "judge",
+      "version": "1.5.0",
+      "reason": "NO_MATRIX_SMOKE_INTERFACE"
+    },
+    {
+      "axis": "judge",
+      "version": "1.4.0",
+      "reason": "NO_MATRIX_SMOKE_INTERFACE"
+    },
+    {
+      "axis": "judge",
+      "version": "1.3.0",
+      "reason": "NO_MATRIX_SMOKE_INTERFACE"
+    }
+  ]
+}

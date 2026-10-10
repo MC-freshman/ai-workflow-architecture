@@ -1,6 +1,6 @@
 {
   "schema": "ai-governance-pointer/v1",
   "id": "platform-conformance",
-  "version": "1.6.0",
+  "version": "1.6.2",
   "hashManifest": "SHA256SUMS"
 }

@@ -20,11 +20,11 @@ const excludedConfig=new Set(['runner','contracts','scannerRelease','capabilitie
 // over the shared pointer. The judge is told the same version, so the snapshot and the reported rows
 // describe the same release; keeping them apart made the merge reject a matrix that had actually
 // passed for exactly this reason.
-export function certificationInventory(root,platformId=null) {
+export function certificationInventory(root,platformId=null,{activeOnly=false}={}) {
   const rows=[],defaults=platformId?declaredDefaults({workspaceRoot:root,platformId}):null;
   for(const [repo,section,kind] of [['tool','workflows','workflow'],['agent','agents','agent'],['software','software','software']]) {
     const registry=readJson(targetPath(root,`${repo}/registry.json`));
-    for(const entry of registry[section] || []) if(entry.enabled===true && (repo==='software' || entry.invocable!==false)) {
+    for(const entry of registry[section] || []) if(entry.enabled===true && (repo==='software' || entry.invocable!==false) && (!activeOnly || !entry.deprecated || defaults?.[kind]?.[entry.id])) {
       const pointer=readJson(targetPath(root,`${repo}/${entry.current || `${entry.id}/current.json`}`));
       const version=resolvedCellVersion({workspaceRoot:root,platformId,kind,id:entry.id,pointerVersion:pointer.version,defaults});
       rows.push({kind,id:entry.id,version:String(version)});
@@ -33,7 +33,7 @@ export function certificationInventory(root,platformId=null) {
   if(new Set(rows.map(resourceKey)).size!==rows.length) throw Error('CERTIFICATION_DUPLICATE_RESOURCE');
   return rows;
 }
-export function certificationSnapshot(root,id,config,{persistCache=false,inventory=certificationInventory(root,id)}={}) {
+export function certificationSnapshot(root,id,config,{persistCache=false,scope='full',inventory=certificationInventory(root,id,{activeOnly:scope==='invocation'}).filter(row=>scope!=='invocation' || row.kind!=='software')}={}) {
   excludedConfig.add('resourceEnvironmentManifest');excludedConfig.add('contextWindowTokens');excludedConfig.add('contextWindowSource');
   const hasher=certificationHasher(root,id,{persist:persistCache}),verified=new Map(),contentCache=new Map(),definitionCache=new Map();
   const verifyDirectory=directory=>{
@@ -105,6 +105,6 @@ export function certificationSnapshot(root,id,config,{persistCache=false,invento
     const resourceSha256=digest(closure.sort((a,b)=>a.key.localeCompare(b.key))),configurationSha256=digest(settings);
     cells[resourceKey(row)]={...row,resourceSha256,configurationSha256,rulesSha256,profiles:[...profiles].sort(),actions:[...actions].sort(),closure,runtimePrograms};
   }
-  const value={schema:'architecture-manager-certification-snapshot/v1',platformId:id,configSha256:sha256(readFileSync(platformConfigPath(root,id))),pins,rulesSha256,cells};
+  const value={schema:'architecture-manager-certification-snapshot/v1',platformId:id,scope,configSha256:sha256(readFileSync(platformConfigPath(root,id))),pins,rulesSha256,cells};
   value.digest=digest(value);hasher.save();value.cache={...hasher.counts};return value;
 }

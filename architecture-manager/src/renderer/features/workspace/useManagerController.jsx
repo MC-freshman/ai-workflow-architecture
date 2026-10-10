@@ -34,7 +34,7 @@ export function useManagerController() {
 
   const {integrationKind,setIntegrationKind,integrationTargetId,setIntegrationTargetId,integrationMode,setIntegrationMode,integrationPaths,setIntegrationPaths,integrationPath,setIntegrationPath,integrationTarget,setIntegrationTarget,integrationText,setIntegrationText,integrationTargetVersion,setIntegrationTargetVersion,platformSuggestion,setPlatformSuggestion}=useIntegrationState(workspaceSession);
 
-  const [dark, setDark] = useState(() => localStorage.getItem('am-theme') === 'dark');
+  const [dark, setDark] = useState(() => localStorage.getItem('am-theme') !== 'light');
   useEffect(() => {
     document.body.classList.toggle('dark', dark);
     localStorage.setItem('am-theme', dark ? 'dark' : 'light');

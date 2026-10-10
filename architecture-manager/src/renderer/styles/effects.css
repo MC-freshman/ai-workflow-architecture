@@ -1,0 +1,39 @@
+/* ── effects: 动效关键帧与可访问性降级 ──────────────────────────
+   性能红线：动画属性仅 transform/opacity/background-position。
+   （.status-dot 的 box-shadow 呼吸为唯一例外。）
+   本文件末尾统一包裹 prefers-reduced-motion 降级。               */
+
+/* .status-dot 呼吸：仅 box-shadow / opacity（性能红线唯一例外） */
+@keyframes am-breathe {
+  0%, 100% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--good) 45%, transparent); opacity: 1; }
+  50% { box-shadow: 0 0 0 6px transparent; opacity: .65; }
+}
+
+.status-dot { animation: am-breathe 2.4s var(--ease) infinite; }
+
+/* P4 面板进入：切视图单次 fade+translateY（不循环） */
+@keyframes am-view-in {
+  from { opacity: 0; transform: translateY(6px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* P4 计划预览扫描线：仅 transform 左右往返（无限 #2，全局配额已满） */
+@keyframes am-scan {
+  from { transform: translateX(0); }
+  to { transform: translateX(333%); }
+}
+
+/* P4 主按钮禁用 shimmer：仅 background-position，有限 3 次（不占无限配额） */
+@keyframes am-shimmer {
+  from { background-position: 200% 0; }
+  to { background-position: -200% 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+    scroll-behavior: auto !important;
+  }
+}

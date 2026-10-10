@@ -1,0 +1,111 @@
+/* ── design tokens ──────────────────────────────────────────────
+   语义层：亮色为根默认，body.dark 覆盖。
+   组件层：间距 / 圆角 / 字号 / 动效时长 / 缓动 / 阴影，与主题无关。
+   本文件是唯一允许出现裸十六进制 / rgba 字面量的样式文件。        */
+
+:root {
+  color-scheme: light;
+
+  /* 语义色 */
+  --bg: #f4f6fa;
+  --panel: #ffffff;
+  --panel-raised: #ffffff;
+  --accent: #1d6fd6;
+  --accent-2: #5b48e0;
+  --accent-soft: #e6effc;
+  --text: #1c2333;
+  --muted: #67718a;
+  --line: #dde3ef;
+  --good: #1d8a4e;
+  --good-bg: #e3f5ea;
+  --warn: #b07a12;
+  --warn-bg: #fdf3dc;
+  --bad: #c0392b;
+  --bad-bg: #fdeae7;
+
+  /* 扩展语义色（由组件层推导的固定语义） */
+  --ink-on-accent: #ffffff;
+  --topbar-ink: #ffffff;
+  --topbar-text-soft: #c9e3eb;
+  --topbar-grad: linear-gradient(135deg, #102a43, #1e4e67);
+  --topbar-grid: rgba(255, 255, 255, .05);
+  --grid-line: rgba(29, 111, 214, .03);
+  --hairline: rgba(255, 255, 255, .04);
+  --line-hover: rgba(29, 111, 214, .35);
+  --code-ink: #24495b;
+  --pre-bg: #142b38;
+  --pre-ink: #d8f3f1;
+  --shadow-1: 0 3px 12px rgba(22, 59, 75, .06);
+  --shadow-2: 0 10px 34px rgba(7, 16, 32, .24);
+  --glow: 0 0 12px rgba(76, 194, 255, .35);
+  --sb-thumb: rgba(103, 113, 138, .35);
+  --sb-thumb-hover: rgba(103, 113, 138, .55);
+
+  /* 组件层：间距 */
+  --sp-1: 4px;
+  --sp-2: 8px;
+  --sp-3: 12px;
+  --sp-4: 16px;
+  --sp-5: 24px;
+  --sp-6: 32px;
+  --sp-7: 48px;
+  --sp-8: 64px;
+
+  /* 组件层：圆角 */
+  --r-sm: 6px;
+  --r-md: 10px;
+  --r-full: 999px;
+
+  /* 组件层：字号 */
+  --fs-11: 11px;
+  --fs-12: 12px;
+  --fs-13: 13px;
+  --fs-14: 14px;
+  --fs-16: 16px;
+  --fs-20: 20px;
+  --fs-28: 28px;
+
+  /* 组件层：动效 */
+  --dur-1: 120ms;
+  --dur-2: 200ms;
+  --dur-3: 320ms;
+  --ease: cubic-bezier(.2, .7, .3, 1);
+
+  /* 字体栈 */
+  --font-sans: "Segoe UI Variable", "Segoe UI", "Microsoft YaHei", sans-serif;
+  --font-mono: "Cascadia Code", "JetBrains Mono", Consolas, "Courier New", monospace;
+}
+
+body.dark {
+  --bg: #0a0e16;
+  --panel: #101624;
+  --panel-raised: #151c2e;
+  --accent: #4cc2ff;
+  --accent-2: #7c6cff;
+  --accent-soft: rgba(76, 194, 255, .12);
+  --text: #e6edf7;
+  --muted: #8b98ad;
+  --line: rgba(139, 152, 173, .16);
+  --good: #34d399;
+  --good-bg: rgba(52, 211, 153, .12);
+  --warn: #fbbf24;
+  --warn-bg: rgba(251, 191, 36, .12);
+  --bad: #f87171;
+  --bad-bg: rgba(248, 113, 113, .12);
+
+  --ink-on-accent: #07131f;
+  --topbar-ink: #eaf6ff;
+  --topbar-text-soft: #b8d9e6;
+  --topbar-grad: linear-gradient(135deg, #0b1e30, #14455c);
+  --topbar-grid: rgba(76, 194, 255, .06);
+  --grid-line: rgba(76, 194, 255, .04);
+  --hairline: rgba(255, 255, 255, .06);
+  --line-hover: rgba(76, 194, 255, .4);
+  --code-ink: #9fc6dd;
+  --pre-bg: #0b1220;
+  --pre-ink: #bfe3ff;
+  --shadow-1: 0 3px 12px rgba(0, 0, 0, .45);
+  --shadow-2: 0 10px 34px rgba(0, 0, 0, .55);
+  --sb-thumb: rgba(139, 152, 173, .35);
+  --sb-thumb-hover: rgba(139, 152, 173, .55);
+}

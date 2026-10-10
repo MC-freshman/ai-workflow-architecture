@@ -18,7 +18,7 @@ export function createCommands() {
     }
     if (!PLAN_WRITE_KINDS.includes(planPreview.kind)) return;
     const target = planPreview.target?.path || (planPreview.target?.platformIds ? `所有已接入平台：${planPreview.target.platformIds.join('、')}` : planPreview.target?.platformId ? `平台：${planPreview.target.platformId}` : `${planPreview.target?.repository}/${planPreview.target?.resourceId}/current.json`);
-    if (!await api.confirm(`确认执行此计划？\n\n目标：${target}\n\n执行前会再次核对文件状态，失败会阻止覆盖。`)) return;
+    if (planPreview.kind!=='platform-global-update' && !await api.confirm(`确认执行此计划？\n\n目标：${target}\n\n执行前会再次核对文件状态，失败会阻止覆盖。`)) return;
     setBusy(true);
     setTransactionProgress(null);
     try {
@@ -78,7 +78,7 @@ setMessage(planPreview.kind === 'software-launch' ? `连接器答复：${applied
       setBusy(false);
       setTransactionProgress(null);
     }
-  
+
     },
   };
 }

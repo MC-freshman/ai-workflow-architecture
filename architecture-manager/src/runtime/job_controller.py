@@ -41,8 +41,6 @@ def main():
             kernel.TerminateJobObject(job, 1); raise RuntimeError('unable to resume owned command')
     else:
         process = subprocess.Popen(specification['argv'], cwd=specification['cwd'], stdin=subprocess.PIPE if specification.get('input') is not None else subprocess.DEVNULL, stdout=subprocess.PIPE, stderr=subprocess.PIPE, start_new_session=True)
-    if specification.get('input') is not None:
-        process.stdin.write(specification['input'].encode('utf-8')); process.stdin.close()
     def copy(source, destination):
         while True:
             data = source.read1(65536)
@@ -50,6 +48,19 @@ def main():
             destination.buffer.write(data); destination.buffer.flush()
     threads = [threading.Thread(target=copy, args=(process.stdout, sys.stdout)), threading.Thread(target=copy, args=(process.stderr, sys.stderr))]
     for thread in threads: thread.start()
+    # Drain output while feeding input: batch commands can fill stdout before
+    # consuming the rest of stdin. Keep the controller free to cancel either way.
+    def feed():
+        try:
+            process.stdin.write(specification['input'].encode('utf-8'))
+        except (BrokenPipeError, OSError):
+            pass  # A child may exit or be terminated before consuming its input.
+        finally:
+            try: process.stdin.close()
+            except (BrokenPipeError, OSError): pass
+    if specification.get('input') is not None:
+        writer = threading.Thread(target=feed, daemon=True)
+        writer.start(); threads.append(writer)
     started = time.monotonic(); termination = None
     try:
         while process.poll() is None:

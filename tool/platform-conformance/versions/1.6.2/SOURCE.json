@@ -1,0 +1,10 @@
+{
+  "schema": "ai-release-source/v1",
+  "id": "platform-conformance",
+  "version": "1.6.2",
+  "derivedFrom": "platform-conformance@1.6.1",
+  "change": "Approved one-button P2; exclude inherited historical matrix outputs from the new operational release. Software-state fix and negative tests retained.",
+  "recordedAt": "2026-10-10T09:09:02.713414+00:00",
+  "author": "workspace maintainer",
+  "license": "existing release terms for unchanged bytes; new operational implementation by workspace maintainer"
+}

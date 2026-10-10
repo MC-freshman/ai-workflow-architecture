@@ -68,7 +68,7 @@ return (
         <div>
           <div className="eyebrow">ARCHITECTURE MANAGER · {appVersion}</div>
           <h1>架构管理台</h1>
-          <p className="subtitle">独立用户版 · 只读盘点 + 计划式接入</p>
+          <p className="subtitle">管理你的多平台 AI 工作区：先盘点、再计划、确认才执行</p>
         </div>
         <div className="topbar-actions">
           <button className="primary-button" onClick={async () => scan(await api.selectWorkspace())} disabled={busy}>

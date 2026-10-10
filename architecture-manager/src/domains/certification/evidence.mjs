@@ -8,6 +8,7 @@ import {atomicWrite} from '../../transactions/kernel.mjs';
 import {resourceKey,stableJson} from './fingerprints.mjs';
 import {environmentBinding} from './binding.mjs';
 import {legacyBindingAtGit} from './legacy.mjs';
+import {floorReachedForScope} from './floor-policy.mjs';
 
 export const matrixSummary=rows=>Object.fromEntries(['PASS','NEEDS-INPUT','EXPECTED','FAIL'].map(status=>[status,rows.filter(row=>row.status===status).length]));
 export function ownEvidence(root,id,path,expected=null) {
@@ -22,14 +23,14 @@ function reportValid(report) {
   if(report.rows.some(row=>!['PASS','EXPECTED'].includes(row.status) || !/^(workflow|agent|software)$/.test(row.kind))) return false;
   return report.rows.some(row=>row.status==='PASS') && Object.entries(matrixSummary(report.rows)).every(([key,count])=>report.summary?.[key]===count);
 }
-export function readCoverage(root,id) {
-  const pointerPath=targetPath(root,`${id}/runtime/manager-check/coverage-latest.json`);
+export function readCoverage(root,id,{scope='full'}={}) {
+  const pointerPath=targetPath(root,`${id}/runtime/manager-check/${scope==='invocation'?'invocation-':''}coverage-latest.json`);
   if(!existsSync(pointerPath)) return {status:'missing',coverage:null};
   try {
     const pointer=readJson(pointerPath);
     if(!ownEvidence(root,id,pointer.path,pointer.sha256)) throw Error('CERTIFICATION_EVIDENCE_INVALID');
     const coverage=readJson(pointer.path);
-    if(coverage.schema!=='architecture-manager-certification-coverage/v1' || coverage.platformId!==id || !ownEvidence(root,id,coverage.matrixPath,coverage.matrixSha256) || !ownEvidence(root,id,coverage.conformPath,coverage.conformSha256) || !reportValid(readJson(coverage.matrixPath)) || !readJson(coverage.conformPath).floorReached) throw Error('CERTIFICATION_EVIDENCE_INVALID');
+    if(coverage.schema!=='architecture-manager-certification-coverage/v1' || coverage.platformId!==id || (coverage.scope || 'full')!==scope || !ownEvidence(root,id,coverage.matrixPath,coverage.matrixSha256) || !ownEvidence(root,id,coverage.conformPath,coverage.conformSha256) || !reportValid(readJson(coverage.matrixPath)) || !floorReachedForScope(readJson(coverage.conformPath),scope)) throw Error('CERTIFICATION_EVIDENCE_INVALID');
     const reports=new Map();
     for(const entry of Object.values(coverage.rows)) {
       if(!ownEvidence(root,id,entry.source.path,entry.source.sha256)) throw Error('CERTIFICATION_EVIDENCE_INVALID');
@@ -71,11 +72,12 @@ export function legacyCoverage(root,id,previous,snapshot=null) {
   } catch {return null;}
 }
 export function writeCoverage(root,id,snapshot,rows,matrixPath,conformPath,fullAnchor) {
-  if(!ownEvidence(root,id,matrixPath) || !ownEvidence(root,id,conformPath) || !readJson(conformPath).floorReached || !reportValid(readJson(matrixPath))) throw Error('CERTIFICATION_COVERAGE_INCOMPLETE');
+  const scope=snapshot.scope || 'full';
+  if(!ownEvidence(root,id,matrixPath) || !ownEvidence(root,id,conformPath) || !floorReachedForScope(readJson(conformPath),scope) || !reportValid(readJson(matrixPath))) throw Error('CERTIFICATION_COVERAGE_INCOMPLETE');
   if(stableJson(Object.keys(rows).sort())!==stableJson(Object.keys(snapshot.cells).sort())) throw Error('CERTIFICATION_COVERAGE_INCOMPLETE');
-  const value={schema:'architecture-manager-certification-coverage/v1',platformId:id,snapshot,rows,matrixPath,matrixSha256:sha256(readFileSync(matrixPath)),conformPath,conformSha256:sha256(readFileSync(conformPath)),fullAnchor,environmentBindingSha256:environmentBinding(root,id),checkedAt:new Date().toISOString()};
+  const value={schema:'architecture-manager-certification-coverage/v1',platformId:id,scope,snapshot,rows,matrixPath,matrixSha256:sha256(readFileSync(matrixPath)),conformPath,conformSha256:sha256(readFileSync(conformPath)),fullAnchor,environmentBindingSha256:environmentBinding(root,id),checkedAt:new Date().toISOString()};
   const path=join(dirname(matrixPath),'coverage.json');writeFileSync(path,JSON.stringify(value,null,2)+'\n',{flag:'wx'});
-  const pointer=targetPath(root,`${id}/runtime/manager-check/coverage-latest.json`);
+  const pointer=targetPath(root,`${id}/runtime/manager-check/${scope==='invocation'?'invocation-':''}coverage-latest.json`);
   atomicWrite(pointer,JSON.stringify({path,sha256:sha256(readFileSync(path))},null,2)+'\n',randomUUID());return value;
 }
 export function mergeCertification(root,id,snapshot,selection,actualPath,conformPath,out) {
@@ -92,7 +94,7 @@ export function mergeCertification(root,id,snapshot,selection,actualPath,conform
   const provenance={actualRows:actual.size,reusedRows:Object.keys(rows).length-actual.size,removedRows:Object.keys(selection.baseline?.rows || {}).filter(key=>!snapshot.cells[key]),sources:[...new Map(Object.values(rows).map(entry=>[entry.source.path,entry.source])).values()],selection:{kind:selection.kind,reasons:selection.reasons},businessStagesExecuted:false};
   const matrix={schema:'ai-invocation-matrix/v1',generatedAt:new Date().toISOString(),rows:Object.values(rows).map(entry=>entry.row),provenance};matrix.summary=matrixSummary(matrix.rows);
   const path=join(out,'matrix.coverage.json');writeFileSync(path,JSON.stringify(matrix,null,2)+'\n',{flag:'wx'});
-  if(!reportValid(matrix) || !readJson(conformPath).floorReached || selection.kind==='smoke') return {matrixPath:path,matrix,provenance,coverageComplete:false};
+  if(!reportValid(matrix) || !floorReachedForScope(readJson(conformPath),snapshot.scope || 'full') || selection.kind==='smoke') return {matrixPath:path,matrix,provenance,coverageComplete:false};
   const coverage=writeCoverage(root,id,snapshot,rows,path,conformPath,selection.baseline?.fullAnchor || {kind:selection.kind,matrixPath:actualPath,matrixSha256:source?.sha256});
   return {matrixPath:path,matrix,provenance,coverageComplete:true,coverage};
 }
@@ -104,7 +106,7 @@ export function pendingCoverage(root,id,snapshot) {
     const latest=readJson(latestPath),path=latest.partialPath || latest.matrixActualPath || latest.matrixPath;
     if(!['check-failed','check-cancelled'].includes(latest.stage) || !ownEvidence(root,id,path,latest.partialSha256 || latest.matrixActualSha256 || latest.matrixSha256) || !ownEvidence(root,id,latest.scopeSnapshotPath,latest.scopeSnapshotSha256)) return null;
     const prior=readJson(latest.scopeSnapshotPath),report=readJson(path),source={path,sha256:sha256(readFileSync(path))};
-    if(!report.rows?.length || prior.snapshot?.platformId!==id || !['full','resume-first','incremental'].includes(prior.selection?.kind)) return null;
+    if((latest.scope || prior.snapshot?.scope || 'full')!==(snapshot.scope || 'full') || !report.rows?.length || prior.snapshot?.platformId!==id || !['full','resume-first','incremental'].includes(prior.selection?.kind)) return null;
     const rows={};
     for(const [key,entry] of Object.entries(prior.baselineRows || {})) if(ownEvidence(root,id,entry.source.path,entry.source.sha256) && stableJson(entry.fingerprint)===stableJson(snapshot.cells[key])) rows[key]=entry;
     for(const row of report.rows) {const key=resourceKey(row),before=prior.snapshot.cells[key],next=snapshot.cells[key];if(['PASS','EXPECTED'].includes(row.status) && before && next && prior.snapshot.rulesSha256===snapshot.rulesSha256 && stableJson(before)===stableJson(next)) rows[key]={row,source,fingerprint:next};}

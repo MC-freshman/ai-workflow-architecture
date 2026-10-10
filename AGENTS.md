@@ -1,4 +1,4 @@
-# 用户工作区协作约定 · 0.8.1
+# 用户工作区协作约定 · 0.8.3
 
 开始维护前阅读 AI_ARCHITECTURE_SYSTEM_PROMPT.md 和 agentic-workflow-master-manual.md；架构原则入口为 versions/架构基本原则.md。
 

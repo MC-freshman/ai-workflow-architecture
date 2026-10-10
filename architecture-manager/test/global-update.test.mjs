@@ -50,6 +50,23 @@ test('preflight collects window and explicit source without writing configuratio
   const good=buildGlobalUpdatePlan({workspaceRoot:f.root,settings:{alpha:{contextWindowTokens:256000,contextWindowSource:'user-declared lower bound 256K'}}});assert.equal(good.payload.preflight[0].contextWindowTokens,256000);assert.equal(good.payload.preflight[0].pending.length,0);assert.deepEqual(readFileSync(join(f.root,path)),before);
 });
 
+test('update completion preserves a negative full-integration result and software gaps',async t=>{
+  const f=fixture(t),original=f.services.check;
+  f.services.check=async input=>({...await original(input),coverageComplete:false,invocationCoverageComplete:true,
+    fullFloorReached:false,gaps:[{id:'software:missing-body',verdict:'unverified',reason:'body not bound'}]});
+  const plan=buildGlobalUpdatePlan({workspaceRoot:f.root,push:true});
+  const result=await applyGlobalUpdate(plan,{auditRoot:f.auditRoot,services:f.services});
+  assert(result.results.every(row=>row.status==='complete'));
+  assert(result.results.every(row=>row.architectureComplete===false && row.capabilityPending.length===1));
+});
+
+test('unchanged update never reuses a stale native-client receipt as complete',async t=>{
+  const f=fixture(t);await applyGlobalUpdate(buildGlobalUpdatePlan({workspaceRoot:f.root,push:true}),{auditRoot:f.auditRoot,services:f.services});
+  f.services.nativeStatus=()=>({nativeVendorClientVerified:false});
+  const result=await applyGlobalUpdate(buildGlobalUpdatePlan({workspaceRoot:f.root,push:true}),{auditRoot:f.auditRoot,services:f.services});
+  assert(result.results.every(row=>row.status==='pending' && row.pending.includes('NATIVE_CLIENT_VERIFICATION_REQUIRED')));
+});
+
 test('post-activation throw is committed as pending, resumes without reinstall and remains restorable',async t=>{
   const f=fixture(t),plan=buildGlobalUpdatePlan({workspaceRoot:f.root}),original=f.services.check;
   f.services.check=async input=>{if(input.platformId==='alpha')throw Error('REAL_CHECK_THROW');return original(input);};

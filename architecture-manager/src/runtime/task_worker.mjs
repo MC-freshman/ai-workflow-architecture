@@ -12,10 +12,12 @@ try {
   if(!Object.hasOwn(api,method) || typeof api[method]!=='function') throw Error('IPC_OPERATION_UNDECLARED');
   const parameters=[...args];
   const input=parameters[0];
+  const globalUpdate=method==='applyPlan' && input?.plan?.kind==='platform-global-update';
   const target=input?.platformId || input?.plan?.target?.platformId;
   if(target) cancelLegacy=()=>api.cancelOnboarding({workspaceRoot:input.workspaceRoot || input.plan.workspaceRoot,platformId:target});
+  if(globalUpdate)cancelLegacy=()=>api.cancelGlobalUpdate({workspaceRoot:input.plan.workspaceRoot});
   if(method==='applyPlan') parameters[0]={...parameters[0],onProgress:update=>{
-    if(context.mode!=='provider-session' && processScopeCancelled(context)) throw Error('TASK_CANCELLED');
+    if(!globalUpdate && context.mode!=='provider-session' && processScopeCancelled(context)) throw Error('TASK_CANCELLED');
     progress(update);
   }};
   if(method==='runPlatformCheck') parameters[0]={...parameters[0],onProgress:progress,registerCancel};

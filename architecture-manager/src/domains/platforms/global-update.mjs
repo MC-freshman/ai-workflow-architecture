@@ -17,7 +17,7 @@ import {collectResourceRequirements,resourceEnvironmentMatches,prepareResourceEn
 import {buildOnboardingRuntimePlan,applyOnboardingRuntime} from '../../onboarding-runtime.mjs';
 import {buildOnboardingGovernancePlan,applyOnboardingGovernance} from '../../onboarding-governance.mjs';
 import {runPlatformCheck} from '../../platform-check.mjs';
-import {nativeClientStatus,probeNativeClient} from './native-client.mjs';
+import {nativeClientStatus,probeNativeClient,buildNativeClientPlan,applyNativeClient} from './native-client.mjs';
 import {buildGitPlan} from '../../git.mjs';
 import {applyGitTransaction} from '../../git-executor.mjs';
 import {assertConfigurationReferences} from '../../onboarding-config.mjs';
@@ -105,7 +105,8 @@ function platformPlan(root,id,target,settings={}) {
   }
   const python=settings.pythonExecutable || config.interpreters?.['.py'] || bridge.runner?.python;
   if(!python || !existsSync(python))pending.push('RUNTIME_COMPATIBLE_PYTHON_REQUIRED');
-  const basePaths=[bridgePath,configPath,...compatibility.mirrors];
+  const nativeBinding=`${id}/bridge/native-client.json`;
+  const basePaths=[bridgePath,configPath,...compatibility.mirrors,...(existsSync(targetPath(root,nativeBinding))?[nativeBinding]:[])];
   const privateBindings=privateBindingHashes(root,id,config);
   for(const profile of requirements.profiles)if(profile!=='portable-resource-python')pending.push('RESOURCE_PROFILE_ADAPTER_REQUIRED:'+profile);
   return {platformId:id,targetDigest:target.digest,configPath,bridgePath,python,nextConfig,nextBridge,requirements,overrides,pending,privateBindings,
@@ -146,7 +147,14 @@ function checkBindings(root,id,result) {
 function evidenceFresh(root,row,state) {
   return state.targetDigest===row.targetDigest && state.requirementsDigest===row.requirements.digest && state.finalBinding===digest(privateBindingHashes(root,row.platformId,readJson(targetPath(root,row.configPath)))) && state.checkBindings?.length===2 && state.checkBindings.every(file=>hashFile(platformPath(root,row.platformId,file.path))===file.sha256);
 }
-function saveState(root,row,state) {const path=statePath(root,row.platformId,state.planId);mkdirSync(join(path,'..'),{recursive:true});atomicWrite(path,encode(state),randomUUID());return path;}
+function saveState(root,row,state) {
+  const path=statePath(root,row.platformId,state.planId);mkdirSync(join(path,'..'),{recursive:true});
+  const last=state.timeline?.at(-1);
+  if(!last || last.status!==state.status || last.error!==state.error || digest(last.pending || [])!==digest(state.pending || [])) {
+    (state.timeline ||= []).push({at:new Date().toISOString(),status:state.status,error:state.error,pending:state.pending || []});
+  }
+  atomicWrite(path,encode(state),randomUUID());return path;
+}
 function commitFiles(root,paths,message,options) {
   if(!paths.length)return {head:git(root,'rev-parse','HEAD'),committedAt:git(root,'show','-s','--format=%cI','HEAD')};
   const staged=git(root,'diff','--cached','--name-only','-z').split('\0').filter(Boolean);
@@ -230,6 +238,7 @@ export async function applyGlobalUpdate(plan,{actor='local-user',auditRoot=defau
   const persistHistory=()=>atomicWrite(history,encode({plan,governanceHashes}),randomUUID());
   const assertGovernance=()=>{for(const [path,hash] of Object.entries(governanceHashes))if(hashFile(targetPath(root,path))!==hash)throw Error('GLOBAL_UPDATE_WORKSPACE_CHANGED');};
   const prepare=services.prepare || prepareEnvironments,check=services.check || runPlatformCheck;
+  const nativeCurrent=id=>services.nativeStatus?services.nativeStatus(root,id):nativeClientStatus(root,id);
   try {
     for(const row of plan.payload.platforms) {
       control.assertActive();assertShared(root,plan.payload.shared);assertGovernance();
@@ -238,14 +247,14 @@ export async function applyGlobalUpdate(plan,{actor='local-user',auditRoot=defau
       if(state.status==='prepared' && previousHistory?.plan?.planId!==plan.planId) {
         const previousPath=previousHistory?.plan?statePath(root,row.platformId,previousHistory.plan.planId):null;
         const prior=previousPath && existsSync(previousPath)?readJson(previousPath):null;
-        if(prior && ['complete','no-change'].includes(prior.status) && evidenceFresh(root,row,prior) && prior.finalFiles.filter(file=>file.path.startsWith(row.platformId+'/')).every(file=>hashFile(targetPath(root,file.path))===file.newSha256) && sha256(encode(row.nextConfig))===hashFile(targetPath(root,row.configPath)) && sha256(encode(row.nextBridge))===hashFile(targetPath(root,row.bridgePath))) {
+        if(prior && ['complete','no-change'].includes(prior.status) && evidenceFresh(root,row,prior) && nativeCurrent(row.platformId).nativeVendorClientVerified && prior.finalFiles.filter(file=>file.path.startsWith(row.platformId+'/')).every(file=>hashFile(targetPath(root,file.path))===file.newSha256) && sha256(encode(row.nextConfig))===hashFile(targetPath(root,row.configPath)) && sha256(encode(row.nextBridge))===hashFile(targetPath(root,row.bridgePath))) {
           state={...prior,planId:plan.planId,sourceDigest:row.sourceDigest,status:'no-change',beforeFiles:[],reusedFrom:prior.planId};saveState(root,row,state);
         }
       }
       if(state.sourceDigest!==row.sourceDigest)throw Error('ONBOARDING_RESUME_DRIFT');
       if(state.status==='restored')throw Error('GLOBAL_UPDATE_ALREADY_RESTORED');
-      if(['complete','no-change'].includes(state.status)) {baselineUnchanged(root,row,state);if(!evidenceFresh(root,row,state))throw Error('GLOBAL_UPDATE_EVIDENCE_CHANGED');results.push(state);continue;}
-      if(state.status==='validated-awaiting-push' && evidenceFresh(root,row,state)){baselineUnchanged(root,row,state);results.push(state);continue;}
+      if(['complete','no-change'].includes(state.status)) {baselineUnchanged(root,row,state);if(!evidenceFresh(root,row,state))throw Error('GLOBAL_UPDATE_EVIDENCE_CHANGED');if(nativeCurrent(row.platformId).nativeVendorClientVerified){results.push(state);continue;}state.status='pending';state.pending=['NATIVE_CLIENT_VERIFICATION_REQUIRED'];saveState(root,row,state);}
+      if(state.status==='validated-awaiting-push' && evidenceFresh(root,row,state) && nativeCurrent(row.platformId).nativeVendorClientVerified){baselineUnchanged(root,row,state);results.push(state);continue;}
       onProgress({platformId:'global-update',phase:`更新 ${row.platformId}`,completed:results.length,total:plan.payload.platforms.length});
       try {
         baselineUnchanged(root,row,state);
@@ -266,12 +275,23 @@ export async function applyGlobalUpdate(plan,{actor='local-user',auditRoot=defau
         }
         control.assertActive();
         state.status='checking';saveState(root,row,state);
-        const checked=await check({workspaceRoot:root,platformId:row.platformId,mode:'full',stopOnFloorFailure:true,registerCancel:control.registerCancel,onProgress:progress=>onProgress({...progress,platformId:'global-update',targetPlatformId:row.platformId})});
+        const checked=await check({workspaceRoot:root,platformId:row.platformId,mode:'full',scope:'invocation',stopOnFloorFailure:true,registerCancel:control.registerCancel,onProgress:progress=>onProgress({...progress,platformId:'global-update',targetPlatformId:row.platformId})});
         control.assertActive();assertShared(root,plan.payload.shared);
         state.check=checked;state.checkBindings=checkBindings(root,row.platformId,checked);state.targetDigest=plan.payload.shared.digest;state.requirementsDigest=row.requirements.digest;
-        if(!['callable','complete'].includes(checked.stage) || checked.coverageComplete!==true || checked.issues?.length) {state.status='pending';state.pending=checked.issues?.length?checked.issues:['CAPABILITY_FLOOR_OR_CALL_CHECK_PENDING'];state.git=commitFiles(root,state.finalFiles.map(file=>file.path),'Save pending '+row.platformId+' integration update',options);saveState(root,row,state);results.push(state);continue;}
+        state.architectureComplete=checked.coverageComplete===true;state.capabilityPending=checked.gaps || [];
+        if(!['callable','complete'].includes(checked.stage) || !(checked.invocationCoverageComplete===true || checked.coverageComplete===true) || checked.issues?.length) {state.status='pending';state.pending=checked.issues?.length?checked.issues:['CAPABILITY_FLOOR_OR_CALL_CHECK_PENDING'];state.git=commitFiles(root,state.finalFiles.map(file=>file.path),'Save pending '+row.platformId+' integration update',options);saveState(root,row,state);results.push(state);continue;}
         let native=services.nativeStatus?services.nativeStatus(root,row.platformId):nativeClientStatus(root,row.platformId);
-        if(!services.nativeStatus && !native.nativeVendorClientVerified && native.registered && native.profile?.supportsDirectProbe)native=await probeNativeClient({workspaceRoot:root,platformId:row.platformId},{registerCancel:control.registerCancel});
+        if(!services.nativeStatus && !native.nativeVendorClientVerified && native.registered && native.profile?.supportsDirectProbe) {
+          const path=`${row.platformId}/bridge/native-client.json`,before=readFileSync(targetPath(root,path),'utf8');
+          const generated=buildNativeClientPlan({workspaceRoot:root,platformId:row.platformId});
+          state.status='checking-native';saveState(root,row,state);
+          try {native=await applyNativeClient(generated,{...options,registerCancel:control.registerCancel});}
+          finally {
+            const after=readFileSync(targetPath(root,path),'utf8');
+            if(before!==after){const file={path,content:after,newSha256:sha256(after),beforeSha256:sha256(before)};state.beforeFiles.push({...file,before});state.finalFiles=state.finalFiles.filter(value=>value.path!==path);state.finalFiles.push(file);saveState(root,row,state);}
+          }
+          if(!native.nativeVendorClientVerified)native=await probeNativeClient({workspaceRoot:root,platformId:row.platformId},{registerCancel:control.registerCancel});
+        }
         control.assertActive();assertShared(root,plan.payload.shared);state.native=native;
         if(!native.nativeVendorClientVerified){state.status='pending';state.pending=['NATIVE_CLIENT_VERIFICATION_REQUIRED'];state.git=commitFiles(root,state.finalFiles.map(file=>file.path),'Save '+row.platformId+' update pending native validation',options);saveState(root,row,state);results.push(state);continue;}
         const governance=services.governance?await services.governance(root,row.platformId):buildOnboardingGovernancePlan({workspaceRoot:root,platformId:row.platformId});

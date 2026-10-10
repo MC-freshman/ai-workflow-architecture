@@ -45,14 +45,18 @@ export function selectCertification(snapshot,baseline,{mode='full',only=null,bas
   return {kind,mode:kind==='full'?'full':'quick',selected:[...selected],only:[...selected].join(','),baseline,reasons,removed:Object.keys(baseline?.rows || {}).filter(key=>!snapshot.cells[key]),reused:keys.filter(key=>!selected.has(key))};
 }
 export function certificationSelection(root,id,snapshot,options={}) {
-  const saved=readCoverage(root,id);
+  const saved=readCoverage(root,id,{scope:snapshot.scope || 'full'});
   let baseline=saved.coverage;
   const pending=pendingCoverage(root,id,snapshot);
   if(baseline && pending) baseline=pending.resumeFirst?pending:{...baseline,rows:{...baseline.rows,...pending.rows}};
   if(saved.status==='missing') {
     const statePath=targetPath(root,`${id}/runtime/maintenance/manager-onboarding/state.json`);
     let previous={};try {if(existsSync(statePath)) previous=readJson(statePath);} catch { /* invalid old state is not proof */ }
-    baseline=legacyCoverage(root,id,previous,snapshot) || pending;
+    if(pending?.resumeFirst) baseline=pending;
+    else {
+      const legacy=legacyCoverage(root,id,previous,snapshot);
+      baseline=legacy && pending?{...legacy,rows:{...legacy.rows,...pending.rows}}:pending || legacy;
+    }
   }
   return selectCertification(snapshot,baseline,{...options,baselineStatus:saved.status});
 }

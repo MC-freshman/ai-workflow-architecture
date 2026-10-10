@@ -11,6 +11,11 @@
 # User data, execution state and credentials
 /inbox/
 **/runtime/
+# The application's runtime directory contains source modules, not platform state.
+!architecture-manager/src/runtime/
+!architecture-manager/src/runtime/**
+**/__pycache__/
+*.pyc
 **/.env
 **/.env.*
 !**/.env.example
