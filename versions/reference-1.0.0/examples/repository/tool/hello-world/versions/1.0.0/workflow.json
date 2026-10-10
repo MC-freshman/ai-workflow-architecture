@@ -1,9 +1,0 @@
-{
-  "schema": "ai-workflow-definition/v2",
-  "id": "hello-world",
-  "stages": [
-    {"id": "intake", "outputs": ["request.json"]},
-    {"id": "respond", "outputs": ["result.json"]}
-  ]
-}
-

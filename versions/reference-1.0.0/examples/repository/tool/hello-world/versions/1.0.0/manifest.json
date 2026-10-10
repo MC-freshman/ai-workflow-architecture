@@ -1,8 +1,0 @@
-{
-  "schema": "ai-workflow/v2.1",
-  "id": "hello-world",
-  "version": "1.0.0",
-  "definition": "workflow.json",
-  "parallel": true
-}
-

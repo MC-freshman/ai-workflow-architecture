@@ -1,0 +1,120 @@
+{
+  "schema": "public-release-provenance/v1",
+  "note": "历史软件配方曾在较早公开快照中脱敏；本发行保留原公开版本字节，不覆盖冻结目录。",
+  "releases": [
+    {
+      "release": "software/burp-suite/versions/1.0.0",
+      "source": "previous-public-export",
+      "sourceHead": "22f5690d284dbd37e2827c73ee0501bdb6de0890",
+      "filesDifferentFromPrivate": [
+        "software/burp-suite/versions/1.0.0/README.md",
+        "software/burp-suite/versions/1.0.0/recipes/windows.json"
+      ],
+      "immutablePublicBytesRetained": true
+    },
+    {
+      "release": "software/burp-suite/versions/1.0.1",
+      "source": "previous-public-export",
+      "sourceHead": "22f5690d284dbd37e2827c73ee0501bdb6de0890",
+      "filesDifferentFromPrivate": [
+        "software/burp-suite/versions/1.0.1/recipes/windows.json"
+      ],
+      "immutablePublicBytesRetained": true
+    },
+    {
+      "release": "software/mysql-cli/versions/1.0.0",
+      "source": "previous-public-export",
+      "sourceHead": "22f5690d284dbd37e2827c73ee0501bdb6de0890",
+      "filesDifferentFromPrivate": [
+        "software/mysql-cli/versions/1.0.0/README.md",
+        "software/mysql-cli/versions/1.0.0/recipes/windows.json"
+      ],
+      "immutablePublicBytesRetained": true
+    },
+    {
+      "release": "software/mysql-cli/versions/1.0.1",
+      "source": "previous-public-export",
+      "sourceHead": "22f5690d284dbd37e2827c73ee0501bdb6de0890",
+      "filesDifferentFromPrivate": [
+        "software/mysql-cli/versions/1.0.1/README.md",
+        "software/mysql-cli/versions/1.0.1/SOURCE.json",
+        "software/mysql-cli/versions/1.0.1/capabilities.snapshot.json",
+        "software/mysql-cli/versions/1.0.1/recipes/windows.json"
+      ],
+      "immutablePublicBytesRetained": true
+    },
+    {
+      "release": "software/mysql-cli/versions/1.0.2",
+      "source": "previous-public-export",
+      "sourceHead": "22f5690d284dbd37e2827c73ee0501bdb6de0890",
+      "filesDifferentFromPrivate": [
+        "software/mysql-cli/versions/1.0.2/README.md",
+        "software/mysql-cli/versions/1.0.2/capabilities.snapshot.json",
+        "software/mysql-cli/versions/1.0.2/recipes/windows.json"
+      ],
+      "immutablePublicBytesRetained": true
+    },
+    {
+      "release": "software/nmap/versions/1.0.0",
+      "source": "previous-public-export",
+      "sourceHead": "22f5690d284dbd37e2827c73ee0501bdb6de0890",
+      "filesDifferentFromPrivate": [
+        "software/nmap/versions/1.0.0/README.md",
+        "software/nmap/versions/1.0.0/recipes/windows.json"
+      ],
+      "immutablePublicBytesRetained": true
+    },
+    {
+      "release": "software/nmap/versions/1.0.1",
+      "source": "previous-public-export",
+      "sourceHead": "22f5690d284dbd37e2827c73ee0501bdb6de0890",
+      "filesDifferentFromPrivate": [
+        "software/nmap/versions/1.0.1/README.md",
+        "software/nmap/versions/1.0.1/recipes/windows.json"
+      ],
+      "immutablePublicBytesRetained": true
+    },
+    {
+      "release": "software/veracrypt/versions/1.0.0",
+      "source": "previous-public-export",
+      "sourceHead": "22f5690d284dbd37e2827c73ee0501bdb6de0890",
+      "filesDifferentFromPrivate": [
+        "software/veracrypt/versions/1.0.0/README.md",
+        "software/veracrypt/versions/1.0.0/recipes/windows.json"
+      ],
+      "immutablePublicBytesRetained": true
+    },
+    {
+      "release": "software/veracrypt/versions/1.0.1",
+      "source": "previous-public-export",
+      "sourceHead": "22f5690d284dbd37e2827c73ee0501bdb6de0890",
+      "filesDifferentFromPrivate": [
+        "software/veracrypt/versions/1.0.1/README.md",
+        "software/veracrypt/versions/1.0.1/recipes/windows.json"
+      ],
+      "immutablePublicBytesRetained": true
+    },
+    {
+      "release": "software/wireshark-cli/versions/1.0.0",
+      "source": "previous-public-export",
+      "sourceHead": "22f5690d284dbd37e2827c73ee0501bdb6de0890",
+      "filesDifferentFromPrivate": [
+        "software/wireshark-cli/versions/1.0.0/README.md",
+        "software/wireshark-cli/versions/1.0.0/recipes/windows.json"
+      ],
+      "immutablePublicBytesRetained": true
+    },
+    {
+      "release": "software/wireshark-cli/versions/1.0.1",
+      "source": "previous-public-export",
+      "sourceHead": "22f5690d284dbd37e2827c73ee0501bdb6de0890",
+      "filesDifferentFromPrivate": [
+        "software/wireshark-cli/versions/1.0.1/README.md",
+        "software/wireshark-cli/versions/1.0.1/SOURCE.json",
+        "software/wireshark-cli/versions/1.0.1/capabilities.snapshot.json",
+        "software/wireshark-cli/versions/1.0.1/recipes/windows.json"
+      ],
+      "immutablePublicBytesRetained": true
+    }
+  ]
+}

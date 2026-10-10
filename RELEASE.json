@@ -1,0 +1,38 @@
+{
+  "schema": "ai-workspace-release/v1",
+  "application": {
+    "name": "Architecture Manager",
+    "version": "0.8.1",
+    "platform": "Windows",
+    "architecture": "x64"
+  },
+  "tag": "v0.8.1",
+  "releaseUrl": "https://github.com/MC-freshman/ai-workflow-architecture/releases/tag/v0.8.1",
+  "sourceSnapshot": "8d679a59964a8bb5315bd3e6fa0ee9b1ee3feaf3",
+  "sharedResourceDefaults": {
+    "wf-runner": "0.13.1",
+    "repo-lint": "0.7.0",
+    "runtime-contracts": "1.6.0",
+    "architecture-ops": "1.5.1",
+    "platform-conformance": "1.6.0"
+  },
+  "sourceFilesVerified": 225,
+  "artifacts": [
+    {
+      "name": "Architecture-Manager-0.8.1-portable-x64.exe",
+      "bytes": 112442712,
+      "sha256": "9c27dbf5a9967ca871e40f94c47187460e4b94f57a66fced27df9f9ba5af9562",
+      "asarSha256": "1beb733dba74f3882bb0c905333efcf800a5b6fb707f1cbeca48351db947bb59"
+    },
+    {
+      "name": "Architecture-Manager-0.8.1-setup-x64.exe",
+      "bytes": 112672726,
+      "sha256": "32dd812054b4cec1d626aa293167ac44ea04a5c056b5d2e7766f43d2654a236f",
+      "asarSha256": "1beb733dba74f3882bb0c905333efcf800a5b6fb707f1cbeca48351db947bb59"
+    }
+  ],
+  "repositoryChecksums": "REPOSITORY-SHA256SUMS",
+  "platformConfigurationsIncluded": false,
+  "runtimeDataIncluded": false,
+  "privateGitHistoryImported": false
+}
