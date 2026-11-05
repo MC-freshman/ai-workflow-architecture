@@ -1,0 +1,31 @@
+{
+  "schema": "ai-platform-bridge/v1.1",
+  "platform": "doubao",
+  "shared": {
+    "agentRegistry": "E:\\ai\\agent\\registry.json",
+    "toolRegistry": "E:\\ai\\tool\\registry.json",
+    "architecturePrompt": "E:\\ai\\AI_ARCHITECTURE_SYSTEM_PROMPT.md",
+    "readOnly": true,
+    "softwareRegistry": "E:\\ai\\software\\registry.json"
+  },
+  "runtimeRoot": "E:\\ai\\doubao\\runtime",
+  "runner": {
+    "enabled": true,
+    "config": "E:\\ai\\doubao\\bridge\\doubao-config.json",
+    "release": "E:\\ai\\tool\\wf-runner\\versions\\0.13.1",
+    "version": "0.13.1",
+    "python": "D:/Various_programming_languages/PPython/python.exe"
+  },
+  "modes": [
+    "workflow",
+    "agent-workflow"
+  ],
+  "displayName": "doubao",
+  "defaults": {
+    "workflowVersions": {
+      "repo-lint": "0.7.0"
+    },
+    "agentVersions": {}
+  },
+  "runtimeComponentVersion": "0.9.0"
+}

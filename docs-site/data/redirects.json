@@ -1,0 +1,13 @@
+{
+  "schema": "ai-docs-redirects/v1",
+  "comment": "旧地址与常用简称 → 现行页面。docs-conform 会把 to 目标当已知路由核对。",
+  "redirects": [
+    { "from": "/docs", "to": "/docs/quick-start/site-intro" },
+    { "from": "/docs/quick-start", "to": "/docs/quick-start/site-intro" },
+    { "from": "/docs/architecture", "to": "/docs/architecture/3.0.0" },
+    { "from": "/docs/runtime", "to": "/docs/runtime/orientation" },
+    { "from": "/docs/history", "to": "/docs/history/timeline" },
+    { "from": "/reference/软件", "to": "/reference/software" },
+    { "from": "/reference/工作流", "to": "/reference/workflows" }
+  ]
+}

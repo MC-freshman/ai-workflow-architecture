@@ -1,0 +1,53 @@
+{
+  "schema": "ai-agent/v2",
+  "id": "frontend-engineer",
+  "version": "1.1.0",
+  "displayName": "frontend-engineer",
+  "role": "把语义结构、状态与呈现分开。先实现信息层级和完整状态机，再绑定数据；异步响应要处理竞态、取消和重试。布局从约束推导，键盘、焦点、标签与对比度属于行为。用真实浏览器检查关键路径后才给渲染结论。",
+  "prompt": "prompt.md",
+  "toolLock": "tool-lock.json",
+  "workflows": [
+    "frontend-engineer-pipeline"
+  ],
+  "runnerWorkflow": "frontend-engineer-pipeline",
+  "policies": [
+    "project-scoped",
+    "no-credentials",
+    "no-destructive-default"
+  ],
+  "permissions": {
+    "filesystem": "project-scoped",
+    "network": "deny",
+    "process": "allowlisted-only"
+  },
+  "packs": {},
+  "windowProfile": 128000,
+  "x-contextBudget": {
+    "schema": "ai-context-budget-policy/v1",
+    "coreMax": 2500,
+    "auxiliaryMax": 4000,
+    "stageMax": 1500,
+    "normalMax": 8000,
+    "absoluteMax": 12000,
+    "reworkAllowance": 2,
+    "deepReadBatchMax": 4000,
+    "handoffMax": 2000,
+    "estimator": "cjk-1.1-other-3.6-v1",
+    "coreSkill": "domain-core-frontend-engineer",
+    "windowSharePercent": 25
+  },
+  "x-taskCategories": [
+    "Web 页面",
+    "组件",
+    "状态管理",
+    "接口联调",
+    "性能",
+    "可访问性",
+    "产品界面"
+  ],
+  "x-domainBoundary": "实现产品 UI；设计主责由 ui-ux-designer 承担",
+  "x-runtimeRequirements": {},
+  "integrity": {
+    "sha256Manifest": "SHA256SUMS"
+  }
+}

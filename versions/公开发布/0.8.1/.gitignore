@@ -1,0 +1,24 @@
+# Local dependencies and build outputs
+**/node_modules/
+**/__pycache__/
+*.pyc
+/architecture-manager/dist/
+/architecture-manager/release/
+**/.vite/
+**/.cache/
+*.log
+
+# User data, execution state and credentials
+/inbox/
+**/runtime/
+**/.env
+**/.env.*
+!**/.env.example
+!**/.env.sample
+!**/.env.template
+**/credentials.json
+**/credentials.yaml
+**/id_rsa
+**/id_ed25519
+.DS_Store
+Thumbs.db

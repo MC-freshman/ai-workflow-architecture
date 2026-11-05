@@ -1,0 +1,22 @@
+{
+  "schema": "ai-tool-lock/v2",
+  "skills": {
+    "domain-core-ui-ux-designer": "1.1.0",
+    "ui-ux-designer-task-01": "1.0.0",
+    "ui-ux-designer-task-02": "1.0.0",
+    "ui-ux-designer-task-03": "1.1.0",
+    "ui-ux-designer-task-04": "1.0.0",
+    "ui-ux-designer-task-05": "1.0.0",
+    "ui-ux-designer-task-06": "1.0.0",
+    "domain-source-catalog": "1.0.0",
+    "ui-design-reference-library": "1.0.0",
+    "product-onboarding": "1.0.0",
+    "interface-copy": "1.0.0",
+    "interface-visual-design": "1.0.0"
+  },
+  "workflows": {
+    "ui-ux-designer-pipeline": "1.1.0"
+  },
+  "packs": {},
+  "profiles": {}
+}

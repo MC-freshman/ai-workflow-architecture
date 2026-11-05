@@ -1,0 +1,43 @@
+{
+  "platform": "qoder-cn",
+  "platformRoot": "E:\\ai\\qoder-cn",
+  "toolRoot": "E:\\ai\\tool",
+  "agentRoot": "E:\\ai\\agent",
+  "softwareRoot": "E:\\ai\\software",
+  "runsRoot": "E:\\ai\\qoder-cn\\runtime\\runs",
+  "runner": "E:\\ai\\tool\\wf-runner\\versions\\0.13.1",
+  "contracts": "E:\\ai\\tool\\runtime-contracts\\versions\\1.6.0",
+  "scannerRelease": "E:\\ai\\tool\\repo-lint\\versions\\0.7.0",
+  "bridge": "E:\\ai\\qoder-cn\\bridge.json",
+  "capabilities": "E:\\ai\\qoder-cn\\bridge\\capabilities.json",
+  "softwareRuntimeRoot": "E:\\ai\\qoder-cn\\runtime\\software",
+  "projectWriteRoots": [
+    "E:\\ai\\qoder-cn\\workspaces"
+  ],
+  "inputRoots": [
+    "E:\\ai\\qoder-cn\\workspaces"
+  ],
+  "invocationMatrixRelease": "E:\\ai\\tool\\architecture-ops\\versions\\1.5.2",
+  "contextWindowTokens": 1000000,
+  "contextWindowSource": "user-declared",
+  "interpreters": {
+    ".py": "E:\\ai\\qoder-cn\\runtime\\manager-environments\\8ef977ae-873b-436b-b548-9b872c841750\\host\\Scripts\\python.exe"
+  },
+  "scriptEnvironmentRungs": [
+    {
+      "execPath": "kernel-sandbox",
+      "executionBackend": "E:\\ai\\qoder-cn\\bridge\\backends\\manager-sealed.json",
+      "scriptEnvironment": "E:\\ai\\qoder-cn\\runtime\\manager-environments\\8ef977ae-873b-436b-b548-9b872c841750\\sealed",
+      "requiresSealedEnvironment": true
+    }
+  ],
+  "softwareGateway": "E:\\ai\\software\\_connector\\versions\\1.0.7\\connector.py",
+  "softwareGatewayConfig": "E:\\ai\\qoder-cn\\bridge\\software-gateway-config.json",
+  "executionBackend": "E:\\ai\\qoder-cn\\bridge\\backends\\manager-sealed.json",
+  "environmentManifest": "E:\\ai\\qoder-cn\\runtime\\manager-environments\\8ef977ae-873b-436b-b548-9b872c841750\\script-environment.json",
+  "scriptEnvironment": "E:\\ai\\qoder-cn\\runtime\\manager-environments\\8ef977ae-873b-436b-b548-9b872c841750\\sealed",
+  "softwareEnvironment": "E:\\ai\\qoder-cn\\runtime\\software\\software-environment.json",
+  "peerDispatcherModule": "E:\\ai\\qoder-cn\\bridge\\manager-providers\\peer_dispatcher.py",
+  "peerContentRoot": "E:\\ai\\qoder-cn\\runtime\\peer-content",
+  "resourceEnvironmentManifest": "E:\\ai\\qoder-cn\\runtime\\manager-resources\\daac5c84-4247-4cca-ae61-3a33edbf9e13\\resource-environment.json"
+}

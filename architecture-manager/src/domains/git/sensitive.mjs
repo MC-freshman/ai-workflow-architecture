@@ -3,7 +3,10 @@ import {join} from 'node:path';
 import {targetPath} from '../../core/paths.mjs';
 import {gitRaw,nulPaths} from '../../infrastructure/git.mjs';
 
-const SECRET=/(password|passwd|api[_-]?key|access[_-]?token|secret|private[_-]?key)\s*[:=]/i;
+// D-155: the keyword must be ASSIGNED a quoted literal to count as a possible secret.
+// The bare `keyword\s*[:=]` form false-positived on the manager's own bundled code
+// (e.g. the sensitive scanner module inside platform_defaults.mjs: `secret === "string"`).
+const SECRET=/["']?(password|passwd|api[_-]?key|access[_-]?token|secret|private[_-]?key)["']?\s*[:=]\s*(?:"[^"\n]*"|'[^'\n]*'|`[^`\n]*`)/i;
 const BODY=/\.(exe|dll|msi|msix|com|pyd|so|dylib|zip|7z|rar|iso|bundle)$/i;
 export function inspectBytes(name,buffer) {
   const findings=[],size=buffer.length;

@@ -5,7 +5,7 @@ import {join,dirname} from 'node:path';
 import {tmpdir} from 'node:os';
 import {sha256} from '../src/core/hash.mjs';
 import {seedRelease,seedPointer,seedRuntimeReleases} from './support/resources.mjs';
-import {applyPlan,verifyPlanTarget} from '../src/transactions.mjs';
+import {applyPlan,verifyPlanTarget} from '../src/transactions/router.mjs';
 import {buildAnchorMaterialisationPlan,buildAnchorAlignmentPlan} from '../src/domains/certification/anchor-plans.mjs';
 import {anchorAlignment} from '../src/domains/certification/anchor.mjs';
 

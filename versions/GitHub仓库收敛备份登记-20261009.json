@@ -1,0 +1,172 @@
+{
+  "schema": "github-consolidation-backup-registry/v1",
+  "at": "2026-10-09T14:49:12.673368+00:00",
+  "backupRoot": "inbox/backup/codex/github-consolidation-20261009",
+  "classification": "historical backup/evidence registration, not an executable dependency",
+  "containsPrivateData": true,
+  "containsCredentials": false,
+  "restoreVerified": true,
+  "backupManifestSha256": "f4d583529d262bab3d0aaaf1b69ff66b8fcb59c5f04f3010b08526261675a763",
+  "supplementManifestSha256": "49f25ad9f73921b665fca4a764acd4207480c024665f856edbdfa54c31f78e93",
+  "files": 239,
+  "bytes": 2564006264,
+  "repositories": [
+    {
+      "name": "ai-workflow-architecture-governance",
+      "private": true,
+      "refs": [
+        "refs/heads/main 1821c01f3d947f9da60f19e1e50d39f16581cec7",
+        "refs/tags/architecture-3.0.0 ffe3d49a19c0a6ebdafe724f99796506a700636d",
+        "refs/tags/qoder-adopted-3.0.0 ffb5916a953c410aafe066b9ff7142a0efea7a47"
+      ],
+      "releases": 0,
+      "assets": 0,
+      "issuesAndPulls": 0,
+      "hasDiscussions": false,
+      "decision": "retain"
+    },
+    {
+      "name": "ai-workflow-architecture",
+      "private": false,
+      "refs": [
+        "refs/heads/main 22f5690d284dbd37e2827c73ee0501bdb6de0890"
+      ],
+      "releases": 0,
+      "assets": 0,
+      "issuesAndPulls": 0,
+      "hasDiscussions": false,
+      "decision": "retain"
+    },
+    {
+      "name": "ai-workflow-architecture-full",
+      "private": true,
+      "refs": [
+        "refs/heads/main 60b4a22aaba8fd686f8d97fc27046ca337da718a",
+        "refs/tags/architecture-v1.0.0 9164da84a14937fef6afb6eba6577b5292016a04",
+        "refs/tags/architecture-v1.0.0-export.1 e096b9c4dd13861c0f7b4318967e1030c1842825"
+      ],
+      "releases": 2,
+      "assets": 6,
+      "issuesAndPulls": 0,
+      "hasDiscussions": false,
+      "decision": "delete"
+    },
+    {
+      "name": "ai-workflow-architecture-evidence",
+      "private": true,
+      "refs": [
+        "refs/heads/main 73266ec19d0adc16a077f5e95400d6d307ac3b91",
+        "refs/tags/evidence-v1.0.0 1f6ee3821eeabcf531d757cb984181933c36c183"
+      ],
+      "releases": 1,
+      "assets": 1,
+      "issuesAndPulls": 0,
+      "hasDiscussions": false,
+      "decision": "delete"
+    },
+    {
+      "name": "ai-workflow-architecture-1.0.0-reference",
+      "private": false,
+      "refs": [
+        "refs/heads/main da231d80d5463c9589cd6efaa1c290bb6d248736",
+        "refs/tags/v1.0.0 074364ea09ed9c7b7051f549ece21b70c6b1ac2e"
+      ],
+      "releases": 1,
+      "assets": 2,
+      "issuesAndPulls": 0,
+      "hasDiscussions": true,
+      "decision": "delete"
+    },
+    {
+      "name": "architecture-manager",
+      "private": false,
+      "refs": [
+        "refs/heads/codex/audit-tests-20261008 38029d65deadaf7d225f90a7a136877579e8787b",
+        "refs/heads/codex/manager-check-performance-20261001 9d3e5b42a6b5a2335e583d94a034c36a7c482d4b",
+        "refs/heads/codex/manager-unified-20261003 f6dde5a70531b8e6d79a2cad758e5cb8c78b1b31",
+        "refs/heads/codex/zero-ai-onboarding-20260930 11a49a23d4e9ce7124cd09ddcf008d0f9d9e4456",
+        "refs/heads/master 6a9683bfbbe0ef94fa7dca5dd612ab70ff7c0dfc",
+        "refs/tags/v0.3.1 258bae561050a9d421208d22ce893c6427a74732",
+        "refs/tags/v0.4.0 11a49a23d4e9ce7124cd09ddcf008d0f9d9e4456",
+        "refs/tags/v0.4.1 3aa2a89bb99e2001e09b04ec0b25b9a5c05fc6ed",
+        "refs/tags/v0.4.2 94d45b7cefbc1ad7ed76e936051d590453d98ec2",
+        "refs/tags/v0.5.0 ed2113b9e71d5bfc017e0063f7a01aab8fa874b1",
+        "refs/tags/v0.5.2 eeff49041aaa16f8ff4986152c97b844319736f4",
+        "refs/tags/v0.5.6 9daf0154338468611e41247fa23a8598ef107950",
+        "refs/tags/v0.5.7 b2a4fe61d50b756ea2013938afc8d85eb6d0ff9c",
+        "refs/tags/v0.6.0 182c9fa624c17fac9f0018316fe8ecdb2290060c",
+        "refs/tags/v0.7.0 23405a1a7ed59040d5a11faacfa30b2179dea914"
+      ],
+      "releases": 10,
+      "assets": 36,
+      "issuesAndPulls": 0,
+      "hasDiscussions": false,
+      "decision": "delete"
+    }
+  ],
+  "local": [
+    {
+      "label": "root",
+      "head": "8d432fad8044e914382b08ccbde1f0b50d5f6814",
+      "branch": "main",
+      "refs": [
+        "refs/backup/architecture-prune-before-manifest-rebase 7eadbe852e132792a565f9630779f8d8dc460497",
+        "refs/codex/snapshots/b20752d33220382b631035df1af0d031adc6fab8 c018fe9d2f1a40431688ef6455e778c29be73a9e",
+        "refs/codex/turn-diffs/captures/1791554403600/28caaf09-2455-4abe-9d1f-508703449220/base c9f530113de5f5bd0bd094ecddf8b79df0112147",
+        "refs/codex/turn-diffs/checkpoints/1af142e5e180f752f59225dd6a910ec8/f4e92799db3db32dadf7a15edce501e6/1791547028445/e6c33194-734b-44d8-bc6b-df22f5383b54 5303255d7f43dfa8ef724a29433ea3b1963bcb59",
+        "refs/codex/turn-diffs/checkpoints/63618ea7c2b2911cd9e0dbe41c2e316b/0f49c7fcdc0179b36bfd98a6b036e91d/1791461189585/ff194223-69cc-4b8b-a1e2-bf465e34f149 4db90b7a45fceafba278e41fef05f2811eba437c",
+        "refs/codex/turn-diffs/checkpoints/de2b789946b58cbc12dfee94677d3cf2/72d9a59e9f300d526347441a6b6b80f2/1791469631542/980d29f8-88e1-42bb-bdfb-6a03b5986497 4db90b7a45fceafba278e41fef05f2811eba437c",
+        "refs/heads/main 8d432fad8044e914382b08ccbde1f0b50d5f6814",
+        "refs/remotes/origin/HEAD 1821c01f3d947f9da60f19e1e50d39f16581cec7",
+        "refs/remotes/origin/main 1821c01f3d947f9da60f19e1e50d39f16581cec7",
+        "refs/tags/architecture-3.0.0 ffe3d49a19c0a6ebdafe724f99796506a700636d",
+        "refs/tags/qoder-adopted-3.0.0 ffb5916a953c410aafe066b9ff7142a0efea7a47"
+      ],
+      "bundle": "E:\\ai\\inbox\\backup\\codex\\github-consolidation-20261009\\local-root.bundle",
+      "sha256": "f42d25f75cd00f6dbca816b6a1326e7acd732eb96f26993c2a67c8f96ef189e9",
+      "status": "?? \"versions/GitHub\\344\\273\\223\\345\\272\\223\\346\\224\\266\\346\\225\\233\\345\\256\\236\\346\\226\\275\\350\\241\\250-20261009.md\""
+    },
+    {
+      "label": "manager",
+      "head": "38029d65deadaf7d225f90a7a136877579e8787b",
+      "branch": "codex/audit-tests-20261008",
+      "refs": [
+        "refs/heads/codex/audit-tests-20261008 38029d65deadaf7d225f90a7a136877579e8787b",
+        "refs/heads/codex/manager-057-audit-20261007 b2a4fe61d50b756ea2013938afc8d85eb6d0ff9c",
+        "refs/heads/codex/manager-auto-scope-20261008 23405a1a7ed59040d5a11faacfa30b2179dea914",
+        "refs/heads/codex/manager-check-performance-20261001 9d3e5b42a6b5a2335e583d94a034c36a7c482d4b",
+        "refs/heads/codex/manager-native-auto-20261007 182c9fa624c17fac9f0018316fe8ecdb2290060c",
+        "refs/heads/codex/manager-unified-20261003 794b4b9e5bfe59873e83ec7766b6e885f37830f8",
+        "refs/heads/codex/onboarding-chain-20261007 a4f72da03c366fa945c7b4885d284d1cd500548d",
+        "refs/heads/codex/onboarding-resume-20261006 95d48d8eeb69a97b2697c7a1e4281a3487ab42d7",
+        "refs/heads/codex/zero-ai-onboarding-20260930 11a49a23d4e9ce7124cd09ddcf008d0f9d9e4456",
+        "refs/heads/master d63b949c50b85d7a21cde4a6e6503b91302ed7e8",
+        "refs/remotes/origin/HEAD 6a9683bfbbe0ef94fa7dca5dd612ab70ff7c0dfc",
+        "refs/remotes/origin/codex/audit-tests-20261008 38029d65deadaf7d225f90a7a136877579e8787b",
+        "refs/remotes/origin/codex/manager-check-performance-20261001 9d3e5b42a6b5a2335e583d94a034c36a7c482d4b",
+        "refs/remotes/origin/codex/manager-unified-20261003 f6dde5a70531b8e6d79a2cad758e5cb8c78b1b31",
+        "refs/remotes/origin/codex/zero-ai-onboarding-20260930 11a49a23d4e9ce7124cd09ddcf008d0f9d9e4456",
+        "refs/remotes/origin/master 6a9683bfbbe0ef94fa7dca5dd612ab70ff7c0dfc",
+        "refs/tags/v0.3.1 258bae561050a9d421208d22ce893c6427a74732",
+        "refs/tags/v0.4.0 11a49a23d4e9ce7124cd09ddcf008d0f9d9e4456",
+        "refs/tags/v0.4.1 3aa2a89bb99e2001e09b04ec0b25b9a5c05fc6ed",
+        "refs/tags/v0.4.2 94d45b7cefbc1ad7ed76e936051d590453d98ec2",
+        "refs/tags/v0.5.0 ed2113b9e71d5bfc017e0063f7a01aab8fa874b1",
+        "refs/tags/v0.5.2 eeff49041aaa16f8ff4986152c97b844319736f4",
+        "refs/tags/v0.5.6 9daf0154338468611e41247fa23a8598ef107950",
+        "refs/tags/v0.5.7 b2a4fe61d50b756ea2013938afc8d85eb6d0ff9c",
+        "refs/tags/v0.6.0 182c9fa624c17fac9f0018316fe8ecdb2290060c",
+        "refs/tags/v0.7.0 23405a1a7ed59040d5a11faacfa30b2179dea914"
+      ],
+      "bundle": "E:\\ai\\inbox\\backup\\codex\\github-consolidation-20261009\\local-manager.bundle",
+      "sha256": "3017bf467eec5c8aee6743d8600af6821d5435979d8e17be75b73a79bd83eec5",
+      "status": ""
+    }
+  ],
+  "sharedTreesBefore": {
+    "tool": "ed5cabd399c88966e6ffdd42281fdd73de954b83",
+    "agent": "96469945dcc11b3cff392b97ece1b40b7cb3cf7c",
+    "software": "312647c902bf360a6fd72acc4fa209ebe0fba270"
+  },
+  "restoration": "git clone --mirror <backup-repo.git-or-local.bundle> <codex/runtime/tmp/restore>; git fsck --full; compare refs and asset SHA256"
+}

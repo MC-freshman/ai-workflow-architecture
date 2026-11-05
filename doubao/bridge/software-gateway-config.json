@@ -1,0 +1,77 @@
+{
+  "schema": "ai-software-gateway-config/v1",
+  "platformId": "doubao",
+  "platform": "windows",
+  "softwareRoot": "E:\\ai\\software",
+  "lockRoot": "E:\\ai\\doubao\\runtime\\software\\locks",
+  "evidenceRoot": "E:\\ai\\doubao\\runtime\\software\\evidence",
+  "bodies": {},
+  "interpreters": {
+    ".py": "D:/Various_programming_languages/PPython/python.exe"
+  },
+  "interpreterAliases": {},
+  "credentialProvider": [
+    "D:/Various_programming_languages/PPython/python.exe",
+    "-B",
+    "E:\\ai\\doubao\\bridge\\manager-providers\\platform_provider.py",
+    "credential",
+    "E:\\ai\\doubao\\runtime\\software\\provider-state"
+  ],
+  "sessionLaunch": [
+    "D:/Various_programming_languages/PPython/python.exe",
+    "-B",
+    "E:\\ai\\doubao\\bridge\\manager-providers\\platform_provider.py",
+    "launch",
+    "E:\\ai\\doubao\\runtime\\software\\provider-state"
+  ],
+  "sessionLiveness": [
+    "D:/Various_programming_languages/PPython/python.exe",
+    "-B",
+    "E:\\ai\\doubao\\bridge\\manager-providers\\platform_provider.py",
+    "liveness",
+    "E:\\ai\\doubao\\runtime\\software\\provider-state"
+  ],
+  "sessionTerminate": [
+    "D:/Various_programming_languages/PPython/python.exe",
+    "-B",
+    "E:\\ai\\doubao\\bridge\\manager-providers\\platform_provider.py",
+    "terminate",
+    "E:\\ai\\doubao\\runtime\\software\\provider-state"
+  ],
+  "credentialWorkspace": "E:\\ai\\doubao\\runtime\\software\\credentials",
+  "allowGuiLaunch": false,
+  "projectWriteRoots": [
+    "E:\\ai\\doubao\\workspaces"
+  ],
+  "artifactRoots": [
+    "E:\\ai\\doubao\\runtime\\software"
+  ],
+  "softwareProfiles": {
+    "readonly-version": {
+      "filesystem": [
+        "none",
+        "read"
+      ],
+      "network": [
+        "none"
+      ],
+      "credentials": [
+        "none"
+      ]
+    },
+    "administrator": {
+      "filesystem": [
+        "none",
+        "read",
+        "system"
+      ],
+      "network": [
+        "none"
+      ],
+      "credentials": [
+        "none"
+      ],
+      "consentPolicy": "per-call-user-confirmation"
+    }
+  }
+}

@@ -4,10 +4,10 @@ import test from 'node:test';
 import { mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join, dirname } from 'node:path';
-import { buildOnboardingConfigPlan, applyOnboardingConfig, verifyOnboardingConfig, readOnboardingConfig } from '../src/onboarding-config.mjs';
+import { buildOnboardingConfigPlan, applyOnboardingConfig, verifyOnboardingConfig, readOnboardingConfig } from '../src/domains/onboarding/onboarding-config.mjs';
 import { sha256 } from '../src/core/hash.mjs';
 import { allPlatformIds } from '../src/core/platforms.mjs';
-import { inspectPlatformConnection } from '../src/platform-check.mjs';
+import { inspectPlatformConnection } from '../src/domains/platforms/platform-check.mjs';
 
 function fixture() {
   const root = mkdtempSync(join(tmpdir(), 'manager-config-'));

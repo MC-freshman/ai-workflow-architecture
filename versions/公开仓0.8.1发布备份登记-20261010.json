@@ -1,0 +1,42 @@
+{
+  "schema": "public-release-081-backup/v1",
+  "at": "2026-10-10T09:00:57.723977+08:00",
+  "backupRoot": "inbox/backup/codex/public-release-081-20261010",
+  "classification": "Historical backup registration; not a current dependency",
+  "restoreVerified": true,
+  "gitRestoration": [
+    {
+      "repository": "private",
+      "bundleSha256": "20bd9fd6d477b6ed8de0fcbebc02f787fc9c9607c8882fd99bf4fa99cb7afc6a",
+      "refsEqual": true,
+      "fsck": true,
+      "pseudoHeadsObjectsVerified": 3
+    },
+    {
+      "repository": "public",
+      "bundleSha256": "e4e098fc5a41ce74724b685d88e17b268628e461be6c0a609d9b851dd556ee63",
+      "refsEqual": true,
+      "fsck": true,
+      "pseudoHeadsObjectsVerified": 1
+    }
+  ],
+  "assets": [
+    {
+      "name": "Architecture-Manager-0.8.1-portable-x64.exe",
+      "bytes": 112442712,
+      "sha256": "9c27dbf5a9967ca871e40f94c47187460e4b94f57a66fced27df9f9ba5af9562",
+      "asarSha256": "1beb733dba74f3882bb0c905333efcf800a5b6fb707f1cbeca48351db947bb59"
+    },
+    {
+      "name": "Architecture-Manager-0.8.1-setup-x64.exe",
+      "bytes": 112672726,
+      "sha256": "32dd812054b4cec1d626aa293167ac44ea04a5c056b5d2e7766f43d2654a236f",
+      "asarSha256": "1beb733dba74f3882bb0c905333efcf800a5b6fb707f1cbeca48351db947bb59"
+    }
+  ],
+  "manifestSha256": "7a758ad3c747c5eb88aebc36284846940996b6ac0fb25544cbabeab511b529f7",
+  "publicSourceHead": "8d679a59964a8bb5315bd3e6fa0ee9b1ee3feaf3",
+  "agent": null,
+  "workflow": null,
+  "otherSessionIsolation": "Only the publication-specific files are committed; unrelated platform changes remain with their original session."
+}

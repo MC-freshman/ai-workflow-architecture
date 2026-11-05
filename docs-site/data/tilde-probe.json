@@ -1,0 +1,2161 @@
+{
+  "schema": "ai-docs-tilde-probe/v1",
+  "generatedAt": "2026-09-23T00:29:19Z",
+  "method": "file-based-node-probe",
+  "scope": "docs-manifest entries and their generated internal/shareable pages",
+  "totals": {
+    "sourceFiles": 45,
+    "sourceStrikePairs": 34,
+    "sourceSingleTildes": 30,
+    "syncedEscapedSingles": 30,
+    "syncedBareSingles": 0,
+    "htmlDelInternal": 34,
+    "htmlDelShareable": 4
+  },
+  "authorStrikeCandidates": [
+    {
+      "id": "how-to-read",
+      "source": "HANDOFF.md",
+      "status": "current",
+      "visibility": "internal",
+      "line": 13,
+      "column": 186,
+      "kind": "strike",
+      "value": "~~跨平台资源仲裁~~",
+      "context": "| **BP-4 跨平台同一项目语义** | 一项目拆多 run 跨平台跑必须等价于同平台连续跑；**两项**必需机制（2026-09-22 基本原则 1.3 由三项裁减为两项）——**续跑版本一致性校验**（不得静默换版）、**可回读的带 sha256 交接载体**（`handoff-bundle/v1` 或用户指定共享路径，不得直读别平台 `runtime/`）。~~跨平台资源仲裁~~、~~平台中立项目状态层目录~~、~~并行是一等能力~~ 三项**已撤销为必需项**（撤"
+    },
+    {
+      "id": "how-to-read",
+      "source": "HANDOFF.md",
+      "status": "current",
+      "visibility": "internal",
+      "line": 13,
+      "column": 198,
+      "kind": "strike",
+      "value": "~~平台中立项目状态层目录~~",
+      "context": "| **BP-4 跨平台同一项目语义** | 一项目拆多 run 跨平台跑必须等价于同平台连续跑；**两项**必需机制（2026-09-22 基本原则 1.3 由三项裁减为两项）——**续跑版本一致性校验**（不得静默换版）、**可回读的带 sha256 交接载体**（`handoff-bundle/v1` 或用户指定共享路径，不得直读别平台 `runtime/`）。~~跨平台资源仲裁~~、~~平台中立项目状态层目录~~、~~并行是一等能力~~ 三项**已撤销为必需项**（撤"
+    },
+    {
+      "id": "how-to-read",
+      "source": "HANDOFF.md",
+      "status": "current",
+      "visibility": "internal",
+      "line": 13,
+      "column": 214,
+      "kind": "strike",
+      "value": "~~并行是一等能力~~",
+      "context": "| **BP-4 跨平台同一项目语义** | 一项目拆多 run 跨平台跑必须等价于同平台连续跑；**两项**必需机制（2026-09-22 基本原则 1.3 由三项裁减为两项）——**续跑版本一致性校验**（不得静默换版）、**可回读的带 sha256 交接载体**（`handoff-bundle/v1` 或用户指定共享路径，不得直读别平台 `runtime/`）。~~跨平台资源仲裁~~、~~平台中立项目状态层目录~~、~~并行是一等能力~~ 三项**已撤销为必需项**（撤"
+    },
+    {
+      "id": "workspace-rules",
+      "source": "AGENTS.md",
+      "status": "current",
+      "visibility": "internal",
+      "line": 31,
+      "column": 686,
+      "kind": "strike",
+      "value": "~~C5 未实测~~",
+      "context": "当前实施状态以总手册为准：主方案序列 `Phase 0 → 1 → 5A → 2 → 3 → 4` 已全部执行完毕；`G1 / G2 / G3` 三道门已全部闭合（2026-09-14）；**架构 1.0.0 已于 2026-09-15 定稿**（`versions/架构1.0.0.md`，§9 平台表于 2026-09-17 按实测修订，**现为冻结历史基线**）：四条验收要求按接口口径达标（默认指针矩阵 PASS 38 / EXPECTED 2 / FAIL 0，判据是 "
+    },
+    {
+      "id": "system-prompt",
+      "source": "AI_ARCHITECTURE_SYSTEM_PROMPT.md",
+      "status": "current",
+      "visibility": "internal",
+      "line": 278,
+      "column": 1048,
+      "kind": "strike",
+      "value": "~~`repo-lint` 两条闭合路径~~",
+      "context": "历史上的 “Phase 1 已完成并停止” 只表示早期授权阶段；现行状态以总手册、`HANDOFF.md` 和 `versions/架构2.0.0.md`（§9 当前基线状态、§10 定稿时未达成项）为准（`post-competition-closeout.md` 是赛后台账，其中 zcode 路径与能力以 9-17 重建后的平台章为准）：主方案序列 `Phase 0 → 1 → 5A → 2 → 3 → 4` 已全部执行完毕，**`G1 / G2 / G3` 三道门已于 "
+    },
+    {
+      "id": "system-prompt",
+      "source": "AI_ARCHITECTURE_SYSTEM_PROMPT.md",
+      "status": "current",
+      "visibility": "internal",
+      "line": 278,
+      "column": 1108,
+      "kind": "strike",
+      "value": "~~C5 未实测~~",
+      "context": "历史上的 “Phase 1 已完成并停止” 只表示早期授权阶段；现行状态以总手册、`HANDOFF.md` 和 `versions/架构2.0.0.md`（§9 当前基线状态、§10 定稿时未达成项）为准（`post-competition-closeout.md` 是赛后台账，其中 zcode 路径与能力以 9-17 重建后的平台章为准）：主方案序列 `Phase 0 → 1 → 5A → 2 → 3 → 4` 已全部执行完毕，**`G1 / G2 / G3` 三道门已于 "
+    },
+    {
+      "id": "master-manual",
+      "source": "agentic-workflow-master-manual.md",
+      "status": "companion",
+      "visibility": "internal",
+      "line": 17,
+      "column": 56,
+      "kind": "strike",
+      "value": "~~BP-1 结构上成立但 software 未接线（三仓实际只有两仓被共享）~~",
+      "context": "**按 BP 的现状定位（2026-09-18 原文，已被 09-21/09-22 超出，保留作历史读）**：~~BP-1 结构上成立但 software 未接线（三仓实际只有两仓被共享）~~ → 3.0 后 `software` 已成真正同构第三仓，qoder / codex / workbuddy 三家接了第三根，zcode / doubao / dsh 仍只接两根（时间差）；BP-2 三家已各自出 45 格 `FAIL 0`，余三家未接；BP-3 的方向由 2.1.0 "
+    },
+    {
+      "id": "master-manual",
+      "source": "agentic-workflow-master-manual.md",
+      "status": "companion",
+      "visibility": "internal",
+      "line": 17,
+      "column": 260,
+      "kind": "strike",
+      "value": "~~BP-4 未满足，唯一对症机制（`handoff bundle`）尚未定归属~~",
+      "context": "**按 BP 的现状定位（2026-09-18 原文，已被 09-21/09-22 超出，保留作历史读）**：~~BP-1 结构上成立但 software 未接线（三仓实际只有两仓被共享）~~ → 3.0 后 `software` 已成真正同构第三仓，qoder / codex / workbuddy 三家接了第三根，zcode / doubao / dsh 仍只接两根（时间差）；BP-2 三家已各自出 45 格 `FAIL 0`，余三家未接；BP-3 的方向由 2.1.0 "
+    },
+    {
+      "id": "bp",
+      "source": "versions/架构基本原则.md",
+      "status": "current",
+      "visibility": "public",
+      "line": 43,
+      "column": 61,
+      "kind": "strike",
+      "value": "~~`software/registry.json` 不存在~~",
+      "context": "**当前差距（2026-09-22 更正；原为 09-18/09-20 实勘，已被 3.0-A 与三平台采纳超出）**：~~`software/registry.json` 不存在~~ → 已存在（`ai-software-registry/v1`，六行 + 七轴裁定，3.0 S-P2）；~~引擎动作枚举仍封闭为 `[\"prompt\",\"script\"]`~~ → `0.9.0` 起含 `software-call`（`runtime-contracts 1.3.0`）；~~"
+    },
+    {
+      "id": "bp",
+      "source": "versions/架构基本原则.md",
+      "status": "current",
+      "visibility": "public",
+      "line": 43,
+      "column": 146,
+      "kind": "strike",
+      "value": "~~引擎动作枚举仍封闭为 `[\"prompt\",\"script\"]`~~",
+      "context": "**当前差距（2026-09-22 更正；原为 09-18/09-20 实勘，已被 3.0-A 与三平台采纳超出）**：~~`software/registry.json` 不存在~~ → 已存在（`ai-software-registry/v1`，六行 + 七轴裁定，3.0 S-P2）；~~引擎动作枚举仍封闭为 `[\"prompt\",\"script\"]`~~ → `0.9.0` 起含 `software-call`（`runtime-contracts 1.3.0`）；~~"
+    },
+    {
+      "id": "bp",
+      "source": "versions/架构基本原则.md",
+      "status": "current",
+      "visibility": "public",
+      "line": 43,
+      "column": 239,
+      "kind": "strike",
+      "value": "~~六平台全量 grep `software` 零命中、只绑两根~~",
+      "context": "**当前差距（2026-09-22 更正；原为 09-18/09-20 实勘，已被 3.0-A 与三平台采纳超出）**：~~`software/registry.json` 不存在~~ → 已存在（`ai-software-registry/v1`，六行 + 七轴裁定，3.0 S-P2）；~~引擎动作枚举仍封闭为 `[\"prompt\",\"script\"]`~~ → `0.9.0` 起含 `software-call`（`runtime-contracts 1.3.0`）；~~"
+    },
+    {
+      "id": "arch-3.0.0",
+      "source": "versions/架构3.0.0.md",
+      "status": "current",
+      "visibility": "public",
+      "line": 120,
+      "column": 3,
+      "kind": "strike",
+      "value": "~~**跨平台仲裁落点（P8b）**~~",
+      "context": "- ~~**跨平台仲裁落点（P8b）**~~ —— **2026-09-22 由用户裁决关闭（不是修好，是撤销该要求）**：BP-4 的必需机制裁减为两项（续跑版本一致性校验 + 带 sha256 的可回读交接载体），原 §4.3③\"互斥键在所有平台之间有效\"、原 §4.4\"并行是一等能力\"、原 §4.5\"中立层目录须单独授权\"三项**撤销**。关闭依据是实测前提而非便利：六个\"平台\"是同一台机器、同一 `E:\\ai` 文件系统下的不同客户端，续跑由人工错开即可（用户 09-"
+    },
+    {
+      "id": "platform-checklist",
+      "source": "versions/平台接入清单.md",
+      "status": "companion",
+      "visibility": "internal",
+      "line": 80,
+      "column": 45,
+      "kind": "strike",
+      "value": "~~接入实施方案已定稿~~",
+      "context": "> **workbuddy 注记（2026-09-16，workbuddy 会话）**：~~接入实施方案已定稿~~ → **已执行完毕并升格为第 7 运行平台**：`workbuddy/bridge/workbuddy-config.json`（钉 `0.6.0` / `0.2.1`）与 `capabilities.json` 已落盘（checks 9 项逐项实证），矩阵 r3 `38 PASS / 0 NEEDS-INPUT / 2 EXPECTED / FAIL 0` 达"
+    },
+    {
+      "id": "arch-2.0.0",
+      "source": "versions/架构2.0.0.md",
+      "status": "history",
+      "visibility": "internal",
+      "line": 151,
+      "column": 4,
+      "kind": "strike",
+      "value": "~~**§8 四条缺陷未修**~~",
+      "context": "5. ~~**§8 四条缺陷未修**~~ **已改判并执行**（2026-09-18 同日两度决定：先\"不发 0.7.7 只登记\"，后授权「开始完成 2.0.0 的任务，切到 0.7.7」）。现状：`tool/wf-runner/versions/0.7.7` 已发布、qoder 生产已接入；§8 的 ①③④ **闭合**，⑥ 只闭合\"超时与篡改分开\"，**全量→增量哈希仍未做**（登记为开放项）。**残留**：zcode 生产仍 0.6.0，故这四条在共享侧尚未\"所有平台都"
+    },
+    {
+      "id": "invocation-spec",
+      "source": "invocation-adapters-spec.md",
+      "status": "current",
+      "visibility": "internal",
+      "line": 34,
+      "column": 667,
+      "kind": "strike",
+      "value": "~~peer 委派不可用（见 2.4 上报 ③）~~",
+      "context": "| Qoder（**第 5 运行平台；2026-09-15 升格**） | `E:\\ai\\qoder\\bridge.json` + `bridge\\qoder-config.json`（runner **0.6.0**、contracts **repo-lint 0.2.1** 显式选版，另加 `scriptEnvironment` = 本平台 WSL2 钉版 venv 与逐文件 `environmentManifest`）+ `capabilities.json`（`per"
+    },
+    {
+      "id": "invocation-spec",
+      "source": "invocation-adapters-spec.md",
+      "status": "current",
+      "visibility": "internal",
+      "line": 85,
+      "column": 40,
+      "kind": "strike",
+      "value": "~~`wf-runner` `resolution.py:139` 把锁内 repo-lint `version` 写死~~",
+      "context": "上报共享侧（除已单独授权的缓存清理外，本节不构成修改任何发布目录的授权）：① ~~`wf-runner` `resolution.py:139` 把锁内 repo-lint `version` 写死~~ —— **已结案（并修正归因）**：该字面量逐版核得**只存在于 `0.5.0`**（`resolution.py:137/139/140`），`0.5.2` 起即由解析键取版本，**不是 0.6.0 的改动**；qoder 实测钉 0.6.0 时锁内 `version=0."
+    },
+    {
+      "id": "invocation-spec",
+      "source": "invocation-adapters-spec.md",
+      "status": "current",
+      "visibility": "internal",
+      "line": 176,
+      "column": 3,
+      "kind": "strike",
+      "value": "~~T2~~",
+      "context": "| ~~T2~~ | **已结清（2026-09-16，WorkBuddy 接入）**：能力面结论 = 用户级 Skill（A2）+ PowerShell/文件 CLI（A4），MCP 不声明；接入判据达成（矩阵 r3 `38 PASS / 2 EXPECTED / 0 FAIL`，见 2.6） | 见 2.6 与 `workbuddy/bridge/platform.md` |"
+    },
+    {
+      "id": "invocation-spec",
+      "source": "invocation-adapters-spec.md",
+      "status": "current",
+      "visibility": "internal",
+      "line": 178,
+      "column": 3,
+      "kind": "strike",
+      "value": "~~T4~~",
+      "context": "| ~~T4~~ | **已结清（2026-09-07）**：ZCode 入口落地（bridge/config/插件包）+ 集成冒烟全绿；工作区级 `.zcode` 因一级目录白名单约束移除，命令/技能由插件包承载（待 UI 安装） | 见 2.2；剩余：用户 UI 安装插件（可选）、wf-mcp-server（A3 层，未来项） |"
+    },
+    {
+      "id": "invocation-spec",
+      "source": "invocation-adapters-spec.md",
+      "status": "current",
+      "visibility": "internal",
+      "line": 179,
+      "column": 3,
+      "kind": "strike",
+      "value": "~~T5~~",
+      "context": "| ~~T5~~ | **已结清（2026-09-16，doubao 接入）**：2026-09-07 Z4 探测当时判定 Doubao 配置面为空 → unsupported；2026-09-16 用户授权变更定位，Doubao 会话以 agent 能力面（CLI 传输面）按 §9 八项接口接入并升格为第 6 运行平台（矩阵 `38 PASS / 2 EXPECTED / 0 FAIL`） | 见 2.3 / 2.5（z4-doubao-probe.json、doubao-"
+    },
+    {
+      "id": "invocation-spec",
+      "source": "invocation-adapters-spec.md",
+      "status": "current",
+      "visibility": "internal",
+      "line": 263,
+      "column": 4,
+      "kind": "strike",
+      "value": "~~原 ③ 跨平台资源仲裁~~",
+      "context": "~~原 ③ 跨平台资源仲裁~~（可写项目根与 exclusive 资源——单例软件、固定端口、网卡、设备、许可证席位、数据目录——的互斥键必须在所有平台之间有效）、~~必须建一个不属于任何平台的中立状态层目录~~、~~并行是一等能力（共享编排模板）~~ 三项自 2026-09-22 起**撤销为必需项**。**撤销 ≠ 修好**：已实现的 3.0 网关锁表与 `exclusiveResources` 全部保留，作用域如实声明为**同一平台内**。**明写的代价**：同一项目副"
+    },
+    {
+      "id": "invocation-spec",
+      "source": "invocation-adapters-spec.md",
+      "status": "current",
+      "visibility": "internal",
+      "line": 263,
+      "column": 86,
+      "kind": "strike",
+      "value": "~~必须建一个不属于任何平台的中立状态层目录~~",
+      "context": "~~原 ③ 跨平台资源仲裁~~（可写项目根与 exclusive 资源——单例软件、固定端口、网卡、设备、许可证席位、数据目录——的互斥键必须在所有平台之间有效）、~~必须建一个不属于任何平台的中立状态层目录~~、~~并行是一等能力（共享编排模板）~~ 三项自 2026-09-22 起**撤销为必需项**。**撤销 ≠ 修好**：已实现的 3.0 网关锁表与 `exclusiveResources` 全部保留，作用域如实声明为**同一平台内**。**明写的代价**：同一项目副"
+    },
+    {
+      "id": "invocation-spec",
+      "source": "invocation-adapters-spec.md",
+      "status": "current",
+      "visibility": "internal",
+      "line": 263,
+      "column": 111,
+      "kind": "strike",
+      "value": "~~并行是一等能力（共享编排模板）~~",
+      "context": "~~原 ③ 跨平台资源仲裁~~（可写项目根与 exclusive 资源——单例软件、固定端口、网卡、设备、许可证席位、数据目录——的互斥键必须在所有平台之间有效）、~~必须建一个不属于任何平台的中立状态层目录~~、~~并行是一等能力（共享编排模板）~~ 三项自 2026-09-22 起**撤销为必需项**。**撤销 ≠ 修好**：已实现的 3.0 网关锁表与 `exclusiveResources` 全部保留，作用域如实声明为**同一平台内**。**明写的代价**：同一项目副"
+    },
+    {
+      "id": "platform-qoder",
+      "source": "qoder/bridge/platform.md",
+      "status": "current",
+      "visibility": "internal",
+      "line": 29,
+      "column": 3,
+      "kind": "strike",
+      "value": "~~**仍未接入生产**：`qoder-config.json` 仍 `0.6.0` + `repo-lint 0.2.1`、生产 `capabilities.json` 未动；共享 `current.json` 与 `tool/agent` 发布目录在本会话窗口内零写入（已机检）。观察窗口 ≥48h 未起算 → **不支持也不产出 `versions/架构2.0.0.md`**。~~",
+      "context": "- ~~**仍未接入生产**：`qoder-config.json` 仍 `0.6.0` + `repo-lint 0.2.1`、生产 `capabilities.json` 未动；共享 `current.json` 与 `tool/agent` 发布目录在本会话窗口内零写入（已机检）。观察窗口 ≥48h 未起算 → **不支持也不产出 `versions/架构2.0.0.md`**。~~ **【本节为 2.0-B 当日快照，已被 2.0-C 取代】** 下一轮（2026-0"
+    },
+    {
+      "id": "platform-qoder",
+      "source": "qoder/bridge/platform.md",
+      "status": "current",
+      "visibility": "internal",
+      "line": 120,
+      "column": 231,
+      "kind": "strike",
+      "value": "~~引擎**未实现 `delegate`**（`engine.py` 零命中），未声明 `peerDispatch` 的平台因此拿到的是响应契约崩溃而非 `CAPABILITY_UNAVAILABLE`——「架构只提供接口、平台按声明被拒」这条在委派面上还没闭环~~",
+      "context": "| Q9 | 上报共享侧四项：① `ops/invocation_matrix.py` 未显式传 `encoding`，cp936 区域读 UTF-8 输出会崩（qoder 以 `PYTHONUTF8=1 -X utf8` 规避）；② `engine 0.6.0` 仍存两处资源级特例字面量（`engine.py:468`、`engine.py:545` 的 `math-modeling-programmer` 分支），与基线「特例归零」表述不完全一致；③ ~~引擎**未实现 "
+    },
+    {
+      "id": "platform-qoder-invocation",
+      "source": "qoder/bridge/invocation-manual.md",
+      "status": "current",
+      "visibility": "internal",
+      "line": 70,
+      "column": 4,
+      "kind": "strike",
+      "value": "~~锁内 `repo-lint` 版本字面量写死~~",
+      "context": "2. ~~锁内 `repo-lint` 版本字面量写死~~ —— 结案。逐版核对：该字面量只在 **0.5.0**（`resolution.py:137/139/140`），**0.5.2 已无**（早于 0.6.0 的变更⑥），0.6.0 由解析键取版本（`resolution.py:142` 用 `key[2]`）。本平台钉 0.6.0，实测锁内 `version=0.2.1` 与 `path`/哈希自洽。"
+    },
+    {
+      "id": "arch-2.1.0-plan",
+      "source": "versions/架构2.1.0-更新方案.md",
+      "status": "history",
+      "visibility": "internal",
+      "line": 1,
+      "column": 216,
+      "kind": "strike",
+      "value": "~~详细设计提案，未实施、未发布、未切换默认。~~",
+      "context": "> 文档状态：**框架侧已执行（2026-09-20）**——定稿判据载体 `versions/架构2.1.0-定稿实施表-20260919.md`，P1…P9 已按其预写判据逐行跑完并发布 `wf-runner 0.8.0` / `runtime-contracts 1.2.2` / `platform-conformance 1.2.0`；**共享 `current` 三项均未翻、qoder 生产仍显式钉 0.7.7**。~~详细设计提案，未实施、未发布、未切换默认。~~"
+    },
+    {
+      "id": "arch-2.1.0-plan",
+      "source": "versions/架构2.1.0-更新方案.md",
+      "status": "history",
+      "visibility": "internal",
+      "line": 15,
+      "column": 52,
+      "kind": "strike",
+      "value": "~~仍是待决策项~~",
+      "context": "> 其余事项（三档命名与默认档、数模档位配对、主机降级同意粒度、是否授权真改 `wf-runner`）~~仍是待决策项~~ **【2026-09-20 已结】** 四项在定稿表 P1 各有明确处置（采纳 / 改判 / 移交），逐条依据与红线自检见 `qoder/runtime/maintenance/2.1-A/DECISIONS.md`：三档取 `fast/balanced/full` 默认 `balanced`；数模档位与 `rigor` **不自动配对**（只出文档建议"
+    },
+    {
+      "id": "arch-2.1.0-plan",
+      "source": "versions/架构2.1.0-更新方案.md",
+      "status": "history",
+      "visibility": "internal",
+      "line": 75,
+      "column": 3,
+      "kind": "strike",
+      "value": "~~**不跑脚本阶段、不重哈希环境**（草稿本就不跑求解器）。~~",
+      "context": "- ~~**不跑脚本阶段、不重哈希环境**（草稿本就不跑求解器）。~~"
+    },
+    {
+      "id": "arch-2.1.0-plan",
+      "source": "versions/架构2.1.0-更新方案.md",
+      "status": "history",
+      "visibility": "internal",
+      "line": 240,
+      "column": 7,
+      "kind": "strike",
+      "value": "~~conformance floor 是否作为新接入验收硬门~~",
+      "context": "- [x] ~~conformance floor 是否作为新接入验收硬门~~ → **是（BP-2 §2.2）**：接入完成 = 对三仓能力并集 0 `declaredAbsent`；未覆盖项列待补台账（带补齐路径与成本），不得写成永久分层。核的时刻只有两个——平台声称接入完成、目录新增能力；**不是每 run 税**（BP-3 §3.2⑤）。"
+    },
+    {
+      "id": "arch-2.1.0-plan",
+      "source": "versions/架构2.1.0-更新方案.md",
+      "status": "history",
+      "visibility": "internal",
+      "line": 241,
+      "column": 7,
+      "kind": "strike",
+      "value": "~~§3.5 平台对等是否连同 floor 一起写进验收硬门~~",
+      "context": "- [x] ~~§3.5 平台对等是否连同 floor 一起写进验收硬门~~ → **是（BP-2 §2.3 / §2.5）**：作者/搭建者/定稿会话身份不产生任何运行时特权；共享代码/契约/配方中禁止平台专有常量、venv 路径、发行版名、release 特例，违反即属缺陷而非特性。"
+    },
+    {
+      "id": "arch-2.1.0-plan",
+      "source": "versions/架构2.1.0-更新方案.md",
+      "status": "history",
+      "visibility": "internal",
+      "line": 242,
+      "column": 7,
+      "kind": "strike",
+      "value": "~~§3.6 `handoff bundle` 是否纳入 2.1.0 范围~~",
+      "context": "- [x] ~~§3.6 `handoff bundle` 是否纳入 2.1.0 范围~~ → **纳入，且不得顺延（BP-4 §4.3）**：中立项目状态层、续跑版本一致性校验、跨平台资源仲裁三项**缺一即视为 BP-4 未满足**；并行编排模板作为共享工作流发布（BP-4 §4.4）。中立层落地的目录位置须用户单独授权（BP-4 §4.5）。"
+    },
+    {
+      "id": "arch-3.1.0-plan",
+      "source": "versions/架构3.1.0-更新方案-20260920.md",
+      "status": "proposal",
+      "visibility": "internal",
+      "line": 171,
+      "column": 3,
+      "kind": "strike",
+      "value": "~~九条欠账另立一轮修复案~~",
+      "context": "| ~~九条欠账另立一轮修复案~~ | 抓的是真失败，但**轮次是假的** | — | — ⇒ 并入本文；另开一轮＝为同一代字节付两次矩阵成本（违反 3.2⑤ 的意图） |"
+    },
+    {
+      "id": "arch-3.1.0-plan",
+      "source": "versions/架构3.1.0-更新方案-20260920.md",
+      "status": "proposal",
+      "visibility": "internal",
+      "line": 172,
+      "column": 3,
+      "kind": "strike",
+      "value": "~~每域再跑一次全矩阵~~",
+      "context": "| ~~每域再跑一次全矩阵~~ | **否** | — | — ⇒ **删除**，依 3.2⑤ 全矩阵只在两个时刻 |"
+    },
+    {
+      "id": "arch-3.1.0-plan",
+      "source": "versions/架构3.1.0-更新方案-20260920.md",
+      "status": "proposal",
+      "visibility": "internal",
+      "line": 218,
+      "column": 474,
+      "kind": "strike",
+      "value": "~~P8b（中立项目状态层目录落点，须用户单独授权）~~",
+      "context": "**本文解决（§7.1 并入 9 条）**：D-32、D-34、D-51、D-53、D-56、D-59、D-62、D-64、D-66。**仍不在本文解决**：D-25（`type: process` 门禁每次 submit 由引擎重跑子进程）、D-27（无密封环境平台的合法锁形态，2.1 已给形状）、D-31（共享侧没有带 checkpoint 翻 `current.json` 的工具 ⇒ 采纳波仍靠各平台手工配对，与 D-52 同族）、D-35（0.8.0 起 `scrip"
+    }
+  ],
+  "results": [
+    {
+      "id": "site-intro",
+      "title": "文档站说明",
+      "source": "docs-site/content/quick-start/site-intro.md",
+      "slug": "/docs/quick-start/site-intro",
+      "status": "current",
+      "visibility": "public",
+      "sourceStats": {
+        "strikeCount": 0,
+        "singleCount": 0,
+        "strikes": [],
+        "singles": []
+      },
+      "synced": {
+        "profile": "internal",
+        "strikeCount": 0,
+        "escapedSingleCount": 0,
+        "bareSingleCount": 0,
+        "sourceStrikeMatches": true,
+        "sourceSingleMatches": true
+      },
+      "html": {
+        "internal": {
+          "delCount": 0,
+          "sourceStrikeMatches": true
+        },
+        "shareable": {
+          "delCount": 0,
+          "sourceStrikeMatches": true
+        }
+      }
+    },
+    {
+      "id": "arch-overview",
+      "title": "当前架构概览",
+      "source": "docs-site/content/quick-start/arch-overview.md",
+      "slug": "/docs/quick-start/overview",
+      "status": "current",
+      "visibility": "public",
+      "sourceStats": {
+        "strikeCount": 0,
+        "singleCount": 1,
+        "strikes": [],
+        "singles": [
+          {
+            "line": 47,
+            "column": 28,
+            "kind": "single",
+            "value": "~",
+            "context": "| 上位原则条文与判据 | [架构基本原则 BP-1 ~ BP-7](/docs/architecture/basic-principles) |"
+          }
+        ]
+      },
+      "synced": {
+        "profile": "internal",
+        "strikeCount": 0,
+        "escapedSingleCount": 1,
+        "bareSingleCount": 0,
+        "sourceStrikeMatches": true,
+        "sourceSingleMatches": true
+      },
+      "html": {
+        "internal": {
+          "delCount": 0,
+          "sourceStrikeMatches": true
+        },
+        "shareable": {
+          "delCount": 0,
+          "sourceStrikeMatches": true
+        }
+      }
+    },
+    {
+      "id": "how-to-read",
+      "title": "E:\\ai 总框架（如何阅读本项目）",
+      "source": "HANDOFF.md",
+      "slug": "/docs/quick-start/handoff",
+      "status": "current",
+      "visibility": "internal",
+      "sourceStats": {
+        "strikeCount": 3,
+        "singleCount": 2,
+        "strikes": [
+          {
+            "line": 13,
+            "column": 186,
+            "kind": "strike",
+            "value": "~~跨平台资源仲裁~~",
+            "context": "| **BP-4 跨平台同一项目语义** | 一项目拆多 run 跨平台跑必须等价于同平台连续跑；**两项**必需机制（2026-09-22 基本原则 1.3 由三项裁减为两项）——**续跑版本一致性校验**（不得静默换版）、**可回读的带 sha256 交接载体**（`handoff-bundle/v1` 或用户指定共享路径，不得直读别平台 `runtime/`）。~~跨平台资源仲裁~~、~~平台中立项目状态层目录~~、~~并行是一等能力~~ 三项**已撤销为必需项**（撤"
+          },
+          {
+            "line": 13,
+            "column": 198,
+            "kind": "strike",
+            "value": "~~平台中立项目状态层目录~~",
+            "context": "| **BP-4 跨平台同一项目语义** | 一项目拆多 run 跨平台跑必须等价于同平台连续跑；**两项**必需机制（2026-09-22 基本原则 1.3 由三项裁减为两项）——**续跑版本一致性校验**（不得静默换版）、**可回读的带 sha256 交接载体**（`handoff-bundle/v1` 或用户指定共享路径，不得直读别平台 `runtime/`）。~~跨平台资源仲裁~~、~~平台中立项目状态层目录~~、~~并行是一等能力~~ 三项**已撤销为必需项**（撤"
+          },
+          {
+            "line": 13,
+            "column": 214,
+            "kind": "strike",
+            "value": "~~并行是一等能力~~",
+            "context": "| **BP-4 跨平台同一项目语义** | 一项目拆多 run 跨平台跑必须等价于同平台连续跑；**两项**必需机制（2026-09-22 基本原则 1.3 由三项裁减为两项）——**续跑版本一致性校验**（不得静默换版）、**可回读的带 sha256 交接载体**（`handoff-bundle/v1` 或用户指定共享路径，不得直读别平台 `runtime/`）。~~跨平台资源仲裁~~、~~平台中立项目状态层目录~~、~~并行是一等能力~~ 三项**已撤销为必需项**（撤"
+          }
+        ],
+        "singles": [
+          {
+            "line": 2,
+            "column": 35,
+            "kind": "single",
+            "value": "~",
+            "context": "> 更新：2026-09-18。本文保留 **上位基本原则（BP-1~BP-7，其中 **BP-6 入库先行** 与 **BP-7 不可入库件隔离与备份** 于 2026-09-21 新增（指令 09-20 深夜））+ 三共享仓（tool / agent / software）+ 各运行平台** 的总框架。各运行平台的本章由该平台自己维护，这里只放相对路径。inbox 与 `ai学习笔记` 不在本文展开。zcode 于 2026-09-17 重建：矩阵仍 38/2/0，但脚本"
+          },
+          {
+            "line": 6,
+            "column": 15,
+            "kind": "single",
+            "value": "~",
+            "context": "**上位基本原则 BP-1 ~ BP-5**（全文与判据：[架构基本原则.md](versions/架构基本原则.md)；本文件任何条款与它冲突以它为准）："
+          }
+        ]
+      },
+      "synced": {
+        "profile": "internal",
+        "strikeCount": 3,
+        "escapedSingleCount": 2,
+        "bareSingleCount": 0,
+        "sourceStrikeMatches": true,
+        "sourceSingleMatches": true
+      },
+      "html": {
+        "internal": {
+          "delCount": 3,
+          "sourceStrikeMatches": true
+        }
+      }
+    },
+    {
+      "id": "workspace-rules",
+      "title": "E:\\ai 工作区规则",
+      "source": "AGENTS.md",
+      "slug": "/docs/quick-start/workspace-rules",
+      "status": "current",
+      "visibility": "internal",
+      "sourceStats": {
+        "strikeCount": 1,
+        "singleCount": 2,
+        "strikes": [
+          {
+            "line": 31,
+            "column": 686,
+            "kind": "strike",
+            "value": "~~C5 未实测~~",
+            "context": "当前实施状态以总手册为准：主方案序列 `Phase 0 → 1 → 5A → 2 → 3 → 4` 已全部执行完毕；`G1 / G2 / G3` 三道门已全部闭合（2026-09-14）；**架构 1.0.0 已于 2026-09-15 定稿**（`versions/架构1.0.0.md`，§9 平台表于 2026-09-17 按实测修订，**现为冻结历史基线**）：四条验收要求按接口口径达标（默认指针矩阵 PASS 38 / EXPECTED 2 / FAIL 0，判据是 "
+          }
+        ],
+        "singles": [
+          {
+            "line": 15,
+            "column": 188,
+            "kind": "single",
+            "value": "~",
+            "context": "已纳入正式架构的一级目录为 `codex`、`dsh`、`workbuddy`、`zcode`、`doubao`、`tool`、`agent`、`software`、`inbox`、`qoder`、`ai学习笔记`、`versions`、`.zcode`。其中 `versions` 存放**架构版本文档**（**上位原则 `versions/架构基本原则.md`（BP-1~BP-7，BP-1~BP-4 于 2026-09-18、BP-5 于 2026-09-19、BP-6 与"
+          },
+          {
+            "line": 15,
+            "column": 198,
+            "kind": "single",
+            "value": "~",
+            "context": "已纳入正式架构的一级目录为 `codex`、`dsh`、`workbuddy`、`zcode`、`doubao`、`tool`、`agent`、`software`、`inbox`、`qoder`、`ai学习笔记`、`versions`、`.zcode`。其中 `versions` 存放**架构版本文档**（**上位原则 `versions/架构基本原则.md`（BP-1~BP-7，BP-1~BP-4 于 2026-09-18、BP-5 于 2026-09-19、BP-6 与"
+          }
+        ]
+      },
+      "synced": {
+        "profile": "internal",
+        "strikeCount": 1,
+        "escapedSingleCount": 2,
+        "bareSingleCount": 0,
+        "sourceStrikeMatches": true,
+        "sourceSingleMatches": true
+      },
+      "html": {
+        "internal": {
+          "delCount": 1,
+          "sourceStrikeMatches": true
+        }
+      }
+    },
+    {
+      "id": "system-prompt",
+      "title": "E:\\ai 架构系统提示词",
+      "source": "AI_ARCHITECTURE_SYSTEM_PROMPT.md",
+      "slug": "/docs/quick-start/system-prompt",
+      "status": "current",
+      "visibility": "internal",
+      "sourceStats": {
+        "strikeCount": 2,
+        "singleCount": 2,
+        "strikes": [
+          {
+            "line": 278,
+            "column": 1048,
+            "kind": "strike",
+            "value": "~~`repo-lint` 两条闭合路径~~",
+            "context": "历史上的 “Phase 1 已完成并停止” 只表示早期授权阶段；现行状态以总手册、`HANDOFF.md` 和 `versions/架构2.0.0.md`（§9 当前基线状态、§10 定稿时未达成项）为准（`post-competition-closeout.md` 是赛后台账，其中 zcode 路径与能力以 9-17 重建后的平台章为准）：主方案序列 `Phase 0 → 1 → 5A → 2 → 3 → 4` 已全部执行完毕，**`G1 / G2 / G3` 三道门已于 "
+          },
+          {
+            "line": 278,
+            "column": 1108,
+            "kind": "strike",
+            "value": "~~C5 未实测~~",
+            "context": "历史上的 “Phase 1 已完成并停止” 只表示早期授权阶段；现行状态以总手册、`HANDOFF.md` 和 `versions/架构2.0.0.md`（§9 当前基线状态、§10 定稿时未达成项）为准（`post-competition-closeout.md` 是赛后台账，其中 zcode 路径与能力以 9-17 重建后的平台章为准）：主方案序列 `Phase 0 → 1 → 5A → 2 → 3 → 4` 已全部执行完毕，**`G1 / G2 / G3` 三道门已于 "
+          }
+        ],
+        "singles": [
+          {
+            "line": 3,
+            "column": 18,
+            "kind": "single",
+            "value": "~",
+            "context": "## 〇、架构基本原则 BP-1 ~ BP-5（上位，全文与判据见 `versions/架构基本原则.md`）"
+          },
+          {
+            "line": 31,
+            "column": 49,
+            "kind": "single",
+            "value": "~",
+            "context": "- E:\\ai\\versions（架构版本文档区，**上位原则 `架构基本原则.md`（BP-1~BP-7，BP-5 于 2026-09-19、BP-6 与 BP-7 由用户 2026-09-20 深夜授权、2026-09-21 落笔新增）**；当前基线 `架构3.0.0.md`（2026-09-21 定稿，判据载体 `架构3.0.0-定稿实施表-20260920.md`，账在 `平台接入清单.md` §8.17），其下 `架构2.0.0.md`（2026-09-18 定稿，"
+          }
+        ]
+      },
+      "synced": {
+        "profile": "internal",
+        "strikeCount": 2,
+        "escapedSingleCount": 2,
+        "bareSingleCount": 0,
+        "sourceStrikeMatches": true,
+        "sourceSingleMatches": true
+      },
+      "html": {
+        "internal": {
+          "delCount": 2,
+          "sourceStrikeMatches": true
+        }
+      }
+    },
+    {
+      "id": "master-manual",
+      "title": "Agentic Workflow 总手册（统一版 v2.0）",
+      "source": "agentic-workflow-master-manual.md",
+      "slug": "/docs/quick-start/master-manual",
+      "status": "companion",
+      "visibility": "internal",
+      "sourceStats": {
+        "strikeCount": 2,
+        "singleCount": 1,
+        "strikes": [
+          {
+            "line": 17,
+            "column": 56,
+            "kind": "strike",
+            "value": "~~BP-1 结构上成立但 software 未接线（三仓实际只有两仓被共享）~~",
+            "context": "**按 BP 的现状定位（2026-09-18 原文，已被 09-21/09-22 超出，保留作历史读）**：~~BP-1 结构上成立但 software 未接线（三仓实际只有两仓被共享）~~ → 3.0 后 `software` 已成真正同构第三仓，qoder / codex / workbuddy 三家接了第三根，zcode / doubao / dsh 仍只接两根（时间差）；BP-2 三家已各自出 45 格 `FAIL 0`，余三家未接；BP-3 的方向由 2.1.0 "
+          },
+          {
+            "line": 17,
+            "column": 260,
+            "kind": "strike",
+            "value": "~~BP-4 未满足，唯一对症机制（`handoff bundle`）尚未定归属~~",
+            "context": "**按 BP 的现状定位（2026-09-18 原文，已被 09-21/09-22 超出，保留作历史读）**：~~BP-1 结构上成立但 software 未接线（三仓实际只有两仓被共享）~~ → 3.0 后 `software` 已成真正同构第三仓，qoder / codex / workbuddy 三家接了第三根，zcode / doubao / dsh 仍只接两根（时间差）；BP-2 三家已各自出 45 格 `FAIL 0`，余三家未接；BP-3 的方向由 2.1.0 "
+          }
+        ],
+        "singles": [
+          {
+            "line": 7,
+            "column": 15,
+            "kind": "single",
+            "value": "~",
+            "context": "**上位基本原则 BP-1 ~ BP-5（全文与判据：`versions/架构基本原则.md`；本节其余描述都是现状，不是目标）**："
+          }
+        ]
+      },
+      "synced": {
+        "profile": "internal",
+        "strikeCount": 2,
+        "escapedSingleCount": 1,
+        "bareSingleCount": 0,
+        "sourceStrikeMatches": true,
+        "sourceSingleMatches": true
+      },
+      "html": {
+        "internal": {
+          "delCount": 2,
+          "sourceStrikeMatches": true
+        }
+      }
+    },
+    {
+      "id": "bp",
+      "title": "架构基本原则 BP-1 ~ BP-7",
+      "source": "versions/架构基本原则.md",
+      "slug": "/docs/architecture/basic-principles",
+      "status": "current",
+      "visibility": "public",
+      "sourceStats": {
+        "strikeCount": 3,
+        "singleCount": 4,
+        "strikes": [
+          {
+            "line": 43,
+            "column": 61,
+            "kind": "strike",
+            "value": "~~`software/registry.json` 不存在~~",
+            "context": "**当前差距（2026-09-22 更正；原为 09-18/09-20 实勘，已被 3.0-A 与三平台采纳超出）**：~~`software/registry.json` 不存在~~ → 已存在（`ai-software-registry/v1`，六行 + 七轴裁定，3.0 S-P2）；~~引擎动作枚举仍封闭为 `[\"prompt\",\"script\"]`~~ → `0.9.0` 起含 `software-call`（`runtime-contracts 1.3.0`）；~~"
+          },
+          {
+            "line": 43,
+            "column": 146,
+            "kind": "strike",
+            "value": "~~引擎动作枚举仍封闭为 `[\"prompt\",\"script\"]`~~",
+            "context": "**当前差距（2026-09-22 更正；原为 09-18/09-20 实勘，已被 3.0-A 与三平台采纳超出）**：~~`software/registry.json` 不存在~~ → 已存在（`ai-software-registry/v1`，六行 + 七轴裁定，3.0 S-P2）；~~引擎动作枚举仍封闭为 `[\"prompt\",\"script\"]`~~ → `0.9.0` 起含 `software-call`（`runtime-contracts 1.3.0`）；~~"
+          },
+          {
+            "line": 43,
+            "column": 239,
+            "kind": "strike",
+            "value": "~~六平台全量 grep `software` 零命中、只绑两根~~",
+            "context": "**当前差距（2026-09-22 更正；原为 09-18/09-20 实勘，已被 3.0-A 与三平台采纳超出）**：~~`software/registry.json` 不存在~~ → 已存在（`ai-software-registry/v1`，六行 + 七轴裁定，3.0 S-P2）；~~引擎动作枚举仍封闭为 `[\"prompt\",\"script\"]`~~ → `0.9.0` 起含 `software-call`（`runtime-contracts 1.3.0`）；~~"
+          }
+        ],
+        "singles": [
+          {
+            "line": 2,
+            "column": 78,
+            "kind": "single",
+            "value": "~",
+            "context": "> **1.1 增补**：2026-09-19 经用户授权新增 **BP-5 分步实施与完成判定**（口语原文 §9 第 5–7 条），其余条文 BP-1~BP-4 原文不改。"
+          },
+          {
+            "line": 3,
+            "column": 160,
+            "kind": "single",
+            "value": "~",
+            "context": "> **1.2 增补**：用户 2026-09-20 深夜授权、**2026-09-21** 落笔新增 **BP-6 入库先行与可回滚**、**BP-7 不可入库件的隔离与备份**（口语原文 §9 第 8–9 条；同日一并确立 `inbox` 的「备份 / 归档 / 垃圾桶」三区职责，见 7.7）。其余条文 BP-1~BP-5 原文不改。"
+          },
+          {
+            "line": 16,
+            "column": 57,
+            "kind": "single",
+            "value": "~",
+            "context": "5. **引用写法**：其他文件不整篇复制本文。统一用\"紧凑条文块 + 指向本文\"（**1.2 版起为 BP-1~BP-7 七条**；1.1 版为 BP-1~BP-5），条文块的字面表述见 §8。"
+          },
+          {
+            "line": 16,
+            "column": 79,
+            "kind": "single",
+            "value": "~",
+            "context": "5. **引用写法**：其他文件不整篇复制本文。统一用\"紧凑条文块 + 指向本文\"（**1.2 版起为 BP-1~BP-7 七条**；1.1 版为 BP-1~BP-5），条文块的字面表述见 §8。"
+          }
+        ]
+      },
+      "synced": {
+        "profile": "internal",
+        "strikeCount": 3,
+        "escapedSingleCount": 4,
+        "bareSingleCount": 0,
+        "sourceStrikeMatches": true,
+        "sourceSingleMatches": true
+      },
+      "html": {
+        "internal": {
+          "delCount": 3,
+          "sourceStrikeMatches": true
+        },
+        "shareable": {
+          "delCount": 3,
+          "sourceStrikeMatches": true
+        }
+      }
+    },
+    {
+      "id": "arch-3.0.0",
+      "title": "架构 3.0.0（当前基线）",
+      "source": "versions/架构3.0.0.md",
+      "slug": "/docs/architecture/3.0.0",
+      "status": "current",
+      "visibility": "public",
+      "sourceStats": {
+        "strikeCount": 1,
+        "singleCount": 0,
+        "strikes": [
+          {
+            "line": 120,
+            "column": 3,
+            "kind": "strike",
+            "value": "~~**跨平台仲裁落点（P8b）**~~",
+            "context": "- ~~**跨平台仲裁落点（P8b）**~~ —— **2026-09-22 由用户裁决关闭（不是修好，是撤销该要求）**：BP-4 的必需机制裁减为两项（续跑版本一致性校验 + 带 sha256 的可回读交接载体），原 §4.3③\"互斥键在所有平台之间有效\"、原 §4.4\"并行是一等能力\"、原 §4.5\"中立层目录须单独授权\"三项**撤销**。关闭依据是实测前提而非便利：六个\"平台\"是同一台机器、同一 `E:\\ai` 文件系统下的不同客户端，续跑由人工错开即可（用户 09-"
+          }
+        ],
+        "singles": []
+      },
+      "synced": {
+        "profile": "internal",
+        "strikeCount": 1,
+        "escapedSingleCount": 0,
+        "bareSingleCount": 0,
+        "sourceStrikeMatches": true,
+        "sourceSingleMatches": true
+      },
+      "html": {
+        "internal": {
+          "delCount": 1,
+          "sourceStrikeMatches": true
+        },
+        "shareable": {
+          "delCount": 1,
+          "sourceStrikeMatches": true
+        }
+      }
+    },
+    {
+      "id": "arch-3.0.0-plan",
+      "title": "架构 3.0.0 定稿实施表（S-P1…S-P9 + 裁定 C-1…C-9）",
+      "source": "versions/架构3.0.0-定稿实施表-20260920.md",
+      "slug": "/docs/architecture/3.0.0-final-plan",
+      "status": "companion",
+      "visibility": "internal",
+      "sourceStats": {
+        "strikeCount": 0,
+        "singleCount": 0,
+        "strikes": [],
+        "singles": []
+      },
+      "synced": {
+        "profile": "internal",
+        "strikeCount": 0,
+        "escapedSingleCount": 0,
+        "bareSingleCount": 0,
+        "sourceStrikeMatches": true,
+        "sourceSingleMatches": true
+      },
+      "html": {
+        "internal": {
+          "delCount": 0,
+          "sourceStrikeMatches": true
+        }
+      }
+    },
+    {
+      "id": "arch-3.0.0-map",
+      "title": "架构 3.0.0 文件地图",
+      "source": "versions/架构3.0.0-文件地图.md",
+      "slug": "/docs/architecture/3.0.0-file-map",
+      "status": "companion",
+      "visibility": "internal",
+      "sourceStats": {
+        "strikeCount": 0,
+        "singleCount": 1,
+        "strikes": [],
+        "singles": [
+          {
+            "line": 14,
+            "column": 35,
+            "kind": "single",
+            "value": "~",
+            "context": "| `versions/架构基本原则.md` | 上位原则 BP-1~BP-7。3.0 的三仓同构（BP-1）、平台对等与能力地板（BP-2）、验收最小量（BP-3）、跨平台同一项目语义（BP-4）、分步与完成判定（BP-5）、入库先行（BP-6）、不可入库件隔离（BP-7）全部从它导出 |"
+          }
+        ]
+      },
+      "synced": {
+        "profile": "internal",
+        "strikeCount": 0,
+        "escapedSingleCount": 1,
+        "bareSingleCount": 0,
+        "sourceStrikeMatches": true,
+        "sourceSingleMatches": true
+      },
+      "html": {
+        "internal": {
+          "delCount": 0,
+          "sourceStrikeMatches": true
+        }
+      }
+    },
+    {
+      "id": "platform-checklist",
+      "title": "平台接入清单（各轮增量的总账）",
+      "source": "versions/平台接入清单.md",
+      "slug": "/docs/architecture/platform-checklist",
+      "status": "companion",
+      "visibility": "internal",
+      "sourceStats": {
+        "strikeCount": 1,
+        "singleCount": 1,
+        "strikes": [
+          {
+            "line": 80,
+            "column": 45,
+            "kind": "strike",
+            "value": "~~接入实施方案已定稿~~",
+            "context": "> **workbuddy 注记（2026-09-16，workbuddy 会话）**：~~接入实施方案已定稿~~ → **已执行完毕并升格为第 7 运行平台**：`workbuddy/bridge/workbuddy-config.json`（钉 `0.6.0` / `0.2.1`）与 `capabilities.json` 已落盘（checks 9 项逐项实证），矩阵 r3 `38 PASS / 0 NEEDS-INPUT / 2 EXPECTED / FAIL 0` 达"
+          }
+        ],
+        "singles": [
+          {
+            "line": 149,
+            "column": 119,
+            "kind": "single",
+            "value": "~",
+            "context": "- **〔同日第二消歧：还有\"基本原则写入轮\"，勿与本条混读〕** 上表的 14 份是**架构 2.0.0 定稿轮**（2026-09-18 日间）的同步口径。同日 **18:35–18:50 另有一轮 `架构基本原则.md`（BP-1~BP-4）写入轮**，改动面与上表**高度重叠但不是同一批**：该轮实际动的是 `AGENTS.md`、`AI_ARCHITECTURE_SYSTEM_PROMPT.md`（新增 §〇 + §二 划界）、`agentic-workflow-m"
+          }
+        ]
+      },
+      "synced": {
+        "profile": "internal",
+        "strikeCount": 1,
+        "escapedSingleCount": 1,
+        "bareSingleCount": 0,
+        "sourceStrikeMatches": true,
+        "sourceSingleMatches": true
+      },
+      "html": {
+        "internal": {
+          "delCount": 1,
+          "sourceStrikeMatches": true
+        }
+      }
+    },
+    {
+      "id": "qoder-3.0-q",
+      "title": "qoder 平台侧 3.0.0 完整接入实施表（3.0-Q）",
+      "source": "versions/qoder接入3.0.0-实施表-20260921.md",
+      "slug": "/docs/architecture/qoder-3.0-q",
+      "status": "companion",
+      "visibility": "internal",
+      "sourceStats": {
+        "strikeCount": 0,
+        "singleCount": 0,
+        "strikes": [],
+        "singles": []
+      },
+      "synced": {
+        "profile": "internal",
+        "strikeCount": 0,
+        "escapedSingleCount": 0,
+        "bareSingleCount": 0,
+        "sourceStrikeMatches": true,
+        "sourceSingleMatches": true
+      },
+      "html": {
+        "internal": {
+          "delCount": 0,
+          "sourceStrikeMatches": true
+        }
+      }
+    },
+    {
+      "id": "arch-2.0.0",
+      "title": "架构 2.0.0（历史基线，§9/§10 仍现行）",
+      "source": "versions/架构2.0.0.md",
+      "slug": "/docs/architecture/2.0.0",
+      "status": "history",
+      "visibility": "internal",
+      "sourceStats": {
+        "strikeCount": 1,
+        "singleCount": 1,
+        "strikes": [
+          {
+            "line": 151,
+            "column": 4,
+            "kind": "strike",
+            "value": "~~**§8 四条缺陷未修**~~",
+            "context": "5. ~~**§8 四条缺陷未修**~~ **已改判并执行**（2026-09-18 同日两度决定：先\"不发 0.7.7 只登记\"，后授权「开始完成 2.0.0 的任务，切到 0.7.7」）。现状：`tool/wf-runner/versions/0.7.7` 已发布、qoder 生产已接入；§8 的 ①③④ **闭合**，⑥ 只闭合\"超时与篡改分开\"，**全量→增量哈希仍未做**（登记为开放项）。**残留**：zcode 生产仍 0.6.0，故这四条在共享侧尚未\"所有平台都"
+          }
+        ],
+        "singles": [
+          {
+            "line": 28,
+            "column": 69,
+            "kind": "single",
+            "value": "~",
+            "context": "> **（2026-09-18 追加，上位关系）** 本节全部不变量从属于 `versions/架构基本原则.md` 的 **BP-1 ~ BP-5**（三仓骨架不可变 / 平台对等与能力地板 / 验收与接入最小量 / 跨平台同一项目语义 / 分步实施与完成判定）。BP 规定目标，本节规定实现时不得越界的边界；二者冲突以 BP 为准并回改本文。下列不变量**没有一条被 BP 放松**，被重新划界的只有不变量 3 的适用范围（见该条括注）。"
+          }
+        ]
+      },
+      "synced": {
+        "profile": "internal",
+        "strikeCount": 1,
+        "escapedSingleCount": 1,
+        "bareSingleCount": 0,
+        "sourceStrikeMatches": true,
+        "sourceSingleMatches": true
+      },
+      "html": {
+        "internal": {
+          "delCount": 1,
+          "sourceStrikeMatches": true
+        }
+      }
+    },
+    {
+      "id": "arch-2.0.0-migration",
+      "title": "架构 1.0.0 → 2.0.0 迁移指南",
+      "source": "versions/架构2.0.0-迁移指南.md",
+      "slug": "/docs/architecture/2.0.0-migration",
+      "status": "companion",
+      "visibility": "internal",
+      "sourceStats": {
+        "strikeCount": 0,
+        "singleCount": 1,
+        "strikes": [],
+        "singles": [
+          {
+            "line": 3,
+            "column": 36,
+            "kind": "single",
+            "value": "~",
+            "context": "> 上位依据：`versions/架构基本原则.md`（**BP-1 ~ BP-5**）。本指南的复验节奏（§1 第 8 步：`--only` 只跑受影响面、矩阵全量 39 行只在栈换代时跑一次）与 §3「不必迁移的东西」已与 **BP-3 最小量** 和 **BP-2 对等**（授权逐平台取得、结论不互抄，见 §1 第 4 步）一致，故此处只挂指针、不重述条文；若将来新增步骤，先过 BP-3 三问。本指南下面 §1 的 8 步是**迁移工序序**，不是 **BP-5** 意"
+          }
+        ]
+      },
+      "synced": {
+        "profile": "internal",
+        "strikeCount": 0,
+        "escapedSingleCount": 1,
+        "bareSingleCount": 0,
+        "sourceStrikeMatches": true,
+        "sourceSingleMatches": true
+      },
+      "html": {
+        "internal": {
+          "delCount": 0,
+          "sourceStrikeMatches": true
+        }
+      }
+    },
+    {
+      "id": "arch-2.0.0-recovery",
+      "title": "架构 2.0.0 操作与恢复手册",
+      "source": "versions/架构2.0.0-恢复手册.md",
+      "slug": "/docs/architecture/2.0.0-recovery",
+      "status": "companion",
+      "visibility": "internal",
+      "sourceStats": {
+        "strikeCount": 0,
+        "singleCount": 0,
+        "strikes": [],
+        "singles": []
+      },
+      "synced": {
+        "profile": "internal",
+        "strikeCount": 0,
+        "escapedSingleCount": 0,
+        "bareSingleCount": 0,
+        "sourceStrikeMatches": true,
+        "sourceSingleMatches": true
+      },
+      "html": {
+        "internal": {
+          "delCount": 0,
+          "sourceStrikeMatches": true
+        }
+      }
+    },
+    {
+      "id": "arch-1.0.0",
+      "title": "架构 1.0.0（冻结历史基线）",
+      "source": "versions/架构1.0.0.md",
+      "slug": "/docs/architecture/1.0.0",
+      "status": "frozen",
+      "visibility": "internal",
+      "sourceStats": {
+        "strikeCount": 0,
+        "singleCount": 0,
+        "strikes": [],
+        "singles": []
+      },
+      "synced": {
+        "profile": "internal",
+        "strikeCount": 0,
+        "escapedSingleCount": 0,
+        "bareSingleCount": 0,
+        "sourceStrikeMatches": true,
+        "sourceSingleMatches": true
+      },
+      "html": {
+        "internal": {
+          "delCount": 0,
+          "sourceStrikeMatches": true
+        }
+      }
+    },
+    {
+      "id": "arch-1.0.0-boundary",
+      "title": "架构 1.0.0 发布边界",
+      "source": "versions/架构1.0.0-发布边界-20260916.md",
+      "slug": "/docs/architecture/1.0.0-release-boundary",
+      "status": "frozen",
+      "visibility": "internal",
+      "sourceStats": {
+        "strikeCount": 0,
+        "singleCount": 0,
+        "strikes": [],
+        "singles": []
+      },
+      "synced": {
+        "profile": "internal",
+        "strikeCount": 0,
+        "escapedSingleCount": 0,
+        "bareSingleCount": 0,
+        "sourceStrikeMatches": true,
+        "sourceSingleMatches": true
+      },
+      "html": {
+        "internal": {
+          "delCount": 0,
+          "sourceStrikeMatches": true
+        }
+      }
+    },
+    {
+      "id": "arch-1.0.0-status",
+      "title": "架构 1.0.0 接入状态（2026-09-16）",
+      "source": "versions/架构1.0.0-接入状态-20260916.md",
+      "slug": "/docs/architecture/1.0.0-integration-status",
+      "status": "frozen",
+      "visibility": "internal",
+      "sourceStats": {
+        "strikeCount": 0,
+        "singleCount": 0,
+        "strikes": [],
+        "singles": []
+      },
+      "synced": {
+        "profile": "internal",
+        "strikeCount": 0,
+        "escapedSingleCount": 0,
+        "bareSingleCount": 0,
+        "sourceStrikeMatches": true,
+        "sourceSingleMatches": true
+      },
+      "html": {
+        "internal": {
+          "delCount": 0,
+          "sourceStrikeMatches": true
+        }
+      }
+    },
+    {
+      "id": "invocation-spec",
+      "title": "调用适配规范（v0.2 起累积增补）",
+      "source": "invocation-adapters-spec.md",
+      "slug": "/docs/runtime/invocation-adapters",
+      "status": "current",
+      "visibility": "internal",
+      "sourceStats": {
+        "strikeCount": 8,
+        "singleCount": 1,
+        "strikes": [
+          {
+            "line": 34,
+            "column": 667,
+            "kind": "strike",
+            "value": "~~peer 委派不可用（见 2.4 上报 ③）~~",
+            "context": "| Qoder（**第 5 运行平台；2026-09-15 升格**） | `E:\\ai\\qoder\\bridge.json` + `bridge\\qoder-config.json`（runner **0.6.0**、contracts **repo-lint 0.2.1** 显式选版，另加 `scriptEnvironment` = 本平台 WSL2 钉版 venv 与逐文件 `environmentManifest`）+ `capabilities.json`（`per"
+          },
+          {
+            "line": 85,
+            "column": 40,
+            "kind": "strike",
+            "value": "~~`wf-runner` `resolution.py:139` 把锁内 repo-lint `version` 写死~~",
+            "context": "上报共享侧（除已单独授权的缓存清理外，本节不构成修改任何发布目录的授权）：① ~~`wf-runner` `resolution.py:139` 把锁内 repo-lint `version` 写死~~ —— **已结案（并修正归因）**：该字面量逐版核得**只存在于 `0.5.0`**（`resolution.py:137/139/140`），`0.5.2` 起即由解析键取版本，**不是 0.6.0 的改动**；qoder 实测钉 0.6.0 时锁内 `version=0."
+          },
+          {
+            "line": 176,
+            "column": 3,
+            "kind": "strike",
+            "value": "~~T2~~",
+            "context": "| ~~T2~~ | **已结清（2026-09-16，WorkBuddy 接入）**：能力面结论 = 用户级 Skill（A2）+ PowerShell/文件 CLI（A4），MCP 不声明；接入判据达成（矩阵 r3 `38 PASS / 2 EXPECTED / 0 FAIL`，见 2.6） | 见 2.6 与 `workbuddy/bridge/platform.md` |"
+          },
+          {
+            "line": 178,
+            "column": 3,
+            "kind": "strike",
+            "value": "~~T4~~",
+            "context": "| ~~T4~~ | **已结清（2026-09-07）**：ZCode 入口落地（bridge/config/插件包）+ 集成冒烟全绿；工作区级 `.zcode` 因一级目录白名单约束移除，命令/技能由插件包承载（待 UI 安装） | 见 2.2；剩余：用户 UI 安装插件（可选）、wf-mcp-server（A3 层，未来项） |"
+          },
+          {
+            "line": 179,
+            "column": 3,
+            "kind": "strike",
+            "value": "~~T5~~",
+            "context": "| ~~T5~~ | **已结清（2026-09-16，doubao 接入）**：2026-09-07 Z4 探测当时判定 Doubao 配置面为空 → unsupported；2026-09-16 用户授权变更定位，Doubao 会话以 agent 能力面（CLI 传输面）按 §9 八项接口接入并升格为第 6 运行平台（矩阵 `38 PASS / 2 EXPECTED / 0 FAIL`） | 见 2.3 / 2.5（z4-doubao-probe.json、doubao-"
+          },
+          {
+            "line": 263,
+            "column": 4,
+            "kind": "strike",
+            "value": "~~原 ③ 跨平台资源仲裁~~",
+            "context": "~~原 ③ 跨平台资源仲裁~~（可写项目根与 exclusive 资源——单例软件、固定端口、网卡、设备、许可证席位、数据目录——的互斥键必须在所有平台之间有效）、~~必须建一个不属于任何平台的中立状态层目录~~、~~并行是一等能力（共享编排模板）~~ 三项自 2026-09-22 起**撤销为必需项**。**撤销 ≠ 修好**：已实现的 3.0 网关锁表与 `exclusiveResources` 全部保留，作用域如实声明为**同一平台内**。**明写的代价**：同一项目副"
+          },
+          {
+            "line": 263,
+            "column": 86,
+            "kind": "strike",
+            "value": "~~必须建一个不属于任何平台的中立状态层目录~~",
+            "context": "~~原 ③ 跨平台资源仲裁~~（可写项目根与 exclusive 资源——单例软件、固定端口、网卡、设备、许可证席位、数据目录——的互斥键必须在所有平台之间有效）、~~必须建一个不属于任何平台的中立状态层目录~~、~~并行是一等能力（共享编排模板）~~ 三项自 2026-09-22 起**撤销为必需项**。**撤销 ≠ 修好**：已实现的 3.0 网关锁表与 `exclusiveResources` 全部保留，作用域如实声明为**同一平台内**。**明写的代价**：同一项目副"
+          },
+          {
+            "line": 263,
+            "column": 111,
+            "kind": "strike",
+            "value": "~~并行是一等能力（共享编排模板）~~",
+            "context": "~~原 ③ 跨平台资源仲裁~~（可写项目根与 exclusive 资源——单例软件、固定端口、网卡、设备、许可证席位、数据目录——的互斥键必须在所有平台之间有效）、~~必须建一个不属于任何平台的中立状态层目录~~、~~并行是一等能力（共享编排模板）~~ 三项自 2026-09-22 起**撤销为必需项**。**撤销 ≠ 修好**：已实现的 3.0 网关锁表与 `exclusiveResources` 全部保留，作用域如实声明为**同一平台内**。**明写的代价**：同一项目副"
+          }
+        ],
+        "singles": [
+          {
+            "line": 15,
+            "column": 50,
+            "kind": "single",
+            "value": "~",
+            "context": "**上位原则**：本文全部判据从属于 `versions/架构基本原则.md` 的 **BP-1 ~ BP-5**（三仓骨架不可变 / 平台对等与能力地板 / 验收与接入最小量 / 跨平台同一项目语义 / 分步实施与完成判定）。本文与 BP 冲突处以 BP 为准并回改本文。要点落点：入口形态可以不同，**能力天花板必须唯一**（BP-2）——差异只能是达标时间差，不得写成分层；本文 §6/§9 的验收步骤受 BP-3 最小量约束，本文 §8 的批次执行节奏受 BP-5 分步实"
+          }
+        ]
+      },
+      "synced": {
+        "profile": "internal",
+        "strikeCount": 8,
+        "escapedSingleCount": 1,
+        "bareSingleCount": 0,
+        "sourceStrikeMatches": true,
+        "sourceSingleMatches": true
+      },
+      "html": {
+        "internal": {
+          "delCount": 8,
+          "sourceStrikeMatches": true
+        }
+      }
+    },
+    {
+      "id": "runtime-orientation",
+      "title": "运行契约速览（run-lock / 版本解析 / 交接包 / 仲裁）",
+      "source": "docs-site/content/runtime/orientation.md",
+      "slug": "/docs/runtime/orientation",
+      "status": "current",
+      "visibility": "public",
+      "sourceStats": {
+        "strikeCount": 0,
+        "singleCount": 0,
+        "strikes": [],
+        "singles": []
+      },
+      "synced": {
+        "profile": "internal",
+        "strikeCount": 0,
+        "escapedSingleCount": 0,
+        "bareSingleCount": 0,
+        "sourceStrikeMatches": true,
+        "sourceSingleMatches": true
+      },
+      "html": {
+        "internal": {
+          "delCount": 0,
+          "sourceStrikeMatches": true
+        },
+        "shareable": {
+          "delCount": 0,
+          "sourceStrikeMatches": true
+        }
+      }
+    },
+    {
+      "id": "platform-codex",
+      "title": "codex 平台说明",
+      "source": "codex/bridge/platform.md",
+      "slug": "/docs/platforms/codex",
+      "status": "current",
+      "visibility": "internal",
+      "sourceStats": {
+        "strikeCount": 0,
+        "singleCount": 0,
+        "strikes": [],
+        "singles": []
+      },
+      "synced": {
+        "profile": "internal",
+        "strikeCount": 0,
+        "escapedSingleCount": 0,
+        "bareSingleCount": 0,
+        "sourceStrikeMatches": true,
+        "sourceSingleMatches": true
+      },
+      "html": {
+        "internal": {
+          "delCount": 0,
+          "sourceStrikeMatches": true
+        }
+      }
+    },
+    {
+      "id": "platform-codex-invocation",
+      "title": "codex 调用手册",
+      "source": "codex/bridge/invocation-manual.md",
+      "slug": "/docs/platforms/codex-invocation",
+      "status": "current",
+      "visibility": "internal",
+      "sourceStats": {
+        "strikeCount": 0,
+        "singleCount": 0,
+        "strikes": [],
+        "singles": []
+      },
+      "synced": {
+        "profile": "internal",
+        "strikeCount": 0,
+        "escapedSingleCount": 0,
+        "bareSingleCount": 0,
+        "sourceStrikeMatches": true,
+        "sourceSingleMatches": true
+      },
+      "html": {
+        "internal": {
+          "delCount": 0,
+          "sourceStrikeMatches": true
+        }
+      }
+    },
+    {
+      "id": "platform-qoder",
+      "title": "qoder 平台说明",
+      "source": "qoder/bridge/platform.md",
+      "slug": "/docs/platforms/qoder",
+      "status": "current",
+      "visibility": "internal",
+      "sourceStats": {
+        "strikeCount": 2,
+        "singleCount": 0,
+        "strikes": [
+          {
+            "line": 29,
+            "column": 3,
+            "kind": "strike",
+            "value": "~~**仍未接入生产**：`qoder-config.json` 仍 `0.6.0` + `repo-lint 0.2.1`、生产 `capabilities.json` 未动；共享 `current.json` 与 `tool/agent` 发布目录在本会话窗口内零写入（已机检）。观察窗口 ≥48h 未起算 → **不支持也不产出 `versions/架构2.0.0.md`**。~~",
+            "context": "- ~~**仍未接入生产**：`qoder-config.json` 仍 `0.6.0` + `repo-lint 0.2.1`、生产 `capabilities.json` 未动；共享 `current.json` 与 `tool/agent` 发布目录在本会话窗口内零写入（已机检）。观察窗口 ≥48h 未起算 → **不支持也不产出 `versions/架构2.0.0.md`**。~~ **【本节为 2.0-B 当日快照，已被 2.0-C 取代】** 下一轮（2026-0"
+          },
+          {
+            "line": 120,
+            "column": 231,
+            "kind": "strike",
+            "value": "~~引擎**未实现 `delegate`**（`engine.py` 零命中），未声明 `peerDispatch` 的平台因此拿到的是响应契约崩溃而非 `CAPABILITY_UNAVAILABLE`——「架构只提供接口、平台按声明被拒」这条在委派面上还没闭环~~",
+            "context": "| Q9 | 上报共享侧四项：① `ops/invocation_matrix.py` 未显式传 `encoding`，cp936 区域读 UTF-8 输出会崩（qoder 以 `PYTHONUTF8=1 -X utf8` 规避）；② `engine 0.6.0` 仍存两处资源级特例字面量（`engine.py:468`、`engine.py:545` 的 `math-modeling-programmer` 分支），与基线「特例归零」表述不完全一致；③ ~~引擎**未实现 "
+          }
+        ],
+        "singles": []
+      },
+      "synced": {
+        "profile": "internal",
+        "strikeCount": 2,
+        "escapedSingleCount": 0,
+        "bareSingleCount": 0,
+        "sourceStrikeMatches": true,
+        "sourceSingleMatches": true
+      },
+      "html": {
+        "internal": {
+          "delCount": 2,
+          "sourceStrikeMatches": true
+        }
+      }
+    },
+    {
+      "id": "platform-qoder-invocation",
+      "title": "qoder 调用手册",
+      "source": "qoder/bridge/invocation-manual.md",
+      "slug": "/docs/platforms/qoder-invocation",
+      "status": "current",
+      "visibility": "internal",
+      "sourceStats": {
+        "strikeCount": 1,
+        "singleCount": 0,
+        "strikes": [
+          {
+            "line": 70,
+            "column": 4,
+            "kind": "strike",
+            "value": "~~锁内 `repo-lint` 版本字面量写死~~",
+            "context": "2. ~~锁内 `repo-lint` 版本字面量写死~~ —— 结案。逐版核对：该字面量只在 **0.5.0**（`resolution.py:137/139/140`），**0.5.2 已无**（早于 0.6.0 的变更⑥），0.6.0 由解析键取版本（`resolution.py:142` 用 `key[2]`）。本平台钉 0.6.0，实测锁内 `version=0.2.1` 与 `path`/哈希自洽。"
+          }
+        ],
+        "singles": []
+      },
+      "synced": {
+        "profile": "internal",
+        "strikeCount": 1,
+        "escapedSingleCount": 0,
+        "bareSingleCount": 0,
+        "sourceStrikeMatches": true,
+        "sourceSingleMatches": true
+      },
+      "html": {
+        "internal": {
+          "delCount": 1,
+          "sourceStrikeMatches": true
+        }
+      }
+    },
+    {
+      "id": "platform-zcode",
+      "title": "zcode 平台说明",
+      "source": "zcode/bridge/platform.md",
+      "slug": "/docs/platforms/zcode",
+      "status": "current",
+      "visibility": "internal",
+      "sourceStats": {
+        "strikeCount": 0,
+        "singleCount": 0,
+        "strikes": [],
+        "singles": []
+      },
+      "synced": {
+        "profile": "internal",
+        "strikeCount": 0,
+        "escapedSingleCount": 0,
+        "bareSingleCount": 0,
+        "sourceStrikeMatches": true,
+        "sourceSingleMatches": true
+      },
+      "html": {
+        "internal": {
+          "delCount": 0,
+          "sourceStrikeMatches": true
+        }
+      }
+    },
+    {
+      "id": "platform-zcode-invocation",
+      "title": "zcode 调用手册",
+      "source": "zcode/bridge/invocation-manual.md",
+      "slug": "/docs/platforms/zcode-invocation",
+      "status": "current",
+      "visibility": "internal",
+      "sourceStats": {
+        "strikeCount": 0,
+        "singleCount": 0,
+        "strikes": [],
+        "singles": []
+      },
+      "synced": {
+        "profile": "internal",
+        "strikeCount": 0,
+        "escapedSingleCount": 0,
+        "bareSingleCount": 0,
+        "sourceStrikeMatches": true,
+        "sourceSingleMatches": true
+      },
+      "html": {
+        "internal": {
+          "delCount": 0,
+          "sourceStrikeMatches": true
+        }
+      }
+    },
+    {
+      "id": "platform-workbuddy",
+      "title": "workbuddy 平台说明",
+      "source": "workbuddy/bridge/platform.md",
+      "slug": "/docs/platforms/workbuddy",
+      "status": "current",
+      "visibility": "internal",
+      "sourceStats": {
+        "strikeCount": 0,
+        "singleCount": 0,
+        "strikes": [],
+        "singles": []
+      },
+      "synced": {
+        "profile": "internal",
+        "strikeCount": 0,
+        "escapedSingleCount": 0,
+        "bareSingleCount": 0,
+        "sourceStrikeMatches": true,
+        "sourceSingleMatches": true
+      },
+      "html": {
+        "internal": {
+          "delCount": 0,
+          "sourceStrikeMatches": true
+        }
+      }
+    },
+    {
+      "id": "platform-workbuddy-invocation",
+      "title": "workbuddy 调用手册",
+      "source": "workbuddy/bridge/invocation-manual.md",
+      "slug": "/docs/platforms/workbuddy-invocation",
+      "status": "current",
+      "visibility": "internal",
+      "sourceStats": {
+        "strikeCount": 0,
+        "singleCount": 0,
+        "strikes": [],
+        "singles": []
+      },
+      "synced": {
+        "profile": "internal",
+        "strikeCount": 0,
+        "escapedSingleCount": 0,
+        "bareSingleCount": 0,
+        "sourceStrikeMatches": true,
+        "sourceSingleMatches": true
+      },
+      "html": {
+        "internal": {
+          "delCount": 0,
+          "sourceStrikeMatches": true
+        }
+      }
+    },
+    {
+      "id": "platform-doubao",
+      "title": "doubao 平台说明",
+      "source": "doubao/bridge/platform.md",
+      "slug": "/docs/platforms/doubao",
+      "status": "current",
+      "visibility": "internal",
+      "sourceStats": {
+        "strikeCount": 0,
+        "singleCount": 0,
+        "strikes": [],
+        "singles": []
+      },
+      "synced": {
+        "profile": "internal",
+        "strikeCount": 0,
+        "escapedSingleCount": 0,
+        "bareSingleCount": 0,
+        "sourceStrikeMatches": true,
+        "sourceSingleMatches": true
+      },
+      "html": {
+        "internal": {
+          "delCount": 0,
+          "sourceStrikeMatches": true
+        }
+      }
+    },
+    {
+      "id": "platform-doubao-invocation",
+      "title": "doubao 调用手册",
+      "source": "doubao/bridge/invocation-manual.md",
+      "slug": "/docs/platforms/doubao-invocation",
+      "status": "current",
+      "visibility": "internal",
+      "sourceStats": {
+        "strikeCount": 0,
+        "singleCount": 0,
+        "strikes": [],
+        "singles": []
+      },
+      "synced": {
+        "profile": "internal",
+        "strikeCount": 0,
+        "escapedSingleCount": 0,
+        "bareSingleCount": 0,
+        "sourceStrikeMatches": true,
+        "sourceSingleMatches": true
+      },
+      "html": {
+        "internal": {
+          "delCount": 0,
+          "sourceStrikeMatches": true
+        }
+      }
+    },
+    {
+      "id": "tool-platform-conformance",
+      "title": "platform-conformance 1.1.0",
+      "source": "tool/platform-conformance/versions/1.1.0/conformance/README.md",
+      "slug": "/docs/resources/platform-conformance",
+      "status": "current",
+      "visibility": "internal",
+      "sourceStats": {
+        "strikeCount": 0,
+        "singleCount": 0,
+        "strikes": [],
+        "singles": []
+      },
+      "synced": {
+        "profile": "internal",
+        "strikeCount": 0,
+        "escapedSingleCount": 0,
+        "bareSingleCount": 0,
+        "sourceStrikeMatches": true,
+        "sourceSingleMatches": true
+      },
+      "html": {
+        "internal": {
+          "delCount": 0,
+          "sourceStrikeMatches": true
+        }
+      }
+    },
+    {
+      "id": "tool-architecture-ops",
+      "title": "architecture-ops 1.1.0",
+      "source": "tool/architecture-ops/versions/1.1.0/README.md",
+      "slug": "/docs/resources/architecture-ops",
+      "status": "current",
+      "visibility": "internal",
+      "sourceStats": {
+        "strikeCount": 0,
+        "singleCount": 0,
+        "strikes": [],
+        "singles": []
+      },
+      "synced": {
+        "profile": "internal",
+        "strikeCount": 0,
+        "escapedSingleCount": 0,
+        "bareSingleCount": 0,
+        "sourceStrikeMatches": true,
+        "sourceSingleMatches": true
+      },
+      "html": {
+        "internal": {
+          "delCount": 0,
+          "sourceStrikeMatches": true
+        }
+      }
+    },
+    {
+      "id": "tool-runtime-contracts",
+      "title": "runtime-contracts 1.1.0",
+      "source": "tool/runtime-contracts/versions/1.1.0/README.md",
+      "slug": "/docs/resources/runtime-contracts",
+      "status": "current",
+      "visibility": "internal",
+      "sourceStats": {
+        "strikeCount": 0,
+        "singleCount": 0,
+        "strikes": [],
+        "singles": []
+      },
+      "synced": {
+        "profile": "internal",
+        "strikeCount": 0,
+        "escapedSingleCount": 0,
+        "bareSingleCount": 0,
+        "sourceStrikeMatches": true,
+        "sourceSingleMatches": true
+      },
+      "html": {
+        "internal": {
+          "delCount": 0,
+          "sourceStrikeMatches": true
+        }
+      }
+    },
+    {
+      "id": "agent-software-engineer",
+      "title": "软件工程专家 1.4.0（当前提示词）",
+      "source": "agent/software-engineer/versions/1.4.0/prompt.md",
+      "slug": "/docs/resources/agent-software-engineer",
+      "status": "current",
+      "visibility": "internal",
+      "sourceStats": {
+        "strikeCount": 0,
+        "singleCount": 0,
+        "strikes": [],
+        "singles": []
+      },
+      "synced": {
+        "profile": "internal",
+        "strikeCount": 0,
+        "escapedSingleCount": 0,
+        "bareSingleCount": 0,
+        "sourceStrikeMatches": true,
+        "sourceSingleMatches": true
+      },
+      "html": {
+        "internal": {
+          "delCount": 0,
+          "sourceStrikeMatches": true
+        }
+      }
+    },
+    {
+      "id": "agent-software-engineer-runtime-policy",
+      "title": "软件工程专家运行策略 1.4.0",
+      "source": "agent/software-engineer/versions/1.4.0/policies/runtime.md",
+      "slug": "/docs/resources/agent-software-engineer-runtime",
+      "status": "current",
+      "visibility": "internal",
+      "sourceStats": {
+        "strikeCount": 0,
+        "singleCount": 0,
+        "strikes": [],
+        "singles": []
+      },
+      "synced": {
+        "profile": "internal",
+        "strikeCount": 0,
+        "escapedSingleCount": 0,
+        "bareSingleCount": 0,
+        "sourceStrikeMatches": true,
+        "sourceSingleMatches": true
+      },
+      "html": {
+        "internal": {
+          "delCount": 0,
+          "sourceStrikeMatches": true
+        }
+      }
+    },
+    {
+      "id": "timeline",
+      "title": "架构演进时间线",
+      "source": "docs-site/content/history/timeline.md",
+      "slug": "/docs/history/timeline",
+      "status": "current",
+      "visibility": "public",
+      "sourceStats": {
+        "strikeCount": 0,
+        "singleCount": 2,
+        "strikes": [],
+        "singles": [
+          {
+            "line": 20,
+            "column": 52,
+            "kind": "single",
+            "value": "~",
+            "context": "## 2026-09-18 ｜ 架构 2.0.0 定稿 + `software` 仓设立 + BP-1~4 确立"
+          },
+          {
+            "line": 25,
+            "column": 10,
+            "kind": "single",
+            "value": "~",
+            "context": "- **BP-1 ~ BP-4 经用户授权写入全部治理文档**（→ [基本原则](/docs/architecture/basic-principles)）。"
+          }
+        ]
+      },
+      "synced": {
+        "profile": "internal",
+        "strikeCount": 0,
+        "escapedSingleCount": 2,
+        "bareSingleCount": 0,
+        "sourceStrikeMatches": true,
+        "sourceSingleMatches": true
+      },
+      "html": {
+        "internal": {
+          "delCount": 0,
+          "sourceStrikeMatches": true
+        },
+        "shareable": {
+          "delCount": 0,
+          "sourceStrikeMatches": true
+        }
+      }
+    },
+    {
+      "id": "open-items",
+      "title": "当前开放事项与待补台账",
+      "source": "docs-site/content/history/open-items.md",
+      "slug": "/docs/history/open-items",
+      "status": "current",
+      "visibility": "internal",
+      "sourceStats": {
+        "strikeCount": 0,
+        "singleCount": 0,
+        "strikes": [],
+        "singles": []
+      },
+      "synced": {
+        "profile": "internal",
+        "strikeCount": 0,
+        "escapedSingleCount": 0,
+        "bareSingleCount": 0,
+        "sourceStrikeMatches": true,
+        "sourceSingleMatches": true
+      },
+      "html": {
+        "internal": {
+          "delCount": 0,
+          "sourceStrikeMatches": true
+        }
+      }
+    },
+    {
+      "id": "arch-2.0-proposal",
+      "title": "架构演进提案：2.0 → 3.0（历史提案）",
+      "source": "versions/架构2.0-3.0演进提案-20260917.md",
+      "slug": "/docs/history/proposal-2.0-3.0",
+      "status": "frozen",
+      "visibility": "internal",
+      "sourceStats": {
+        "strikeCount": 0,
+        "singleCount": 3,
+        "strikes": [],
+        "singles": [
+          {
+            "line": 1,
+            "column": 175,
+            "kind": "single",
+            "value": "~",
+            "context": "> **【2026-09-17 更新】本文的 3.0 设计已被 v2 取代**。本文是历史提案，不是现行能力声明；文中「交稿级转 zcode」已过时——zcode 重建后 `math-solver-chain` 为 `declaredAbsent`。**【2026-09-18 追加】上位依据为 `versions/架构基本原则.md`（BP-1 ~ BP-4）**：本文的验收段（每次发版后全平台重跑矩阵）与平台分层口径**与 BP-3 / BP-2 冲突，仅作历史留档阅读，不"
+          },
+          {
+            "line": 1,
+            "column": 361,
+            "kind": "single",
+            "value": "~",
+            "context": "> **【2026-09-17 更新】本文的 3.0 设计已被 v2 取代**。本文是历史提案，不是现行能力声明；文中「交稿级转 zcode」已过时——zcode 重建后 `math-solver-chain` 为 `declaredAbsent`。**【2026-09-18 追加】上位依据为 `versions/架构基本原则.md`（BP-1 ~ BP-4）**：本文的验收段（每次发版后全平台重跑矩阵）与平台分层口径**与 BP-3 / BP-2 冲突，仅作历史留档阅读，不"
+          },
+          {
+            "line": 414,
+            "column": 142,
+            "kind": "single",
+            "value": "~",
+            "context": "3. gateway 的 burp adapter 做一次 `tools/list` 拉取 → 生成 `bridge/tool-surfaces/burp.json`（逐工具标 tier：proxy 检索 /issue 读取 = T0，scanner=T1，repeater=T1\\~T2 按参数，intruder=T1，配置编辑 = 排除）→ selftest（只调只读工具做连通性自检，类比 renderer-selftest）。"
+          }
+        ]
+      },
+      "synced": {
+        "profile": "internal",
+        "strikeCount": 0,
+        "escapedSingleCount": 3,
+        "bareSingleCount": 0,
+        "sourceStrikeMatches": true,
+        "sourceSingleMatches": true
+      },
+      "html": {
+        "internal": {
+          "delCount": 0,
+          "sourceStrikeMatches": true
+        }
+      }
+    },
+    {
+      "id": "arch-2.0.0-plan",
+      "title": "架构 2.0.0 更新方案（编制于 2026-09-16）",
+      "source": "versions/架构2.0.0-更新方案.md",
+      "slug": "/docs/history/2.0.0-update-plan",
+      "status": "history",
+      "visibility": "internal",
+      "sourceStats": {
+        "strikeCount": 0,
+        "singleCount": 0,
+        "strikes": [],
+        "singles": []
+      },
+      "synced": {
+        "profile": "internal",
+        "strikeCount": 0,
+        "escapedSingleCount": 0,
+        "bareSingleCount": 0,
+        "sourceStrikeMatches": true,
+        "sourceSingleMatches": true
+      },
+      "html": {
+        "internal": {
+          "delCount": 0,
+          "sourceStrikeMatches": true
+        }
+      }
+    },
+    {
+      "id": "arch-2.0-x-repair",
+      "title": "架构 2.0.x 框架侧收口与修复方案（2.0-H / 2.0-X）",
+      "source": "versions/架构2.0.x-框架收口与修复方案.md",
+      "slug": "/docs/history/2.0.x-framework-closeout",
+      "status": "history",
+      "visibility": "internal",
+      "sourceStats": {
+        "strikeCount": 0,
+        "singleCount": 1,
+        "strikes": [],
+        "singles": [
+          {
+            "line": 1,
+            "column": 102,
+            "kind": "single",
+            "value": "~",
+            "context": "> 日期 **2026-09-19**　·　编制与执行会话 **qoder**　·　配套 `versions/架构2.0.0.md`（2.0 基线）、`versions/架构基本原则.md`（BP-1 ~ BP-5）"
+          }
+        ]
+      },
+      "synced": {
+        "profile": "internal",
+        "strikeCount": 0,
+        "escapedSingleCount": 1,
+        "bareSingleCount": 0,
+        "sourceStrikeMatches": true,
+        "sourceSingleMatches": true
+      },
+      "html": {
+        "internal": {
+          "delCount": 0,
+          "sourceStrikeMatches": true
+        }
+      }
+    },
+    {
+      "id": "arch-2.1.0-plan",
+      "title": "架构 2.1.0 更新方案（rigor 三档与成本封顶）",
+      "source": "versions/架构2.1.0-更新方案.md",
+      "slug": "/docs/history/2.1.0-update-plan",
+      "status": "history",
+      "visibility": "internal",
+      "sourceStats": {
+        "strikeCount": 6,
+        "singleCount": 5,
+        "strikes": [
+          {
+            "line": 1,
+            "column": 216,
+            "kind": "strike",
+            "value": "~~详细设计提案，未实施、未发布、未切换默认。~~",
+            "context": "> 文档状态：**框架侧已执行（2026-09-20）**——定稿判据载体 `versions/架构2.1.0-定稿实施表-20260919.md`，P1…P9 已按其预写判据逐行跑完并发布 `wf-runner 0.8.0` / `runtime-contracts 1.2.2` / `platform-conformance 1.2.0`；**共享 `current` 三项均未翻、qoder 生产仍显式钉 0.7.7**。~~详细设计提案，未实施、未发布、未切换默认。~~"
+          },
+          {
+            "line": 15,
+            "column": 52,
+            "kind": "strike",
+            "value": "~~仍是待决策项~~",
+            "context": "> 其余事项（三档命名与默认档、数模档位配对、主机降级同意粒度、是否授权真改 `wf-runner`）~~仍是待决策项~~ **【2026-09-20 已结】** 四项在定稿表 P1 各有明确处置（采纳 / 改判 / 移交），逐条依据与红线自检见 `qoder/runtime/maintenance/2.1-A/DECISIONS.md`：三档取 `fast/balanced/full` 默认 `balanced`；数模档位与 `rigor` **不自动配对**（只出文档建议"
+          },
+          {
+            "line": 75,
+            "column": 3,
+            "kind": "strike",
+            "value": "~~**不跑脚本阶段、不重哈希环境**（草稿本就不跑求解器）。~~",
+            "context": "- ~~**不跑脚本阶段、不重哈希环境**（草稿本就不跑求解器）。~~"
+          },
+          {
+            "line": 240,
+            "column": 7,
+            "kind": "strike",
+            "value": "~~conformance floor 是否作为新接入验收硬门~~",
+            "context": "- [x] ~~conformance floor 是否作为新接入验收硬门~~ → **是（BP-2 §2.2）**：接入完成 = 对三仓能力并集 0 `declaredAbsent`；未覆盖项列待补台账（带补齐路径与成本），不得写成永久分层。核的时刻只有两个——平台声称接入完成、目录新增能力；**不是每 run 税**（BP-3 §3.2⑤）。"
+          },
+          {
+            "line": 241,
+            "column": 7,
+            "kind": "strike",
+            "value": "~~§3.5 平台对等是否连同 floor 一起写进验收硬门~~",
+            "context": "- [x] ~~§3.5 平台对等是否连同 floor 一起写进验收硬门~~ → **是（BP-2 §2.3 / §2.5）**：作者/搭建者/定稿会话身份不产生任何运行时特权；共享代码/契约/配方中禁止平台专有常量、venv 路径、发行版名、release 特例，违反即属缺陷而非特性。"
+          },
+          {
+            "line": 242,
+            "column": 7,
+            "kind": "strike",
+            "value": "~~§3.6 `handoff bundle` 是否纳入 2.1.0 范围~~",
+            "context": "- [x] ~~§3.6 `handoff bundle` 是否纳入 2.1.0 范围~~ → **纳入，且不得顺延（BP-4 §4.3）**：中立项目状态层、续跑版本一致性校验、跨平台资源仲裁三项**缺一即视为 BP-4 未满足**；并行编排模板作为共享工作流发布（BP-4 §4.4）。中立层落地的目录位置须用户单独授权（BP-4 §4.5）。"
+          }
+        ],
+        "singles": [
+          {
+            "line": 65,
+            "column": 33,
+            "kind": "single",
+            "value": "~",
+            "context": "| 引擎墙钟 | 分钟级（5×15–35s + 反复哈希） | ~1–2s | ~3–6s | ~8–20s（含脚本时 +1 次环境校验） |"
+          },
+          {
+            "line": 65,
+            "column": 41,
+            "kind": "single",
+            "value": "~",
+            "context": "| 引擎墙钟 | 分钟级（5×15–35s + 反复哈希） | ~1–2s | ~3–6s | ~8–20s（含脚本时 +1 次环境校验） |"
+          },
+          {
+            "line": 65,
+            "column": 49,
+            "kind": "single",
+            "value": "~",
+            "context": "| 引擎墙钟 | 分钟级（5×15–35s + 反复哈希） | ~1–2s | ~3–6s | ~8–20s（含脚本时 +1 次环境校验） |"
+          },
+          {
+            "line": 76,
+            "column": 299,
+            "kind": "single",
+            "value": "~",
+            "context": "**【2026-09-20 执行期更正，按 BP-2 实施并保留原文】** 这句与本文 §3.4 的\"三档 × 能力\"表（求解器 / 脚本在三列都标 ✅）以及上位 **BP-2**「档位只管开销、永不管能不能用」互相矛盾，三者不可同时实现。**实现采 BP-2 / §3.4 的读法**：`fast` **照常派发 script 阶段**，减的是门禁执行、seal 文档与往返次数；环境校验也**每 run 至少做一次权威全量**（红线 5，档位不得用来逃这条）。实测读数：fas"
+          },
+          {
+            "line": 288,
+            "column": 21,
+            "kind": "single",
+            "value": "~",
+            "context": "- `E:\\HANDOFF.md` §一~三（平台接入、共享 current 快照、各平台能力章入口）。"
+          }
+        ]
+      },
+      "synced": {
+        "profile": "internal",
+        "strikeCount": 6,
+        "escapedSingleCount": 5,
+        "bareSingleCount": 0,
+        "sourceStrikeMatches": true,
+        "sourceSingleMatches": true
+      },
+      "html": {
+        "internal": {
+          "delCount": 6,
+          "sourceStrikeMatches": true
+        }
+      }
+    },
+    {
+      "id": "arch-2.1.0-final-plan",
+      "title": "架构 2.1.0 定稿实施表（P1…P9）",
+      "source": "versions/架构2.1.0-定稿实施表-20260919.md",
+      "slug": "/docs/history/2.1.0-final-plan",
+      "status": "history",
+      "visibility": "internal",
+      "sourceStats": {
+        "strikeCount": 0,
+        "singleCount": 0,
+        "strikes": [],
+        "singles": []
+      },
+      "synced": {
+        "profile": "internal",
+        "strikeCount": 0,
+        "escapedSingleCount": 0,
+        "bareSingleCount": 0,
+        "sourceStrikeMatches": true,
+        "sourceSingleMatches": true
+      },
+      "html": {
+        "internal": {
+          "delCount": 0,
+          "sourceStrikeMatches": true
+        }
+      }
+    },
+    {
+      "id": "arch-3.0-software-proposal",
+      "title": "架构演进提案 v2：software 第三仓与通用工具面",
+      "source": "versions/架构3.0-software整合提案-20260917-v2.md",
+      "slug": "/docs/history/3.0-software-proposal",
+      "status": "history",
+      "visibility": "internal",
+      "sourceStats": {
+        "strikeCount": 0,
+        "singleCount": 1,
+        "strikes": [],
+        "singles": [
+          {
+            "line": 57,
+            "column": 73,
+            "kind": "single",
+            "value": "~",
+            "context": "**【2026-09-18 上位依据】** 本节\"需求四条\"是派生要求；上位条款是 `versions/架构基本原则.md` 的 **BP-1 ~ BP-5**（三仓骨架不可变 / 平台对等与能力地板 / 验收与接入最小量 / 跨平台同一项目语义 / 分步实施与完成判定），已经用户授权写入全部治理文档。对照结论：① 本文对 software 的同构设计与 **BP-1 一致**，但 software 必须与 tool/agent **对称到同一判据面**（registry、指"
+          }
+        ]
+      },
+      "synced": {
+        "profile": "internal",
+        "strikeCount": 0,
+        "escapedSingleCount": 1,
+        "bareSingleCount": 0,
+        "sourceStrikeMatches": true,
+        "sourceSingleMatches": true
+      },
+      "html": {
+        "internal": {
+          "delCount": 0,
+          "sourceStrikeMatches": true
+        }
+      }
+    },
+    {
+      "id": "arch-3.1.0-plan",
+      "title": "架构 3.1.0 更新方案（提案，未定稿）",
+      "source": "versions/架构3.1.0-更新方案-20260920.md",
+      "slug": "/docs/history/3.1.0-proposal",
+      "status": "proposal",
+      "visibility": "internal",
+      "sourceStats": {
+        "strikeCount": 3,
+        "singleCount": 1,
+        "strikes": [
+          {
+            "line": 171,
+            "column": 3,
+            "kind": "strike",
+            "value": "~~九条欠账另立一轮修复案~~",
+            "context": "| ~~九条欠账另立一轮修复案~~ | 抓的是真失败，但**轮次是假的** | — | — ⇒ 并入本文；另开一轮＝为同一代字节付两次矩阵成本（违反 3.2⑤ 的意图） |"
+          },
+          {
+            "line": 172,
+            "column": 3,
+            "kind": "strike",
+            "value": "~~每域再跑一次全矩阵~~",
+            "context": "| ~~每域再跑一次全矩阵~~ | **否** | — | — ⇒ **删除**，依 3.2⑤ 全矩阵只在两个时刻 |"
+          },
+          {
+            "line": 218,
+            "column": 474,
+            "kind": "strike",
+            "value": "~~P8b（中立项目状态层目录落点，须用户单独授权）~~",
+            "context": "**本文解决（§7.1 并入 9 条）**：D-32、D-34、D-51、D-53、D-56、D-59、D-62、D-64、D-66。**仍不在本文解决**：D-25（`type: process` 门禁每次 submit 由引擎重跑子进程）、D-27（无密封环境平台的合法锁形态，2.1 已给形状）、D-31（共享侧没有带 checkpoint 翻 `current.json` 的工具 ⇒ 采纳波仍靠各平台手工配对，与 D-52 同族）、D-35（0.8.0 起 `scrip"
+          }
+        ],
+        "singles": [
+          {
+            "line": 4,
+            "column": 33,
+            "kind": "single",
+            "value": "~",
+            "context": "> 上位从属：`versions/架构基本原则.md`（BP-1~BP-5，v1.1）。本文全部条文受其约束，冲突以 BP 为准并回改本文。"
+          }
+        ]
+      },
+      "synced": {
+        "profile": "internal",
+        "strikeCount": 3,
+        "escapedSingleCount": 1,
+        "bareSingleCount": 0,
+        "sourceStrikeMatches": true,
+        "sourceSingleMatches": true
+      },
+      "html": {
+        "internal": {
+          "delCount": 3,
+          "sourceStrikeMatches": true
+        }
+      }
+    },
+    {
+      "id": "post-competition-closeout",
+      "title": "赛后收口清单（2026-09-07）",
+      "source": "post-competition-closeout.md",
+      "slug": "/docs/history/post-competition-closeout",
+      "status": "history",
+      "visibility": "internal",
+      "sourceStats": {
+        "strikeCount": 0,
+        "singleCount": 0,
+        "strikes": [],
+        "singles": []
+      },
+      "synced": {
+        "profile": "internal",
+        "strikeCount": 0,
+        "escapedSingleCount": 0,
+        "bareSingleCount": 0,
+        "sourceStrikeMatches": true,
+        "sourceSingleMatches": true
+      },
+      "html": {
+        "internal": {
+          "delCount": 0,
+          "sourceStrikeMatches": true
+        }
+      }
+    }
+  ],
+  "assertions": {
+    "everySourceStrikeHasInternalDel": true,
+    "everySyncedSourceStrikePreserved": true,
+    "everySourceSingleEscaped": true,
+    "noBareSyncedSingles": true
+  }
+}

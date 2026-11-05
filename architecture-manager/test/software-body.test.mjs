@@ -8,7 +8,7 @@ import {intakeFixture} from './support/intake-fixture.mjs';
 import {seedPointer} from './support/resources.mjs';
 import {scanExternalBody} from '../src/domains/intake/sources.mjs';
 import {buildSoftwareBodyPlacementPlan,buildSoftwareBodyPlan,readSoftwareBodyActions} from '../src/domains/intake/software-body.mjs';
-import {applyPlan,verifyPlanTarget} from '../src/transactions.mjs';
+import {applyPlan,verifyPlanTarget} from '../src/transactions/router.mjs';
 import {buildSoftwareCommandPlan} from '../src/domains/software/actions.mjs';
 import {buildIntakeRevertPlan} from '../src/domains/intake/journals.mjs';
 import {listRuntimeBodies} from '../src/domains/intake/runtime-body.mjs';

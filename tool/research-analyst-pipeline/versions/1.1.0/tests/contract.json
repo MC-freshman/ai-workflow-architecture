@@ -1,0 +1,29 @@
+{
+  "schema": "ai-workflow-contract-test/v1",
+  "id": "research-analyst-pipeline",
+  "version": "1.1.0",
+  "expect": {
+    "manifestMode": "pipeline",
+    "definitionSchema": "ai-workflow-definition/v3",
+    "stages": [
+      "INTAKE",
+      "WORK",
+      "REPORT"
+    ],
+    "defaultScenario": "standard",
+    "scenarios": [
+      "paper-analysis",
+      "paper-reader",
+      "standard",
+      "task-01",
+      "task-02",
+      "task-03",
+      "task-04",
+      "task-05",
+      "task-06"
+    ],
+    "gate": "work-integrity (process, evidence:expert-work-check.json) + report-complete (output-schema)",
+    "repair": "WORK onFail=repair maxIterations=2 via the work-integrity process gate",
+    "gateScript": "scripts/validate_expert_work.py"
+  }
+}

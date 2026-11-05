@@ -1,0 +1,114 @@
+{
+  "schema": "ai-invocation-exceptions/v1",
+  "platform": "workbuddy",
+  "updatedAt": "2026-09-25 (r4, architecture 3.2.0 adoption re-check)",
+  "note": "workbuddy 本平台自己的矩阵例外清单。EXPECTED 判定要求 expectedCode 与实测错误码一致，同资源以别的错误码失败仍记 FAIL。**3.2.0 采纳轮（2026-09-25）重审结论：三条 software 条目原样保留、零增删**——本轮 `invocation_matrix --only software`（6 格）实测 `PASS 3 / EXPECTED 3 / FAIL 0`，三条仍 EXPECTED 的原因逐条见各自条目（nmap：快照未冻结 + 配方 pin 65 字符；veracrypt：GUI 无 stdout；burp-suite：端点未监听），且连接器电池（baseline/p3-connector-battery-rerun.json）的拒绝格与之逐行一致。`repo-lint` 条目已于 3.1 轮按其自带时效退役（见 retired 段）；3.2.0 下矩阵未再探出该格新失败（3.2.0 只跑受影响面，不跑全矩阵——BP-3）。**D-94 口径提醒**：architecture-ops 1.4.0 的矩阵会把未归类的网关错误落成 PASS，故软件格的 PASS 以连接器直驱电池为权威、矩阵为对照。",
+  "x-history-notes": {
+    "20260923": "3.1.0 采纳轮（2026-09-23）的 note 原文，因 r4 改写迁入此键留档：**3.1.0 采纳轮重审三条，两条时效兑现、一条失效**：① `repo-lint` 条目**按自己的时效规则退役**——它标了 `selfExpiring`：共享 current 一旦抬到扫描器版本即不可达。3.1 整理轮已把共享 current 与平台 scannerRelease 双双抬到 `repo-lint 0.5.1`（本平台并按 P2 把 `config.bridge` 从候选副本改指正式 `bridge.json`，使平台作用域默认不再读到 0.4.0），于是那一格实测变为 `@0.5.1 / INVALID_REQUEST`，即 harness 定义的 NEEDS-INPUT（合成参数不可能满足 `scope=live ⇒ toolRoot=/shared/tool`），**不是**待登记缺口，条目随之下线；平台能力缺口（无脚本隔离沙箱 / 无 D04 只读 jail）的权威登记处仍是 `capabilities.declaredAbsent` 的 `scriptEnvironment`、`action:script`、两条 permission-triple 与平台章待办 W1。② 三条软件条目 `dirsearch / mysql-cli / wireshark-cli @1.0.0` **翻正退役**——共享侧在 `539d6a86`（3.0-Q Q-P3，2026-09-21）以真本体实测重新冻结了这三件的能力快照并把指针抬到 1.0.1；本平台 3.1 全矩阵实测三者 `frozen=true` 且本体已登记 ⇒ 三格由 EXPECTED 变为 **PASS**。③ 其余三条软件条目（`nmap` / `veracrypt` / `burp-suite`）**保留**，理由随条目更新为各自实测到的『为什么不冻结』。**当时判据：PASS 43 / NEEDS-INPUT 1 / EXPECTED 3 / FAIL 1，48 格 = 42 工作流/专家 + 6 软件格**（baseline/p3-matrix.json）。那 1 格 FAIL 是 `agent:mastermind-bug-bounty@4.0.0`（`UNAUTHORIZED / definition-mismatch`），**故不登记为本平台例外**——根因在共享侧 3.1 释放集：该代理 4.0.0 的 tool-lock 仍钉 `workflow:mastermind-bug-bounty@3.0.0`，而 3.0.0 的定义件写 `version: 2.0.0` 与 manifest 不符（共享侧自己的 repo-lint 0.5.1 报告同时记下了这两条事实）。把真失败登记成 EXPECTED 会让 FAIL 0 变成一句谎话，故只报不改（不写共享仓，红线 1/7）。"
+  },
+  "infrastructure": [
+    {
+      "kind": "workflow",
+      "id": "wf-runner",
+      "version": "0.5.2",
+      "expectedCode": "CAPABILITY_UNAVAILABLE",
+      "reason": "引擎自身，不作为用户可调用工作流（自指 action:script → cli.py）。矩阵经共享 current 解析该资源为 0.5.2（本平台引擎钉 0.6.0 属另一套机制，与资源指针无关）；其权限策略未在 workbuddy permissionAdapters 中声明，按声明式要求被拒——设计例外的正确表现。**3.1 起本条为惰性历史记录**：wf-runner 在注册表里的 kind 已是 engine、invocable=false，按 ENTRY-04 出分母（本平台 48 格读数里 excludedByType 正是它），不再参与任何判定。",
+      "review": "2026-09-16",
+      "reviewedAt": "2026-09-23"
+    }
+  ],
+  "pendingGaps": [
+    {
+      "kind": "software",
+      "id": "nmap",
+      "version": "1.0.0",
+      "expectedCode": "SNAPSHOT_NOT_FROZEN",
+      "reason": "共享侧待补齐项：本平台网关 inventory 如实回 frozen=false（3.1 矩阵实测复核）。共享侧 3.0-Q Q-P3 的记录说明原因是**观测到的真 CLI 与配方声明不符**——本机 nmap 7.95 的 usage 没有 `-oJ`，而配方在 scan/serviceScan 的 baseArgv 里声明了它 ⇒ 拒绝冻结该快照（登记 D-61），宁可停在 EXPECTED 也不发一份跑不了的调用。本平台只登记不自改共享仓（红线 1/7）；软件面按用户 2026-09-23 裁定默认忽视。",
+      "review": "2026-09-21",
+      "reviewedAt": "2026-09-23",
+      "doNotFixHere": "属性在共享软件仓作者侧（含 D-61 的配方/真 CLI 口径裁定）"
+    },
+    {
+      "kind": "software",
+      "id": "veracrypt",
+      "version": "1.0.0",
+      "expectedCode": "SNAPSHOT_NOT_FROZEN",
+      "reason": "共享侧待补齐项：本平台网关 inventory 如实回 frozen=false（3.1 矩阵实测复核）。共享侧记录的原因是该本体为 GUI、无可读 stdout 的实测面 ⇒ 明知不可问就明写，不伪造快照。另有 `profile:administrator` 一面（mount/dismount/createVolume 需提权），同样只登记。本平台只登记不自改共享仓（红线 1/7）；软件面按用户 2026-09-23 裁定默认忽视。",
+      "review": "2026-09-21",
+      "reviewedAt": "2026-09-23",
+      "doNotFixHere": "属性在共享软件仓作者侧"
+    },
+    {
+      "kind": "software",
+      "id": "burp-suite",
+      "version": "1.0.0",
+      "expectedCode": "SNAPSHOT_NOT_FROZEN",
+      "reason": "共享侧待补齐项：本平台网关 inventory 如实回 frozen=false（3.1 矩阵实测复核）。共享侧记录的原因是该 kind=mcp-http 的端点未监听、无可实测面 ⇒ 明写不可问。本平台已实测该配方可解析、本体已就地登记核验（bridge/software-environment.json），故这不是平台接入债，也不阻断 call 之前的全部门链。本平台只登记不自改共享仓（红线 1/7）；软件面按用户 2026-09-23 裁定默认忽视。",
+      "review": "2026-09-21",
+      "reviewedAt": "2026-09-23",
+      "doNotFixHere": "属性在共享软件仓作者侧"
+    }
+  ],
+  "retired": [
+    {
+      "kind": "workflow",
+      "id": "repo-lint",
+      "version": "0.3.0",
+      "expectedCode": "VERSION_CONFLICT",
+      "retiredAt": "2026-09-23 (workbuddy 3.1.0 adoption, P6)",
+      "retiredBecause": "条目自带 selfExpiring 与处置条件（『共享 current 一旦抬到扫描器版本，这个 key 即不可达，条目必须随之删除；届时以新版本的读数重新审一次』）。条件已兑现：共享 current 与平台 scannerRelease 双双为 repo-lint 0.5.1，本平台并用 P2 把 config.bridge 改指正式 bridge.json，实测该格为 `@0.5.1 / INVALID_REQUEST` ⇒ NEEDS-INPUT（合成参数不足），按 harness 定义不必登记为例外。",
+      "measuredAfterRetirement": "workflow:repo-lint@0.5.1 → INVALID_REQUEST（'toolRoot' is a required property，实例 {}；报文与诊断件见 3.1-adopt/tmp/p2-battery-after.u8.txt 与 p3-matrix.json 该行）",
+      "previousEntry": {
+        "expectedCode": "VERSION_CONFLICT",
+        "reason": "本轮重审条目（原 @0.2.1 / CAPABILITY_UNAVAILABLE）。版本移到 0.3.0、错误码改为 VERSION_CONFLICT，两者都是 P4 首轮全矩阵实测到的真读数…… ⑤ 本条目自带时效：共享 current 一旦抬到 0.4.0，这个 key 即不可达，条目必须随之删除。",
+        "review": "2026-09-21",
+        "selfExpiring": true
+      }
+    },
+    {
+      "kind": "software",
+      "id": "dirsearch",
+      "version": "1.0.0",
+      "expectedCode": "SNAPSHOT_NOT_FROZEN",
+      "retiredAt": "2026-09-23 (workbuddy 3.1.0 adoption, P6)",
+      "retiredBecause": "共享侧 539d6a86（3.0-Q Q-P3，2026-09-21 15:19）以真本体只读实测重新冻结了该配方能力快照并把指针抬到 1.0.1；本平台 3.1 全矩阵实测 `dirsearch@1.0.1` 网关答 `frozen=true`、capabilities 2 条、本体已登记 ⇒ 该格 PASS，条目按其自身预告『六配方快照一旦冻结，这六条即从清单移除』下线。",
+      "measuredAfterRetirement": "software:dirsearch@1.0.1 → PASS（snapshotFrozen=true, capabilities=2, bodyVerified=true）",
+      "previousEntry": {
+        "expectedCode": "SNAPSHOT_NOT_FROZEN",
+        "reason": "共享侧待补齐项（D-47，配方作者 doubao）：六配方 capabilities.snapshot.json#frozen 全为假。",
+        "review": "2026-09-21",
+        "doNotFixHere": "D-47 属共享软件仓作者侧；本平台只登记不自改共享仓（红线 1/7）"
+      }
+    },
+    {
+      "kind": "software",
+      "id": "mysql-cli",
+      "version": "1.0.0",
+      "expectedCode": "SNAPSHOT_NOT_FROZEN",
+      "retiredAt": "2026-09-23 (workbuddy 3.1.0 adoption, P6)",
+      "retiredBecause": "同 dirsearch：共享侧 539d6a86 冻结其能力快照并抬指针到 1.0.1；本平台实测 `mysql-cli@1.0.1` 网关答 `frozen=true`、capabilities 3 条、本体已登记 ⇒ PASS。",
+      "measuredAfterRetirement": "software:mysql-cli@1.0.1 → PASS（snapshotFrozen=true, capabilities=3, bodyVerified=true）",
+      "previousEntry": {
+        "expectedCode": "SNAPSHOT_NOT_FROZEN",
+        "reason": "共享侧待补齐项（D-47，配方作者 doubao）：六配方 capabilities.snapshot.json#frozen 全为假。",
+        "review": "2026-09-21",
+        "doNotFixHere": "D-47 属共享软件仓作者侧；本平台只登记不自改共享仓（红线 1/7）"
+      }
+    },
+    {
+      "kind": "software",
+      "id": "wireshark-cli",
+      "version": "1.0.0",
+      "expectedCode": "SNAPSHOT_NOT_FROZEN",
+      "retiredAt": "2026-09-23 (workbuddy 3.1.0 adoption, P6)",
+      "retiredBecause": "同 dirsearch：共享侧 539d6a86 冻结其能力快照并抬指针到 1.0.1；本平台实测 `wireshark-cli@1.0.1` 网关答 `frozen=true`、capabilities 5 条、本体已登记 ⇒ PASS。",
+      "measuredAfterRetirement": "software:wireshark-cli@1.0.1 → PASS（snapshotFrozen=true, capabilities=5, bodyVerified=true）",
+      "previousEntry": {
+        "expectedCode": "SNAPSHOT_NOT_FROZEN",
+        "reason": "共享侧待补齐项（D-47，配方作者 doubao）：六配方 capabilities.snapshot.json#frozen 全为假。",
+        "review": "2026-09-21",
+        "doNotFixHere": "D-47 属共享软件仓作者侧；本平台只登记不自改共享仓（红线 1/7）"
+      }
+    }
+  ]
+}

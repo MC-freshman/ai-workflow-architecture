@@ -5,8 +5,8 @@ import {tmpdir} from 'node:os';
 import {join,relative} from 'node:path';
 import {execFileSync} from 'node:child_process';
 import {runDomainTask,cancelDomainTask} from '../src/infrastructure/tasks.mjs';
-import {buildGitPlan} from '../src/git.mjs';
-import {buildWorkspaceClonePlan} from '../src/workspace-bootstrap.mjs';
+import {buildGitPlan} from '../src/domains/git/git.mjs';
+import {buildWorkspaceClonePlan} from '../src/domains/workspace/workspace-bootstrap.mjs';
 function fixture(t) {const root=mkdtempSync(join(tmpdir(),'manager-domain-task-'));t.after(()=>{assert.ok(relative(tmpdir(),root).startsWith('manager-domain-task-'));rmSync(root,{recursive:true,force:true});});return root;}
 function git(root,...args) {return execFileSync('git',['-C',root,...args],{encoding:'utf8',windowsHide:true,stdio:['ignore','pipe','pipe']}).trim();}
 function seed(root) {git(root,'init');git(root,'config','user.name','fixture');git(root,'config','user.email','fixture@example.invalid');git(root,'config','core.autocrlf','false');writeFileSync(join(root,'README.md'),'source\n');git(root,'add','--','README.md');git(root,'commit','-m','baseline');}

@@ -1,0 +1,10 @@
+{
+  "schema": "ai-resource-source/v1",
+  "id": "ui-ux-designer-task-03",
+  "kind": "skill",
+  "reason": "Approved P1-P4: actionable guidance and consistent UI quality, bounded task-selected skills",
+  "createdAt": "2026-10-10T02:38:11.450503+00:00",
+  "previousVersion": "1.0.0",
+  "upstream": [],
+  "changes": "Workspace adaptation; added task triggers, domain boundaries, scoped delivery and evidence requirements; upstream launchers and auto-install flows excluded."
+}

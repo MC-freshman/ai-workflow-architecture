@@ -1,0 +1,242 @@
+{
+  "schema": "ai-skill/v1",
+  "id": "ui-design-reference-library",
+  "version": "1.0.0",
+  "kind": "atomic",
+  "category": "skill",
+  "entry": "SKILL.md",
+  "input": {
+    "type": "text",
+    "contract": "chosen technical reference"
+  },
+  "output": {
+    "type": "text",
+    "contract": "bounded reference receipt"
+  },
+  "permissions": [
+    "read-project"
+  ],
+  "requires": [],
+  "conflicts": [],
+  "source": {
+    "repository": "multiple pinned upstream text sources",
+    "snapshot": "approved 20261010",
+    "license": "MIT AND Apache-2.0"
+  },
+  "integrity": {
+    "sha256Manifest": "SHA256SUMS"
+  },
+  "x-referenceIndex": [
+    {
+      "path": "impeccable/reference/onboard.md",
+      "sha256": "9a2c08ee2516d2ee87129e7ebe6a0895f9990c9852d1f6fa7e70be9a6a88a659",
+      "source": "impeccable",
+      "commit": "d631a8827f99414d2b6daba4ef08b7f8701751d7"
+    },
+    {
+      "path": "impeccable/reference/clarify.md",
+      "sha256": "6c382f8283756e8a693d832b750f7e4cbff1ca5bdcc3825b2b4ef4da9f21876a",
+      "source": "impeccable",
+      "commit": "d631a8827f99414d2b6daba4ef08b7f8701751d7"
+    },
+    {
+      "path": "impeccable/reference/operate.md",
+      "sha256": "a9d2203acd45ca33a13d5c68b02b23ed512425ac15f0e8438318ed124b43729d",
+      "source": "impeccable",
+      "commit": "d631a8827f99414d2b6daba4ef08b7f8701751d7"
+    },
+    {
+      "path": "impeccable/reference/polish.md",
+      "sha256": "73893e18e874e14beccd7fca92335d9036f5a5e068fd8815fd7daceadf186a43",
+      "source": "impeccable",
+      "commit": "d631a8827f99414d2b6daba4ef08b7f8701751d7"
+    },
+    {
+      "path": "impeccable/reference/craft-floor.md",
+      "sha256": "96e2e6bd4fcf9a2c6da65fb029f96d9176308fae2efd9d8653d3b8d838960e07",
+      "source": "impeccable",
+      "commit": "d631a8827f99414d2b6daba4ef08b7f8701751d7"
+    },
+    {
+      "path": "ui-ux-pro-max/data/styles.csv",
+      "sha256": "a93a4d9d7025856575d7b7583bda020be9043013432c5af7c58af9dbdfb206b7",
+      "source": "ui-ux-pro-max",
+      "commit": "50d8a7de0900119855614541f15a1a616691eb33"
+    },
+    {
+      "path": "ui-ux-pro-max/data/colors.csv",
+      "sha256": "8162429222bce22df62b564085946a30d07cc9722c58d0a3a494bd0d1d00841c",
+      "source": "ui-ux-pro-max",
+      "commit": "50d8a7de0900119855614541f15a1a616691eb33"
+    },
+    {
+      "path": "ui-ux-pro-max/data/typography.csv",
+      "sha256": "321fc446e89024488ebae96dda93efc4d2307bd8bddb240857ad51364f6782c8",
+      "source": "ui-ux-pro-max",
+      "commit": "50d8a7de0900119855614541f15a1a616691eb33"
+    },
+    {
+      "path": "ui-ux-pro-max/data/ux-guidelines.csv",
+      "sha256": "ff81ec613f70ba9fc3fcce52dbe4ae35d44b2079dbe6dc066d2d6e38c28facd5",
+      "source": "ui-ux-pro-max",
+      "commit": "50d8a7de0900119855614541f15a1a616691eb33"
+    },
+    {
+      "path": "ui-ux-pro-max/data/products.csv",
+      "sha256": "42473f75e8dde5987bdf89ce55d8c168091b80a356cae691dd60247d80720b70",
+      "source": "ui-ux-pro-max",
+      "commit": "50d8a7de0900119855614541f15a1a616691eb33"
+    },
+    {
+      "path": "ui-ux-pro-max/data/app-interface.csv",
+      "sha256": "331e7cf2c0b222d80c566c5f255c63cb339f65bfd02e471a720f28e4864a9f08",
+      "source": "ui-ux-pro-max",
+      "commit": "50d8a7de0900119855614541f15a1a616691eb33"
+    },
+    {
+      "path": "ui-ux-pro-max/references/quick-reference.md",
+      "sha256": "0609bc7c89dacb40472465d8fc14257b56b2c43439660fc8d6fa3b8c022e1876",
+      "source": "ui-ux-pro-max",
+      "commit": "50d8a7de0900119855614541f15a1a616691eb33"
+    },
+    {
+      "path": "ui-ux-pro-max/references/pro-rules.md",
+      "sha256": "d28442d61c310b49c054a4ea736f89fb3008beebdbbc38c4b3a540b8f7fadf23",
+      "source": "ui-ux-pro-max",
+      "commit": "50d8a7de0900119855614541f15a1a616691eb33"
+    },
+    {
+      "path": "ui-ux-pro-max/data/stacks/angular.csv",
+      "sha256": "704be83f2bad30c7e6de01afb113ffa01e0c458762f48b7102f31ba2367b5553",
+      "source": "ui-ux-pro-max",
+      "commit": "50d8a7de0900119855614541f15a1a616691eb33"
+    },
+    {
+      "path": "ui-ux-pro-max/data/stacks/astro.csv",
+      "sha256": "2c2f55fadaafc05e04cc321c8194a1a28b656e6757fe2ba316f41b16428299c6",
+      "source": "ui-ux-pro-max",
+      "commit": "50d8a7de0900119855614541f15a1a616691eb33"
+    },
+    {
+      "path": "ui-ux-pro-max/data/stacks/avalonia.csv",
+      "sha256": "442fca14675a020683473e7e49f08abb27b9df0765c80efe54aef61f1a4ac258",
+      "source": "ui-ux-pro-max",
+      "commit": "50d8a7de0900119855614541f15a1a616691eb33"
+    },
+    {
+      "path": "ui-ux-pro-max/data/stacks/flutter.csv",
+      "sha256": "64dba0ac17349f28bce517a0f5f48c54d9ed2e487ec0c0258303463b382f41a0",
+      "source": "ui-ux-pro-max",
+      "commit": "50d8a7de0900119855614541f15a1a616691eb33"
+    },
+    {
+      "path": "ui-ux-pro-max/data/stacks/html-tailwind.csv",
+      "sha256": "d05a581d20af57b8ca0104a6d31d90a07c437d500662a96c3029fc2f9a4678ee",
+      "source": "ui-ux-pro-max",
+      "commit": "50d8a7de0900119855614541f15a1a616691eb33"
+    },
+    {
+      "path": "ui-ux-pro-max/data/stacks/javafx.csv",
+      "sha256": "2e819b8d5abdd23ad4dae0991650fdb57af497aabd68b37463aa9c442944c869",
+      "source": "ui-ux-pro-max",
+      "commit": "50d8a7de0900119855614541f15a1a616691eb33"
+    },
+    {
+      "path": "ui-ux-pro-max/data/stacks/jetpack-compose.csv",
+      "sha256": "699de218b286948eaec7d15767b6e1350ee299167e49bf476d82e3ff58724e0a",
+      "source": "ui-ux-pro-max",
+      "commit": "50d8a7de0900119855614541f15a1a616691eb33"
+    },
+    {
+      "path": "ui-ux-pro-max/data/stacks/laravel.csv",
+      "sha256": "854ea4daa5fc61292d22235ad33b49ba3fe22423c3de8d3cb03758ffed3b59f9",
+      "source": "ui-ux-pro-max",
+      "commit": "50d8a7de0900119855614541f15a1a616691eb33"
+    },
+    {
+      "path": "ui-ux-pro-max/data/stacks/nextjs.csv",
+      "sha256": "ecd2c27b2ea0127d203ae726060efcdd7335b5e83f96b99e4f3befbbfeebd5a4",
+      "source": "ui-ux-pro-max",
+      "commit": "50d8a7de0900119855614541f15a1a616691eb33"
+    },
+    {
+      "path": "ui-ux-pro-max/data/stacks/nuxt-ui.csv",
+      "sha256": "fce682a338cfcdbf35d318d20e5befbe7b5d81b05abc37f87677a6d9cde84dc6",
+      "source": "ui-ux-pro-max",
+      "commit": "50d8a7de0900119855614541f15a1a616691eb33"
+    },
+    {
+      "path": "ui-ux-pro-max/data/stacks/nuxtjs.csv",
+      "sha256": "3d9b54ed2d151bd9c86e9e5609b8a6f88a00c4c52fa601a30af96c49b2c4d176",
+      "source": "ui-ux-pro-max",
+      "commit": "50d8a7de0900119855614541f15a1a616691eb33"
+    },
+    {
+      "path": "ui-ux-pro-max/data/stacks/react-native.csv",
+      "sha256": "ba31dd9c0c04da6bc02a74448bf121f9c0728ae5ba3b4d47b487778b0a1135b5",
+      "source": "ui-ux-pro-max",
+      "commit": "50d8a7de0900119855614541f15a1a616691eb33"
+    },
+    {
+      "path": "ui-ux-pro-max/data/stacks/react.csv",
+      "sha256": "4dd176a9787e5c6306b5df94158d75955adcdc6edab41ce5286641a5842303c1",
+      "source": "ui-ux-pro-max",
+      "commit": "50d8a7de0900119855614541f15a1a616691eb33"
+    },
+    {
+      "path": "ui-ux-pro-max/data/stacks/shadcn.csv",
+      "sha256": "e56cfde5b74907836ac3582a4779d5b7f3d206a702ab81b8669a1b668c3eeb51",
+      "source": "ui-ux-pro-max",
+      "commit": "50d8a7de0900119855614541f15a1a616691eb33"
+    },
+    {
+      "path": "ui-ux-pro-max/data/stacks/svelte.csv",
+      "sha256": "f6e379ba802941ba26b01d4ffbe3cd39120f2587659a1d93851c707f66bc13db",
+      "source": "ui-ux-pro-max",
+      "commit": "50d8a7de0900119855614541f15a1a616691eb33"
+    },
+    {
+      "path": "ui-ux-pro-max/data/stacks/swiftui.csv",
+      "sha256": "bdd9231ff3ad658f4e7c063e1eb49df2fd09ac8d90631a86df899b39833b9623",
+      "source": "ui-ux-pro-max",
+      "commit": "50d8a7de0900119855614541f15a1a616691eb33"
+    },
+    {
+      "path": "ui-ux-pro-max/data/stacks/threejs.csv",
+      "sha256": "155d583b9c64da0df4b6c6cb060c02eab222505e0734d6353da02c9e2b5d982b",
+      "source": "ui-ux-pro-max",
+      "commit": "50d8a7de0900119855614541f15a1a616691eb33"
+    },
+    {
+      "path": "ui-ux-pro-max/data/stacks/uno.csv",
+      "sha256": "a0474363e4225b5367214d5675fd3e075f137026f9500f0d04357882ef4f6d48",
+      "source": "ui-ux-pro-max",
+      "commit": "50d8a7de0900119855614541f15a1a616691eb33"
+    },
+    {
+      "path": "ui-ux-pro-max/data/stacks/uwp.csv",
+      "sha256": "c409f08c1fbba1f1029f1acaa554e7b4471cc85517a5751c9f2e62465badcd5c",
+      "source": "ui-ux-pro-max",
+      "commit": "50d8a7de0900119855614541f15a1a616691eb33"
+    },
+    {
+      "path": "ui-ux-pro-max/data/stacks/vue.csv",
+      "sha256": "b655f1ebb9dff2652d15981f31b1784c8a6d4759efd2815a14f3088257569f95",
+      "source": "ui-ux-pro-max",
+      "commit": "50d8a7de0900119855614541f15a1a616691eb33"
+    },
+    {
+      "path": "ui-ux-pro-max/data/stacks/winui.csv",
+      "sha256": "e676dc1c13ee6c205c40b0746f1335150a346c7a49a0616d2545bc3d2c930c85",
+      "source": "ui-ux-pro-max",
+      "commit": "50d8a7de0900119855614541f15a1a616691eb33"
+    },
+    {
+      "path": "ui-ux-pro-max/data/stacks/wpf.csv",
+      "sha256": "9781a9950b20333637b30a02e498b7efca21b618a3eeb8665836f3ac6e974da7",
+      "source": "ui-ux-pro-max",
+      "commit": "50d8a7de0900119855614541f15a1a616691eb33"
+    }
+  ],
+  "x-runtimeRequirements": {}
+}

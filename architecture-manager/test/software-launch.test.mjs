@@ -3,8 +3,8 @@ import test from 'node:test';
 import { mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
-import { buildSoftwareConnectorLaunchPlan, applySoftwareLaunch } from '../src/software-launch.mjs';
-import { resolveRecipeVersion } from '../src/software-publish.mjs';
+import { buildSoftwareConnectorLaunchPlan, applySoftwareLaunch } from '../src/domains/software/software-launch.mjs';
+import { resolveRecipeVersion } from '../src/domains/software/software-publish.mjs';
 
 const CONNECTOR = `import json, sys
 request = json.loads(sys.stdin.read())

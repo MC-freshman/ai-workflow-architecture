@@ -1,0 +1,21 @@
+[
+  {"id": "AUD-D-001", "status": "open", "title": "presenter.mjs 重复键文案互覆：IMPORT_GIT_BASELINE_REQUIRED/IMPORT_EXTERNAL_CHANGE 后值静默覆盖前值", "location": "architecture-manager/src/renderer/presenter.mjs:66-69", "source": "v0.8.1 审计 P1 静态层+P3-P7 走查（QA 严过关，commit 71783e92）"},
+  {"id": "AUD-D-002", "status": "open", "title": "presenter.mjs RELEASE_SEMVER_INVALID 重复键（同文本，卫生）", "location": "architecture-manager/src/renderer/presenter.mjs:194,205", "source": "v0.8.1 审计 P1 静态层（QA 严过关）"},
+  {"id": "AUD-D-003", "status": "unverified-registration", "title": "atomicGit 取消 flag 残留平台根目录无清理", "location": "architecture-manager/src/infrastructure/process-scope.mjs:22", "source": "v0.8.1 审计 R0 走查（QA 严过关）"},
+  {"id": "AUD-D-004", "status": "unverified-registration", "title": "owned-process 16MB 输出上限只发取消不杀进程，stdout 仍累积", "location": "architecture-manager/src/core/owned-process.mjs:15-16", "source": "v0.8.1 审计 R0 走查（QA 严过关）"},
+  {"id": "AUD-D-005", "status": "unverified-registration", "title": "子进程退出码 124/125 与超时/取消语义冲突", "location": "architecture-manager/src/core/owned-process.mjs:18; src/runtime/job_controller.py:70; windows_job.ps1", "source": "v0.8.1 审计 R0 走查（QA 严过关）"},
+  {"id": "AUD-D-006", "status": "unverified-registration", "title": "job_controller 子进程不读 stdin 时 BrokenPipeError 未捕获", "location": "architecture-manager/src/runtime/job_controller.py:44-45", "source": "v0.8.1 审计 R0 走查（QA 严过关）"},
+  {"id": "AUD-D-007", "status": "unverified-registration", "title": "凭据 set 备份 uuid 目录无清理无上限（DPAPI 加密值，无明文风险）", "location": "architecture-manager/src/runtime/credential_store.py:126-134", "source": "v0.8.1 审计 R0 走查（QA 严过关）"},
+  {"id": "AUD-D-008", "status": "unverified-registration", "title": "provision 注册恢复输出尾行 JSON 假设脆弱", "location": "architecture-manager/src/runtime/provision.py:150", "source": "v0.8.1 审计 R0 走查（QA 严过关）"},
+  {"id": "AUD-D-009", "status": "unverified-registration", "title": "peer_dispatcher requestId 拼路径缺纵深白名单校验", "location": "architecture-manager/src/runtime/peer_dispatcher.py:29", "source": "v0.8.1 审计 R0 走查（QA 严过关）"},
+  {"id": "AUD-D-010", "status": "unverified-registration", "title": "readonlyGit 白名单缺 log/blame 等纯读命令（仅性能）", "location": "architecture-manager/src/infrastructure/process-scope.mjs:16", "source": "v0.8.1 审计 R0 走查（QA 严过关）"},
+  {"id": "AUD-D-011", "status": "unverified-registration", "title": "manager-launch 临时目录残留（崩溃时含 allowGuiLaunch:true 副本；response 证据累积）", "location": "architecture-manager/src/software-launch.mjs:64-96", "source": "v0.8.1 审计 R0 走查（QA 严过关）"},
+  {"id": "AUD-D-012", "status": "unverified-registration", "title": "atomicWrite 与审计 JSONL 无 fsync（掉电级持久性缺口）", "location": "architecture-manager/src/transactions/kernel.mjs:42,57-64", "source": "v0.8.1 审计 R1 走查（QA 严过关）"},
+  {"id": "AUD-D-013", "status": "unverified-registration", "title": "多文件事务恢复中途崩溃需人工 checkpoint 恢复（缺继续恢复自动化）", "location": "architecture-manager/src/transactions.mjs:263-323", "source": "v0.8.1 审计 R1 走查（QA 严过关）"},
+  {"id": "AUD-D-014", "status": "unverified-registration", "title": "operation 级审计 target 解析缺 reference 等字段", "location": "architecture-manager/src/transactions/operation-audit.mjs:15", "source": "v0.8.1 审计 R1 走查（QA 严过关）"},
+  {"id": "AUD-D-015", "status": "unverified-registration", "title": "safeRelative 不拒 Windows 保留设备名与尾部点/空格", "location": "architecture-manager/src/core/paths.mjs:6-11", "source": "v0.8.1 审计 R2/R3 走查（QA 严过关）"},
+  {"id": "AUD-D-016", "status": "unverified-registration", "title": "CSP 全缺（渲染层零注入汇，纵深防御加固项）", "location": "architecture-manager/index.html; src/main.mjs", "source": "v0.8.1 审计 R3 走查（QA 严过关）"},
+  {"id": "AUD-D-017", "status": "unverified-registration", "title": "markOnboardingRecorded 直调 git 绕过 process-scope（只读）", "location": "architecture-manager/src/onboarding-state.mjs:160", "source": "v0.8.1 审计 R4 走查（QA 严过关）"},
+  {"id": "AUD-D-018", "status": "unverified-registration", "title": "onboarding 证据复用双判据不统一（效率/可解释性）", "location": "architecture-manager/src/onboarding-state.mjs:65", "source": "v0.8.1 审计 R4 走查（QA 严过关）"},
+  {"id": "AUD-D-019", "status": "unverified-registration", "title": "verifyRelease 路径未经 targetPath 归一（只读面，与其余 verify 不一致）", "location": "architecture-manager/src/releases.mjs:113", "source": "v0.8.1 审计 R5 走查（QA 严过关）"}
+]

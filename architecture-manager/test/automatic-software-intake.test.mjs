@@ -6,7 +6,7 @@ import {intakeFixture} from './support/intake-fixture.mjs';
 import {seedRelease,seedPointer} from './support/resources.mjs';
 import {scanExternalBody} from '../src/domains/intake/sources.mjs';
 import {buildAutomaticSoftwarePlan,matchSoftwareRecipes} from '../src/domains/intake/automatic-software.mjs';
-import {applyPlan,verifyPlanTarget} from '../src/transactions.mjs';
+import {applyPlan,verifyPlanTarget} from '../src/transactions/router.mjs';
 import {sha256File} from '../src/core/hash.mjs';
 import {selectDeclaredEntry} from '../src/domains/intake/entry-selection.mjs';
 

@@ -5,9 +5,9 @@ import {join,dirname} from 'node:path';
 import {tmpdir} from 'node:os';
 import {execFileSync} from 'node:child_process';
 import {seedRuntimeReleases} from './support/resources.mjs';
-import {buildAutomaticOnboardingPlan,applyAutomaticOnboarding,verifyAutomaticOnboarding} from '../src/onboarding-auto.mjs';
-import {readOnboardingConfig} from '../src/onboarding-config.mjs';
-import {readOnboardingState} from '../src/onboarding-state.mjs';
+import {buildAutomaticOnboardingPlan,applyAutomaticOnboarding,verifyAutomaticOnboarding} from '../src/domains/onboarding/onboarding-auto.mjs';
+import {readOnboardingConfig} from '../src/domains/onboarding/onboarding-config.mjs';
+import {readOnboardingState} from '../src/domains/onboarding/onboarding-state.mjs';
 import {onboardingResumePreview,assertResumePreview,archiveAutomaticJournal,reconcileAutomaticJournal,onboardingDeferrals,inputInvalidations} from '../src/domains/platforms/onboarding-resume.mjs';
 import {sha256} from '../src/core/hash.mjs';
 

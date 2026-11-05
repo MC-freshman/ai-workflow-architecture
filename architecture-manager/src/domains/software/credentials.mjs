@@ -5,7 +5,7 @@ import {targetPath,defaultAuditRoot} from '../../core/paths.mjs';
 import {sha256,sha256File} from '../../core/hash.mjs';
 import {readJson,stableJson} from '../../core/json.mjs';
 import {platformPython} from '../platforms/runtime-binding.mjs';
-import {runnerConfig} from '../../software-publish.mjs';
+import {runnerConfig} from './software-publish.mjs';
 import {runtimeFile} from '../../core/runtime-path.mjs';
 import {plannedFiles,applyGeneratedFiles,verifyFiles} from '../../transactions/onboarding-files.mjs';
 import {atomicWrite,requirePlan,saveCheckpoint,writeAudit} from '../../transactions/kernel.mjs';

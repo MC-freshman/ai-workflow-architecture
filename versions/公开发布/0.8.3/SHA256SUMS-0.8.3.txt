@@ -1,0 +1,4 @@
+e07059c415b79e6d3446064982127a1751ae083145af70f3857130aff3adfa3e  Architecture-Manager-0.8.3-Guide.zh-CN.md
+2385f6cd57e3f7f6613320fc1826088aae2ae8a358b4a9713c1556e20ad7d182  Architecture-Manager-0.8.3-portable-x64.exe
+24cb9d6c8bbd9e77edc95c4e18602c73143513454cd06d4177168b9c24ff2024  Architecture-Manager-0.8.3-setup-x64.exe
+665b61f9c37c8e141b6f36cc3dedb86243daeda203bb935fa12a13b58773a415  RELEASE-0.8.3.json

@@ -17,18 +17,27 @@ export function friendlyError(error) {
     AUTOMATIC_SOFTWARE_DECLARATION_REQUIRED:'未找到匹配配方。请在下方声明 CLI 功能，或导入现成 MCP；管理台不会猜测未知程序的动作和权限。',
     PLATFORM_SCOPE_MISMATCH:'这条请求不属于所选平台，未写入任何配置。',
     PLATFORM_VERSION_PAIRING_REQUIRED:'此资源与平台引擎、契约或检查器配对锁定，请使用平台版本对齐计划，不能单独切换。',
-    MANAGEMENT_NODE_REQUIRED:'未找到可用的 Node.js 18 或更新版本。请安装系统设施后重试；管理台将为各平台建立独立运行时及备份。',
+    // D-164: 兼容旧记录保留；现行发现失败分 NODE_NOT_FOUND / NODE_SPAWN_FAILED / NODE_VERSION_UNSUPPORTED 三种，
+    // 只有第一种才是"没装"，后两种都不是让用户去安装 Node。
+    MANAGEMENT_NODE_REQUIRED:'未找到可用的 Node.js 18 或更新版本（旧记录兼容码；现行错误码见下方详情）。请按详情中的实际原因处理。',
+    NODE_NOT_FOUND:'确实没有找到 Node.js 18 或更新版本：已按 PATH、常见安装目录和系统查询逐项查找。请安装后再重试；管理台将为各平台建立独立运行时及备份。',
+    NODE_SPAWN_FAILED:'已找到 Node.js，但它无法启动（权限、占用或当前会话的进程限制）。这不是缺少 Node，无需安装；请查看下方详情，关闭占用程序或在未被限制的会话中重试。',
+    NODE_VERSION_UNSUPPORTED:'找到的 Node.js 版本低于管理台要求的 18，不会被采用。请改用 Node.js 18 或更新版本后重试。',
     MANAGEMENT_RUNTIME_DRIFT:'管理命令的程序或脚本已经变化，请更新本平台标准客户端入口后重试。',
     MANAGEMENT_SERVICE_UPDATE_REQUIRED:'请先更新本平台标准客户端入口，安装与管理台相同的版本选择执行器。',
     NATIVE_CLIENT_BODY_REQUIRED:'请选择本平台目录内的厂商客户端程序；安装包需先安装，外部本体可先通过本体接入安置。',
     NATIVE_CLIENT_SELECTION_REQUIRED:'发现多个客户端本体，请在“客户端入口”选择本次要接入的程序。',
     NATIVE_CLIENT_PLATFORM_PATH_REQUIRED:'客户端本体与配置必须归所选平台；请先导入本体，不能借用其它平台程序。',
+    NATIVE_BODY_OUTSIDE_PLATFORM:'本体位于本工作区内、但归另一个平台目录所有，不能借用。两条出路：把本体迁入本平台目录；或就"外部本体例外"单独治理裁定后再登记（当前未开放）。',
     NATIVE_SERVICE_REQUIRED:'请先安装或更新架构服务通道，再注册原生客户端。',
     NATIVE_SERVICE_UPDATE_REQUIRED:'请先点击“安装标准 CLI 客户端入口”更新本平台只读验证服务，再进行原生验证。',
     NATIVE_AI_CONSENT_REQUIRED:'原生 AI 验证需要本次明确选择；自动接入不会自行消耗厂商模型额度。',
     NATIVE_WORKBUDDY_LOGIN_REQUIRED:'WorkBuddy 原生 CLI 没有有效认证；缓存账号不代表已认证。请先完成原生登录，再明确发起验证；不会自动重试。',
     NATIVE_AI_ATTEMPT_ALREADY_USED:'这次原生验证已经执行，不会自动重试；请查看本次记录。',
     NATIVE_AI_TOOL_TRACE_REQUIRED:'未收到匹配的原生工具使用与工具结果；模型文字不能充当三仓验证。',
+    NATIVE_AI_PROMPT_ECHOED:'模型没有发起工具调用，而是把工具参数当文字输出了。这不是验证成功，也不是拒绝验证；本次按可重试形态记录，请重新发起一次原生验证。',
+    NATIVE_AI_MODEL_DRIFT:'一次原生验证中出现了两个不同模型，无法把证据钉到其中一个；本次作废，请重新发起。',
+    NATIVE_ATTEMPT_POLICY_INVALID:'本次原生验证的重试次数或重试间隔不在允许范围内（次数 1–5，间隔 0–30 秒）。',
     NATIVE_AI_ATTEMPT_STOPPED:'本次原生验证已停止或超时；没有自动重试，请查看记录。',
     NATIVE_CREDENTIAL_RELAY_REQUIRED:'厂商认证没有返回可用于工具请求的凭据。账号缓存和登录页面成功不能替代原生调用，接入保持待验证。',
     NATIVE_AUTH_CONNECTION_CLOSED:'厂商 CLI 提前结束了认证连接；页面登录成功尚未成为工具回执。请保留当前配置，等待原生适配器处理，勿反复登录。',
@@ -63,8 +72,6 @@ export function friendlyError(error) {
     PLATFORM_INSTALLATION_REQUIRED:'这是安装包或没有可启动的程序入口。请先完成安装，再选择已安装的完整程序目录或明确的单文件本体。',
     CLIENT_BODY_DRIFT:'客户端本体在绑定后发生了变化，请重新导入或更新本体后再测试；旧回执不会自动沿用。',
     BODY_TEXT_REQUIRED:'正文不能为空，请选择正文入口或填写完整内容。',
-    IMPORT_GIT_BASELINE_REQUIRED:'登记文件有尚未提交的变化。请到 Git 页提交这些文件，建立可回滚基线后再执行接入。',
-    IMPORT_EXTERNAL_CHANGE:'登记或本体被外部修改，管理台已保留现场。请重新读取后生成计划。',
     IMPORT_GIT_BASELINE_REQUIRED:'覆盖现有登记前需要可回滚的 Git 提交。请在仓库页提交计划涉及的现有配置，再重新预览；其它暂存内容不会混入。',
     IMPORT_EXTERNAL_CHANGE:'导入目标已被其它操作改动，已保留现场。请重新读取记录，不能用旧计划覆盖新内容。',
     IMPORT_BUSY:'这份导入仍在执行，请等待安全步骤收口或停止本次操作后再继续。',
@@ -139,7 +146,13 @@ export function friendlyError(error) {
     RUNTIME_PYTHON_REQUIRED: '请选择能运行的 Python 3.10 或更新版本。',
     RUNTIME_BACKEND_REQUIRED: '请先检测并保存隔离后端，或选择本平台已有的后端配置。',
     RUNTIME_SEALED_BACKEND_REQUIRED: '当前步骤需要已就绪的 WSL 隔离后端。缺少系统组件时请先完成安装，再回到此处继续。',
-    RUNTIME_PREPARATION_FAILED: '环境准备失败，原环境未切换。请查看下方原因，修复系统设施或下载连接后重新生成计划。',
+    // D-171: "fix the download connection" was not actionable -- the product had
+    // no place to configure it. Point at the two entries that now exist.
+    RUNTIME_PREPARATION_FAILED: '环境准备失败，原环境未切换。请查看下方原因；若是下载问题，在“必要补填与保留个人固定版本”里填写本平台的资源下载源（镜像 index-url）或离线 wheelhouse 目录后重新生成计划。',
+    RESOURCE_ENVIRONMENT_PREPARATION_FAILED: '资源依赖环境准备失败。已建立的虚拟环境与已下载的 wheel 会保留；可在“必要补填与保留个人固定版本”里填写本平台的资源下载源（镜像 index-url）或离线 wheelhouse 目录后重新生成计划续装。',
+    RESOURCE_ENVIRONMENT_COMMAND_FAILED: '资源依赖环境的某条命令没有成功（见下方详情）。已下载内容会保留；若是下载问题，填下载源或离线 wheelhouse 后重新生成计划即可续装。',
+    RESOURCE_ENVIRONMENT_IDLE_TIMEOUT: '资源依赖下载长时间没有进展（无新输出、目录也不再增长）才停止。已下载内容会保留，换个更快的下载源或填离线 wheelhouse 后重新生成计划即可续装。',
+    RESOURCE_ENVIRONMENT_TIME_LIMIT: '资源依赖下载超过本次时间上限才停止。已下载内容会保留，换个更快的下载源或填离线 wheelhouse 后重新生成计划即可续装。',
     CLIENT_ADAPTER_PENDING: '这个客户端入口还没有可验证的适配器。可先安装标准 CLI 客户端；原生客户端接线会单独显示待完成。',
     CLIENT_ENTRY_DRIFT: '已安装的客户端入口文件发生了变化，请重新预览并安装入口。',
     CLIENT_RECEIPT_MISMATCH: '客户端回执与本次挑战、平台或版本不符，不能作为接入证据。',
@@ -156,6 +169,7 @@ export function friendlyError(error) {
     GIT_UNRELATED_STAGED_FILES: 'Git 暂存区还有本轮之外的文件。请先处理它们，管理台不会将其混入接入提交。',
     ONBOARDING_CAPABILITY_PROBE_FAILED: '必要能力探针尚未通过，已停在当前步骤。请查看本平台的接入记录后修复并继续。',
     ONBOARDING_CHECK_FAILED: '接入认证尚未通过。请打开平台的检查问题或接入记录查看具体原因；已通过的安装与配置步骤保留。',
+    ONBOARDING_RECORD_INCOMPLETE: '治理文件已提交，但接入状态未能标记为完成；提交已存在，不会自动重做。请查看下方详情与审计记录后重试标记步骤，不要重复提交。',
     EXTERNAL_CHANGE_DETECTED: '目标文件已被其他程序修改，管理台已阻止覆盖，请重新扫描。',
     TOP_LEVEL_CONFIRMATION_REQUIRED: '顶层治理文件需要勾选确认后才能生成计划。',
     TARGET_VERSION_UNAVAILABLE: '目标版本不在当前共享仓目录中，请先确认版本已发布。',
@@ -201,8 +215,7 @@ export function friendlyError(error) {
     SOFTWARE_NOT_DECLARED: '所选平台的连接器没有声明这个软件本体，先完成安置与绑定。',
     SOFTWARE_CONNECTOR_FAILED: '连接器进程执行失败，见审计事件；管理台不重试、不代答。',
     SOFTWARE_CONNECTOR_INVALID: '连接器输出不是合法 JSON，启动结果未知。',
-    SOFTWARE_CONNECTOR_ENTRY_MISSING: '连接器入口文件不存在。',
-    RELEASE_SEMVER_INVALID: '版本号必须是严格的 x.y.z。'
+    SOFTWARE_CONNECTOR_ENTRY_MISSING: '连接器入口文件不存在。'
   };
   return hints[key] ? `${hints[key]}（${key}）${details.length ? `\n${details.join(':').trim()}` : ''}` : code;
 }

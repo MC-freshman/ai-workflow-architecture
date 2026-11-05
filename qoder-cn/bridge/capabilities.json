@@ -1,0 +1,147 @@
+{
+  "schema": "ai-platform-capabilities/v1",
+  "platform": "qoder-cn",
+  "checks": {
+    "prompt-stage-claim": true,
+    "script-environment-isolation-jail": true,
+    "peerDispatch": true,
+    "software-call": true
+  },
+  "permissionAdapters": [
+    {
+      "filesystem": "project-scoped",
+      "network": "deny",
+      "process": "allowlisted-only",
+      "evidence": "Target-platform jail probe E:\\ai\\qoder-cn\\runtime\\maintenance\\manager-onboarding\\capabilities\\357d8c45-a6bb-4318-b728-5a56f1aa5389\\probe.json sha256=2d595915003766168cd93c623b958876d48cdb2e653e8aa33db2d59b0102f418"
+    },
+    {
+      "filesystem": "platform-runtime-write-shared-read-only",
+      "network": "deny",
+      "process": "isolated-python",
+      "evidence": "Target-platform jail probe E:\\ai\\qoder-cn\\runtime\\maintenance\\manager-onboarding\\capabilities\\357d8c45-a6bb-4318-b728-5a56f1aa5389\\probe.json sha256=2d595915003766168cd93c623b958876d48cdb2e653e8aa33db2d59b0102f418"
+    },
+    {
+      "filesystem": "shared-read-only-platform-report-write",
+      "network": "deny",
+      "process": "none",
+      "evidence": "Target-platform jail probe E:\\ai\\qoder-cn\\runtime\\maintenance\\manager-onboarding\\capabilities\\357d8c45-a6bb-4318-b728-5a56f1aa5389\\probe.json sha256=2d595915003766168cd93c623b958876d48cdb2e653e8aa33db2d59b0102f418"
+    }
+  ],
+  "profiles": {
+    "portable-resource-python": {
+      "declared": true,
+      "adapters": [
+        "verified-resource-environment"
+      ],
+      "evidencePath": "E:\\ai\\qoder-cn\\runtime\\manager-resources\\daac5c84-4247-4cca-ae61-3a33edbf9e13\\RESTORE-VERIFIED.json",
+      "evidenceSha256": "d40227e4e2a272ec67d4982f77da28481d1ca4022f5b9bb1c588a1239854623e"
+    }
+  },
+  "descriptor": {
+    "schema": "ai-platform-descriptor/v2",
+    "platformId": "qoder-cn",
+    "protocols": [
+      "ai-run-protocol/v1.1",
+      "ai-run-protocol/v1.2",
+      "ai-run-protocol/v1.3"
+    ],
+    "operations": [
+      "prepare",
+      "next",
+      "submit",
+      "status",
+      "stop"
+    ],
+    "actions": {
+      "prompt": {
+        "supported": true,
+        "enforcement": "mediated",
+        "evidencePath": "E:\\ai\\qoder-cn\\runtime\\maintenance\\manager-onboarding\\capabilities\\357d8c45-a6bb-4318-b728-5a56f1aa5389\\probe.json",
+        "evidenceSha256": "2d595915003766168cd93c623b958876d48cdb2e653e8aa33db2d59b0102f418"
+      },
+      "script": {
+        "supported": true,
+        "enforcement": "kernel",
+        "evidencePath": "E:\\ai\\qoder-cn\\runtime\\maintenance\\manager-onboarding\\capabilities\\357d8c45-a6bb-4318-b728-5a56f1aa5389\\probe.json",
+        "evidenceSha256": "2d595915003766168cd93c623b958876d48cdb2e653e8aa33db2d59b0102f418"
+      },
+      "peer": {
+        "supported": true,
+        "enforcement": "mediated",
+        "evidencePath": "E:\\ai\\qoder-cn\\runtime\\maintenance\\manager-onboarding\\capabilities\\357d8c45-a6bb-4318-b728-5a56f1aa5389\\probe.json",
+        "evidenceSha256": "2d595915003766168cd93c623b958876d48cdb2e653e8aa33db2d59b0102f418"
+      },
+      "software-call": {
+        "supported": true,
+        "enforcement": "mediated",
+        "evidencePath": "E:\\ai\\qoder-cn\\runtime\\maintenance\\manager-onboarding\\capabilities\\357d8c45-a6bb-4318-b728-5a56f1aa5389\\probe.json",
+        "evidenceSha256": "2d595915003766168cd93c623b958876d48cdb2e653e8aa33db2d59b0102f418"
+      }
+    },
+    "profiles": {
+      "administrator": {
+        "declared": true,
+        "adapters": [
+          "per-call-connector-consent"
+        ],
+        "evidencePath": "E:\\ai\\qoder-cn\\runtime\\maintenance\\manager-onboarding\\capabilities\\357d8c45-a6bb-4318-b728-5a56f1aa5389\\probe.json",
+        "elevatedDuringProbe": false
+      },
+      "python>=3.8": {
+        "declared": true,
+        "adapters": [
+          "verified-platform-python"
+        ],
+        "evidencePath": "E:\\ai\\qoder-cn\\runtime\\maintenance\\manager-onboarding\\capabilities\\357d8c45-a6bb-4318-b728-5a56f1aa5389\\probe.json"
+      },
+      "portable-resource-python": {
+        "declared": true,
+        "adapters": [
+          "verified-resource-environment"
+        ],
+        "evidencePath": "E:\\ai\\qoder-cn\\runtime\\manager-resources\\daac5c84-4247-4cca-ae61-3a33edbf9e13\\RESTORE-VERIFIED.json",
+        "evidenceSha256": "d40227e4e2a272ec67d4982f77da28481d1ca4022f5b9bb1c588a1239854623e"
+      }
+    },
+    "enforcement": "mediated",
+    "recovery": [
+      "replay"
+    ]
+  },
+  "declaredAbsent": {},
+  "unverified": {},
+  "gapPlan": {
+    "software:burp-suite": {
+      "path": "在软件中心绑定正确版本本体并完成配方快照，回到向导重试",
+      "costMinutes": 20
+    },
+    "software:dirsearch": {
+      "path": "在软件中心绑定正确版本本体并完成配方快照，回到向导重试",
+      "costMinutes": 20
+    },
+    "software:mysql-cli": {
+      "path": "在软件中心绑定正确版本本体并完成配方快照，回到向导重试",
+      "costMinutes": 20
+    },
+    "software:nmap": {
+      "path": "在软件中心绑定正确版本本体并完成配方快照，回到向导重试",
+      "costMinutes": 20
+    },
+    "software:veracrypt": {
+      "path": "在软件中心绑定正确版本本体并完成配方快照，回到向导重试",
+      "costMinutes": 20
+    },
+    "software:wireshark-cli": {
+      "path": "在软件中心绑定正确版本本体并完成配方快照，回到向导重试",
+      "costMinutes": 20
+    }
+  },
+  "resolvedLegacyGaps": {
+    "action:software-call": {
+      "resolvedAt": "2026-10-28T13:39:24.178Z",
+      "evidencePath": "E:\\ai\\qoder-cn\\runtime\\maintenance\\manager-onboarding\\capabilities\\21fc6da1-592f-4d6d-8968-38546c7e320a\\probe.json",
+      "evidenceSha256": "134d5ea59dad23247fef42bd897d4c7d053818c5c0fc94d94510f98c80b62778"
+    }
+  },
+  "attestedAt": "2026-10-29T09:21:55.678Z"
+}

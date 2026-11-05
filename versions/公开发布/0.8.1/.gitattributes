@@ -1,0 +1,2 @@
+# Preserve the exact bytes of frozen resource releases and checksum manifests.
+* -text

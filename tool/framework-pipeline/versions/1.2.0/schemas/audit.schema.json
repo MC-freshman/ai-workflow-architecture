@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "executor-adoption/audit.schema.json/v1",
+  "title": "AUDIT stage manifest",
+  "type": "object",
+  "required": ["schema", "status", "deliverableCount", "auditedCount", "entries"],
+  "properties": {
+    "schema": {"const": "executor-adoption/audit-manifest/v1"},
+    "status": {"enum": ["passed", "failed"]},
+    "source": {
+      "type": "object",
+      "required": ["stage", "outputPath"],
+      "properties": {
+        "stage": {"type": "string"},
+        "outputPath": {"type": "string"}
+      },
+      "additionalProperties": false
+    },
+    "deliverableCount": {"type": "integer", "minimum": 0},
+    "auditedCount": {"type": "integer", "minimum": 0},
+    "entries": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name", "kind", "exists"],
+        "properties": {
+          "name": {"type": ["string", "null"]},
+          "kind": {"enum": ["file", "inline", "absent", "invalid"]},
+          "path": {"type": "string"},
+          "exists": {"type": "boolean"},
+          "bytes": {"type": "integer", "minimum": 0},
+          "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+          "reason": {"type": "string"}
+        },
+        "additionalProperties": false
+      }
+    }
+  },
+  "additionalProperties": false
+}

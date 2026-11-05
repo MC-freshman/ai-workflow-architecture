@@ -1,0 +1,48 @@
+{
+ "softwareRoot": "E:/ai/software",
+ "lockRoot": "E:/ai/qoder/runtime/software/locks",
+ "evidenceRoot": "E:/ai/qoder/runtime/software/evidence",
+ "bodies": {
+  "burp-suite": "<local-tool-body-path> V2024.5.1/BurpSuite V2024.5.1/BurpSuite/burpsuite_pro_org.jar",
+  "dirsearch": "D:/Various_programming_languages/PPython/dirsearch-master/dirsearch-master/dirsearch.py",
+  "mysql-cli": "<local-tool-body-path>",
+  "nmap": "<local-tool-body-path>",
+  "veracrypt": "<local-tool-body-path>",
+  "wireshark-cli": "<local-tool-body-path>"
+ },
+ "interpreters": {
+  ".py": "D:\\Various_programming_languages\\pycharm\\python3.9\\python.exe"
+ },
+ "note": "P7 (qoder): software dispatch goes through the shared connector. Bodies are this platform survey; the interpreter alias comes from each release's frozen snapshot; credentials are resolved by the platform provider into a temporary owner-only file that is deleted in the same call; sessions are started, checked and stopped through platform providers so the shared code names no operating system; allowedHosts is the standing ruling that a mediated scan may only reach the loopback. allowGuiLaunch stays off: opening a desktop window is a per-call decision, and without it the honest answer is INTERACTIVE_REQUIRED.",
+ "interpreterAliases": {
+  "PPython": "D:/Various_programming_languages/PPython/python.exe"
+ },
+ "credentialProvider": [
+  "D:/Various_programming_languages/pycharm/python3.9/python.exe",
+  "-B",
+  "E:/ai/qoder/runtime/software/credential-provider-windows.py"
+ ],
+ "sessionLaunch": [
+  "D:/Various_programming_languages/pycharm/python3.9/python.exe",
+  "-B",
+  "E:/ai/qoder/runtime/software/session-process-windows.py",
+  "--launch"
+ ],
+ "sessionLiveness": [
+  "D:/Various_programming_languages/pycharm/python3.9/python.exe",
+  "-B",
+  "E:/ai/qoder/runtime/software/session-process-windows.py",
+  "--alive"
+ ],
+ "sessionTerminate": [
+  "D:/Various_programming_languages/pycharm/python3.9/python.exe",
+  "-B",
+  "E:/ai/qoder/runtime/software/session-process-windows.py",
+  "--terminate"
+ ],
+ "allowedHosts": [
+  "127.0.0.1",
+  "localhost"
+ ],
+ "allowGuiLaunch": false
+}

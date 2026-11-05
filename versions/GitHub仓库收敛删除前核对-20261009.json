@@ -1,0 +1,21 @@
+{
+  "schema": "github-consolidation-predelete/v1",
+  "at": "2026-10-09T23:54:18.329213+00:00",
+  "ok": true,
+  "deleteRepositories": [
+    "ai-workflow-architecture-full",
+    "ai-workflow-architecture-evidence",
+    "ai-workflow-architecture-1.0.0-reference",
+    "architecture-manager"
+  ],
+  "privateHead": "8900495d0f0a7a40c880d51f82586f81d16db02c",
+  "publicHead": "8d679a59964a8bb5315bd3e6fa0ee9b1ee3feaf3",
+  "backupManifestSha256": "f4d583529d262bab3d0aaaf1b69ff66b8fcb59c5f04f3010b08526261675a763",
+  "sourceRefsUnchanged": true,
+  "releasesVerified": 11,
+  "assetsVerified": 38,
+  "sharedTreesUnchanged": true,
+  "agent": null,
+  "workflow": null,
+  "retainedRemoteHeadsEqualLocal": true
+}

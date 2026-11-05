@@ -1,6 +1,6 @@
 import {existsSync} from 'node:fs';
 import {randomUUID} from 'node:crypto';
-import {runnerConfig} from '../../software-publish.mjs';
+import {runnerConfig} from './software-publish.mjs';
 import {targetPath} from '../../core/paths.mjs';
 import {parseJson} from '../../core/json.mjs';
 import {platformPython} from '../platforms/runtime-binding.mjs';

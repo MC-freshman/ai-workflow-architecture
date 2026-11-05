@@ -1,0 +1,39 @@
+{
+  "schema": "ai-skill/v1",
+  "id": "interface-visual-review",
+  "version": "1.0.0",
+  "kind": "atomic",
+  "category": "skill",
+  "entry": "SKILL.md",
+  "input": {
+    "type": "text",
+    "contract": "objective, task inputs and constraints"
+  },
+  "output": {
+    "type": "text",
+    "contract": "named artifacts, evidence and pending limitations"
+  },
+  "permissions": [
+    "read-project"
+  ],
+  "requires": [],
+  "conflicts": [],
+  "x-externalReferences": [
+    {
+      "resource": "ui-design-reference-library",
+      "version": "1.0.0",
+      "path": "impeccable/reference/polish.md",
+      "sha256": "73893e18e874e14beccd7fca92335d9036f5a5e068fd8815fd7daceadf186a43",
+      "when": "较大界面检查需要状态/尺寸细节时读取"
+    }
+  ],
+  "x-runtimeRequirements": {},
+  "source": {
+    "repository": "workspace adaptation of pinned UI design references",
+    "snapshot": "approved 20261010 P1-P4",
+    "license": "workspace-authored guidance; included reference licensing in SOURCE.json"
+  },
+  "integrity": {
+    "sha256Manifest": "SHA256SUMS"
+  }
+}

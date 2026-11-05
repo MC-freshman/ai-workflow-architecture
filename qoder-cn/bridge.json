@@ -1,0 +1,31 @@
+{
+  "schema": "ai-platform-bridge/v1.1",
+  "platform": "qoder-cn",
+  "displayName": "qoder-cn",
+  "shared": {
+    "toolRegistry": "E:\\ai\\tool\\registry.json",
+    "agentRegistry": "E:\\ai\\agent\\registry.json",
+    "softwareRegistry": "E:\\ai\\software\\registry.json",
+    "architecturePrompt": "E:\\ai\\AI_ARCHITECTURE_SYSTEM_PROMPT.md",
+    "readOnly": true
+  },
+  "runtimeRoot": "E:\\ai\\qoder-cn\\runtime",
+  "modes": [
+    "workflow",
+    "agent-workflow"
+  ],
+  "defaults": {
+    "workflowVersions": {
+      "repo-lint": "0.7.0"
+    },
+    "agentVersions": {}
+  },
+  "runner": {
+    "enabled": true,
+    "config": "E:\\ai\\qoder-cn\\bridge\\qoder-cn-config.json",
+    "release": "E:\\ai\\tool\\wf-runner\\versions\\0.13.1",
+    "python": "E:\\ai\\qoder-cn\\runtime\\manager-environments\\8ef977ae-873b-436b-b548-9b872c841750\\host\\Scripts\\python.exe",
+    "version": "0.13.1"
+  },
+  "runtimeComponentVersion": "0.9.0"
+}

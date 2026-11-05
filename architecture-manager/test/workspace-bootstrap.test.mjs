@@ -4,7 +4,7 @@ import { execFileSync } from 'node:child_process';
 import { existsSync, mkdirSync, mkdtempSync, rmSync, writeFileSync, readFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
-import { applyWorkspaceClone, buildWorkspaceClonePlan } from '../src/workspace-bootstrap.mjs';
+import { applyWorkspaceClone, buildWorkspaceClonePlan } from '../src/domains/workspace/workspace-bootstrap.mjs';
 
 function makeSourceRepo(withArchitecture = true) {
   const source = mkdtempSync(join(tmpdir(), 'am-clone-src-'));

@@ -1,0 +1,7 @@
+{
+  "schema": "wf-runner-execution-backend/v1",
+  "kind": "host",
+  "interpreter": "E:/ai/codex/workspaces/agentic-workflow-implementation/.venv/Scripts/python.exe",
+  "verifyTimeoutSeconds": 120,
+  "declaredBy": "codex host-controlled fallback; usable only when the current run carries explicit consent in its prepare request."
+}

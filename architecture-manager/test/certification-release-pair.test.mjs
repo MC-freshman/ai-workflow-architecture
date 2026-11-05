@@ -5,7 +5,7 @@ import {join} from 'node:path';
 import {tmpdir} from 'node:os';
 import {seedRelease,seedRuntimeReleases} from './support/resources.mjs';
 import {recommendedCertificationPair} from '../src/domains/certification/releases.mjs';
-import {buildOnboardingConfigPlan} from '../src/onboarding-config.mjs';
+import {buildOnboardingConfigPlan} from '../src/domains/onboarding/onboarding-config.mjs';
 import {validateFrozenResource} from '../src/domains/resources/versions.mjs';
 test('recommendation excludes candidates and requires the exact paired checker; selection is explicit',t=>{
   const root=mkdtempSync(join(tmpdir(),'manager-cert-pair-'));t.after(()=>rmSync(root,{recursive:true,force:true}));seedRuntimeReleases(root);seedRelease(root,'tool','repo-lint','0.6.5',{'scripts/repo_lint.py':'# fixture only\n'});

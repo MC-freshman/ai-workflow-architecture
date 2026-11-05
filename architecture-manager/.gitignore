@@ -3,3 +3,7 @@ dist/
 release/
 *.log
 .DS_Store
+seed/
+release-p6test/
+release-*/
+__pycache__/

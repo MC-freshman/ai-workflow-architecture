@@ -5,7 +5,7 @@ import {platformPath} from '../../core/platform-path.mjs';
 import {targetPath} from '../../core/paths.mjs';
 import {readJson} from '../../core/json.mjs';
 import {sha256} from '../../core/hash.mjs';
-import {readOnboardingConfig,assertConfigurationReferences} from '../../onboarding-config.mjs';
+import {readOnboardingConfig,assertConfigurationReferences} from '../onboarding/onboarding-config.mjs';
 import {plannedFiles,applyGeneratedFiles,verifyFiles} from '../../transactions/onboarding-files.mjs';
 
 const json=value=>JSON.stringify(value,null,2)+'\n';

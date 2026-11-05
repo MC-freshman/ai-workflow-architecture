@@ -2,8 +2,8 @@ import {execFile} from 'node:child_process';
 import {promisify} from 'node:util';
 import {existsSync} from 'node:fs';
 import {delimiter,join} from 'node:path';
-import {readOnboardingConfig} from '../../onboarding-config.mjs';
-import {detectRuntime} from '../../onboarding-runtime.mjs';
+import {readOnboardingConfig} from '../onboarding/onboarding-config.mjs';
+import {detectRuntime} from '../onboarding/onboarding-runtime.mjs';
 const run=promisify(execFile);
 
 export function pythonCandidates(snapshot,fields={},env=process.env) {

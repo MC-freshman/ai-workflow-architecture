@@ -88,15 +88,15 @@ function unresolvedHandlerBindings(source) {
 }
 
 test('every binding referenced by an Electron handler is imported or locally bound', () => {
-  const source = readFileSync(join(root, 'src', 'main.mjs'), 'utf8');
-  assert.deepEqual(unresolvedHandlerBindings(source), [], 'handler references a binding main.mjs never imports');
+  const source = readFileSync(join(root, 'src', 'electron', 'register-operations.mjs'), 'utf8');
+  assert.deepEqual(unresolvedHandlerBindings(source), [], 'handler references a binding the registration module never imports');
   // The guard must actually detect the failure it exists for, so the same mistake is injected here.
   const synthetic = "import {a} from 'b';\nhandleOperation('x:y', (_event, input) => missingHelper(input));\n";
   assert.deepEqual(unresolvedHandlerBindings(synthetic), ['missingHelper']);
 });
 test('every declared operation channel is registered by the Electron entry point', () => {
   const declarations = JSON.parse(readFileSync(join(root, 'src', 'app', 'operations.json'), 'utf8'));
-  const source = readFileSync(join(root, 'src', 'main.mjs'), 'utf8');
+  const source = readFileSync(join(root, 'src', 'electron', 'register-operations.mjs'), 'utf8');
   const registered = new Set([...source.matchAll(/handleOperation\(\s*'([^']+)'/g)].map((match) => match[1]));
   const declared = Object.entries(declarations.operations).map(([method, operation]) => ({ method, channel: operation.channel }));
   const missing = declared.filter((entry) => !registered.has(entry.channel));

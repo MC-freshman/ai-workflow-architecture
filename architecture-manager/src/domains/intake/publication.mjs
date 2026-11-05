@@ -124,7 +124,7 @@ function releaseMatches(plan) {
 export async function verifyIntakePublication({plan}) {
   assertPublication(plan);const release=releaseMatches(plan),changes=plan.payload.changes.map(row=>({path:row.path,ok:hash(targetPath(plan.workspaceRoot,row.path))===row.afterSha256}));
   if(release)validateFrozenResource(plan.workspaceRoot,plan.target.repository,plan.target.resourceId,plan.target.version,undefined,plan.target.prefix);
-  const placement=plan.payload.placementPlan?(await import('../../software-intake.mjs')).verifySoftwareImport({plan:plan.payload.placementPlan}):null;
+  const placement=plan.payload.placementPlan?(await import('../software/software-intake.mjs')).verifySoftwareImport({plan:plan.payload.placementPlan}):null;
   return {schema:'architecture-manager-verification/v1',ok:release && changes.every(row=>row.ok) && (!placement || placement.ok),release,changes,placement,sourceRetained:true,functionExecuted:false};
 }
 export async function applyIntakePublication(plan,{actor='local-user',auditRoot=defaultAuditRoot(),now=new Date().toISOString(),onProgress=()=>{},failAfterStep=null}={}) {
@@ -149,12 +149,12 @@ export async function applyIntakePublication(plan,{actor='local-user',auditRoot=
       journal.checkpoint=saveCheckpoint(auditRoot,plan.planId,encode({schema:'architecture-manager-import-checkpoint/v1',workspaceRoot:plan.workspaceRoot,platformId:plan.target.platformId,files:plan.payload.changes,releaseRetainedOnUndo:true}));journalWrite(directory,journal);
     }
     if(plan.payload.placementPlan) {
-      const body=await import('../../software-intake.mjs'),placement=plan.payload.placementPlan;
+      const body=await import('../software/software-intake.mjs'),placement=plan.payload.placementPlan;
       if(!journal.placement) {
         if(fs.existsSync(placement.target.path)) {
           if(!body.verifySoftwareImport({plan:placement}).ok)throw Error('IMPORT_EXTERNAL_CHANGE');
           if(placement.payload?.intake)journal.placement=await body.applySoftwareImport({plan:placement},{actor,auditRoot,now,onProgress});
-          else {const {listSoftwareRecoveries}=await import('../../software-recovery.mjs');const previous=listSoftwareRecoveries({workspaceRoot:plan.workspaceRoot,auditRoot}).find(row=>row.action==='software-import' && row.target===placement.target.path);if(!previous)throw Error('IMPORT_EXTERNAL_CHANGE');journal.placement={status:'already-staged',checkpointPath:previous.checkpointPath};}
+          else {const {listSoftwareRecoveries}=await import('../software/software-recovery.mjs');const previous=listSoftwareRecoveries({workspaceRoot:plan.workspaceRoot,auditRoot}).find(row=>row.action==='software-import' && row.target===placement.target.path);if(!previous)throw Error('IMPORT_EXTERNAL_CHANGE');journal.placement={status:'already-staged',checkpointPath:previous.checkpointPath};}
         } else journal.placement=await body.applySoftwareImport({plan:placement},{actor,auditRoot,now,onProgress});
         journal.status='body-staged';journalWrite(directory,journal);
       }

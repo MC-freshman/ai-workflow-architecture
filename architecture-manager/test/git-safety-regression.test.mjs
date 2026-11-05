@@ -4,8 +4,8 @@ import {mkdtempSync,writeFileSync,mkdirSync,readFileSync,rmSync} from 'node:fs';
 import {join,relative} from 'node:path';
 import {tmpdir} from 'node:os';
 import {gitRaw,gitText} from '../src/infrastructure/git.mjs';
-import {buildGitPlan,inspectGit,scanSensitivePaths} from '../src/git.mjs';
-import {applyGitTransaction,verifyGitTransaction} from '../src/git-executor.mjs';
+import {buildGitPlan,inspectGit,scanSensitivePaths} from '../src/domains/git/git.mjs';
+import {applyGitTransaction,verifyGitTransaction} from '../src/domains/git/git-executor.mjs';
 
 function fixture(t) {
   const root=mkdtempSync(join(tmpdir(),'am-git-regression-'));

@@ -1,0 +1,17 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/ai-agent-v2.schema.json",
+  "title": "AI Agent manifest",
+  "type": "object",
+  "required": ["schema", "id", "version", "prompt", "toolLock"],
+  "properties": {
+    "schema": {"const": "ai-agent/v2"},
+    "id": {"type": "string", "pattern": "^[a-z0-9][a-z0-9-]*$"},
+    "version": {"type": "string"},
+    "prompt": {"type": "string"},
+    "toolLock": {"type": "string"},
+    "parallel": {"type": "boolean"}
+  },
+  "additionalProperties": true
+}
+

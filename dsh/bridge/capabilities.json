@@ -1,0 +1,222 @@
+{
+  "schema": "ai-platform-capabilities/v1",
+  "platform": "dsh",
+  "attestedAt": "2026-10-06T15:32:54.959Z",
+  "checks": {
+    "python-runtime": true,
+    "runner-protocol-prepare": true,
+    "prompt-stage-claim": true,
+    "script-environment-isolation-jail": true,
+    "peerDispatch": true,
+    "software-call": true
+  },
+  "permissions": {
+    "filesystem": "project-scoped",
+    "network": "deny",
+    "process": "allowlisted-only"
+  },
+  "permissionAdapters": [
+    {
+      "filesystem": "project-scoped",
+      "network": "deny",
+      "process": "allowlisted-only",
+      "evidence": "Target-platform jail probe E:\\ai\\dsh\\runtime\\maintenance\\manager-onboarding\\capabilities\\22c01905-5f57-4f80-8149-14c9327b2775\\probe.json sha256=f883a6c36c80810680b63df5ddd5afd0a0294a4b2e960764118348d15a259b3d"
+    },
+    {
+      "filesystem": "platform-runtime-write-shared-read-only",
+      "network": "deny",
+      "process": "isolated-python",
+      "evidence": "Target-platform jail probe E:\\ai\\dsh\\runtime\\maintenance\\manager-onboarding\\capabilities\\22c01905-5f57-4f80-8149-14c9327b2775\\probe.json sha256=f883a6c36c80810680b63df5ddd5afd0a0294a4b2e960764118348d15a259b3d"
+    },
+    {
+      "filesystem": "shared-read-only-platform-report-write",
+      "network": "deny",
+      "process": "none",
+      "evidence": "Target-platform jail probe E:\\ai\\dsh\\runtime\\maintenance\\manager-onboarding\\capabilities\\22c01905-5f57-4f80-8149-14c9327b2775\\probe.json sha256=f883a6c36c80810680b63df5ddd5afd0a0294a4b2e960764118348d15a259b3d"
+    }
+  ],
+  "descriptor": {
+    "schema": "ai-platform-descriptor/v2",
+    "platformId": "dsh",
+    "protocols": [
+      "ai-run-protocol/v1.1",
+      "ai-run-protocol/v1.2",
+      "ai-run-protocol/v1.3"
+    ],
+    "operations": [
+      "prepare",
+      "next",
+      "submit",
+      "status",
+      "stop"
+    ],
+    "actions": {
+      "prompt": {
+        "supported": true,
+        "enforcement": "mediated",
+        "evidencePath": "E:\\ai\\dsh\\runtime\\maintenance\\manager-onboarding\\capabilities\\22c01905-5f57-4f80-8149-14c9327b2775\\probe.json",
+        "evidenceSha256": "f883a6c36c80810680b63df5ddd5afd0a0294a4b2e960764118348d15a259b3d"
+      },
+      "script": {
+        "supported": true,
+        "enforcement": "kernel",
+        "evidencePath": "E:\\ai\\dsh\\runtime\\maintenance\\manager-onboarding\\capabilities\\22c01905-5f57-4f80-8149-14c9327b2775\\probe.json",
+        "evidenceSha256": "f883a6c36c80810680b63df5ddd5afd0a0294a4b2e960764118348d15a259b3d"
+      },
+      "peer": {
+        "supported": true,
+        "enforcement": "mediated",
+        "evidencePath": "E:\\ai\\dsh\\runtime\\maintenance\\manager-onboarding\\capabilities\\22c01905-5f57-4f80-8149-14c9327b2775\\probe.json",
+        "evidenceSha256": "f883a6c36c80810680b63df5ddd5afd0a0294a4b2e960764118348d15a259b3d"
+      },
+      "software-call": {
+        "supported": true,
+        "enforcement": "mediated",
+        "evidencePath": "E:\\ai\\dsh\\runtime\\maintenance\\manager-onboarding\\capabilities\\22c01905-5f57-4f80-8149-14c9327b2775\\probe.json",
+        "evidenceSha256": "f883a6c36c80810680b63df5ddd5afd0a0294a4b2e960764118348d15a259b3d"
+      }
+    },
+    "enforcement": "advisory",
+    "recovery": [
+      "replay"
+    ],
+    "profiles": {
+      "administrator": {
+        "declared": true,
+        "adapters": [
+          "per-call-connector-consent"
+        ],
+        "evidencePath": "E:\\ai\\dsh\\runtime\\maintenance\\manager-onboarding\\capabilities\\22c01905-5f57-4f80-8149-14c9327b2775\\probe.json",
+        "elevatedDuringProbe": false
+      },
+      "renderer": {
+        "declared": true,
+        "adapters": [
+          "matplotlib-adapter-first"
+        ],
+        "evidencePath": "E:\\ai\\dsh\\runtime\\maintenance\\manager-onboarding\\capabilities\\22c01905-5f57-4f80-8149-14c9327b2775\\probe.json"
+      },
+      "python>=3.8": {
+        "declared": true,
+        "adapters": [
+          "verified-platform-python"
+        ],
+        "evidencePath": "E:\\ai\\dsh\\runtime\\maintenance\\manager-onboarding\\capabilities\\22c01905-5f57-4f80-8149-14c9327b2775\\probe.json"
+      },
+      "portable-resource-python": {
+        "declared": true,
+        "adapters": [
+          "verified-resource-environment"
+        ],
+        "evidencePath": "E:\\ai\\dsh\\runtime\\manager-resources\\63f95f7c-7713-4e47-8aa6-580da1b478ac\\RESTORE-VERIFIED.json",
+        "evidenceSha256": "04d47e8d218f7fc1346fd3c33b272e309ae46d840a7447d7fbbf03b6fdc2cee0"
+      }
+    }
+  },
+  "declaredAbsent": {},
+  "unverified": {},
+  "notes": "本文件只表达当前可回读的能力边界；未验证能力保持 fail-closed。",
+  "attestationStatus": "re-attested 2026-09-27 by the zcode session under the user repair-round authorization (codex/doubao excluded, dsh included). Readings: platform-conformance 1.5.0 suite 25 OK (6 skipped: no evidenceBindings, no script rungs declared); conform items 25 / pass 0 / declaredAbsent 24 / unverified 1 (digest b8096652d08a); full invocation matrix on the current generation wf-runner 0.12.0 + runtime-contracts 1.5.0 + repo-lint 0.6.3: PASS 0 / NEEDS-INPUT 1 / FAIL 45 - every failure is CAPABILITY_UNAVAILABLE from the engine refusing releases whose pinned packages have no declared sealed environment, plus the repo-lint live cell which is a jail-scope NEEDS-INPUT on host-run harnesses. This is the honest fail-closed face: nothing is claimed beyond it.",
+  "gapPlan": {
+    "union-source-gap:software": {
+      "path": "same as software-face: declaring softwareRoot lets the software repository contribute union rows",
+      "costMinutes": 180
+    },
+    "profile:administrator": {
+      "path": "per-call consent adapter only (red line 5); no resident elevation",
+      "costMinutes": 90
+    },
+    "software:burp-suite": {
+      "path": "在软件中心绑定正确版本本体并完成配方快照，回到向导重试",
+      "costMinutes": 20
+    },
+    "software:dirsearch": {
+      "path": "在软件中心绑定正确版本本体并完成配方快照，回到向导重试",
+      "costMinutes": 20
+    },
+    "software:mysql-cli": {
+      "path": "在软件中心绑定正确版本本体并完成配方快照，回到向导重试",
+      "costMinutes": 20
+    },
+    "software:nmap": {
+      "path": "在软件中心绑定正确版本本体并完成配方快照，回到向导重试",
+      "costMinutes": 20
+    },
+    "software:veracrypt": {
+      "path": "在软件中心绑定正确版本本体并完成配方快照，回到向导重试",
+      "costMinutes": 20
+    },
+    "software:wireshark-cli": {
+      "path": "在软件中心绑定正确版本本体并完成配方快照，回到向导重试",
+      "costMinutes": 20
+    }
+  },
+  "readings": {
+    "conformDigest": "b8096652d08a (pre-gapPlan)",
+    "matrixPaired": "PASS 0 / NEEDS-INPUT 1 / FAIL 45 (0.12.0/1.5.0/0.6.3, final)",
+    "matrixPreRaise": "PASS 0 / FAIL 46 (45 CAPABILITY_UNAVAILABLE + 1 VERSION_CONFLICT from the then-pinned repo-lint 0.5.2 vs raised current 0.6.1 - the D-52 pairing rule working)",
+    "evidence": "dsh/runtime/maintenance/20260927-dsh-selfcert/"
+  },
+  "profiles": {
+    "renderer": {
+      "adapters": [
+        "matplotlib-adapter-first"
+      ],
+      "requires": [
+        "matplotlib"
+      ],
+      "evidencePath": "E:\\ai\\dsh\\runtime\\maintenance\\manager-onboarding\\capabilities\\22c01905-5f57-4f80-8149-14c9327b2775\\probe.json",
+      "evidenceSha256": "f883a6c36c80810680b63df5ddd5afd0a0294a4b2e960764118348d15a259b3d"
+    },
+    "portable-resource-python": {
+      "declared": true,
+      "adapters": [
+        "verified-resource-environment"
+      ],
+      "evidencePath": "E:\\ai\\dsh\\runtime\\manager-resources\\63f95f7c-7713-4e47-8aa6-580da1b478ac\\RESTORE-VERIFIED.json",
+      "evidenceSha256": "04d47e8d218f7fc1346fd3c33b272e309ae46d840a7447d7fbbf03b6fdc2cee0"
+    }
+  },
+  "resolvedLegacyGaps": {
+    "runner-protocol-prepare": {
+      "resolvedAt": "2026-10-06T10:48:04.015Z",
+      "evidencePath": "E:\\ai\\dsh\\runtime\\maintenance\\manager-onboarding\\capabilities\\fbb24f99-e508-4dcf-9082-60fdd7e6913f\\probe.json",
+      "evidenceSha256": "3c910b0c2394a70e5d76dbeb57c3705c25c0e938f5d6ac888ad41a4f1daaee70"
+    },
+    "sealed-script-environment": {
+      "resolvedAt": "2026-10-06T10:48:04.015Z",
+      "evidencePath": "E:\\ai\\dsh\\runtime\\maintenance\\manager-onboarding\\capabilities\\fbb24f99-e508-4dcf-9082-60fdd7e6913f\\probe.json",
+      "evidenceSha256": "3c910b0c2394a70e5d76dbeb57c3705c25c0e938f5d6ac888ad41a4f1daaee70"
+    },
+    "peer-dispatch": {
+      "resolvedAt": "2026-10-06T10:48:04.015Z",
+      "evidencePath": "E:\\ai\\dsh\\runtime\\maintenance\\manager-onboarding\\capabilities\\fbb24f99-e508-4dcf-9082-60fdd7e6913f\\probe.json",
+      "evidenceSha256": "3c910b0c2394a70e5d76dbeb57c3705c25c0e938f5d6ac888ad41a4f1daaee70"
+    },
+    "software-face": {
+      "resolvedAt": "2026-10-06T10:48:04.015Z",
+      "evidencePath": "E:\\ai\\dsh\\runtime\\maintenance\\manager-onboarding\\capabilities\\fbb24f99-e508-4dcf-9082-60fdd7e6913f\\probe.json",
+      "evidenceSha256": "3c910b0c2394a70e5d76dbeb57c3705c25c0e938f5d6ac888ad41a4f1daaee70"
+    },
+    "action:script": {
+      "resolvedAt": "2026-10-06T10:48:04.015Z",
+      "evidencePath": "E:\\ai\\dsh\\runtime\\maintenance\\manager-onboarding\\capabilities\\fbb24f99-e508-4dcf-9082-60fdd7e6913f\\probe.json",
+      "evidenceSha256": "3c910b0c2394a70e5d76dbeb57c3705c25c0e938f5d6ac888ad41a4f1daaee70"
+    },
+    "action:peer": {
+      "resolvedAt": "2026-10-06T10:48:04.015Z",
+      "evidencePath": "E:\\ai\\dsh\\runtime\\maintenance\\manager-onboarding\\capabilities\\fbb24f99-e508-4dcf-9082-60fdd7e6913f\\probe.json",
+      "evidenceSha256": "3c910b0c2394a70e5d76dbeb57c3705c25c0e938f5d6ac888ad41a4f1daaee70"
+    },
+    "action:software-call": {
+      "resolvedAt": "2026-10-06T10:48:04.015Z",
+      "evidencePath": "E:\\ai\\dsh\\runtime\\maintenance\\manager-onboarding\\capabilities\\fbb24f99-e508-4dcf-9082-60fdd7e6913f\\probe.json",
+      "evidenceSha256": "3c910b0c2394a70e5d76dbeb57c3705c25c0e938f5d6ac888ad41a4f1daaee70"
+    },
+    "mcp-tool-surface": {
+      "resolvedAt": "2026-10-06T10:48:04.015Z",
+      "evidencePath": "E:\\ai\\dsh\\runtime\\maintenance\\manager-onboarding\\client-latest.json",
+      "evidenceSha256": "9837d56d8d41a7c85cdef858b8d85bd8d66675ef66d1a435feb42f51a337042a"
+    }
+  }
+}

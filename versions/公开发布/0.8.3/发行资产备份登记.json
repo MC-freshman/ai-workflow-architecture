@@ -1,0 +1,24 @@
+{
+  "at": "2026-10-10T19:56:41.874145+08:00",
+  "classification": "Evidence registration, not a current runtime dependency",
+  "backup": "inbox/backup/codex/github-readme-083-20261010",
+  "restoreVerified": true,
+  "containsCredentials": false,
+  "assets": [
+    {
+      "name": "Architecture-Manager-0.8.3-portable-x64.exe",
+      "bytes": 112449035,
+      "sha256": "2385f6cd57e3f7f6613320fc1826088aae2ae8a358b4a9713c1556e20ad7d182",
+      "asarSha256": "4ebedcfeb9a97b9d7891a924200e4a6488cb32fb0f0676a7ad4a555294af5947"
+    },
+    {
+      "name": "Architecture-Manager-0.8.3-setup-x64.exe",
+      "bytes": 112678942,
+      "sha256": "24cb9d6c8bbd9e77edc95c4e18602c73143513454cd06d4177168b9c24ff2024",
+      "asarSha256": "4ebedcfeb9a97b9d7891a924200e4a6488cb32fb0f0676a7ad4a555294af5947"
+    }
+  ],
+  "manifestSha256": "e45d383a68c7cc44fa99ab05446426c7e51ee96d55fb175e6e9b70398e848aaa",
+  "agent": null,
+  "workflow": null
+}

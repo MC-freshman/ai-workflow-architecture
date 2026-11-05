@@ -1,0 +1,86 @@
+{
+  "softwareRoot": "E:\\ai\\software",
+  "lockRoot": "E:\\ai\\qoder\\runtime\\software\\locks",
+  "evidenceRoot": "E:\\ai\\qoder\\runtime\\software\\evidence",
+  "bodies": {
+    "burp-suite": "<local-tool-body-path> V2024.5.1/BurpSuite V2024.5.1/BurpSuite/burpsuite_pro_org.jar",
+    "dirsearch": "D:/Various_programming_languages/PPython/dirsearch-master/dirsearch-master/dirsearch.py",
+    "mysql-cli": "<local-tool-body-path>",
+    "nmap": "<local-tool-body-path>",
+    "veracrypt": "<local-tool-body-path>",
+    "wireshark-cli": "<local-tool-body-path>"
+  },
+  "interpreterAliases": {
+    "PPython": "D:/Various_programming_languages/PPython/python.exe"
+  },
+  "interpreters": {
+    ".py": "E:\\ai\\qoder\\runtime\\manager-environments\\5966c276-0f80-4d2e-bb19-441e4a5befdd\\host\\Scripts\\python.exe"
+  },
+  "credentialProvider": [
+    "E:\\ai\\qoder\\runtime\\manager-environments\\5966c276-0f80-4d2e-bb19-441e4a5befdd\\host\\Scripts\\python.exe",
+    "-B",
+    "E:\\ai\\qoder\\bridge\\manager-providers\\platform_provider.py",
+    "credential",
+    "E:\\ai\\qoder\\runtime\\software\\provider-state"
+  ],
+  "sessionLaunch": [
+    "E:\\ai\\qoder\\runtime\\manager-environments\\5966c276-0f80-4d2e-bb19-441e4a5befdd\\host\\Scripts\\python.exe",
+    "-B",
+    "E:\\ai\\qoder\\bridge\\manager-providers\\platform_provider.py",
+    "launch",
+    "E:\\ai\\qoder\\runtime\\software\\provider-state"
+  ],
+  "sessionLiveness": [
+    "E:\\ai\\qoder\\runtime\\manager-environments\\5966c276-0f80-4d2e-bb19-441e4a5befdd\\host\\Scripts\\python.exe",
+    "-B",
+    "E:\\ai\\qoder\\bridge\\manager-providers\\platform_provider.py",
+    "liveness",
+    "E:\\ai\\qoder\\runtime\\software\\provider-state"
+  ],
+  "sessionTerminate": [
+    "E:\\ai\\qoder\\runtime\\manager-environments\\5966c276-0f80-4d2e-bb19-441e4a5befdd\\host\\Scripts\\python.exe",
+    "-B",
+    "E:\\ai\\qoder\\bridge\\manager-providers\\platform_provider.py",
+    "terminate",
+    "E:\\ai\\qoder\\runtime\\software\\provider-state"
+  ],
+  "credentialWorkspace": "E:\\ai\\qoder\\runtime\\software\\credentials",
+  "allowGuiLaunch": false,
+  "projectWriteRoots": [
+    "E:/ai/qoder/runtime/maintenance/2.0-C/fixtures/project"
+  ],
+  "artifactRoots": [
+    "E:\\ai\\qoder\\runtime\\software"
+  ],
+  "softwareProfiles": {
+    "readonly-version": {
+      "filesystem": [
+        "none",
+        "read"
+      ],
+      "network": [
+        "none"
+      ],
+      "credentials": [
+        "none"
+      ]
+    },
+    "administrator": {
+      "filesystem": [
+        "none",
+        "read",
+        "system"
+      ],
+      "network": [
+        "none"
+      ],
+      "credentials": [
+        "none"
+      ],
+      "consentPolicy": "per-call-user-confirmation"
+    }
+  },
+  "platformId": "qoder",
+  "platform": "windows",
+  "note": "2026-10-14 接入轮改绑：六件 bodies 原指向 E:/ai/dsh/runtime/software/*（跨平台读 dsh runtime，隔离违规且 dsh 的 dirsearch 本体不完整），现按 software-gateway.json 的既有工具箱绑定改回；改绑前原件与 sha256 见 runtime/maintenance/20261014-integration/pre-adoption/。"
+}

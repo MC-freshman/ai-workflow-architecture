@@ -7,7 +7,7 @@ import {targetPath,defaultAuditRoot} from '../../core/paths.mjs';
 import {readJson,stableJson} from '../../core/json.mjs';
 import {sha256,sha256File} from '../../core/hash.mjs';
 import {validateFrozenResource} from '../resources/versions.mjs';
-import {runnerConfig} from '../../software-publish.mjs';
+import {runnerConfig} from './software-publish.mjs';
 import {platformPython} from '../platforms/runtime-binding.mjs';
 import {runScopedProcess} from '../../infrastructure/process-scope.mjs';
 import {atomicWrite,requirePlan,writeAudit,saveCheckpoint} from '../../transactions/kernel.mjs';

@@ -1,0 +1,182 @@
+{
+  "schema": "ai-platform-capabilities/v1",
+  "platform": "zcode",
+  "attestedAt": "2026-10-07T07:54:18.243Z",
+  "attestationStatus": "re-attested 2026-09-27 (+08) by the maintenance repair round M-P5: zcode adopted wf-runner 0.12.0 (D-45 discarded-run trail preservation, D-46 bytecode guard) + repo-lint 0.6.3 (D-75 validator sync + D-83 report-version unpin) + platform-conformance 1.5.1 battery. Readings: suite 26/26, conform, full matrix on the 0.12.0 stack (see round ledger).",
+  "checks": {
+    "python-runtime": true,
+    "runner-dependency-resolution": true,
+    "prompt-stage-claim": true,
+    "script-environment-isolation-jail": true,
+    "peerDispatch": true,
+    "software-gateway-smoke": true,
+    "software-call": true
+  },
+  "permissionAdapters": [
+    {
+      "filesystem": "project-scoped",
+      "network": "deny",
+      "process": "allowlisted-only",
+      "evidence": "Target-platform jail probe E:\\ai\\zcode\\runtime\\maintenance\\manager-onboarding\\capabilities\\1a58d3f1-1239-4741-b62e-38df59a99f40\\probe.json sha256=aec23d80f56d28e13bb26a5865722dbbec10bbe2979a21250c2181344bb3dd9f"
+    },
+    {
+      "filesystem": "platform-runtime-write-shared-read-only",
+      "network": "deny",
+      "process": "isolated-python",
+      "evidence": "Target-platform jail probe E:\\ai\\zcode\\runtime\\maintenance\\manager-onboarding\\capabilities\\1a58d3f1-1239-4741-b62e-38df59a99f40\\probe.json sha256=aec23d80f56d28e13bb26a5865722dbbec10bbe2979a21250c2181344bb3dd9f"
+    },
+    {
+      "filesystem": "shared-read-only-platform-report-write",
+      "network": "deny",
+      "process": "none",
+      "evidence": "Target-platform jail probe E:\\ai\\zcode\\runtime\\maintenance\\manager-onboarding\\capabilities\\1a58d3f1-1239-4741-b62e-38df59a99f40\\probe.json sha256=aec23d80f56d28e13bb26a5865722dbbec10bbe2979a21250c2181344bb3dd9f"
+    }
+  ],
+  "profiles": {
+    "renderer": {
+      "adapters": [
+        "matplotlib-adapter-first"
+      ],
+      "requires": [
+        "matplotlib"
+      ],
+      "evidencePath": "E:\\ai\\zcode\\runtime\\maintenance\\manager-onboarding\\capabilities\\1a58d3f1-1239-4741-b62e-38df59a99f40\\probe.json",
+      "evidenceSha256": "aec23d80f56d28e13bb26a5865722dbbec10bbe2979a21250c2181344bb3dd9f"
+    },
+    "portable-resource-python": {
+      "declared": true,
+      "adapters": [
+        "verified-resource-environment"
+      ],
+      "evidencePath": "E:\\ai\\zcode\\runtime\\manager-resources\\3040a469-85d7-4541-b4e2-455dc1252412\\RESTORE-VERIFIED.json",
+      "evidenceSha256": "1d99f07584d391c5c85ba076f89e72cb540cca64bd353e6fa2c2950d42eb3af5"
+    }
+  },
+  "descriptor": {
+    "schema": "ai-platform-descriptor/v2",
+    "platformId": "zcode",
+    "protocols": [
+      "ai-run-protocol/v1.1",
+      "ai-run-protocol/v1.2"
+    ],
+    "operations": [
+      "prepare",
+      "next",
+      "submit",
+      "status",
+      "stop"
+    ],
+    "actions": {
+      "prompt": {
+        "supported": true,
+        "enforcement": "mediated",
+        "evidencePath": "E:\\ai\\zcode\\runtime\\maintenance\\manager-onboarding\\capabilities\\1a58d3f1-1239-4741-b62e-38df59a99f40\\probe.json",
+        "evidenceSha256": "aec23d80f56d28e13bb26a5865722dbbec10bbe2979a21250c2181344bb3dd9f"
+      },
+      "script": {
+        "supported": true,
+        "enforcement": "kernel",
+        "evidencePath": "E:\\ai\\zcode\\runtime\\maintenance\\manager-onboarding\\capabilities\\1a58d3f1-1239-4741-b62e-38df59a99f40\\probe.json",
+        "evidenceSha256": "aec23d80f56d28e13bb26a5865722dbbec10bbe2979a21250c2181344bb3dd9f"
+      },
+      "peer": {
+        "supported": true,
+        "enforcement": "mediated",
+        "evidencePath": "E:\\ai\\zcode\\runtime\\maintenance\\manager-onboarding\\capabilities\\1a58d3f1-1239-4741-b62e-38df59a99f40\\probe.json",
+        "evidenceSha256": "aec23d80f56d28e13bb26a5865722dbbec10bbe2979a21250c2181344bb3dd9f"
+      },
+      "software-call": {
+        "supported": true,
+        "enforcement": "mediated",
+        "evidencePath": "E:\\ai\\zcode\\runtime\\maintenance\\manager-onboarding\\capabilities\\1a58d3f1-1239-4741-b62e-38df59a99f40\\probe.json",
+        "evidenceSha256": "aec23d80f56d28e13bb26a5865722dbbec10bbe2979a21250c2181344bb3dd9f"
+      }
+    },
+    "profiles": {
+      "renderer": {
+        "declared": true,
+        "adapters": [
+          "matplotlib-adapter-first"
+        ],
+        "evidencePath": "E:\\ai\\zcode\\runtime\\maintenance\\manager-onboarding\\capabilities\\1a58d3f1-1239-4741-b62e-38df59a99f40\\probe.json"
+      },
+      "python>=3.8": {
+        "declared": true,
+        "adapters": [
+          "verified-platform-python"
+        ],
+        "evidencePath": "E:\\ai\\zcode\\runtime\\maintenance\\manager-onboarding\\capabilities\\1a58d3f1-1239-4741-b62e-38df59a99f40\\probe.json"
+      },
+      "administrator": {
+        "declared": true,
+        "adapters": [
+          "per-call-connector-consent"
+        ],
+        "evidencePath": "E:\\ai\\zcode\\runtime\\maintenance\\manager-onboarding\\capabilities\\1a58d3f1-1239-4741-b62e-38df59a99f40\\probe.json",
+        "elevatedDuringProbe": false
+      },
+      "portable-resource-python": {
+        "declared": true,
+        "adapters": [
+          "verified-resource-environment"
+        ],
+        "evidencePath": "E:\\ai\\zcode\\runtime\\manager-resources\\3040a469-85d7-4541-b4e2-455dc1252412\\RESTORE-VERIFIED.json",
+        "evidenceSha256": "1d99f07584d391c5c85ba076f89e72cb540cca64bd353e6fa2c2950d42eb3af5"
+      }
+    },
+    "enforcement": "mediated",
+    "recovery": [
+      "replay"
+    ],
+    "evidenceBindings": {
+      "configDigest": "1bcb2e47a32eeaefce5981afa268ab97cabd5514f3275ca797829faf18f6be73",
+      "runnerDigest": "4e152bdb66834fa6defeb2a0a677b5a099c32ddbc8523c4a8c76acf695fc650e",
+      "runnerTreeDigest": "65264119660f10b4b9e4617073e5c68c5d4cc9e6119777a95e931b7a69657e69",
+      "environmentDigest": "1e3687c9cb625552ede851336c6ec3062af99f198661435eef2e3d3fe7539a88"
+    }
+  },
+  "software": {
+    "gateway": "software/_connector/versions/1.0.7 (shared connector, pinned bytes)",
+    "configKeys": "zcode/bridge/zcode-config.json declares softwareRoot / softwareRuntimeRoot / softwareGateway / softwareGatewayConfig / softwareEnvironment / softwareProfiles / softwareConsentGrants / interpreters",
+    "gatewayConfig": "zcode/bridge/software-gateway.json: bodies are this platform's own survey (every file hashed on this machine against the published recipe verify.files); allowedHosts=[127.0.0.1, localhost]; allowGuiLaunch=false; no credentialProvider and no session providers declared yet",
+    "frozenSnapshots": "dirsearch@1.0.1, mysql-cli@1.0.2, wireshark-cli@1.0.1 frozen (published); nmap@1.0.0, burp-suite@1.0.0, veracrypt@1.0.0 unfrozen (published state, honestly served as frozen=false)",
+    "bodySurvey": "Z3/body-survey.json: dirsearch 2/2, mysql-cli 3/3, wireshark-cli 5/5, burp-suite 4/4, veracrypt 2/2 files match; nmap.exe carries a one-hex-digit digest mismatch against its own recipe (drift evidence, registered with D-61 context) and nmap stays unfrozen",
+    "realDispatch": "Z3/call-dirsearch-version-res.json: real connector dispatch of dirsearch@1.0.1 version capability (exitCode 0, stdout 'dirsearch v0.4.3', outputSha256 a4af01b0...); same-key replay returned replayed=true without re-dispatch (Z3/call-dirsearch-version-replay.json); evidence layout under zcode/runtime/software/evidence/",
+    "smoke": "Z3/smoke-req-*/res-*: 10/10 structured exchanges (6 inventory asks, software.list, software.health, unknown-id CAPABILITY_UNAVAILABLE, missing-key INVALID_REQUEST); engine-shaped messages (no kind key) verified against _connector 1.0.6 (D-93 fix present)"
+  },
+  "declaredAbsent": {},
+  "gapPlan": {
+    "profile:administrator": {
+      "path": "declare an administrator-scoped adapter only behind a per-call consent grant (no resident elevation, red line 5): register the consent-gated adapter, verify one elevated software operation under a per-call consentToken, re-attest",
+      "costMinutes": 90
+    },
+    "math-solver-chain": {
+      "path": "obsolete as a capability item since the 2026-09-22 ruling (math modeling equals every other agentic workflow); the scientific stack it needs is now declared in the sealed script environment at the phase1 lock pins - kept here only as provenance of the removal",
+      "costMinutes": 0
+    },
+    "software:nmap": {
+      "path": "X-P4 (this round): publish nmap 1.0.1 with recipe verify.files matching the live body, freeze the snapshot from a live read-only inquiry, register the verified body",
+      "costMinutes": 60
+    },
+    "software:veracrypt": {
+      "path": "X-P5 (this round): publish veracrypt 1.0.1 declaring the desktop-session transport; the snapshot stays honestly unfrozen (no stdout to inquire) until a per-call-consent session run",
+      "costMinutes": 45
+    }
+  },
+  "evidence": {
+    "promptSubmit": "runtime/maintenance/20260917-reconnect/submit-intake-response.txt; full matrix 2026-09-26 Z4/matrix-full.json exercises prepare/claim/stop on the 0.10.1 stack",
+    "terminalStop": "runtime/maintenance/20260917-reconnect/stop-smoke-response.txt",
+    "scriptEnvironment": "0.7.7 bytes: runtime/maintenance/2.0-prod-adoption/baseline/RL30P77-snapshot.json (real script stage to succeeded) + RL30P77-negatives.json. 0.10.1 bytes: Z4/env-verification-attestation.json (engine environment_verify full pass, 2370/2370, 0 mismatches, manifestSha256 1e3687c9cb625552); end-to-end script execution on 0.10.1 is blocked repo-wide by Z-D2, not by this platform",
+    "peerDispatch": "0.7.7 bytes: runtime/maintenance/2.0-prod-adoption/baseline/V6-{a-closure,b-lineage,c-idempotency,d-rejections,e-restricted}.json (BATTERY GREEN); dispatcher module unchanged this round",
+    "softwareCall": "20260927-3x-repair/rp5/ evidence set: attach open->SESSION_READY on a human-path pid, status alive, close SESSION_CLOSED, dead-pid attach refused ATTACH_FAILED without starting a replacement; regression smoke + real dirsearch dispatch on 1.0.7",
+    "conformance": "Z2/suite-after.txt and Z4/suite-final.txt (25 tests: the 1 failure is the shared-side Z-D1, byte-identical before and after this round's changes) + Z4/conform-floor.json (final: items 27 / pass 26 / declaredAbsent 1 / unverified 0 / remediationMissing 0, digest 5e7f769c85cf, union 21afc04781c3)"
+  },
+  "notes": "Rewritten 2026-09-26 by the zcode full-adoption round (Z-P4). The previous attestation (2026-09-19) described the 0.7.7 stack and is superseded; its evidence files remain on disk and are referenced by byte generation. math-solver-chain is removed from declaredAbsent per the 2026-09-22 ruling that math modeling equals every other agentic workflow - the capability item itself no longer exists in the union. mcp-tool-surface stays declaredAbsent with a fill path; no other union item is declared absent.",
+  "resolvedLegacyGaps": {
+    "mcp-tool-surface": {
+      "resolvedAt": "2026-10-07T07:54:18.243Z",
+      "evidencePath": "E:\\ai\\zcode\\runtime\\maintenance\\manager-onboarding\\client-latest.json",
+      "evidenceSha256": "71ebba192b78e7ef514effb434edc15db896ad85baa4fbab9ae737b832d377d6"
+    }
+  }
+}

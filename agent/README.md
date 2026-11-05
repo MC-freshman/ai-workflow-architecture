@@ -1,7 +1,120 @@
-# agent · 专家角色、提示词与精确依赖锁
+# Shared Agent Registry
 
-本仓 registry.json 是登记入口；每个资源的 current.json 选择默认版，versions/<版本> 保存冻结的文本/源码及 SHA256SUMS。使用实际锁定版本，旧版本不可覆盖。
+Canonical shared Agent registry for every integrated runtime platform
+(codex, dsh, workbuddy, zcode, doubao, qoder, and qoder-cn - registered 2026-10-28 as
+the seventh platform directory; its accession evidence belongs to that platform
+alone and is not claimed here).
 
-软件本体、环境、凭据和运行数据归使用者自己的平台；配方或定义存在不代表已安装或接入。管理台可浏览资源、预览发布新版本、切换默认或个人选版。
+- Architecture basic principles (superior to this file): `E:\ai\versions\架构基本原则.md`
+  — BP-1 three-repo skeleton (`tool` + `agent` + `software`) immutable and symmetric /
+  BP-2 platform parity + capability floor, authorship confers no runtime privilege,
+  conclusions are never copied between platforms / BP-3 acceptance and onboarding minimal
+  (adding an agent whose required capability Profile is already declared by a platform
+  costs zero platform changes plus one `conform --only <id>` smoke cell) /
+  BP-4 one project split into runs across platforms must stay functionally equivalent
+  to running it on one platform, which requires a platform-neutral project state layer,
+  version-consistency checks on continuation, and cross-platform resource arbitration /
+  BP-5 stepwise execution and closure: a plan entering execution is cut into ordered P
+  steps of about 2-3 hours each, every P into 2-4 sub-blocks with a safe interrupt point,
+  execution follows the approved plan strictly, non-blocking defects found mid-flight are
+  logged rather than fixed and get one consolidated fix plan after close-out, and running
+  every P step to its pre-written criteria means the update is complete (criteria freeze
+  at plan sign-off and are never raised mid-round).
 
-使用方法见 [操作手册](../docs/user-guide.md)，版本与职责见 [架构说明](../docs/architecture.md)。第三方资源的 LICENSE/NOTICE 和来源许可优先。
+- Registry: E:\ai\agent\registry.json
+- Published bundles: E:\ai\agent\<agent-id>\versions\<version>
+- Runtime state belongs to the consuming platform, never here.
+- Published versions are immutable. Create a new version directory for every change.
+- Top-level resolution follows an explicit version, then a platform-local default,
+  then the Agent's `current.json`. Record the exact version and source before execution.
+  Internal Workflow/Skill/Pack selection must obey the Agent's exact `tool-lock.json`;
+  neither a platform default nor an explicit argument may bypass that lock.
+- Agent releases contain prompts, domain policies, tests, and a version-locked
+  `tool-lock.json`; shared Skill, pack, and Workflow implementations belong to
+  `E:\ai\tool`.
+- A run may select a profile (for example one game engine), but profile expansion
+  must be resolved to exact Skill and Workflow versions before execution.
+
+## Current Status (2026-09-05)
+
+There are 13 Agents with v1/v2 manifests. The math Agent is 1.6.0 and locks math
+Workflow 1.5.0. The mastermind shared pointer and registry both select
+3.2.1-dsh.1; Codex has a local 3.3.0 default. This intentional override is not
+a reason to change the shared pointer.
+
+Complete version inventory and deferred implementation:
+`E:\ai\agentic-workflow-master-manual.md` (the three 2026-09-07 draft plans
+formerly under `inbox\workflow-archive-20260907\` were retired on 2026-09-30). Existing releases, pointers,
+machine registries, and local defaults remain frozen during the competition.
+Updating a lock requires a new Agent release; candidate Workflow 1.6.0 would
+need a new math Agent release for Agent-mode adoption, provisionally 1.7.0.
+
+peer-lock is a future mechanism. Its design requires exact versions, rejects
+unknown peers, and does not allow automatic minor-version following. A historical
+multi-Agent run-lock alone does not demonstrate prior authorization or successful execution.
+
+## Experts and scenario selection (architecture 3.1.0, 2026-09-23)
+
+- One domain = one expert. An expert's `tool-lock.json` may now pin a v3 workflow plus the skills its scenarios
+  select (`skills` in the lock, exact semver). Selecting a scenario at `prepare` is a top-level `scenario` key on
+  the request -- not a parameter inside `input.parameters`, because every workflow's `input.schema.json` is closed
+  and adding a key there would mean rewriting 113 published releases.
+- The scenario decides **which of the expert's own pinned skill documents reach the prompt**, nothing else:
+  versions still come from the lock, the tier still comes from `rigor`, and a scenario never unlocks a tier
+  ("未写档位" stays draft).
+- `deprecated` / `supersededBy` on a registry row are descriptions for humans and for `repo-lint` R17. The hard
+  switch is `enabled`: setting `enabled: false` makes pinned older runs fail to resolve, which is exactly what
+  R17 exists to catch. Collapsing six experts into one (security) or eleven workflows into one (game) moved no
+  bytes and flipped no pointers.
+- A merged expert's release must state where its scenario content came from. When the source expert's prompt was
+  four lines and the craft lives in the skills it pins, the scenario selects those skills instead of writing new
+  prose -- inventing a `SKILL.md` to make a migration look complete is a defect, not a deliverable.
+- Adoption is still per-platform: publishing `wf-runner 0.10.0` + `runtime-contracts 1.4.0` + `repo-lint 0.5.1`
+  as one generation did not move any `current.json`, so no expert runs on scenarios until its platform adopts and
+  self-certifies that stack.
+
+## 当前状态更正（2026-09-23，3.1.0 采纳收口）
+
+专家默认已切到 `game-builder 1.9.1`、`mastermind-bug-bounty 4.0.0`、`novel-writer 1.5.1`、`software-engineer 1.5.1`、`visualization-engineer 1.7.1`。旧释放目录保持只读；1.9.1/1.5.1/1.7.1 是对历史元数据或哈希完整性的新增修复释放。
+
+## 2026-10-09 现行专家面
+
+现行主责28位，另保留7个deprecated入口。每位1领域核心+1主流程+按任务辅助卡，见上位治理文档 versions/专家扩充与上下文控制-收口报告-20261009.md。目录ID不等于覆盖职业全集，未验证外部接入不能写成功。
+
+| 主责 | 专家 | 主流程 / 版本 | 核心与辅助 |
+|---|---|---|---|
+| 治理 | framework-author@1.1.0 | framework-pipeline@1.1.0 | 1核心 + 6辅助 |
+| 研发 | software-architect@1.0.0 | software-architect-pipeline@1.0.0 | 1核心 + 6辅助 |
+| 研发 | software-engineer@1.8.0 | se-pipeline@1.3.0 | 1核心 + 9辅助（按场景）+ 2深度资源 |
+| 研发 | frontend-engineer@1.1.0 | frontend-engineer-pipeline@1.1.0 | 1核心 + 10辅助（按场景）+ 2深度资源 |
+| 研发 | qa-engineer@1.0.0 | qa-engineer-pipeline@1.0.0 | 1核心 + 7辅助 |
+| 研发 | database-engineer@1.0.0 | database-engineer-pipeline@1.0.0 | 1核心 + 6辅助 |
+| 运维 | devops-engineer@1.0.0 | devops-engineer-pipeline@1.0.0 | 1核心 + 6辅助 |
+| 运维 | automation-engineer@1.0.0 | automation-engineer-pipeline@1.0.0 | 1核心 + 6辅助 |
+| 数据 | data-engineer@1.0.0 | data-engineer-pipeline@1.0.0 | 1核心 + 6辅助 |
+| 数据 | data-analyst@1.0.0 | data-analyst-pipeline@1.0.0 | 1核心 + 6辅助 |
+| AI | ml-engineer@1.0.0 | ml-engineer-pipeline@1.0.0 | 1核心 + 6辅助 |
+| AI | llm-engineer@1.0.0 | llm-engineer-pipeline@1.0.0 | 1核心 + 6辅助 |
+| 数模 | modeling-analyst@1.0.0 | modeling-analyst-pipeline@1.0.0 | 1核心 + 6辅助 |
+| 数模 | math-modeling-programmer@1.10.0 | math-modeling-programmer@1.8.0 | 1核心 + 6辅助 |
+| 设计 | ui-ux-designer@1.1.0 | ui-ux-designer-pipeline@1.1.0 | 1核心 + 9辅助（按场景）+ 2深度资源 |
+| 设计 | visualization-engineer@1.8.0 | visualization-qa@1.4.0 | 1核心 + 6辅助 |
+| 产品 | product-manager@1.0.0 | product-manager-pipeline@1.0.0 | 1核心 + 6辅助 |
+| 游戏 | game-designer@1.0.0 | game-designer-pipeline@1.0.0 | 1核心 + 6辅助 |
+| 游戏 | game-builder@1.11.0 | game-pipeline@1.2.0 | 1核心 + 6辅助 |
+| 故事 | story-architect@1.0.0 | story-architect-pipeline@1.0.0 | 1核心 + 6辅助 |
+| 故事 | novel-writer@1.7.0 | novel-pipeline@1.2.0 | 1核心 + 6辅助 |
+| 研究 | research-analyst@1.0.0 | research-analyst-pipeline@1.0.0 | 1核心 + 6辅助 |
+| 研究 | paper-author@1.1.0 | paper-pipeline@1.1.0 | 1核心 + 6辅助 |
+| 内容 | content-strategist@1.0.0 | content-strategist-pipeline@1.0.0 | 1核心 + 6辅助 |
+| 办公 | document-engineer@1.0.0 | document-engineer-pipeline@1.0.0 | 1核心 + 6辅助 |
+| 办公 | spreadsheet-engineer@1.0.0 | spreadsheet-engineer-pipeline@1.0.0 | 1核心 + 6辅助 |
+| 办公 | presentation-designer@1.0.0 | presentation-designer-pipeline@1.0.0 | 1核心 + 6辅助 |
+| 安全 | mastermind-bug-bounty@4.2.0 | mastermind-bug-bounty@3.2.0 | 1核心 + 6辅助 |
+
+
+## 2026-10-10 使用引导与界面方法
+
+软件专家 1.8.0 配 se-pipeline 1.3.0；前端与 UI/UX 专家各 1.1.0，仍一领域核心、一主流程、按场景辅助。software-engineer 默认增加短体验路由，完整软件可选 product、交付可选 delivery/release；前端和设计的 product-ui 选中视觉/文案/引导方法。深度资料精确钉 ui-design-reference-library 1.0.0，不常驻加载全集。
+
+新软件交付包括真实快速开始、示例/结果/恢复方法；界面按用途/已有风格确定方向并检查实际渲染。软件逻辑、界面实现与设计契约保持领域分界，没有新增自动多模型委派能力。后端小修不加载整套 UI 方法。详见 versions/软件专家引导与界面质量增强-收口报告-20261010.md（从根仓读取）。

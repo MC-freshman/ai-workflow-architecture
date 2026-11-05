@@ -1,0 +1,83 @@
+{
+  "zeroImportFiles": [
+    "src/domains/platforms/default-command.mjs"
+  ],
+  "zeroExternalRefExports": [
+    {
+      "file": "src/core/platforms.mjs",
+      "name": "discoverPlatformIds"
+    },
+    {
+      "file": "src/documents.mjs",
+      "name": "TOP_LEVEL_REQUIREMENTS"
+    },
+    {
+      "file": "src/domains/certification/anchor.mjs",
+      "name": "ANCHOR_SCHEMA"
+    },
+    {
+      "file": "src/domains/certification/anchor.mjs",
+      "name": "anchorRefusal"
+    },
+    {
+      "file": "src/domains/certification/anchor.mjs",
+      "name": "anchorPairFacts"
+    },
+    {
+      "file": "src/domains/certification/evidence.mjs",
+      "name": "ownEvidence"
+    },
+    {
+      "file": "src/domains/certification/evidence.mjs",
+      "name": "writeCoverage"
+    },
+    {
+      "file": "src/domains/certification/fingerprints.mjs",
+      "name": "certificationInventory"
+    },
+    {
+      "file": "src/domains/git/sensitive.mjs",
+      "name": "inspectBytes"
+    },
+    {
+      "file": "src/domains/intake/software-body.mjs",
+      "name": "normalizeSoftwareAction"
+    },
+    {
+      "file": "src/domains/intake/tool-body.mjs",
+      "name": "workflowTextFiles"
+    },
+    {
+      "file": "src/domains/platforms/onboarding-resume.mjs",
+      "name": "ONBOARDING_STEPS"
+    },
+    {
+      "file": "src/domains/platforms/onboarding-resume.mjs",
+      "name": "automaticJournalPath"
+    },
+    {
+      "file": "src/domains/platforms/runtime-discovery.mjs",
+      "name": "pythonCandidates"
+    },
+    {
+      "file": "src/domains/software/mcp-discovery.mjs",
+      "name": "validateMcpSchemas"
+    },
+    {
+      "file": "src/inventory.mjs",
+      "name": "SHARED_REPOSITORIES"
+    },
+    {
+      "file": "src/onboarding-providers.mjs",
+      "name": "applyBindingEdits"
+    },
+    {
+      "file": "src/plans.mjs",
+      "name": "validatePointerTransition"
+    },
+    {
+      "file": "src/runs.mjs",
+      "name": "summarizeRunLock"
+    }
+  ]
+}

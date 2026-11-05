@@ -1,0 +1,56 @@
+{
+  "schema": "ai-platform-capabilities/v1",
+  "platform": "zcode",
+  "attestedAt": "2026-09-17",
+  "checks": {
+    "python-runtime": true,
+    "runner-dependency-resolution": true,
+    "scriptEnvironment": true,
+    "peerDispatch": true
+  },
+  "permissionAdapters": [
+    {
+      "filesystem": "project-scoped",
+      "network": "deny",
+      "process": "allowlisted-only",
+      "evidence": "Prompt-only session adapter: writes confined to this platform, no task network requests or task subprocesses; runner lifecycle uses pinned CLI. These are session constraints, NOT OS-level sandbox isolation. Script execution is absent and fails closed."
+    },
+    {
+      "filesystem": "shared-read-only-platform-report-write",
+      "network": "deny",
+      "process": "none",
+      "evidence": "zcode/runtime/maintenance/2.0-unlock/baseline/C2d-backend.json jail checks D04_sharedToolReadOnlyVisible/D04_sharedAgentReadOnlyVisible/D04_sharedReadOnly_deniesWrites (Landlock+chroot jail on the pinned WSL2 backend, runner 0.7.5 injection path); repo-lint 0.3.0 re-probes the mounts write-denied before every live scan."
+    }
+  ],
+  "profiles": {
+    "renderer": {
+      "adapters": [
+        "matplotlib-adapter-first"
+      ],
+      "requires": [
+        "matplotlib"
+      ]
+    }
+  },
+  "evidence": {
+    "promptSubmit": "runtime/maintenance/20260917-reconnect/submit-intake-response.txt",
+    "terminalStop": "runtime/maintenance/20260917-reconnect/stop-smoke-response.txt",
+    "renderer": "runtime/maintenance/20260917-reconnect/renderer-selftest.png; matplotlib 3.9.4 Agg; PNG decoder verified, not a visual quality acceptance",
+    "scriptEnvironment": "runtime/maintenance/2.0-unlock/baseline/A2-script-loop.json; runtime/maintenance/2.0-unlock/baseline/C2d-backend.json",
+    "peerDispatch": "runtime/maintenance/2.0-unlock/baseline/V6-{defects-076,a-closure,b-lineage,c-idempotency,d-rejections,e-restricted,verify}.json; real child runs under runtime/runs/v6a-mastermind peer-dispatch/d6e224fc109ac + d6e224fc109ac-mastermind-* child runs (pilot surface, runner 0.7.6, dispatcher zcode/bridge/ops/peer_dispatcher.py)"
+  },
+  "declaredAbsent": {
+    "peerDispatch": {
+      "status": "declaredAbsent",
+      "note": "REMOVED 2026-09-18 (pilot): V6-a..e acceptance GREEN on runner 0.7.6 with real child runs (baseline/V6-*.json). Dispatcher = zcode/bridge/ops/peer_dispatcher.py via tmp acceptance overlay; checks.peerDispatch was flipped to true only after V6-a went green. Production adoption is the closing wave."
+    },
+    "mcp-tool-surface": "Not registered",
+    "math-solver-chain": "Not validated; no delivery/freeze claims",
+    "scriptEnvironment": {
+      "status": "declaredAbsent",
+      "note": "REMOVED — script environment restored 2026-09-17 (pilot): A2 controller loop, C2d jail re-auth on the injected backend, exact-lock py310 venv inventory. Pilot config only until the closing wave adopts 0.7.5 in production."
+    }
+  },
+  "notes": "Reconnection scope only; previous acceptance evidence was deleted. No historical capability claims inherited.",
+  "controllerSha256": "2cd9c1230d9074775601753a713e101b3428c6bd8056f9050f101fc2c58b5ac4"
+}

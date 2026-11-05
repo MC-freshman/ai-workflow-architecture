@@ -1,0 +1,1734 @@
+TAP version 13
+# Subtest: a raw skill and raw expert join without current files, exact skill/workflow pins remain readable
+ok 1 - a raw skill and raw expert join without current files, exact skill/workflow pins remain readable
+  ---
+  duration_ms: 2309.8594
+  type: 'test'
+  ...
+# Subtest: editing one skill in an existing multi-skill catalog keeps all other rows and avoids duplicate registration
+ok 2 - editing one skill in an existing multi-skill catalog keeps all other rows and avoids duplicate registration
+  ---
+  duration_ms: 2071.6971
+  type: 'test'
+  ...
+# Subtest: full text edits produce a new skill version and preserve both old source and old frozen bytes
+ok 3 - full text edits produce a new skill version and preserve both old source and old frozen bytes
+  ---
+  duration_ms: 2039.8873
+  type: 'test'
+  ...
+# Subtest: an expert without a main workflow, floating pin, empty body, or raw secret cannot become a callable registration
+ok 4 - an expert without a main workflow, floating pin, empty body, or raw secret cannot become a callable registration
+  ---
+  duration_ms: 664.7796
+  type: 'test'
+  ...
+# Subtest: the agent prompt context rejects a rewritten skill seal after preview instead of attaching stale text to a new pin
+ok 5 - the agent prompt context rejects a rewritten skill seal after preview instead of attaching stale text to a new pin
+  ---
+  duration_ms: 1782.2889
+  type: 'test'
+  ...
+# Subtest: both anchor plan kinds apply and verify through the transaction dispatcher the UI uses
+ok 6 - both anchor plan kinds apply and verify through the transaction dispatcher the UI uses
+  ---
+  duration_ms: 2710.1914
+  type: 'test'
+  ...
+# Subtest: an alignment plan refuses to write when the platform changed after the plan was built
+ok 7 - an alignment plan refuses to write when the platform changed after the plan was built
+  ---
+  duration_ms: 1301.9954
+  type: 'test'
+  ...
+# Subtest: materialising the anchor writes one file, re-derives to the same digest, and then reports no change
+ok 8 - materialising the anchor writes one file, re-derives to the same digest, and then reports no change
+  ---
+  duration_ms: 1234.967
+  type: 'test'
+  ...
+# Subtest: aligning a platform writes only the two configuration files and keeps unrelated keys
+ok 9 - aligning a platform writes only the two configuration files and keeps unrelated keys
+  ---
+  duration_ms: 1949.3379
+  type: 'test'
+  ...
+# Subtest: the pair warning travels with the plan instead of refusing it, and the warning names both versions
+ok 10 - the pair warning travels with the plan instead of refusing it, and the warning names both versions
+  ---
+  duration_ms: 1795.4097
+  type: 'test'
+  ...
+# Subtest: an interrupted alignment restores every file it had already written
+ok 11 - an interrupted alignment restores every file it had already written
+  ---
+  duration_ms: 1513.2618
+  type: 'test'
+  ...
+# Subtest: an alignment plan refuses to apply after the platform configuration changed under it
+ok 12 - an alignment plan refuses to apply after the platform configuration changed under it
+  ---
+  duration_ms: 1411.0325
+  type: 'test'
+  ...
+# Subtest: without a materialised anchor no alignment plan can be built
+ok 13 - without a materialised anchor no alignment plan can be built
+  ---
+  duration_ms: 103.1618
+  type: 'test'
+  ...
+# fatal: not a git repository (or any of the parent directories): .git
+# Subtest: a post-alignment run asks for the affected-cell mode, records the anchor digest, and never claims a client loop
+ok 14 - a post-alignment run asks for the affected-cell mode, records the anchor digest, and never claims a client loop
+  ---
+  duration_ms: 759.2448
+  type: 'test'
+  ...
+# Subtest: a failing post-alignment check stops the record and keeps the failure readable
+ok 15 - a failing post-alignment check stops the record and keeps the failure readable
+  ---
+  duration_ms: 988.239
+  type: 'test'
+  ...
+# Subtest: the report names every platform that carries a bridge, and says why the anchor is unavailable
+ok 16 - the report names every platform that carries a bridge, and says why the anchor is unavailable
+  ---
+  duration_ms: 1482.6247
+  type: 'test'
+  ...
+# Subtest: anchor takes the newest frozen engine whose declared checker is present, and names why the rest lost
+ok 17 - anchor takes the newest frozen engine whose declared checker is present, and names why the rest lost
+  ---
+  duration_ms: 606.0988
+  type: 'test'
+  ...
+# Subtest: an engine whose declared checker is not on disk is named as the reason it lost
+ok 18 - an engine whose declared checker is not on disk is named as the reason it lost
+  ---
+  duration_ms: 399.8698
+  type: 'test'
+  ...
+# Subtest: engines without the one-process interface cannot anchor, and a workspace without one refuses to anchor
+ok 19 - engines without the one-process interface cannot anchor, and a workspace without one refuses to anchor
+  ---
+  duration_ms: 99.0649
+  type: 'test'
+  ...
+# Subtest: a workspace without a matrix-compatible judge refuses to anchor instead of falling back
+ok 20 - a workspace without a matrix-compatible judge refuses to anchor instead of falling back
+  ---
+  duration_ms: 256.6132
+  type: 'test'
+  ...
+# Subtest: alignment reports every key that differs from the anchor, and downgrades the pair question to a named warning
+ok 21 - alignment reports every key that differs from the anchor, and downgrades the pair question to a named warning
+  ---
+  duration_ms: 1147.2375
+  type: 'test'
+  ...
+# Subtest: without a materialised anchor the alignment says so instead of inventing one
+ok 22 - without a materialised anchor the alignment says so instead of inventing one
+  ---
+  duration_ms: 49.6478
+  type: 'test'
+  ...
+# Subtest: Windows ZIP restore ignores GNU tar ahead of system tar in PATH
+ok 23 - Windows ZIP restore ignores GNU tar ahead of system tar in PATH
+  ---
+  duration_ms: 8646.4956
+  type: 'test'
+  ...
+# Subtest: new audit events always have time and a content seal; no timestamp is invented for old events
+ok 24 - new audit events always have time and a content seal; no timestamp is invented for old events
+  ---
+  duration_ms: 8.1158
+  type: 'test'
+  ...
+# Subtest: valid JSON scalars and wrong event shapes are rejected rather than sent to the renderer
+ok 25 - valid JSON scalars and wrong event shapes are rejected rather than sent to the renderer
+  ---
+  duration_ms: 4.1566
+  type: 'test'
+  ...
+# Subtest: object-valued display fields cannot crash the renderer; started-only operations stay explicitly unresolved
+ok 26 - object-valued display fields cannot crash the renderer; started-only operations stay explicitly unresolved
+  ---
+  duration_ms: 6.6381
+  type: 'test'
+  ...
+# Subtest: sealed-event alteration and checkpoint corruption are independently detected
+ok 27 - sealed-event alteration and checkpoint corruption are independently detected
+  ---
+  duration_ms: 19.4088
+  type: 'test'
+  ...
+# Subtest: checkpoint references outside the audit namespace are not read
+ok 28 - checkpoint references outside the audit namespace are not read
+  ---
+  duration_ms: 3.2929
+  type: 'test'
+  ...
+# Subtest: unsupported and unconfirmed plans have correlated start/failure events without changing the workspace
+ok 29 - unsupported and unconfirmed plans have correlated start/failure events without changing the workspace
+  ---
+  duration_ms: 9.5323
+  type: 'test'
+  ...
+# Subtest: an interruption after a checkpoint links the final failure to the actual recovery point
+ok 30 - an interruption after a checkpoint links the final failure to the actual recovery point
+  ---
+  duration_ms: 10.6972
+  type: 'test'
+  ...
+# Subtest: async failures and cancellation preserve correlation and redact memory-only credential values
+ok 31 - async failures and cancellation preserve correlation and redact memory-only credential values
+  ---
+  duration_ms: 12.5043
+  type: 'test'
+  ...
+# Subtest: parallel and nested operations do not mix identifiers or credential contexts
+ok 32 - parallel and nested operations do not mix identifiers or credential contexts
+  ---
+  duration_ms: 20.3569
+  type: 'test'
+  ...
+# Subtest: credential patterns are redacted on write and old events are redacted without rewriting their bytes
+ok 33 - credential patterns are redacted on write and old events are redacted without rewriting their bytes
+  ---
+  duration_ms: 7.3764
+  type: 'test'
+  ...
+# Subtest: audit write failure blocks dispatch and finalization failure never pretends an applied write did not occur
+ok 34 - audit write failure blocks dispatch and finalization failure never pretends an applied write did not occur
+  ---
+  duration_ms: 4.6369
+  type: 'test'
+  ...
+# Subtest: workspace/status/id filters and bounded limits select actual events
+ok 35 - workspace/status/id filters and bounded limits select actual events
+  ---
+  duration_ms: 6.4468
+  type: 'test'
+  ...
+# Subtest: parses events, counts corrupt lines, and honors the limit
+ok 36 - parses events, counts corrupt lines, and honors the limit
+  ---
+  duration_ms: 6.7737
+  type: 'test'
+  ...
+# Subtest: reports a missing audit root instead of failing
+ok 37 - reports a missing audit root instead of failing
+  ---
+  duration_ms: 0.4312
+  type: 'test'
+  ...
+# Subtest: metadata fills identity and exact next semver; Chinese names get a stable safe identifier
+ok 38 - metadata fills identity and exact next semver; Chinese names get a stable safe identifier
+  ---
+  duration_ms: 48.45
+  type: 'test'
+  ...
+# Subtest: one automatic prompt workflow plan keeps original body and creates real sealed publication inputs
+ok 39 - one automatic prompt workflow plan keeps original body and creates real sealed publication inputs
+  ---
+  duration_ms: 630.7266
+  type: 'test'
+  ...
+# Subtest: software and unresolved entries do not silently become workflow plans
+ok 40 - software and unresolved entries do not silently become workflow plans
+  ---
+  duration_ms: 43.5823
+  type: 'test'
+  ...
+# Subtest: manifest or unique canonical entry removes README ambiguity; multiple bodies remain explicit
+ok 41 - manifest or unique canonical entry removes README ambiguity; multiple bodies remain explicit
+  ---
+  duration_ms: 1.6172
+  type: 'test'
+  ...
+# Subtest: unknown GUI automatically publishes only a standard session and binds without starting the body
+ok 42 - unknown GUI automatically publishes only a standard session and binds without starting the body
+  ---
+  duration_ms: 2251.1815
+  type: 'test'
+  ...
+# Subtest: one confirmed existing-software plan really restores and binds once, preserves recipe and source, and records pending health honestly
+ok 43 - one confirmed existing-software plan really restores and binds once, preserves recipe and source, and records pending health honestly
+  ---
+  duration_ms: 1461.5291
+  type: 'test'
+  ...
+# Subtest: legacy bridge conflict follows the actual configuration reference and refuses an unknown authority
+ok 44 - legacy bridge conflict follows the actual configuration reference and refuses an unknown authority
+  ---
+  duration_ms: 65.0035
+  type: 'test'
+  ...
+# Subtest: only identifiable legacy string expansion is removed; legitimate numeric custom data remains
+ok 45 - only identifiable legacy string expansion is removed; legitimate numeric custom data remains
+  ---
+  duration_ms: 1.4077
+  type: 'test'
+  ...
+# Subtest: unchanged certification reuses positive source rows; same-pins additions select exactly the added resource
+ok 46 - unchanged certification reuses positive source rows; same-pins additions select exactly the added resource
+  ---
+  duration_ms: 1074.8419
+  type: 'test'
+  ...
+# Subtest: Profile/provider changes select the dependent cells and unrelated registry metadata causes no test
+ok 47 - Profile/provider changes select the dependent cells and unrelated registry metadata causes no test
+  ---
+  duration_ms: 1192.4819
+  type: 'test'
+  ...
+# Subtest: pointer/dependency changes and modified frozen bytes cannot hide behind unchanged engine pins
+ok 48 - pointer/dependency changes and modified frozen bytes cannot hide behind unchanged engine pins
+  ---
+  duration_ms: 670.5864
+  type: 'test'
+  ...
+# Subtest: damaged sources, cross-platform evidence, empty selections and different returned rows fail closed
+ok 49 - damaged sources, cross-platform evidence, empty selections and different returned rows fail closed
+  ---
+  duration_ms: 1111.3351
+  type: 'test'
+  ...
+# Subtest: first/full certification is never manufactured by a zero-row or single-row smoke report
+ok 50 - first/full certification is never manufactured by a zero-row or single-row smoke report
+  ---
+  duration_ms: 205.9278
+  type: 'test'
+  ...
+# Subtest: interrupted first matrix retains only actual unchanged PASS rows and tests unfinished cells
+ok 51 - interrupted first matrix retains only actual unchanged PASS rows and tests unfinished cells
+  ---
+  duration_ms: 296.82
+  type: 'test'
+  ...
+# Subtest: major generation and changed validation rules cannot reuse incompatible results
+ok 52 - major generation and changed validation rules cannot reuse incompatible results
+  ---
+  duration_ms: 615.7641
+  type: 'test'
+  ...
+# Subtest: legacy complete evidence migrates without another matrix only when its complete binding still matches
+ok 53 - legacy complete evidence migrates without another matrix only when its complete binding still matches
+  ---
+  duration_ms: 989.1851
+  type: 'test'
+  ...
+# Subtest: content hashing reuses unchanged bytes but detects same-size edits even if mtime is restored
+ok 54 - content hashing reuses unchanged bytes but detects same-size edits even if mtime is restored
+  ---
+  duration_ms: 482.9864
+  type: 'test'
+  ...
+# Subtest: registry metadata changes can migrate the old shared digest from Git while changed private bindings cannot
+ok 55 - registry metadata changes can migrate the old shared digest from Git while changed private bindings cannot
+  ---
+  duration_ms: 3044.0481
+  type: 'test'
+  ...
+# Subtest: a partial incremental attempt retains its newly passing cells and retries only failures
+ok 56 - a partial incremental attempt retains its newly passing cells and retries only failures
+  ---
+  duration_ms: 1052.5178
+  type: 'test'
+  ...
+# Subtest: recommendation excludes candidates and requires the exact paired checker; selection is explicit
+ok 57 - recommendation excludes candidates and requires the exact paired checker; selection is explicit
+  ---
+  duration_ms: 962.2181
+  type: 'test'
+  ...
+# Subtest: the legacy selection export delegates to validated resource and evidence rules
+ok 58 - the legacy selection export delegates to validated resource and evidence rules
+  ---
+  duration_ms: 759.9251
+  type: 'test'
+  ...
+# Subtest: the legacy export refuses a changed engine generation rather than falling back to one cell
+ok 59 - the legacy export refuses a changed engine generation rather than falling back to one cell
+  ---
+  duration_ms: 441.6347
+  type: 'test'
+  ...
+# Subtest: empty, entirely skipped, truncated, cancelled and inconsistent summaries cannot produce a green conform
+ok 60 - empty, entirely skipped, truncated, cancelled and inconsistent summaries cannot produce a green conform
+  ---
+  duration_ms: 2.1917
+  type: 'test'
+  ...
+# Subtest: test-source or package changes alter the proof even when result counts are unchanged
+ok 61 - test-source or package changes alter the proof even when result counts are unchanged
+  ---
+  duration_ms: 41.2243
+  type: 'test'
+  ...
+# Subtest: the snapshot inventory follows the platform declaration, so a passing row is not rejected at merge
+ok 62 - the snapshot inventory follows the platform declaration, so a passing row is not rejected at merge
+  ---
+  duration_ms: 625.0636
+  type: 'test'
+  ...
+# Subtest: a cell whose version the platform does not declare keeps the shared pointer
+ok 63 - a cell whose version the platform does not declare keeps the shared pointer
+  ---
+  duration_ms: 207.7926
+  type: 'test'
+  ...
+# Subtest: a declared version is read from either a bare version or a release path
+ok 64 - a declared version is read from either a bare version or a release path
+  ---
+  duration_ms: 1.0147
+  type: 'test'
+  ...
+# Subtest: only the cells whose version the platform declares are overridden
+ok 65 - only the cells whose version the platform declares are overridden
+  ---
+  duration_ms: 55.4426
+  type: 'test'
+  ...
+# Subtest: a platform without a bridge declaration overrides nothing
+ok 66 - a platform without a bridge declaration overrides nothing
+  ---
+  duration_ms: 5.1802
+  type: 'test'
+  ...
+# Subtest: the judge command line carries the platform declaration instead of the shared pointer
+ok 67 - the judge command line carries the platform declaration instead of the shared pointer
+  ---
+  duration_ms: 12.5674
+  type: 'test'
+  ...
+# Subtest: set-status goes through plan, apply, verify and stays idempotent
+ok 68 - set-status goes through plan, apply, verify and stays idempotent
+  ---
+  duration_ms: 30.3597
+  type: 'test'
+  ...
+# Subtest: external change between plan and apply is blocked without writing
+ok 69 - external change between plan and apply is blocked without writing
+  ---
+  duration_ms: 11.2897
+  type: 'test'
+  ...
+# Subtest: append registers a new row and rejects duplicates and missing fields
+ok 70 - append registers a new row and rejects duplicates and missing fields
+  ---
+  duration_ms: 21.1087
+  type: 'test'
+  ...
+# Subtest: builder rejects invalid status, wrong baseline and unknown operations
+ok 71 - builder rejects invalid status, wrong baseline and unknown operations
+  ---
+  duration_ms: 14.1942
+  type: 'test'
+  ...
+# Subtest: simulated interrupt after checkpoint leaves the book unchanged and restorable
+ok 72 - simulated interrupt after checkpoint leaves the book unchanged and restorable
+  ---
+  duration_ms: 17.598
+  type: 'test'
+  ...
+# Subtest: reads the defect book with counts and red rows surfaced loudly
+ok 73 - reads the defect book with counts and red rows surfaced loudly
+  ---
+  duration_ms: 5.555
+  type: 'test'
+  ...
+# Subtest: reports a missing or corrupt book without inventing one
+ok 74 - reports a missing or corrupt book without inventing one
+  ---
+  duration_ms: 4.0647
+  type: 'test'
+  ...
+# Subtest: runs the real stdlib checker when it exists on this host
+ok 75 - runs the real stdlib checker when it exists on this host
+  ---
+  duration_ms: 108.3193
+  type: 'test'
+  ...
+# Subtest: task wrappers operate on Electron-style frozen preload methods without changing them
+ok 76 - task wrappers operate on Electron-style frozen preload methods without changing them
+  ---
+  duration_ms: 5.4482
+  type: 'test'
+  ...
+# Subtest: active gateway stays authoritative after Python changes; malformed historic file never blocks reads
+ok 77 - active gateway stays authoritative after Python changes; malformed historic file never blocks reads
+  ---
+  duration_ms: 1266.6008
+  type: 'test'
+  ...
+# Subtest: explicit migration is executable, preserves source, checks both baselines and rolls back interrupted writes
+ok 78 - explicit migration is executable, preserves source, checks both baselines and rolls back interrupted writes
+  ---
+  duration_ms: 1871.9507
+  type: 'test'
+  ...
+# Subtest: unselected conflicting gateways are readable but configuration writes require explicit source choice
+ok 79 - unselected conflicting gateways are readable but configuration writes require explicit source choice
+  ---
+  duration_ms: 2111.5614
+  type: 'test'
+  ...
+# Subtest: clearing one body and interpreter alias removes only that binding; provider refresh never restores old file values
+ok 80 - clearing one body and interpreter alias removes only that binding; provider refresh never restores old file values
+  ---
+  duration_ms: 1666.1443
+  type: 'test'
+  ...
+# Subtest: private relative paths use selected workspace and reject other platforms, sibling roots and junction escapes
+ok 81 - private relative paths use selected workspace and reject other platforms, sibling roots and junction escapes
+  ---
+  duration_ms: 463.4886
+  type: 'test'
+  ...
+# Subtest: reconcile invalidates stale runtime installation plan with preserved history; unrelated software changes retain it
+ok 82 - reconcile invalidates stale runtime installation plan with preserved history; unrelated software changes retain it
+  ---
+  duration_ms: 0.9925
+  type: 'test'
+  ...
+# (node:20000) [DEP0187] DeprecationWarning: Passing invalid argument types to fs.existsSync is deprecated
+# (Use `node --trace-deprecation ...` to show where the warning was created)
+# Subtest: commits only the explicitly listed paths and verifies by HEAD advance
+ok 83 - commits only the explicitly listed paths and verifies by HEAD advance
+  ---
+  duration_ms: 1712.2282
+  type: 'test'
+  ...
+# Subtest: rejects add -A, dot, wildcards and absolute paths by construction
+ok 84 - rejects add -A, dot, wildcards and absolute paths by construction
+  ---
+  duration_ms: 3667.192
+  type: 'test'
+  ...
+# Subtest: rejects stale plans after HEAD moved externally
+ok 85 - rejects stale plans after HEAD moved externally
+  ---
+  duration_ms: 1257.1533
+  type: 'test'
+  ...
+# Subtest: blocks commits whose staged paths hit the sensitive scan
+ok 86 - blocks commits whose staged paths hit the sensitive scan
+  ---
+  duration_ms: 1131.6903
+  type: 'test'
+  ...
+# Subtest: creates branch and tag plans and verifies the refs
+ok 87 - creates branch and tag plans and verifies the refs
+  ---
+  duration_ms: 2029.256
+  type: 'test'
+  ...
+# Subtest: rollback uses revert --no-edit and produces a revert commit
+ok 88 - rollback uses revert --no-edit and produces a revert commit
+  ---
+  duration_ms: 1315.414
+  type: 'test'
+  ...
+# Subtest: export backup writes the archive and SHA256SUMS under inbox/archive
+ok 89 - export backup writes the archive and SHA256SUMS under inbox/archive
+  ---
+  duration_ms: 1734.6983
+  type: 'test'
+  ...
+# Subtest: a configured but unreachable local remote fails with a structured git error and an audit row
+ok 90 - a configured but unreachable local remote fails with a structured git error and an audit row
+  ---
+  duration_ms: 1571.5786
+  type: 'test'
+  ...
+# Subtest: generic GUI commit rejects unrelated staged content before changing the index
+ok 91 - generic GUI commit rejects unrelated staged content before changing the index
+  ---
+  duration_ms: 1359.4823
+  type: 'test'
+  ...
+# Subtest: NUL status preserves a leading space, Chinese/space/newline paths and rename source
+ok 92 - NUL status preserves a leading space, Chinese/space/newline paths and rename source
+  ---
+  duration_ms: 1113.9295
+  type: 'test'
+  ...
+# Subtest: directory and binary scanning finds both the fake secret and software body
+ok 93 - directory and binary scanning finds both the fake secret and software body
+  ---
+  duration_ms: 520.7653
+  type: 'test'
+  ...
+# Subtest: option-shaped or absent remotes are rejected at preview and execution
+ok 94 - option-shaped or absent remotes are rejected at preview and execution
+  ---
+  duration_ms: 2864.0227
+  type: 'test'
+  ...
+# Subtest: snapshot needs a real restore and rejects corruption and extra payload
+ok 95 - snapshot needs a real restore and rejects corruption and extra payload
+  ---
+  duration_ms: 1716.8537
+  type: 'test'
+  ...
+# Subtest: history backup restores repository history, staged changes and untracked working files
+ok 96 - history backup restores repository history, staged changes and untracked working files
+  ---
+  duration_ms: 2797.4918
+  type: 'test'
+  ...
+# To C:\\Users\\wk\\AppData\\Local\\Temp\\manager-global-update-gLVY3F\\remote.git
+#  * [new branch]      master -> master
+# To C:\\Users\\wk\\AppData\\Local\\Temp\\manager-global-update-4v4nb3\\remote.git
+#  * [new branch]      master -> master
+# To C:\\Users\\wk\\AppData\\Local\\Temp\\manager-global-update-IPTq8i\\remote.git
+#  * [new branch]      master -> master
+# To C:\\Users\\wk\\AppData\\Local\\Temp\\manager-global-update-fmwESN\\remote.git
+#  * [new branch]      master -> master
+# To C:\\Users\\wk\\AppData\\Local\\Temp\\manager-global-update-SwVZxl\\remote.git
+#  * [new branch]      master -> master
+# To C:\\Users\\wk\\AppData\\Local\\Temp\\manager-global-update-nQhQW3\\remote.git
+#  * [new branch]      master -> master
+# To C:\\Users\\wk\\AppData\\Local\\Temp\\manager-global-update-loDj8i\\remote.git
+#  * [new branch]      master -> master
+# To C:\\Users\\wk\\AppData\\Local\\Temp\\manager-global-update-hheQqv\\remote.git
+#  * [new branch]      master -> master
+# To C:\\Users\\wk\\AppData\\Local\\Temp\\manager-global-update-zr8BrP\\remote.git
+#  * [new branch]      master -> master
+# To C:\\Users\\wk\\AppData\\Local\\Temp\\manager-global-update-yuQnLv\\remote.git
+#  * [new branch]      master -> master
+# To C:\\Users\\wk\\AppData\\Local\\Temp\\manager-global-update-AbifZK\\remote.git
+#  * [new branch]      master -> master
+# Subtest: preflight collects window and explicit source without writing configuration
+ok 97 - preflight collects window and explicit source without writing configuration
+  ---
+  duration_ms: 6024.7773
+  type: 'test'
+  ...
+# Subtest: post-activation throw is committed as pending, resumes without reinstall and remains restorable
+ok 98 - post-activation throw is committed as pending, resumes without reinstall and remains restorable
+  ---
+  duration_ms: 18396.0766
+  type: 'test'
+  ...
+# Subtest: cancel after activation settles its configuration before returning stopped
+ok 99 - cancel after activation settles its configuration before returning stopped
+  ---
+  duration_ms: 5888.3333
+  type: 'test'
+  ...
+# Subtest: owned worker cancellation is observed even when the local onboarding job was not cancelled
+ok 100 - owned worker cancellation is observed even when the local onboarding job was not cancelled
+  ---
+  duration_ms: 9653.216
+  type: 'test'
+  ...
+# Subtest: a check that edits configuration externally cannot have that edit committed or overwritten
+ok 101 - a check that edits configuration externally cannot have that edit committed or overwritten
+  ---
+  duration_ms: 7462.4176
+  type: 'test'
+  ...
+# Subtest: global update fixes current once, updates two isolated platforms, keeps current and in-flight locks, and reuses unchanged evidence
+ok 102 - global update fixes current once, updates two isolated platforms, keeps current and in-flight locks, and reuses unchanged evidence
+  ---
+  duration_ms: 21114.8575
+  type: 'test'
+  ...
+# Subtest: one platform pending does not block the other, and continuing a stopped plan does not repeat completed preparation
+ok 103 - one platform pending does not block the other, and continuing a stopped plan does not repeat completed preparation
+  ---
+  duration_ms: 15073.3195
+  type: 'test'
+  ...
+# Subtest: external changes are preserved and stale shared targets are refused
+ok 104 - external changes are preserved and stale shared targets are refused
+  ---
+  duration_ms: 7583.6341
+  type: 'test'
+  ...
+# Subtest: restoration refuses to overwrite an external edit and restores only owned configuration
+ok 105 - restoration refuses to overwrite an external edit and restores only owned configuration
+  ---
+  duration_ms: 16564.4002
+  type: 'test'
+  ...
+# Subtest: dependency closure reads x-runtimeRequirements and rejects actual version conflicts and bad seals
+ok 106 - dependency closure reads x-runtimeRequirements and rejects actual version conflicts and bad seals
+  ---
+  duration_ms: 3210.5678
+  type: 'test'
+  ...
+# Subtest: global update includes and restores an existing legacy bridge without breaking the paired configuration
+ok 107 - global update includes and restores an existing legacy bridge without breaking the paired configuration
+  ---
+  duration_ms: 18302.6644
+  type: 'test'
+  ...
+# Subtest: inventories the three zones shallowly without requiring all of them
+ok 108 - inventories the three zones shallowly without requiring all of them
+  ---
+  duration_ms: 23.7967
+  type: 'test'
+  ...
+# Subtest: surfaces the BP-7 ledger when present
+ok 109 - surfaces the BP-7 ledger when present
+  ---
+  duration_ms: 4.9533
+  type: 'test'
+  ...
+# Subtest: real Electron copies external ASAR bodies as opaque bytes and restores them
+ok 110 - real Electron copies external ASAR bodies as opaque bytes and restores them
+  ---
+  duration_ms: 1595.6422
+  type: 'test'
+  ...
+# Subtest: new external agent is sealed, registered once and original bytes survive; shared version cannot be overwritten
+ok 111 - new external agent is sealed, registered once and original bytes survive; shared version cannot be overwritten
+  ---
+  duration_ms: 1242.5641
+  type: 'test'
+  ...
+# Subtest: published-before-registration interruption resumes without replacing the release or replaying stage copies
+ok 112 - published-before-registration interruption resumes without replacing the release or replaying stage copies
+  ---
+  duration_ms: 1307.9451
+  type: 'test'
+  ...
+# Subtest: partial registration can be really restored; frozen release and unrelated external edits are preserved
+ok 113 - partial registration can be really restored; frozen release and unrelated external edits are preserved
+  ---
+  duration_ms: 1355.817
+  type: 'test'
+  ...
+# Subtest: source drift, uncommitted rollback baseline and path escape stop before publication
+ok 114 - source drift, uncommitted rollback baseline and path escape stop before publication
+  ---
+  duration_ms: 952.9558
+  type: 'test'
+  ...
+# Subtest: same ID upgrade preserves old sealed bytes and restores exact old pointer/registry after a real rollback commit
+ok 115 - same ID upgrade preserves old sealed bytes and restores exact old pointer/registry after a real rollback commit
+  ---
+  duration_ms: 2235.1323
+  type: 'test'
+  ...
+# Subtest: copy cancellation preserves partial staging and resumes one sealed publication safely
+ok 116 - copy cancellation preserves partial staging and resumes one sealed publication safely
+  ---
+  duration_ms: 1408.3378
+  type: 'test'
+  ...
+# Subtest: software placement, real backup restore and binding compose once across an interrupted publication
+ok 117 - software placement, real backup restore and binding compose once across an interrupted publication
+  ---
+  duration_ms: 1536.8542
+  type: 'test'
+  ...
+# Subtest: the common apply/verify route and history produce a bound undo plan instead of trusting a different displayed target
+ok 118 - the common apply/verify route and history produce a bound undo plan instead of trusting a different displayed target
+  ---
+  duration_ms: 1640.7234
+  type: 'test'
+  ...
+# Subtest: external BOM prompt and skill ZIP remain original; body instructions never execute
+ok 119 - external BOM prompt and skill ZIP remain original; body instructions never execute
+  ---
+  duration_ms: 55.6279
+  type: 'test'
+  ...
+# Subtest: shared sources separate caches, credentials, binaries and invalid encoding without exposing secrets
+ok 120 - shared sources separate caches, credentials, binaries and invalid encoding without exposing secrets
+  ---
+  duration_ms: 46.4853
+  type: 'test'
+  ...
+# Subtest: source edits invalidate intake while restored runtime placement has explicit two-copy peak
+ok 121 - source edits invalidate intake while restored runtime placement has explicit two-copy peak
+  ---
+  duration_ms: 12.6193
+  type: 'test'
+  ...
+# Subtest: ZIP traversal, links, aliases, corrupt payloads and file/directory collisions are rejected before extraction
+ok 122 - ZIP traversal, links, aliases, corrupt payloads and file/directory collisions are rejected before extraction
+  ---
+  duration_ms: 19.22
+  type: 'test'
+  ...
+# Subtest: directory junctions are refused and cooperative cancel stops a real source scan
+ok 123 - directory junctions are refused and cooperative cancel stops a real source scan
+  ---
+  duration_ms: 6.8668
+  type: 'test'
+  ...
+# Subtest: intake and placement-only UI requests reach the real Worker in their own workspace
+ok 124 - intake and placement-only UI requests reach the real Worker in their own workspace
+  ---
+  duration_ms: 1348.7941
+  type: 'test'
+  ...
+# Subtest: scans a workspace without writing
+ok 125 - scans a workspace without writing
+  ---
+  duration_ms: 62.0811
+  type: 'test'
+  ...
+# Subtest: suggests the newest stable release without silently changing current
+ok 126 - suggests the newest stable release without silently changing current
+  ---
+  duration_ms: 47.2238
+  type: 'test'
+  ...
+# Subtest: shows the update log first with the same document kind in scan and read views
+ok 127 - shows the update log first with the same document kind in scan and read views
+  ---
+  duration_ms: 49.1846
+  type: 'test'
+  ...
+# Subtest: validates platform markers and persists only a local view plan
+ok 128 - validates platform markers and persists only a local view plan
+  ---
+  duration_ms: 37.0044
+  type: 'test'
+  ...
+# Subtest: reads full agent/skill entries and applies a guarded registry plan
+ok 129 - reads full agent/skill entries and applies a guarded registry plan
+  ---
+  duration_ms: 69.6688
+  type: 'test'
+  ...
+# Subtest: registry guard ignores obsolete releases but blocks the active release
+ok 130 - registry guard ignores obsolete releases but blocks the active release
+  ---
+  duration_ms: 51.4921
+  type: 'test'
+  ...
+# Subtest: classifies corrupt current.json instead of treating it as green
+ok 131 - classifies corrupt current.json instead of treating it as green
+  ---
+  duration_ms: 42.6839
+  type: 'test'
+  ...
+# Subtest: rejects a missing root and paths outside the selected root
+ok 132 - rejects a missing root and paths outside the selected root
+  ---
+  duration_ms: 27.5727
+  type: 'test'
+  ...
+# Subtest: creates a reversible platform view plan without applying it
+ok 133 - creates a reversible platform view plan without applying it
+  ---
+  duration_ms: 1.3558
+  type: 'test'
+  ...
+# Subtest: rejects a stale or unavailable resource pointer target
+ok 134 - rejects a stale or unavailable resource pointer target
+  ---
+  duration_ms: 0.7802
+  type: 'test'
+  ...
+# Subtest: protects top-level requirements and creates a hashed document plan
+ok 135 - protects top-level requirements and creates a hashed document plan
+  ---
+  duration_ms: 0.5885
+  type: 'test'
+  ...
+# Subtest: lists registered software and makes absent launch executor explicit
+ok 136 - lists registered software and makes absent launch executor explicit
+  ---
+  duration_ms: 25.0062
+  type: 'test'
+  ...
+# Subtest: imports a new software file into one platform with a full backup and real restore drill
+ok 137 - imports a new software file into one platform with a full backup and real restore drill
+  ---
+  duration_ms: 92.733
+  type: 'test'
+  ...
+# Subtest: software import refuses changed source bytes before any copy
+ok 138 - software import refuses changed source bytes before any copy
+  ---
+  duration_ms: 35.2702
+  type: 'test'
+  ...
+# Subtest: software import checkpoint interruption leaves no body or backup
+ok 139 - software import checkpoint interruption leaves no body or backup
+  ---
+  duration_ms: 33.7614
+  type: 'test'
+  ...
+# Subtest: publishes only a probed CLI version capability and binds its platform connector
+ok 140 - publishes only a probed CLI version capability and binds its platform connector
+  ---
+  duration_ms: 812.9354
+  type: 'test'
+  ...
+# Subtest: a published recipe stays pending when connector verification cannot complete
+ok 141 - a published recipe stays pending when connector verification cannot complete
+  ---
+  duration_ms: 177.7879
+  type: 'test'
+  ...
+# Subtest: creates guarded Git plans without applying them
+ok 142 - creates guarded Git plans without applying them
+  ---
+  duration_ms: 4349.8375
+  type: 'test'
+  ...
+# Subtest: applies and verifies a document plan with checkpoint and idempotency
+ok 143 - applies and verifies a document plan with checkpoint and idempotency
+  ---
+  duration_ms: 98.8543
+  type: 'test'
+  ...
+# Subtest: blocks external document changes and preserves the original on interruption
+ok 144 - blocks external document changes and preserves the original on interruption
+  ---
+  duration_ms: 62.2592
+  type: 'test'
+  ...
+# Subtest: applies and verifies a hashed shared current pointer plan
+ok 145 - applies and verifies a hashed shared current pointer plan
+  ---
+  duration_ms: 533.0923
+  type: 'test'
+  ...
+# Subtest: plans and applies GUI integration for platform config and shared resource pointer
+ok 146 - plans and applies GUI integration for platform config and shared resource pointer
+  ---
+  duration_ms: 163.5751
+  type: 'test'
+  ...
+# Subtest: migrates a legacy bridge and its runner reference together without deleting the old file
+ok 147 - migrates a legacy bridge and its runner reference together without deleting the old file
+  ---
+  duration_ms: 150.2011
+  type: 'test'
+  ...
+# Subtest: a bridge migration interrupted after checkpoints leaves both files unchanged
+ok 148 - a bridge migration interrupted after checkpoints leaves both files unchanged
+  ---
+  duration_ms: 104.2456
+  type: 'test'
+  ...
+# Subtest: generates a no-code root bridge for an existing platform directory without configuration
+ok 149 - generates a no-code root bridge for an existing platform directory without configuration
+  ---
+  duration_ms: 64.1926
+  type: 'test'
+  ...
+# Subtest: refuses a real platform check when only a bridge marker exists
+ok 150 - refuses a real platform check when only a bridge marker exists
+  ---
+  duration_ms: 35.3033
+  type: 'test'
+  ...
+# Subtest: rejects GUI integration paths outside the existing workspace shape and raw secrets
+ok 151 - rejects GUI integration paths outside the existing workspace shape and raw secrets
+  ---
+  duration_ms: 45.3392
+  type: 'test'
+  ...
+# Subtest: prefers root bridge and reports divergent legacy bridge without a duplicate marker
+ok 152 - prefers root bridge and reports divergent legacy bridge without a duplicate marker
+  ---
+  duration_ms: 49.5219
+  type: 'test'
+  ...
+# Subtest: matrix progress only uses complete actual events, including split Chinese text
+ok 153 - matrix progress only uses complete actual events, including split Chinese text
+  ---
+  duration_ms: 1.8667
+  type: 'test'
+  ...
+# Subtest: application boundary exposes the complete IPC domain surface
+ok 154 - application boundary exposes the complete IPC domain surface
+  ---
+  duration_ms: 1.4341
+  type: 'test'
+  ...
+# Subtest: read and write application surfaces stay separate
+ok 155 - read and write application surfaces stay separate
+  ---
+  duration_ms: 0.1689
+  type: 'test'
+  ...
+# Subtest: core and transaction kernel remain Electron independent
+ok 156 - core and transaction kernel remain Electron independent
+  ---
+  duration_ms: 0.7416
+  type: 'test'
+  ...
+# Subtest: every binding referenced by an Electron handler is imported or locally bound
+ok 157 - every binding referenced by an Electron handler is imported or locally bound
+  ---
+  duration_ms: 1.2842
+  type: 'test'
+  ...
+# Subtest: every declared operation channel is registered by the Electron entry point
+ok 158 - every declared operation channel is registered by the Electron entry point
+  ---
+  duration_ms: 1.4353
+  type: 'test'
+  ...
+# Subtest: native AI proof requires one genuine paired tool-use/result, never final model JSON or an ack
+ok 159 - native AI proof requires one genuine paired tool-use/result, never final model JSON or an ack
+  ---
+  duration_ms: 2.8393
+  type: 'test'
+  ...
+# Subtest: native auth bridge waits for credential success and never exports auth tokens
+ok 160 - native auth bridge waits for credential success and never exports auth tokens
+  ---
+  duration_ms: 390.827
+  type: 'test'
+  ...
+# Subtest: real native discovery, explicit permissions, typed call, tool failure, missing reference and drift
+ok 161 - real native discovery, explicit permissions, typed call, tool failure, missing reference and drift
+  ---
+  duration_ms: 7699.6144
+  type: 'test'
+  ...
+# Subtest: real Streamable HTTP uses initialized notification, session headers and pagination/SSE responses
+ok 162 - real Streamable HTTP uses initialized notification, session headers and pagination/SSE responses
+  ---
+  duration_ms: 4935.2847
+  type: 'test'
+  ...
+# Subtest: Windows credential reference is isolated and encrypted backups really restore; plans/evidence contain no values
+ok 163 - Windows credential reference is isolated and encrypted backups really restore; plans/evidence contain no values
+  ---
+  duration_ms: 2645.0878
+  type: 'test'
+  ...
+# Subtest: new failed or pending native verification invalidates an older success without deleting its evidence
+ok 164 - new failed or pending native verification invalidates an older success without deleting its evidence
+  ---
+  duration_ms: 0.7756
+  type: 'test'
+  ...
+# Subtest: native JSONC reader preserves URL/comment-shaped strings and rejects unclosed comments
+ok 165 - native JSONC reader preserves URL/comment-shaped strings and rejects unclosed comments
+  ---
+  duration_ms: 1.0437
+  type: 'test'
+  ...
+# Subtest: proved permissions remove the precise old absence, stronger and unproved declarations survive
+ok 166 - proved permissions remove the precise old absence, stronger and unproved declarations survive
+  ---
+  duration_ms: 0.3918
+  type: 'test'
+  ...
+# Subtest: native body discovery uses interface artifacts and rejects cross-platform paths
+ok 167 - native body discovery uses interface artifacts and rejects cross-platform paths
+  ---
+  duration_ms: 20.0427
+  type: 'test'
+  ...
+# Subtest: native discovery sees a nearby installed program before source directories exhaust the scan budget
+ok 168 - native discovery sees a nearby installed program before source directories exhaust the scan budget
+  ---
+  duration_ms: 296.9119
+  type: 'test'
+  ...
+# Subtest: native receipt refuses facade acknowledgement, replay, software omission and model-turn claims
+ok 169 - native receipt refuses facade acknowledgement, replay, software omission and model-turn claims
+  ---
+  duration_ms: 0.7024
+  type: 'test'
+  ...
+# Subtest: automatic discovery rejects old host/guest versions and selects real compatible facilities
+ok 170 - automatic discovery rejects old host/guest versions and selects real compatible facilities
+  ---
+  duration_ms: 984.938
+  type: 'test'
+  ...
+# Subtest: Windows private config backup restores real bytes and never stores plaintext credentials
+ok 171 - Windows private config backup restores real bytes and never stores plaintext credentials
+  ---
+  duration_ms: 292.4434
+  type: 'test'
+  ...
+# warning: in the working copy of 'agent/registry.json', LF will be replaced by CRLF the next time Git touches it
+# warning: in the working copy of 'audit/checkpoints/onboard-config-repair-client-427bd490-5193-42ae-a43d-06fc883f2d26-20261010021731095-640bce63.before', LF will be replaced by CRLF the next time Git touches it
+# warning: in the working copy of 'audit/events.jsonl', LF will be replaced by CRLF the next time Git touches it
+# warning: in the working copy of 'repair-client/bridge.json', LF will be replaced by CRLF the next time Git touches it
+# warning: in the working copy of 'repair-client/bridge/capabilities.json', LF will be replaced by CRLF the next time Git touches it
+# warning: in the working copy of 'repair-client/bridge/client-adapter.json', LF will be replaced by CRLF the next time Git touches it
+# warning: in the working copy of 'repair-client/bridge/platform.md', LF will be replaced by CRLF the next time Git touches it
+# warning: in the working copy of 'repair-client/bridge/repair-client-config.json', LF will be replaced by CRLF the next time Git touches it
+# warning: in the working copy of 'repair-client/bridge/software-gateway-config.json', LF will be replaced by CRLF the next time Git touches it
+# warning: in the working copy of 'software/_connector/current.json', LF will be replaced by CRLF the next time Git touches it
+# warning: in the working copy of 'software/_connector/versions/1.0.7/README.md', LF will be replaced by CRLF the next time Git touches it
+# warning: in the working copy of 'software/_connector/versions/1.0.7/SHA256SUMS', LF will be replaced by CRLF the next time Git touches it
+# warning: in the working copy of 'software/_connector/versions/1.0.7/capabilities.snapshot.json', LF will be replaced by CRLF the next time Git touches it
+# warning: in the working copy of 'software/_connector/versions/1.0.7/connector.py', LF will be replaced by CRLF the next time Git touches it
+# warning: in the working copy of 'software/_connector/versions/1.0.7/manifest.json', LF will be replaced by CRLF the next time Git touches it
+# warning: in the working copy of 'software/_connector/versions/1.0.7/schemas/input.json', LF will be replaced by CRLF the next time Git touches it
+# warning: in the working copy of 'software/_connector/versions/1.0.7/schemas/output.json', LF will be replaced by CRLF the next time Git touches it
+# warning: in the working copy of 'software/registry.json', LF will be replaced by CRLF the next time Git touches it
+# warning: in the working copy of 'tool/registry.json', LF will be replaced by CRLF the next time Git touches it
+# warning: in the working copy of 'tool/repo-lint/current.json', LF will be replaced by CRLF the next time Git touches it
+# warning: in the working copy of 'tool/repo-lint/versions/0.6.3/SHA256SUMS', LF will be replaced by CRLF the next time Git touches it
+# warning: in the working copy of 'tool/repo-lint/versions/0.6.3/manifest.json', LF will be replaced by CRLF the next time Git touches it
+# warning: in the working copy of 'tool/repo-lint/versions/0.6.3/prompt.md', LF will be replaced by CRLF the next time Git touches it
+# warning: in the working copy of 'tool/repo-lint/versions/0.6.3/schemas/input.json', LF will be replaced by CRLF the next time Git touches it
+# warning: in the working copy of 'tool/repo-lint/versions/0.6.3/schemas/output.json', LF will be replaced by CRLF the next time Git touches it
+# warning: in the working copy of 'tool/repo-lint/versions/0.6.3/scripts/repo_lint.py', LF will be replaced by CRLF the next time Git touches it
+# warning: in the working copy of 'tool/repo-lint/versions/0.6.3/workflow.yaml', LF will be replaced by CRLF the next time Git touches it
+# warning: in the working copy of 'tool/runtime-contracts/current.json', LF will be replaced by CRLF the next time Git touches it
+# warning: in the working copy of 'tool/runtime-contracts/versions/1.5.0/SHA256SUMS', LF will be replaced by CRLF the next time Git touches it
+# warning: in the working copy of 'tool/runtime-contracts/versions/1.5.0/contracts/runtime/validate_contracts.py', LF will be replaced by CRLF the next time Git touches it
+# warning: in the working copy of 'tool/runtime-contracts/versions/1.5.0/manifest.json', LF will be replaced by CRLF the next time Git touches it
+# warning: in the working copy of 'tool/runtime-contracts/versions/1.5.0/prompt.md', LF will be replaced by CRLF the next time Git touches it
+# warning: in the working copy of 'tool/runtime-contracts/versions/1.5.0/schemas/input.json', LF will be replaced by CRLF the next time Git touches it
+# warning: in the working copy of 'tool/runtime-contracts/versions/1.5.0/schemas/output.json', LF will be replaced by CRLF the next time Git touches it
+# warning: in the working copy of 'tool/runtime-contracts/versions/1.5.0/workflow.yaml', LF will be replaced by CRLF the next time Git touches it
+# warning: in the working copy of 'tool/wf-runner/current.json', LF will be replaced by CRLF the next time Git touches it
+# warning: in the working copy of 'tool/wf-runner/versions/0.12.0/SHA256SUMS', LF will be replaced by CRLF the next time Git touches it
+# warning: in the working copy of 'tool/wf-runner/versions/0.12.0/cli.py', LF will be replaced by CRLF the next time Git touches it
+# warning: in the working copy of 'tool/wf-runner/versions/0.12.0/manifest.json', LF will be replaced by CRLF the next time Git touches it
+# warning: in the working copy of 'tool/wf-runner/versions/0.12.0/prompt.md', LF will be replaced by CRLF the next time Git touches it
+# warning: in the working copy of 'tool/wf-runner/versions/0.12.0/schemas/input.json', LF will be replaced by CRLF the next time Git touches it
+# warning: in the working copy of 'tool/wf-runner/versions/0.12.0/schemas/output.json', LF will be replaced by CRLF the next time Git touches it
+# warning: in the working copy of 'tool/wf-runner/versions/0.12.0/workflow.yaml', LF will be replaced by CRLF the next time Git touches it
+# Subtest: delayed hydration and repeated scan preserve edited keys, untouched keys refresh and stale selection is rejected
+ok 172 - delayed hydration and repeated scan preserve edited keys, untouched keys refresh and stale selection is rejected
+  ---
+  duration_ms: 2.4534
+  type: 'test'
+  ...
+# Subtest: peer acceptance refuses failed truthy claims, business completion without callable evidence and failed stop
+ok 173 - peer acceptance refuses failed truthy claims, business completion without callable evidence and failed stop
+  ---
+  duration_ms: 137.376
+  type: 'test'
+  ...
+# Subtest: gateway resolution retains active name, migrates legacy bodies/MCP/aliases explicitly and reports historical differences
+ok 174 - gateway resolution retains active name, migrates legacy bodies/MCP/aliases explicitly and reports historical differences
+  ---
+  duration_ms: 2557.7745
+  type: 'test'
+  ...
+# Subtest: stale host manifest is replaced by selected real interpreter snapshot, rollback is atomic and original remains
+ok 175 - stale host manifest is replaced by selected real interpreter snapshot, rollback is atomic and original remains
+  ---
+  duration_ms: 8039.5882
+  type: 'test'
+  ...
+# Subtest: readback separates current commit privacy from legacy runtime drift and never claims business execution
+ok 176 - readback separates current commit privacy from legacy runtime drift and never claims business execution
+  ---
+  duration_ms: 2504.5893
+  type: 'test'
+  ...
+# Subtest: peer callable probe uses real runner prepare/claim/stop; missing business content remains pending
+ok 177 - peer callable probe uses real runner prepare/claim/stop; missing business content remains pending
+  ---
+  duration_ms: 8544.6494
+  type: 'test'
+  ...
+# Subtest: actual CLI and MCP connections pass; wrong platform, replay and direct runner impersonation fail
+ok 178 - actual CLI and MCP connections pass; wrong platform, replay and direct runner impersonation fail
+  ---
+  duration_ms: 10600.6772
+  type: 'test'
+  ...
+# Subtest: a non-base platform is configured, discovered and checked without source edits or PIN
+ok 179 - a non-base platform is configured, discovered and checked without source edits or PIN
+  ---
+  duration_ms: 492.6545
+  type: 'test'
+  ...
+# Subtest: existing fields survive a configuration update and partial writes are restored
+ok 180 - existing fields survive a configuration update and partial writes are restored
+  ---
+  duration_ms: 856.6543
+  type: 'test'
+  ...
+# Subtest: changed baselines, raw credentials and another platform environment are rejected
+ok 181 - changed baselines, raw credentials and another platform environment are rejected
+  ---
+  duration_ms: 424.2978
+  type: 'test'
+  ...
+# Subtest: re-entry restores only persisted inputs whose original content hash still matches
+ok 182 - re-entry restores only persisted inputs whose original content hash still matches
+  ---
+  duration_ms: 987.9436
+  type: 'test'
+  ...
+# Subtest: the probe candidate drops stale false gates without changing live capability bytes
+ok 183 - the probe candidate drops stale false gates without changing live capability bytes
+  ---
+  duration_ms: 141.0036
+  type: 'test'
+  ...
+# Subtest: attestation clears only proven legacy names and a current real client receipt; drift restores the gap
+ok 184 - attestation clears only proven legacy names and a current real client receipt; drift restores the gap
+  ---
+  duration_ms: 5753.5099
+  type: 'test'
+  ...
+# Subtest: real provider launch/liveness/terminate rejects recycled PID records and leaves no child
+ok 185 - real provider launch/liveness/terminate rejects recycled PID records and leaves no child
+  ---
+  duration_ms: 894.4445
+  type: 'test'
+  ...
+# Subtest: cancel owns the real Windows descendant tree
+ok 186 - cancel owns the real Windows descendant tree
+  ---
+  duration_ms: 1156.7064
+  type: 'test'
+  ...
+# Subtest: cancel owns Linux descendants started through the selected WSL backend
+ok 187 - cancel owns Linux descendants started through the selected WSL backend # SKIP
+  ---
+  duration_ms: 0.4104
+  type: 'test'
+  ...
+# Subtest: first matrix recovery retains actual passing rows and replaces only the selected failures
+ok 188 - first matrix recovery retains actual passing rows and replaces only the selected failures
+  ---
+  duration_ms: 45.9977
+  type: 'test'
+  ...
+# Subtest: configuration drift and cancelled attempts without a complete report cannot reuse a first matrix
+ok 189 - configuration drift and cancelled attempts without a complete report cannot reuse a first matrix
+  ---
+  duration_ms: 29.1824
+  type: 'test'
+  ...
+# Subtest: a passing different resource or wrong version cannot replace the failed row
+ok 190 - a passing different resource or wrong version cannot replace the failed row
+  ---
+  duration_ms: 38.8792
+  type: 'test'
+  ...
+# Subtest: real automatic partial setup saves configuration/Git without installing or certifying deferred modules
+ok 191 - real automatic partial setup saves configuration/Git without installing or certifying deferred modules
+  ---
+  duration_ms: 24059.2144
+  type: 'test'
+  ...
+# Subtest: independent client/provider changes require explicit reconciliation, archive old bytes, and reject another drift
+ok 192 - independent client/provider changes require explicit reconciliation, archive old bytes, and reject another drift
+  ---
+  duration_ms: 9745.8337
+  type: 'test'
+  ...
+# Subtest: software mutation invalidates its probe/certification, version changes need restart, and no arbitrary skip is accepted
+ok 193 - software mutation invalidates its probe/certification, version changes need restart, and no arbitrary skip is accepted
+  ---
+  duration_ms: 899.9842
+  type: 'test'
+  ...
+# Subtest: scaffold plan creates a platform directory only with explicit confirmation
+ok 194 - scaffold plan creates a platform directory only with explicit confirmation
+  ---
+  duration_ms: 47.7468
+  type: 'test'
+  ...
+# Subtest: forged scaffold payload never writes outside its generated target
+ok 195 - forged scaffold payload never writes outside its generated target
+  ---
+  duration_ms: 4.3074
+  type: 'test'
+  ...
+# Subtest: pipeline awaits the check and stops on its actual gap result
+ok 196 - pipeline awaits the check and stops on its actual gap result
+  ---
+  duration_ms: 21.9741
+  type: 'test'
+  ...
+# Subtest: scaffold failure cleans up created files
+ok 197 - scaffold failure cleans up created files
+  ---
+  duration_ms: 5.3287
+  type: 'test'
+  ...
+# Subtest: governance drafts cover five documents and the current card requires a client loop without maintenance AI
+ok 198 - governance drafts cover five documents and the current card requires a client loop without maintenance AI
+  ---
+  duration_ms: 1.3983
+  type: 'test'
+  ...
+# Subtest: parses P-step tables out of versions/ documents
+ok 199 - parses P-step tables out of versions/ documents
+  ---
+  duration_ms: 7.6773
+  type: 'test'
+  ...
+# Subtest: ordinary and bold P tables are mapped by headers, including reordered columns and progress-only tables
+ok 200 - ordinary and bold P tables are mapped by headers, including reordered columns and progress-only tables
+  ---
+  duration_ms: 4.7423
+  type: 'test'
+  ...
+# Subtest: diffDocument reads a git diff read-only
+ok 201 - diffDocument reads a git diff read-only
+  ---
+  duration_ms: 502.7512
+  type: 'test'
+  ...
+# Subtest: docs-site operations fail with structured errors when the site is absent
+ok 202 - docs-site operations fail with structured errors when the site is absent
+  ---
+  duration_ms: 2.24
+  type: 'test'
+  ...
+# Subtest: a real externally supplied protocol client is installed, restored and challenged while the facade remains distinct
+ok 203 - a real externally supplied protocol client is installed, restored and challenged while the facade remains distinct
+  ---
+  duration_ms: 10054.6179
+  type: 'test'
+  ...
+# Subtest: GUI-only bodies stay pending and forged executable plans fail before creating a platform
+ok 204 - GUI-only bodies stay pending and forged executable plans fail before creating a platform
+  ---
+  duration_ms: 6541.775
+  type: 'test'
+  ...
+# Subtest: platform body continuation verifies settled configuration before continuing and preserves external edits
+ok 205 - platform body continuation verifies settled configuration before continuing and preserves external edits
+  ---
+  duration_ms: 6261.8178
+  type: 'test'
+  ...
+# Subtest: platform choice and rollback affect only future runs of one platform; shared defaults and agent locks survive
+ok 206 - platform choice and rollback affect only future runs of one platform; shared defaults and agent locks survive
+  ---
+  duration_ms: 828.9961
+  type: 'test'
+  ...
+# Subtest: direct AI executor and manager replay each produce one correlated terminal operation
+ok 207 - direct AI executor and manager replay each produce one correlated terminal operation
+  ---
+  duration_ms: 439.2024
+  type: 'test'
+  ...
+# Subtest: stale bridge, shared pointer and dependency bytes cannot be silently accepted
+ok 208 - stale bridge, shared pointer and dependency bytes cannot be silently accepted
+  ---
+  duration_ms: 274.4641
+  type: 'test'
+  ...
+# Subtest: checkpoint interruption releases the lock and leaves the original bridge intact
+ok 209 - checkpoint interruption releases the lock and leaves the original bridge intact
+  ---
+  duration_ms: 333.8811
+  type: 'test'
+  ...
+# Subtest: engine paired selection and forged platform identity fail before any write
+ok 210 - engine paired selection and forged platform identity fail before any write
+  ---
+  duration_ms: 44.2697
+  type: 'test'
+  ...
+# Subtest: a dead owner lock is archived for recovery; a live owner blocks before mutation
+ok 211 - a dead owner lock is archived for recovery; a live owner blocks before mutation
+  ---
+  duration_ms: 409.1451
+  type: 'test'
+  ...
+# Subtest: installed standalone AI command uses the same executor and rejects another platform
+ok 212 - installed standalone AI command uses the same executor and rejects another platform
+  ---
+  duration_ms: 1666.2966
+  type: 'test'
+  ...
+# Subtest: restoration rejects an external edit and leaves all checkpoint targets untouched
+ok 213 - restoration rejects an external edit and leaves all checkpoint targets untouched
+  ---
+  duration_ms: 6.0823
+  type: 'test'
+  ...
+# Subtest: owned changes restore old bytes or remove only a newly created file
+ok 214 - owned changes restore old bytes or remove only a newly created file
+  ---
+  duration_ms: 4.8468
+  type: 'test'
+  ...
+# Subtest: directory rollback preserves externally changed or added files
+ok 215 - directory rollback preserves externally changed or added files
+  ---
+  duration_ms: 6.771
+  type: 'test'
+  ...
+# Subtest: upgrade preserves the previous version, bumps both identities, and verifies SHA256SUMS
+ok 216 - upgrade preserves the previous version, bumps both identities, and verifies SHA256SUMS
+  ---
+  duration_ms: 1780.524
+  type: 'test'
+  ...
+# Subtest: the fresh expert template is callable through an exactly locked main workflow
+ok 217 - the fresh expert template is callable through an exactly locked main workflow
+  ---
+  duration_ms: 1702.4598
+  type: 'test'
+  ...
+# Subtest: rejects existing versions, bad semver and missing upgrade sources while allowing new IDs
+ok 218 - rejects existing versions, bad semver and missing upgrade sources while allowing new IDs
+  ---
+  duration_ms: 876.2236
+  type: 'test'
+  ...
+# Subtest: lists references from other current releases before a pointer switch
+ok 219 - lists references from other current releases before a pointer switch
+  ---
+  duration_ms: 839.307
+  type: 'test'
+  ...
+# Subtest: mark action deprecates without disabling and keeps pinned runs resolvable
+ok 220 - mark action deprecates without disabling and keeps pinned runs resolvable
+  ---
+  duration_ms: 873.4831
+  type: 'test'
+  ...
+# Subtest: renderer domains stay split and write kinds remain centralized
+ok 221 - renderer domains stay split and write kinds remain centralized
+  ---
+  duration_ms: 5.4379
+  type: 'test'
+  ...
+# Subtest: late document result cannot overwrite a newer selection or a different workspace
+ok 222 - late document result cannot overwrite a newer selection or a different workspace
+  ---
+  duration_ms: 1.6562
+  type: 'test'
+  ...
+# Subtest: IPC client rejects stale asynchronous results and does not dispatch from an expired workspace
+ok 223 - IPC client rejects stale asynchronous results and does not dispatch from an expired workspace
+  ---
+  duration_ms: 3.2326
+  type: 'test'
+  ...
+# Subtest: nested native parameters convert numbers, booleans, arrays and local references without handwritten JSON
+ok 224 - nested native parameters convert numbers, booleans, arrays and local references without handwritten JSON
+  ---
+  duration_ms: 0.4286
+  type: 'test'
+  ...
+# Subtest: App composes the controller and workspace surface; commands and feature state are separate modules
+ok 225 - App composes the controller and workspace surface; commands and feature state are separate modules
+  ---
+  duration_ms: 1.2628
+  type: 'test'
+  ...
+# Subtest: frozen versions are checked at preview, application and readback
+ok 226 - frozen versions are checked at preview, application and readback
+  ---
+  duration_ms: 366.9995
+  type: 'test'
+  ...
+# Subtest: valid JSON is insufficient for registry editing; structural errors never write
+ok 227 - valid JSON is insufficient for registry editing; structural errors never write
+  ---
+  duration_ms: 6.4131
+  type: 'test'
+  ...
+# Subtest: software next version is semantic and extra files fail recipe verification
+ok 228 - software next version is semantic and extra files fail recipe verification
+  ---
+  duration_ms: 69.7785
+  type: 'test'
+  ...
+# Subtest: wrong templates and upgrade definition identities fail before publication
+ok 229 - wrong templates and upgrade definition identities fail before publication
+  ---
+  duration_ms: 10.7357
+  type: 'test'
+  ...
+# Subtest: BOM JSON and precise dependency pins are handled without changing source bytes
+ok 230 - BOM JSON and precise dependency pins are handled without changing source bytes
+  ---
+  duration_ms: 60.38
+  type: 'test'
+  ...
+# Subtest: restore proof rejects missing, changed, foreign and failed evidence, and accepts legacy own backup
+ok 231 - restore proof rejects missing, changed, foreign and failed evidence, and accepts legacy own backup
+  ---
+  duration_ms: 123.4292
+  type: 'test'
+  ...
+# Subtest: same-path restore changes invalidate only cells with resource packages
+ok 232 - same-path restore changes invalidate only cells with resource packages
+  ---
+  duration_ms: 565.2683
+  type: 'test'
+  ...
+# Subtest: summarizes a v1.1 lock without inventing fields the generation lacks
+ok 233 - summarizes a v1.1 lock without inventing fields the generation lacks
+  ---
+  duration_ms: 6.7364
+  type: 'test'
+  ...
+# Subtest: summarizes a v1.3 lock with rigor fields
+ok 234 - summarizes a v1.3 lock with rigor fields
+  ---
+  duration_ms: 4.9876
+  type: 'test'
+  ...
+# Subtest: classifies missing, corrupt and unknown-schema locks instead of guessing
+ok 235 - classifies missing, corrupt and unknown-schema locks instead of guessing
+  ---
+  duration_ms: 7.2184
+  type: 'test'
+  ...
+# Subtest: lists platform runs read-only and skips non-directories
+ok 236 - lists platform runs read-only and skips non-directories
+  ---
+  duration_ms: 9.5982
+  type: 'test'
+  ...
+# Subtest: lists the ledger across all six platforms with totals
+ok 237 - lists the ledger across all six platforms with totals
+  ---
+  duration_ms: 10.6955
+  type: 'test'
+  ...
+# Subtest: runtime body directories retain dependencies and restoration supplies the exact installed tree
+ok 238 - runtime body directories retain dependencies and restoration supplies the exact installed tree
+  ---
+  duration_ms: 1310.0828
+  type: 'test'
+  ...
+# Subtest: cancelled copy resumes its verified prefix without a second full backup or leftover partial trees
+ok 239 - cancelled copy resumes its verified prefix without a second full backup or leftover partial trees
+  ---
+  duration_ms: 1051.5666
+  type: 'test'
+  ...
+# Subtest: generic CLI body publishes only observed capabilities and uses real connector calls, update and metadata rollback
+ok 240 - generic CLI body publishes only observed capabilities and uses real connector calls, update and metadata rollback
+  ---
+  duration_ms: 4968.1168
+  type: 'test'
+  ...
+# Subtest: desktop sessions start a real owned process, reuse it and close it without declaring native GUI functions
+ok 241 - desktop sessions start a real owned process, reuse it and close it without declaring native GUI functions
+  ---
+  duration_ms: 16971.9881
+  type: 'test'
+  ...
+# Subtest: installation packages cannot become installed software recipes
+ok 242 - installation packages cannot become installed software recipes
+  ---
+  duration_ms: 1258.1284
+  type: 'test'
+  ...
+# Subtest: a restored replacement binds to the existing recipe without republishing; pointer drift refuses execution
+ok 243 - a restored replacement binds to the existing recipe without republishing; pointer drift refuses execution
+  ---
+  duration_ms: 2445.4717
+  type: 'test'
+  ...
+# Subtest: health uses the explicitly selected platform binding and its connector, not recipe detectedPath
+ok 244 - health uses the explicitly selected platform binding and its connector, not recipe detectedPath
+  ---
+  duration_ms: 35.5971
+  type: 'test'
+  ...
+# Subtest: missing selection and connector refusals cannot be shown as a passed live function
+ok 245 - missing selection and connector refusals cannot be shown as a passed live function
+  ---
+  duration_ms: 49.2226
+  type: 'test'
+  ...
+# Subtest: builder resolves the connector, gateway config and interpreter from the platform config
+ok 246 - builder resolves the connector, gateway config and interpreter from the platform config
+  ---
+  duration_ms: 18.8416
+  type: 'test'
+  ...
+# Subtest: apply relays the connector answer verbatim, including INTERACTIVE_REQUIRED
+ok 247 - apply relays the connector answer verbatim, including INTERACTIVE_REQUIRED
+  ---
+  duration_ms: 213.182
+  type: 'test'
+  ...
+# Subtest: invalid connector output and process failure are structured, never guessed
+ok 248 - invalid connector output and process failure are structured, never guessed
+  ---
+  duration_ms: 180.6673
+  type: 'test'
+  ...
+# Subtest: recipe versions are derived, not hardcoded
+ok 249 - recipe versions are derived, not hardcoded
+  ---
+  duration_ms: 3.3934
+  type: 'test'
+  ...
+# Subtest: test\\support\\certification.mjs
+ok 59 - test\\support\\certification.mjs
+  ---
+  duration_ms: 185.8023
+  type: 'test'
+  ...
+# Subtest: test\\support\\intake-fixture.mjs
+ok 60 - test\\support\\intake-fixture.mjs
+  ---
+  duration_ms: 193.7699
+  type: 'test'
+  ...
+# Subtest: test\\support\\resources.mjs
+ok 61 - test\\support\\resources.mjs
+  ---
+  duration_ms: 57.9989
+  type: 'test'
+  ...
+# Subtest: test\\support\\zip.mjs
+ok 62 - test\\support\\zip.mjs
+  ---
+  duration_ms: 49.9898
+  type: 'test'
+  ...
+# Subtest: registered Python worker finishes a Git atomic transaction before honoring cancellation
+ok 254 - registered Python worker finishes a Git atomic transaction before honoring cancellation # SKIP
+  ---
+  duration_ms: 0.5969
+  type: 'test'
+  ...
+# Subtest: worker clone works without Python and publishes only a verified byte-preserving checkout
+ok 255 - worker clone works without Python and publishes only a verified byte-preserving checkout
+  ---
+  duration_ms: 3353.5222
+  type: 'test'
+  ...
+# Subtest: worker document subprocess uses Node mode and true cancellation cleans up its process tree
+ok 256 - worker document subprocess uses Node mode and true cancellation cleans up its process tree
+  ---
+  duration_ms: 2016.8714
+  type: 'test'
+  ...
+# Subtest: closing waits for cancellation evidence and refuses new work
+ok 257 - closing waits for cancellation evidence and refuses new work
+  ---
+  duration_ms: 23.296
+  type: 'test'
+  ...
+# Subtest: close cancels its real descendant tree and leaves an independent process alive
+ok 258 - close cancels its real descendant tree and leaves an independent process alive
+  ---
+  duration_ms: 1088.2368
+  type: 'test'
+  ...
+# Subtest: timeout is distinct from user cancellation and owns the command tree
+ok 259 - timeout is distinct from user cancellation and owns the command tree
+  ---
+  duration_ms: 681.0823
+  type: 'test'
+  ...
+# Subtest: worker queries remain asynchronous and progress belongs to one job/workspace session
+ok 260 - worker queries remain asynchronous and progress belongs to one job/workspace session
+  ---
+  duration_ms: 311.0583
+  type: 'test'
+  ...
+# Subtest: task client attaches one unique request identity without changing domain input
+ok 261 - task client attaches one unique request identity without changing domain input
+  ---
+  duration_ms: 0.9562
+  type: 'test'
+  ...
+# Subtest: Windows fallback preserves exact Unicode/quote arguments and owns descendants on timeout
+ok 262 - Windows fallback preserves exact Unicode/quote arguments and owns descendants on timeout
+  ---
+  duration_ms: 2702.5003
+  type: 'test'
+  ...
+# Subtest: a wrong job/session cannot cancel an unrelated task and immediate cancellation settles
+ok 263 - a wrong job/session cannot cancel an unrelated task and immediate cancellation settles
+  ---
+  duration_ms: 433.9509
+  type: 'test'
+  ...
+# Subtest: a new ID from a text body becomes a nonempty schema-valid registered workflow without original current files
+ok 264 - a new ID from a text body becomes a nonempty schema-valid registered workflow without original current files
+  ---
+  duration_ms: 1376.5476
+  type: 'test'
+  ...
+# Subtest: the existing release wizard creates a legal new ID and updates both identities when upgrading without editing YAML
+ok 265 - the existing release wizard creates a legal new ID and updates both identities when upgrading without editing YAML
+  ---
+  duration_ms: 2402.087
+  type: 'test'
+  ...
+# Subtest: a source script is frozen but never run by recognition, preview, publication or readback
+ok 266 - a source script is frozen but never run by recognition, preview, publication or readback
+  ---
+  duration_ms: 1450.0858
+  type: 'test'
+  ...
+# Subtest: empty stages, cycles, floating dependencies and changed generated drafts cannot be published as usable workflows
+ok 267 - empty stages, cycles, floating dependencies and changed generated drafts cannot be published as usable workflows
+  ---
+  duration_ms: 803.0048
+  type: 'test'
+  ...
+# Subtest: imported definitions retain all support files and stage details while the target identity is made explicit
+ok 268 - imported definitions retain all support files and stage details while the target identity is made explicit
+  ---
+  duration_ms: 1769.9245
+  type: 'test'
+  ...
+# Subtest: actual release and document callbacks pass the selected workspace to IPC
+ok 269 - actual release and document callbacks pass the selected workspace to IPC
+  ---
+  duration_ms: 16.4393
+  type: 'test'
+  ...
+# Subtest: a single operation declaration controls IPC and generated standalone preload
+ok 270 - a single operation declaration controls IPC and generated standalone preload
+  ---
+  duration_ms: 2.6357
+  type: 'test'
+  ...
+# Subtest: workspace audit checks registered releases without executing bodies or changing bytes
+ok 271 - workspace audit checks registered releases without executing bodies or changing bytes
+  ---
+  duration_ms: 619.3345
+  type: 'test'
+  ...
+# Subtest: corrupted release and missing pointer are reported while the other repository still gets checked
+ok 272 - corrupted release and missing pointer are reported while the other repository still gets checked
+  ---
+  duration_ms: 136.9236
+  type: 'test'
+  ...
+# Subtest: validly sealed dependency locks are audited recursively and disabled releases are not relabeled verified
+ok 273 - validly sealed dependency locks are audited recursively and disabled releases are not relabeled verified
+  ---
+  duration_ms: 129.2288
+  type: 'test'
+  ...
+# Subtest: clones an architecture repo, verifies markers, records HEAD
+ok 274 - clones an architecture repo, verifies markers, records HEAD
+  ---
+  duration_ms: 826.9306
+  type: 'test'
+  ...
+# Subtest: rejects non-empty destinations, bad remotes and non-architecture repos with cleanup
+ok 275 - rejects non-empty destinations, bad remotes and non-architecture repos with cleanup
+  ---
+  duration_ms: 821.7114
+  type: 'test'
+  ...
+# Subtest: nested upstream EOL attributes cannot change frozen bytes during clone
+ok 276 - nested upstream EOL attributes cannot change frozen bytes during clone
+  ---
+  duration_ms: 1275.4242
+  type: 'test'
+  ...
+1..276
+# tests 276
+# suites 0
+# pass 274
+# fail 0
+# cancelled 0
+# skipped 2
+# todo 0
+# duration_ms 433590.0332

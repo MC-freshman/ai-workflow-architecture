@@ -3,10 +3,10 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import os from 'node:os';
 import {join,relative} from 'node:path';
-import {readAuditEvents} from '../src/audit.mjs';
+import {readAuditEvents} from '../src/domains/audit/audit.mjs';
 import {writeAudit,saveCheckpoint} from '../src/transactions/kernel.mjs';
 import {auditPlanOperation} from '../src/transactions/operation-audit.mjs';
-import {applyPlan} from '../src/transactions.mjs';
+import {applyPlan} from '../src/transactions/router.mjs';
 import {auditEventHash} from '../src/transactions/audit-content.mjs';
 
 function fixture(t) {

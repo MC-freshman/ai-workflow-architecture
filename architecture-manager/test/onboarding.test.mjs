@@ -4,8 +4,8 @@ import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { allPlatformIds } from '../src/core/platforms.mjs';
-import { applyPlan, verifyPlanTarget } from '../src/transactions.mjs';
-import { buildOnboardingCard, buildPlatformScaffoldPlan, governanceOnboardingDraft, runOnboardingPipeline } from '../src/onboarding.mjs';
+import { applyPlan, verifyPlanTarget } from '../src/transactions/router.mjs';
+import { buildOnboardingCard, buildPlatformScaffoldPlan, governanceOnboardingDraft, runOnboardingPipeline } from '../src/domains/onboarding/onboarding.mjs';
 
 function makeWorkspace() {
   const root = mkdtempSync(join(tmpdir(), 'am-onboard-'));

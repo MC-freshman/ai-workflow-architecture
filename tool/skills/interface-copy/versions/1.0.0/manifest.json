@@ -1,0 +1,39 @@
+{
+  "schema": "ai-skill/v1",
+  "id": "interface-copy",
+  "version": "1.0.0",
+  "kind": "atomic",
+  "category": "skill",
+  "entry": "SKILL.md",
+  "input": {
+    "type": "text",
+    "contract": "objective, task inputs and constraints"
+  },
+  "output": {
+    "type": "text",
+    "contract": "named artifacts, evidence and pending limitations"
+  },
+  "permissions": [
+    "read-project"
+  ],
+  "requires": [],
+  "conflicts": [],
+  "x-externalReferences": [
+    {
+      "resource": "ui-design-reference-library",
+      "version": "1.0.0",
+      "path": "impeccable/reference/clarify.md",
+      "sha256": "6c382f8283756e8a693d832b750f7e4cbff1ca5bdcc3825b2b4ef4da9f21876a",
+      "when": "表单、错误恢复和跨页面术语不一致时读取"
+    }
+  ],
+  "x-runtimeRequirements": {},
+  "source": {
+    "repository": "workspace adaptation of pinned UI design references",
+    "snapshot": "approved 20261010 P1-P4",
+    "license": "workspace-authored guidance; included reference licensing in SOURCE.json"
+  },
+  "integrity": {
+    "sha256Manifest": "SHA256SUMS"
+  }
+}

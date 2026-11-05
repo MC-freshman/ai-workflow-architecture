@@ -5,8 +5,8 @@ import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { sha256 } from '../src/core/hash.mjs';
-import { buildGitPlan } from '../src/git.mjs';
-import { applyPlan, verifyPlanTarget } from '../src/transactions.mjs';
+import { buildGitPlan } from '../src/domains/git/git.mjs';
+import { applyPlan, verifyPlanTarget } from '../src/transactions/router.mjs';
 
 function git(root, args) {
   return execFileSync('git', ['-C', root, ...args], { encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'] }).trim();
@@ -72,7 +72,11 @@ test('rejects stale plans after HEAD moved externally', () => {
 
 test('blocks commits whose staged paths hit the sensitive scan', () => {
   const fixture = makeRepo();
-  writeFileSync(join(fixture.root, 'key.txt'), 'private_key: AAAA\n');
+  // D-160: since D-155 the scanner only flags a keyword that is ASSIGNED a
+  // QUOTED literal (sensitive.mjs:9) -- the bare `keyword: value` form
+  // false-positived on the manager's own bundled code. The fixture must
+  // therefore carry a quoted value to exercise the block path.
+  writeFileSync(join(fixture.root, 'key.txt'), 'private_key: "AAAA"\n');
   const plan = buildGitPlan({ workspaceRoot: fixture.root, action: 'commit', message: 'oops secret', paths: ['key.txt'] });
   assert.throws(() => applyPlan({ plan, auditRoot: fixture.auditRoot }), /COMMIT_BLOCKED_SENSITIVE/);
   assert.equal(git(fixture.root, ['status', '--short']).includes('A  key.txt'), false);

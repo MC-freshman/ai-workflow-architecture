@@ -1,0 +1,1829 @@
+{
+ "schema": "ai-defect-status-book/v1",
+ "generatedAt": "2026-09-27 (M-P6 flip)",
+ "generatedBy": "zcode session, R-P1 of 架构3.x-框架侧统一修复方案-20260927.md (executing round)",
+ "rules": {
+  "statuses": [
+   "open",
+   "closed",
+   "absorbed",
+   "ruled",
+   "unverified-registration"
+  ],
+  "discipline": "D-32: no row may say 'probably fixed'; closed/absorbed/ruled rows must carry a verifiable source path; unverified-registration rows are red rows named loudly, never counted as done",
+  "redRows": "status in (open, unverified-registration)"
+ },
+ "defects": [
+  {
+   "id": "D-25",
+   "title": "process 门禁每次 submit 由引擎重跑子进程（带副作用门禁被重复执行）",
+   "location": "engine.py process-gate path (2.1-A 登记，未定位到行)",
+   "status": "closed",
+   "owner": "codex（wf-runner 0.10.1，2026-09-24 裁定记录 §1 同源）",
+   "costMinutes": 120,
+   "source": "tool/wf-runner/versions/0.10.1/SOURCE.json; tool/wf-runner/versions/0.11.0/tests/test_process_gate_idempotency.py",
+   "evidence": "0.10.1 SOURCE.json releaseScope 明载：process-gate submit replay 改为持久化 per-run/stage/attempt/gate intent+outcome 记录，同提交复用记录结果、绑定变化冲突、有 intent 无 outcome 失败关闭为 UNKNOWN_OUTCOME；0.11.0 携带 test_process_gate_idempotency.py",
+   "correctionNote": "2026-09-27 状态簿首版误标 open——建簿时未核对 0.10.1 releaseScope；立修复表前核实纠正（佐证立表前逐号核实的必要性）"
+  },
+  {
+   "id": "D-26",
+   "title": "门3/门4 驱动脚本与 fixture/baseline 产物的实测成本更正（登记级）",
+   "location": "versions/平台接入清单.md §8.7",
+   "status": "closed",
+   "owner": "2.0-G 重出证",
+   "costMinutes": 0,
+   "source": "AGENTS.md 2.0-H 段"
+  },
+  {
+   "id": "D-27",
+   "title": "environmentManifest 可选化被 run-lock schema 封顶",
+   "location": "tool/runtime-contracts/（1.2.x 代已修）",
+   "status": "closed",
+   "owner": "09-23 修复轮",
+   "costMinutes": 0,
+   "source": "versions/平台接入清单.md:302"
+  },
+  {
+   "id": "D-28",
+   "title": "platform-conformance/1.0.0 目录内 5 个未登记 .pyc（永久历史红行）",
+   "location": "tool/platform-conformance/versions/1.0.0/",
+   "status": "ruled",
+   "owner": "留痕；发布器从此双向拒绝未登记字节",
+   "costMinutes": 0,
+   "source": "versions/平台接入清单.md:302"
+  },
+  {
+   "id": "D-29",
+   "title": "（09-23 修复轮登记，已修）",
+   "location": "versions/平台接入清单.md:302",
+   "status": "closed",
+   "owner": "09-23 修复轮",
+   "costMinutes": 0,
+   "source": "versions/平台接入清单.md:302"
+  },
+  {
+   "id": "D-30",
+   "title": "（已修）",
+   "location": "versions/平台接入清单.md:302",
+   "status": "closed",
+   "owner": "09-23 修复轮",
+   "costMinutes": 0,
+   "source": "versions/平台接入清单.md:302"
+  },
+  {
+   "id": "D-31",
+   "title": "共享侧没有带 checkpoint 切 current.json 的工具",
+   "location": "tool/architecture-ops/（checkpointed plan→apply→verify 已实装并被 3.0/3.2 各轮使用）",
+   "status": "closed",
+   "owner": "3.0-A/09-23",
+   "costMinutes": 0,
+   "source": "versions/平台接入清单.md:302 + §8.26 P7/P8 使用记录"
+  },
+  {
+   "id": "D-32",
+   "title": "判据 --only 只认单选择器，多选静默出空报告假绿",
+   "location": "tool/platform-conformance/versions/1.4.x/conformance/conform.py（1.4.0 起 --only 多选逐条判定）",
+   "status": "closed",
+   "owner": "3.1-A F-4",
+   "costMinutes": 0,
+   "source": "versions/平台接入清单.md:380"
+  },
+  {
+   "id": "D-33",
+   "title": "暂存件残留 __pycache__ 使引擎包自检报 HASH_MISMATCH",
+   "location": "发布器 purge 字节码（3.0-A 起）",
+   "status": "closed",
+   "owner": "3.0-A",
+   "costMinutes": 0,
+   "source": "versions/平台接入清单.md:317"
+  },
+  {
+   "id": "D-34",
+   "title": "strict JSON 错误只报值不报文件",
+   "location": "tool/runtime-contracts/versions/1.4.0/SOURCE.json（strict JSON errors now name file + json path + offset）",
+   "status": "closed",
+   "owner": "3.1-A T-P3b",
+   "costMinutes": 0,
+   "source": "tool/runtime-contracts/versions/1.4.0/SOURCE.json"
+  },
+  {
+   "id": "D-35",
+   "title": "0.8.0 起 scriptEnvironmentRungs 未声明者 fail-closed 的采纳面裁定",
+   "location": "versions/架构3.1.0-发布完整性修复实施表-20260923.md",
+   "status": "closed",
+   "owner": "09-23 修复轮",
+   "costMinutes": 0,
+   "source": "versions/架构3.x-框架侧统一修复方案-20260927.md §5"
+  },
+  {
+   "id": "D-36",
+   "title": "成对切换闭包与三仓逐字节 revert 演练",
+   "location": "3.0-A S-P9 实装（三次拒绝零字节写入）",
+   "status": "closed",
+   "owner": "3.0-A",
+   "costMinutes": 0,
+   "source": "qoder/runtime/maintenance/3.0-A/3.0-LEDGER.md"
+  },
+  {
+   "id": "D-37",
+   "title": "已发布 repo-lint 0.1.1/0.2.1 的语义与新代冲突（S-P2 实测）",
+   "location": "3.0-A S-P2 裁定",
+   "status": "closed",
+   "owner": "3.0-A",
+   "costMinutes": 0,
+   "source": "qoder/runtime/maintenance/3.0-A/3.0-LEDGER.md"
+  },
+  {
+   "id": "D-38",
+   "title": "单样本臂当硬门 ⇒ 假红",
+   "location": "3.0-A S-P3 内修",
+   "status": "closed",
+   "owner": "3.0-A",
+   "costMinutes": 0,
+   "source": "qoder/runtime/maintenance/3.0-A/3.0-LEDGER.md"
+  },
+  {
+   "id": "D-39",
+   "title": "读回扫描比被测面浅一层",
+   "location": "3.0-A S-P3 内修",
+   "status": "closed",
+   "owner": "3.0-A",
+   "costMinutes": 0,
+   "source": "qoder/runtime/maintenance/3.0-A/3.0-LEDGER.md"
+  },
+  {
+   "id": "D-40",
+   "title": "UNPINNED 65 位摘要（第二次独立实测）",
+   "location": "3.0-A S-P3 内修",
+   "status": "closed",
+   "owner": "3.0-A",
+   "costMinutes": 0,
+   "source": "qoder/runtime/maintenance/3.0-A/3.0-LEDGER.md"
+  },
+  {
+   "id": "D-41",
+   "title": "读回并发格用惰性生成器 ⇒ 争用从未发生",
+   "location": "3.0-A S-P4 内修",
+   "status": "closed",
+   "owner": "3.0-A",
+   "costMinutes": 0,
+   "source": "qoder/runtime/maintenance/3.0-A/3.0-LEDGER.md S-P4 段"
+  },
+  {
+   "id": "D-42",
+   "title": "软件释放版未进 run-lock resources[]",
+   "location": "engine.py resources 组装段",
+   "status": "absorbed",
+   "owner": "连接器方向（裁定记录 §5）；随 R-P2 D-97 一并在锁内补代际记录时复核",
+   "costMinutes": 60,
+   "source": "versions/架构3.x-框架侧统一修复方案-20260927.md §5"
+  },
+  {
+   "id": "D-43",
+   "title": "qoder 生产 config 不声明 softwareRoot ⇒ software 仓不进并集",
+   "location": "qoder/bridge/qoder-config.json（09-24 P0-A 已声明）",
+   "status": "closed",
+   "owner": "qoder 09-24",
+   "costMinutes": 0,
+   "source": "versions/平台接入清单.md §8.25"
+  },
+  {
+   "id": "D-44",
+   "title": "并集粒度不按能力出行（只到 profile/triple/package/action）",
+   "location": "tool/platform-conformance/ conform 判定项族",
+   "status": "absorbed",
+   "owner": "R-P4（D-92 判定项族同源收口）",
+   "costMinutes": 45,
+   "source": "qoder/runtime/maintenance/3.0-A/3.0-LEDGER.md S-P5 段"
+  },
+  {
+   "id": "D-45",
+   "title": "prepare 期拒绝走 discard_uncommitted_run_dir ⇒ 门禁 trail 不落盘",
+   "location": "engine.py discard_uncommitted_run_dir",
+   "status": "closed",
+   "owner": "M-P1..M-P5 of 架构3.x-维护缺陷修复实施表 (2026-09-27, zcode session)",
+   "costMinutes": 90,
+   "source": "tool/wf-runner/versions/0.12.0/engine.py",
+   "evidence": "wf-runner 0.12.0: discard_uncommitted_run_dir first MOVES the uncommitted dir into the platform diagnostic layer (logs/wf-runner/rejected/<run>-<ts> + DISCARDED.txt); probe: rejected-prepare trail readable, runs/ clean"
+  },
+  {
+   "id": "D-46",
+   "title": "驱动器 import 共享释放版把 __pycache__ 写进已发布件（纪律类；完整性门可拦）",
+   "location": "各会话执行纪律（-B）；engine integrity gate 为机检兜底",
+   "status": "closed",
+   "owner": "M-P1..M-P5 of 架构3.x-维护缺陷修复实施表 (2026-09-27, zcode session)",
+   "costMinutes": 15,
+   "source": "tool/wf-runner/versions/0.12.0/cli.py",
+   "evidence": "wf-runner 0.12.0 cli.py sets sys.dont_write_bytecode before any import; test_no_bytecode runs the CLI without -B and asserts the tree stays clean (0 pyc measured)"
+  },
+  {
+   "id": "D-47",
+   "title": "六件配方能力快照全部未冻结",
+   "location": "software/*/capabilities.snapshot.json",
+   "status": "absorbed",
+   "owner": "逐件发布收口：dirsearch/mysql-cli/wireshark-cli 1.0.1 已冻结（3.0-Q）；burp-suite 1.0.1 已冻结待换针（X-P1）；nmap 本轮 X-P4；veracrypt 本轮 X-P5（如实不冻结）",
+   "costMinutes": 45,
+   "source": "versions/平台接入清单.md §8.18 + 本轮 X 表"
+  },
+  {
+   "id": "D-48",
+   "title": "selftest 按配方 readonly.json 执行（S-P7 实装）",
+   "location": "software/*/selftest/",
+   "status": "closed",
+   "owner": "3.0-A",
+   "costMinutes": 0,
+   "source": "qoder/runtime/maintenance/3.0-A/3.0-LEDGER.md"
+  },
+  {
+   "id": "D-49",
+   "title": "成对切换拒绝规则被实测成一次真实阻断",
+   "location": "3.0-A S-P9",
+   "status": "closed",
+   "owner": "3.0-A",
+   "costMinutes": 0,
+   "source": "AGENTS.md 3.0-A 段"
+  },
+  {
+   "id": "D-50",
+   "title": "WSL 内对 /mnt/e 做 live 全仓扫描 >420s ⇒ jail 内跑 linter 不能作常规路径",
+   "location": "repo-lint 执行面（宿主侧 + scannerRelease 声明为现行形态）",
+   "status": "ruled",
+   "owner": "3.0-A 成本事实裁定",
+   "costMinutes": 0,
+   "source": "qoder/runtime/maintenance/3.0-A/3.0-LEDGER.md S-P7 段"
+  },
+  {
+   "id": "D-51",
+   "title": "busy 被拒的锚点被判'结果未知'",
+   "location": "T-P3b 六格修复",
+   "status": "closed",
+   "owner": "3.1-A T-P3b",
+   "costMinutes": 0,
+   "source": "versions/平台接入清单.md:380"
+  },
+  {
+   "id": "D-52",
+   "title": "选中的 repo-lint 版本与 scannerRelease 不一致静默换版",
+   "location": "tool/wf-runner/versions/0.10.1/resolution.py:178（VERSION_CONFLICT 已实装）",
+   "status": "closed",
+   "owner": "3.0-A",
+   "costMinutes": 0,
+   "source": "qoder/runtime/maintenance/3.0-A/3.0-LEDGER.md；zcode 09-26 复验"
+  },
+  {
+   "id": "D-53",
+   "title": "start_script 不复验密封",
+   "location": "T-P3b 六格修复",
+   "status": "closed",
+   "owner": "3.1-A T-P3b",
+   "costMinutes": 0,
+   "source": "versions/平台接入清单.md:380"
+  },
+  {
+   "id": "D-54",
+   "title": "Q-P1 环境操作教训（登记级）",
+   "location": "qoder/runtime/maintenance/3.0-Q/Q-LEDGER.md",
+   "status": "ruled",
+   "owner": "3.0-Q 过程留痕",
+   "costMinutes": 0,
+   "source": "qoder/runtime/maintenance/3.0-Q/Q-LEDGER.md"
+  },
+  {
+   "id": "D-55",
+   "title": "Q-P1 接入面事实（已收进平台声明面）",
+   "location": "qoder/bridge/capabilities.json",
+   "status": "closed",
+   "owner": "3.0-Q",
+   "costMinutes": 0,
+   "source": "qoder/runtime/maintenance/3.0-Q/Q-LEDGER.md"
+  },
+  {
+   "id": "D-56",
+   "title": "环境根拼错被报成内核挂载失败",
+   "location": "T-P3b 六格修复",
+   "status": "closed",
+   "owner": "3.1-A T-P3b",
+   "costMinutes": 0,
+   "source": "versions/平台接入清单.md:380"
+  },
+  {
+   "id": "D-57",
+   "title": "Q-P2 工具口径（登记级）",
+   "location": "qoder/runtime/maintenance/3.0-Q/Q-LEDGER.md",
+   "status": "ruled",
+   "owner": "3.0-Q 过程留痕",
+   "costMinutes": 0,
+   "source": "qoder/runtime/maintenance/3.0-Q/Q-LEDGER.md"
+  },
+  {
+   "id": "D-58",
+   "title": "Q-P2 过程教训，非代码缺陷",
+   "location": "qoder/runtime/maintenance/3.0-Q/Q-LEDGER.md",
+   "status": "ruled",
+   "owner": "3.0-Q 过程留痕",
+   "costMinutes": 0,
+   "source": "qoder/runtime/maintenance/3.0-Q/Q-LEDGER.md"
+  },
+  {
+   "id": "D-59",
+   "title": "矩阵软件行读错 interpreters 位置",
+   "location": "tool/architecture-ops/versions/1.4.0/architecture_ops/invocation_matrix.py:268-287（config map 优先已实装）",
+   "status": "closed",
+   "owner": "3.1-A F-4/T-P3b",
+   "costMinutes": 20,
+   "source": "versions/平台接入清单.md:380"
+  },
+  {
+   "id": "D-60",
+   "title": "参考网关问 --tools 而真实 CLI 答不出 ⇒ 绿行只证登记不证可派发",
+   "location": "software/_connector/versions/1.0.6/connector.py（snapshot-only attestation，不问 --tools）",
+   "status": "closed",
+   "owner": "连接器 1.0.6 落地（09-22 方向的实装）",
+   "costMinutes": 0,
+   "source": "versions/平台接入清单.md §8.25 P3 段"
+  },
+  {
+   "id": "D-61",
+   "title": "nmap 配方声明 7.95 不存在的 -oJ ⇒ 拒绝冻结",
+   "location": "software/nmap/versions/1.0.0/recipes/",
+   "status": "closed",
+   "owner": "R-P2..R-P6/X-P4 of 架构3.x-框架侧统一修复方案 (2026-09-27, zcode session)",
+   "costMinutes": 60,
+   "source": "software/nmap/versions/1.0.1/SOURCE.json",
+   "evidence": "nmap 1.0.1 (X-P4): scan/serviceScan run -oX (7.95 has no -oJ), recipe verify.files live-measured, snapshot frozen from live inquiry; conform --only nmap pass with floorReached=true"
+  },
+  {
+   "id": "D-62",
+   "title": "档位只在提示词自律、机器读不出",
+   "location": "tool/runtime-contracts/versions/1.4.0/SOURCE.json（run-lock execution gains rigor/rigorSource）",
+   "status": "closed",
+   "owner": "3.1-A T-P3b",
+   "costMinutes": 0,
+   "source": "tool/runtime-contracts/versions/1.4.0/SOURCE.json"
+  },
+  {
+   "id": "D-63",
+   "title": "（连接器方向裁定项）",
+   "location": "versions/架构3.x-框架侧统一修复方案-20260927.md §5",
+   "status": "ruled",
+   "owner": "连接器代已落地",
+   "costMinutes": 0,
+   "source": "versions/架构3.x-框架侧统一修复方案-20260927.md §5"
+  },
+  {
+   "id": "D-64",
+   "title": "kill 后只不重复派发、不自动回收",
+   "location": "T-P3b 六格修复",
+   "status": "closed",
+   "owner": "3.1-A T-P3b",
+   "costMinutes": 0,
+   "source": "versions/平台接入清单.md:380"
+  },
+  {
+   "id": "D-65",
+   "title": "19 条历史非终态 run 的状态名不在现行终态集合 ⇒ 只能按 mtime 划窗口",
+   "location": "各平台 runtime/runs/（遗留字面量）",
+   "status": "closed",
+   "owner": "M-P1..M-P5 of 架构3.x-维护缺陷修复实施表 (2026-09-27, zcode session)",
+   "costMinutes": 60,
+   "source": "zcode/runtime/maintenance/20260927-3x-repair/m-p4/census-summary.json",
+   "evidence": "mapping ruling registered (completed->succeeded, completed-awaiting-instruction->waiting-for-input) + six-platform census filed (14 historical literals, all on codex; zcode/qoder/doubao/workbuddy/dsh clean); historical state bytes preserved by design"
+  },
+  {
+   "id": "D-66",
+   "title": "上位条文与复述文档之间没有一致性机检",
+   "location": "repo-lint R16（0.5.1 起内建）",
+   "status": "closed",
+   "owner": "3.1-A",
+   "costMinutes": 40,
+   "source": "versions/平台接入清单.md:380-381"
+  },
+  {
+   "id": "D-67",
+   "title": "历史快照与现行规则混排（文档卫生）",
+   "location": "治理文本多处置history于现行段（zcode 09-26 排查 30+ 处）",
+   "status": "closed",
+   "owner": "M-P1..M-P5 of 架构3.x-维护缺陷修复实施表 (2026-09-27, zcode session)",
+   "costMinutes": 120,
+   "source": "zcode/runtime/maintenance/20260927-3x-repair/m-p3/d67-inventory.json",
+   "evidence": "sweep executed: HANDOFF math clauses historicized (3), spec 09-17 snapshot marked, system prompt top-level list gains architecture-manager, AGENTS.md 09-27 status section supersedes stale value claims; residual narrative drift deliberately kept with reasons in d67-inventory.json"
+  },
+  {
+   "id": "D-68",
+   "title": "远端拒连时按'本地已入库、远端待复算'记账的口径（非代码缺陷）",
+   "location": "versions/平台接入清单.md:399 等多处使用",
+   "status": "ruled",
+   "owner": "常设口径",
+   "costMinutes": 0,
+   "source": "versions/平台接入清单.md:399"
+  },
+  {
+   "id": "D-69",
+   "title": "registry 缺 deprecated 位、enabled:false 是硬开关",
+   "location": "tool/registry.json（deprecated/supersededBy 已实装，09-23 起各收拢轮使用）",
+   "status": "closed",
+   "owner": "3.1-A F-3/T-P6",
+   "costMinutes": 0,
+   "source": "versions/平台接入清单.md:388"
+  },
+  {
+   "id": "D-70",
+   "title": "自述漂移正是 R2 该抓的形状（判据已具备）",
+   "location": "repo-lint R2 规则",
+   "status": "closed",
+   "owner": "3.1-A（R2 抓出 D-95/D-70 同族）",
+   "costMinutes": 0,
+   "source": "qoder/runtime/maintenance/3.1-A/3.1-LEDGER.md"
+  },
+  {
+   "id": "D-71",
+   "title": "过渡实现待替换",
+   "location": "qoder/runtime/maintenance/3.1-A/3.1-LEDGER.md",
+   "status": "closed",
+   "owner": "3.1-A T-P4（复核翻转，2026-09-27 立修复表前核实）",
+   "costMinutes": 60,
+   "source": "tool/repo-lint/versions/0.6.1/scripts/repo_lint.py; tool/repo-lint/versions/0.6.1/schemas/workflow-definition-v3.schema.json",
+   "evidence": "T-P4 行明载\"删掉 0.5.0 的剥键换标过渡实现 D-71\"；0.6.1 复核：scripts/repo_lint.py:588 起为原生 v3 分支（defaultScenario/requiredStages/scenarios 自有校验），schemas/workflow-definition-v3.schema.json 独立成文，运行期剥键换标逻辑不存在"
+  },
+  {
+   "id": "D-72",
+   "title": "提示词锚点语法从未成文",
+   "location": "invocation-adapters-spec.md §11（3.1-A 成文）",
+   "status": "closed",
+   "owner": "3.1-A",
+   "costMinutes": 0,
+   "source": "qoder/runtime/maintenance/3.1-A/3.1-LEDGER.md"
+  },
+  {
+   "id": "D-73",
+   "title": "新错误码（CONTEXT_UNRESOLVED 等）尚未进契约",
+   "location": "tool/runtime-contracts/versions/1.4.0/SOURCE.json（joined the error-code enums）",
+   "status": "closed",
+   "owner": "3.1-A T-P3",
+   "costMinutes": 0,
+   "source": "tool/runtime-contracts/versions/1.4.0/SOURCE.json"
+  },
+  {
+   "id": "D-74",
+   "title": "引擎 raise 契约里没有的 HANDOFF_VERSION_MISMATCH（2.1-A 遗留）",
+   "location": "tool/runtime-contracts/versions/1.4.1/contracts/runtime/error-envelope.schema.json:74",
+   "status": "closed",
+   "owner": "3.1-A T-P3",
+   "costMinutes": 0,
+   "source": "tool/runtime-contracts/versions/1.4.0/SOURCE.json + 1.4.1 schema 实读"
+  },
+  {
+   "id": "D-75",
+   "title": "同一份校验器字节活在两个释放里，修复只到一处",
+   "location": "qoder/runtime/maintenance/3.1-A/3.1-LEDGER.md",
+   "status": "closed",
+   "owner": "M-P1..M-P5 of 架构3.x-维护缺陷修复实施表 (2026-09-27, zcode session)",
+   "costMinutes": 45,
+   "source": "tool/repo-lint/versions/0.6.2/SOURCE.json",
+   "evidence": "repo-lint 0.6.2: validate_contracts.py synced byte-for-byte from runtime-contracts 1.5.0; conformance 1.5.1 test_validator_sync makes one-sided fixes fail (negative measured on 0.6.1)"
+  },
+  {
+   "id": "D-76",
+   "title": "_gateway 三态（accepted/running/succeeded）未进 request.json 判据面",
+   "location": "software/_gateway/1.0.0（已发布不可回改）",
+   "status": "closed",
+   "owner": "M-P1..M-P5 of 架构3.x-维护缺陷修复实施表 (2026-09-27, zcode session)",
+   "costMinutes": 60,
+   "source": "software/_gateway/versions/1.0.1/gateway.py",
+   "evidence": "_gateway 1.0.1: request.json carries dispatchState (not-dispatched -> dispatched-completed/uncertain); probe with loopback http mock judged the 3.2.0 P3b criterion against the reference gateway itself"
+  },
+  {
+   "id": "D-77",
+   "title": "提示词锚点（与 D-72 同面）",
+   "location": "invocation-adapters-spec.md §11",
+   "status": "closed",
+   "owner": "3.1-A",
+   "costMinutes": 0,
+   "source": "qoder/runtime/maintenance/3.1-A/3.1-LEDGER.md"
+  },
+  {
+   "id": "D-78",
+   "title": "一个子块的编辑吃掉相邻文件全部改动（过程自纠，登记级）",
+   "location": "qoder/runtime/maintenance/3.1-A/3.1-LEDGER.md",
+   "status": "ruled",
+   "owner": "3.1-A 过程留痕",
+   "costMinutes": 0,
+   "source": "qoder/runtime/maintenance/3.1-A/3.1-LEDGER.md"
+  },
+  {
+   "id": "D-79",
+   "title": "v2 阶段模式 if 缺 required ⇒ 局部对象全分支开火",
+   "location": "3.1-A 场景 replace 补丁（T-P3b 内修）",
+   "status": "closed",
+   "owner": "3.1-A",
+   "costMinutes": 0,
+   "source": "versions/平台接入清单.md:397"
+  },
+  {
+   "id": "D-80",
+   "title": "合并时自创权限三元组 ⇒ 所有平台凭空多一格 declaredAbsent（纪律）",
+   "location": "conform 判定逻辑（union 只认已声明三元组）",
+   "status": "ruled",
+   "owner": "纪律入 R-P1 状态簿沿用",
+   "costMinutes": 0,
+   "source": "versions/平台接入清单.md:397"
+  },
+  {
+   "id": "D-81",
+   "title": "（号段已声明、逐条定义盘面未找到）",
+   "location": "未定位",
+   "status": "ruled",
+   "owner": "M-P3 定义查证（2026-09-27）",
+   "costMinutes": 0,
+   "source": "versions/缺陷状态簿.json（本裁定）；zcode/runtime/maintenance/20260927-3x-repair/m-p3/ 查证记录",
+   "evidence": "全台账 + inbox/archive 镜像 + versions/ 全量 grep 无逐条定义；3.1-A 的\"D-70…D-82 十三条\"区间声明使其余十二条各有出处，唯 D-81 从未被任何文本赋义。裁定：该号视为从未定义的登记空洞，后续若有会话主张此号须先在状态簿补条目再引用。",
+   "correctionNote": "unverified-registration -> ruled per the M-P3 sweep (definitions sought everywhere, none found)"
+  },
+  {
+   "id": "D-82",
+   "title": "--select 无单格成本（57.4s vs 全量 58.8s）",
+   "location": "repo-lint 0.5.2（30.1s，裁定记录 §1）",
+   "status": "closed",
+   "owner": "09-23 修复轮",
+   "costMinutes": 0,
+   "source": "versions/架构3.2.0-裁定记录-20260924.md §1"
+  },
+  {
+   "id": "D-83",
+   "title": "（用户 09-27 账面点名；盘面未找到逐条定义）",
+   "location": "未定位",
+   "status": "closed",
+   "owner": "M-P1..M-P5 of 架构3.x-维护缺陷修复实施表 (2026-09-27, zcode session)",
+   "costMinutes": 0,
+   "source": "tool/repo-lint/versions/0.6.3/SOURCE.json",
+   "evidence": "definition recovered from the 3.1.0 baseline (qoder evidence mirror): output schema pinned report.version to a hardcoded const; repo-lint 0.6.3 unpins it (plain string)"
+  },
+  {
+   "id": "D-84",
+   "title": "连接器声明件缺 attestation/会话指引/逐操作 network-filesystem 三个位",
+   "location": "runtime-contracts 下一代（R-P2 ①）",
+   "status": "closed",
+   "owner": "R-P2..R-P6/X-P4 of 架构3.x-框架侧统一修复方案 (2026-09-27, zcode session)",
+   "costMinutes": 90,
+   "source": "tool/repo-lint/versions/0.6.1/schemas/software-connector-v1.schema.json",
+   "evidence": "runtime-contracts 1.5.0 + repo-lint 0.6.1: ai-software-connector/v1 published with attestation/sessionGuidance/per-operation network (schemas/software-connector-v1.schema.json)"
+  },
+  {
+   "id": "D-85",
+   "title": "inventoryResponse 闭合键集无 frozen，而锁与引擎读它",
+   "location": "engine.py:660；ai-software-inventory/v1",
+   "status": "closed",
+   "owner": "R-P2..R-P6/X-P4 of 架构3.x-框架侧统一修复方案 (2026-09-27, zcode session)",
+   "costMinutes": 90,
+   "source": "tool/repo-lint/versions/0.6.1/schemas/software-gateway-adapter-v1.schema.json",
+   "evidence": "repo-lint 0.6.1 inventoryResponse requires frozen (D-85); _gateway 1.0.0 is judged historically non-conformant, not exempted"
+  },
+  {
+   "id": "D-86",
+   "title": "引擎 call 请求带 consented/holder，不在已发布 callRequest 键集",
+   "location": "engine.py:670/727-735",
+   "status": "closed",
+   "owner": "R-P2..R-P6/X-P4 of 架构3.x-框架侧统一修复方案 (2026-09-27, zcode session)",
+   "costMinutes": 60,
+   "source": "tool/repo-lint/versions/0.6.1/schemas/software-gateway-adapter-v1.schema.json",
+   "evidence": "repo-lint 0.6.1 callRequest declares the engine-added consented/holder keys; the engine message is now legal under the published shape"
+  },
+  {
+   "id": "D-87",
+   "title": "credentialInjection 在已发布声明件里没有位",
+   "location": "ai-software-manifest/v1 闭合键集；mysql-cli@1.0.2 connector.json",
+   "status": "closed",
+   "owner": "R-P2..R-P6/X-P4 of 架构3.x-框架侧统一修复方案 (2026-09-27, zcode session)",
+   "costMinutes": 60,
+   "source": "tool/repo-lint/versions/0.6.1/schemas/software-manifest-v1.schema.json",
+   "evidence": "repo-lint 0.6.1 software-manifest-v1 gains credentialInjection"
+  },
+  {
+   "id": "D-88",
+   "title": "组件类释放件（software/_*）不受任何已发布 schema 约束",
+   "location": "repo-lint software_lint 只遍历 registry 条目",
+   "status": "closed",
+   "owner": "R-P2..R-P6/X-P4 of 架构3.x-框架侧统一修复方案 (2026-09-27, zcode session)",
+   "costMinutes": 75,
+   "source": "tool/repo-lint/versions/0.6.1/scripts/software_lint.py",
+   "evidence": "repo-lint 0.6.1 publishes software-component-v1 and software_lint traverses software/_*; negative fixture (corrupted component manifest) goes red"
+  },
+  {
+   "id": "D-89",
+   "title": "连接器拒绝凭据时原样回显被拒串（真泄漏）",
+   "location": "修于 software/_connector/versions/1.0.2",
+   "status": "closed",
+   "owner": "3.2.0 P4a",
+   "costMinutes": 0,
+   "source": "versions/架构3.x-框架侧统一修复方案-20260927.md §2"
+  },
+  {
+   "id": "D-90",
+   "title": "人工路径起来的程序无法被附着（无 pid 位）",
+   "location": "runtime-contracts 会话形状 + 连接器",
+   "status": "closed",
+   "owner": "R-P2..R-P6/X-P4 of 架构3.x-框架侧统一修复方案 (2026-09-27, zcode session)",
+   "costMinutes": 120,
+   "source": "software/_connector/versions/1.0.7/connector.py",
+   "evidence": "runtime contract software-session-v1 carries attachPid; connector 1.0.7 attach verified on real processes (open->SESSION_READY, status, close, dead-pid ATTACH_FAILED)"
+  },
+  {
+   "id": "D-91",
+   "title": "_connector 1.0.4 SHA256SUMS 列被忽略路径（永久红行）",
+   "location": "software/_connector/versions/1.0.4/SHA256SUMS",
+   "status": "ruled",
+   "owner": "不回改；1.0.5/1.0.6 已重出正确封条；显式点名仍报历史错误",
+   "costMinutes": 0,
+   "source": "versions/架构3.x-框架侧统一修复方案-20260927.md §2；zcode 09-26 复核仍唯一"
+  },
+  {
+   "id": "D-92",
+   "title": "conform 27 判定项族没有按软件的行，P7/P8 判据口径命不中",
+   "location": "tool/platform-conformance/versions/1.4.1/conformance/conform.py",
+   "status": "closed",
+   "owner": "R-P2..R-P6/X-P4 of 架构3.x-框架侧统一修复方案 (2026-09-27, zcode session)",
+   "costMinutes": 45,
+   "source": "tool/platform-conformance/versions/1.5.0/conformance/conform.py",
+   "evidence": "platform-conformance 1.5.0 adds one union row per software release; conform --only burp-suite / --only nmap name real rows and reach floorReached=true on single cells"
+  },
+  {
+   "id": "D-93",
+   "title": "连接器要求 kind:request 而 runner 从不发 kind",
+   "location": "修于 software/_connector/versions/1.0.6（缺失即视为请求）",
+   "status": "closed",
+   "owner": "3.2.0 P8",
+   "costMinutes": 0,
+   "source": "versions/架构3.x-框架侧统一修复方案-20260927.md §2"
+  },
+  {
+   "id": "D-94",
+   "title": "矩阵把未归类网关错误判成 PASS（判据假绿）",
+   "location": "tool/architecture-ops/versions/1.4.0/architecture_ops/invocation_matrix.py",
+   "status": "closed",
+   "owner": "R-P2..R-P6/X-P4 of 架构3.x-框架侧统一修复方案 (2026-09-27, zcode session)",
+   "costMinutes": 60,
+   "source": "tool/architecture-ops/versions/1.5.0/architecture_ops/invocation_matrix.py",
+   "evidence": "architecture-ops 1.5.0: unclassified gateway errors are FAIL; stub-outage probe reproduced old PASS 6 -> new FAIL 6"
+  },
+  {
+   "id": "D-95",
+   "title": "repo-lint@0.5.2 workflow.yaml 自述 0.5.1 ⇒ 引擎严格闭包拒绝（=zcode 09-26 轮的 Z-D2）",
+   "location": "tool/repo-lint/versions/0.5.2/workflow.yaml:3 vs manifest.json",
+   "status": "closed",
+   "owner": "R-P2..R-P6/X-P4 of 架构3.x-框架侧统一修复方案 (2026-09-27, zcode session)",
+   "costMinutes": 30,
+   "source": "tool/repo-lint/versions/0.6.1/workflow.yaml",
+   "evidence": "repo-lint 0.6.1 published with workflow.yaml self-version in lockstep; 0.5.2 untouched; full snapshot scan errors 0 after the raise batch"
+  },
+  {
+   "id": "D-96",
+   "title": "3.3.0 两条新域以未定义 kind:pipeline + invocable:true 登记，引擎无此命名空间（=zcode Z-D1 内容侧根因）",
+   "location": "tool/registry.json（framework-pipeline/paper-pipeline 两行）；test_entry04.py:12",
+   "status": "closed",
+   "owner": "R-P2..R-P6/X-P4 of 架构3.x-框架侧统一修复方案 (2026-09-27, zcode session)",
+   "costMinutes": 45,
+   "source": "tool/registry.json",
+   "evidence": "registry framework-pipeline/paper-pipeline kind pipeline->workflow (3.1.0 precedent); 1.4.1 conformance suite 25/25 after the fix; both pipelines reachable through the engine namespace"
+  },
+  {
+   "id": "D-97",
+   "title": "runner↔contracts 混代不被机械拒绝且 run-lock 不记 contracts 代（=zcode Z-D3）",
+   "location": "engine.py prepare/plan；ai-run-lock resources",
+   "status": "closed",
+   "owner": "R-P2..R-P6/X-P4 of 架构3.x-框架侧统一修复方案 (2026-09-27, zcode session)",
+   "costMinutes": 90,
+   "source": "tool/wf-runner/versions/0.11.0/engine.py",
+   "evidence": "runner 0.11.0 records contracts:runtime-contracts in the lock and re-validates on resume (VERSION_CONFLICT); contracts 1.5.0 grants kind=contracts; mixed-generation prepare refused with zero disk"
+  },
+  {
+   "id": "D-98",
+   "title": "能力探针继承旧 false，prepare 自指拒绝；peer 二次报 KeyError",
+   "location": "architecture-manager/src/runtime/capability_probe.py",
+   "status": "closed",
+   "owner": "Codex，管理台接入续跑与暂缓修复 P1–P5（2026-10-06）",
+   "costMinutes": 0,
+   "source": "architecture-manager/src/runtime/capability_probe.py",
+   "evidence": "0.5.1 候选表修复已在 dsh 16:07 实测；0.5.2 回归验证生产表不被临时候选改写，peer 给出依赖失败原因。"
+  },
+  {
+   "id": "D-99",
+   "title": "独立安装客户端或软件绑定后自动接入无法续接",
+   "location": "architecture-manager/src/domains/platforms/onboarding-resume.mjs",
+   "status": "closed",
+   "owner": "Codex，管理台接入续跑与暂缓修复 P1–P5（2026-10-06）",
+   "costMinutes": 0,
+   "source": "architecture-manager/src/domains/platforms/onboarding-resume.mjs",
+   "evidence": "显式差异确认、受影响步骤失效、旧日志 SHA 日期副本；等待候选 EXE 回读。 最终 0.5.2 实际 EXE 的暂缓保存、严格拒绝、差异续接、显式重建及 Git 回读全通过；完整回归 183 项：182 PASS/0 FAIL/1 WSL 未执行。"
+  },
+  {
+   "id": "D-100",
+   "title": "能力实测通过后旧 unverified/declaredAbsent 名仍残留",
+   "location": "architecture-manager/src/domains/platforms/capability-evidence.mjs",
+   "status": "closed",
+   "owner": "Codex，管理台接入续跑与暂缓修复 P1–P5（2026-10-06）",
+   "costMinutes": 0,
+   "source": "architecture-manager/src/domains/platforms/capability-evidence.mjs",
+   "evidence": "只清有对应证据的旧名；真实客户端回执绑定漂移则保留 MCP 缺口。生产 dsh 尚未执行新登记。"
+  },
+  {
+   "id": "D-101",
+   "title": "Windows Git Bash tar 把盘符 ZIP 路径当远程主机",
+   "location": "architecture-manager/src/infrastructure/archive-tool.mjs",
+   "status": "closed",
+   "owner": "Codex，管理台接入续跑与暂缓修复 P1–P5（2026-10-06）",
+   "costMinutes": 0,
+   "source": "architecture-manager/src/infrastructure/archive-tool.mjs",
+   "evidence": "GNU tar 在 PATH 前置真实复现拒绝；显式系统 tar 真实 ZIP 恢复逐哈希通过。原 PowerShell 基线 14/14，通过与失败由 PATH 区分。"
+  },
+  {
+   "id": "D-102",
+   "title": "缺陷状态簿连续性检查固定上界 D-97，漏查新增号段",
+   "location": "versions/缺陷状态簿.check.py",
+   "status": "closed",
+   "owner": "Codex，管理台接入续跑与暂缓修复 P1–P5（2026-10-06）",
+   "costMinutes": 0,
+   "source": "versions/缺陷状态簿.check.py",
+   "evidence": "合法 ID 动态上界；D-98 漏号与非法 ID 负例须返回结构化失败。"
+  },
+  {
+   "id": "D-103",
+   "title": "automatic.json 没有带日期 SHA 历史，续接来源无法回读",
+   "location": "architecture-manager/src/domains/platforms/onboarding-resume.mjs",
+   "status": "closed",
+   "owner": "Codex，管理台接入续跑与暂缓修复 P1–P5（2026-10-06）",
+   "costMinutes": 0,
+   "source": "architecture-manager/src/domains/platforms/onboarding-resume.mjs",
+   "evidence": "每次获批尝试/重建前按原始字节留历史与完整 SHA；拒绝的未批准差异不换日志。"
+  },
+  {
+   "id": "D-104",
+   "title": "一键接入不能暂缓不需要的软件/环境/客户端/认证/Git",
+   "location": "architecture-manager/src/domains/onboarding/onboarding-auto.mjs",
+   "status": "closed",
+   "owner": "Codex，管理台接入续跑与暂缓修复 P1–P5（2026-10-06）",
+   "costMinutes": 0,
+   "source": "architecture-manager/src/domains/onboarding/onboarding-auto.mjs",
+   "evidence": "配置与安全校验不可跳，依赖自动暂缓；配置保存成功保持 configured-pending，未测不算 PASS 或完整接入。等待实际 EXE。 最终 0.5.2 实际 EXE 的暂缓保存、严格拒绝、差异续接、显式重建及 Git 回读全通过；完整回归 183 项：182 PASS/0 FAIL/1 WSL 未执行。"
+  },
+  {
+   "id": "D-105",
+   "title": "接入向导异步回读/扫描刷新可能覆盖尚未保存的表单",
+   "location": "architecture-manager/src/renderer/panels/onboard.jsx:27–43",
+   "status": "closed",
+   "owner": "Codex，管理台0.5.6接入链路修复P1–P6",
+   "costMinutes": 0,
+   "source": "versions/管理台0.5.6-接入链路修复记录-20261007.md",
+   "evidence": "215项214PASS/0FAIL/1WSL未测；实际便携EXE验证草稿保护、模板更新、现行配方绑定。旧平台日志保持原SHA；业务未执行与历史runtime入库另列，不刷绿。"
+  },
+  {
+   "id": "D-106",
+   "title": "peer 实测判据只检查 claimReached，已安装副本仍为旧字节",
+   "status": "closed",
+   "owner": "Codex，管理台0.5.6接入链路修复P1–P6",
+   "costMinutes": 0,
+   "location": "architecture-manager/src/",
+   "source": "versions/管理台0.5.6-接入链路修复记录-20261007.md",
+   "evidence": "215项214PASS/0FAIL/1WSL未测；实际便携EXE验证草稿保护、模板更新、现行配方绑定。旧平台日志保持原SHA；业务未执行与历史runtime入库另列，不刷绿。"
+  },
+  {
+   "id": "D-107",
+   "title": "Python 环境切换后 hostEnvironmentManifest 仍锁旧解释器",
+   "status": "closed",
+   "owner": "Codex，管理台0.5.6接入链路修复P1–P6",
+   "costMinutes": 0,
+   "location": "architecture-manager/src/",
+   "source": "versions/管理台0.5.6-接入链路修复记录-20261007.md",
+   "evidence": "215项214PASS/0FAIL/1WSL未测；实际便携EXE验证草稿保护、模板更新、现行配方绑定。旧平台日志保持原SHA；业务未执行与历史runtime入库另列，不刷绿。"
+  },
+  {
+   "id": "D-108",
+   "title": "软件网关改名后旧 bodies 与解释器绑定丢失",
+   "status": "closed",
+   "owner": "Codex，管理台0.5.6接入链路修复P1–P6",
+   "costMinutes": 0,
+   "location": "architecture-manager/src/",
+   "source": "versions/管理台0.5.6-接入链路修复记录-20261007.md",
+   "evidence": "215项214PASS/0FAIL/1WSL未测；实际便携EXE验证草稿保护、模板更新、现行配方绑定。旧平台日志保持原SHA；业务未执行与历史runtime入库另列，不刷绿。；0.5.7 调整为当前指针权威、显式迁移，避免历史文件每次合并形成新冲突，见 D-113。"
+  },
+  {
+   "id": "D-109",
+   "title": "软件本体安置后缺少绑定到现行配方的明确入口",
+   "status": "closed",
+   "owner": "Codex，管理台0.5.6接入链路修复P1–P6",
+   "costMinutes": 0,
+   "location": "architecture-manager/src/",
+   "source": "versions/管理台0.5.6-接入链路修复记录-20261007.md",
+   "evidence": "215项214PASS/0FAIL/1WSL未测；实际便携EXE验证草稿保护、模板更新、现行配方绑定。旧平台日志保持原SHA；业务未执行与历史runtime入库另列，不刷绿。"
+  },
+  {
+   "id": "D-110",
+   "title": "临时接入回读混淆本次提交与历史 runtime 入库违规",
+   "status": "closed",
+   "owner": "Codex，管理台0.5.6接入链路修复P1–P6",
+   "costMinutes": 0,
+   "location": "architecture-manager/src/",
+   "source": "versions/管理台0.5.6-接入链路修复记录-20261007.md",
+   "evidence": "215项214PASS/0FAIL/1WSL未测；实际便携EXE验证草稿保护、模板更新、现行配方绑定。旧平台日志保持原SHA；业务未执行与历史runtime入库另列，不刷绿。"
+  },
+  {
+   "id": "D-111",
+   "title": "peer 协议可调用被报告为业务执行完成",
+   "status": "closed",
+   "owner": "Codex，管理台0.5.6接入链路修复P1–P6",
+   "costMinutes": 0,
+   "location": "architecture-manager/src/",
+   "source": "versions/管理台0.5.6-接入链路修复记录-20261007.md",
+   "evidence": "215项214PASS/0FAIL/1WSL未测；实际便携EXE验证草稿保护、模板更新、现行配方绑定。旧平台日志保持原SHA；业务未执行与历史runtime入库另列，不刷绿。"
+  },
+  {
+   "id": "D-112",
+   "title": "历史 runtime 运行产物已入根仓：qoder 1114 件、zcode 1 件",
+   "status": "ruled",
+   "owner": "缺陷簿修复轮 2026-10-10（workbuddy 平台会话，verify-or-rule）",
+   "costMinutes": 120,
+   "location": "qoder/runtime/ 与 zcode/runtime/（git ls-files 实读）",
+   "source": "versions/管理台模块化与剩余事项收口-P表-20261012.md",
+   "evidence": "裁决：P1 私密复核完成——9 类高信号模式（私钥/AWS/OpenAI/GitHub/GitLab/Slack/Bearer/URL 内嵌凭据）对两平台备份区 2232 件（约 2185 文本件）0 命中；宽口径赋值类 4 处（2 独立文件×双份）逐一裁定为误报（扫描器自身 SECRET=re.compile 常量、emit({'password': 变量引用}) 代码行）。0 真实凭据，无需轮换；残余面仅剩「历史 blob 含运行产物」的隐私卫生，历史改写按簿子纪律留待另批 P 表。证据：workbuddy/runtime/maintenance/20261010-defect-ledger-repair/P1/secret-scan.json（值零落盘）。 2026-10-12 扩展复核全部本地 refs 的唯一 runtime blob（15112 件 / 127015431 字节）；两处宽口径命中确认为测试代码字符串成员判断。运行证据含项目内容和本机标识，全部六平台 runtime 历史路径从隔离副本移除；当前治理树完全相同，原始及清洗 bundle 真实恢复通过。原根仓和远端旧历史保留，未强推，不能称远端清理完成。",
+   "substatuses": {
+    "currentIndex": "closed",
+    "workingFiles": "preserved",
+    "backupRestore": "passed",
+    "historicalPrivacy": "20261012 all-local-refs unique runtime blob audit: 15112 blobs / 127015431 bytes; 0 true high-signal credential findings",
+    "historyRewrite": "isolated clean repository and bundle ready; remote migration pending decision",
+    "localCleanHistory": "verified; all clean refs zero platform runtime paths; current tree identical",
+    "activeLocalHistory": "original history retained until migration"
+   },
+   "originalSource": "versions/治理缺陷联合修复收口-20261009.md"
+  },
+  {
+   "id": "D-113",
+   "title": "当前软件网关被历史文件差异阻断，旧 bridge Python 优先于 runner 配置",
+   "status": "closed",
+   "owner": "Codex，管理台0.5.7 P1–P5",
+   "costMinutes": 0,
+   "location": "architecture-manager/src/",
+   "source": "versions/管理台0.5.7-软件配置冲突与排查修复记录-20261007.md",
+   "evidence": "conform 221/220PASS/0FAIL/1WSL SKIP；实际0.5.7便携EXE六项界面读数通过；198文件与两包内代码一致；zcode生产只读回读6件绑定。旧原件和历史发行包保留。"
+  },
+  {
+   "id": "D-114",
+   "title": "清空软件/解释器路径保存不解除绑定",
+   "status": "closed",
+   "owner": "Codex，管理台0.5.7 P1–P5",
+   "costMinutes": 0,
+   "location": "architecture-manager/src/",
+   "source": "versions/管理台0.5.7-软件配置冲突与排查修复记录-20261007.md",
+   "evidence": "conform 221/220PASS/0FAIL/1WSL SKIP；实际0.5.7便携EXE六项界面读数通过；198文件与两包内代码一致；zcode生产只读回读6件绑定。旧原件和历史发行包保留。"
+  },
+  {
+   "id": "D-115",
+   "title": "明确重新读取未重置隔离后端、环境检测与能力回执",
+   "status": "closed",
+   "owner": "Codex，管理台0.5.7 P1–P5",
+   "costMinutes": 0,
+   "location": "architecture-manager/src/",
+   "source": "versions/管理台0.5.7-软件配置冲突与排查修复记录-20261007.md",
+   "evidence": "conform 221/220PASS/0FAIL/1WSL SKIP；实际0.5.7便携EXE六项界面读数通过；198文件与两包内代码一致；zcode生产只读回读6件绑定。旧原件和历史发行包保留。"
+  },
+  {
+   "id": "D-116",
+   "title": "续跑环境失效仍复用旧安装计划",
+   "status": "closed",
+   "owner": "Codex，管理台0.5.7 P1–P5",
+   "costMinutes": 0,
+   "location": "architecture-manager/src/",
+   "source": "versions/管理台0.5.7-软件配置冲突与排查修复记录-20261007.md",
+   "evidence": "conform 221/220PASS/0FAIL/1WSL SKIP；实际0.5.7便携EXE六项界面读数通过；198文件与两包内代码一致；zcode生产只读回读6件绑定。旧原件和历史发行包保留。"
+  },
+  {
+   "id": "D-117",
+   "title": "延迟文件选择与本体/MCP 请求上下文不完整可串操作对象",
+   "status": "closed",
+   "owner": "Codex，管理台0.5.7 P1–P5",
+   "costMinutes": 0,
+   "location": "architecture-manager/src/",
+   "source": "versions/管理台0.5.7-软件配置冲突与排查修复记录-20261007.md",
+   "evidence": "conform 221/220PASS/0FAIL/1WSL SKIP；实际0.5.7便携EXE六项界面读数通过；198文件与两包内代码一致；zcode生产只读回读6件绑定。旧原件和历史发行包保留。"
+  },
+  {
+   "id": "D-118",
+   "title": "平台私有路径归属、相对路径与目录联接校验不统一",
+   "status": "closed",
+   "owner": "Codex，管理台0.5.7 P1–P5",
+   "costMinutes": 0,
+   "location": "architecture-manager/src/",
+   "source": "versions/管理台0.5.7-软件配置冲突与排查修复记录-20261007.md",
+   "evidence": "conform 221/220PASS/0FAIL/1WSL SKIP；实际0.5.7便携EXE六项界面读数通过；198文件与两包内代码一致；zcode生产只读回读6件绑定。旧原件和历史发行包保留。"
+  },
+  {
+   "id": "D-119",
+   "title": "真实隔离证据通过但旧 permission-triple 缺口仍阻断地板",
+   "status": "closed",
+   "owner": "Codex，0.6.0 原生自动接入轮",
+   "costMinutes": 0,
+   "location": "architecture-manager/src/domains/platforms/capability-evidence.mjs",
+   "source": "versions/管理台0.6.0-自动接入与原生验证修复记录-20261007.md",
+   "evidence": "精确清理有现行证据覆盖的旧名；WorkBuddy 独立 conform 33/0/0。"
+  },
+  {
+   "id": "D-120",
+   "title": "接入准备依赖用户手填兼容 Python 与 WSL 客机版本",
+   "status": "closed",
+   "owner": "Codex，0.6.0 原生自动接入轮",
+   "costMinutes": 0,
+   "location": "architecture-manager/src/domains/platforms/runtime-discovery.mjs",
+   "source": "versions/管理台0.6.0-自动接入与原生验证修复记录-20261007.md",
+   "evidence": "独立实际探测兼容解释器和已安装设施；不足时待准备，不借用别平台环境。"
+  },
+  {
+   "id": "D-121",
+   "title": "管理台服务回环可被混同为厂商原生客户端已接入",
+   "status": "closed",
+   "owner": "Codex，0.6.0 原生自动接入轮",
+   "costMinutes": 0,
+   "location": "architecture-manager/src/domains/platforms/native-client.mjs",
+   "source": "versions/管理台0.6.0-自动接入与原生验证修复记录-20261007.md",
+   "evidence": "单独注册/原生/完整认证状态；Codex 原生 app-server 真读三仓冻结版本，未知接口不会刷绿。"
+  },
+  {
+   "id": "D-122",
+   "title": "本体导入需重复填可推断身份且资源切版默认显示不清",
+   "status": "closed",
+   "owner": "Codex，0.6.0 原生自动接入轮",
+   "costMinutes": 0,
+   "location": "architecture-manager/src/domains/intake/automatic.mjs",
+   "source": "versions/管理台0.6.0-自动接入与原生验证修复记录-20261007.md",
+   "evidence": "自动读取元数据、按 semver 递增；current 默认选中，真实 EXE 已验证 agent 回退/切回与 tool 发布。"
+  },
+  {
+   "id": "D-123",
+   "title": "WorkBuddy 原生 CLI 注册成功后无模型直接调用接口仍未验证",
+   "status": "open",
+   "owner": "所属平台原生接入维护，等待合法接口或当次模型挑战确认",
+   "costMinutes": 30,
+   "location": "architecture-manager/src/domains/platforms/native-client.mjs",
+   "source": "versions/治理缺陷联合修复收口-20261009.md",
+   "evidence": "P10按当前本体/已登记接口核查，未取得新的原生工具回执，未发起模型请求；注册/历史认证不等于tools/call成功。具体平台状态与补齐路径见本收口表。 2026-10-13 排查推进（workbuddy 会话，来源 versions/管理台原生验证缺陷排查-20261013.md）：登录链路实测可通——ai-7ddc3fe4 全程 native_auth_ready→模型轮真跑→MCP connected（hy4-preview，3 turns，13830 tokens），'未验证'收窄为两个可定位点：模型工具调用格式不稳（文本作答，D-148）与共享认证库并发干扰（D-150）；此前所有 attempt 60s 挂死的根因为宿主注入 SERVER__PORT=16279 致 CLI 端口撞用 endpoint 永悬（D-146，驱动层剥变量已实测全链路通过，工具层未修）。仍 open：完整验证未通过、nativeVendorClientVerified 仍 false。 2026-10-13 接入完成收口：一键接入 status=complete / architectureComplete=true（10 步全过，native=auxiliary 按平台所有者当日裁定不阻塞），新密封环境上认证 92 pass / fail 0 / needsInput 0 / conform 32/32。本条与 D-127 的『原生验证』按裁定降级为辅助追踪项（D-152 厂商侧缺陷为唯一剩余阻塞），仍保持 open 不以辅助充数。本轮顺带修复阻塞链全部四个缺陷：D-146/D-147/D-148/D-149/D-150/D-153/D-154/D-155（详见 versions/管理台原生验证缺陷修复-20261013.md）。"
+  },
+  {
+   "id": "D-124",
+   "title": "当前豆包本体尚未找到可配置自建 MCP 的原生入口",
+   "status": "open",
+   "owner": "所属平台原生接入维护，等待合法接口或当次模型挑战确认",
+   "costMinutes": 90,
+   "location": "doubao/Doubao.exe",
+   "source": "versions/治理缺陷联合修复收口-20261009.md",
+   "evidence": "P10按当前本体/已登记接口核查，未取得新的原生工具回执，未发起模型请求；注册/历史认证不等于tools/call成功。具体平台状态与补齐路径见本收口表。"
+  },
+  {
+   "id": "D-125",
+   "title": "新工作区本体导入平台默认可选到未配置的已知模板 ID",
+   "status": "closed",
+   "owner": "联合治理修复 P1–P12 已执行",
+   "costMinutes": 0,
+   "location": "architecture-manager/src/renderer/features/intake/BodyIntakePanel.jsx",
+   "source": "versions/治理缺陷联合修复收口-20261009.md",
+   "evidence": "导入默认为空；切换工作区清归属；真实0.8.1 EXE验证模板存在时仍为稍后选择。",
+   "closedAt": "2026-10-09T12:47:58.067717+00:00",
+   "originalSource": "versions/管理台0.6.0-自动接入与原生验证修复记录-20261007.md"
+  },
+  {
+   "id": "D-126",
+   "title": "兼容旧 runner 字符串时对象展开产生数字字符属性",
+   "status": "closed",
+   "owner": "联合治理修复 P1–P12 已执行",
+   "costMinutes": 0,
+   "location": "architecture-manager/src/domains/onboarding/onboarding-config.mjs",
+   "source": "versions/治理缺陷联合修复收口-20261009.md",
+   "evidence": "normaliseRunner保留有效对象数据，只删除可证明字符串展开残留；doubao/qoder/zcode实际配置通过管理台事务修订。",
+   "closedAt": "2026-10-09T12:47:58.067717+00:00",
+   "originalSource": "versions/管理台0.6.0-自动接入与原生验证修复记录-20261007.md"
+  },
+  {
+   "id": "D-127",
+   "title": "WorkBuddy 内置工具仍被列出且认证成功不代表工具通道已认证",
+   "status": "open",
+   "owner": "所属平台原生接入维护，等待合法接口或当次模型挑战确认",
+   "costMinutes": 30,
+   "location": "architecture-manager/src/runtime/native_workbuddy.py",
+   "source": "versions/治理缺陷联合修复收口-20261009.md",
+   "evidence": "P10按当前本体/已登记接口核查，未取得新的原生工具回执，未发起模型请求；注册/历史认证不等于tools/call成功。具体平台状态与补齐路径见本收口表。 2026-10-13 排查推进（workbuddy 会话）：实测 WorkBuddy CLI --tools '' 下仍列出 40 个内置工具（Agent/Read/Bash/... 与 mcp__architecture__architecture_verify 同在），认证（native_auth_ready）与工具通道可用（MCP connected、service 直驱握手 0.8s）是两回事；本轮模型拿到了工具但未调用（D-148），且启动时有 token 也可能被模型 API 拒（D-150）。仍 open。 2026-10-13 接入完成收口：一键接入 status=complete / architectureComplete=true（10 步全过，native=auxiliary 按平台所有者当日裁定不阻塞），新密封环境上认证 92 pass / fail 0 / needsInput 0 / conform 32/32。本条与 D-127 的『原生验证』按裁定降级为辅助追踪项（D-152 厂商侧缺陷为唯一剩余阻塞），仍保持 open 不以辅助充数。本轮顺带修复阻塞链全部四个缺陷：D-146/D-147/D-148/D-149/D-150/D-153/D-154/D-155（详见 versions/管理台原生验证缺陷修复-20261013.md）。"
+  },
+  {
+   "id": "D-128",
+   "title": "新原生验证失败未显式撤销旧原生成功标志",
+   "status": "closed",
+   "owner": "Codex，0.7.0 P2失败态修复",
+   "costMinutes": 0,
+   "location": "architecture-manager/src/domains/platforms/native-client.mjs",
+   "source": "versions/管理台0.7.0-自动接入与平台独立选版执行记录-20261008.md",
+   "evidence": "新增last-attempt pending/passed/failed，pending或新失败阻断旧成功复用，历史证明保留。native-onboarding失败覆盖测试和WorkBuddy实际失败状态可回读。"
+  },
+  {
+   "id": "D-129",
+   "title": "Codex历史agent默认指向已不存在的冻结版本",
+   "status": "closed",
+   "owner": "联合治理修复 P1–P12 已执行",
+   "costMinutes": 0,
+   "location": "codex/bridge.json defaults.agentVersions.visualization-engineer",
+   "source": "versions/治理缺陷联合修复收口-20261009.md",
+   "evidence": "按实际runner config引用保留用户已选标准bridge；Codex两个bridge现为同字节、无旧visualization覆盖；配置已入库。",
+   "closedAt": "2026-10-09T12:47:58.067717+00:00",
+   "originalSource": "versions/管理台0.7.0-自动接入与平台独立选版执行记录-20261008.md"
+  },
+  {
+   "id": "D-130",
+   "title": "审计未传now时缺少occurredAt",
+   "status": "closed",
+   "owner": "Codex，管理台0.7.1审计测试轮",
+   "costMinutes": 0,
+   "location": "architecture-manager/src/transactions/kernel.mjs",
+   "source": "versions/管理台0.7.1-审计与测试补强执行记录-20261008.md",
+   "evidence": "默认时间戳和事件封条；旧日志保留缺失事实，测试不伪造历史时间；完整回归261/259/0/2，digest 759b2dee3e4d9781d6cd17c3a4aa3917e56e25b6e6cdd8114596bf6b5ff702e2。"
+  },
+  {
+   "id": "D-131",
+   "title": "执行异常或重试没有关联最终审计事件",
+   "status": "closed",
+   "owner": "Codex，管理台0.7.1审计测试轮",
+   "costMinutes": 0,
+   "location": "architecture-manager/src/transactions/operation-audit.mjs",
+   "source": "versions/管理台0.7.1-审计与测试补强执行记录-20261008.md",
+   "evidence": "applyPlan与AI选版统一开始/结果/异常/取消关联；checkpoint损坏、写日志失败、并行及重试反例通过；完整回归261/259/0/2，digest 759b2dee3e4d9781d6cd17c3a4aa3917e56e25b6e6cdd8114596bf6b5ff702e2。"
+  },
+  {
+   "id": "D-132",
+   "title": "合法JSON非事件及非法展示字段进入审计列表",
+   "status": "closed",
+   "owner": "Codex，管理台0.7.1审计测试轮",
+   "costMinutes": 0,
+   "location": "architecture-manager/src/domains/audit/audit.mjs",
+   "source": "versions/管理台0.7.1-审计与测试补强执行记录-20261008.md",
+   "evidence": "拒绝null/标量/数组/非法展示字段，界面过滤与事件/checkpoint完整性问题可见；完整回归261/259/0/2，digest 759b2dee3e4d9781d6cd17c3a4aa3917e56e25b6e6cdd8114596bf6b5ff702e2。"
+  },
+  {
+   "id": "D-133",
+   "title": "conform可零测试假绿且证据未绑定测试与包配置",
+   "status": "closed",
+   "owner": "Codex，管理台0.7.1审计测试轮",
+   "costMinutes": 0,
+   "location": "architecture-manager/scripts/conform-proof.mjs",
+   "source": "versions/管理台0.7.1-审计与测试补强执行记录-20261008.md",
+   "evidence": "拒绝零行/全跳过/缺汇总/失败/取消；绑定测试和包源码，验证期间源变化导致失败；完整回归261/259/0/2，digest 759b2dee3e4d9781d6cd17c3a4aa3917e56e25b6e6cdd8114596bf6b5ff702e2。"
+  },
+  {
+   "id": "D-134",
+   "title": "anchor-dispatch测试结束后未清理独立审计临时目录",
+   "status": "closed",
+   "owner": "联合治理修复 P1–P12 已执行",
+   "costMinutes": 0,
+   "location": "architecture-manager/test/anchor-dispatch.test.mjs auditRoot()/t.after",
+   "source": "versions/治理缺陷联合修复收口-20261009.md",
+   "evidence": "每次anchor审计临时父目录有明确t.after所有者清理；旧遗留不进行全盘前缀扫删。",
+   "closedAt": "2026-10-09T12:47:58.067717+00:00",
+   "originalSource": "versions/管理台0.7.1-审计与测试补强执行记录-20261008.md"
+  },
+  {
+   "id": "D-135",
+   "aliases": [
+    "EXP-01"
+   ],
+   "title": "Agent current/省略入口的解析目录不能被 prepare 内新解析器复用",
+   "status": "closed",
+   "owner": "联合治理修复 P1–P12 已执行",
+   "costMinutes": 0,
+   "location": "tool/wf-runner/versions/0.13.0/engine.py _entry_resolution/prepare",
+   "source": "versions/治理缺陷联合修复收口-20261009.md",
+   "evidence": "新wf-runner0.13.1复用已discover解析器；省略/current/显式三入口精确结果一致、来源分别可回读；坏封条与未知资源零run拒绝。",
+   "closedAt": "2026-10-09T12:47:58.067717+00:00",
+   "originalSource": "versions/治理缺陷联合盘点与修复P表-20261009.md"
+  },
+  {
+   "id": "D-136",
+   "aliases": [
+    "EXP-02"
+   ],
+   "title": "预算候选重复插入函数与守卫",
+   "status": "closed",
+   "owner": "联合治理修复 P1–P12 已执行",
+   "costMinutes": 0,
+   "location": "codex/runtime/maintenance/20261009-agent-expansion/execution/build_support.py；wf-runner 0.13.0 engine.py",
+   "source": "versions/治理缺陷联合修复收口-20261009.md",
+   "evidence": "候选从固定0.13.0干净来源生成两次同字节；保留最后生效的一份预算实现；两处交付路径各一次守卫，累计/单次超限和旧锁形状通过。",
+   "closedAt": "2026-10-09T12:47:58.067717+00:00",
+   "originalSource": "versions/治理缺陷联合盘点与修复P表-20261009.md"
+  },
+  {
+   "id": "D-137",
+   "aliases": [
+    "EXP-03"
+   ],
+   "title": "Codex 入口说明及旧能力缺口与当前声明不一致",
+   "status": "closed",
+   "owner": "联合治理修复 P1–P12 已执行",
+   "costMinutes": 0,
+   "location": "codex-local wfa；codex/bridge/capabilities.json",
+   "source": "versions/治理缺陷联合修复收口-20261009.md",
+   "evidence": "Codex-local wfa与入库来源同步，peer说明限定真实子run创建/claim而不冒充业务完成；删除过时不声明别名并改写当前gap指导、平台内仲裁说明。",
+   "closedAt": "2026-10-09T12:47:58.067717+00:00",
+   "originalSource": "versions/治理缺陷联合盘点与修复P表-20261009.md"
+  },
+  {
+   "id": "D-138",
+   "aliases": [
+    "G-01"
+   ],
+   "title": "标准 bridge 与既存兼容副本不在同一配对事务",
+   "status": "closed",
+   "owner": "联合治理修复 P1–P12 已执行",
+   "costMinutes": 0,
+   "location": "architecture-manager/src/domains/platforms/global-update.mjs baseFiles/activationPlan",
+   "source": "versions/治理缺陷联合修复收口-20261009.md",
+   "evidence": "anchor/onboarding/global及通用配置入口共用实际引用策略；旧副本进入配对写入与恢复，未知权威拒绝，外部编辑受哈希守卫保护。",
+   "closedAt": "2026-10-09T12:47:58.067717+00:00",
+   "originalSource": "versions/治理缺陷联合盘点与修复P表-20261009.md"
+  },
+  {
+   "id": "D-139",
+   "aliases": [
+    "G-02"
+   ],
+   "title": "上下文缺项及来源在更新预览中不够清楚",
+   "status": "closed",
+   "owner": "联合治理修复 P1–P12 已执行",
+   "costMinutes": 0,
+   "location": "architecture-manager/src/renderer/panels/global-update.jsx；platformPlan",
+   "source": "versions/治理缺陷联合修复收口-20261009.md",
+   "evidence": "更新前在同一面板收集窗口与来源；五平台使用用户确认范围下限256000，Codex保留128000；不推定模型与平台对应关系。",
+   "closedAt": "2026-10-09T12:47:58.067717+00:00",
+   "originalSource": "versions/治理缺陷联合盘点与修复P表-20261009.md"
+  },
+  {
+   "id": "D-140",
+   "aliases": [
+    "G-03"
+   ],
+   "title": "配置激活后检查异常未安全入库或恢复",
+   "status": "closed",
+   "owner": "联合治理修复 P1–P12 已执行",
+   "costMinutes": 0,
+   "location": "architecture-manager/src/domains/platforms/global-update.mjs exception/cancellation branch",
+   "source": "versions/治理缺陷联合修复收口-20261009.md",
+   "evidence": "激活后异常/取消先保存仍归本次的配置为待补；不能安全保存时恢复拥有字节，保留外部新改；后台工作进程停止信号也被检查。跨平台治理文件恢复按变化链。",
+   "closedAt": "2026-10-09T12:47:58.067717+00:00",
+   "originalSource": "versions/治理缺陷联合盘点与修复P表-20261009.md"
+  },
+  {
+   "id": "D-141",
+   "aliases": [
+    "G-04"
+   ],
+   "title": "配置更新对象与完整接入状态混称",
+   "status": "closed",
+   "owner": "联合治理修复 P1–P12 已执行",
+   "costMinutes": 0,
+   "location": "architecture-manager/src/renderer/panels/global-update.jsx eligibility/result",
+   "source": "versions/治理缺陷联合修复收口-20261009.md",
+   "evidence": "配置更新、地板验证、厂商原生回执各自展示；配置模板不自动称为完整接入。",
+   "closedAt": "2026-10-09T12:47:58.067717+00:00",
+   "originalSource": "versions/治理缺陷联合盘点与修复P表-20261009.md"
+  },
+  {
+   "id": "D-142",
+   "aliases": [
+    "G-05"
+   ],
+   "title": "现行说明仍包含已撤销的中立层与跨平台仲裁义务",
+   "status": "closed",
+   "owner": "联合治理修复 P1–P12 已执行",
+   "costMinutes": 0,
+   "location": "AI_ARCHITECTURE_SYSTEM_PROMPT.md §二；Codex capability annotations",
+   "source": "versions/治理缺陷联合修复收口-20261009.md",
+   "evidence": "修订系统提示词和现行接口规范的废止义务；AGENTS/HANDOFF/总手册已符合两项规则故不重写；日期历史与冻结基线保留。",
+   "closedAt": "2026-10-09T12:47:58.067717+00:00",
+   "originalSource": "versions/治理缺陷联合盘点与修复P表-20261009.md"
+  },
+  {
+   "id": "D-143",
+   "aliases": [
+    "G-06"
+   ],
+   "title": "资源环境复用不验证恢复证明的存在与哈希",
+   "status": "closed",
+   "owner": "联合治理修复 P1–P12 已执行",
+   "costMinutes": 0,
+   "location": "architecture-manager/src/domains/platforms/resource-environment.mjs resourceEnvironmentMatches",
+   "source": "versions/治理缺陷联合修复收口-20261009.md",
+   "evidence": "资源复用校验平台归属、恢复文件存在/哈希/pass/文件数及真实安装版本；合法旧备份证明沿用；同路径证明变化只使依赖格失效。",
+   "closedAt": "2026-10-09T12:47:58.067717+00:00",
+   "originalSource": "versions/治理缺陷联合盘点与修复P表-20261009.md"
+  },
+  {
+   "id": "D-144",
+   "title": "platform-conformance 1.6.0 的 --only Agent 内容审计块重复",
+   "status": "closed",
+   "owner": "缺陷簿修复轮 2026-10-10（workbuddy 平台会话）",
+   "costMinutes": 30,
+   "location": "tool/platform-conformance/versions/1.6.0/conformance/conform.py:348-434",
+   "source": "tool/platform-conformance/versions/1.6.3/conformance/conform.py；versions/缺陷簿修复与全量验收转绿-实施P表-20261010.md",
+   "evidence": "1.6.3 发布：--only 分支 agent 审计块 7→1（删除六个等价重复块与重复 content 重置），union/verdicts 与 1.6.2 逐字一致（真实 workbuddy 配置冒烟：unionSha256 27910e361436… 一致、pass=4、selectedAgentContent 7→1）；test_only_dedup 回归 rc=0；tool/platform-conformance/current.json 已切 1.6.3；已发布 1.6.2 字节零改动。",
+   "suggestedHandling": "从固定来源发布后续补丁，保留同样预算负例与空选择拒绝，去掉等价重复块。",
+   "originalSource": "versions/治理缺陷联合修复收口-20261009.md"
+  },
+  {
+   "id": "AUD-D-001",
+   "status": "closed",
+   "title": "presenter.mjs 重复键文案互覆：IMPORT_GIT_BASELINE_REQUIRED/IMPORT_EXTERNAL_CHANGE 后值静默覆盖前值",
+   "location": "architecture-manager/src/renderer/presenter.mjs:66-69",
+   "source": "architecture-manager/src/renderer/presenter.mjs；versions/缺陷簿修复与全量验收转绿-实施P表-20261010.md",
+   "owner": "缺陷簿修复轮 2026-10-10（workbuddy 平台会话）",
+   "costMinutes": 15,
+   "evidence": "重复的 IMPORT_GIT_BASELINE_REQUIRED/IMPORT_EXTERNAL_CHANGE 键已删除，保留原生效文本（零行为变化）；eslint 0 error。",
+   "originalSource": "v0.8.1 审计 P1 静态层+P3-P7 走查（QA 严过关，commit 71783e92）"
+  },
+  {
+   "id": "AUD-D-002",
+   "status": "closed",
+   "title": "presenter.mjs RELEASE_SEMVER_INVALID 重复键（同文本，卫生）",
+   "location": "architecture-manager/src/renderer/presenter.mjs:194,205",
+   "source": "architecture-manager/src/renderer/presenter.mjs；versions/缺陷簿修复与全量验收转绿-实施P表-20261010.md",
+   "owner": "缺陷簿修复轮 2026-10-10（workbuddy 平台会话）",
+   "costMinutes": 10,
+   "evidence": "重复 RELEASE_SEMVER_INVALID 已删除（同文本，零行为变化）；eslint 0 error。",
+   "originalSource": "v0.8.1 审计 P1 静态层（QA 严过关）"
+  },
+  {
+   "id": "AUD-D-003",
+   "status": "closed",
+   "title": "atomicGit 取消 flag 残留平台根目录无清理",
+   "location": "architecture-manager/src/infrastructure/process-scope.mjs:22",
+   "source": "architecture-manager/src/infrastructure/process-scope.mjs；versions/缺陷簿修复与全量验收转绿-实施P表-20261010.md",
+   "owner": "缺陷簿修复轮 2026-10-10（workbuddy 平台会话）",
+   "costMinutes": 20,
+   "evidence": "atomicGit 取消旗标在 finally 中 rmSync(force) 清理，不再残留平台根目录；eslint 0 error。",
+   "originalSource": "v0.8.1 审计 R0 走查（QA 严过关）"
+  },
+  {
+   "id": "AUD-D-004",
+   "status": "closed",
+   "title": "owned-process 16MB 输出上限只发取消不杀进程，stdout 仍累积",
+   "location": "architecture-manager/src/core/owned-process.mjs:15-16",
+   "source": "architecture-manager/src/core/owned-process.mjs；versions/缺陷簿修复与全量验收转绿-实施P表-20261010.md",
+   "owner": "缺陷簿修复轮 2026-10-10（workbuddy 平台会话）",
+   "costMinutes": 25,
+   "evidence": "超 16MB 上限即写取消旗标并停止缓冲累积（onOutput 流式转发保留），stdout 不再无界增长；eslint 0 error。",
+   "originalSource": "v0.8.1 审计 R0 走查（QA 严过关）"
+  },
+  {
+   "id": "AUD-D-005",
+   "status": "closed",
+   "title": "子进程退出码 124/125 与超时/取消语义冲突",
+   "location": "architecture-manager/src/core/owned-process.mjs:18; src/runtime/job_controller.py:70; windows_job.ps1",
+   "source": "architecture-manager/src/runtime/job_controller.py；versions/缺陷簿修复与全量验收转绿-实施P表-20261010.md",
+   "owner": "缺陷簿修复轮 2026-10-10（workbuddy 平台会话）",
+   "costMinutes": 30,
+   "evidence": "子进程自身退出码 124/125 在无终止时 +100 重映射（224/225），job_controller.py 与 windows_job.ps1 两控制器同步；py_compile OK；协议语义 125=cancelled / 124=timed-out 不变。",
+   "originalSource": "v0.8.1 审计 R0 走查（QA 严过关）"
+  },
+  {
+   "id": "AUD-D-006",
+   "status": "closed",
+   "title": "job_controller 子进程不读 stdin 时 BrokenPipeError 未捕获",
+   "location": "architecture-manager/src/runtime/job_controller.py:44-45",
+   "source": "architecture-manager/src/runtime/job_controller.py；versions/缺陷簿修复与全量验收转绿-实施P表-20261010.md",
+   "owner": "缺陷簿修复轮 2026-10-10（workbuddy 平台会话）",
+   "costMinutes": 10,
+   "evidence": "copy 线程加 BrokenPipeError/OSError 保护，管理端停止读取时静默排水、不污染退出码；py_compile OK。",
+   "originalSource": "v0.8.1 审计 R0 走查（QA 严过关）"
+  },
+  {
+   "id": "AUD-D-007",
+   "status": "closed",
+   "title": "凭据 set 备份 uuid 目录无清理无上限（DPAPI 加密值，无明文风险）",
+   "location": "architecture-manager/src/runtime/credential_store.py:126-134",
+   "source": "architecture-manager/src/runtime/credential_store.py；versions/缺陷簿修复与全量验收转绿-实施P表-20261010.md",
+   "owner": "缺陷簿修复轮 2026-10-10（workbuddy 平台会话）",
+   "costMinutes": 25,
+   "evidence": "prune_backups：每引用保留最近 10 份备份目录，仅清理含本工具 MANIFEST（schema+reference 双匹配）的目录，不认识的目录永不触碰；py_compile OK。",
+   "originalSource": "v0.8.1 审计 R0 走查（QA 严过关）"
+  },
+  {
+   "id": "AUD-D-008",
+   "status": "closed",
+   "title": "provision 注册恢复输出尾行 JSON 假设脆弱",
+   "location": "architecture-manager/src/runtime/provision.py:150",
+   "source": "architecture-manager/src/runtime/provision.py；versions/缺陷簿修复与全量验收转绿-实施P表-20261010.md",
+   "owner": "缺陷簿修复轮 2026-10-10（workbuddy 平台会话）",
+   "costMinutes": 15,
+   "evidence": "恢复输出改为 last_json_object 自尾行向前健壮解析，解析失败显式 RESTORE_OUTPUT_NOT_JSON；py_compile OK。",
+   "originalSource": "v0.8.1 审计 R0 走查（QA 严过关）"
+  },
+  {
+   "id": "AUD-D-009",
+   "status": "closed",
+   "title": "peer_dispatcher requestId 拼路径缺纵深白名单校验",
+   "location": "architecture-manager/src/runtime/peer_dispatcher.py:29",
+   "source": "architecture-manager/src/runtime/peer_dispatcher.py；versions/缺陷簿修复与全量验收转绿-实施P表-20261010.md",
+   "owner": "缺陷簿修复轮 2026-10-10（workbuddy 平台会话）",
+   "costMinutes": 15,
+   "evidence": "requestId 白名单 ^[A-Za-z0-9._-]{1,180}$，阻断经 requestId 的路径穿越写文件；py_compile OK。",
+   "originalSource": "v0.8.1 审计 R0 走查（QA 严过关）"
+  },
+  {
+   "id": "AUD-D-010",
+   "status": "closed",
+   "title": "readonlyGit 白名单缺 log/blame 等纯读命令（仅性能）",
+   "location": "architecture-manager/src/infrastructure/process-scope.mjs:16",
+   "source": "architecture-manager/src/infrastructure/process-scope.mjs；versions/缺陷簿修复与全量验收转绿-实施P表-20261010.md",
+   "owner": "缺陷簿修复轮 2026-10-10（workbuddy 平台会话）",
+   "costMinutes": 20,
+   "evidence": "readonlyGit 改为子命令位判定（跳过 -C/-c 等全局值旗标），补 log/blame/describe/shortlog/grep/count-objects/diff-tree/merge-base/fsck 纯读命令；杜绝 git merge --log 式旗标碰撞被误判只读；eslint 0 error。",
+   "originalSource": "v0.8.1 审计 R0 走查（QA 严过关）"
+  },
+  {
+   "id": "AUD-D-011",
+   "status": "closed",
+   "title": "manager-launch 临时目录残留（崩溃时含 allowGuiLaunch:true 副本；response 证据累积）",
+   "location": "architecture-manager/src/domains/software/software-launch.mjs:64-96",
+   "source": "architecture-manager/src/domains/software/software-launch.mjs；versions/缺陷簿修复与全量验收转绿-实施P表-20261010.md",
+   "owner": "缺陷簿修复轮 2026-10-10（workbuddy 平台会话）",
+   "costMinutes": 20,
+   "evidence": "每次启动前清扫 manager-launch 目录内 >24h 残留（含崩溃残留的 allowGuiLaunch 副本与 response 证据累积）；eslint 0 error。",
+   "originalSource": "v0.8.1 审计 R0 走查（QA 严过关）"
+  },
+  {
+   "id": "AUD-D-012",
+   "status": "closed",
+   "title": "atomicWrite 与审计 JSONL 无 fsync（掉电级持久性缺口）",
+   "location": "architecture-manager/src/transactions/kernel.mjs:42,57-64",
+   "source": "architecture-manager/src/transactions/kernel.mjs；versions/缺陷簿修复与全量验收转绿-实施P表-20261010.md",
+   "owner": "缺陷簿修复轮 2026-10-10（workbuddy 平台会话）",
+   "costMinutes": 20,
+   "evidence": "atomicWrite rename 前 fsync；审计 events.jsonl 追加改持句柄写+fsync，掉电不再产生空/撕裂收据；eslint 0 error。",
+   "originalSource": "v0.8.1 审计 R1 走查（QA 严过关）"
+  },
+  {
+   "id": "AUD-D-013",
+   "status": "closed",
+   "title": "多文件事务恢复中途崩溃需人工 checkpoint 恢复（缺继续恢复自动化）",
+   "location": "architecture-manager/src/transactions/router.mjs:263-323",
+   "source": "versions/AI可执行补收口与恢复改进-P表-20261011.md",
+   "owner": "Codex 用户批准 P2/P3 源码与候选轮（2026-10-11）",
+   "costMinutes": 0,
+   "evidence": "持久恢复日志、两次真实进程退出后的继续恢复、重放零写入、外部改写拒绝、检查点篡改拒绝与集成重试回归通过。开发 conform 291 PASS / 0 FAIL / 0 SKIPPED，digest 4431a7b673650f13f0df068e291813cade2e29ec0a8188850f7891f4405e687c；0.8.4 候选包逐文件匹配源码，真实备份恢复比较一致；GUI 未验收，生产 0.8.3 未替换。 2026-10-12：修复随 0.8.5 包进入本机 current；真实 GUI、包/源码一致性及备份恢复通过，源码完整检查 294 PASS。",
+   "originalSource": "v0.8.1 审计 R1 走查（QA 严过关）",
+   "previousStatus": "ruled",
+   "substatuses": {
+    "source": "closed",
+    "candidatePackage": "verified",
+    "productionAdoption": "0.8.5-local-current",
+    "gui": "verified"
+   }
+  },
+  {
+   "id": "AUD-D-014",
+   "status": "closed",
+   "title": "operation 级审计 target 解析缺 reference 等字段",
+   "location": "architecture-manager/src/transactions/operation-audit.mjs:15",
+   "source": "architecture-manager/src/transactions/operation-audit.mjs；versions/缺陷簿修复与全量验收转绿-实施P表-20261010.md",
+   "owner": "缺陷簿修复轮 2026-10-10（workbuddy 平台会话）",
+   "costMinutes": 10,
+   "evidence": "operation 级审计 target 链补 reference、repository/resourceId 组合、softwareId、id；eslint 0 error。",
+   "originalSource": "v0.8.1 审计 R1 走查（QA 严过关）"
+  },
+  {
+   "id": "AUD-D-015",
+   "status": "closed",
+   "title": "safeRelative 不拒 Windows 保留设备名与尾部点/空格",
+   "location": "architecture-manager/src/core/paths.mjs:6-11",
+   "source": "architecture-manager/src/core/paths.mjs；versions/缺陷簿修复与全量验收转绿-实施P表-20261010.md",
+   "owner": "缺陷簿修复轮 2026-10-10（workbuddy 平台会话）",
+   "costMinutes": 15,
+   "evidence": "safeRelative 拒绝 Windows 保留设备名（CON/PRN/AUX/NUL/COM1-9/LPT1-9）与尾点/尾空格段；eslint 0 error。",
+   "originalSource": "v0.8.1 审计 R2/R3 走查（QA 严过关）"
+  },
+  {
+   "id": "AUD-D-016",
+   "status": "closed",
+   "title": "CSP 全缺（渲染层零注入汇，纵深防御加固项）",
+   "location": "architecture-manager/index.html; src/main.mjs",
+   "source": "versions/管理台模块化与剩余事项收口-P表-20261012.md",
+   "owner": "Codex 用户授权 2026-10-12 CSP 与真实 GUI 轮",
+   "costMinutes": 0,
+   "evidence": "集中 CSP、同源本地脚本/样式、拒绝网络/内联脚本与外部导航；真实 Electron 12 页面及实际 0.8.5 便携 EXE GUI/IPC 回归通过。完整 conform 294 PASS / 0 FAIL / 0 SKIPPED，digest 3afbd9f9ba7c597ebf281faf2e9b8c879c775aa9470da6219c3eca209a00e51a；240 件 src/dist 匹配，备份真实恢复一致。",
+   "originalSource": "v0.8.1 审计 R3 走查（QA 严过关）",
+   "substatuses": {
+    "source": "closed",
+    "gui": "verified",
+    "productionAdoption": "0.8.5-local-current"
+   }
+  },
+  {
+   "id": "AUD-D-017",
+   "status": "closed",
+   "title": "markOnboardingRecorded 直调 git 绕过 process-scope（只读）",
+   "location": "architecture-manager/src/domains/onboarding/onboarding-state.mjs:160",
+   "source": "architecture-manager/src/domains/onboarding/onboarding-state.mjs；versions/缺陷簿修复与全量验收转绿-实施P表-20261010.md",
+   "owner": "缺陷簿修复轮 2026-10-10（workbuddy 平台会话）",
+   "costMinutes": 15,
+   "evidence": "markOnboardingRecorded 的 git 直调改走 runScopedProcess（status/rev-parse/ls-files 均为只读子命令；scope 外行为不变，取消的 scope 不再能继续记录）；eslint 0 error。",
+   "originalSource": "v0.8.1 审计 R4 走查（QA 严过关）"
+  },
+  {
+   "id": "AUD-D-018",
+   "status": "closed",
+   "title": "onboarding 证据复用双判据不统一（效率/可解释性）",
+   "location": "architecture-manager/src/domains/onboarding/onboarding-state.mjs:65",
+   "source": "versions/AI可执行补收口与恢复改进-P表-20261011.md",
+   "owner": "Codex 用户批准 P2/P3 源码与候选轮（2026-10-11）",
+   "costMinutes": 0,
+   "evidence": "证据复用统一四元绑定与所属平台证据文件哈希；未变复用、缺失/篡改/漂移拒绝，原始哈希不足的旧证明失效。开发 conform 291 PASS / 0 FAIL / 0 SKIPPED，digest 4431a7b673650f13f0df068e291813cade2e29ec0a8188850f7891f4405e687c；0.8.4 候选包逐文件匹配源码，真实备份恢复比较一致；GUI 未验收，生产 0.8.3 未替换。 2026-10-12：修复随 0.8.5 包进入本机 current；真实 GUI、包/源码一致性及备份恢复通过，源码完整检查 294 PASS。",
+   "originalSource": "v0.8.1 审计 R4 走查（QA 严过关）",
+   "previousStatus": "ruled",
+   "substatuses": {
+    "source": "closed",
+    "candidatePackage": "verified",
+    "productionAdoption": "0.8.5-local-current",
+    "gui": "verified"
+   }
+  },
+  {
+   "id": "AUD-D-019",
+   "status": "closed",
+   "title": "verifyRelease 路径未经 targetPath 归一（只读面，与其余 verify 不一致）",
+   "location": "architecture-manager/src/domains/intake/releases.mjs:113",
+   "source": "architecture-manager/src/domains/intake/releases.mjs；versions/缺陷簿修复与全量验收转绿-实施P表-20261010.md",
+   "owner": "缺陷簿修复轮 2026-10-10（workbuddy 平台会话）",
+   "costMinutes": 10,
+   "evidence": "verifyRelease 的 versionRoot 改经 targetPath 归一，junction/symlink 越界检查与其余 verify 一致；eslint 0 error。",
+   "originalSource": "v0.8.1 审计 R5 走查（QA 严过关）"
+  },
+  {
+   "id": "D-145",
+   "title": "全局更新批次执行中，结果表仍显示上一轮记录",
+   "location": "architecture-manager/src/renderer/panels/global-update.jsx",
+   "status": "closed",
+   "owner": "缺陷簿修复轮 2026-10-10（workbuddy 平台会话）",
+   "costMinutes": 20,
+   "source": "architecture-manager/src/renderer/panels/global-update.jsx；versions/缺陷簿修复与全量验收转绿-实施P表-20261010.md",
+   "evidence": "B15 修复：新增 global-update-started 事件（commands.mjs 执行前派发），批次开始即清空上一轮 result 并显示执行中提示，收口事件恢复本轮结果；renderer-contracts 契约不变。",
+   "originalSource": "versions/一键更新所有平台-操作说明与收口-20261010.md（B15 非阻断登记）"
+  },
+  {
+   "id": "D-146",
+   "title": "原生 AI 探针未隔离宿主注入环境变量致 CLI 端口撞用、endpoint 永悬（此前所有 attempt 60s 挂死根因）",
+   "status": "closed",
+   "owner": "管理台原生验证维护（workbuddy 会话 2026-10-13 排查登记）",
+   "costMinutes": 30,
+   "location": "architecture-manager/src/domains/platforms/native-ai-probe.mjs",
+   "source": "versions/管理台原生验证缺陷排查-20261013.md",
+   "evidence": "A/B 实测（同 argv 同配置唯一变量是环境）：继承宿主 SERVER__PORT=16279（应用 service-proxy 端口，prewarm 池 netstat LISTEN）时 CLI serve bootstrap listen EADDRINUSE → EndpointProviderImpl.endpointDeferred 永悬 → 日志停 [Startup] CliExecutor: waiting for endpoint... → initialize 65s+ 无应答 → native_workbuddy.py 60s 超时误报 NATIVE_CLIENT_CONNECTION_FAILED；剥离 CODEBUDDY_*/SERVER__*/CLAUDE_*/WB_* 后 7s initialize 应答、endpoint 160ms ready、models count=20。native-ai-probe.mjs:57 env={...process.env,...} 未剥注入项。同族潜在：native-client.mjs:62 注册路径同样 ...process.env（mcp add-json 不需要本地 server 暂未触发）。证据 workbuddy/runtime/maintenance/manager-native/ai-*/failed.json、p3-probe-events.jsonl、runtime/tmp/native-probe-run.mjs、cli-debug.mjs。 2026-10-13 修复落地（versions/管理台原生验证缺陷修复-20261013.md P1）：新增 core/child-env.mjs——子进程 env 剥离 /^(CODEBUDDY_|SERVER__|CLAUDE_|WB_)/ 并显式分配已验证空闲端口（SERVER__PORT=0 无效的坑已规避）；探针与注册路径（native-client.mjs 注册 env）同批接入。A/B 实测：修复前 65s+ 永悬 → 修复后 7s initialize 应答；活体两次确认 endpoint ready 167ms 内；新单测断言子进程 env 无注入项（4 项绿）。2026-10-16 销账复核：src/core/child-env.mjs 在树；node --test test/child-env.test.mjs 与 test/native-probe-lock.test.mjs 今日合计 6/6 绿。",
+   "suggestedHandling": "探针/launcher 构造子进程 env 时剥离 /^(CODEBUDDY_|SERVER__|CLAUDE_|WB_)/，或 manager 侧先占空闲端口再显式写 SERVER__PORT（注意 SERVER__PORT=0 无效：parseInt('0') 为 falsy 会落回默认 3000）；注册路径同批处理；补合成 env 的单测。 已 closed：修复即按本行原方案落地（剥离注入项 + 显式空闲端口），注册路径同批，单测已补。"
+  },
+  {
+   "id": "D-147",
+   "title": "AI 探针绑定校验弱于直连探针（只校验 config 哈希，不校验本体/cli 字节）",
+   "status": "closed",
+   "owner": "管理台原生验证维护（workbuddy 会话 2026-10-13 排查登记）",
+   "costMinutes": 20,
+   "location": "architecture-manager/src/domains/platforms/native-ai-probe.mjs",
+   "source": "versions/管理台原生验证缺陷排查-20261013.md",
+   "evidence": "native-ai-probe.mjs:41 仅比 sha256File(profile.configPath)===record.nativeConfigSha256（.mcp.json）；native-client.mjs:126 直连探针比 json(profile)!==json(record.profile) 全量 profile（含 bodySha256/cliSha256/executableSha256）。实测 WorkBuddy.exe 自 10-08 注册后已被应用自动更新（记录 55d08c35…→实测 fd43162e…，app 5.7.7 / CLI 2.156.0），native-client.json 中 profile.bodySha256 已过期，AI 探针仍放行运行并产出 attempt。 2026-10-13 修复落地（同文档 P2）：抽出 assertNativeClientBinding（全量 profile + config 哈希）为唯一判据源，直连探针与 AI 探针都走它；过期 bodySha256 夹具断言 NATIVE_CLIENT_BINDING_CHANGED；纯函数单测 5 项绿。副作用（既定行为）：厂商 exe 自 10-08 更新后旧注册记录必被拒 → 已重新注册刷新记录（native-ad7b3c00，managed=true，same=true 未调厂商 CLI，bodySha256 55d08c35→fd43162e 与盘上一致）。2026-10-16 销账复核：assertNativeClientBinding 在 src/domains/platforms/native-ai-probe.mjs 与 native-client.mjs 均在位。",
+   "suggestedHandling": "AI 探针补全量 profile 比对与直连探针同源；本体字节变更时明确抛 NATIVE_CLIENT_BINDING_CHANGED 并提示重新注册。 已 closed：同源判据已落地，本体/cli 字节变更抛 NATIVE_CLIENT_BINDING_CHANGED。"
+  },
+  {
+   "id": "D-148",
+   "title": "原生验证单发单校、无模型钉扎、无重试：弱模型把工具参数当文本吐出即整局失败",
+   "status": "closed",
+   "owner": "管理台原生验证维护（workbuddy 会话 2026-10-13 排查登记）",
+   "costMinutes": 40,
+   "location": "architecture-manager/src/domains/platforms/native-ai-probe.mjs",
+   "source": "versions/管理台原生验证缺陷排查-20261013.md",
+   "evidence": "ai-7ddc3fe4 native-trace.private.jsonl：auto 路由落到 hy4-preview，思维链明写 'So I should issue function call'，输出却把 {\"challenge\":…,\"platformId\":\"workbuddy\"} 当文本吐出、零 tool_use → validateNativeAiEvents 抛 NATIVE_AI_TOOL_TRACE_REQUIRED；当时工具在列表首位、MCP status=connected、schema 简单。argv 无 --model；实测 CODEBUDDY_CURRENT_MODEL_ID=step-5-preview 不能改变 CLI currentModelId（仍 auto），--setting-sources '' 已禁 settings，环境层无钉扎杠杆。",
+   "suggestedHandling": "launcher 内同进程有界重试（每次新鲜 challenge，免二次登录；共享代码零平台常量，合 BP-2）± 平台侧模型覆盖键（写平台 bridge 配置）；--max-turns 1 与重试的相互作用需实测。"
+  },
+  {
+   "id": "D-149",
+   "title": "launcher 时限与 CLI 真实启动/内部超时不匹配，超时被掩码误报",
+   "status": "closed",
+   "owner": "管理台原生验证维护（workbuddy 会话 2026-10-13 排查登记）",
+   "costMinutes": 20,
+   "location": "architecture-manager/src/runtime/native_workbuddy.py",
+   "source": "versions/管理台原生验证缺陷排查-20261013.md",
+   "evidence": "native_workbuddy.py:40 initialize 时限 60s；活配置目录下 CLI 插件/市场阶段实测最长 36s（marketplace journal 恢复争用），剥变量后 7s——余量薄。CLI 自身 auth 超时 60s（attempt 1：auth 请求 12:06:22.500 → 12:07:22.500 'Cancelled control request: auth'），短于 launcher 240s auth 窗口——launcher 在等 CLI 早已弃掉的请求。native_workbuddy.py:122 以 startswith('NATIVE_') 过滤异常，boot/auth/model 三类超时统一掩码为 NATIVE_CLIENT_CONNECTION_FAILED。 2026-10-13 修复落地（同文档 P4）：分类超时 initialize 120s（原 60s）/ auth 90s（原 240s，对齐 CLI 自身 ~60s 弃单）/ 模型轮 120s·每次；原始异常随 detail 字段留痕；三类误报 CONNECTION_FAILED 的问题消除。代码就位；活体确认 boot 路径（endpoint ready 后 [InitializeHandler] 应答）。明写代价：模型轮 120s 分类未获端到端活体验证（attempt 均倒在登录阶段，见 D-152），boot 路径已活体确认。",
+   "suggestedHandling": "分类超时分别报错；initialize 时限上调或改心跳探测；auth 窗口与 CLI 实际超时对齐。 已 closed：三类分类超时与 detail 留痕已落地，auth 窗口已对齐 CLI 实际超时；模型轮分类的活体读数待 D-152 登录稳定后补。"
+  },
+  {
+   "id": "D-150",
+   "title": "共享认证库被桌面应用并发改写 + AtRestEncryption key 竞争：每次 attempt 需真人重登、连续重试互踩",
+   "status": "closed",
+   "owner": "管理台原生验证维护（workbuddy 会话 2026-10-13 排查登记）",
+   "costMinutes": 20,
+   "location": "architecture-manager/src/runtime/native_workbuddy.py",
+   "source": "versions/管理台原生验证缺陷排查-20261013.md",
+   "evidence": "ai-ebac86b8：启动 hasAccessToken=true 但 'Discard refresh: session changed before persistence' → 模型 API 拒 Authentication required；ai-851e0964：'Discard login: a newer auth operation won'（多 CLI 实例互踩）；AtRestEncryption credential-fields read 时 missing-key、同会话 write 时 recovered（key 可用性竞争）；ai-7ddc3fe4 浏览器登录成功后 12:14–12:17 窗口盘上无新增 token 文件（仅 audit-log/plugin-status 噪声）——token 不跨进程持久化。 2026-10-13 修复落地（同文档 P5）：core/native-probe-lock.mjs attempt 锁（活锁拒跑/死锁过期破锁/只删自己的锁）+ 平台章文档化「每 attempt 需新鲜登录」；单测 3 项绿。执行期精化（f4753071）：活体证据表明锁不够——13:38 登录成功后 0.3s 被运行中的桌面应用作废（碰撞方是应用不是其他 attempt），探针 CLI 的 config dir 改为平台隔离目录（与注册同款），把厂商认证存储挪出桌面应用的 watch 面。2026-10-16 销账复核：src/core/native-probe-lock.mjs 在树；test/native-probe-lock.test.mjs 今日与 child-env 合计 6/6 绿。",
+   "suggestedHandling": "attempt 串行化+退避；文档化每次 attempt 需一次新鲜浏览器登录；评估登录与验证同进程单流（登录成功不退出直接发验证 prompt）。 已 closed：manager 侧双措落地（attempt 锁 + 探针 CLI 平台隔离 config dir，厂商认证存储移出桌面应用 watch 面），「每 attempt 需新鲜浏览器登录」已入平台章；登录与验证同进程单流未做（明写为非本轮范围）。"
+  },
+  {
+   "id": "D-151",
+   "title": "原生验证 service 的 .called 标记按 config 级而非 challenge 级作用：首次成功验证后永久阻断后续 attempt",
+   "status": "ruled",
+   "owner": "workbuddy 会话 2026-10-13 修复轮复核改判",
+   "costMinutes": 10,
+   "location": "architecture-manager/src/runtime/mcp_service.py",
+   "source": "versions/管理台原生验证缺陷排查-20261013.md",
+   "evidence": "architecture-manager/src/runtime/mcp_service.py:88-95,121（argv 布局与标记路径）；复核过程见 versions/管理台原生验证缺陷修复-20261013.md",
+   "suggestedHandling": "标记路径改为按 challenge（probe 文件路径）作用，或验证成功后由 manager 清理；修法须保持'一次授权读取'语义不被放宽。",
+   "correctionNote": "2026-10-13 复核改判：登记时的分析读错了 argv 布局。mcp_service.py main() 中 sys.argv[1]=config、sys.argv[2]=--native-probe-file、sys.argv[3]=probe 文件路径（每 attempt 独立目录内的 challenge.json）。因此 `Path(sys.argv[3]+\".called\")` 标记本就按 challenge（即按 probe 文件）作用，\"Survives native-client server restarts; one authorized read per challenge\" 注释语义完全正确——不存在跨 attempt 阻断，无需任何修复或清理。裁定不成立，按 ruled 归档。"
+  },
+  {
+   "id": "D-152",
+   "title": "厂商 CLI 认证存储订阅器把无 token 的存储发射当 logout：叠加 keyblob 对 cbc 角色不可用，浏览器登录间歇性被'superseded by a concurrent logout'作废",
+   "status": "open",
+   "owner": "厂商侧（WorkBuddy CLI/桌面端认证栈）；管理台侧已登记待观察",
+   "costMinutes": 0,
+   "location": "workbuddy/workbuddy/resources/app.asar.unpacked/cli/dist/codebuddy-headless.js（AuthenticationManagerImpl.login/storeSession 订阅器；AtRestEncryption keyblob loader）",
+   "source": "versions/管理台原生验证缺陷修复-20261013.md",
+   "evidence": "bundle 反编译（2026-10-13）：login() 的 afterStore 仅在 !loggedOut 时提交（committedLoginRevision++），而 storeSessionSubject 订阅器对任何无 accessToken 的存储发射置 loggedOut=true（首发射豁免）；AtRestEncryption 的 keyblob 对 cbc 角色报 missing-key（keyblob 目录空/protector key 不匹配，loadOrCreateKeyblobMasterKey），token 写盘失败 → 登录窗口内存储发射无 token 会话 → 登录被作废。实测 2026-10-13 六次 attempt：13:38（live home）、13:43（隔离 home）、13:50（隔离 home）三次 [auth_success] 后 0.3–0.5s 被作废；12:14 同链路成功（write 失败但模型轮用内存会话跑通）。live home 与隔离 home 均复现 → 非桌面应用 watch 共享目录所致，是 keyblob 对 cbc 角色的可用性问题。证据：workbuddy/runtime/maintenance/manager-native/ai-*/failed.json、隔离 home 日志 runtime/native-client-home/logs/2026-10-13/。",
+   "suggestedHandling": "厂商侧：keyblob 对 cbc 角色的签发/解包（或登录路径的存储发射语义）。管理台侧缓解：登录失败后立即重试（attempt 锁已串行化）；或用户在自己的终端（WorkBuddy 应用进程树外）跑探针。不改判据、不以部分成功充数。"
+  },
+  {
+   "id": "D-153",
+   "title": "provision/restore 演练硬编码科学包导入清单（numpy/matplotlib/fitz），与 requirements 动态推导脱节——8 包环境下恢复演练必炸",
+   "status": "closed",
+   "owner": "workbuddy 会话 2026-10-13 修复轮（用户「按 P 表继续」执行期发现并修复）",
+   "costMinutes": 20,
+   "location": "architecture-manager/src/runtime/provision.py; architecture-manager/src/runtime/restore_env.py",
+   "source": "versions/管理台原生验证缺陷修复-20261013.md",
+   "evidence": "provision.py:147/158 与 restore_env.py:40/53 硬编码 'import jsonschema,yaml,numpy,matplotlib,fitz'；当前 pinned 并集（runner 0.13.1 等，registry 扫描 0 个 release 声明科学包）的 8 包 requirements 不含 numpy → 恢复演练 ModuleNotFoundError → RUNTIME_PREPARATION_FAILED（2026-10-13 用户终端实测）。修复：演练导入列表从 spec['requirements'] 动态推导（dist→import 名映射 pyyaml→yaml/pymupdf→fitz），RESTORE.json 登记 requirements 供 restore_env 复用；旧备份回退历史清单。",
+   "closedAt": "2026-10-13T15:10:00+08:00"
+  },
+  {
+   "id": "D-154",
+   "title": "onboarding client 步 serviceOnly 路由校验把 server 参数与 client 参数期望比对——standard 预设下必然 CLIENT_ROUTE_NOT_VERIFIED，该步自 10-09 暂缓以来首次执行即暴露",
+   "status": "closed",
+   "owner": "workbuddy 会话 2026-10-13 修复轮（用户「按 P 表继续」执行期发现并修复）",
+   "costMinutes": 25,
+   "location": "architecture-manager/src/domains/onboarding/onboarding-client.mjs",
+   "source": "versions/管理台原生验证缺陷修复-20261013.md",
+   "evidence": "probeOnboardingClient 的 serviceOnly 变换（:62）把 adapter.{executable,args} 改写为 server 路由，而 :75 的 standard 路由校验仍将 adapter.args 与 expectedClientArgs（cli_client.py 参数）比对——server.args（mcp_service.py）≠ client args → 必炸。诊断：独立复刻 client 步序列在 plan 构建处即 MANAGEMENT_NODE_REQUIRED（agent 树 spawnSync EBUSY），单独跑 probe 复现于 onboarding-client.mjs:75:302；手动 serviceOnly 回执完全合规（client/transport/registriesRead 全对）。修复：serviceOnly 时参数期望切换为 expectedServiceArgs。",
+   "closedAt": "2026-10-13T16:35:00+08:00"
+  },
+  {
+   "id": "D-155",
+   "title": "敏感扫描裸关键词正则误报自身 bundle 代码（secret === \"string\"），COMMIT_BLOCKED_SENSITIVE 挡死 onboarding 收口提交",
+   "status": "closed",
+   "owner": "workbuddy 会话 2026-10-13 修复轮（用户「按 P 表继续」执行期发现并修复）",
+   "costMinutes": 25,
+   "location": "architecture-manager/src/domains/git/sensitive.mjs; architecture-manager/src/domains/git/git-executor.mjs",
+   "source": "versions/管理台原生验证缺陷修复-20261013.md",
+   "evidence": "git 步 COMMIT_BLOCKED_SENSITIVE（2026-10-13 16:32 用户终端实测）：finalize 扫描 workbuddy/bridge/manager-client/platform_defaults.mjs（574KB 管理运行时 bundle，client 步首次安装）命中裸正则 `secret\\s*[:=]`——命中内容是 bundle 内置敏感扫描器自身的代码比较 `secret === \"string\"`（HEAD 已提交版本同样命中 → 既有内容、非新增风险）；qoder/doubao 同款文件有提交先例。修复：①正则收紧为「关键词赋值带引号字面量」（支持带引号键，.env/PEM/二进制/大文件网不变）；②提交扫描改增量（变更文件——未变更的既有文件内容早已被历史接受）。单测 sensitive-scan-semantics.test.mjs 3 项（引号赋值必报/代码比较不报/四类既有网不变）+ 全列表扫描 clean 复验。",
+   "closedAt": "2026-10-13T16:45:00+08:00"
+  },
+  {
+   "id": "D-156",
+   "title": "runL1DualCell 固定 full 口径：software 格漂移时把 software 行并进同一 L1 报告，行数判据必炸（绑软件网关平台重接入/漂移后必现，非 qoder 单平台）",
+   "status": "closed",
+   "owner": "qoder 会话 2026-10-14 接入收口轮（用户批准五步执行期发现并实测）；2026-10-14 workbuddy 会话审计确认影响面与修法（维持未修）",
+   "costMinutes": 15,
+   "location": "architecture-manager/src/domains/onboarding/onboarding-l1.mjs:31-46（runL1DualCell 调 check 未传 scope，runPlatformCheck 默认 'full'）；architecture-manager/src/domains/certification/fingerprints.mjs:36（invocation 口径才滤 software，full 不滤）",
+   "source": "qoder/runtime/maintenance/20261014-integration/LEDGER.md",
+   "evidence": "qoder 2026-10-14 实测：平台绑 _connector 1.0.7 时，L1 所选双格（workflow:automation-engineer-pipeline + agent:automation-engineer）真跑全 PASS，但同一 matrix 报告含 6 条 software 行（2+6=8 行），rows.length===2 判据必然抛 L1_DUAL_CELL_NOT_PASSED —— 凡绑软件网关的平台按现字节挣不到 L1。test/onboarding-l1.test.mjs 只用注入的假 check，无真实矩阵护栏故未拦住。本轮绕行：check 注入强制 scope:'invocation'（L1 定义本就是双格），绕行后 2/2 PASS。 2026-10-14 审计（workbuddy 会话，只读复核 architecture-manager 字节 + 六平台证据）：① 失败机制机器实证——qoder/runtime/manager-check/2026-10-14T11-18-13-391Z/：scope='full' + 既有 full 基线（11-08-28 全量认证）→ certificationSelection 增量面以「相关配置、Profile、provider 或环境改变」把 6 个 software 格并入 selected（software-gateway-config.json 改绑致 configurationSha256 全漂）→ selection.only=8 格 → buildMatrixArgs --only 带 8 格 → 矩阵 8 行全 PASS 但 rows.length===2 仍炸；同轮绕行跑 2026-10-14T11-19-15-665Z（注入 scope:'invocation'）2 行 2/2 PASS。② 触发条件收窄为「基线存在 + software 格指纹漂移」，不是「绑网关」本身：全新平台首轮接入不炸（onboarding-auto.mjs:183 的 l1-dual-cell 步先于 :209 certification、无基线 → kind='smoke' → 恰 2 行）；但 software 侧漂移是常规事件（网关改绑、共享 current 移动、rulesSha256 换钉），且 rules 类漂移（如工作区在途的 platform-conformance 1.6.0→1.6.3）会把全格并入 --only——L1 先跑近全矩阵（预算 callableCount×90s，92 格≈138 分钟）再炸，失败成本被放大。③ 影响面=管理平台级：缺陷字节全在 architecture-manager（onboarding-l1.mjs:34 不传 scope / platform-check.mjs:147 默认 full / fingerprints.mjs:36 仅 invocation 滤 software），生产调用点 onboarding-auto.mjs:183 无注入；六平台（codex/dsh/doubao/qoder/workbuddy/zcode）runner 配置均声明 softwareRoot+softwareGateway+softwareGatewayConfig 三件套，全部暴露；codex/dsh/doubao/zcode 尚无 L1 证据（L1 判据 2026-10-13/14 才立），software 漂移后重接入即触雷。qoder 只是首个触发者（同轮 P3 网关改绑致 6 格全漂）。④ workbuddy 的 L1 证据（workbuddy/runtime/manager-check/l1-p4/dual-cell-20261014.json，2 行 PASS，runsRoot 在 matrix-smoke）亦非 stock runL1DualCell 产出——现字节下没有任何平台能经标准路径挣到 L1，两平台均靠 bespoke 绕行。 2026-10-15 修复落地（commit `b2505dbf`，2 文件 +88/−4）：① `onboarding-l1.mjs` 的 check 调用显式传 scope:'invocation'（L1=双 invocation 格，与判据同源）；② 判据从 rows.length===2 改为「按 kind+id 取所选双格，双格均 PASS/claimed/stopped，且全报告零 FAIL」，附带行记入 extraRows（透明不洗绿），错误码仍 L1_DUAL_CELL_NOT_PASSED；③ 新增 4 例回归（test/onboarding-l1.test.mjs，走真实 certificationSnapshot/certificationSelection/mergeCertification + 合成矩阵，桩镜像 runPlatformCheck 的 scope 默认值）。TDD 读数：修复前 9 例 2 红（错误原文 `L1_DUAL_CELL_NOT_PASSED:[{software:demo-cli,PASS},{workflow:expert-task,PASS},{agent:profile-task,PASS}]` 与 `[{workflow:new-flow,PASS},{workflow:expert-task,PASS},{agent:profile-task,PASS}]`），修复后 9/9 绿。**新发现（超出原登记预判）**：只改 scope 不足以修复——invocation 链建立后，双格之外的 invocable 格漂移仍会附上附带行（T4 用例实证 third-cell 版本漂移 → 3 行，旧行数判据仍炸），故判据改动是必需的而非可选双保险。真机只读校验：E:/ai 的 L1 选格仍为 automation-engineer-pipeline + automation-engineer（确定性未变）。邻域：certification-scope 2/2、certification-incremental 核心 4/4、module-boundaries 5/5、lint 0 错；全量 npm test 在 agent 环境未收敛（spawn 组已知限制），权威验证留用户终端 `npm test`。在途改动（native-client.mjs / native-client-session.mjs / anchor.json）原样未动。",
+   "suggestedHandling": "已于 2026-10-15 按三项修法落地（commit `b2505dbf`），本条 closed。遗留观察项（非阻断，不另开缺陷）：① rules 类漂移（如 platform-conformance 换钉）在 invocation 链仍会全 invocable 格重选，L1 可能跑近全矩阵后才判过——成本面向未根治，根治需共享选择面支持 selection pin，按 BP-5 登记为后续项；② 真实 spawn 端到端（绑软件网关的平台走标准路径 L1）本轮未复跑，首次自然证据将在下次接入/续跑时产出；③ 原登记的**成本放大器**（rules 漂移先跑全矩阵再炸）已由判据改动降级为「跑完照过」，但耗时仍在。"
+  },
+  {
+   "id": "D-157",
+   "title": "applyOnboardingFinalize 非原子：git 提交先于 markOnboardingRecorded 校验，校验抛错后提交已落地（低危）",
+   "status": "closed",
+   "owner": "qoder 会话 2026-10-14 接入收口轮（同轮实测观察到失败面）",
+   "costMinutes": 15,
+   "location": "architecture-manager/src/domains/onboarding/onboarding-finalize.mjs:40-44（applyGitTransaction 先行，markOnboardingRecorded 后行）",
+   "source": "qoder/runtime/maintenance/20261014-integration/LEDGER.md",
+   "evidence": "qoder 2026-10-14 实测：首次 finalize requiresCommit=true → applyGitTransaction 先提交（f5b0c388，内容正确=software-gateway-config.json 改绑）→ markOnboardingRecorded 因 environmentBinding 漂移抛 ONBOARDING_NOT_VERIFIED。结果=提交已落地而 state 未记，调用方只见报错不见提交；重试（校验通过、requiresCommit=false）才闭合。无数据损害，但失败呈现与计划 verification「real Git readback closes onboarding」的次序意图不符，且提交信息「Register … via graphical onboarding」在 state 未记时已入史。",
+   "suggestedHandling": "把 state/绑定校验提到 applyGitTransaction 之前；或提交后校验失败时回滚该提交；二选一，保持 BP-6「破坏性动作前先有可回滚 commit」不受损。"
+  },
+  {
+   "id": "D-158",
+   "title": "entrySkillSlots 对非六平台 id 硬抛 ENTRY_SKILL_SLOT_UNKNOWN，阻断新平台一键接入（NP1 回归）",
+   "status": "closed",
+   "owner": "workbuddy 会话 2026-10-15 全量回归审计（用户终端 npm test 的 12 红定性）",
+   "costMinutes": 90,
+   "location": "architecture-manager/src/domains/onboarding/onboarding-entry-skills.mjs:42-46（entrySkillSlots 硬编码 SLOTS 六平台，表外 id 硬抛）；生产唯一调用点 architecture-manager/src/domains/onboarding/onboarding-client.mjs:38（buildOnboardingClientPlan → collectEntrySkillFiles），经 architecture-manager/src/domains/intake/platform-body.mjs:51（applyPlatformBody）复用",
+   "source": "versions/D-158-entry-skill-表外平台-修法P表-20261015.md",
+   "evidence": " 原始读数来源：用户终端 2026-10-15 全量 npm test（tests 345 / pass 331 / fail 12 / 217.9s）；用户终端权威全量读数中 5 例红，全部同一机制：onboarding-client.test.mjs:11（first-client）、onboarding-evidence-regression.test.mjs:20（evidence-client）、platform-body.test.mjs:17/25/30（new-client / gui-client / resume-client），栈均为 buildOnboardingClientPlan(onboarding-client.mjs:38) → collectEntrySkillFiles → renderEntrySkills → entrySkillSlots 抛 ENTRY_SKILL_SLOT_UNKNOWN:<id>。机制：entrySkillSlots 只在硬编码 SLOTS（codex/workbuddy/zcode/doubao/dsh/qoder）里查表，查不到即 throw。起源提交 = 91dbc419「NP1: lay wf/wfa entry skills inside the onboarding client step」（2026-10-14），早于本轮 D-156 修复提交 b2505dbf；onboarding-l1.mjs 全仓仅被 src/domains/onboarding/onboarding-auto.mjs:18 与自家测试 import，与此簇无因果关系。定性为**真产品缺陷而非夹具过时**：platform-body.mjs:51 走的正是「安装外部协议客户端＝新建平台」这条生产路径，与向导接纳第七个平台的意图正面冲突——NP1 之后任何不在六平台白名单内的客户端，其接入计划在建计划阶段即抛错。同轮对照组 entry-skills-onboarding.test.mjs 的 3 例全绿，因其只测 workbuddy/doubao/zcode 三个表内平台，未覆盖表外 id。 2026-10-15 修复落地（TDD）：4 例先在未修字节上红，错误原文 `ENTRY_SKILL_SLOT_UNKNOWN:brand-new-client`（onboarding-client.test.mjs 一侧同为 ENTRY_SKILL_SLOT_UNKNOWN:<合成 id>），修复后 entry-skills-onboarding 8/8 绿；邻域回归 onboarding-client / onboarding-evidence-regression / platform-body 原本 5 红**全部转绿**（6/6），onboarding-l1 / certification-scope / certification-incremental / module-boundaries / onboarding 共 32/32 绿，eslint 0 错。 **附带发现（原 P 表未预判）**：`SLOTS[platformId]` 是非原型安全查表——实测 'constructor'/'toString'/'valueOf' 会取到 Object.prototype 上的函数（truthy）而**静默穿透不抛错**（T3 用例意外变红才暴露）；已改用 `Object.prototype.hasOwnProperty.call` 一并闭合，并加断言守住「不得解析为 prototype 成员」。形态正则 `/^[a-z][a-z0-9-]{1,30}$/` 之下 'constructor' 属合法 id 故降级为派生槽，'toString'/'valueOf' 含大写故仍 fail-closed。",
+   "suggestedHandling": "已按 versions/D-158-entry-skill-表外平台-修法P表-20261015.md 于 2026-10-15 落地并 closed。① entrySkillSlots 改为 own-property 查表；表外且形态合法（/^[a-z][a-z0-9-]{1,30}$/）的 id 不再抛，返回派生槽 {config:null,manual:null,kind:'none',dir:null,derived:true}，走 doubao/dsh/qoder 同款 staging 导出（自动产出而非静默缺口）。② resolvePython 对派生槽按 <id>/bridge/<id>-config.json → runner-config.json → bridge.json runner.python 三级探测，并回传 configRel；否则 vars.CONFIG_PATH 的 join(workspace, null) 会抛 ERR_INVALID_ARG_TYPE（首轮修复实测踩到）。③ 空/非法 platformId 仍 fail-closed 抛 ENTRY_SKILL_SLOT_UNKNOWN；原型穿透一并闭合。④ summary 增 derivedSlot，docs/entry-skill-locations.md 增「表外平台」行。**遗留（明写代价，不另开缺陷）**：派生槽意味新平台不自动获得本地 /wf /wfa 命令位，只拿 staging 导出——与 doubao/dsh/qoder 完全同口径，按 BP-2 记时间差而非永久缺口；将来某平台需真技能位时应正式入表并走 --only 单格冒烟（BP-3）。"
+  },
+  {
+   "id": "D-159",
+   "title": "node --test 默认 glob 收进未跟踪构建产物目录，6 例冻结第三方脚本被误计为仓库测试",
+   "status": "closed",
+   "owner": "workbuddy 会话 2026-10-15 全量回归审计",
+   "costMinutes": 15,
+   "location": "architecture-manager/package.json:13（\"test\": \"node --test\"，无路径约束，默认 glob 递归全树）；被误收路径 architecture-manager/Architecture Manager/resources/seed/tool/skills/novel-writing-resources/versions/1.0.0/upstream/scripts/test-*.js",
+   "source": "versions/管理台测试充分性评估与补测P表-20261015.md",
+   "evidence": " 原始读数来源：用户终端 2026-10-15 全量 npm test（tests 345 / pass 331 / fail 12 / 217.9s）；12 红中 6 例来自未跟踪构建产物目录 Architecture Manager/resources/seed/（git status 显示 ?? \"architecture-manager/Architecture Manager/\"，其 resources/seed 命中 .gitignore:6 的 seed/ 规则，但目录整体未忽略，故被 glob 收进）。5 例（test-delivery-contract.js / test-normalize-punctuation.js / test-outline-contract.js / test-phase2-contract.js / test-scan-runtime.js）是 CommonJS（.js + require('assert')），撞根 package.json 的 \"type\": \"module\" ⇒ ReferenceError: require is not defined；1 例 test-opencode-plugin.mjs 拷贝源文件 ENOENT（产物目录里该文件本就不完整）。来源字节是**已冻结的第三方 upstream 技能脚本**，属已发布版本只读红线，不得改其源码。同目录另有未跟踪产物 release-final/ 与 runtime/。注：与 D-156 修复无因果关系（起源是产物目录存在与否）。 2026-10-15 修复：`package.json` 的 test 改为 `node --test test/*.test.mjs`，`scripts/conform.mjs` 的 tests 步同步加同一路径（只改 package.json 的话 conform 仍会因裸 glob 收第三方而红）。**关键坑**：node 24 的 `--test` 把**裸目录参数当模块入口**处理——实测 `node --test test/` 与 `./test/` 均报 `Cannot find module '...\test'`（MODULE_NOT_FOUND），必须用 glob 形式；实测 `test/*.test.mjs` 发现 81 个测试文件（`test/**/*.test.mjs` 同为 81，无嵌套测试目录）。冻结第三方 upstream 字节一字未动。",
+   "suggestedHandling": "已修并 closed（package.json + conform.mjs 两处 glob 同步收敛）。**记住**：node 24 的 --test 不认裸目录参数（MODULE_NOT_FOUND），必须给 glob。后续若在 test/ 之外新增测试目录，须同步改这两处，否则新目录不会被发现。另注：未跟踪构建产物目录 Architecture Manager/、release-final/、runtime/ 仍在盘上，缩 glob 只是不再把它们当测试，不是清理产物。"
+  },
+  {
+   "id": "D-160",
+   "title": "敏感扫描 D-155 收紧为「须赋值带引号字面量」后 git-executor 夹具失效；无引号私钥值是否该拦待裁决",
+   "status": "closed",
+   "owner": "workbuddy 会话 2026-10-15 全量回归审计（需用户裁决口径）",
+   "costMinutes": 20,
+   "location": "architecture-manager/src/domains/git/sensitive.mjs:9（SECRET 正则）；夹具 architecture-manager/test/git-executor.test.mjs:73-77；抛出点 architecture-manager/src/domains/git/git-executor.mjs:43-47（COMMIT_BLOCKED_SENSITIVE）",
+   "source": "versions/管理台测试充分性评估与补测P表-20261015.md",
+   "evidence": "1 例红：test/git-executor.test.mjs:73「blocks commits whose staged paths hit the sensitive scan」期望 applyPlan 抛 /COMMIT_BLOCKED_SENSITIVE/，实际 Missing expected exception。机制：夹具写 key.txt 内容 `private_key: AAAA`（值**无引号**），而 D-155（提交 0c4bf867）把 sensitive.mjs:9 的 SECRET 正则收紧为「关键字须被赋值一个带引号字面量（\"...\" / '...' / `...`）」以解决自有打包代码误报（如 platform_defaults.mjs 里的 secret === \"string\"），故 `private_key: AAAA` 不再命中 ⇒ 扫描 clean ⇒ 不抛。起源提交 0c4bf867 早于 D-156 修复提交 b2505dbf，无因果关系。**连带待裁决**：真实 .env 里极常见的无引号写法（private_key=AAAA）现已不拦，是否算扫描过窄——这是产品口径问题，不是单纯夹具过期。 2026-10-15 按裁决①落地（用户选定「只改夹具，产品行为不变」）：夹具 git-executor.test.mjs 改为 private_key: \"AAAA\"（带引号字面量），命中 D-155 收紧后的 SECRET 正则 ⇒ COMMIT_BLOCKED_SENSITIVE 恢复抛出。验证：node --test test/git-executor.test.mjs 8/8 全绿（含原红的「blocks commits whose staged paths hit the sensitive scan」，3596ms）；敏感扫描语义组 3/3 绿。**产品字节零改动**（src/domains/git/sensitive.mjs 未动）。",
+   "suggestedHandling": "已按裁决①修夹具并 closed，产品扫描行为保持不变。明写代价（不另开缺陷，本次明确接受）：D-155 收紧后，真实 .env 里极常见的无引号写法（如 private_key=AAAA）不会被拦，只有赋值带引号字面量才命中——这是为消除自有打包代码误报（platform_defaults.mjs 里 secret === \"string\" 一类）付出的代价。若日后要改，须走更精确的排除（仅对已知打包路径/特定扩展名放宽），而非退回全局裸 keyword[:=] 匹配，否则 D-155 的误报会复发。"
+  },
+  {
+   "id": "D-161",
+   "title": "native-client-session.mjs 测试先行合入而源码遗漏：e7cd1e7d 只 add 测试文件，模块本身留在未跟踪态，克隆方/新会话 npm test 在 import 阶段即全红，P2.2 阻断项被绕过；同期三个构建/运行衍生物目录裸露",
+   "status": "closed",
+   "owner": "workbuddy 会话 2026-10-16 在途收尾（用户指令：在途未提交项弄完 + npm test + GitHub 推送）",
+   "costMinutes": 35,
+   "location": "architecture-manager/src/domains/platforms/native-client-session.mjs（9.4 KB，自 e7cd1e7d 起未跟踪）；测试侧 architecture-manager/test/native-client-session.test.mjs:17（import 缺失模块）；裸露衍生物目录 architecture-manager/{Architecture Manager/（electron-builder 默认解包输出）、release-final/（0.8.7 发行暂存）、runtime/（GUI 运行数据）}",
+   "source": "versions/管理台测试充分性评估与补测P表-20261015.md",
+   "evidence": "机制：P表 §2.1 预判『新件零测试合入，风险最高』并设 P2.2 阻断项（未跟踪件合入前必须有测试）；2026-10-15 e7cd1e7d 只 git add 了 test/native-client-session.test.mjs（7 用例），源码 native-client-session.mjs 一字未 add——护栏合入了、被护栏保护的模块没合入。机械证据：git cat-file -e HEAD:architecture-manager/src/domains/platforms/native-client-session.mjs 报 fatal（exists on disk, but not in 'HEAD'），而测试文件在 HEAD 中且第 17 行 import 该模块 ⇒ 任何新克隆/新会话 npm test 必以 ERR_MODULE_NOT_FOUND 全红，工作树因文件在本地磁盘反而全绿，『绿』是假象。同期三个衍生物目录未被 .gitignore 既有条目（release/ 有、release-final/ 无）覆盖，裸露在 git status，与 BP-7 不可入库件隔离冲突。修复（与本登记同 commit）：① native-client-session.mjs 入仓（eslint 0 错）；② native-client.mjs:155 nativeClientStatus 的 transport 判据由仅 'vendor-cli-model-tool-trace' 扩为含 'vendor-client-session-tool-trace'，会话证明通道与 CLI trace 通道同源判定；③ versions/anchor.json platform-conformance 1.6.0→1.6.3（tool/platform-conformance/versions/1.6.3 冻结目录 SHA256SUMS+manifest 盘上核实存在）；④ .gitignore 增补三个衍生物目录（git check-ignore 逐条回读命中）。验证：node --test test/native-client-session.test.mjs 7/7 绿；native 邻域六文件（native-client-binding/native-ai-probe/native-mcp/native-onboarding/onboarding-native-auxiliary/native-probe-lock）23 例 22 绿，唯一红 real native discovery…drift 为 docs/发布门禁.md 列明的 agent 环境敏感用例（真实终端绿，本树内 Python 连接器缺 jsonschema）；全量 npm test（agent 树，node v24.18.0，884.9s）：348 例 / 340 过 / 6 败 / 2 skip，6 败与发布门禁.md 列明的 6 条环境敏感用例逐条同名，零真实回归；五个待提交文件敏感扫描全 clean。",
+   "suggestedHandling": "已 closed。防再发三条：① P2.2 类阻断项应加反向断言——测试合入时其 import 的 src 相对路径必须已在索引内（git ls-files --error-unmatch 形态），可挂进 conform；② 衍生物目录入 .gitignore 一次性补齐，今后新增构建输出目录同轮处理；③ 0.8.8 rebuild 发行产物按 0.8.6 先例本地冻结不入 git（release-final/ 已 ignore），发布轮需用户单独授权。"
+  },
+  {
+   "id": "D-162",
+   "title": "qoder-cn 为表外客户端：wf/wfa 入口技能只导出到 runtime/entry-skills-export，管理台无法铺入 Qoder CN 客户端，/wf 与 /wfa 在客户端不可用",
+   "status": "unverified-registration",
+   "owner": "qoder-cn 接入会话 2026-10-28 登记；待 Qoder CN 0.4.11 插件/技能加载位实勘（管理台 SLOTS 扩项或产出 CN 插件包）",
+   "costMinutes": 60,
+   "location": "architecture-manager/docs/entry-skill-locations.md:12-16（qoder 与表外平台均 kind=none）；architecture-manager/src/domains/onboarding/onboarding-entry-skills.mjs:29,57,152（derived slot → staging 导出）；architecture-manager/src/domains/onboarding/onboarding-client.mjs:38（入口技能只在 client 步落位）",
+   "source": "qoder-cn/runtime/maintenance/manager-onboarding/state.json（pending.client『用户本次选择暂缓』）；qoder-cn/bridge/capabilities.json（attestedAt 2026-10-28T03:32:15Z）",
+   "evidence": "实勘 2026-10-28：qoder-cn/bridge/skills/ 与 qoder-cn/runtime/entry-skills-export/ 均不存在；<local-user-path> 只有 qoder-context@qoderapp-bundler，无 ai-workflow-hub；对照 qoder 平台的 /wf /wfa 由 qoder/plugins/ai-workflow-hub（.qoder-plugin/plugin.json + skills/{wf,wfa}/SKILL.md）提供。管理台 client 步即使通过，qoder-cn 作为表外平台按 D-158 只写 staging 导出（onboarding-entry-skills.mjs:152），不会让客户端出现斜杠命令。；2026-10-29 实勘与通路：客户端有插件机制（<local-user-path> 含 installed_plugins_v2.json，当前只装 qoder-context@qoderapp-bundler），qoder 国际版工作区级 plugins/ai-workflow-hub 为 .qoder-plugin/plugin.json + skills/{wf,wfa}/SKILL.md，而 E://ai//qoder-cn 下无 plugins/；管理台 0.8.13 已导出同构插件包到 <平台>/runtime/entry-skills-export/plugin/ai-workflow-hub/ 并给出 placementHint，不写平台目录、不改客户端插件状态。仍无法只读确认「Qoder CN 是否读取工作区级 plugins/ 目录」，故保持未核实：不谎报可用。",
+   "suggestedHandling": "先实勘 Qoder CN 的插件/技能加载位（对照 qoder/plugins/ai-workflow-hub 形态），再把 qoder-cn 加入 SLOTS 或产出 CN 插件包，并做一次客户端加载实测；实测通过前不得声称 /wf /wfa 可用。管理台当前版本无法完成这一步（不是配置问题，是客户端接口与入口槽位缺口）。"
+  },
+  {
+   "id": "D-163",
+   "title": "qoder-cn 客户端本体位于 qoder 平台目录内（E:\\ai\\qoder\\qoder-cn\\Qoder CN），管理台 native 发现器与路径校验都不可达，原生注册与三仓只读回执无法出证（native 为辅助项）",
+   "status": "open",
+   "owner": "workbuddy 会话 2026-10-28：管理台侧三项已完成（discoverNativeBodies 认 \"Qoder CN.exe\"、workspace-mcp 认 qoder-cn 元数据名、跨目录本体报 NATIVE_BODY_OUTSIDE_PLATFORM 并给两条出路）；仍待：① 本体归属裁定（迁入 E://ai//qoder-cn 或登记外部本体例外，当前未开放）；② qoder-cn 会话实测原生注册与回执",
+   "costMinutes": 60,
+   "location": "architecture-manager/src/domains/platforms/native-profile.mjs:7（ownNativePath 要求本体在本平台目录内）、:16（discoverNativeBodies 只扫平台目录，且正则只认 Qoder.exe/Codex.exe 等命名）；qoder-cn/bridge/client-adapter.json（nativeVerified=false，无 sourceBody）；<local-user-path> CN\\Qoder CN Launcher\\state.ini（installDir=E:\\ai\\qoder\\qoder-cn\\Qoder CN）",
+   "source": "qoder-cn/runtime/maintenance/manager-onboarding/state.json（pending.native『客户端验证暂缓，原生调用尚未验证』）；qoder-cn/runtime/maintenance/manager-onboarding/history/automatic-2026-10-28T03-42-57-534Z-*.json（journal.native.auxiliary=true）",
+   "evidence": "实测 2026-10-28：state.ini 的 installDir=E:\\ai\\qoder\\qoder-cn\\Qoder CN、appExecutable=.qoder-versions\\0.4.11\\Qoder CN.exe；该本体在 qoder 平台目录内、不在 qoder-cn 平台目录，可执行名『Qoder CN.exe』也不匹配 discoverNativeBodies 的正则；qoder-cn/bridge/native-client.json 不存在。journal.native={nativeVendorClientVerified:false, auxiliary:true}（owner 2026-10-13 裁定 native 为辅助项，不阻断接入）。因此管理台无法为 qoder-cn 注册原生 MCP，也无法产出厂商原生三仓只读回执。 | 2026-10-28 管理台侧实测与修复：盘上 qoder-cn 本体 app.asar 的 package.json name=qoder-cn version=0.4.8（硬证据）；管理台已认 \"Qoder CN.exe\" 与 qoder-cn 元数据名（vendor 仍为 Qoder，edition=CN 仅在 CN 形态出现，国际版 profile 键集不变 ⇒ 已注册的 qoder 不会变成 BINDING_CHANGED）；本体在别平台目录内时改报 NATIVE_BODY_OUTSIDE_PLATFORM:path=...;owner=... 并给两条出路。单测 test/qoder-cn-alignment.test.mjs 4/4 绿。剩余为归属裁定 + qoder-cn 会话实测，本轮不代裁。",
+   "suggestedHandling": "① 归属裁定（迁入 E://ai//qoder-cn 或登记外部本体例外）——等用户拍板；② 裁定后由 qoder-cn 会话实测原生注册与三仓只读回执。管理台侧代码已就绪，无需再改。"
+  },
+  {
+   "id": "D-164",
+   "title": "管理台 Node 发现误报：Node v24.18.0 已安装且在本进程 PATH 中，client 步仍以 MANAGEMENT_NODE_REQUIRED 失败并提示“安装 Node”",
+   "status": "closed",
+   "owner": "qoder-cn 接入会话 2026-10-28 登记；管理台修复（Node 发现回退 + 错误区分 + 预览与执行同源）",
+   "costMinutes": 90,
+   "location": "architecture-manager/src/domains/platforms/management-runtime.mjs:10-19（候选仅 process.execPath/PATH/target；无标准安装位回退；spawn 失败与未安装同码）；architecture-manager/src/renderer/presenter.mjs:20（提示误导为安装 Node）；architecture-manager/src/electron/register-operations.mjs:223（预览在主进程直调）与 architecture-manager/src/electron/ipc-router.mjs:26（执行经 task worker）；architecture-manager/src/domains/onboarding/onboarding-client.mjs:39（apply 再次 build 计划）",
+   "source": "<local-user-path> transactionId=operation-8c4525c2-c2a7-4fda-ba33-df3c3124b267（2026-10-28T04:02:40.221Z, platform-client failed MANAGEMENT_NODE_REQUIRED）；qoder-cn/runtime/maintenance/manager-onboarding/history/automatic-2026-10-28T03-43-42-119Z-*.json 与 03-44-06-*.json（两次自动续跑同在 client 步同码）",
+   "evidence": "1) C:\\Program Files\\nodejs\\node.exe 实测 v24.18.0；2) 直接读取运行中管理台主进程（PID 9116，Explorer 启动，asInvoker，Electron 44.5.0）的环境块，PATH 含 C:\\Program Files\\nodejs\\；3) 用该 PATH 复算 management-runtime.mjs 的候选循环，找到并 spawn 成功 node --version；4) 用真实 runDomainTask worker 调真实 buildOnboardingClientPlan，返回 7 个客户端文件 + managementRuntime.source=C:\\Program Files\\nodejs\\node.exe，即 UI 预览的 8 步；5) 但同一轮 apply 在 worker 内失败并报 MANAGEMENT_NODE_REQUIRED。结论：Node 与代码在管理台外可复现成功，失败发生在管理台执行上下文；具体触发点（worker 内 PATH/spawn）尚未在本进程内插桩确认——不得写成已修复。",
+   "suggestedHandling": "① 发现回退：PATH 之外显式查 %ProgramFiles%\\nodejs\\node.exe、%LOCALAPPDATA%\\Programs\\nodejs\\node.exe、where node，并允许用户选择 node.exe；② 错误区分：拆成 NOT_FOUND 与 SPAWN_FAILED（带 exitCode/stderr/code），提示不得再写“安装 Node”；③ 预览与执行同源：预览主进程解析 managementRuntime 的 source/sha256 并写入计划，apply 不在 worker 重新发现（或确保 worker 继承同一 PATH）；④ 回归测试用受控 env 覆盖“node 仅在 PATH”与“spawn 被拒”两态；⑤ 修后重跑 qoder-cn client 步复验；D-162（入口技能）仍独立存在。"
+  },
+  {
+   "id": "D-165",
+   "title": "管理台 inventory 的 FORMAL_TOP_LEVEL_DIRECTORIES 与治理文本脱节：缺 qoder-cn、残留从未存在的根级 ai学习笔记，导致 inventory 面板不认已注册平台且把一个幽灵目录当正式目录",
+   "status": "closed",
+   "owner": "workbuddy 会话 2026-10-28（管理台对齐与缺陷修复 P5）",
+   "costMinutes": 25,
+   "location": "architecture-manager/src/domains/resources/inventory.mjs:15-32（FORMAL_TOP_LEVEL_DIRECTORIES）",
+   "source": "architecture-manager/test/qoder-cn-alignment.test.mjs（D-165 双向一致性用例，含真实工作区 E:////ai 校验）；architecture-manager/runtime/maintenance/20261028-alignment/p1-inventory.json",
+   "evidence": "P1 只读盘点实测：常量有 ai学习笔记（根级无此实体，2026-09-29 已迁入 inbox/）、无 qoder-cn（该平台已由 bridge.json 数据驱动注册）。2026-10-28 修：补 qoder-cn、删 ai学习笔记，并新增单测锁定『每个注册平台都在常量里、常量每项都真实存在』。",
+   "suggestedHandling": "已修并加双向单测；治理文本（AGENTS.md 权威一级目录枚举）后续若新增平台，单测会先红。"
+  },
+  {
+   "id": "D-166",
+   "title": "治理文件重命名会让接入收口（finalize）卡死：重命名目标是新的路径，不在治理路径集合内，被 staged 路径守卫判为无关暂存而拒绝；合法重命名没有通路",
+   "status": "closed",
+   "owner": "workbuddy 会话 2026-10-28 登记；2026-10-29 管理台 0.8.13 轮修复并关闭（P2）",
+   "costMinutes": 45,
+   "location": "architecture-manager/src/domains/onboarding/onboarding-finalize.mjs:33-34（staged 路径必须在 expected.payload.gitPlan.target.paths 内）；src/domains/onboarding/onboarding-governance.mjs:30-41（onboardingGitPaths 静态列表 + 平台 bridge 目录动态发现）",
+   "source": "architecture-manager/test/onboarding-finalize-atomicity.test.mjs",
+   "evidence": "实测 2026-10-28：git mv versions/更新日志.md → versions/更新日志-2026.md 后 finalize 抛 GIT_UNRELATED_STAGED_FILES 且不产生提交（拒绝是诚实的，无静默写入）。根因：重命名目标不在 onboardingGitPaths 的静态集合里，动态发现也只认已存在文件，旧路径已消失。修复（0.8.13）：onboarding-governance.mjs 新增 stagedNameStatus（带 -c core.quotePath=false）/ onboardingCommitPaths / onboardingRenameSources 与 isGovernanceTextPath，finalize 用「提交目标 + 重命名源」双集合，git.mjs 的 buildGitPlan 与 git-executor 把源并入 commit --only 行；三处 git 事实（--name-only 只报目标、--name-status 需关 quotePath、目标改写后 add 拆成 A+D 故源必须进提交行）已实测并写进代码注释。",
+   "suggestedHandling": "① 允许重命名对（旧→新）整体进入治理提交，要求两端都在本平台/治理范围内并落审计；② 或在预览里显式提示『检测到重命名，请先还原路径或改用新增文件』。属功能缺口，2026-10-28 按 BP-5 只登记不修；2026-10-29 已按 ① 实施：仅当重命名旧名属治理路径集合且新名属治理文本集合（.md/.json/.py/.mjs、非凭据命名、位于根级治理文档 / versions/ / <平台>/bridge/）才放行，其余仍抛 GIT_UNRELATED_STAGED_FILES。"
+  },
+  {
+   "id": "D-167",
+   "title": "两个「是否完全接入」的机器来源会互相矛盾：verifyAutomaticOnboarding 只看 journal.status 与原生收据，不看 l1-dual-cell 收据；readOnboardingThreeLayer 则要求有 l1 步骤才算 current-criteria",
+   "status": "closed",
+   "owner": "workbuddy 会话 2026-10-28（三仓对齐与接入全链路测试 P4 挖掘登记，2026-10-28 用户裁定后统一实现，已修）",
+   "costMinutes": 30,
+   "location": "architecture-manager/src/domains/onboarding/onboarding-auto.mjs:241（verifyAutomaticOnboarding）；src/domains/onboarding/onboarding-state.mjs:39-62（readOnboardingThreeLayer）",
+   "source": "versions/接入口径裁定-20261028.md",
+   "evidence": "实测 2026-10-28：同一份 status=complete 且 native 为 auxiliary 的 journal，去掉 l1-dual-cell 步骤后 verifyAutomaticOnboarding().architectureComplete 仍为 true，而 readOnboardingThreeLayer 给出 pipelineEra=pre-criteria / l1.status=not-earned。两面向上层回答不一致，UI 与判据工具可能各执一词。",
+   "recommendation": "待裁定：要么 verify 也要求 l1 收据（会让一部分旧档 journal 从完全接入降为未完成），要么把 architectureComplete 的定义明确写成「不依赖 l1」，二者择一并同步 UI 文案。"
+  },
+  {
+   "id": "D-168",
+   "title": "同一字段名 architectureComplete 在 global-update 里是第三套公式（coverageComplete），与 onboarding-auto 的公式、与三层读数互不一致：完全接入缺少单一权威定义",
+   "status": "closed",
+   "owner": "workbuddy 会话 2026-10-28（三仓对齐与接入全链路测试 P5 之后复核登记，2026-10-28 用户裁定后统一实现，已修，与 D-167 同源、待同一裁定）",
+   "costMinutes": 20,
+   "location": "architecture-manager/src/domains/platforms/global-update.mjs:285（state.architectureComplete=checked.coverageComplete===true）；对照 src/domains/onboarding/onboarding-auto.mjs:241 与 src/domains/onboarding/onboarding-state.mjs:39-62",
+   "source": "versions/接入口径裁定-20261028.md",
+   "evidence": "实测 2026-10-28：global-update 把 architectureComplete 定义为「调用面覆盖完整」（coverageComplete===true，约等于三层里的 L2 语义），onboarding-auto 把它定义为「journal.status=complete 且原生已验证或 auxiliary」（不看 L1 收据、不看软件是否全部绑定），三层读数则要求 l1-dual-cell 收据 + complete + pendingSoftware=0。同一平台可能被三个来源给出三种答案，且 UI 侧 inventory 面板消费三层读数、入驻/全局更新流程消费 architectureComplete。",
+   "recommendation": "与 D-167 一并裁定：先定死「完全接入」的唯一权威定义（建议以三层读数为准，因为它是 2026-10-14「状态重挣不迁移」口径的载体），再让 architectureComplete 的两处公式和 UI 文案统一改口，或把该字段降级为「记录已收口」并停止用它表达接入完成度。"
+  },
+  {
+   "id": "D-169",
+   "title": "architectureComplete 还有第四、第五套公式：onboarding-readback 漏掉 auxiliary 豁免（与 2026-10-13 业主裁定正面冲突），onboarding-finalize 只看 status 连原生都不看",
+   "status": "closed",
+   "owner": "workbuddy 会话 2026-10-28（回答 D-167 提问时复核登记，2026-10-28 用户裁定后统一实现，已修；readback 一处属既有裁定下的实现 bug，可先于 D-167 裁定单独修）",
+   "costMinutes": 15,
+   "location": "architecture-manager/src/domains/platforms/onboarding-readback.mjs:26-29（onboardingVerified && native.nativeVendorClientVerified，无 auxiliary 分支）；src/domains/onboarding/onboarding-finalize.mjs:60（architectureComplete: state.status==='complete'）",
+   "source": "architecture-manager/test/adoption-completion.test.mjs",
+   "evidence": "实测 2026-10-28：对同一个 auxiliary 原生平台，onboarding-auto.mjs:241 因带 `|| journal?.native?.auxiliary===true` 给 true，onboarding-readback.mjs:29 因少了该分支给 false —— 与 2026-10-13 业主裁定（test/onboarding-native-auxiliary.test.mjs:27 断言『auxiliary native 不得阻断 architectureComplete』，该用例为在跑绿用例）正面冲突，属实现 bug 而非口径待裁定。readback 由 onboarding-state.mjs:30 挂到 state.readback（`onboarding:state` 操作返回，UI onboard.jsx:158 一旦拿到就整段 JSON 展示），与 verify 的返回值各自对外暴露同名布尔，谁读到哪个就按哪个口径作答。onboarding-finalize.mjs:60 又是最松的一版，连原生收据都不看。另有三处恒 false 的局部返回值（onboarding-state.mjs:65 / platform-body.mjs:56,61 / native-client.mjs:87,125,162），属占位，不算分歧。附带：上述用例注释把该裁定标为 D-152，但缺陷簿中 D-152 是 workbuddy CLI 认证存储订阅器缺陷（open），属注释误引，本条一并登记。",
+   "recommendation": "① readback 一处按 2026-10-13 既有裁定单独修（补 auxiliary 豁免，不必等 D-167/D-168 的口径裁定）；② finalize 一处并入 D-167/D-168 的统一口径工作；③ 长期把 architectureComplete 收敛到单一来源函数，禁止各模块自行拼写该字段；④ 顺手修正 onboarding-native-auxiliary.test.mjs:27 的 D-152 误引。"
+  },
+  {
+   "id": "D-170",
+   "title": "接入记录恢复校验白名单漏了 runtime/entry-skills-export：无本地命令位平台 client 步一过就报 ONBOARDING_JOURNAL_INVALID",
+   "status": "closed",
+   "owner": "qoder-cn 接入会话 2026-10-28 登记；管理台修复（validTarget 白名单 + 回归测试）",
+   "costMinutes": 45,
+   "location": "architecture-manager/src/domains/platforms/onboarding-resume.mjs:41（validTarget 未允许 runtime/entry-skills-export）、:47（抛 ONBOARDING_JOURNAL_INVALID）；写入端 architecture-manager/src/domains/onboarding/onboarding-auto.mjs:136（把 plan 文件路径写入 finalTargets）；导出路径 architecture-manager/src/domains/onboarding/onboarding-entry-skills.mjs:152（slot-less 平台写 runtime/entry-skills-export）；restart 顺序 architecture-manager/src/domains/onboarding/onboarding-auto.mjs:94-95（先 assertResumePreview 后 archive，重建也被同一条挡住）",
+   "source": "architecture-manager/test/onboarding-resume-entry-skills.test.mjs；qoder-cn/runtime/maintenance/manager-onboarding/automatic.json（finalTargets 含两条 entry-skills-export，error=ONBOARDING_JOURNAL_INVALID，stoppedAt=certification）；<local-user-path> 2026-10-28T13:49:50.158Z platform-onboarding completed（journal 记录失败）",
+   "evidence": "2026-10-28 21:49 client 步通过后写入 qoder-cn/runtime/entry-skills-export/{wf,wfa}/SKILL.md 并记入 finalTargets；validTarget 只允许 bridge/、bridge.json、runtime/software/software-environment.json、runtime/manager-host/<sha>/manifest.json 与六个治理文件，故 onboardingResumePreview 在 :47 抛错；两条哈希均为合法 64 位且与磁盘一致（0358b6…/94e8db…），其余 20 条 finalTargets 也全部与磁盘一致——不是非法哈希，是路径白名单漏项。影响所有无本地命令位平台（doubao/dsh/qoder/qoder-cn）。平台状态修复：automatic.json 已备份到 repairs/automatic-before-20261028T215657+0800-a167cee03788.json（sha256 a167cee0…），移除两条 finalTargets 后 strict 续跑预览 changes=[]；管理台代码未改，本条仍 open。",
+   "suggestedHandling": "① validTarget 增加 path.startsWith(`${id}/runtime/entry-skills-export/`)（如另有 runtime/entry-skills/ 一并加）；② 或者把 derived staging 文件排除在 finalTargets 之外（写入端与校验端二选一，避免再次漂移）；③ 回归测试覆盖无本地命令位平台：client 步通过 → 续跑预览不得抛 JOURNAL_INVALID；④ 修后重建/续跑 qoder-cn 验证；平台侧临时修复已做，不得写成代码已修复。"
+  },
+  {
+   "id": "D-171",
+   "title": "资源环境下载连接在管理台内不可配置：API 支持 settings.wheelhouse，UI 无镜像/wheelhouse 入口，失败文案却要求修复下载连接",
+   "status": "closed",
+   "owner": "qoder-cn 接入会话 2026-10-28 登记；管理台修复（UI 暴露下载源/wheelhouse + 文案一致）",
+   "costMinutes": 45,
+   "location": "architecture-manager/src/domains/platforms/global-update.mjs:115（wheelhouse 只来自调用方 settings）、:209（传入 prepareResourceEnvironment）；architecture-manager/src/renderer/panels/global-update.jsx（settings 仅 contextWindowTokens/contextWindowSource/pythonExecutable/retain）；architecture-manager/src/renderer/presenter.mjs:149（RUNTIME_PREPARATION_FAILED 文案要求修复下载连接）",
+   "source": "architecture-manager/test/resource-environment-download.test.mjs；<local-user-path> plan）；qoder-cn/runtime/maintenance/manager-updates/global-update-f1ca367b-8327-4a9c-b6eb-89f8d57667e5.json（14:10:15Z preparing-environment → 14:30:31Z pending）",
+   "evidence": "2026-10-28 22:10–22:30 qoder-cn 资源环境 pip 直连 PyPI IPv6（Fastly 2a04:4e42:…:443）约 24 KB/s；pip config list 为空、无 pip.ini；pip-cache 仅 13 MB，temp 10,731,520→11,837,440 B/52s；UI 的全局更新 settings 只有 contextWindowTokens/contextWindowSource/pythonExecutable/retain，无法填 index-url 或 wheelhouse；API 的 settings.wheelhouse 只能由调用方传入；14:30:31.193Z qoder-cn 以 RESOURCE_ENVIRONMENT_PREPARATION_FAILED 转 pending。",
+   "suggestedHandling": "① 在全局更新面板增加每平台/全局的下载源（index-url）或 wheelhouse 选择，写入 settings 并透传给 spec；② 失败文案必须指向可操作的入口；③ 或在平台 config 支持固定 index；④ 回归用例覆盖无网络/慢网下的可配置路径。"
+  },
+  {
+   "id": "D-172",
+   "title": "资源环境 pip 安装固定 1200s 超时且无进度感知/断点续装：慢网下百兆资源包必然被杀，重试只复用 pip-cache",
+   "status": "closed",
+   "owner": "qoder-cn 接入会话 2026-10-28 登记；管理台修复（进度感知超时 + 可续装/离线 wheelhouse）",
+   "costMinutes": 60,
+   "location": "architecture-manager/src/runtime/resource_env.py:23-24（subprocess.run timeout=1200）、:69-75（pip install/download；重试重新 venv）、architecture-manager/src/domains/platforms/resource-environment.mjs:74（外层 timeout=1800000）",
+   "source": "architecture-manager/test/resource-environment-download.test.mjs；qoder-cn/runtime/manager-resources/4a45eeda-5f8f-4098-9161-4fbd963bd60c/requirements.in（9 个包：matplotlib/numpy/openpyxl/pandas/pymupdf/python-docx/python-pptx/reportlab/scikit-learn）；qoder-cn/runtime/maintenance/manager-updates/global-update-f1ca367b-8327-4a9c-b6eb-89f8d57667e5.json",
+   "evidence": "2026-10-28 22:10:31 pip install 启动；22:22:00→22:22:52 temp 10,731,520→11,837,440 B（约 24 KB/s）；20 分钟超时点 22:30:31，剩余包（含 scipy 等依赖）不可能完成；22:30:31.193Z 实测转 pending，error=RESOURCE_ENVIRONMENT_PREPARATION_FAILED。重试会重新 venv + pip install，只复用 13 MB pip-cache，不续装；外层 30 分钟超时未到，内层先杀。",
+   "suggestedHandling": "① 超时改为基于进度（pip 输出/临时文件增长）续期，有进展不杀；② 支持离线 wheelhouse（settings.wheelhouse 已有 API）并在 UI 暴露；③ 失败后保留 venv 与已下载 wheel，重试续装；④ 进度里显示速率/剩余字节；⑤ 回归用例覆盖慢速流与超时边界。"
+  },
+  {
+   "id": "D-173",
+   "title": "能力探针证据不跨入驻轮复用：每轮新建 UUID 目录重跑 probe，环境指纹一致也不沿用",
+   "location": "architecture-manager/src/domains/onboarding/onboarding-attestation.mjs:35-40（probeOnboardingCapabilities 每次 mkdir capabilities/<uuid>）",
+   "status": "open",
+   "owner": "管理台侧；是否复用属治理裁定（会改 evidence-reuse.mjs 与 evidenceFresh 的判定对象），0.8.13 轮只做预算解耦，不扩范围",
+   "costMinutes": 90,
+   "source": "versions/管理台0.8.13四项修复P表-20261029.md（P4 附录）",
+   "evidence": "2026-10-29 P1 只读定位：probe 每次新建目录、timeout 1800000，无按 environmentBindingSha256 复用；ENVIRONMENT_VERIFY_TIMEOUT 发生在引擎侧环境清单校验，管理台能改的是预算声明与写回策略。是否让 probe 证据跨轮复用会改变『证据是否仍可用』的判定对象（现为首次认证的 matrix+conform），与 2026-10-28 接入口径裁定同类，须单独裁定后实施。预算侧已解耦：verifyTimeoutSeconds 由平台已声明值或向导填写（取值域 1..3600，默认 300），管理台写回 backend 不再把它覆盖成 300（codex 现有 backend 均声明 120）。"
+  },
+  {
+   "id": "D-174",
+   "title": "平台副本版本漂移：peer_dispatcher.py 与 platform_defaults.mjs 在 5/7 平台落后于 architecture-manager/src/runtime 真身，且平台副本未钉版",
+   "location": "architecture-manager/src/runtime/peer_dispatcher.py、platform_defaults.mjs；codex/dsh/qoder/zcode/doubao 平台 bridge/manager-* 副本",
+   "status": "closed",
+   "owner": "架构 3.7.0 轮（防复发 P1–P5 已于 2026-11-04 收口）",
+   "costMinutes": 120,
+   "source": "versions/防复发判据与钉版-收口记录-20261104.md",
+   "evidence": "2026-10-30 只读 drift 检查：5/7 平台在 platform_defaults.mjs + peer_dispatcher.py 漂移（codex/dsh/qoder/zcode/doubao），workbuddy/qoder-cn 当前；7/7 bridge.json 均无 runtimeComponentVersion。"
+  },
+  {
+   "id": "D-175",
+   "title": "备份区膨胀：inbox/backup/ 实测 3,988 MB / 95,092 文件，含 venv 完整副本与 restore-drill 内文件",
+   "location": "inbox/backup/",
+   "status": "open",
+   "owner": "inbox 备份治理",
+   "costMinutes": 120,
+   "source": "versions/平台退役与搬迁配方.md",
+   "evidence": "2026-10-29 实测 3,988 MB / 95,092 文件；Wave 1 只删除共享旧版本，未清理 inbox/backup。"
+  },
+  {
+   "id": "D-176",
+   "title": "LX 符号链接残留：WSL 创建的 bin/python* 在 Windows 侧删除被拒，目录内容已清但链接壳残留",
+   "location": "<platform>/runtime/**/restore-drill*/**/bin/python*",
+   "status": "open",
+   "owner": "WSL 内或管理员权限清理",
+   "costMinutes": 30,
+   "source": "versions/平台退役与搬迁配方.md",
+   "evidence": "2026-10-29 处置记录：fsutil 报错误 5、PowerShell/.NET 报错、Git Bash rm 报 Permission denied；残留链接体积可忽略。"
+  },
+  {
+   "id": "D-177",
+   "title": "缺脚本化重建入口：architecture-manager/src/cli.mjs 只有只读 scan，写入型 onboarding 走 GUI，平台副本重铺无法无人值守或批量执行",
+   "location": "architecture-manager/src/cli.mjs",
+   "status": "closed",
+   "owner": "架构 3.7.0 轮 P4（2026-11-05 补 src/cli.mjs relayout 子命令）",
+   "costMinutes": 90,
+   "source": "architecture-manager/src/cli.mjs",
+   "evidence": "防复发 P 表 P3 需先定重铺路径；D-174 的 P4 钉版判据依赖先完成重铺。"
+  }
+ ],
+ "updatedAt": "2026-10-30T12:00:00.000Z",
+ "lastUpdatedAt": "2026-10-30T20:00:00+08:00",
+ "activeRepairPlan": null,
+ "completedRepairPlan": "versions/缺陷簿修复与全量验收转绿-实施P表-20261010.md",
+ "notes_20261010": "缺陷簿修复轮收口：closed +18（AUD-D-001..012/014/015/017/019 + D-144 + 新增 D-145），ruled +4（AUD-D-013/016/018 + D-112），open 剩 D-123/D-124/D-127（A 簇：五家平台原生回执待补，用户 2026-10-10 指令明确除外）。checker 已扩展 AUD-D 号段（连续性校验同 D 段）。",
+ "notes_20261028": "qoder-cn 图形接入首轮（2026-10-28）：配置/后端/环境/providers/能力证明/L1 双格/治理/git 已过；client 步报 MANAGEMENT_NODE_REQUIRED（管理台误报，见 D-164；Node v24 已在管理台进程 PATH 中），certification 因能力地板未补齐而延期。按用户指令只登记管理台无法完成的待验证缺口：D-162（wf/wfa 客户端入口位）、D-163（客户端本体跨平台 + native 不可达）。其余缺口管理台可自行完成：10 项 declaredAbsent 走全局更新资源环境（conform 1.6.3 读 resourceEnvironmentManifest）、6 个软件本体走软件中心导入、证据漂移重跑检查、未入库走 finalize 提交。 追加 D-164（open）：管理台 Node 发现误报——Node v24.18.0 已安装且在主进程 PATH 中，client 步仍报 MANAGEMENT_NODE_REQUIRED；预览（主进程）可过、执行（task worker）失败，代码见 management-runtime.mjs:10-19 与 ipc-router.mjs:26。\n【接入口径裁定 2026-10-28】用户裁定：完全接入 = 能够流畅跑通架构管理的所有步骤（理由：以现在常用口径为准，早期口径不再引用）。\n实现：新增 architecture-manager/src/domains/platforms/adoption-completion.mjs 的 readAdoptionCompletion() 作为唯一权威来源（journal.status==='complete' 且 ONBOARDING_STEP_SEQUENCE 11 步全部在档且状态属于 {passed, auxiliary}），onboarding-auto / onboarding-readback / onboarding-finalize / global-update 四处与 UI 文案统一改口；三层读数的 L3 改为读同一函数，避免旧矛盾重现。\n另确立命名：最小接入（L1）= platform 能正常通过 wf/wfa 调用 skill，机器来源 = journal 的 l1-dual-cell 步为 passed（该术语此前在代码与文档中均不存在，全仓检索 0 命中）。\nD-167 / D-168 / D-169 三条同源，随本裁定一并关闭；裁定全文与「排查过且不算矛盾」清单见 versions/接入口径裁定-20261028.md。 追加 D-170（open）：恢复校验 validTarget 漏了 runtime/entry-skills-export，client 步写出的 wf/wfa staging 导出被记入 finalTargets，续跑报 ONBOARDING_JOURNAL_INVALID；平台状态已备份到 repairs/ 并移除 2 条目标（strict 预览 changes=[]），管理台代码未改。 追加 D-171/D-172（open）：资源环境下载连接在 UI 不可配置；pip 固定 1200s 超时、无进度感知/续装。实测 qoder-cn 于 22:30:31 以 RESOURCE_ENVIRONMENT_PREPARATION_FAILED 转 pending；主因是直连 PyPI IPv6 约 24 KB/s，管理台缺口是慢网下不可操作且必然失败。2026-10-28 晚，0.8.12 修复轮：按用户「qoder-cn 手动接入查出 3 个缺陷，请修复」完成 D-170/D-171/D-172 修复并销账。D-170：onboarding-resume.mjs 的 validTarget/affected 增加 runtime/entry-skills-export/ 前缀，且 journal 键先 normalize 再比前缀（防止 ../ 绕过白名单）。D-171：全局更新面板新增下载源（index-url）/离线 wheelhouse/可信主机三个输入并透传到资源环境 spec；spec 仅下载源字段变化且尚无结果时允许改写，换镜像重试不再被 ONBOARDING_RESUME_DRIFT 挡住；失败文案指向这些入口。D-172：resource_env.py 改为进度感知超时（无输出且观察目录不增长超过 idleTimeoutSeconds 才杀，另有 maxSeconds 硬上限），输出速率与已下载字节进度，venv 与已下载 wheel 保留复用（--find-links backup/wheels、--timeout/--retries），外层 watchdog 提到 2 小时以上。回归：新增 9 例（onboarding-resume-entry-skills 3、resource-environment-download 6）全绿；三条的 source 已改为可解析的真实路径（安全 API 不支持改行，故仅改 source 串与追加本注，其余字节未动）。",
+ "notes_20261029": "管理台 0.8.13 轮（P1–P4，2026-10-29）：D-166 已修（合法重命名放行；路径集归一 + 删除侧进提交 + 静态治理表不再要求已被重命名走的文件），D-162 补通管理台侧能力（staging 之外再导出同构插件包 <id>/runtime/entry-skills-export/plugin/ai-workflow-hub/，含 .qoder-plugin/plugin.json 与 skills/{wf,wfa}/SKILL.md，并给 placementHint；客户端是否读取工作区级插件位未确认前保持 open，按 BP-2 时间差登记）。环境校验预算解耦：verifyTimeoutSeconds 由平台已声明值或向导填写（1..3600，默认 300），管理台写回 backend 不再覆盖平台自选值（codex 两个 backend 均声明 120）；attestation 跨轮复用未做并新登记 D-173（属治理裁定，不在本轮扩范围）。",
+ "notes_20261030": "2026-10-30 文档现状校正：补记 D-174–D-177（平台副本漂移/备份膨胀/LX 链接残留/缺脚本化重建入口）。编号按连续号段修正：10-29 曾把 D-173/174/175 顺延为 D-176/177/178，但 D-174/175 实际为空，导致缺陷簿检查器跳号；现统一回 D-174–D-177。"
+}

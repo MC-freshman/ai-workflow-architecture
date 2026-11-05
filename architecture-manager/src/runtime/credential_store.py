@@ -24,6 +24,27 @@ def digest(value):
     return hashlib.sha256(value).hexdigest()
 
 
+def prune_backups(backup_root, reference, keep=10):
+    """AUD-D-007: bound per-reference backup directories; only prune what this tool wrote."""
+    try:
+        candidates = []
+        for entry in backup_root.iterdir():
+            manifest = entry / 'MANIFEST.json'
+            if not entry.is_dir() or not manifest.is_file():
+                continue
+            try:
+                data = json.loads(manifest.read_text(encoding='utf-8'))
+            except (OSError, ValueError):
+                continue  # an unrecognized directory is never touched
+            if data.get('schema') == 'architecture-manager-credential-backup/v1' and data.get('reference') == reference:
+                candidates.append((entry.stat().st_mtime, entry))
+        candidates.sort(reverse=True)
+        for _, entry in candidates[keep:]:
+            shutil.rmtree(entry)
+    except OSError:
+        pass  # pruning is best effort; the fresh backup is already durable
+
+
 def protect(value, entropy, decrypt=False):
     crypt = ctypes.WinDLL('crypt32', use_last_error=True)
     kernel = ctypes.WinDLL('kernel32', use_last_error=True)
@@ -150,6 +171,7 @@ def main():
     temp = path.with_name(path.name + '-' + str(uuid.uuid4()) + '.tmp')
     temp.write_bytes(payload)
     os.replace(temp, path)
+    prune_backups(Path(request['backupRoot']).resolve(), 'reference:' + name)
     print(json.dumps({'ok': True, 'reference': 'reference:' + name, 'backup': str(backup), 'restoreDrill': True, 'containsCredentials': True, 'encrypted': True}))
 
 

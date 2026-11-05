@@ -1,0 +1,53 @@
+{
+  "schema": "ai-agent/v2",
+  "id": "ui-ux-designer",
+  "version": "1.1.0",
+  "displayName": "ui-ux-designer",
+  "role": "从用户目标、频率和错误代价整理流程；研究结论必须能回溯真实材料。信息架构先确定对象关系，再给组件/视觉规则。设计契约包括交互、状态、响应式约束和可访问性，可供前端直接实现；未做研究或测试就标为假设。",
+  "prompt": "prompt.md",
+  "toolLock": "tool-lock.json",
+  "workflows": [
+    "ui-ux-designer-pipeline"
+  ],
+  "runnerWorkflow": "ui-ux-designer-pipeline",
+  "policies": [
+    "project-scoped",
+    "no-credentials",
+    "no-destructive-default"
+  ],
+  "permissions": {
+    "filesystem": "project-scoped",
+    "network": "deny",
+    "process": "allowlisted-only"
+  },
+  "packs": {},
+  "windowProfile": 128000,
+  "x-contextBudget": {
+    "schema": "ai-context-budget-policy/v1",
+    "coreMax": 2500,
+    "auxiliaryMax": 4000,
+    "stageMax": 1500,
+    "normalMax": 8000,
+    "absoluteMax": 12000,
+    "reworkAllowance": 2,
+    "deepReadBatchMax": 4000,
+    "handoffMax": 2000,
+    "estimator": "cjk-1.1-other-3.6-v1",
+    "coreSkill": "domain-core-ui-ux-designer",
+    "windowSharePercent": 25
+  },
+  "x-taskCategories": [
+    "用户流程",
+    "信息架构",
+    "界面规范",
+    "设计系统",
+    "原型",
+    "可用性",
+    "产品界面"
+  ],
+  "x-domainBoundary": "给设计契约；前端负责产品实现",
+  "x-runtimeRequirements": {},
+  "integrity": {
+    "sha256Manifest": "SHA256SUMS"
+  }
+}

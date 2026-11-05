@@ -3,7 +3,8 @@ import test from 'node:test';
 import { mkdtempSync, mkdirSync, readdirSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
-import { inspectRunDirectory, listPlatformRuns, listRunLedger } from '../src/runs.mjs';
+import { inspectRunDirectory, listPlatformRuns, listRunLedger } from '../src/domains/runs/runs.mjs';
+import { PLATFORM_IDS } from '../src/core/platforms.mjs';
 
 function makeWorkspace() {
   const root = mkdtempSync(join(tmpdir(), 'am-runs-'));
@@ -114,7 +115,7 @@ test('lists platform runs read-only and skips non-directories', () => {
   rmSync(root, { recursive: true, force: true });
 });
 
-test('lists the ledger across all six platforms with totals', () => {
+test('lists the ledger across every base platform with totals', () => {
   const { root, runsRoot } = makeWorkspace();
   writeRun(runsRoot, 'run-a', V11_LOCK);
   writeRun(runsRoot, 'run-b', V13_LOCK);
@@ -123,10 +124,31 @@ test('lists the ledger across all six platforms with totals', () => {
   mkdirSync(qoderRuns, { recursive: true });
   writeRun(qoderRuns, 'q-run', V13_LOCK);
   const ledger = listRunLedger(root);
-  assert.equal(ledger.platforms.length, 6);
+  assert.equal(ledger.platforms.length, PLATFORM_IDS.length);
   assert.equal(ledger.totals.zcode, 3);
   assert.equal(ledger.totals.qoder, 1);
   assert.equal(ledger.totals.codex, 0);
   assert.equal(ledger.totalRuns, 4);
+  rmSync(root, { recursive: true, force: true });
+});
+
+test('the ledger also covers a registered extra found through its own bridge', () => {
+  const { root, runsRoot } = makeWorkspace();
+  writeRun(runsRoot, 'run-a', V13_LOCK);
+  mkdirSync(join(root, 'qoder-cn', 'bridge'), { recursive: true });
+  writeFileSync(join(root, 'qoder-cn', 'bridge.json'), JSON.stringify({
+    schema: 'ai-platform-bridge/v1.1',
+    platform: 'qoder-cn',
+    shared: { readOnly: true },
+    runtimeRoot: join(root, 'qoder-cn', 'runtime')
+  }));
+  const extraRuns = join(root, 'qoder-cn', 'runtime', 'runs');
+  mkdirSync(extraRuns, { recursive: true });
+  writeRun(extraRuns, 'cn-run', V13_LOCK);
+  const ledger = listRunLedger(root);
+  assert.ok(ledger.platforms.some((entry) => entry.platform === 'qoder-cn'));
+  assert.equal(ledger.totals['qoder-cn'], 1);
+  assert.equal(ledger.platforms.length, PLATFORM_IDS.length + 1);
+  assert.equal(ledger.totalRuns, 2);
   rmSync(root, { recursive: true, force: true });
 });

@@ -11,7 +11,7 @@ import {platformConfigPath} from './binding.mjs';
 import {sha256} from '../../core/hash.mjs';
 import {readJson} from '../../core/json.mjs';
 import {targetPath} from '../../core/paths.mjs';
-import {createAnchorPlan,replaceConfigPlan} from '../../plans.mjs';
+import {createAnchorPlan,replaceConfigPlan} from '../plans/plans.mjs';
 import {requirePlan,atomicWrite,saveCheckpoint,makeId,writeAudit,output} from '../../transactions/kernel.mjs';
 import {defaultAuditRoot} from '../../core/paths.mjs';
 import {ANCHOR_RELATIVE_PATH,anchorAlignment,anchorContent,anchorDigest,computeAnchor,readAnchorState} from './anchor.mjs';

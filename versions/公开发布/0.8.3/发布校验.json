@@ -1,0 +1,23 @@
+{
+  "at": "2026-10-10T20:03:12.202498+08:00",
+  "readmeScope": [
+    "architecture functions",
+    "three repositories and independent versions",
+    "normal invocation requirements",
+    "full onboarding requirements",
+    "AI-assisted onboarding handoff",
+    "manual login/UAC/client steps",
+    "update/restore/dependency semantics"
+  ],
+  "oldPublicFrozenFilesUnchanged": 21738,
+  "documentLinksChecked": 12,
+  "sourceFilesVerified": 228,
+  "sourceCodeCommit": "784fd7b893f82a02be7f0c39cfe4af174fc2b988",
+  "publicBoundaryFindings": [],
+  "targetedManagerRegressionPassed": 35,
+  "checkerTestsPassed": 11,
+  "fullDeveloperSuitePassed": false,
+  "artifactRestoreVerified": true,
+  "agent": null,
+  "workflow": null
+}

@@ -4,7 +4,7 @@ import {parseJson,stableJson} from '../../core/json.mjs';
 import {sha256File} from '../../core/hash.mjs';
 import {readExternalText,assertIntakeUnchanged} from '../intake/sources.mjs';
 import {hasSensitiveLiteral} from '../intake/policy.mjs';
-import {runnerConfig} from '../../software-publish.mjs';
+import {runnerConfig} from './software-publish.mjs';
 import {platformPython} from '../platforms/runtime-binding.mjs';
 import {allPlatformIds} from '../../core/platforms.mjs';
 const secretName=/password|passwd|token|secret|api.?key|credential|authorization|cookie/i;

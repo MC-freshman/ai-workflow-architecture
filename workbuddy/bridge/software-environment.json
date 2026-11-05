@@ -1,0 +1,302 @@
+{
+ "schema": "ai-software-environment/v1",
+ "platform": "workbuddy",
+ "at": "2026-09-21T03:30:10Z",
+ "policy": "Bodies are detected in place and verified against the recipe verify.files pins measured on this machine; no body is copied into the platform runtime and none enters the shared repository (BP-1). Licensed and package-manager bodies are registered at their detected path only - this step neither installs nor starts them.",
+ "measuredBy": "runtime/maintenance/3.0-adopt/probe/p1_probe.py (workbuddy, architecture-ops 1.2.0 adoption轮 P1)",
+ "bodies": {
+  "burp-suite": {
+   "detectedPath": "<local-tool-body-path> V2024.5.1\\BurpSuite V2024.5.1",
+   "entrypoint": null,
+   "acquire": "local-install",
+   "source": "便携版（本机已存在，含破解 loader，仅用于已授权环境）",
+   "upstreamVersion": "2024.5.1",
+   "license": "Commercial (Burp Suite Professional)",
+   "redistributable": false,
+   "placement": "detected-in-place (not copied)",
+   "recipe": "software/burp-suite/versions/1.0.0/recipes/windows.json",
+   "verifyVersionCall": null,
+   "expectedVersionOutput": null,
+   "selftestRef": "../selftest/readonly.json",
+   "files": {
+    "BurpSuite\\burpsuite_pro_org.jar": {
+     "result": "MATCH",
+     "measured": "11f9bafac12184dab66069d86f00c770d26bb386e4430ad87a46b1c44844ab82",
+     "bytes": 557157053,
+     "pin": "11f9bafac12184dab66069d86f00c770d26bb386e4430ad87a46b1c44844ab82",
+     "pinLength": 64,
+     "absolute": "<local-tool-body-path> V2024.5.1\\BurpSuite V2024.5.1\\BurpSuite\\burpsuite_pro_org.jar"
+    },
+    "BurpSuite\\burpsuitloader.jar": {
+     "result": "MATCH",
+     "measured": "a77becf8727530e4d77f1f2b871cee0288275bfd11ecb4a5f405d4134204d003",
+     "bytes": 1094365,
+     "pin": "a77becf8727530e4d77f1f2b871cee0288275bfd11ecb4a5f405d4134204d003",
+     "pinLength": 64,
+     "absolute": "<local-tool-body-path> V2024.5.1\\BurpSuite V2024.5.1\\BurpSuite\\burpsuitloader.jar"
+    },
+    "BurpSuite\\extensions\\burp-mcp-all-2024.5.1-compat.jar": {
+     "result": "MATCH",
+     "measured": "4f19af77ffca2641f090c388ffea551d0705b19ce0e75cdcc7dca394b68f6deb",
+     "bytes": 29959488,
+     "pin": "4f19af77ffca2641f090c388ffea551d0705b19ce0e75cdcc7dca394b68f6deb",
+     "pinLength": 64,
+     "absolute": "<local-tool-body-path> V2024.5.1\\BurpSuite V2024.5.1\\BurpSuite\\extensions\\burp-mcp-all-2024.5.1-compat.jar"
+    },
+    "jre\\bin\\java.exe": {
+     "result": "MATCH",
+     "measured": "638a1fa85ec764d5ebeb749047868a36d4cc3bccd26d2caebc20f0f6e4adbdc1",
+     "bytes": 49768,
+     "pin": "638a1fa85ec764d5ebeb749047868a36d4cc3bccd26d2caebc20f0f6e4adbdc1",
+     "pinLength": 64,
+     "absolute": "<local-tool-body-path> V2024.5.1\\BurpSuite V2024.5.1\\jre\\bin\\java.exe"
+    }
+   },
+   "fileVerdict": [
+    "MATCH"
+   ],
+   "snapshotFrozen": false
+  },
+  "dirsearch": {
+   "detectedPath": "D:\\Various_programming_languages\\PPython\\dirsearch-master\\dirsearch-master",
+   "entrypoint": "dirsearch.py",
+   "acquire": "package-manager",
+   "source": "GitHub 源码（本机以源码目录形式存在于 PPython 下）",
+   "upstreamVersion": "0.4.3",
+   "license": "GPL-2.0",
+   "redistributable": true,
+   "placement": "detected-in-place (not copied)",
+   "recipe": "software/dirsearch/versions/1.0.0/recipes/windows.json",
+   "verifyVersionCall": [
+    "${pythonPath}/python.exe",
+    "dirsearch.py",
+    "--version"
+   ],
+   "expectedVersionOutput": "dirsearch v0.4.3",
+   "selftestRef": "../selftest/readonly.json",
+   "files": {
+    "dirsearch.py": {
+     "result": "MATCH",
+     "measured": "7bd588252f0724d8a6af21fd39585621547300cf4fbb1851301a28c4c2b1e011",
+     "bytes": 2504,
+     "pin": "7bd588252f0724d8a6af21fd39585621547300cf4fbb1851301a28c4c2b1e011",
+     "pinLength": 64,
+     "absolute": "D:\\Various_programming_languages\\PPython\\dirsearch-master\\dirsearch-master\\dirsearch.py"
+    },
+    "${pythonPath}/python.exe": {
+     "result": "ABSENT",
+     "measured": null,
+     "bytes": null,
+     "pin": "fd5c46d73d29ba21b04c844bbaf9096066136526911230645a2a040d23fb612b",
+     "pinLength": 64,
+     "absolute": "D:\\Various_programming_languages\\PPython\\dirsearch-master\\dirsearch-master\\${pythonPath}\\python.exe"
+    }
+   },
+   "fileVerdict": [
+    "ABSENT",
+    "MATCH"
+   ],
+   "snapshotFrozen": false
+  },
+  "mysql-cli": {
+   "detectedPath": "<local-tool-body-path>",
+   "entrypoint": "mysql.exe",
+   "acquire": "local-install",
+   "source": "MySQL Community Server 便携版（本机已存在，本配方只取客户端工具）",
+   "upstreamVersion": "8.0.39",
+   "license": "GPL-2.0-or-later (Community Edition)",
+   "redistributable": true,
+   "placement": "detected-in-place (not copied)",
+   "recipe": "software/mysql-cli/versions/1.0.0/recipes/windows.json",
+   "verifyVersionCall": [
+    "mysql.exe",
+    "--version"
+   ],
+   "expectedVersionOutput": "Ver 8.0.39",
+   "selftestRef": "../selftest/readonly.json",
+   "files": {
+    "mysql.exe": {
+     "result": "MATCH",
+     "measured": "5f620d6cd51d34b47389e8902b57a61a3b62c9b234662d73ef49d62c9cb2ddd9",
+     "bytes": 7126600,
+     "pin": "5f620d6cd51d34b47389e8902b57a61a3b62c9b234662d73ef49d62c9cb2ddd9",
+     "pinLength": 64,
+     "absolute": "<local-tool-body-path>"
+    },
+    "mysqldump.exe": {
+     "result": "MATCH",
+     "measured": "c20e50124716fb23b7ff9036962bf077313bde1158bfbfe0e8ac05563e6c5f25",
+     "bytes": 7086160,
+     "pin": "c20e50124716fb23b7ff9036962bf077313bde1158bfbfe0e8ac05563e6c5f25",
+     "pinLength": 64,
+     "absolute": "<local-tool-body-path>"
+    },
+    "mysqladmin.exe": {
+     "result": "MATCH",
+     "measured": "7011e4e08283f2aaf879476076d326588ce1e2b324181c48ce954fb98e827f64",
+     "bytes": 7013456,
+     "pin": "7011e4e08283f2aaf879476076d326588ce1e2b324181c48ce954fb98e827f64",
+     "pinLength": 64,
+     "absolute": "<local-tool-body-path>"
+    }
+   },
+   "fileVerdict": [
+    "MATCH"
+   ],
+   "snapshotFrozen": false
+  },
+  "nmap": {
+   "detectedPath": "<local-tool-body-path>",
+   "entrypoint": "nmap.exe",
+   "acquire": "local-install",
+   "source": "便携版（本机已存在）",
+   "upstreamVersion": "7.95",
+   "license": "NPSL (Nmap Public Source License)",
+   "redistributable": true,
+   "placement": "detected-in-place (not copied)",
+   "recipe": "software/nmap/versions/1.0.0/recipes/windows.json",
+   "verifyVersionCall": [
+    "nmap.exe",
+    "--version"
+   ],
+   "expectedVersionOutput": "Nmap version 7.95",
+   "selftestRef": "../selftest/readonly.json",
+   "files": {
+    "nmap.exe": {
+     "result": "UNPINNED",
+     "measured": "f2496b4588c96a17aba7a6a9ac06dbaf69363dd8f2b4d008555aacc40867f78f",
+     "bytes": 2865024,
+     "pin": "f2496b4588c96a17aba7a6a9ac06d6baf69363dd8f2b4d008555aacc40867f78f",
+     "pinLength": 65,
+     "absolute": "<local-tool-body-path>"
+    },
+    "ncat.exe": {
+     "result": "MATCH",
+     "measured": "a3071223a56a18c9fb913696487f69d1ea2633176412446d4b7eecc82d33c262",
+     "bytes": 363904,
+     "pin": "a3071223a56a18c9fb913696487f69d1ea2633176412446d4b7eecc82d33c262",
+     "pinLength": 64,
+     "absolute": "<local-tool-body-path>"
+    },
+    "nping.exe": {
+     "result": "MATCH",
+     "measured": "cf13938876c5379d80543d0c8f0a594f5195a810acafd490e1cb6fa989f8ad73",
+     "bytes": 351104,
+     "pin": "cf13938876c5379d80543d0c8f0a594f5195a810acafd490e1cb6fa989f8ad73",
+     "pinLength": 64,
+     "absolute": "<local-tool-body-path>"
+    }
+   },
+   "fileVerdict": [
+    "MATCH",
+    "UNPINNED"
+   ],
+   "snapshotFrozen": false
+  },
+  "veracrypt": {
+   "detectedPath": "<local-tool-body-path>",
+   "entrypoint": "VeraCrypt.exe",
+   "acquire": "local-install",
+   "source": "便携版（本机已存在，含安装包与源码存档）",
+   "upstreamVersion": "1.26.7",
+   "license": "Apache-2.0 / TrueCrypt License (dual)",
+   "redistributable": true,
+   "placement": "detected-in-place (not copied)",
+   "recipe": "software/veracrypt/versions/1.0.0/recipes/windows.json",
+   "verifyVersionCall": null,
+   "expectedVersionOutput": null,
+   "selftestRef": "../selftest/readonly.json",
+   "files": {
+    "VeraCrypt.exe": {
+     "result": "MATCH",
+     "measured": "aee0d6f335e4346c57e60bbcc74a9207d4400e027f0b83771f5de63df86e132d",
+     "bytes": 6201064,
+     "pin": "aee0d6f335e4346c57e60bbcc74a9207d4400e027f0b83771f5de63df86e132d",
+     "pinLength": 64,
+     "absolute": "<local-tool-body-path>"
+    },
+    "VeraCrypt Format.exe": {
+     "result": "MATCH",
+     "measured": "7e48cebbfa68a0edfea3f99520d840ef99633341063d07dc454d9e614597d9c8",
+     "bytes": 6221544,
+     "pin": "7e48cebbfa68a0edfea3f99520d840ef99633341063d07dc454d9e614597d9c8",
+     "pinLength": 64,
+     "absolute": "<local-tool-body-path> Format.exe"
+    }
+   },
+   "fileVerdict": [
+    "MATCH"
+   ],
+   "snapshotFrozen": false
+  },
+  "wireshark-cli": {
+   "detectedPath": "<local-tool-body-path>",
+   "entrypoint": "tshark.exe",
+   "acquire": "local-install",
+   "source": "便携版（本机已存在）",
+   "upstreamVersion": "4.2.6",
+   "license": "GPL-2.0-or-later",
+   "redistributable": true,
+   "placement": "detected-in-place (not copied)",
+   "recipe": "software/wireshark-cli/versions/1.0.0/recipes/windows.json",
+   "verifyVersionCall": [
+    "tshark.exe",
+    "--version"
+   ],
+   "expectedVersionOutput": "TShark (Wireshark) 4.2.6",
+   "selftestRef": "../selftest/readonly.json",
+   "files": {
+    "tshark.exe": {
+     "result": "MATCH",
+     "measured": "c0e4998ae62e1abe6582de27916756ece1edcee1b4b4ddb63d54d607524aa7f5",
+     "bytes": 593648,
+     "pin": "c0e4998ae62e1abe6582de27916756ece1edcee1b4b4ddb63d54d607524aa7f5",
+     "pinLength": 64,
+     "absolute": "<local-tool-body-path>"
+    },
+    "editcap.exe": {
+     "result": "MATCH",
+     "measured": "308d39d3b59336b28b64e201fcf0e5ccabf1a194c11b1b7a40499ed546bd3e26",
+     "bytes": 361200,
+     "pin": "308d39d3b59336b28b64e201fcf0e5ccabf1a194c11b1b7a40499ed546bd3e26",
+     "pinLength": 64,
+     "absolute": "<local-tool-body-path>"
+    },
+    "mergecap.exe": {
+     "result": "MATCH",
+     "measured": "920fde18d268eeea4c9e5e710f9937e43b7cd50895622c80254f98b1a573f619",
+     "bytes": 330992,
+     "pin": "920fde18d268eeea4c9e5e710f9937e43b7cd50895622c80254f98b1a573f619",
+     "pinLength": 64,
+     "absolute": "<local-tool-body-path>"
+    },
+    "capinfos.exe": {
+     "result": "MATCH",
+     "measured": "b18878847f6b7942127fff96ae8f583b2267c8b5e9cdbb66c765d210e97d2553",
+     "bytes": 345840,
+     "pin": "b18878847f6b7942127fff96ae8f583b2267c8b5e9cdbb66c765d210e97d2553",
+     "pinLength": 64,
+     "absolute": "<local-tool-body-path>"
+    },
+    "text2pcap.exe": {
+     "result": "MATCH",
+     "measured": "673b3e0c16afcd46cc78d9499758244ca2830ec7fbde0a905ee22b3db5b0eb9e",
+     "bytes": 367856,
+     "pin": "673b3e0c16afcd46cc78d9499758244ca2830ec7fbde0a905ee22b3db5b0eb9e",
+     "pinLength": 64,
+     "absolute": "<local-tool-body-path>"
+    }
+   },
+   "fileVerdict": [
+    "MATCH"
+   ],
+   "snapshotFrozen": false
+  }
+ },
+ "x-verdicts": {
+  "MATCH": "the measured sha256 equals the recipe pin",
+  "UNPINNED": "the recipe pin is not a 64-character sha256, so no comparison is possible (nmap.exe: 65 chars) - registered as a recipe-side defect, not chased here",
+  "ABSENT": "the recipe names a path template that does not resolve on disk (dirsearch: ${pythonPath}/python.exe is a placeholder, the interpreter is declared in config.interpreters instead)"
+ },
+ "x-cross-platform": "These bodies sit on this host and are registered by more than one platform. Registration is a per-platform declaration, but a singleton recipe (burp-suite, veracrypt) therefore has two possible claimants and only platform-internal locks - C-8 stays open."
+}

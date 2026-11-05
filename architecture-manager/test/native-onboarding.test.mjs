@@ -12,7 +12,7 @@ import {discoverOnboardingRuntime} from '../src/domains/platforms/runtime-discov
 import {parseJsonc} from '../src/core/jsonc.mjs';
 import {nativeAttemptBlocksProof} from '../src/domains/platforms/native-attempt.mjs';
 import {seedRuntimeReleases} from './support/resources.mjs';
-import {buildOnboardingConfigPlan,applyOnboardingConfig} from '../src/onboarding-config.mjs';
+import {buildOnboardingConfigPlan,applyOnboardingConfig} from '../src/domains/onboarding/onboarding-config.mjs';
 
 function fixture(t){const root=fs.mkdtempSync(join(tmpdir(),'native-onboarding-'));t.after(()=>fs.rmSync(root,{recursive:true,force:true}));const put=(path,value)=>{fs.mkdirSync(dirname(join(root,path)),{recursive:true});fs.writeFileSync(join(root,path),typeof value==='string'?value:JSON.stringify(value));};return {root,put,id:'native-client'};}
 test('new failed or pending native verification invalidates an older success without deleting its evidence',()=>{
@@ -35,7 +35,10 @@ test('native body discovery uses interface artifacts and rejects cross-platform 
  const f=fixture(t);f.put(f.id+'/app/Client.exe','body');f.put(f.id+'/app/resources/codex.exe','native-cli');
  assert.equal(nativeProfile(f.root,f.id,join(f.root,f.id,'app/Client.exe')).kind,'codex-app-server');
  f.put(f.id+'/unknown.exe','not a registered interface');assert.equal(nativeProfile(f.root,f.id,join(f.root,f.id,'unknown.exe')).supportsRegistration,false);
- f.put('other/Client.exe','foreign');assert.throws(()=>ownNativePath(f.root,f.id,join(f.root,'other/Client.exe')),/PLATFORM_PATH/);
+ // D-163: a body under another platform's directory is a placement decision, reported with the
+ // owning directory and the two ways out instead of a bare path rejection.
+ f.put('other/Client.exe','foreign');const crossed=(()=>{try{ownNativePath(f.root,f.id,join(f.root,'other/Client.exe'));}catch(error){return error;}return null;})();
+ assert.ok(crossed);assert.match(crossed.message,/NATIVE_BODY_OUTSIDE_PLATFORM/);assert.match(crossed.message,/owner=other/);assert.match(crossed.message,/path=other\/Client\.exe/);
  assert.equal(nativeClientStatus(f.root,f.id).nativeVendorClientVerified,false);
 });
 test('native discovery sees a nearby installed program before source directories exhaust the scan budget',t=>{

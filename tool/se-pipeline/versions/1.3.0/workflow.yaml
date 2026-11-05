@@ -1,0 +1,186 @@
+{
+  "schema": "ai-workflow-definition/v3",
+  "id": "se-pipeline",
+  "version": "1.3.0",
+  "mode": "pipeline",
+  "maxParallel": 1,
+  "roles": [
+    "expert"
+  ],
+  "outputWorker": "expert",
+  "gateDefinitions": {
+    "report-complete": {
+      "type": "output-schema"
+    },
+    "work-integrity": {
+      "type": "process",
+      "cwd": "evidence",
+      "argv": [
+        "workflow:scripts/validate_expert_work.py"
+      ],
+      "expectExit": [
+        0
+      ],
+      "expectArtifacts": [
+        {
+          "target": "evidence:expert-work-check.json",
+          "minBytes": 2
+        }
+      ],
+      "reasonFrom": "evidence:expert-work-check.json"
+    }
+  },
+  "stages": [
+    {
+      "id": "INTAKE",
+      "action": "prompt",
+      "worker": "expert",
+      "dependsOn": [],
+      "promptRef": "workflow.md#stage:INTAKE",
+      "outputs": "schemas/intake.schema.json"
+    },
+    {
+      "id": "WORK",
+      "action": "prompt",
+      "worker": "expert",
+      "dependsOn": [
+        "INTAKE"
+      ],
+      "promptRef": "workflow.md#stage:WORK",
+      "outputs": "schemas/work.schema.json",
+      "onFail": "repair",
+      "maxIterations": 2,
+      "repairPromptRef": "workflow.md#stage:repair",
+      "gates": [
+        "work-integrity"
+      ]
+    },
+    {
+      "id": "REPORT",
+      "action": "prompt",
+      "worker": "expert",
+      "dependsOn": [
+        "WORK"
+      ],
+      "promptRef": "workflow.md#stage:REPORT",
+      "outputs": "schemas/report.schema.json",
+      "gates": [
+        "report-complete"
+      ]
+    }
+  ],
+  "defaultScenario": "standard",
+  "requiredStages": [
+    "INTAKE",
+    "WORK",
+    "REPORT"
+  ],
+  "scenarios": {
+    "standard": {
+      "summary": "本域默认常见任务；始终包含本域核心",
+      "skills": [
+        "domain-core-software-engineer@1.1.0",
+        "software-engineer-task-01@1.0.0",
+        "software-product-experience@1.0.0"
+      ]
+    },
+    "task-01": {
+      "summary": "后端/API",
+      "skills": [
+        "domain-core-software-engineer@1.1.0",
+        "software-engineer-task-01@1.0.0",
+        "software-product-experience@1.0.0"
+      ]
+    },
+    "task-02": {
+      "summary": "通用编码",
+      "skills": [
+        "domain-core-software-engineer@1.1.0",
+        "software-engineer-task-02@1.0.0",
+        "software-product-experience@1.0.0"
+      ]
+    },
+    "task-03": {
+      "summary": "业务规则",
+      "skills": [
+        "domain-core-software-engineer@1.1.0",
+        "software-engineer-task-03@1.0.0",
+        "software-product-experience@1.0.0"
+      ]
+    },
+    "task-04": {
+      "summary": "调试",
+      "skills": [
+        "domain-core-software-engineer@1.1.0",
+        "software-engineer-task-04@1.0.0",
+        "software-product-experience@1.0.0"
+      ]
+    },
+    "task-05": {
+      "summary": "重构",
+      "skills": [
+        "domain-core-software-engineer@1.1.0",
+        "software-engineer-task-05@1.0.0",
+        "software-product-experience@1.0.0"
+      ]
+    },
+    "task-06": {
+      "summary": "交付",
+      "skills": [
+        "domain-core-software-engineer@1.1.0",
+        "software-engineer-task-06@1.1.0",
+        "software-product-experience@1.0.0"
+      ]
+    },
+    "refactor": {
+      "summary": "兼容场景 refactor；任务按核心路由选择辅助引用",
+      "skills": [
+        "domain-core-software-engineer@1.1.0",
+        "software-engineer-task-05@1.0.0",
+        "software-product-experience@1.0.0"
+      ]
+    },
+    "release": {
+      "summary": "软件交付与可用快速开始，读回实际界面产物",
+      "skills": [
+        "domain-core-software-engineer@1.1.0",
+        "software-engineer-task-06@1.1.0",
+        "software-product-experience@1.0.0"
+      ]
+    },
+    "review": {
+      "summary": "兼容场景 review；任务按核心路由选择辅助引用",
+      "skills": [
+        "domain-core-software-engineer@1.1.0",
+        "software-engineer-task-05@1.0.0",
+        "software-product-experience@1.0.0"
+      ]
+    },
+    "test": {
+      "summary": "兼容场景 test；任务按核心路由选择辅助引用",
+      "skills": [
+        "domain-core-software-engineer@1.1.0",
+        "software-engineer-task-05@1.0.0",
+        "software-product-experience@1.0.0"
+      ]
+    },
+    "product": {
+      "summary": "完整软件的逻辑、首次使用与界面交接要求",
+      "skills": [
+        "domain-core-software-engineer@1.1.0",
+        "software-engineer-task-02@1.0.0",
+        "software-product-experience@1.0.0",
+        "product-onboarding@1.0.0",
+        "interface-copy@1.0.0"
+      ]
+    },
+    "delivery": {
+      "summary": "软件交付与可用快速开始，读回实际界面产物",
+      "skills": [
+        "domain-core-software-engineer@1.1.0",
+        "software-engineer-task-06@1.1.0",
+        "software-product-experience@1.0.0"
+      ]
+    }
+  }
+}

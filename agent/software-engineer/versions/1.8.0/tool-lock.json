@@ -1,0 +1,22 @@
+{
+  "schema": "ai-tool-lock/v2",
+  "skills": {
+    "domain-core-software-engineer": "1.1.0",
+    "software-engineer-task-01": "1.0.0",
+    "software-engineer-task-02": "1.0.0",
+    "software-engineer-task-03": "1.0.0",
+    "software-engineer-task-04": "1.0.0",
+    "software-engineer-task-05": "1.0.0",
+    "software-engineer-task-06": "1.1.0",
+    "domain-source-catalog": "1.0.0",
+    "ui-design-reference-library": "1.0.0",
+    "software-product-experience": "1.0.0",
+    "product-onboarding": "1.0.0",
+    "interface-copy": "1.0.0"
+  },
+  "workflows": {
+    "se-pipeline": "1.3.0"
+  },
+  "packs": {},
+  "profiles": {}
+}

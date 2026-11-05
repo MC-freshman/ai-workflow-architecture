@@ -85,7 +85,12 @@ public static class ArchitectureManagerOwnedJob {
       }
       WaitForSingleObject(process.process,5000);uint code;GetExitCodeProcess(process.process,out code);
       CloseHandle(job);job=IntPtr.Zero;Task.WaitAll(new Task[]{stdout,stderr},5000);
-      return termination!=0?termination:(int)code;
+      if(termination!=0) return termination;
+      // AUD-D-005: the child's own exit code must not collide with the controller protocol
+      // (124=timed-out, 125=cancelled); shift colliding codes so a plain child failure is
+      // never misread as a cancellation. Same convention as job_controller.py.
+      if(code==124||code==125) return (int)code+100;
+      return (int)code;
     } finally {
       if(job!=IntPtr.Zero) CloseHandle(job);
       foreach(IntPtr handle in new IntPtr[]{inRead,inWrite,outRead,outWrite,errRead,errWrite,process.thread,process.process}) if(handle!=IntPtr.Zero) CloseHandle(handle);

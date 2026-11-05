@@ -4,7 +4,7 @@ import {mkdtempSync,rmSync,mkdirSync,writeFileSync} from 'node:fs';
 import {join,dirname} from 'node:path';
 import {tmpdir} from 'node:os';
 import {declaredVersion,declaredDefaults,declarationTargets,resolvedCellVersion} from '../src/domains/certification/declared.mjs';
-import {buildMatrixArgs} from '../src/platform-check.mjs';
+import {buildMatrixArgs} from '../src/domains/platforms/platform-check.mjs';
 
 function seedPlatform(root,platformId,{workflowVersions={},agentVersions=null}={}) {
   mkdirSync(join(root,platformId,'bridge'),{recursive:true});

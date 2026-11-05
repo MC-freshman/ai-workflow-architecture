@@ -14,7 +14,10 @@ fs.mkdirSync(out,{recursive:true});
 const steps=[
   ['lint',[path.join(root,'node_modules/eslint/bin/eslint.js'),'src','scripts']],
   ['preload',[path.join(root,'scripts/generate-preload.mjs'),'--check']],
-  ['tests',['--test','--test-reporter=tap','--test-concurrency=1']]
+  // P4: fail on runtime component drift or a stale runtimeComponentVersion pin.
+  ['runtime-drift',[path.join(root,'scripts/check-runtime-drift.mjs'),'--root',path.dirname(root)]],
+  ['governance-drift',[path.join(root,'scripts/check-governance-drift.mjs'),'--root',path.dirname(root)]],
+  ['tests',['--test','--test-reporter=tap','--test-concurrency=1','test/*.test.mjs']]
 ];
 const proofIndex=process.argv.indexOf('--release-proof');
 if(proofIndex>=0) steps.push(['release-proof',[path.join(root,'scripts/release-proof.mjs'),path.resolve(process.argv[proofIndex+1])]]);
@@ -24,7 +27,9 @@ const results=[];
 const sourcesBefore=sourceSnapshot(root);
 for(const [name,args] of steps) {
   const start=performance.now();
-  const result=spawnSync(process.execPath,args,{cwd:root,env:process.env,encoding:'utf8',windowsHide:true,maxBuffer:64*1024*1024,timeout:600000});
+  // The full serial suite (95 files, --test-concurrency=1) legitimately exceeds ten minutes;
+  // the 600s cap used to kill the step mid-run and every test after it read as a timeout.
+  const result=spawnSync(process.execPath,args,{cwd:root,env:process.env,encoding:'utf8',windowsHide:true,maxBuffer:64*1024*1024,timeout:name==='tests'?1200000:600000});
   fs.writeFileSync(path.join(out,name+'.stdout'),result.stdout || '');fs.writeFileSync(path.join(out,name+'.stderr'),result.stderr || '');
   const row={name,ok:result.status===0,durationMs:performance.now()-start,exitCode:result.status,error:result.error?.message || null};
   if(name==='tests') { const evidence=parseTestEvidence(result.stdout);Object.assign(row,evidence);row.ok &&=evidence.valid; }

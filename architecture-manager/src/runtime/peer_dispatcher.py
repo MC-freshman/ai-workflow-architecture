@@ -2,6 +2,7 @@
 import hashlib
 import json
 from pathlib import Path
+import re
 import subprocess
 import sys
 import time
@@ -26,7 +27,12 @@ class Dispatcher:
     def request(self, body):
         root = Path(self.runner_config['platformRoot']) / 'runtime' / 'maintenance' / 'manager-peer'
         root.mkdir(parents=True, exist_ok=True)
-        request_path = root / (body['requestId'] + '.json')
+        # AUD-D-009: requestId becomes a filename below; anything outside this flat
+        # namespace (path separators, dot segments) would write outside manager-peer.
+        request_id = body.get('requestId')
+        if not isinstance(request_id, str) or not re.fullmatch(r'[A-Za-z0-9._-]{1,180}', request_id):
+            raise ValueError('PEER_REQUEST_ID_INVALID')
+        request_path = root / (request_id + '.json')
         request_path.write_text(json.dumps(body), encoding='utf-8')
         result = subprocess.run([sys.executable, '-B', str(Path(self.runner_config['runner']) / 'cli.py'), '--config', str(self.runner_config_path), '--request', str(request_path)], capture_output=True, timeout=600)
         lines = result.stdout.decode('utf-8', 'replace').strip().splitlines()

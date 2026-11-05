@@ -42,10 +42,13 @@ def main():
     else:
         process = subprocess.Popen(specification['argv'], cwd=specification['cwd'], stdin=subprocess.PIPE if specification.get('input') is not None else subprocess.DEVNULL, stdout=subprocess.PIPE, stderr=subprocess.PIPE, start_new_session=True)
     def copy(source, destination):
-        while True:
-            data = source.read1(65536)
-            if not data: break
-            destination.buffer.write(data); destination.buffer.flush()
+        try:
+            while True:
+                data = source.read1(65536)
+                if not data: break
+                destination.buffer.write(data); destination.buffer.flush()
+        except (BrokenPipeError, OSError):
+            pass  # AUD-D-006: the manager may stop reading; drain quietly, never poison the exit code.
     threads = [threading.Thread(target=copy, args=(process.stdout, sys.stdout)), threading.Thread(target=copy, args=(process.stderr, sys.stderr))]
     for thread in threads: thread.start()
     # Drain output while feeding input: batch commands can fill stdout before
@@ -78,7 +81,13 @@ def main():
     finally:
         if job: kernel.CloseHandle(job)
         for thread in threads: thread.join(timeout=5)
-    return 125 if termination == 'cancelled' else 124 if termination == 'timed-out' else process.returncode
+    code = 125 if termination == 'cancelled' else 124 if termination == 'timed-out' else process.returncode
+    if termination is None and code in (124, 125):
+        # AUD-D-005: the child's own exit code collides with the controller protocol
+        # (124=timed-out, 125=cancelled). Shift it so a plain child failure is never
+        # misread as a cancellation; mirrors the windows_job.ps1 convention.
+        return code + 100
+    return code
 
 
 if __name__ == '__main__':

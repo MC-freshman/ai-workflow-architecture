@@ -4,8 +4,8 @@ import { existsSync, mkdirSync, mkdtempSync, readFileSync, rmSync, writeFileSync
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { sha256 } from '../src/core/hash.mjs';
-import { buildDefectBookEditPlan } from '../src/defects.mjs';
-import { applyPlan, verifyPlanTarget } from '../src/transactions.mjs';
+import { buildDefectBookEditPlan } from '../src/domains/audit/defects.mjs';
+import { applyPlan, verifyPlanTarget } from '../src/transactions/router.mjs';
 
 const BOOK_RELATIVE = join('versions', '缺陷状态簿.json');
 const BOOK = {

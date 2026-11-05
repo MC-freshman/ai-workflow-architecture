@@ -7,19 +7,19 @@ import { tmpdir } from 'node:os';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import test from 'node:test';
-import { assertWithinRoot, FORMAL_TOP_LEVEL_DIRECTORIES, inspectPlatformDirectory, scanWorkspace } from '../src/inventory.mjs';
-import { buildPlatformViewPlan, buildResourcePointerPlan } from '../src/plans.mjs';
-import { buildRegistryPlan, readCatalogEntry } from '../src/catalog.mjs';
-import { buildDocumentPlan, readDocument } from '../src/documents.mjs';
-import { buildSoftwareLaunchPlan, listSoftware } from '../src/software.mjs';
-import { buildGitPlan, scanSensitiveFiles } from '../src/git.mjs';
-import { applyPlan, verifyPlanTarget } from '../src/transactions.mjs';
-import { buildIntegrationPlan, listIntegrationTargets, readIntegrationTarget, suggestPlatformBridge } from '../src/integration.mjs';
-import { inspectPlatformConnection, runPlatformCheck } from '../src/platform-check.mjs';
+import { assertWithinRoot, FORMAL_TOP_LEVEL_DIRECTORIES, inspectPlatformDirectory, scanWorkspace } from '../src/domains/resources/inventory.mjs';
+import { buildPlatformViewPlan, buildResourcePointerPlan } from '../src/domains/plans/plans.mjs';
+import { buildRegistryPlan, readCatalogEntry } from '../src/domains/resources/catalog.mjs';
+import { buildDocumentPlan, readDocument } from '../src/domains/docs/documents.mjs';
+import { buildSoftwareLaunchPlan, listSoftware } from '../src/domains/software/software.mjs';
+import { buildGitPlan, scanSensitiveFiles } from '../src/domains/git/git.mjs';
+import { applyPlan, verifyPlanTarget } from '../src/transactions/router.mjs';
+import { buildIntegrationPlan, listIntegrationTargets, readIntegrationTarget, suggestPlatformBridge } from '../src/domains/platforms/integration.mjs';
+import { inspectPlatformConnection, runPlatformCheck } from '../src/domains/platforms/platform-check.mjs';
 import { latestStableVersion } from '../src/core/versions.mjs';
-import { buildSoftwareImportPlan } from '../src/software-intake.mjs';
-import { applySoftwareRecipe, buildSoftwareRecipePlan, listSoftwareIntakes, verifySoftwareRecipe } from '../src/software-publish.mjs';
-import { buildSoftwareRevertPlan, listSoftwareRecoveries } from '../src/software-recovery.mjs';
+import { buildSoftwareImportPlan } from '../src/domains/software/software-intake.mjs';
+import { applySoftwareRecipe, buildSoftwareRecipePlan, listSoftwareIntakes, verifySoftwareRecipe } from '../src/domains/software/software-publish.mjs';
+import { buildSoftwareRevertPlan, listSoftwareRecoveries } from '../src/domains/software/software-recovery.mjs';
 
 function fixture() {
   const root = mkdtempSync(join(tmpdir(), 'architecture-manager-'));
@@ -76,7 +76,10 @@ test('shows the update log first with the same document kind in scan and read vi
     writeFileSync(join(root, 'versions', '更新日志.md'), '# 更新日志\n');
     const inventory = scanWorkspace(root);
     assert.equal(FORMAL_TOP_LEVEL_DIRECTORIES.includes('architecture-manager'), true);
-    assert.equal(FORMAL_TOP_LEVEL_DIRECTORIES.includes('ai学习笔记'), true);
+    // D-165: the registered CN platform belongs to the formal list; a top-level directory the
+    // workspace never had does not (ai学习笔记 lives under inbox/ since 2026-09-29).
+    assert.equal(FORMAL_TOP_LEVEL_DIRECTORIES.includes('qoder-cn'), true);
+    assert.equal(FORMAL_TOP_LEVEL_DIRECTORIES.includes('ai学习笔记'), false);
     assert.equal(inventory.architectureDocuments[0], 'versions/更新日志.md');
     assert.equal(inventory.documentSummaries[0].kind, 'update-log');
     assert.equal(readDocument(root, 'versions/更新日志.md').kind, 'update-log');

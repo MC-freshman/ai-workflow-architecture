@@ -12,7 +12,17 @@ export function auditPlanOperation(options, execute) {
   const validId = value => typeof value === 'string' && /^[A-Za-z0-9._-]{1,180}$/.test(value);
   const safePlan = {planId:validId(plan?.planId)?plan.planId:'invalid-plan',workspaceRoot:typeof plan?.workspaceRoot==='string'?plan.workspaceRoot:null};
   const action = validId(plan?.kind) ? plan.kind : 'invalid-plan';
-  const target = plan?.target?.path || plan?.target?.platformId || plan?.target?.resourceId || action;
+  // AUD-D-014: the operation-level target kept only path/platformId/resourceId, so plans that
+  // address a repository resource, a software body or a credential reference audited as their
+  // action name. Name every address form the domains actually use.
+  const target = plan?.target?.path
+    || plan?.target?.platformId
+    || plan?.target?.reference
+    || (plan?.target?.repository && plan?.target?.resourceId ? `${plan.target.repository}/${plan.target.resourceId}` : null)
+    || plan?.target?.resourceId
+    || plan?.target?.softwareId
+    || plan?.target?.id
+    || action;
   const context = {operationId,parentOperationId:parent?.operationId || null,planId:safePlan.planId,secrets:[...(parent?.secrets || []),credentialValue].filter(v=>typeof v==='string' && v)};
   return auditContext.run(context, () => {
     const common = {auditRoot,transactionId:operationId,plan:safePlan,actor,action,target:typeof target==='string'?target:action,phase:'operation'};

@@ -4,9 +4,10 @@ import {execFileSync} from 'node:child_process';
 import {sha256} from '../../core/hash.mjs';
 import {targetPath} from '../../core/paths.mjs';
 import {providerTemplateStatus} from './provider-templates.mjs';
-import {clientBinding} from '../../onboarding-client.mjs';
+import {clientBinding} from '../onboarding/onboarding-client.mjs';
 import {environmentBinding} from '../certification/binding.mjs';
 import {nativeClientStatus} from './native-client.mjs';
+import {readAdoptionCompletion} from './adoption-completion.mjs';
 
 export function onboardingReadback(root,id,state) {
   const git=args=>execFileSync('git',['-C',root,...args],{encoding:'utf8',windowsHide:true,shell:false,maxBuffer:8*1024*1024}).split('\0').filter(Boolean);
@@ -26,6 +27,6 @@ export function onboardingReadback(root,id,state) {
   const currentBindings=['configSha256','versionsSha256','adapterSha256'].every(key=>state[key]===binding[key]) && state.environmentBindingSha256===environmentBinding(root,id);
   const onboardingVerified=state.status==='complete' && currentBindings && templates.current && proofs.every(row=>row.ok);
   const native=nativeClientStatus(root,id);
-  const report={schema:'architecture-manager-onboarding-readback/v2',platformId:id,recordedStatus:state.status,onboardingVerified,architectureComplete:onboardingVerified && native.nativeVendorClientVerified,native,currentBindings,providerTemplates:templates,proofs,privacy,proofScope:'callable-protocol-and-first-certification',businessStagesExecuted:false,nativeVendorClientVerified:native.nativeVendorClientVerified,writePerformed:false};
+  const report={schema:'architecture-manager-onboarding-readback/v2',platformId:id,recordedStatus:state.status,onboardingVerified,architectureComplete:readAdoptionCompletion({workspaceRoot:root,platformId:id}).complete,native,currentBindings,providerTemplates:templates,proofs,privacy,proofScope:'callable-protocol-and-first-certification',businessStagesExecuted:false,nativeVendorClientVerified:native.nativeVendorClientVerified,writePerformed:false};
   report.digest=sha256(JSON.stringify(report));return report;
 }

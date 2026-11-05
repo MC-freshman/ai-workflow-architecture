@@ -19,6 +19,13 @@ def unpack(archive, destination):
         source.extractall(destination)
 
 
+def requirement_imports(requirements):
+    # Import what this backup actually provisioned; pre-2026-10-13 backups fall
+    # back to the historical scientific profile they were built with.
+    overrides = {'pyyaml': 'yaml', 'pymupdf': 'fitz', 'rpds_py': 'rpds'}
+    names = sorted({overrides.get(r.split('==')[0].strip().lower().replace('-', '_'), r.split('==')[0].strip().lower().replace('-', '_')) for r in (requirements or [])})
+    return ','.join(names) if names else 'jsonschema,yaml,numpy,matplotlib,fitz'
+
 def main():
     registration = json.loads(Path(sys.argv[1]).read_text(encoding='utf-8'))
     root = Path(sys.argv[2])
@@ -37,7 +44,7 @@ def main():
         for row in registration['sealedFiles']:
             if hashlib.sha256((root / row['path']).read_bytes()).hexdigest() != row['sha256']:
                 raise ValueError('sealed restore hash differs')
-        subprocess.run([str(root / 'bin/python'), '-B', '-c', 'import jsonschema,yaml,numpy,matplotlib,fitz'], check=True)
+        subprocess.run([str(root / 'bin/python'), '-B', '-c', f"import {requirement_imports(registration.get('requirements'))}"], check=True)
         print(json.dumps({'sealedRestored': True, 'hashesMatch': True})); return
     expected = Path(registration['platformRoot']).resolve() / 'runtime'
     if expected not in root.resolve().parents:
@@ -50,7 +57,7 @@ def main():
     for row in registration['hostFiles']:
         if hashlib.sha256((root / 'host' / row['path']).read_bytes()).hexdigest() != row['sha256']:
             raise ValueError('host restore hash differs')
-    subprocess.run([str(root / 'host/Scripts/python.exe'), '-B', '-c', 'import jsonschema,yaml,numpy'], check=True)
+    subprocess.run([str(root / 'host/Scripts/python.exe'), '-B', '-c', f"import {requirement_imports(registration.get('requirements'))}"], check=True)
     def linux(path):
         value = Path(path).as_posix()
         for rule in registration['backend']['pathMap']:

@@ -7,8 +7,8 @@ import {intakeFixture} from './support/intake-fixture.mjs';
 import {seedRuntimeReleases} from './support/resources.mjs';
 import {scanExternalBody} from '../src/domains/intake/sources.mjs';
 import {buildPlatformBodyPlan} from '../src/domains/intake/platform-body.mjs';
-import {applyPlan,verifyPlanTarget} from '../src/transactions.mjs';
-import {buildOnboardingClientPlan,applyOnboardingClient,probeOnboardingClient} from '../src/onboarding-client.mjs';
+import {applyPlan,verifyPlanTarget} from '../src/transactions/router.mjs';
+import {buildOnboardingClientPlan,applyOnboardingClient,probeOnboardingClient} from '../src/domains/onboarding/onboarding-client.mjs';
 function setup(t) {
   const f=intakeFixture(t);seedRuntimeReleases(f.root);
   for(const path of ['AGENTS.md','AI_ARCHITECTURE_SYSTEM_PROMPT.md','HANDOFF.md','versions/平台接入清单.md','versions/更新日志.md']){fs.mkdirSync(join(f.root,path,'..'),{recursive:true});fs.writeFileSync(join(f.root,path),'# Fixture governance\nCompletion requires real evidence.\n');}

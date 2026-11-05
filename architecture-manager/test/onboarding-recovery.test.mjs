@@ -4,7 +4,7 @@ import { mkdtempSync,mkdirSync,readFileSync,writeFileSync,rmSync } from 'node:fs
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { sha256 } from '../src/core/hash.mjs';
-import { pendingFirstMatrix,mergeFirstMatrix } from '../src/onboarding-recovery.mjs';
+import { pendingFirstMatrix,mergeFirstMatrix } from '../src/domains/onboarding/onboarding-recovery.mjs';
 
 function fixture() {
   const root=mkdtempSync(join(tmpdir(),'manager-recovery-'));const id='a-client';

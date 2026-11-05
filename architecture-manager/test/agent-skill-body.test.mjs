@@ -6,7 +6,7 @@ import {intakeFixture} from './support/intake-fixture.mjs';
 import {scanExternalBody} from '../src/domains/intake/sources.mjs';
 import {buildAgentSkillBodyPlan,readBodyEditor,listBodyDependencies} from '../src/domains/intake/shared-body.mjs';
 import {applyIntakePublication,verifyIntakePublication} from '../src/domains/intake/publication.mjs';
-import {readCatalogEntry,readSkillContent} from '../src/catalog.mjs';
+import {readCatalogEntry,readSkillContent} from '../src/domains/resources/catalog.mjs';
 import {sha256} from '../src/core/hash.mjs';
 import {verifyFrozenDirectory} from '../src/domains/resources/integrity.mjs';
 

@@ -1,0 +1,13 @@
+{
+  "mcpServers": {
+    "architecture": {
+      "command": "E:\\ai\\workbuddy\\runtime\\manager-environments\\4c30aa9c-387b-4cb2-bf2d-edd1de6c3293\\host\\Scripts\\python.exe",
+      "args": [
+        "-B",
+        "E:\\ai\\workbuddy\\bridge\\manager-client\\mcp_service.py",
+        "E:\\ai\\workbuddy\\bridge\\workbuddy-config.json"
+      ]
+    }
+  },
+  "notes": "Import this into a compatible native client. Export is not evidence of native registration."
+}

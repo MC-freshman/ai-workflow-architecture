@@ -9,9 +9,9 @@ import {buildIntakePublicationPlan,applyIntakePublication,verifyIntakePublicatio
 import {sha256} from '../src/core/hash.mjs';
 import {withProcessScope} from '../src/infrastructure/process-scope.mjs';
 import {seedRelease} from './support/resources.mjs';
-import {buildSoftwareImportPlan} from '../src/software-intake.mjs';
+import {buildSoftwareImportPlan} from '../src/domains/software/software-intake.mjs';
 import {listIntakeJournals,readIntakeJournal,buildIntakeRevertPlan} from '../src/domains/intake/journals.mjs';
-import {applyPlan,verifyPlanTarget} from '../src/transactions.mjs';
+import {applyPlan,verifyPlanTarget} from '../src/transactions/router.mjs';
 const json=value=>JSON.stringify(value,null,2)+'\n';
 async function fixture(t) {
   const base=mkdtempSync(join(tmpdir(),'manager-publication-'));t.after(()=>rmSync(base,{recursive:true,force:true}));const root=join(base,'workspace'),platformId='local-client';mkdirSync(join(root,platformId),{recursive:true});mkdirSync(join(root,'agent'));

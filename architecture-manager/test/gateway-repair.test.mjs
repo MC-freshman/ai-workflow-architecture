@@ -1,12 +1,12 @@
 import test from 'node:test';import assert from 'node:assert/strict';import fs from 'node:fs';import {join,dirname,resolve} from 'node:path';import {tmpdir} from 'node:os';
 import {gatewayBinding,assertGatewaySelection} from '../src/domains/software/gateway-binding.mjs';
 import {buildGatewayMigrationPlan,applyGatewayMigration,verifyGatewayMigration} from '../src/domains/software/gateway-migration.mjs';
-import {readOnboardingConfig,buildOnboardingConfigPlan,applyOnboardingConfig} from '../src/onboarding-config.mjs';
-import {buildOnboardingProvidersPlan,applyOnboardingProviders} from '../src/onboarding-providers.mjs';
+import {readOnboardingConfig,buildOnboardingConfigPlan,applyOnboardingConfig} from '../src/domains/onboarding/onboarding-config.mjs';
+import {buildOnboardingProvidersPlan,applyOnboardingProviders} from '../src/domains/onboarding/onboarding-providers.mjs';
 import {platformPath} from '../src/core/platform-path.mjs';
 import {reconcileAutomaticJournal,invalidateRuntimePlan,inputInvalidations} from '../src/domains/platforms/onboarding-resume.mjs';
 import {seedRuntimeReleases} from './support/resources.mjs';
-import {applyPlan,verifyPlanTarget} from '../src/transactions.mjs';
+import {applyPlan,verifyPlanTarget} from '../src/transactions/router.mjs';
 import {applyGeneratedFiles} from '../src/transactions/onboarding-files.mjs';
 function fixture(t){const root=fs.mkdtempSync(join(tmpdir(),'gateway-repair-')),id='local-client',auditRoot=join(root,'audit'),put=(p,v)=>{fs.mkdirSync(dirname(join(root,p)),{recursive:true});fs.writeFileSync(join(root,p),typeof v==='string'?v:JSON.stringify(v,null,2)+'\n');};t.after(()=>fs.rmSync(root,{recursive:true,force:true}));seedRuntimeReleases(root);put('software/registry.json',{software:[{id:'app-one'},{id:'app-two'}]});for(const repo of ['tool','agent'])put(repo+'/registry.json',{});applyOnboardingConfig(buildOnboardingConfigPlan({workspaceRoot:root,platformId:id,confirmed:true,fields:{pythonExecutable:process.execPath}}),{auditRoot});const current=id+'/bridge/software-gateway-config.json',legacy=id+'/bridge/software-gateway.json',input={workspaceRoot:root,platformId:id};return {root,id,auditRoot,put,current,legacy,input};}
 test('active gateway stays authoritative after Python changes; malformed historic file never blocks reads',t=>{

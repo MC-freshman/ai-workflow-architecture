@@ -1,0 +1,20 @@
+{
+  "schema": "ai-environment-snapshot/v1",
+  "platform": "qoder",
+  "capturedAt": "2026-09-12",
+  "pythonVersion": "3.9.13",
+  "python": "D:\\Various_programming_languages\\pycharm\\python3.9\\python.exe",
+  "pythonBuild": "3.9.13 (tags/v3.9.13:6de2ca5, May 17 2022, 16:36:42) [MSC v.1929 64 bit (AMD64)]",
+  "packages": {
+    "attrs": "26.1.0",
+    "jsonschema": "4.25.1",
+    "jsonschema-specifications": "2025.9.1",
+    "packaging": "25.0",
+    "PyYAML": "6.0.2",
+    "referencing": "0.36.2",
+    "rpds-py": "0.27.1",
+    "typing-extensions": "4.16.0"
+  },
+  "packageSource": "E:\\ai\\tool\\wf-runner\\versions\\0.6.0\\requirements.lock.txt（与 0.5.0 的锁逐字节一致；8/8 版本逐一匹配，import 冒烟通过）",
+  "notes": "解释器为机器级安装，不在 E:\\ai\\qoder 内；平台内固定 venv 尚未创建（见 platform.md 待办 Q2）。运行时须设 PYTHONDONTWRITEBYTECODE=1，避免在只读发布目录写 __pycache__。"
+}

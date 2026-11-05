@@ -5,7 +5,7 @@ import {targetPath} from '../../core/paths.mjs';
 import {readJson} from '../../core/json.mjs';
 import {runtimeFile} from '../../core/runtime-path.mjs';
 import {runScopedProcess,withScopedCleanup} from '../../infrastructure/process-scope.mjs';
-import {inspectPlatformConnection} from '../../platform-check.mjs';
+import {inspectPlatformConnection} from '../platforms/platform-check.mjs';
 import {validateFrozenResource} from '../resources/versions.mjs';
 import {validPlatformId} from '../../core/platforms.mjs';
 import {sha256} from '../../core/hash.mjs';

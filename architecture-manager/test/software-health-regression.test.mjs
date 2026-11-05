@@ -4,7 +4,7 @@ import {mkdtempSync,mkdirSync,writeFileSync,rmSync} from 'node:fs';
 import {join,dirname,relative} from 'node:path';
 import {tmpdir} from 'node:os';
 import {seedRelease,seedPointer} from './support/resources.mjs';
-import {healthSoftware} from '../src/software.mjs';
+import {healthSoftware} from '../src/domains/software/software.mjs';
 
 function fixture(t) {
   const root=mkdtempSync(join(tmpdir(),'manager-health-'));

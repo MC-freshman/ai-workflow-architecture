@@ -6,7 +6,7 @@ import {sha256,sha256File} from '../../core/hash.mjs';
 import {targetPath} from '../../core/paths.mjs';
 import {readJson} from '../../core/json.mjs';
 import {platformPython} from '../platforms/runtime-binding.mjs';
-import {runnerConfig,resolveRecipeVersion} from '../../software-publish.mjs';
+import {runnerConfig,resolveRecipeVersion} from '../software/software-publish.mjs';
 import {buildRuntimeBodyPlan,verifyRuntimeBody} from './runtime-body.mjs';
 import {buildIntakePublicationPlan} from './publication.mjs';
 import {assertBodyIdentity,sharedRegistration,encode} from './shared-body.mjs';

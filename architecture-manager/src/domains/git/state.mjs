@@ -11,9 +11,13 @@ export function parseGitStatus(output) {
   return rows;
 }
 export function selectedPath(name,paths) { return paths.some(path=>name===path || name.startsWith(path+'/')); }
-export function assertSelectedIndex(root,paths) {
+// `extraAllowed` carries the departed source of a rename the caller already judged legitimate:
+// once the destination is staged, git reports the pair as an add plus a delete, so the source
+// shows up in the index without ever being addable itself. An unrelated rename still fails closed.
+export function assertSelectedIndex(root,paths,extraAllowed=[]) {
   const staged=nulPaths(gitRaw(root,['diff','--cached','--name-only','-z']));
-  const unrelated=staged.filter(name=>!selectedPath(name,paths));
+  const allowed=[...paths,...extraAllowed];
+  const unrelated=staged.filter(name=>!selectedPath(name,allowed));
   if(unrelated.length) throw Object.assign(new Error('GIT_UNRELATED_STAGED_FILES'),{paths:unrelated});
 }
 export function assertConfiguredRemote(root,remote) {

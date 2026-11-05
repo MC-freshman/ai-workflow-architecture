@@ -1,0 +1,241 @@
+{
+  "schema": "ai-skill/v1",
+  "id": "research-paper-reader",
+  "version": "1.0.0",
+  "kind": "atomic",
+  "category": "skill",
+  "entry": "SKILL.md",
+  "input": {
+    "type": "paper-source",
+    "contract": "paper PDF/HTML/DOI/arXiv/pasted text plus output language and output directory"
+  },
+  "output": {
+    "type": "files",
+    "contract": "Markdown and JSON artifacts listed in SKILL.md"
+  },
+  "permissions": [
+    "read-project"
+  ],
+  "requires": [
+    "python>=3.10",
+    "PyMuPDF>=1.26"
+  ],
+  "conflicts": [],
+  "source": {
+    "sourceId": "nature-skills",
+    "repository": "nature-skills-main",
+    "snapshot": "snapshot-2026.08.31",
+    "path": "skills/nature-reader/SKILL.md",
+    "license": "Apache-2.0"
+  },
+  "integrity": {
+    "sha256Manifest": "SHA256SUMS"
+  },
+  "x-referenceIndex": [
+    {
+      "path": "upstream/nature-reader/agents/openai.yaml",
+      "sha256": "3f51bc49dea2775124ca3db18fa9d0128862b7e4b019003e07b0d55517ac7225",
+      "sourcePath": "skills/nature-reader/agents/openai.yaml"
+    },
+    {
+      "path": "upstream/nature-reader/evals/evals.json",
+      "sha256": "7e706ffe4078454858287754816f9de5e2e45128eec79fb92bd41e03f32833cb",
+      "sourcePath": "skills/nature-reader/evals/evals.json"
+    },
+    {
+      "path": "upstream/nature-reader/manifest.yaml",
+      "sha256": "f287b0f61dd096467ee4f670fc9c752b972b9b5d56a5c21397d816c200256051",
+      "sourcePath": "skills/nature-reader/manifest.yaml"
+    },
+    {
+      "path": "upstream/nature-reader/README.md",
+      "sha256": "2e0d2cb22a51c3ba6fe92d0da80dbf89d756c85448cadd9d3215b3e20f36750b",
+      "sourcePath": "skills/nature-reader/README.md"
+    },
+    {
+      "path": "upstream/nature-reader/README_EN.md",
+      "sha256": "5f34fa9cfd7b3f45647b4451349a42ef4537b89a0fa9c37d487dbfec0dc10d9a",
+      "sourcePath": "skills/nature-reader/README_EN.md"
+    },
+    {
+      "path": "upstream/nature-reader/references/article-anatomy.md",
+      "sha256": "f3899789c574577e37c27478673d98e21f8329f37f2e5162ac9e09a0d10a6f14",
+      "sourcePath": "skills/nature-reader/references/article-anatomy.md"
+    },
+    {
+      "path": "upstream/nature-reader/references/equation-handling.md",
+      "sha256": "57cdad3fdb5a1820636edd09b7e4aae3fc0ac8898709da8ed201299a958efa6a",
+      "sourcePath": "skills/nature-reader/references/equation-handling.md"
+    },
+    {
+      "path": "upstream/nature-reader/references/figure-extraction.md",
+      "sha256": "eba50785ea176c63ba16d2ddfe614c91525b984c5097ce42b6e49a1beef8ebdc",
+      "sourcePath": "skills/nature-reader/references/figure-extraction.md"
+    },
+    {
+      "path": "upstream/nature-reader/references/grounding-rules.md",
+      "sha256": "9042ef5c948767bb74a8eb148c472ea31d37953e216c60d5ee572344950b5a9b",
+      "sourcePath": "skills/nature-reader/references/grounding-rules.md"
+    },
+    {
+      "path": "upstream/nature-reader/references/output-spec.md",
+      "sha256": "81d590eef5d65fc84aeff9be7e7034b5ff92588d2504fbc08d7543547133aaa0",
+      "sourcePath": "skills/nature-reader/references/output-spec.md"
+    },
+    {
+      "path": "upstream/nature-reader/scripts/validate_reader_math.py",
+      "sha256": "252c6d0998801d24a459e40e48a4125c4a07b8ee639bb28fab8e0f3c5a2b66f1",
+      "sourcePath": "skills/nature-reader/scripts/validate_reader_math.py"
+    },
+    {
+      "path": "upstream/nature-reader/SKILL.md",
+      "sha256": "fb93710f348498f5e83aa4ef90761ee0fdc67cc0adc3c0aca7d3302074c6f71c",
+      "sourcePath": "skills/nature-reader/SKILL.md"
+    },
+    {
+      "path": "upstream/nature-reader/static/core/output-contract.md",
+      "sha256": "05d1ffda81d01c3241a7ff6ff3574243c3c967da942f3cd0f0fa12c32891be26",
+      "sourcePath": "skills/nature-reader/static/core/output-contract.md"
+    },
+    {
+      "path": "upstream/nature-reader/static/core/principles.md",
+      "sha256": "4ce0178a0e38563eca2a8b5de678bf1f654b25557236bd1fefe346203ab11aac",
+      "sourcePath": "skills/nature-reader/static/core/principles.md"
+    },
+    {
+      "path": "upstream/nature-reader/static/core/workflow.md",
+      "sha256": "fdb0a192259b78cfb2ad14ba0065ea02141e8f029d4bdd78b0bc24afebf7cb22",
+      "sourcePath": "skills/nature-reader/static/core/workflow.md"
+    },
+    {
+      "path": "upstream/nature-reader/static/fragments/source/doi-arxiv.md",
+      "sha256": "c8b8d006f04f34b703021d9b76b3e62d17212b839fbe37a11a8e34baf86854d9",
+      "sourcePath": "skills/nature-reader/static/fragments/source/doi-arxiv.md"
+    },
+    {
+      "path": "upstream/nature-reader/static/fragments/source/html.md",
+      "sha256": "136a004201a8ad77e7af5ac8233d8a90cd39f33d7349fe215b4a7946e26b995e",
+      "sourcePath": "skills/nature-reader/static/fragments/source/html.md"
+    },
+    {
+      "path": "upstream/nature-reader/static/fragments/source/pasted-text.md",
+      "sha256": "bee3ad0473e686b2bc76fe8c532dc967795019f067fefcd84cf7eed82475bb2f",
+      "sourcePath": "skills/nature-reader/static/fragments/source/pasted-text.md"
+    },
+    {
+      "path": "upstream/nature-reader/static/fragments/source/pdf-text.md",
+      "sha256": "2f61a2253524683fbe899859c944dc86b20be7f1cf95712d1299a769265caef7",
+      "sourcePath": "skills/nature-reader/static/fragments/source/pdf-text.md"
+    },
+    {
+      "path": "upstream/nature-reader/static/fragments/source/scanned-pdf.md",
+      "sha256": "e0e7a8343c13952befcc674047dff3488eb2e9640c5740299e6b4a4d0a764d47",
+      "sourcePath": "skills/nature-reader/static/fragments/source/scanned-pdf.md"
+    },
+    {
+      "path": "upstream/nature-shared/agents/openai.yaml",
+      "sha256": "4bbf2e58b350269cf231f73ca12af1d097b9d64637023b037e238083151fbd67",
+      "sourcePath": "skills/nature-shared/agents/openai.yaml"
+    },
+    {
+      "path": "upstream/nature-shared/core/consistency-sweep.md",
+      "sha256": "42b4f5337af441709951ecd9e60c7adc644b0a02a349fc41f64247d669adfe82",
+      "sourcePath": "skills/nature-shared/core/consistency-sweep.md"
+    },
+    {
+      "path": "upstream/nature-shared/core/discussion-argument-language.md",
+      "sha256": "a3b0ddcadc47efc029e923ae8133ba0bd99e6a6eb27fdbc791d0e1096d98c169",
+      "sourcePath": "skills/nature-shared/core/discussion-argument-language.md"
+    },
+    {
+      "path": "upstream/nature-shared/core/ethics.md",
+      "sha256": "065db5761d72c295eb1ed5c231deb0b0bcbb0f1065d530f994c044398bd75056",
+      "sourcePath": "skills/nature-shared/core/ethics.md"
+    },
+    {
+      "path": "upstream/nature-shared/core/main-text-discipline.md",
+      "sha256": "d43190c4d617096c1088bb5452cec5b0ae13f5d4947c2b21c28315181f051b8e",
+      "sourcePath": "skills/nature-shared/core/main-text-discipline.md"
+    },
+    {
+      "path": "upstream/nature-shared/core/nature-abstract.md",
+      "sha256": "92c0f1e78df5a9b4dc7ad276ed625e371d211124a47a9eed0a4de82c9c1526cb",
+      "sourcePath": "skills/nature-shared/core/nature-abstract.md"
+    },
+    {
+      "path": "upstream/nature-shared/core/nature-introduction.md",
+      "sha256": "813fb8acb9b5c76e9c8f1d8c1616fefa82a1ec949d4aba98935b0485fb4cd4f7",
+      "sourcePath": "skills/nature-shared/core/nature-introduction.md"
+    },
+    {
+      "path": "upstream/nature-shared/core/nature-results-discussion.md",
+      "sha256": "16f1ce1ed6d2aad7853eabf304cdbd661530931747bce4cf3f10b3dfb655adc1",
+      "sourcePath": "skills/nature-shared/core/nature-results-discussion.md"
+    },
+    {
+      "path": "upstream/nature-shared/core/paper-type-taxonomy.md",
+      "sha256": "84878907fd0416f628c8e3969e583569b9930f0129e6553167112435d93a3ad1",
+      "sourcePath": "skills/nature-shared/core/paper-type-taxonomy.md"
+    },
+    {
+      "path": "upstream/nature-shared/core/reader-workflow.md",
+      "sha256": "acf54e59da3cd29d9179748895c7b5ed0da2d948704e97bee83771698ecbe10d",
+      "sourcePath": "skills/nature-shared/core/reader-workflow.md"
+    },
+    {
+      "path": "upstream/nature-shared/core/research-compliance.md",
+      "sha256": "0ac172d2af0c2089acd7280712a89b23a5f232d4e436e9ae78dd501ff30cd855",
+      "sourcePath": "skills/nature-shared/core/research-compliance.md"
+    },
+    {
+      "path": "upstream/nature-shared/core/terminology-ledger.md",
+      "sha256": "c8ff387fc55439dbec9835d624fb1c1e544cca06ae8d007f8e4f726f68080784",
+      "sourcePath": "skills/nature-shared/core/terminology-ledger.md"
+    },
+    {
+      "path": "upstream/nature-shared/journal-formats/nat-comms.md",
+      "sha256": "5a9eef685502e35d2289478d0b3815d5dbfbb6b2ed7d758accedfc7fd930e975",
+      "sourcePath": "skills/nature-shared/journal-formats/nat-comms.md"
+    },
+    {
+      "path": "upstream/nature-shared/journal-formats/nature-machine-intelligence.md",
+      "sha256": "d62a418fbd67841e745f553b98a267b5a01c9445457a07a0121095ce76fad0af",
+      "sourcePath": "skills/nature-shared/journal-formats/nature-machine-intelligence.md"
+    },
+    {
+      "path": "upstream/nature-shared/journal-formats/nature.md",
+      "sha256": "2c4d007f69b64a2e083f9511748c3726b349a4dce4bfccbdac3bf97d1c1afc10",
+      "sourcePath": "skills/nature-shared/journal-formats/nature.md"
+    },
+    {
+      "path": "upstream/nature-shared/manifest.yaml",
+      "sha256": "f45acd0684bba87b9ea1ece65752c4e26c2c4ce168d9611b7d616e595f1c34b8",
+      "sourcePath": "skills/nature-shared/manifest.yaml"
+    },
+    {
+      "path": "upstream/nature-shared/README.md",
+      "sha256": "2e42d487b9aa4985933dfb230ac57c88e8dfeba97644bb30d2c222de9a65e61e",
+      "sourcePath": "skills/nature-shared/README.md"
+    },
+    {
+      "path": "upstream/nature-shared/README_EN.md",
+      "sha256": "1d2fd257264aa512f52dfc131d9adfd67c7dcf2b6f1e3c059c693360b027b245",
+      "sourcePath": "skills/nature-shared/README_EN.md"
+    },
+    {
+      "path": "upstream/nature-shared/scripts/check_consistency.py",
+      "sha256": "670ccc43aad4639fe3525d8dce7443d85f462f99958b560a539cc5b6b0b072a6",
+      "sourcePath": "skills/nature-shared/scripts/check_consistency.py"
+    },
+    {
+      "path": "upstream/nature-shared/SKILL.md",
+      "sha256": "3d914e73f023cab4f247d82f906a948307de8a867fd6c33df999badf67c5d5f2",
+      "sourcePath": "skills/nature-shared/SKILL.md"
+    },
+    {
+      "path": "upstream/nature-shared/tests/test_check_consistency.py",
+      "sha256": "c70abcc137513cf947e44e0c35f99dd4438fbe4477faf89a6aa671ffa8fac1de",
+      "sourcePath": "skills/nature-shared/tests/test_check_consistency.py"
+    }
+  ]
+}

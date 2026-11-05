@@ -22,8 +22,8 @@ export function RunsPanel({ api, workspace }) {
   const platforms = (ledger?.platforms || []).filter((platform) => platform.total > 0);
   return <section className="panel"><div className="panel-title"><span>运行台账（只读）</span><div className="panel-tools"><span className="muted">{ledger ? `共 ${ledger.totalRuns} 个 run · 不写入任何平台 runtime` : '未读取'}</span><button className="small-button" onClick={load} disabled={!workspace}>刷新</button></div></div>
     {error && <div className="empty">读取失败：{error}</div>}
-    {!ledger && !error && <div className="empty">选择工作区后显示六平台 run 目录。</div>}
-    {platforms.length === 0 && ledger && <div className="empty">六个平台当前都没有 run 目录。</div>}
+    {!ledger && !error && <div className="empty">选择工作区后显示各平台 run 目录。</div>}
+    {platforms.length === 0 && ledger && <div className="empty">当前没有平台 run 目录。</div>}
     {platforms.map((platform) => <div key={platform.platform}>
       <div className="panel-subtitle">{platform.platform} · {platform.total} 个 run</div>
       <div className="rows">{platform.runs.map((run) => {

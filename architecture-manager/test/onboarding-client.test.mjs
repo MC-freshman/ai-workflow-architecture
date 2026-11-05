@@ -5,8 +5,8 @@ import { execFileSync } from 'node:child_process';
 import { dirname, join } from 'node:path';
 import { tmpdir } from 'node:os';
 import { mkdirSync, mkdtempSync, readFileSync, writeFileSync, rmSync } from 'node:fs';
-import { buildOnboardingConfigPlan, applyOnboardingConfig } from '../src/onboarding-config.mjs';
-import { buildOnboardingClientPlan, applyOnboardingClient, probeOnboardingClient } from '../src/onboarding-client.mjs';
+import { buildOnboardingConfigPlan, applyOnboardingConfig } from '../src/domains/onboarding/onboarding-config.mjs';
+import { buildOnboardingClientPlan, applyOnboardingClient, probeOnboardingClient } from '../src/domains/onboarding/onboarding-client.mjs';
 
 test('actual CLI and MCP connections pass; wrong platform, replay and direct runner impersonation fail', async () => {
   const root = mkdtempSync(join(tmpdir(), 'manager-client-')); const auditRoot = join(root, 'audit');

@@ -5,8 +5,8 @@ import {writeFileSync,readFileSync,existsSync} from 'node:fs';
 import {intakeFixture} from './support/intake-fixture.mjs';
 import {buildToolBodyPlan,readToolBodyEditor} from '../src/domains/intake/tool-body.mjs';
 import {scanExternalBody,draftTextSource} from '../src/domains/intake/sources.mjs';
-import {buildReleasePlan} from '../src/releases.mjs';
-import {applyPlan,verifyPlanTarget} from '../src/transactions.mjs';
+import {buildReleasePlan} from '../src/domains/intake/releases.mjs';
+import {applyPlan,verifyPlanTarget} from '../src/transactions/router.mjs';
 import {sha256} from '../src/core/hash.mjs';
 
 test('a new ID from a text body becomes a nonempty schema-valid registered workflow without original current files',async t=>{

@@ -1,0 +1,42 @@
+{
+  "platform": "workbuddy",
+  "contracts": "E:\\ai\\tool\\runtime-contracts\\versions\\1.3.0",
+  "scannerRelease": "E:\\ai\\tool\\repo-lint\\versions\\0.4.0",
+  "toolRoot": "E:\\ai\\tool",
+  "agentRoot": "E:\\ai\\agent",
+  "softwareRoot": "E:\\ai\\software",
+  "softwareGateway": "E:\\ai\\software\\_gateway\\versions\\1.0.0\\gateway.py",
+  "softwareGatewayConfig": "E:\\ai\\workbuddy\\bridge\\software-gateway-config.json",
+  "softwareEnvironment": "E:\\ai\\workbuddy\\bridge\\software-environment.json",
+  "interpreters": {
+    ".py": "E:\\ai\\workbuddy\\runtime\\py-env\\Scripts\\python.exe"
+  },
+  "softwareProfiles": {
+    "readonly-observe": {
+      "filesystem": [
+        "read"
+      ],
+      "network": [
+        "loopback"
+      ],
+      "process": [
+        "self"
+      ],
+      "credentials": [],
+      "sideEffects": [
+        "none"
+      ],
+      "consent": "auto"
+    }
+  },
+  "bridge": "E:\\ai\\workbuddy\\bridge\\bridge-candidate-090.json",
+  "runner": "E:\\ai\\tool\\wf-runner\\versions\\0.9.0",
+  "environmentManifest": "E:\\ai\\workbuddy\\bridge\\environment.json",
+  "capabilities": "E:\\ai\\workbuddy\\bridge\\capabilities-candidate-090.json",
+  "runsRoot": "E:\\ai\\workbuddy\\runtime\\runs",
+  "platformRoot": "E:\\ai\\workbuddy",
+  "inputRoots": [
+    "E:\\ai"
+  ],
+  "notes": "workbuddy 平台显式钉版（2026-09-16 S2 落盘）：runner wf-runner 0.6.0（manifest+SHA256SUMS 实测齐备）、contracts repo-lint 0.2.1（契约 platform 枚举已含 workbuddy）。共享 current = wf-runner 0.5.2 / repo-lint 0.2.1：引擎选版与共享指针是两套机制，本平台钉版不改动任何共享默认。tool/agent 业务版本不在此文件钉——解析顺序为显式版本 → 共享 current，保证用户一句话换代跟随（invocation-manual.md §4）。环境 = 本平台自建 Windows venv（E:\\ai\\workbuddy\\runtime\\py-env，python 3.9.13），按 runner requirements.lock 8 库逐一匹配 + matplotlib 3.9.4（renderer profile 需要），environmentManifest 指向 bridge/environment.json。未设置的可选键及其后果——scriptEnvironment 缺 → 协议内 action:script 阶段与 --tool render-figure/record-visual-review 不可执行（与 matrix 默认 claim+stop 不冲突）；peerDispatcherModule / peerChildExecutor 缺 → 委派不可用；hostEnvironmentManifest 缺 → 不做 runner 解释器逐文件校验（与 zcode 同形）。前置条件见 capabilities.permissionAdapters：不声明业务三元组则 0.6.0 下每次 prepare 都被拒。 | 架构 3.0 候选接线（2026-09-21，platform-side P2）。相对生产文件的变化只有钥匙：runner 0.6.0 -> 0.9.0；contracts 由 repo-lint/0.2.1（legacy 布局）改为 standalone 包 runtime-contracts/1.3.0，并按 0.9.0 配对要求显式声明 scannerRelease=repo-lint/0.4.0（resolution.py 会把该版本与任何显式 repo-lint 选择做 VERSION_CONFLICT 比对，故它必须与本平台真正运行的扫描器一致）。软件面新增 softwareRoot / softwareGateway / softwareGatewayConfig / softwareEnvironment / interpreters / softwareProfiles。softwareProfiles 只声明 readonly-observe 一档——它覆盖六配方全部 sideEffects=none 的 capability （即 recipe 里 safeForSelftest 的那一组）在 profile 门被读的五个维度；写类 / 外部 / system / 凭证类请求面本平台本轮不声明，落到 profile 门按 PROFILE_NOT_DECLARED 拒（未实测面不写成支持）。capabilities 本候选指向 bridge/capabilities-candidate-090.json（生产 capabilities.json 本步零改动，候选/生产分开标注）；P5 采用时把该候选文件的 software 段并入生产 capabilities.json，并把本键改回 bridge/capabilities.json。本轮不改共享 current.json（D-52：抬针属各平台同批动作），不代他平台申报。 P4 修正（2026-09-21）：本候选的 bridge 键指向候选 bridge 副本 bridge/bridge-candidate-090.json，其中本平台默认 defaults.workflowVersions[\"repo-lint\"]=0.4.0 由共享权威工具 architecture-ops 1.2.0 switch_defaults 写入（plan→apply→verify，CAS + checkpoint，sharedCurrentTouched=false）——把平台默认对齐到本平台声明的 scannerRelease，正是 P4 实测那条 VERSION_CONFLICT 报文（resolution.py:171-180「align the pin or request 0.4.0」）给出的正解：选版与扫描器是同一个 key，平台默认必须与平台声明的扫描器版本一致；这条默认写在平台自己的 bridge.json，共享 current.json 一字未动（D-52）。"
+}

@@ -3,10 +3,18 @@ import { homedir, tmpdir } from 'node:os';
 import { join, normalize, relative, resolve, sep } from 'node:path';
 import { sha256 } from './hash.mjs';
 
+const WINDOWS_RESERVED = /^(con|prn|aux|nul|com[1-9]|lpt[1-9])(\..*)?$/i;
+
 export function safeRelative(value) {
   if (typeof value !== 'string' || value.trim() === '') throw new Error('INVALID_TRANSACTION_TARGET');
   const normalized = normalize(value).split(sep).join('/');
   if (normalized.startsWith('../') || normalized === '..' || normalized.startsWith('/') || /^[A-Za-z]:\//.test(normalized)) throw new Error('TRANSACTION_TARGET_OUTSIDE_WORKSPACE');
+  for (const segment of normalized.split('/')) {
+    if (!segment || segment === '.' || segment === '..') continue;
+    // AUD-D-015: Windows silently remaps reserved device names and strips trailing
+    // dots/spaces, which turns a planned path into a different file; refuse them.
+    if (WINDOWS_RESERVED.test(segment) || /[. ]$/.test(segment)) throw new Error('INVALID_TRANSACTION_TARGET');
+  }
   return normalized;
 }
 

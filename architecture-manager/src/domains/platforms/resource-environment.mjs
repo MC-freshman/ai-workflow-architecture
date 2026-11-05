@@ -59,21 +59,63 @@ export function resourceEnvironmentMatches(root,id,path,requirements) {
     return Object.entries(requirements.packages).every(([name,pin])=>installed[name]===pin);
   }catch(error){if(error.message==='TASK_CANCELLED')throw error;return false;}
 }
-export async function prepareResourceEnvironment({workspaceRoot,platformId,python,requirements,installationId=randomUUID(),wheelhouse=null},options={}) {
+// D-171: every knob that changes *where* packages come from or *how patient*
+// the download is. They are the only spec fields allowed to change between two
+// attempts: switching mirror after a failed download must not be refused as a
+// drift, it must reuse the install directory and continue.
+export const RESOURCE_DOWNLOAD_SPEC_KEYS=['wheelhouse','indexUrl','trustedHost','socketTimeoutSeconds','retries','idleTimeoutSeconds','maxSeconds'];
+function downloadSpec(source) {
+  const spec={};
+  if(source.wheelhouse)spec.wheelhouse=platformPath(source.workspaceRoot,source.platformId,source.wheelhouse);
+  for(const key of ['indexUrl','trustedHost'])if(source[key])spec[key]=String(source[key]).trim();
+  for(const key of ['socketTimeoutSeconds','retries','idleTimeoutSeconds','maxSeconds']) {
+    const value=Number(source[key]);if(Number.isFinite(value) && value>0)spec[key]=Math.floor(value);
+  }
+  return spec;
+}
+// Export the pure pieces so the retry rule is testable without a real download.
+export function resourceEnvironmentSpec({workspaceRoot,platformId,directory,backup,packages,profiles,requirementsDigest,python,wheelhouse=null,download=null}) {
+  const source={...(wheelhouse?{wheelhouse}:{}),...download};
+  return {schema:'manager-resource-environment-spec/v1',platformId,directory,backup,packages,profiles,requirementsDigest,python,...downloadSpec({...source,workspaceRoot,platformId})};
+}
+export function specDiffersOnlyInDownloadSource(previous,next) {
+  const keys=new Set([...Object.keys(previous),...Object.keys(next)]);
+  for(const key of keys) {
+    if(RESOURCE_DOWNLOAD_SPEC_KEYS.includes(key))continue;
+    if(JSON.stringify(previous[key])!==JSON.stringify(next[key]))return false;
+  }
+  return true;
+}
+export async function prepareResourceEnvironment({workspaceRoot,platformId,python,requirements,installationId=randomUUID(),wheelhouse=null,download=null},options={}) {
   if(!Object.keys(requirements.packages).length)return {status:'not-required',manifest:null};
   if(!python || !existsSync(python))throw Error('RUNTIME_COMPATIBLE_PYTHON_REQUIRED');
   const directory=targetPath(workspaceRoot,`${platformId}/runtime/manager-resources/${installationId}`);
   const backup=targetPath(workspaceRoot,`inbox/backup/${platformId}/manager-resources/${installationId}`);
   mkdirSync(directory,{recursive:true});
   const specPath=join(directory,'spec.json'),resultPath=join(directory,'resource-environment.json');
-  const spec={schema:'manager-resource-environment-spec/v1',platformId,directory,backup,packages:requirements.packages,profiles:requirements.profiles,requirementsDigest:requirements.digest,python,...(wheelhouse?{wheelhouse:platformPath(workspaceRoot,platformId,wheelhouse)}:{})};
+  const spec=resourceEnvironmentSpec({workspaceRoot,platformId,directory,backup,packages:requirements.packages,profiles:requirements.profiles,requirementsDigest:requirements.digest,python,wheelhouse,download});
   const content=encode(spec);
-  if(existsSync(specPath) && readFileSync(specPath,'utf8')!==content)throw Error('ONBOARDING_RESUME_DRIFT');
   const {atomicWrite}=await import('../../transactions/kernel.mjs');
-  if(!existsSync(specPath))atomicWrite(specPath,content,installationId);
-  const result=await runOwnedProcess({python,args:['-B',runtimeFile('resource_env.py'),specPath],cwd:directory,scopeRoot:directory,timeout:1800000,registerCancel:options.registerCancel,onOutput:chunk=>{try{options.onProgress?.({...JSON.parse(String(chunk).trim()),platformId});}catch{/* progress is data */}},env:{...process.env,PYTHONDONTWRITEBYTECODE:'1',PIP_CACHE_DIR:join(directory,'pip-cache'),TEMP:directory,TMP:directory}});
+  if(existsSync(specPath)) {
+    const existing=readFileSync(specPath,'utf8');
+    // D-171: a failed download followed by a corrected mirror/wheelhouse is a
+    // normal retry, not a drift. Nothing has been produced yet, so rewriting the
+    // spec keeps the same install directory (venv + cache + wheels) alive.
+    if(existing!==content) {
+      if(!existsSync(resultPath) && specDiffersOnlyInDownloadSource(JSON.parse(existing),spec))atomicWrite(specPath,content,installationId);
+      else throw Error('ONBOARDING_RESUME_DRIFT');
+    }
+  } else atomicWrite(specPath,content,installationId);
+  // D-172: the outer watchdog must not be the binding constraint. The python
+  // side now ends a run on real inactivity (idleTimeoutSeconds) or its own hard
+  // cap, both reported as progress; this is only a backstop against a hang.
+  const result=await runOwnedProcess({python,args:['-B',runtimeFile('resource_env.py'),specPath],cwd:directory,scopeRoot:directory,timeout:Number(download?.maxSeconds||0)*1000+7200000,registerCancel:options.registerCancel,onOutput:chunk=>{try{options.onProgress?.({...JSON.parse(String(chunk).trim()),platformId});}catch{/* progress is data */}},env:{...process.env,PYTHONDONTWRITEBYTECODE:'1',PIP_CACHE_DIR:join(directory,'pip-cache'),TEMP:directory,TMP:directory}});
   if(result.cancelled)throw Error('ONBOARDING_CANCELLED');
-  if(result.exitCode!==0 || !existsSync(resultPath))throw Error('RESOURCE_ENVIRONMENT_PREPARATION_FAILED');
+  // D-172: hand the python side's own reason to the caller, so "the download
+  // stalled" is distinguishable from "a package refused to install". The generic
+  // code stays as the fallback when nothing more specific was reported.
+  const reason=/RESOURCE_ENVIRONMENT_(?:IDLE_TIMEOUT|TIME_LIMIT|COMMAND_FAILED|PACKAGE_MISMATCH|RESTORE_HASH_MISMATCH|PATH_MISMATCH)[^\r\n]*/.exec(`${result.stdout}\n${result.stderr}`);
+  if(result.exitCode!==0 || !existsSync(resultPath))throw Error(reason?reason[0]:'RESOURCE_ENVIRONMENT_PREPARATION_FAILED');
   const env=readJson(resultPath),proof=readJson(platformPath(workspaceRoot,platformId,env.restoreEvidence));
   if(env.requirementsDigest!==requirements.digest || !proof.pass || sha256(readFileSync(env.restoreEvidence))!==env.restoreEvidenceSha256)throw Error('RESOURCE_ENVIRONMENT_RESTORE_FAILED');
   return {status:'prepared',manifest:resultPath,sha256:sha256(readFileSync(resultPath)),result:env};

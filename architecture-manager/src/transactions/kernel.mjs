@@ -1,4 +1,4 @@
-import { appendFileSync, existsSync, mkdirSync, renameSync, rmSync, writeFileSync } from 'node:fs';
+import { appendFileSync, closeSync, existsSync, fsyncSync, mkdirSync, openSync, renameSync, rmSync, writeFileSync } from 'node:fs';
 import { randomUUID } from 'node:crypto';
 import { join } from 'node:path';
 import { sha256 } from '../core/hash.mjs';
@@ -39,7 +39,14 @@ export function writeAudit({ auditRoot, transactionId, plan, actor, action, stat
     writeState:writePerformed===true?'performed':writePerformed===false?'not-performed':'unknown'
   },context?.secrets || []);
   event.eventSha256 = auditEventHash(event);
-  appendFileSync(auditPath(auditRoot), `${JSON.stringify(event)}\n`, 'utf8');
+  // AUD-D-012: audit receipts must survive a power cut - append and flush in one held handle.
+  const handle = openSync(auditPath(auditRoot), 'a');
+  try {
+    appendFileSync(handle, `${JSON.stringify(event)}\n`, 'utf8');
+    fsyncSync(handle);
+  } finally {
+    closeSync(handle);
+  }
   return event;
 }
 
@@ -58,6 +65,13 @@ export function atomicWrite(target, content, transactionId) {
   const temporary = `${target}.architecture-manager-${transactionId}.tmp`;
   try {
     writeFileSync(temporary, content, 'utf8');
+    // AUD-D-012: fsync before rename so a crash cannot leave an empty or torn target.
+    const handle = openSync(temporary, 'r+');
+    try {
+      fsyncSync(handle);
+    } finally {
+      closeSync(handle);
+    }
     renameSync(temporary, target);
   } finally {
     if (existsSync(temporary)) rmSync(temporary, { force: true });

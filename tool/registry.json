@@ -1,6 +1,6 @@
 {
   "schema": "ai-tool-registry/v2",
-  "version": 18,
+  "version": 19,
   "skills": [
     {
       "id": "skills-awesome-coding",
@@ -89,6 +89,13 @@
     {
       "id": "skills-domain-expansion",
       "path": "_registry/skills-domain-expansion.json",
+      "kind": "skill-catalog",
+      "enabled": true,
+      "invocable": false
+    },
+    {
+      "id": "skills-research-paper",
+      "path": "_registry/skills-research-paper.json",
       "kind": "skill-catalog",
       "enabled": true,
       "invocable": false

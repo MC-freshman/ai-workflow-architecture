@@ -6,8 +6,8 @@ import {tmpdir} from 'node:os';
 import {execFileSync} from 'node:child_process';
 import {archiveTool} from '../src/infrastructure/archive-tool.mjs';
 import {gitText} from '../src/infrastructure/git.mjs';
-import {buildGitPlan} from '../src/git.mjs';
-import {applyGitTransaction,verifyGitTransaction} from '../src/git-executor.mjs';
+import {buildGitPlan} from '../src/domains/git/git.mjs';
+import {applyGitTransaction,verifyGitTransaction} from '../src/domains/git/git-executor.mjs';
 
 test('Windows ZIP restore ignores GNU tar ahead of system tar in PATH',{skip:process.platform!=='win32'},t=>{
   const root=fs.mkdtempSync(join(tmpdir(),'archive-tool-'));t.after(()=>fs.rmSync(root,{recursive:true,force:true}));

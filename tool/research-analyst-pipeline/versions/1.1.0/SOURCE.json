@@ -1,0 +1,7 @@
+{
+  "schema": "ai-release-source/v1",
+  "id": "research-analyst-pipeline",
+  "version": "1.1.0",
+  "derivedFrom": "research-analyst-pipeline@1.0.0",
+  "change": "adds paper-reader/paper-analysis scenarios and dependency pins; stages, gates and schemas unchanged"
+}

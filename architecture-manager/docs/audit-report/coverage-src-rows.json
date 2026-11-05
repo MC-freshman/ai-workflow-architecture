@@ -1,0 +1,926 @@
+[
+ {
+  "file": "app/api.mjs",
+  "line": 100,
+  "branch": 100,
+  "fn": 100,
+  "uncovered": ""
+ },
+ {
+  "file": "app/command-api.mjs",
+  "line": 100,
+  "branch": 100,
+  "fn": 100,
+  "uncovered": ""
+ },
+ {
+  "file": "app/query-api.mjs",
+  "line": 100,
+  "branch": 100,
+  "fn": 100,
+  "uncovered": ""
+ },
+ {
+  "file": "app/task-context.mjs",
+  "line": 100,
+  "branch": 77.78,
+  "fn": 100,
+  "uncovered": ""
+ },
+ {
+  "file": "audit.mjs",
+  "line": 100,
+  "branch": 95.12,
+  "fn": 100,
+  "uncovered": ""
+ },
+ {
+  "file": "catalog.mjs",
+  "line": 83.01,
+  "branch": 59.8,
+  "fn": 83.33,
+  "uncovered": "27 84-100 159-169 171-174 188-189"
+ },
+ {
+  "file": "core/certification-scope.mjs",
+  "line": 100,
+  "branch": 83.33,
+  "fn": 100,
+  "uncovered": ""
+ },
+ {
+  "file": "core/hash.mjs",
+  "line": 100,
+  "branch": 100,
+  "fn": 100,
+  "uncovered": ""
+ },
+ {
+  "file": "core/json.mjs",
+  "line": 100,
+  "branch": 100,
+  "fn": 100,
+  "uncovered": ""
+ },
+ {
+  "file": "core/jsonc.mjs",
+  "line": 100,
+  "branch": 86.49,
+  "fn": 100,
+  "uncovered": ""
+ },
+ {
+  "file": "core/matrix-progress.mjs",
+  "line": 100,
+  "branch": 76.19,
+  "fn": 100,
+  "uncovered": ""
+ },
+ {
+  "file": "core/onboarding-jobs.mjs",
+  "line": 65,
+  "branch": 71.43,
+  "fn": 57.14,
+  "uncovered": "12-15 18-20"
+ },
+ {
+  "file": "core/owned-process.mjs",
+  "line": 42.11,
+  "branch": 100,
+  "fn": 0,
+  "uncovered": "9-19"
+ },
+ {
+  "file": "core/paths.mjs",
+  "line": 100,
+  "branch": 74.07,
+  "fn": 100,
+  "uncovered": ""
+ },
+ {
+  "file": "core/physical-fs.mjs",
+  "line": 100,
+  "branch": 50,
+  "fn": 100,
+  "uncovered": ""
+ },
+ {
+  "file": "core/platform-path.mjs",
+  "line": 100,
+  "branch": 85.71,
+  "fn": 100,
+  "uncovered": ""
+ },
+ {
+  "file": "core/platforms.mjs",
+  "line": 100,
+  "branch": 95.24,
+  "fn": 100,
+  "uncovered": ""
+ },
+ {
+  "file": "core/runtime-path.mjs",
+  "line": 100,
+  "branch": 40,
+  "fn": 100,
+  "uncovered": ""
+ },
+ {
+  "file": "core/task-lifecycle.mjs",
+  "line": 100,
+  "branch": 100,
+  "fn": 100,
+  "uncovered": ""
+ },
+ {
+  "file": "core/versions.mjs",
+  "line": 73.91,
+  "branch": 77.78,
+  "fn": 75,
+  "uncovered": "11 19-23"
+ },
+ {
+  "file": "defects.mjs",
+  "line": 94.96,
+  "branch": 72.13,
+  "fn": 100,
+  "uncovered": "66-67 115-118"
+ },
+ {
+  "file": "docs-ops.mjs",
+  "line": 89.74,
+  "branch": 83.33,
+  "fn": 80,
+  "uncovered": "30-33"
+ },
+ {
+  "file": "documents.mjs",
+  "line": 92.21,
+  "branch": 60,
+  "fn": 100,
+  "uncovered": "13-14 16-17 35-36"
+ },
+ {
+  "file": "domains/audit/workspace.mjs",
+  "line": 100,
+  "branch": 86.67,
+  "fn": 92.31,
+  "uncovered": ""
+ },
+ {
+  "file": "domains/certification/anchor-plans.mjs",
+  "line": 94.09,
+  "branch": 65.48,
+  "fn": 94.74,
+  "uncovered": "60-65 114-115 160-163"
+ },
+ {
+  "file": "domains/certification/anchor-report.mjs",
+  "line": 96.55,
+  "branch": 64.71,
+  "fn": 100,
+  "uncovered": "33-34"
+ },
+ {
+  "file": "domains/certification/anchor.mjs",
+  "line": 95.65,
+  "branch": 75.44,
+  "fn": 89.66,
+  "uncovered": "178-187"
+ },
+ {
+  "file": "domains/certification/binding.mjs",
+  "line": 100,
+  "branch": 70.59,
+  "fn": 100,
+  "uncovered": ""
+ },
+ {
+  "file": "domains/certification/content-cache.mjs",
+  "line": 100,
+  "branch": 100,
+  "fn": 100,
+  "uncovered": ""
+ },
+ {
+  "file": "domains/certification/declared.mjs",
+  "line": 100,
+  "branch": 82.14,
+  "fn": 100,
+  "uncovered": ""
+ },
+ {
+  "file": "domains/certification/evidence.mjs",
+  "line": 100,
+  "branch": 84.46,
+  "fn": 95.83,
+  "uncovered": ""
+ },
+ {
+  "file": "domains/certification/fingerprints.mjs",
+  "line": 100,
+  "branch": 76.6,
+  "fn": 77.78,
+  "uncovered": ""
+ },
+ {
+  "file": "domains/certification/legacy.mjs",
+  "line": 52.17,
+  "branch": 73.33,
+  "fn": 50,
+  "uncovered": "14-20 31-45"
+ },
+ {
+  "file": "domains/certification/releases.mjs",
+  "line": 97.62,
+  "branch": 61.9,
+  "fn": 100,
+  "uncovered": "19"
+ },
+ {
+  "file": "domains/certification/selection.mjs",
+  "line": 100,
+  "branch": 94,
+  "fn": 100,
+  "uncovered": ""
+ },
+ {
+  "file": "domains/git/backup.mjs",
+  "line": 100,
+  "branch": 70.27,
+  "fn": 100,
+  "uncovered": ""
+ },
+ {
+  "file": "domains/git/sensitive.mjs",
+  "line": 100,
+  "branch": 71.43,
+  "fn": 100,
+  "uncovered": ""
+ },
+ {
+  "file": "domains/git/state.mjs",
+  "line": 100,
+  "branch": 100,
+  "fn": 100,
+  "uncovered": ""
+ },
+ {
+  "file": "domains/intake/automatic-software.mjs",
+  "line": 98.65,
+  "branch": 44.44,
+  "fn": 90.91,
+  "uncovered": "61"
+ },
+ {
+  "file": "domains/intake/automatic.mjs",
+  "line": 77.78,
+  "branch": 28.95,
+  "fn": 80,
+  "uncovered": "22-23 36-39 53-60"
+ },
+ {
+  "file": "domains/intake/entry-selection.mjs",
+  "line": 100,
+  "branch": 100,
+  "fn": 100,
+  "uncovered": ""
+ },
+ {
+  "file": "domains/intake/interpret.mjs",
+  "line": 100,
+  "branch": 61.54,
+  "fn": 100,
+  "uncovered": ""
+ },
+ {
+  "file": "domains/intake/journals.mjs",
+  "line": 100,
+  "branch": 68.75,
+  "fn": 87.5,
+  "uncovered": ""
+ },
+ {
+  "file": "domains/intake/mcp-body.mjs",
+  "line": 35.29,
+  "branch": 100,
+  "fn": 0,
+  "uncovered": "13-34"
+ },
+ {
+  "file": "domains/intake/paths.mjs",
+  "line": 100,
+  "branch": 86.21,
+  "fn": 100,
+  "uncovered": ""
+ },
+ {
+  "file": "domains/intake/platform-body.mjs",
+  "line": 29.03,
+  "branch": 100,
+  "fn": 0,
+  "uncovered": "16-21 23-34 36-58 60-62"
+ },
+ {
+  "file": "domains/intake/policy.mjs",
+  "line": 100,
+  "branch": 95.83,
+  "fn": 100,
+  "uncovered": ""
+ },
+ {
+  "file": "domains/intake/publication.mjs",
+  "line": 97.82,
+  "branch": 82.96,
+  "fn": 94.92,
+  "uncovered": "102-106"
+ },
+ {
+  "file": "domains/intake/runtime-body.mjs",
+  "line": 97.87,
+  "branch": 76,
+  "fn": 100,
+  "uncovered": "72-73"
+ },
+ {
+  "file": "domains/intake/shared-body.mjs",
+  "line": 100,
+  "branch": 80.7,
+  "fn": 79.31,
+  "uncovered": ""
+ },
+ {
+  "file": "domains/intake/smoke.mjs",
+  "line": 29.79,
+  "branch": 100,
+  "fn": 0,
+  "uncovered": "15-47"
+ },
+ {
+  "file": "domains/intake/software-binding.mjs",
+  "line": 90.32,
+  "branch": 66.67,
+  "fn": 83.33,
+  "uncovered": "29-31"
+ },
+ {
+  "file": "domains/intake/software-body.mjs",
+  "line": 25.32,
+  "branch": 100,
+  "fn": 16.67,
+  "uncovered": "19-42 44-73 75-79"
+ },
+ {
+  "file": "domains/intake/sources.mjs",
+  "line": 100,
+  "branch": 88.8,
+  "fn": 96.3,
+  "uncovered": ""
+ },
+ {
+  "file": "domains/intake/tool-body.mjs",
+  "line": 100,
+  "branch": 85.42,
+  "fn": 94.44,
+  "uncovered": ""
+ },
+ {
+  "file": "domains/intake/zip.mjs",
+  "line": 100,
+  "branch": 48.72,
+  "fn": 66.67,
+  "uncovered": ""
+ },
+ {
+  "file": "domains/platforms/bridge-compatibility.mjs",
+  "line": 100,
+  "branch": 95.12,
+  "fn": 100,
+  "uncovered": ""
+ },
+ {
+  "file": "domains/platforms/capability-evidence.mjs",
+  "line": 100,
+  "branch": 73.68,
+  "fn": 100,
+  "uncovered": ""
+ },
+ {
+  "file": "domains/platforms/global-update.mjs",
+  "line": 11.51,
+  "branch": 100,
+  "fn": 0,
+  "uncovered": "33-38 40-114 116-134 138-223 225-326 329-331 333-345 347-365"
+ },
+ {
+  "file": "domains/platforms/host-manifest.mjs",
+  "line": 71.43,
+  "branch": 25,
+  "fn": 33.33,
+  "uncovered": "12-13 15 17 19-20"
+ },
+ {
+  "file": "domains/platforms/management-runtime.mjs",
+  "line": 24.32,
+  "branch": 100,
+  "fn": 0,
+  "uncovered": "9-21 23-37"
+ },
+ {
+  "file": "domains/platforms/native-ai-probe.mjs",
+  "line": 52.69,
+  "branch": 54.72,
+  "fn": 45.83,
+  "uncovered": "38-40 42 46-78 84 86 88-92"
+ },
+ {
+  "file": "domains/platforms/native-artifacts.mjs",
+  "line": 35.71,
+  "branch": 100,
+  "fn": 0,
+  "uncovered": "6-14"
+ },
+ {
+  "file": "domains/platforms/native-attempt.mjs",
+  "line": 76.92,
+  "branch": 100,
+  "fn": 50,
+  "uncovered": "8-10"
+ },
+ {
+  "file": "domains/platforms/native-client.mjs",
+  "line": 35.4,
+  "branch": 58.82,
+  "fn": 47.37,
+  "uncovered": "21-28 30-38 41-95 115-145 153"
+ },
+ {
+  "file": "domains/platforms/native-profile.mjs",
+  "line": 64.71,
+  "branch": 80,
+  "fn": 75,
+  "uncovered": "39-44 47-55 60-68"
+ },
+ {
+  "file": "domains/platforms/onboarding-readback.mjs",
+  "line": 100,
+  "branch": 33.33,
+  "fn": 66.67,
+  "uncovered": ""
+ },
+ {
+  "file": "domains/platforms/onboarding-resume.mjs",
+  "line": 98.72,
+  "branch": 78.26,
+  "fn": 100,
+  "uncovered": "39"
+ },
+ {
+  "file": "domains/platforms/provider-templates.mjs",
+  "line": 100,
+  "branch": 100,
+  "fn": 100,
+  "uncovered": ""
+ },
+ {
+  "file": "domains/platforms/resource-defaults.mjs",
+  "line": 98.21,
+  "branch": 74.23,
+  "fn": 100,
+  "uncovered": "85-86"
+ },
+ {
+  "file": "domains/platforms/resource-environment.mjs",
+  "line": 35,
+  "branch": 45.45,
+  "fn": 40,
+  "uncovered": "17-22 24-47 57-60 63-80"
+ },
+ {
+  "file": "domains/platforms/resource-proof.mjs",
+  "line": 100,
+  "branch": 80,
+  "fn": 100,
+  "uncovered": ""
+ },
+ {
+  "file": "domains/platforms/runtime-binding.mjs",
+  "line": 100,
+  "branch": 62.5,
+  "fn": 100,
+  "uncovered": ""
+ },
+ {
+  "file": "domains/platforms/runtime-discovery.mjs",
+  "line": 26.83,
+  "branch": 100,
+  "fn": 0,
+  "uncovered": "10-13 16-41"
+ },
+ {
+  "file": "domains/resources/contracts.mjs",
+  "line": 100,
+  "branch": 85.45,
+  "fn": 90,
+  "uncovered": ""
+ },
+ {
+  "file": "domains/resources/integrity.mjs",
+  "line": 100,
+  "branch": 83.33,
+  "fn": 100,
+  "uncovered": ""
+ },
+ {
+  "file": "domains/resources/registry.mjs",
+  "line": 100,
+  "branch": 83.87,
+  "fn": 100,
+  "uncovered": ""
+ },
+ {
+  "file": "domains/resources/versions.mjs",
+  "line": 100,
+  "branch": 88.37,
+  "fn": 83.33,
+  "uncovered": ""
+ },
+ {
+  "file": "domains/software/actions.mjs",
+  "line": 36,
+  "branch": 100,
+  "fn": 0,
+  "uncovered": "17-32 34-47 49-50"
+ },
+ {
+  "file": "domains/software/credentials.mjs",
+  "line": 48.78,
+  "branch": 100,
+  "fn": 0,
+  "uncovered": "15-17 19-22 26-30 32-38 40-41"
+ },
+ {
+  "file": "domains/software/gateway-binding.mjs",
+  "line": 100,
+  "branch": 87.5,
+  "fn": 100,
+  "uncovered": ""
+ },
+ {
+  "file": "domains/software/gateway-migration.mjs",
+  "line": 100,
+  "branch": 78.95,
+  "fn": 100,
+  "uncovered": ""
+ },
+ {
+  "file": "domains/software/health.mjs",
+  "line": 100,
+  "branch": 68.18,
+  "fn": 60,
+  "uncovered": ""
+ },
+ {
+  "file": "domains/software/mcp-config.mjs",
+  "line": 34.04,
+  "branch": 100,
+  "fn": 0,
+  "uncovered": "13-18 20-32 34-45"
+ },
+ {
+  "file": "domains/software/mcp-discovery.mjs",
+  "line": 45,
+  "branch": 100,
+  "fn": 0,
+  "uncovered": "17-24 26-36 38-40"
+ },
+ {
+  "file": "electron/operation-registry.mjs",
+  "line": 100,
+  "branch": 100,
+  "fn": 80,
+  "uncovered": ""
+ },
+ {
+  "file": "git-executor.mjs",
+  "line": 90.18,
+  "branch": 80,
+  "fn": 100,
+  "uncovered": "77 97-99 101-103 108-111"
+ },
+ {
+  "file": "git.mjs",
+  "line": 93.69,
+  "branch": 75.81,
+  "fn": 75,
+  "uncovered": "34-35 39-41 44-45"
+ },
+ {
+  "file": "inbox.mjs",
+  "line": 92.73,
+  "branch": 73.33,
+  "fn": 100,
+  "uncovered": "25-26 51-52"
+ },
+ {
+  "file": "infrastructure/archive-tool.mjs",
+  "line": 100,
+  "branch": 66.67,
+  "fn": 100,
+  "uncovered": ""
+ },
+ {
+  "file": "infrastructure/filesystem.mjs",
+  "line": 100,
+  "branch": 40,
+  "fn": 100,
+  "uncovered": ""
+ },
+ {
+  "file": "infrastructure/git.mjs",
+  "line": 100,
+  "branch": 100,
+  "fn": 100,
+  "uncovered": ""
+ },
+ {
+  "file": "infrastructure/process-scope.mjs",
+  "line": 100,
+  "branch": 61.54,
+  "fn": 85.71,
+  "uncovered": ""
+ },
+ {
+  "file": "infrastructure/tasks.mjs",
+  "line": 95,
+  "branch": 64.1,
+  "fn": 72.73,
+  "uncovered": "19-21"
+ },
+ {
+  "file": "integration.mjs",
+  "line": 89.64,
+  "branch": 71.54,
+  "fn": 85.71,
+  "uncovered": "56-62 127-131 157-160 182-186 245-249"
+ },
+ {
+  "file": "inventory.mjs",
+  "line": 94.31,
+  "branch": 73.08,
+  "fn": 82.14,
+  "uncovered": "43-44 84-86 93-94 197-200 211-213"
+ },
+ {
+  "file": "onboarding-attestation.mjs",
+  "line": 30.95,
+  "branch": 100,
+  "fn": 0,
+  "uncovered": "21-30 33-41 44-82"
+ },
+ {
+  "file": "onboarding-auto.mjs",
+  "line": 72.14,
+  "branch": 66.36,
+  "fn": 58.06,
+  "uncovered": "27-36 87-90 134-146 151-154 157-159 162-167 170-185"
+ },
+ {
+  "file": "onboarding-client.mjs",
+  "line": 36.36,
+  "branch": 100,
+  "fn": 30,
+  "uncovered": "22-36 38-42 55-58 61-99"
+ },
+ {
+  "file": "onboarding-config.mjs",
+  "line": 96.02,
+  "branch": 85.29,
+  "fn": 89.47,
+  "uncovered": "107-109 124-128"
+ },
+ {
+  "file": "onboarding-finalize.mjs",
+  "line": 52.17,
+  "branch": 40,
+  "fn": 25,
+  "uncovered": "20-25 30-45"
+ },
+ {
+  "file": "onboarding-governance.mjs",
+  "line": 100,
+  "branch": 66.67,
+  "fn": 100,
+  "uncovered": ""
+ },
+ {
+  "file": "onboarding-providers.mjs",
+  "line": 100,
+  "branch": 66.67,
+  "fn": 100,
+  "uncovered": ""
+ },
+ {
+  "file": "onboarding-recovery.mjs",
+  "line": 94.55,
+  "branch": 85.07,
+  "fn": 95.24,
+  "uncovered": "25 27-28"
+ },
+ {
+  "file": "onboarding-runtime.mjs",
+  "line": 28.3,
+  "branch": 66.67,
+  "fn": 20,
+  "uncovered": "23-32 44-62 69-83 86-105 108-152 155-159"
+ },
+ {
+  "file": "onboarding-state.mjs",
+  "line": 64.33,
+  "branch": 48.39,
+  "fn": 56.52,
+  "uncovered": "39-45 48-49 74-103 133-135 146-149 152 158-171"
+ },
+ {
+  "file": "onboarding.mjs",
+  "line": 95.31,
+  "branch": 72.55,
+  "fn": 93.75,
+  "uncovered": "147-153 205-206 212"
+ },
+ {
+  "file": "plans-center.mjs",
+  "line": 100,
+  "branch": 78.57,
+  "fn": 100,
+  "uncovered": ""
+ },
+ {
+  "file": "plans.mjs",
+  "line": 100,
+  "branch": 51.43,
+  "fn": 100,
+  "uncovered": ""
+ },
+ {
+  "file": "platform-check.mjs",
+  "line": 55.8,
+  "branch": 27.45,
+  "fn": 26.32,
+  "uncovered": "18-20 53-60 63-72 76-84 86-104 126-132 139-146 149-150 152 155-156 163-165 167-176 182-195 206 209 213"
+ },
+ {
+  "file": "releases.mjs",
+  "line": 59.65,
+  "branch": 72.06,
+  "fn": 77.78,
+  "uncovered": "52-105 107 112-123 153-154"
+ },
+ {
+  "file": "renderer/features/documents/commands.mjs",
+  "line": 52.5,
+  "branch": 100,
+  "fn": 66.67,
+  "uncovered": "19-37"
+ },
+ {
+  "file": "renderer/presenter.mjs",
+  "line": 100,
+  "branch": 40,
+  "fn": 100,
+  "uncovered": ""
+ },
+ {
+  "file": "renderer/shared/onboarding-draft.mjs",
+  "line": 100,
+  "branch": 75,
+  "fn": 87.5,
+  "uncovered": ""
+ },
+ {
+  "file": "renderer/shared/request-coordinator.mjs",
+  "line": 100,
+  "branch": 94.44,
+  "fn": 90.91,
+  "uncovered": ""
+ },
+ {
+  "file": "renderer/shared/schema-fields.mjs",
+  "line": 93.75,
+  "branch": 69.44,
+  "fn": 100,
+  "uncovered": "15"
+ },
+ {
+  "file": "renderer/shared/task-client.mjs",
+  "line": 90.48,
+  "branch": 64.71,
+  "fn": 100,
+  "uncovered": "19-20"
+ },
+ {
+  "file": "runs.mjs",
+  "line": 100,
+  "branch": 67.8,
+  "fn": 100,
+  "uncovered": ""
+ },
+ {
+  "file": "runtime/task_worker.mjs",
+  "line": 90.63,
+  "branch": 27.27,
+  "fn": 28.57,
+  "uncovered": "18-20"
+ },
+ {
+  "file": "software-intake.mjs",
+  "line": 88.82,
+  "branch": 50,
+  "fn": 56.25,
+  "uncovered": "28-35 136-145"
+ },
+ {
+  "file": "software-launch.mjs",
+  "line": 88.68,
+  "branch": 27.27,
+  "fn": 66.67,
+  "uncovered": "86-92 102-106"
+ },
+ {
+  "file": "software-publish.mjs",
+  "line": 83.1,
+  "branch": 49.56,
+  "fn": 86.67,
+  "uncovered": "82-89 155-183 257-267"
+ },
+ {
+  "file": "software-recovery.mjs",
+  "line": 88.79,
+  "branch": 38.89,
+  "fn": 75,
+  "uncovered": "71-72 75-78 90-93 104-105"
+ },
+ {
+  "file": "software.mjs",
+  "line": 75.54,
+  "branch": 38.24,
+  "fn": 76.92,
+  "uncovered": "73-80 82-99 125 131-137"
+ },
+ {
+  "file": "transactions.mjs",
+  "line": 88.97,
+  "branch": 59.29,
+  "fn": 89.47,
+  "uncovered": "114-117 144-147 182-186 215-218 239-241 246-248 256-260 288-290 318-322 383-389 398"
+ },
+ {
+  "file": "transactions/audit-content.mjs",
+  "line": 100,
+  "branch": 94.74,
+  "fn": 100,
+  "uncovered": ""
+ },
+ {
+  "file": "transactions/audit-context.mjs",
+  "line": 100,
+  "branch": 100,
+  "fn": 100,
+  "uncovered": ""
+ },
+ {
+  "file": "transactions/kernel.mjs",
+  "line": 100,
+  "branch": 87.5,
+  "fn": 100,
+  "uncovered": ""
+ },
+ {
+  "file": "transactions/onboarding-files.mjs",
+  "line": 100,
+  "branch": 89.66,
+  "fn": 100,
+  "uncovered": ""
+ },
+ {
+  "file": "transactions/operation-audit.mjs",
+  "line": 100,
+  "branch": 84.62,
+  "fn": 100,
+  "uncovered": ""
+ },
+ {
+  "file": "transactions/recovery.mjs",
+  "line": 100,
+  "branch": 74.07,
+  "fn": 100,
+  "uncovered": ""
+ },
+ {
+  "file": "workspace-bootstrap.mjs",
+  "line": 92.54,
+  "branch": 60.87,
+  "fn": 75,
+  "uncovered": "56-60"
+ }
+]

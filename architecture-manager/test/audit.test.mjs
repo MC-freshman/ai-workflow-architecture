@@ -3,7 +3,7 @@ import test from 'node:test';
 import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
-import { readAuditEvents } from '../src/audit.mjs';
+import { readAuditEvents } from '../src/domains/audit/audit.mjs';
 
 function makeAuditRoot() {
   const auditRoot = join(mkdtempSync(join(tmpdir(), 'am-audit-')), 'audit');

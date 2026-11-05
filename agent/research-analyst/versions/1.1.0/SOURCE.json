@@ -1,0 +1,23 @@
+{
+  "schema": "ai-release-source/v1",
+  "id": "research-analyst",
+  "version": "1.1.0",
+  "origin": "approved 20261021 research-domain extension",
+  "sources": [
+    {
+      "resource": "research-paper-reader",
+      "version": "1.0.0",
+      "path": "upstream/nature-reader/SKILL.md",
+      "sha256": "fb93710f348498f5e83aa4ef90761ee0fdc67cc0adc3c0aca7d3302074c6f71c",
+      "when": "论文精读/讲解场景"
+    },
+    {
+      "resource": "research-paper-card",
+      "version": "1.0.0",
+      "path": "upstream/nature-paper-card/SKILL.md",
+      "sha256": "9f0bc1412059805ae9fee9152d591ca22d59311db99f18c92381722555630d2f",
+      "when": "论文深度分析场景"
+    }
+  ],
+  "change": "adds paper-reader/paper-analysis scenarios and paper resource skill pins; writing boundary unchanged"
+}

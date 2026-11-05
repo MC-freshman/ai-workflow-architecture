@@ -13,7 +13,7 @@ import {readMcpConfiguration,checkMcpServer} from '../src/domains/software/mcp-c
 import {buildMcpBodyPlan} from '../src/domains/intake/mcp-body.mjs';
 import {buildSoftwareCommandPlan} from '../src/domains/software/actions.mjs';
 import {buildNativeCredentialProviderPlan,buildNativeCredentialPlan} from '../src/domains/software/credentials.mjs';
-import {applyPlan,verifyPlanTarget} from '../src/transactions.mjs';
+import {applyPlan,verifyPlanTarget} from '../src/transactions/router.mjs';
 import {sha256File} from '../src/core/hash.mjs';
 const here=dirname(fileURLToPath(import.meta.url)),connectorSource=process.env.ARCHITECTURE_MANAGER_TEST_NATIVE_CONNECTOR || resolve(here,'../../software/_connector/versions/1.0.8'),python=process.env.ARCHITECTURE_MANAGER_TEST_PYTHON || 'python';
 function setup(t) {

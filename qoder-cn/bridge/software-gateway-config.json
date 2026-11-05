@@ -1,0 +1,86 @@
+{
+  "schema": "ai-software-gateway-config/v1",
+  "platformId": "qoder-cn",
+  "platform": "windows",
+  "softwareRoot": "E:\\ai\\software",
+  "lockRoot": "E:\\ai\\qoder-cn\\runtime\\software\\locks",
+  "evidenceRoot": "E:\\ai\\qoder-cn\\runtime\\software\\evidence",
+  "bodies": {
+    "burp-suite": "<local-tool-body-path> V2024.5.1\\BurpSuite V2024.5.1\\BurpSuite\\burpsuite_pro_org.jar",
+    "dirsearch": "D:\\Various_programming_languages\\PPython\\dirsearch-master\\dirsearch-master\\dirsearch.py",
+    "mysql-cli": "<local-tool-body-path>",
+    "nmap": "<local-tool-body-path>",
+    "veracrypt": "<local-tool-body-path>",
+    "wireshark-cli": "<local-tool-body-path>"
+  },
+  "interpreters": {
+    ".py": "E:\\ai\\qoder-cn\\runtime\\manager-environments\\8ef977ae-873b-436b-b548-9b872c841750\\host\\Scripts\\python.exe"
+  },
+  "interpreterAliases": {
+    "PPython": "D:\\Various_programming_languages\\PPython\\python.exe"
+  },
+  "credentialProvider": [
+    "E:\\ai\\qoder-cn\\runtime\\manager-environments\\8ef977ae-873b-436b-b548-9b872c841750\\host\\Scripts\\python.exe",
+    "-B",
+    "E:\\ai\\qoder-cn\\bridge\\manager-providers\\platform_provider.py",
+    "credential",
+    "E:\\ai\\qoder-cn\\runtime\\software\\provider-state"
+  ],
+  "sessionLaunch": [
+    "E:\\ai\\qoder-cn\\runtime\\manager-environments\\8ef977ae-873b-436b-b548-9b872c841750\\host\\Scripts\\python.exe",
+    "-B",
+    "E:\\ai\\qoder-cn\\bridge\\manager-providers\\platform_provider.py",
+    "launch",
+    "E:\\ai\\qoder-cn\\runtime\\software\\provider-state"
+  ],
+  "sessionLiveness": [
+    "E:\\ai\\qoder-cn\\runtime\\manager-environments\\8ef977ae-873b-436b-b548-9b872c841750\\host\\Scripts\\python.exe",
+    "-B",
+    "E:\\ai\\qoder-cn\\bridge\\manager-providers\\platform_provider.py",
+    "liveness",
+    "E:\\ai\\qoder-cn\\runtime\\software\\provider-state"
+  ],
+  "sessionTerminate": [
+    "E:\\ai\\qoder-cn\\runtime\\manager-environments\\8ef977ae-873b-436b-b548-9b872c841750\\host\\Scripts\\python.exe",
+    "-B",
+    "E:\\ai\\qoder-cn\\bridge\\manager-providers\\platform_provider.py",
+    "terminate",
+    "E:\\ai\\qoder-cn\\runtime\\software\\provider-state"
+  ],
+  "credentialWorkspace": "E:\\ai\\qoder-cn\\runtime\\software\\credentials",
+  "allowGuiLaunch": false,
+  "projectWriteRoots": [
+    "E:\\ai\\qoder-cn\\workspaces"
+  ],
+  "artifactRoots": [
+    "E:\\ai\\qoder-cn\\runtime\\software"
+  ],
+  "softwareProfiles": {
+    "readonly-version": {
+      "filesystem": [
+        "none",
+        "read"
+      ],
+      "network": [
+        "none"
+      ],
+      "credentials": [
+        "none"
+      ]
+    },
+    "administrator": {
+      "filesystem": [
+        "none",
+        "read",
+        "system"
+      ],
+      "network": [
+        "none"
+      ],
+      "credentials": [
+        "none"
+      ],
+      "consentPolicy": "per-call-user-confirmation"
+    }
+  }
+}

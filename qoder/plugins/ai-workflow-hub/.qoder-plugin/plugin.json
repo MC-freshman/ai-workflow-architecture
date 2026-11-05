@@ -1,0 +1,6 @@
+{
+  "name": "ai-workflow-hub",
+  "displayName": "AI Workflow Hub (qoder)",
+  "version": "1.1.0",
+  "description": "统一的 /wf 与 /wfa 入口：按 E:\\ai 共享工作流与专家仓库的调用协议执行，版本一律解析共享默认，本平台只钉引擎与契约。"
+}

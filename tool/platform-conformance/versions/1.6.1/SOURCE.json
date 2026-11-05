@@ -1,0 +1,10 @@
+{
+  "schema": "ai-release-source/v1",
+  "id": "platform-conformance",
+  "version": "1.6.1",
+  "derivedFrom": "platform-conformance@1.6.0",
+  "change": "20261010 approved one-button P2: retain software states before classifying; actual missing snapshots and bodies remain unverified",
+  "recordedAt": "2026-10-10T09:09:02.713414+00:00",
+  "author": "workspace maintainer",
+  "license": "existing release terms for unchanged bytes; new operational implementation by workspace maintainer"
+}

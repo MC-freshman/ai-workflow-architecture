@@ -5,7 +5,7 @@
   "legacyExactPayloadUnique": 1717,
   "legacyNormalizedBodyUnique": 1646,
   "countMeaning": "content fingerprints, not number of proven independent capabilities",
-  "newSkills": 200,
+  "newSkills": 206,
   "entries": [
     {
       "id": "coding-api-design",
@@ -33889,19 +33889,25 @@
     },
     {
       "id": "domain-core-software-engineer",
-      "version": "1.0.0",
+      "version": "1.1.0",
       "source": {
-        "repository": "workspace-authored operational guidance",
-        "snapshot": "approved 20261009",
-        "license": "workspace-authored"
+        "sourceId": "20261010-ui-guidance",
+        "license": "see pinned SOURCE/retained LICENSE",
+        "snapshot": "approved 20261010"
       },
-      "language": "zh",
-      "domain": "software-engineer",
+      "language": "zh-CN",
+      "domain": "interface-design",
       "canonicalId": "domain-core-software-engineer",
       "selection": "new canonical task/core/reference",
       "owners": [
-        "software-engineer"
-      ]
+        {
+          "agent": "software-engineer",
+          "version": "1.8.0",
+          "deprecated": false
+        }
+      ],
+      "payloadSha256": "2e75678e7d72d093f475887a6662b244751cd05deb5dfb92b31099d4407f270d",
+      "bodySha256": "ba33ccbd94efa50f2bc5a01c42dc5b06ea369fc99607ccd8740d7961e86eaee6"
     },
     {
       "id": "software-engineer-task-01",
@@ -33985,51 +33991,69 @@
     },
     {
       "id": "software-engineer-task-06",
-      "version": "1.0.0",
+      "version": "1.1.0",
       "source": {
-        "repository": "workspace-authored operational guidance",
-        "snapshot": "approved 20261009",
-        "license": "workspace-authored"
+        "sourceId": "20261010-ui-guidance",
+        "license": "see pinned SOURCE/retained LICENSE",
+        "snapshot": "approved 20261010"
       },
-      "language": "zh",
-      "domain": "software-engineer",
+      "language": "zh-CN",
+      "domain": "software-experience",
       "canonicalId": "software-engineer-task-06",
       "selection": "new canonical task/core/reference",
       "owners": [
-        "software-engineer"
-      ]
+        {
+          "agent": "software-engineer",
+          "version": "1.8.0",
+          "deprecated": false
+        }
+      ],
+      "payloadSha256": "dfa74c5b8854eb0e60d8393b9b27c87932caad5682c1b60cc131bfa74a1e67da",
+      "bodySha256": "0962b0c372a1061a6ade00dc8f0303865d804289e2b241096e479294876da434"
     },
     {
       "id": "domain-core-frontend-engineer",
-      "version": "1.0.0",
+      "version": "1.1.0",
       "source": {
-        "repository": "workspace-authored operational guidance",
-        "snapshot": "approved 20261009",
-        "license": "workspace-authored"
+        "sourceId": "20261010-ui-guidance",
+        "license": "see pinned SOURCE/retained LICENSE",
+        "snapshot": "approved 20261010"
       },
-      "language": "zh",
-      "domain": "frontend-engineer",
+      "language": "zh-CN",
+      "domain": "interface-design",
       "canonicalId": "domain-core-frontend-engineer",
       "selection": "new canonical task/core/reference",
       "owners": [
-        "frontend-engineer"
-      ]
+        {
+          "agent": "frontend-engineer",
+          "version": "1.1.0",
+          "deprecated": false
+        }
+      ],
+      "payloadSha256": "aeebc5a30693e7a0250a85bd3814ea09576c4df3d926bff166a489722db7f7fc",
+      "bodySha256": "acd27d19ada3df1a7b53a1afb7e28173b1af01ba5e9a5c546d1453c8c9648aad"
     },
     {
       "id": "frontend-engineer-task-01",
-      "version": "1.0.0",
+      "version": "1.1.0",
       "source": {
-        "repository": "workspace-authored operational guidance",
-        "snapshot": "approved 20261009",
-        "license": "workspace-authored"
+        "sourceId": "20261010-ui-guidance",
+        "license": "see pinned SOURCE/retained LICENSE",
+        "snapshot": "approved 20261010"
       },
-      "language": "zh",
-      "domain": "frontend-engineer",
+      "language": "zh-CN",
+      "domain": "interface-design",
       "canonicalId": "frontend-engineer-task-01",
       "selection": "new canonical task/core/reference",
       "owners": [
-        "frontend-engineer"
-      ]
+        {
+          "agent": "frontend-engineer",
+          "version": "1.1.0",
+          "deprecated": false
+        }
+      ],
+      "payloadSha256": "2ef3778d1bf35ac32ec86db013e19ef5d3c8c4153f23f23fc54e032ac86d3b5a",
+      "bodySha256": "0c2e44de12d4d9e0172a93bc4808bd36ccf3635acd95675bd8ac9b7d733ae5d2"
     },
     {
       "id": "frontend-engineer-task-02",
@@ -35249,19 +35273,25 @@
     },
     {
       "id": "domain-core-ui-ux-designer",
-      "version": "1.0.0",
+      "version": "1.1.0",
       "source": {
-        "repository": "workspace-authored operational guidance",
-        "snapshot": "approved 20261009",
-        "license": "workspace-authored"
+        "sourceId": "20261010-ui-guidance",
+        "license": "see pinned SOURCE/retained LICENSE",
+        "snapshot": "approved 20261010"
       },
-      "language": "zh",
-      "domain": "ui-ux-designer",
+      "language": "zh-CN",
+      "domain": "interface-design",
       "canonicalId": "domain-core-ui-ux-designer",
       "selection": "new canonical task/core/reference",
       "owners": [
-        "ui-ux-designer"
-      ]
+        {
+          "agent": "ui-ux-designer",
+          "version": "1.1.0",
+          "deprecated": false
+        }
+      ],
+      "payloadSha256": "87d2a7811d7136e9f8097f3245baac8d351c747c5ee60b84a33d74c674ac5776",
+      "bodySha256": "23bb49089db2ada0062e459a706bd2462763e58442b3e8ca690904cfba9544aa"
     },
     {
       "id": "ui-ux-designer-task-01",
@@ -35297,19 +35327,25 @@
     },
     {
       "id": "ui-ux-designer-task-03",
-      "version": "1.0.0",
+      "version": "1.1.0",
       "source": {
-        "repository": "workspace-authored operational guidance",
-        "snapshot": "approved 20261009",
-        "license": "workspace-authored"
+        "sourceId": "20261010-ui-guidance",
+        "license": "see pinned SOURCE/retained LICENSE",
+        "snapshot": "approved 20261010"
       },
-      "language": "zh",
-      "domain": "ui-ux-designer",
+      "language": "zh-CN",
+      "domain": "interface-design",
       "canonicalId": "ui-ux-designer-task-03",
       "selection": "new canonical task/core/reference",
       "owners": [
-        "ui-ux-designer"
-      ]
+        {
+          "agent": "ui-ux-designer",
+          "version": "1.1.0",
+          "deprecated": false
+        }
+      ],
+      "payloadSha256": "07e2f9837861e43a4f89850c091fc7ab1ab562d13fd2a995e7e0f6fffbc8b5ff",
+      "bodySha256": "ce99d46d8d789ceee91ba34c64ef511fa6cf2977e960df54df29c38f47650ebe"
     },
     {
       "id": "ui-ux-designer-task-04",
@@ -36846,6 +36882,173 @@
       "selection": "new canonical task/core/reference",
       "owners": [
         "mastermind-bug-bounty"
+      ]
+    },
+    {
+      "id": "software-product-experience",
+      "canonicalId": "software-product-experience",
+      "selection": "canonical",
+      "version": "1.0.0",
+      "source": {
+        "sourceId": "20261010-ui-guidance",
+        "license": "see pinned SOURCE/retained LICENSE",
+        "snapshot": "approved 20261010"
+      },
+      "language": "zh-CN",
+      "domain": "software-experience",
+      "payloadSha256": "60d553086d78e9381628db26be8cc2a652c59bbaa9d8d6efc3c145cd2cf3fb59",
+      "bodySha256": "0551a09877951f2a4c2bc1b357ccbe506499630aba6528b0b14f511156e8345c",
+      "owners": [
+        {
+          "agent": "software-engineer",
+          "version": "1.8.0",
+          "deprecated": false
+        }
+      ]
+    },
+    {
+      "id": "product-onboarding",
+      "canonicalId": "product-onboarding",
+      "selection": "canonical",
+      "version": "1.0.0",
+      "source": {
+        "sourceId": "20261010-ui-guidance",
+        "license": "see pinned SOURCE/retained LICENSE",
+        "snapshot": "approved 20261010"
+      },
+      "language": "zh-CN",
+      "domain": "interface-design",
+      "payloadSha256": "103b66edc2e4d8db8144d77ece936a0d3eb15a4a77e5656613b08f470eb52dc8",
+      "bodySha256": "139f4f70a431cdce737f45036e18f95b2b89f03f42f6bee28610938f0b19ebe0",
+      "owners": [
+        {
+          "agent": "software-engineer",
+          "version": "1.8.0",
+          "deprecated": false
+        },
+        {
+          "agent": "frontend-engineer",
+          "version": "1.1.0",
+          "deprecated": false
+        },
+        {
+          "agent": "ui-ux-designer",
+          "version": "1.1.0",
+          "deprecated": false
+        }
+      ]
+    },
+    {
+      "id": "interface-copy",
+      "canonicalId": "interface-copy",
+      "selection": "canonical",
+      "version": "1.0.0",
+      "source": {
+        "sourceId": "20261010-ui-guidance",
+        "license": "see pinned SOURCE/retained LICENSE",
+        "snapshot": "approved 20261010"
+      },
+      "language": "zh-CN",
+      "domain": "interface-design",
+      "payloadSha256": "899a2f94d9d55141be98022525b52c2443a1598354bf4f90562e9bcdeea1faea",
+      "bodySha256": "b3eb8bb40d9a73a320dfb8d59ee201e1f980f25d964e01ace1717c88a1ccc6c6",
+      "owners": [
+        {
+          "agent": "software-engineer",
+          "version": "1.8.0",
+          "deprecated": false
+        },
+        {
+          "agent": "frontend-engineer",
+          "version": "1.1.0",
+          "deprecated": false
+        },
+        {
+          "agent": "ui-ux-designer",
+          "version": "1.1.0",
+          "deprecated": false
+        }
+      ]
+    },
+    {
+      "id": "interface-visual-design",
+      "canonicalId": "interface-visual-design",
+      "selection": "canonical",
+      "version": "1.0.0",
+      "source": {
+        "sourceId": "20261010-ui-guidance",
+        "license": "see pinned SOURCE/retained LICENSE",
+        "snapshot": "approved 20261010"
+      },
+      "language": "zh-CN",
+      "domain": "interface-design",
+      "payloadSha256": "3607652cefa591d2a705c9f3818e37cf3176bdf10a3756682965a89185a94b25",
+      "bodySha256": "c4ceb2b03b6982e946a28f06a2eda3f6647d12902c396058129ce3153f556c58",
+      "owners": [
+        {
+          "agent": "frontend-engineer",
+          "version": "1.1.0",
+          "deprecated": false
+        },
+        {
+          "agent": "ui-ux-designer",
+          "version": "1.1.0",
+          "deprecated": false
+        }
+      ]
+    },
+    {
+      "id": "interface-visual-review",
+      "canonicalId": "interface-visual-review",
+      "selection": "canonical",
+      "version": "1.0.0",
+      "source": {
+        "sourceId": "20261010-ui-guidance",
+        "license": "see pinned SOURCE/retained LICENSE",
+        "snapshot": "approved 20261010"
+      },
+      "language": "zh-CN",
+      "domain": "interface-design",
+      "payloadSha256": "f178477e4c1dbe371bdbe3c48a9d74f0a6b0b59d88d603cf44db51d233907f68",
+      "bodySha256": "fe15ee1dc57d11f4daff8ffc15e33ffba44d26e4d72b464548e8dbb3d43f0f03",
+      "owners": [
+        {
+          "agent": "frontend-engineer",
+          "version": "1.1.0",
+          "deprecated": false
+        }
+      ]
+    },
+    {
+      "id": "ui-design-reference-library",
+      "canonicalId": "ui-design-reference-library",
+      "selection": "canonical",
+      "version": "1.0.0",
+      "source": {
+        "sourceId": "20261010-ui-guidance",
+        "license": "see pinned SOURCE/retained LICENSE",
+        "snapshot": "approved 20261010"
+      },
+      "language": "zh-CN",
+      "domain": "interface-design",
+      "payloadSha256": "2e8be5a2fe85afd774ff5cd5f291ce727b065fc965b56510ed50c9ebba147e5f",
+      "bodySha256": "c16ea7f1613b2ecc6b5fd88664e57e7406f0f358051a274b5c5ac7ee515f67a6",
+      "owners": [
+        {
+          "agent": "software-engineer",
+          "version": "1.8.0",
+          "deprecated": false
+        },
+        {
+          "agent": "frontend-engineer",
+          "version": "1.1.0",
+          "deprecated": false
+        },
+        {
+          "agent": "ui-ux-designer",
+          "version": "1.1.0",
+          "deprecated": false
+        }
       ]
     }
   ]

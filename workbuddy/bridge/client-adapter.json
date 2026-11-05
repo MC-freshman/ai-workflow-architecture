@@ -1,0 +1,32 @@
+{
+  "schema": "architecture-manager-client/v1",
+  "platformId": "workbuddy",
+  "kind": "cli",
+  "executable": "E:\\ai\\workbuddy\\runtime\\manager-environments\\4c30aa9c-387b-4cb2-bf2d-edd1de6c3293\\host\\Scripts\\python.exe",
+  "args": [
+    "-B",
+    "E:\\ai\\workbuddy\\bridge\\manager-client\\cli_client.py",
+    "E:\\ai\\workbuddy\\bridge\\client-adapter.json"
+  ],
+  "server": {
+    "executable": "E:\\ai\\workbuddy\\runtime\\manager-environments\\4c30aa9c-387b-4cb2-bf2d-edd1de6c3293\\host\\Scripts\\python.exe",
+    "args": [
+      "-B",
+      "E:\\ai\\workbuddy\\bridge\\manager-client\\mcp_service.py",
+      "E:\\ai\\workbuddy\\bridge\\workbuddy-config.json"
+    ]
+  },
+  "preset": "architecture-json-cli",
+  "probeTool": "architecture_probe",
+  "nativeVerified": false,
+  "installedClient": true,
+  "management": {
+    "executable": "E:\\ai\\workbuddy\\runtime\\manager-node\\node.exe",
+    "executableSha256": "9a4eb5f1c29c6a2e93852ead46b999e284a6a5ca8bab4d4e241d587d025a52de",
+    "args": [
+      "E:\\ai\\workbuddy\\bridge\\manager-client\\platform_defaults.mjs",
+      "E:\\ai\\workbuddy\\bridge\\workbuddy-config.json"
+    ],
+    "moduleSha256": "3ef9d7c661dac41a8591d301511014aac002908a26ce857c82b404f194c36ff0"
+  }
+}

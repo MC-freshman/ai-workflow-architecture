@@ -8,10 +8,10 @@ import { writeFileSync, mkdtempSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join, dirname } from 'node:path';
 import { fileURLToPath } from 'node:url';
-import { listRunLedger } from '../src/runs.mjs';
-import { readDefectBook, verifyDefectBook } from '../src/defects.mjs';
-import { inspectInbox } from '../src/inbox.mjs';
-import { inspectGit } from '../src/git.mjs';
+import { listRunLedger } from '../src/domains/runs/runs.mjs';
+import { readDefectBook, verifyDefectBook } from '../src/domains/audit/defects.mjs';
+import { inspectInbox } from '../src/domains/intake/inbox.mjs';
+import { inspectGit } from '../src/domains/git/git.mjs';
 
 const repoRoot = join(dirname(fileURLToPath(import.meta.url)), '..');
 const workspaceRoot = process.argv[2] || 'E:/ai';

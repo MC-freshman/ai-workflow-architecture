@@ -1,0 +1,21 @@
+{
+  "schema": "ai-skill-catalog/v1",
+  "sourceId": "nature-skills",
+  "snapshot": "snapshot-2026.08.31",
+  "skills": [
+    {
+      "id": "research-paper-reader",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-reader/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "research-paper-card",
+      "version": "1.0.0",
+      "sourceId": "nature-skills",
+      "sourcePath": "skills/nature-paper-card/SKILL.md",
+      "category": "skill"
+    }
+  ]
+}

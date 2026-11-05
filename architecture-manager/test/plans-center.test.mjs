@@ -4,8 +4,8 @@ import { execFileSync } from 'node:child_process';
 import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
-import { diffDocument, buildDocsSite } from '../src/docs-ops.mjs';
-import { parseImplementationTables } from '../src/plans-center.mjs';
+import { diffDocument, buildDocsSite } from '../src/domains/docs/docs-ops.mjs';
+import { parseImplementationTables } from '../src/domains/plans/plans-center.mjs';
 
 const TABLE_DOC = `# 实施表 fixture
 

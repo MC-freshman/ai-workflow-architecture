@@ -6,12 +6,12 @@ import {tmpdir} from 'node:os';
 import {seedRelease,seedPointer} from './support/resources.mjs';
 import {sha256} from '../src/core/hash.mjs';
 import {readJson} from '../src/core/json.mjs';
-import {assertPublishedVersion,buildResourcePointerPlan} from '../src/plans.mjs';
-import {applyPlan,verifyPlanTarget} from '../src/transactions.mjs';
-import {buildIntegrationPlan} from '../src/integration.mjs';
-import {buildReleasePlan} from '../src/releases.mjs';
+import {assertPublishedVersion,buildResourcePointerPlan} from '../src/domains/plans/plans.mjs';
+import {applyPlan,verifyPlanTarget} from '../src/transactions/router.mjs';
+import {buildIntegrationPlan} from '../src/domains/platforms/integration.mjs';
+import {buildReleasePlan} from '../src/domains/intake/releases.mjs';
 import {validateResourceContent} from '../src/domains/resources/contracts.mjs';
-import {resolveRecipeVersion,verifySoftwareRecipe} from '../src/software-publish.mjs';
+import {resolveRecipeVersion,verifySoftwareRecipe} from '../src/domains/software/software-publish.mjs';
 
 function fixture(t) {const root=mkdtempSync(join(tmpdir(),'am-resource-regression-'));t.after(()=>{assert.ok(relative(tmpdir(),root).startsWith('am-resource-regression-'));rmSync(root,{recursive:true,force:true});});return root;}
 function pointerPlan(root) {return buildResourcePointerPlan({workspaceRoot:root,repository:'tool',resourceId:'demo',currentVersion:'1.0.0',targetVersion:'1.1.0',availableVersions:['1.0.0','1.1.0'],baselineSha256:sha256(readFileSync(join(root,'tool/demo/current.json')))});}

@@ -1,0 +1,120 @@
+{
+  "at": "2026-10-10T20:08:49.416614+08:00",
+  "ok": true,
+  "version": "0.8.3",
+  "P1": "pass",
+  "P2": "pass",
+  "P3": "pass",
+  "private": {
+    "head": "dfbab5683c71c042e379e4bb7a1375b6f2eedf50",
+    "originMain": "dfbab5683c71c042e379e4bb7a1375b6f2eedf50",
+    "remoteHead": "dfbab5683c71c042e379e4bb7a1375b6f2eedf50",
+    "remoteEqualsLocal": true,
+    "whitelistStatusEmpty": true,
+    "globalStatusEmpty": true,
+    "readmeSha256": "5366be06a4b530dca092ef1e0e47cd16d099061e2d6a0d99012d8ea87b627c55"
+  },
+  "public": {
+    "head": "ea11a675d550c2e8d51ac9d70f433653640d1185",
+    "originMain": "ea11a675d550c2e8d51ac9d70f433653640d1185",
+    "remoteHead": "ea11a675d550c2e8d51ac9d70f433653640d1185",
+    "remoteEqualsLocal": true,
+    "whitelistStatusEmpty": true,
+    "globalStatusEmpty": true,
+    "readmeSha256": "e07059c415b79e6d3446064982127a1751ae083145af70f3857130aff3adfa3e"
+  },
+  "rollbackCommit": "62385c5d8d8b4c840f082ab7bf4e1cdb8a7a02e9",
+  "rollbackCommittedAt": "2026-10-10T19:36:51+08:00",
+  "firstPublicationAt": "2026-10-10T12:06:51Z",
+  "baselinePrecedesPublication": true,
+  "destructiveActions": false,
+  "入库时间早于破坏时间": "N/A — no destructive action this round; baseline preceded new publication",
+  "releases": {
+    "public": {
+      "at": "2026-10-10T20:06:51.765558+08:00",
+      "head": "ea11a675d550c2e8d51ac9d70f433653640d1185",
+      "tag": "v0.8.3",
+      "url": "https://github.com/MC-freshman/ai-workflow-architecture/releases/tag/v0.8.3",
+      "publishedAt": "2026-10-10T12:06:51Z",
+      "assets": [
+        {
+          "name": "Architecture-Manager-0.8.3-Guide.zh-CN.md",
+          "bytes": 29993,
+          "sha256": "e07059c415b79e6d3446064982127a1751ae083145af70f3857130aff3adfa3e"
+        },
+        {
+          "name": "Architecture-Manager-0.8.3-portable-x64.exe",
+          "bytes": 112449035,
+          "sha256": "2385f6cd57e3f7f6613320fc1826088aae2ae8a358b4a9713c1556e20ad7d182"
+        },
+        {
+          "name": "Architecture-Manager-0.8.3-setup-x64.exe",
+          "bytes": 112678942,
+          "sha256": "24cb9d6c8bbd9e77edc95c4e18602c73143513454cd06d4177168b9c24ff2024"
+        },
+        {
+          "name": "RELEASE-0.8.3.json",
+          "bytes": 1962,
+          "sha256": "665b61f9c37c8e141b6f36cc3dedb86243daeda203bb935fa12a13b58773a415"
+        },
+        {
+          "name": "SHA256SUMS-0.8.3.txt",
+          "bytes": 410,
+          "sha256": "2486c247690abcb7adaf33a3317fee06672e5847ebe725a4191a4adb75c387c6"
+        }
+      ],
+      "serverAssetDigestsVerified": true,
+      "installerExecuted": false
+    },
+    "private": {
+      "at": "2026-10-10T20:07:45.104472+08:00",
+      "head": "dfbab5683c71c042e379e4bb7a1375b6f2eedf50",
+      "tag": "v0.8.3",
+      "url": "https://github.com/MC-freshman/ai-workflow-architecture-governance/releases/tag/v0.8.3",
+      "publishedAt": "2026-10-10T12:07:44Z",
+      "assets": [
+        {
+          "name": "Architecture-Manager-0.8.3-Guide.zh-CN.md",
+          "bytes": 29993,
+          "sha256": "e07059c415b79e6d3446064982127a1751ae083145af70f3857130aff3adfa3e"
+        },
+        {
+          "name": "Architecture-Manager-0.8.3-portable-x64.exe",
+          "bytes": 112449035,
+          "sha256": "2385f6cd57e3f7f6613320fc1826088aae2ae8a358b4a9713c1556e20ad7d182"
+        },
+        {
+          "name": "Architecture-Manager-0.8.3-setup-x64.exe",
+          "bytes": 112678942,
+          "sha256": "24cb9d6c8bbd9e77edc95c4e18602c73143513454cd06d4177168b9c24ff2024"
+        },
+        {
+          "name": "RELEASE-0.8.3.json",
+          "bytes": 1962,
+          "sha256": "665b61f9c37c8e141b6f36cc3dedb86243daeda203bb935fa12a13b58773a415"
+        },
+        {
+          "name": "SHA256SUMS-0.8.3.txt",
+          "bytes": 410,
+          "sha256": "2486c247690abcb7adaf33a3317fee06672e5847ebe725a4191a4adb75c387c6"
+        }
+      ],
+      "serverAssetDigestsVerified": true,
+      "installerExecuted": false
+    }
+  },
+  "oldReleaseAssetsAndTagsPreserved": true,
+  "oldPublicFrozenFilesUnchanged": 21738,
+  "publicCommittedProof": {
+    "at": "2026-10-10T20:08:14.450982+08:00",
+    "ok": true,
+    "head": "ea11a675d550c2e8d51ac9d70f433653640d1185",
+    "committedChecksumsVerified": 24268,
+    "uniqueBlobsVerified": 13157,
+    "oldFrozenFilesUnchanged": 21738,
+    "packagedSrcVerifiedInCommit": 228
+  },
+  "publicHistoryImport": false,
+  "agent": null,
+  "workflow": null
+}

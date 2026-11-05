@@ -1,0 +1,200 @@
+{
+  "generatedAt": "2026-10-10T02:48:29.234Z",
+  "mode": "chain",
+  "bookPath": "E:/ai/versions/缺陷状态簿.json",
+  "baselineSha256": "e2d9743ce292fe5de7291ff678ff9abd31462b67bab4b7d62649d23ee1649ea8",
+  "finalBookSha256": "51322f3b571f8bdd676ab35eb8d56eb423838bc42c2311bd52ac73b2075e3ff7",
+  "rows": [
+    {
+      "n": "defect-book-append-20261010024701075",
+      "planId": "defect-book-append-20261010024701075",
+      "transactionId": "defect-book-append-20261010024701075-20261010024701115-de92003a",
+      "checkpointSha256": "e2d9743ce292fe5de7291ff678ff9abd31462b67bab4b7d62649d23ee1649ea8",
+      "match": "",
+      "id": "AUD-D-001",
+      "status": "open",
+      "newSha256": "b3d7d6bca2933302f684c2dab02507f6835f0c758fe49cdf51a084b84951fa2f"
+    },
+    {
+      "n": "defect-book-append-20261010024701188",
+      "planId": "defect-book-append-20261010024701188",
+      "transactionId": "defect-book-append-20261010024701188-20261010024701194-bd73b4e7",
+      "checkpointSha256": "b3d7d6bca2933302f684c2dab02507f6835f0c758fe49cdf51a084b84951fa2f",
+      "match": "",
+      "id": "AUD-D-002",
+      "status": "open",
+      "newSha256": "53db829936c403feca2a4bcbff8db741153e15ac6e9b28d187d5f569dee521f6"
+    },
+    {
+      "n": "defect-book-append-20261010024701233",
+      "planId": "defect-book-append-20261010024701233",
+      "transactionId": "defect-book-append-20261010024701233-20261010024701239-3ba5de38",
+      "checkpointSha256": "53db829936c403feca2a4bcbff8db741153e15ac6e9b28d187d5f569dee521f6",
+      "match": "",
+      "id": "AUD-D-003",
+      "status": "unverified-registration",
+      "newSha256": "451e4fede67b7d75be4a5a7859300e499f22e803b763c7599904ee8d6fbda472"
+    },
+    {
+      "n": "defect-book-append-20261010024701266",
+      "planId": "defect-book-append-20261010024701266",
+      "transactionId": "defect-book-append-20261010024701266-20261010024701270-d898f42d",
+      "checkpointSha256": "451e4fede67b7d75be4a5a7859300e499f22e803b763c7599904ee8d6fbda472",
+      "match": "",
+      "id": "AUD-D-004",
+      "status": "unverified-registration",
+      "newSha256": "23a53f7d5a53788bb5012339bdc97adaf56ff92872de601e7c8b77c705f24452"
+    },
+    {
+      "n": "defect-book-append-20261010024701295",
+      "planId": "defect-book-append-20261010024701295",
+      "transactionId": "defect-book-append-20261010024701295-20261010024701299-94738fdc",
+      "checkpointSha256": "23a53f7d5a53788bb5012339bdc97adaf56ff92872de601e7c8b77c705f24452",
+      "match": "",
+      "id": "AUD-D-005",
+      "status": "unverified-registration",
+      "newSha256": "202a65254a6b64664b14c86c1016007cdfe93dc1a67200c14451328ac8fd4157"
+    },
+    {
+      "n": "defect-book-append-20261010024701324",
+      "planId": "defect-book-append-20261010024701324",
+      "transactionId": "defect-book-append-20261010024701324-20261010024701328-70f0e164",
+      "checkpointSha256": "202a65254a6b64664b14c86c1016007cdfe93dc1a67200c14451328ac8fd4157",
+      "match": "",
+      "id": "AUD-D-006",
+      "status": "unverified-registration",
+      "newSha256": "a45c7e8d1cadbe095389170fbf539d595f89ab32ab70d92591178ee16695c1e1"
+    },
+    {
+      "n": "defect-book-append-20261010024701353",
+      "planId": "defect-book-append-20261010024701353",
+      "transactionId": "defect-book-append-20261010024701353-20261010024701356-3a9c9111",
+      "checkpointSha256": "a45c7e8d1cadbe095389170fbf539d595f89ab32ab70d92591178ee16695c1e1",
+      "match": "",
+      "id": "AUD-D-007",
+      "status": "unverified-registration",
+      "newSha256": "deb6fb888623ef5145b9f9011ecbcf90f8d8712402a9c09333a9292dc961ca27"
+    },
+    {
+      "n": "defect-book-append-20261010024701387",
+      "planId": "defect-book-append-20261010024701387",
+      "transactionId": "defect-book-append-20261010024701387-20261010024701390-de9cf7ff",
+      "checkpointSha256": "deb6fb888623ef5145b9f9011ecbcf90f8d8712402a9c09333a9292dc961ca27",
+      "match": "",
+      "id": "AUD-D-008",
+      "status": "unverified-registration",
+      "newSha256": "5e4de6f19f6425fffe63d767331b3d26b023d537393f916a4f1ca46e26383950"
+    },
+    {
+      "n": "defect-book-append-20261010024701416",
+      "planId": "defect-book-append-20261010024701416",
+      "transactionId": "defect-book-append-20261010024701416-20261010024701420-d8d71969",
+      "checkpointSha256": "5e4de6f19f6425fffe63d767331b3d26b023d537393f916a4f1ca46e26383950",
+      "match": "",
+      "id": "AUD-D-009",
+      "status": "unverified-registration",
+      "newSha256": "31643064a89feb5135be90edd53ed7768c5aaa9b2a5c14503fede98a9faee57c"
+    },
+    {
+      "n": "defect-book-append-20261010024701453",
+      "planId": "defect-book-append-20261010024701453",
+      "transactionId": "defect-book-append-20261010024701453-20261010024701462-6c51a6c1",
+      "checkpointSha256": "31643064a89feb5135be90edd53ed7768c5aaa9b2a5c14503fede98a9faee57c",
+      "match": "",
+      "id": "AUD-D-010",
+      "status": "unverified-registration",
+      "newSha256": "7fda1826f25dd577dbcbf0a2c411cf40c0ae39b63bf4816273690b32a72ea640"
+    },
+    {
+      "n": "defect-book-append-20261010024701490",
+      "planId": "defect-book-append-20261010024701490",
+      "transactionId": "defect-book-append-20261010024701490-20261010024701494-7d9d3ed1",
+      "checkpointSha256": "7fda1826f25dd577dbcbf0a2c411cf40c0ae39b63bf4816273690b32a72ea640",
+      "match": "",
+      "id": "AUD-D-011",
+      "status": "unverified-registration",
+      "newSha256": "ba7af41661763a6f2ddfcf0b8c6c1650cd1861a401a7b1c7a69e139658343e3d"
+    },
+    {
+      "n": "defect-book-append-20261010024701522",
+      "planId": "defect-book-append-20261010024701522",
+      "transactionId": "defect-book-append-20261010024701522-20261010024701526-3af7fd49",
+      "checkpointSha256": "ba7af41661763a6f2ddfcf0b8c6c1650cd1861a401a7b1c7a69e139658343e3d",
+      "match": "",
+      "id": "AUD-D-012",
+      "status": "unverified-registration",
+      "newSha256": "762dfbc6a551e25d9d119a0fd451d26253a6b15b756fc0ed5c6f8d9bfeedbd85"
+    },
+    {
+      "n": "defect-book-append-20261010024701552",
+      "planId": "defect-book-append-20261010024701552",
+      "transactionId": "defect-book-append-20261010024701552-20261010024701556-841ef5fa",
+      "checkpointSha256": "762dfbc6a551e25d9d119a0fd451d26253a6b15b756fc0ed5c6f8d9bfeedbd85",
+      "match": "",
+      "id": "AUD-D-013",
+      "status": "unverified-registration",
+      "newSha256": "538c95198c0cde1ede187d6ecdec19ace3921632ac84b101277119d1e2a3d090"
+    },
+    {
+      "n": "defect-book-append-20261010024701582",
+      "planId": "defect-book-append-20261010024701582",
+      "transactionId": "defect-book-append-20261010024701582-20261010024701587-a1b31ff8",
+      "checkpointSha256": "538c95198c0cde1ede187d6ecdec19ace3921632ac84b101277119d1e2a3d090",
+      "match": "STDOUT-MATCH",
+      "id": "AUD-D-014",
+      "status": "unverified-registration",
+      "newSha256": "b1243a5c577cae5ea04c89fea25150b87d7b5dfec8165d83b7b87b94e5e8394e"
+    },
+    {
+      "n": "defect-book-append-20261010024701615",
+      "planId": "defect-book-append-20261010024701615",
+      "transactionId": "defect-book-append-20261010024701615-20261010024701619-38ddde27",
+      "checkpointSha256": "b1243a5c577cae5ea04c89fea25150b87d7b5dfec8165d83b7b87b94e5e8394e",
+      "match": "STDOUT-MATCH",
+      "id": "AUD-D-015",
+      "status": "unverified-registration",
+      "newSha256": "a320a992668c1811ada243bfc9867c7af824a152f0f1df7369ab162b495fc018"
+    },
+    {
+      "n": "defect-book-append-20261010024701643",
+      "planId": "defect-book-append-20261010024701643",
+      "transactionId": "defect-book-append-20261010024701643-20261010024701647-06a67adc",
+      "checkpointSha256": "a320a992668c1811ada243bfc9867c7af824a152f0f1df7369ab162b495fc018",
+      "match": "STDOUT-MATCH",
+      "id": "AUD-D-016",
+      "status": "unverified-registration",
+      "newSha256": "10a0d941a3a149db7862ac2ca4b5108a2e337c1b838148abebe4d43442fdaa6d"
+    },
+    {
+      "n": "defect-book-append-20261010024701675",
+      "planId": "defect-book-append-20261010024701675",
+      "transactionId": "defect-book-append-20261010024701675-20261010024701679-0bdf6977",
+      "checkpointSha256": "10a0d941a3a149db7862ac2ca4b5108a2e337c1b838148abebe4d43442fdaa6d",
+      "match": "STDOUT-MATCH",
+      "id": "AUD-D-017",
+      "status": "unverified-registration",
+      "newSha256": "702a5371ea990b94f8e7ce2c18a48395c1cbf53ef90d22990df8cf0e51bb21a7"
+    },
+    {
+      "n": "defect-book-append-20261010024701706",
+      "planId": "defect-book-append-20261010024701706",
+      "transactionId": "defect-book-append-20261010024701706-20261010024701709-436c8c01",
+      "checkpointSha256": "702a5371ea990b94f8e7ce2c18a48395c1cbf53ef90d22990df8cf0e51bb21a7",
+      "match": "STDOUT-MATCH",
+      "id": "AUD-D-018",
+      "status": "unverified-registration",
+      "newSha256": "1499a842f62049a2f92e71f9ba91fae5f02f32cd7d6aa3a0f4a8770c0871de84"
+    },
+    {
+      "n": "defect-book-append-20261010024701734",
+      "planId": "defect-book-append-20261010024701734",
+      "transactionId": "defect-book-append-20261010024701734-20261010024701739-14275ce6",
+      "checkpointSha256": "1499a842f62049a2f92e71f9ba91fae5f02f32cd7d6aa3a0f4a8770c0871de84",
+      "match": "STDOUT-MATCH",
+      "id": "AUD-D-019",
+      "status": "unverified-registration",
+      "newSha256": "51322f3b571f8bdd676ab35eb8d56eb423838bc42c2311bd52ac73b2075e3ff7"
+    }
+  ],
+  "chainIntegrity": "verified (each newSha256 == next checkpointSha256; last == finalBookSha256)"
+}

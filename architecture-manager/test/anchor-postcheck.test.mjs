@@ -4,8 +4,8 @@ import {mkdtempSync,rmSync,mkdirSync,writeFileSync} from 'node:fs';
 import {join,dirname} from 'node:path';
 import {tmpdir} from 'node:os';
 import {seedPointer,seedRuntimeReleases} from './support/resources.mjs';
-import {executePostAlignmentChecks} from '../src/onboarding-state.mjs';
-import {readOnboardingState} from '../src/onboarding-state.mjs';
+import {executePostAlignmentChecks} from '../src/domains/onboarding/onboarding-state.mjs';
+import {readOnboardingState} from '../src/domains/onboarding/onboarding-state.mjs';
 
 // A platform that is configured but has never passed a first matrix. The post-alignment run must be
 // able to act on it, must ask for the affected-cell mode only, and must never claim a client loop.

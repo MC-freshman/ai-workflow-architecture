@@ -1,9 +1,8 @@
 {
   "schema": "ai-architecture-anchor/v1",
-  "generatedAt": "2026-10-10T11:56:05.823Z",
   "source": {
     "kind": "derived-from-workspace-pointers-and-frozen-manifests",
-    "workspaceRoot": "."
+    "workspaceRoot": "E:\\ai"
   },
   "engine": {
     "id": "wf-runner",
@@ -34,8 +33,8 @@
   },
   "conformance": {
     "id": "platform-conformance",
-    "version": "1.6.2",
-    "path": "tool/platform-conformance/versions/1.6.2",
+    "version": "1.6.3",
+    "path": "tool/platform-conformance/versions/1.6.3",
     "selectedBecause": "shared current pointer: the capability-floor judge the workspace declares as default"
   },
   "software": {

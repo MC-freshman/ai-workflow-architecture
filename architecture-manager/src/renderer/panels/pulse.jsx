@@ -25,7 +25,7 @@ export function HomePulse({ api, workspace }) {
   if (!pulse) return null;
   return <div className="stats-grid">
     <div className="stat-card"><div className="stat-label">缺陷红行</div><div className="stat-value">{pulse.redRows ?? '—'}</div><div className="stat-hint">{pulse.defectTotal != null ? `簿共 ${pulse.defectTotal} 条` : '簿未读'}</div></div>
-    <div className="stat-card"><div className="stat-label">运行台账</div><div className="stat-value">{pulse.runs}</div><div className="stat-hint">六平台 run 目录</div></div>
+    <div className="stat-card"><div className="stat-label">运行台账</div><div className="stat-value">{pulse.runs}</div><div className="stat-hint">各平台 run 目录</div></div>
     <div className="stat-card"><div className="stat-label">inbox</div><div className="stat-value">{pulse.inbox || '—'}</div><div className="stat-hint">只读盘点</div></div>
     <div className="stat-card"><div className="stat-label">审计事件</div><div className="stat-value">{pulse.auditEvents ?? '—'}</div><div className="stat-hint">本机应用数据</div></div>
   </div>;

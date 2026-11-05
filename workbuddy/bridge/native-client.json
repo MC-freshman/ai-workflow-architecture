@@ -1,0 +1,35 @@
+{
+  "schema": "architecture-manager-native-client/v1",
+  "platformId": "workbuddy",
+  "profile": {
+    "kind": "workbuddy-cli",
+    "label": "WorkBuddy 原生 CLI",
+    "bodyPath": "E:\\ai\\workbuddy\\workbuddy\\WorkBuddy.exe",
+    "bodySha256": "fd43162ea5637b48206e0f87e33221cb30d256e326c84646576b2882b78f9454",
+    "executable": "E:\\ai\\workbuddy\\workbuddy\\WorkBuddy.exe",
+    "executableSha256": "fd43162ea5637b48206e0f87e33221cb30d256e326c84646576b2882b78f9454",
+    "cli": "E:\\ai\\workbuddy\\workbuddy\\resources\\app.asar.unpacked\\cli\\bin\\codebuddy",
+    "cliSha256": "8df0f1c7bc6535e5df0b626450228241d874867023adb6c9c8f7b1a882590bf4",
+    "productPath": "E:\\ai\\workbuddy\\workbuddy\\resources\\app.asar.unpacked\\cli\\product.json",
+    "project": "E:\\ai\\workbuddy\\workspaces\\architecture-native",
+    "configPath": "E:\\ai\\workbuddy\\workspaces\\architecture-native\\.mcp.json",
+    "supportsRegistration": true,
+    "supportsDirectProbe": false
+  },
+  "entry": {
+    "type": "stdio",
+    "command": "E:\\ai\\workbuddy\\runtime\\manager-environments\\4c30aa9c-387b-4cb2-bf2d-edd1de6c3293\\host\\Scripts\\python.exe",
+    "args": [
+      "-B",
+      "E:\\ai\\workbuddy\\bridge\\manager-client\\mcp_service.py",
+      "E:\\ai\\workbuddy\\bridge\\workbuddy-config.json"
+    ]
+  },
+  "registered": true,
+  "nativeConfigSha256": "1cfd89a468da388a5b67d13c5e1b2b735131f7f5bed4ce791c78361b78f1deb3",
+  "nativeVendorClientVerified": false,
+  "status": "registered-pending-native-call",
+  "reason": "厂商配置已注册；尚无已验证的无模型工具调用接口，不能标记完整接入。",
+  "backupPath": "E:\\ai\\inbox\\backup\\workbuddy\\manager-native\\native-cbec68ef-eaff-4674-8715-3432ce0ecea4\\config.before.dpapi.json",
+  "registeredAt": "2026-10-13T15:36:17.080Z"
+}

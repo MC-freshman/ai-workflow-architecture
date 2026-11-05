@@ -14,7 +14,7 @@ import {sha256,sha256File} from '../../core/hash.mjs';
 import {targetPath,defaultAuditRoot} from '../../core/paths.mjs';
 import {requirePlan,atomicWrite,writeAudit} from '../../transactions/kernel.mjs';
 import {assertIntakeUnchanged} from './sources.mjs';
-import {healthSoftware} from '../../software.mjs';
+import {healthSoftware} from '../software/software.mjs';
 
 const json=value=>JSON.stringify(value,null,2)+'\n';
 const fileName=value=>basename(String(value || '').replaceAll('\\','/')).toLowerCase();

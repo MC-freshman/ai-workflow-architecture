@@ -22,6 +22,7 @@ export function createCommands() {
     setBusy(true);
     setTransactionProgress(null);
     try {
+      if(planPreview.kind==='platform-global-update')window.dispatchEvent(new window.CustomEvent('global-update-started',{detail:{workspaceRoot:workspace}}));
       const applied = await api.applyPlan({ plan: planPreview, afterText: planPayload?.afterText, credentialValue:planPayload?.credentialValue, actor: 'local-user' });
       if(planPreview.kind==='mcp-credential')setPlanPayload(null);
       if(applied.stoppedAfterCompletion && planPreview.kind!=='platform-global-update') {

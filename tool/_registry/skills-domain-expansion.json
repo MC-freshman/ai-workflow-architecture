@@ -1,7 +1,7 @@
 {
   "schema": "ai-skill-catalog/v1",
   "sourceId": "20261009-domain-expansion",
-  "snapshot": "approved 20261009",
+  "snapshot": "approved 20261009; bounded UI/guidance update approved 20261010",
   "skills": [
     {
       "id": "automation-engineer-task-01",
@@ -355,8 +355,8 @@
     },
     {
       "id": "domain-core-frontend-engineer",
-      "version": "1.0.0",
-      "sourceId": "20261009-domain-expansion",
+      "version": "1.1.0",
+      "sourceId": "20261010-ui-guidance",
       "sourcePath": "domain-core-frontend-engineer/SKILL.md",
       "category": "skill"
     },
@@ -460,8 +460,8 @@
     },
     {
       "id": "domain-core-software-engineer",
-      "version": "1.0.0",
-      "sourceId": "20261009-domain-expansion",
+      "version": "1.1.0",
+      "sourceId": "20261010-ui-guidance",
       "sourcePath": "domain-core-software-engineer/SKILL.md",
       "category": "skill"
     },
@@ -481,8 +481,8 @@
     },
     {
       "id": "domain-core-ui-ux-designer",
-      "version": "1.0.0",
-      "sourceId": "20261009-domain-expansion",
+      "version": "1.1.0",
+      "sourceId": "20261010-ui-guidance",
       "sourcePath": "domain-core-ui-ux-designer/SKILL.md",
       "category": "skill"
     },
@@ -544,8 +544,8 @@
     },
     {
       "id": "frontend-engineer-task-01",
-      "version": "1.0.0",
-      "sourceId": "20261009-domain-expansion",
+      "version": "1.1.0",
+      "sourceId": "20261010-ui-guidance",
       "sourcePath": "frontend-engineer-task-01/SKILL.md",
       "category": "skill"
     },
@@ -1230,8 +1230,8 @@
     },
     {
       "id": "software-engineer-task-06",
-      "version": "1.0.0",
-      "sourceId": "20261009-domain-expansion",
+      "version": "1.1.0",
+      "sourceId": "20261010-ui-guidance",
       "sourcePath": "software-engineer-task-06/SKILL.md",
       "category": "skill"
     },
@@ -1335,8 +1335,8 @@
     },
     {
       "id": "ui-ux-designer-task-03",
-      "version": "1.0.0",
-      "sourceId": "20261009-domain-expansion",
+      "version": "1.1.0",
+      "sourceId": "20261010-ui-guidance",
       "sourcePath": "ui-ux-designer-task-03/SKILL.md",
       "category": "skill"
     },
@@ -1401,6 +1401,48 @@
       "version": "1.0.0",
       "sourceId": "20261009-domain-expansion",
       "sourcePath": "visualization-engineer-task-06/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "software-product-experience",
+      "version": "1.0.0",
+      "sourceId": "20261010-ui-guidance",
+      "sourcePath": "software-product-experience/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "product-onboarding",
+      "version": "1.0.0",
+      "sourceId": "20261010-ui-guidance",
+      "sourcePath": "product-onboarding/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "interface-copy",
+      "version": "1.0.0",
+      "sourceId": "20261010-ui-guidance",
+      "sourcePath": "interface-copy/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "interface-visual-design",
+      "version": "1.0.0",
+      "sourceId": "20261010-ui-guidance",
+      "sourcePath": "interface-visual-design/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "interface-visual-review",
+      "version": "1.0.0",
+      "sourceId": "20261010-ui-guidance",
+      "sourcePath": "interface-visual-review/SKILL.md",
+      "category": "skill"
+    },
+    {
+      "id": "ui-design-reference-library",
+      "version": "1.0.0",
+      "sourceId": "20261010-ui-guidance",
+      "sourcePath": "ui-design-reference-library/SKILL.md",
       "category": "skill"
     }
   ]

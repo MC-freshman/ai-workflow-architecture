@@ -5,9 +5,9 @@ import { existsSync, mkdirSync, mkdtempSync, readdirSync, readFileSync, rmSync, 
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { sha256 } from '../src/core/hash.mjs';
-import { buildRegistryPlan } from '../src/catalog.mjs';
-import { buildReleasePlan, listResourceReferences, readRegistryBaseline, verifyRelease } from '../src/releases.mjs';
-import { applyPlan } from '../src/transactions.mjs';
+import { buildRegistryPlan } from '../src/domains/resources/catalog.mjs';
+import { buildReleasePlan, listResourceReferences, readRegistryBaseline, verifyRelease } from '../src/domains/intake/releases.mjs';
+import { applyPlan } from '../src/transactions/router.mjs';
 import {execFileSync} from 'node:child_process';
 
 function makeWorkspace() {

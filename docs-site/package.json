@@ -1,0 +1,42 @@
+{
+  "name": "ai-docs-site",
+  "version": "1.0.0",
+  "private": true,
+  "description": "E:\\ai 架构与治理文档静态站（Docusaurus 3.x，精选白名单 + 三仓自动生成）",
+  "scripts": {
+    "docusaurus": "docusaurus",
+    "inventory": "node scripts/inventory.mjs",
+    "sync": "node scripts/sync-docs.mjs",
+    "generate": "node scripts/generate-reference.mjs",
+    "redact": "node scripts/redact-check.mjs",
+    "probe:tilde": "node scripts/tilde-probe.mjs",
+    "start": "node scripts/sync-docs.mjs && node scripts/generate-reference.mjs && docusaurus start",
+    "build": "node scripts/build.mjs --profile internal",
+    "build:shareable": "node scripts/build.mjs --profile shareable",
+    "serve": "docusaurus serve --dir build/internal",
+    "serve:shareable": "docusaurus serve --dir build/shareable",
+    "clear": "docusaurus clear",
+    "conform": "node scripts/docs-conform.mjs"
+  },
+  "dependencies": {
+    "@docusaurus/core": "^3.10.2",
+    "@docusaurus/plugin-client-redirects": "^3.10.2",
+    "@docusaurus/preset-classic": "^3.10.2",
+    "@docusaurus/theme-mermaid": "^3.10.2",
+    "@easyops-cn/docusaurus-search-local": "^0.55.3",
+    "@mermaid-js/layout-elk": "^0.1.9",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "remark-cjk-friendly": "^2.3.1"
+  },
+  "devDependencies": {
+    "@docusaurus/module-type-aliases": "^3.10.2",
+    "@docusaurus/tsconfig": "^3.10.2",
+    "@docusaurus/types": "^3.10.2",
+    "@types/node": "^24.0.0",
+    "typescript": "~5.9.3"
+  },
+  "engines": {
+    "node": ">=20.0"
+  }
+}

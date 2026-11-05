@@ -1,0 +1,60 @@
+{
+  "schema": "ai-skill/v1",
+  "id": "interface-visual-design",
+  "version": "1.0.0",
+  "kind": "atomic",
+  "category": "skill",
+  "entry": "SKILL.md",
+  "input": {
+    "type": "text",
+    "contract": "objective, task inputs and constraints"
+  },
+  "output": {
+    "type": "text",
+    "contract": "named artifacts, evidence and pending limitations"
+  },
+  "permissions": [
+    "read-project"
+  ],
+  "requires": [],
+  "conflicts": [],
+  "x-externalReferences": [
+    {
+      "resource": "ui-design-reference-library",
+      "version": "1.0.0",
+      "path": "impeccable/reference/operate.md",
+      "sha256": "a9d2203acd45ca33a13d5c68b02b23ed512425ac15f0e8438318ed124b43729d",
+      "when": "工具或办公软件的视觉方向需要细节时读取"
+    },
+    {
+      "resource": "ui-design-reference-library",
+      "version": "1.0.0",
+      "path": "ui-ux-pro-max/data/styles.csv",
+      "sha256": "a93a4d9d7025856575d7b7583bda020be9043013432c5af7c58af9dbdfb206b7",
+      "when": "按用途检索风格候选，读取匹配行"
+    },
+    {
+      "resource": "ui-design-reference-library",
+      "version": "1.0.0",
+      "path": "ui-ux-pro-max/data/colors.csv",
+      "sha256": "8162429222bce22df62b564085946a30d07cc9722c58d0a3a494bd0d1d00841c",
+      "when": "配色需要候选时读取匹配产品行"
+    },
+    {
+      "resource": "ui-design-reference-library",
+      "version": "1.0.0",
+      "path": "ui-ux-pro-max/data/typography.csv",
+      "sha256": "321fc446e89024488ebae96dda93efc4d2307bd8bddb240857ad51364f6782c8",
+      "when": "字体选择需要候选时读取匹配行"
+    }
+  ],
+  "x-runtimeRequirements": {},
+  "source": {
+    "repository": "workspace adaptation of pinned UI design references",
+    "snapshot": "approved 20261010 P1-P4",
+    "license": "workspace-authored guidance; included reference licensing in SOURCE.json"
+  },
+  "integrity": {
+    "sha256Manifest": "SHA256SUMS"
+  }
+}

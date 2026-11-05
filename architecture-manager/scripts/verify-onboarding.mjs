@@ -3,10 +3,10 @@ import { readFileSync, existsSync, writeFileSync } from 'node:fs';
 import { resolve, join } from 'node:path';
 import { createHash } from 'node:crypto';
 import { execFileSync } from 'node:child_process';
-import { readOnboardingConfig } from '../src/onboarding-config.mjs';
-import { clientBinding } from '../src/onboarding-client.mjs';
-import { environmentBinding } from '../src/onboarding-state.mjs';
-import { onboardingGitPaths } from '../src/onboarding-governance.mjs';
+import { readOnboardingConfig } from '../src/domains/onboarding/onboarding-config.mjs';
+import { clientBinding } from '../src/domains/onboarding/onboarding-client.mjs';
+import { environmentBinding } from '../src/domains/onboarding/onboarding-state.mjs';
+import { onboardingGitPaths } from '../src/domains/onboarding/onboarding-governance.mjs';
 
 const root=resolve(process.argv[2] || '.'); const id=process.argv[3];
 const read=path=>JSON.parse(readFileSync(path,'utf8'));

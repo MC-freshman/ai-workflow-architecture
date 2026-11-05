@@ -1,0 +1,36 @@
+{
+  "schema": "ai-environment-snapshot/v1",
+  "platform": "workbuddy",
+  "capturedAt": "2026-09-16",
+  "pythonVersion": "3.9.13",
+  "python": "E:\\ai\\workbuddy\\runtime\\py-env\\Scripts\\python.exe",
+  "pythonBuild": "3.9.13 (tags/v3.9.13:6de2ca5, May 17 2022, 16:36:42) [MSC v.1929 64 bit (AMD64)]",
+  "packages": {
+    "attrs": "26.1.0",
+    "contourpy": "1.3.0",
+    "cycler": "0.12.1",
+    "fonttools": "4.60.2",
+    "importlib_resources": "6.5.2",
+    "jsonschema": "4.25.1",
+    "jsonschema-specifications": "2025.9.1",
+    "kiwisolver": "1.4.7",
+    "matplotlib": "3.9.4",
+    "numpy": "1.26.4",
+    "packaging": "25.0",
+    "pillow": "11.3.0",
+    "pyparsing": "3.3.2",
+    "python-dateutil": "2.9.0.post0",
+    "pyyaml": "6.0.2",
+    "referencing": "0.36.2",
+    "rpds-py": "0.27.1",
+    "six": "1.17.0",
+    "typing-extensions": "4.16.0",
+    "zipp": "3.23.1"
+  },
+  "packageSource": "E:\\ai\\tool\\wf-runner\\versions\\0.6.0\\requirements.lock.txt（8/8 版本逐一匹配；另装 matplotlib 3.9.4 供 renderer profile 使用，numpy 钉 1.26.4 与 matplotlib 3.9.4 兼容）",
+  "selftest": {
+    "imports": "20/20 导入通过（runtime\\tmp\\s1_import_check.py，日志 runtime\\logs\\s1-import-check3.txt）",
+    "renderer": "matplotlib Agg 真实出图 E:\\ai\\workbuddy\\runtime\\renderer-selftest\\render.png（35938 字节，runtime\\tmp\\s1_render_selftest.py）"
+  },
+  "notes": "workbuddy 平台自建 Windows venv（E:\\ai\\workbuddy\\runtime\\py-env，python 3.9.13 系统 Python 构建，对齐 doubao 验证基线）。解释器与依赖均在平台目录内，满足平台隔离。未提供脚本隔离沙箱（scriptEnvironment），协议内 action:script 阶段不可执行；矩阵 claim+stop 不依赖脚本阶段。运行时必须设 PYTHONDONTWRITEBYTECODE=1，避免在只读发布目录写 __pycache__。 | **2026-09-23（架构 3.1.0 全面接入 P6）**：包名改用 PEP 503 归一形式（`PyYAML` → `pyyaml`、`typing_extensions` → `typing-extensions`），版本一字未改。理由是一次实测驱动的口径对齐：platform-conformance 的并集侧把 `environmentLock` 里的名字归一后产出 `python-package:<归一名>`，而裁决侧直接拿**原名**键去比对本文件的 `packages`，于是这两个**已装且已声明**的包被读成 declaredAbsent（`conform.py:127` vs `:177`）；引擎自己解析 requirements 时两边都做归一（`resolution.py:135`），故改名对它无影响。改名后两个包实测转 pass。判断依据与前后读数见 runtime/maintenance/3.1-adopt/P-TABLE.md 的 P6 记录。"
+}

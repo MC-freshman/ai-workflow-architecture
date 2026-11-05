@@ -27,6 +27,29 @@ def run(argv, **kwargs):
     return result.stdout
 
 
+def last_json_object(text):
+    """AUD-D-008: parse the last JSON object in command output instead of assuming the final line."""
+    for line in reversed(text.splitlines()):
+        line = line.strip()
+        if not line.startswith('{'):
+            continue
+        try:
+            return json.loads(line)
+        except ValueError:
+            continue
+    raise ValueError('RESTORE_OUTPUT_NOT_JSON')
+
+
+IMPORT_OVERRIDES = {'pyyaml': 'yaml', 'pymupdf': 'fitz', 'rpds_py': 'rpds'}
+def requirement_imports(requirements):
+    # The restore drills import exactly what this environment provisioned; the
+    # scientific profile is requirement-driven, never a hardcoded assumption.
+    names = set()
+    for requirement in requirements:
+        dist = requirement.split('==')[0].strip().lower().replace('-', '_')
+        names.add(IMPORT_OVERRIDES.get(dist, dist))
+    return ','.join(sorted(names))
+
 def main(path):
     spec = json.loads(Path(path).read_text(encoding='utf-8'))
     root = Path(spec['workspaceRoot']).resolve()
@@ -131,7 +154,7 @@ def main(path):
     actual = {f['path'][len(linux(restored)):]: f['sha256'] for f in restored_inventory['files']}
     if expected != actual:
         raise ValueError('restoration bytes differ')
-    guest([linux(restored / 'bin/python'), '-B', '-c', 'import jsonschema,yaml,numpy,matplotlib,fitz;print("restored imports pass")'])
+    guest([linux(restored / 'bin/python'), '-B', '-c', f"import {requirement_imports(spec['requirements'])};print('restored imports pass')"])
     host_archive = backup / 'host-environment.zip'
     host_files = [{'path': str(f.relative_to(host)), 'sha256': hashlib.sha256(f.read_bytes()).hexdigest()} for f in sorted(host.rglob('*')) if f.is_file()]
     with zipfile.ZipFile(host_archive, 'w', zipfile.ZIP_DEFLATED) as output:
@@ -142,12 +165,12 @@ def main(path):
         archive_input.extractall(host_restored)
     if any(hashlib.sha256((host_restored / r['path']).read_bytes()).hexdigest() != r['sha256'] for r in host_files):
         raise ValueError('host restore hash mismatch')
-    run([str(host_restored / ('Scripts/python.exe' if os.name == 'nt' else 'bin/python')), '-B', '-c', 'import jsonschema,yaml,numpy;print("host restore imports pass")'])
+    run([str(host_restored / ('Scripts/python.exe' if os.name == 'nt' else 'bin/python')), '-B', '-c', f"import {requirement_imports(spec['requirements'])};print('host restore imports pass')"])
     save(backup / 'HOST-REBUILD.json', {'platformId': spec['platformId'], 'containsCredentials': False, 'archive': str(host_archive), 'archiveSha256': hashlib.sha256(host_archive.read_bytes()).hexdigest(), 'files': host_files, 'restoreVerified': True, 'rebuildCommand': [sys.executable, '-B', '-m', 'venv', '--copies', str(host)], 'installCommand': [str(host_python), '-B', '-m', 'pip', 'install', '-r', str(backup / 'requirements.lock.txt')]})
     shutil.copy2(Path(__file__).with_name('restore_env.py'), backup / 'restore.py')
-    restore_registration = {'schema': 'manager-environment-restore/v1', 'platformId': spec['platformId'], 'platformRoot': str(root / spec['platformId']), 'backend': backend, 'sealedArchiveLinux': linux(archive), 'sealedArchiveSha256': hashlib.sha256(archive.read_bytes()).hexdigest(), 'hostArchiveSha256': hashlib.sha256(host_archive.read_bytes()).hexdigest(), 'links': manifest['links'], 'allowedSystemInterpreters': sorted(set(link['target'] for link in manifest['links'])), 'sealedFiles': [{'path': row['path'][len(linux(sealed)) + 1:], 'sha256': row['sha256']} for row in manifest['files']], 'hostFiles': host_files, 'containsCredentials': False, 'command': [sys.executable, '-B', str(backup / 'restore.py'), str(backup / 'RESTORE.json'), str(base / ('registered-restore-drill-' + attempt))]}
+    restore_registration = {'schema': 'manager-environment-restore/v1', 'platformId': spec['platformId'], 'platformRoot': str(root / spec['platformId']), 'backend': backend, 'requirements': spec['requirements'], 'sealedArchiveLinux': linux(archive), 'sealedArchiveSha256': hashlib.sha256(archive.read_bytes()).hexdigest(), 'hostArchiveSha256': hashlib.sha256(host_archive.read_bytes()).hexdigest(), 'links': manifest['links'], 'allowedSystemInterpreters': sorted(set(link['target'] for link in manifest['links'])), 'sealedFiles': [{'path': row['path'][len(linux(sealed)) + 1:], 'sha256': row['sha256']} for row in manifest['files']], 'hostFiles': host_files, 'containsCredentials': False, 'command': [sys.executable, '-B', str(backup / 'restore.py'), str(backup / 'RESTORE.json'), str(base / ('registered-restore-drill-' + attempt))]}
     save(backup / 'RESTORE.json', restore_registration)
-    restored_result = json.loads(run(restore_registration['command']).splitlines()[-1])
+    restored_result = last_json_object(run(restore_registration['command']))
     if not all(restored_result.get(key) is True for key in ('hostRestored', 'sealedRestored', 'hashesMatch')):
         raise ValueError('registered restoration did not pass')
     save(backup / 'RESTORE-VERIFIED.json', {'installationId': spec['installationId'], 'registrationSha256': hashlib.sha256((backup / 'RESTORE.json').read_bytes()).hexdigest(), 'result': restored_result, 'command': restore_registration['command']})

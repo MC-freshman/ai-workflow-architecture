@@ -6,7 +6,7 @@ import {tmpdir} from 'node:os';
 import {draftTextSource} from '../src/domains/intake/sources.mjs';
 import {suggestBodyImport,nextImportVersion,buildAutomaticTextBodyPlan} from '../src/domains/intake/automatic.mjs';
 import {seedRuntimeReleases} from './support/resources.mjs';
-import {buildOnboardingConfigPlan,applyOnboardingConfig} from '../src/onboarding-config.mjs';
+import {buildOnboardingConfigPlan,applyOnboardingConfig} from '../src/domains/onboarding/onboarding-config.mjs';
 import {execFileSync} from 'node:child_process';
 
 function fixture(t){const root=fs.mkdtempSync(join(tmpdir(),'auto-intake-'));t.after(()=>fs.rmSync(root,{recursive:true,force:true}));const put=(path,value)=>{fs.mkdirSync(dirname(join(root,path)),{recursive:true});fs.writeFileSync(join(root,path),typeof value==='string'?value:JSON.stringify(value));};seedRuntimeReleases(root);return {root,put,id:'intake-owner'};}

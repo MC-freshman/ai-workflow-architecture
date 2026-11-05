@@ -1,0 +1,10 @@
+{
+  "schema": "ai-release-source/v1",
+  "id": "platform-conformance",
+  "version": "1.6.3",
+  "derivedFrom": "platform-conformance@1.6.2",
+  "change": "D-144: deduplicate the --only agent-content audit block in conform.py (one audit_agent run and one content row per id) and add a regression test; union and verdict semantics unchanged.",
+  "recordedAt": "2026-10-10T21:30:00+08:00",
+  "author": "workspace maintainer (defect-ledger repair round 2026-10-10, workbuddy platform session)",
+  "license": "existing release terms for unchanged bytes; new operational implementation by workspace maintainer"
+}

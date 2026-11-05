@@ -1,0 +1,7 @@
+{
+  "schema": "ai-release-source/v1",
+  "id": "research-analyst-pipeline",
+  "version": "1.2.0",
+  "derivedFrom": "research-analyst-pipeline@1.1.0",
+  "change": "adds a deterministic AUDIT script stage between WORK and REPORT. Sandbox-resolved input contract: the host stages the WORK deliverables object at work/data/raw/work-output.json (or cwd output.json) and deliverable files under work/deliverables/ with paths declared relative to the script cwd; audit_deliverables.py verifies readability and computes per-file sha256 into audit-manifest.json (exit 0 = all verifiable, 1 = missing deliverable, 2 = missing input). Existing stages, prompts, gates and schemas are unchanged bytes."
+}

@@ -3,7 +3,7 @@ import test from 'node:test';
 import { existsSync, mkdirSync, mkdtempSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
-import { readDefectBook, verifyDefectBook } from '../src/defects.mjs';
+import { readDefectBook, verifyDefectBook } from '../src/domains/audit/defects.mjs';
 
 function makeWorkspace(book) {
   const root = mkdtempSync(join(tmpdir(), 'am-defects-'));

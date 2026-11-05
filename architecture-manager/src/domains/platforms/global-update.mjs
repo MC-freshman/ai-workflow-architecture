@@ -6,6 +6,8 @@ import {targetPath,defaultAuditRoot} from '../../core/paths.mjs';
 import {platformPath} from '../../core/platform-path.mjs';
 import {sha256} from '../../core/hash.mjs';
 import {readJson} from '../../core/json.mjs';
+import {automaticJournalPath} from './onboarding-resume.mjs';
+import {readAdoptionCompletion} from './adoption-completion.mjs';
 import {atomicWrite,requirePlan,writeAudit,saveCheckpoint} from '../../transactions/kernel.mjs';
 import {plannedFiles,applyGeneratedFiles} from '../../transactions/onboarding-files.mjs';
 import {restoreOwnedFiles} from '../../transactions/recovery.mjs';
@@ -14,13 +16,13 @@ import {platformConfigPath,privateBindingHashes} from '../certification/binding.
 import {buildAnchorAlignmentPlan} from '../certification/anchor-plans.mjs';
 import {validateFrozenResource} from '../resources/versions.mjs';
 import {collectResourceRequirements,resourceEnvironmentMatches,prepareResourceEnvironment} from './resource-environment.mjs';
-import {buildOnboardingRuntimePlan,applyOnboardingRuntime} from '../../onboarding-runtime.mjs';
-import {buildOnboardingGovernancePlan,applyOnboardingGovernance} from '../../onboarding-governance.mjs';
-import {runPlatformCheck} from '../../platform-check.mjs';
+import {buildOnboardingRuntimePlan,applyOnboardingRuntime} from '../onboarding/onboarding-runtime.mjs';
+import {buildOnboardingGovernancePlan,applyOnboardingGovernance} from '../onboarding/onboarding-governance.mjs';
+import {runPlatformCheck} from './platform-check.mjs';
 import {nativeClientStatus,probeNativeClient,buildNativeClientPlan,applyNativeClient} from './native-client.mjs';
-import {buildGitPlan} from '../../git.mjs';
-import {applyGitTransaction} from '../../git-executor.mjs';
-import {assertConfigurationReferences} from '../../onboarding-config.mjs';
+import {buildGitPlan} from '../git/git.mjs';
+import {applyGitTransaction} from '../git/git-executor.mjs';
+import {assertConfigurationReferences} from '../onboarding/onboarding-config.mjs';
 import {bridgeCompatibility,bridgeFiles,normaliseRunner} from './bridge-compatibility.mjs';
 import {withScopedCleanup,assertScopedActive} from '../../infrastructure/process-scope.mjs';
 
@@ -110,7 +112,11 @@ function platformPlan(root,id,target,settings={}) {
   const privateBindings=privateBindingHashes(root,id,config);
   for(const profile of requirements.profiles)if(profile!=='portable-resource-python')pending.push('RESOURCE_PROFILE_ADAPTER_REQUIRED:'+profile);
   return {platformId:id,targetDigest:target.digest,configPath,bridgePath,python,nextConfig,nextBridge,requirements,overrides,pending,privateBindings,
-    compatibility:{authority:compatibility.authority,conflicted:compatibility.conflicted,mirrors:compatibility.mirrors},wheelhouse:settings.wheelhouse || null,settings,baseFiles:basePaths.map(path=>({path,beforeSha256:hashFile(targetPath(root,path))})),
+    compatibility:{authority:compatibility.authority,conflicted:compatibility.conflicted,mirrors:compatibility.mirrors},wheelhouse:settings.wheelhouse || null,
+    // D-171: the download route reaches the resource-environment spec. Without
+    // this the API accepted settings.wheelhouse but nothing in the product could
+    // ever set it, and a slow/broken index had no user-reachable remedy.
+    download:{wheelhouse:settings.wheelhouse || null,indexUrl:settings.indexUrl || null,trustedHost:settings.trustedHost || null},settings,baseFiles:basePaths.map(path=>({path,beforeSha256:hashFile(targetPath(root,path))})),
     resources,sourceDigest:digest({target:target.digest,privateBindings,config:hashFile(targetPath(root,configPath)),bridge:hashFile(targetPath(root,bridgePath)),settings})};
 }
 export function buildGlobalUpdatePlan({workspaceRoot,settings={},push=null,resumePlan=null,now=new Date().toISOString()}) {
@@ -204,7 +210,7 @@ async function prepareEnvironments(plan,row,state,control,options) {
   control.assertActive();
   if(!state.resource) {
     if(resourceEnvironmentMatches(root,row.platformId,row.nextConfig.resourceEnvironmentManifest,row.requirements))state.resource={status:'reused',manifest:row.nextConfig.resourceEnvironmentManifest};
-    else state.resource=await prepareResourceEnvironment({workspaceRoot:root,platformId:row.platformId,python:row.python,requirements:row.requirements,installationId:state.resourceId,wheelhouse:row.wheelhouse},{...options,registerCancel:control.registerCancel});
+    else state.resource=await prepareResourceEnvironment({workspaceRoot:root,platformId:row.platformId,python:row.python,requirements:row.requirements,installationId:state.resourceId,wheelhouse:row.wheelhouse,download:row.download},{...options,registerCancel:control.registerCancel});
     saveState(root,row,state);
   }
 }
@@ -239,6 +245,9 @@ export async function applyGlobalUpdate(plan,{actor='local-user',auditRoot=defau
   const assertGovernance=()=>{for(const [path,hash] of Object.entries(governanceHashes))if(hashFile(targetPath(root,path))!==hash)throw Error('GLOBAL_UPDATE_WORKSPACE_CHANGED');};
   const prepare=services.prepare || prepareEnvironments,check=services.check || runPlatformCheck;
   const nativeCurrent=id=>services.nativeStatus?services.nativeStatus(root,id):nativeClientStatus(root,id);
+  // Owner ruling 2026-10-13: platforms whose onboarding recorded the vendor native
+  // verification as AUXILIARY (D-152 vendor defect) are never demoted to pending over it.
+  const nativeAuxiliary=id=>{try{return readJson(automaticJournalPath(root,id)).native?.auxiliary===true;}catch{return false;}};
   try {
     for(const row of plan.payload.platforms) {
       control.assertActive();assertShared(root,plan.payload.shared);assertGovernance();
@@ -253,9 +262,9 @@ export async function applyGlobalUpdate(plan,{actor='local-user',auditRoot=defau
       }
       if(state.sourceDigest!==row.sourceDigest)throw Error('ONBOARDING_RESUME_DRIFT');
       if(state.status==='restored')throw Error('GLOBAL_UPDATE_ALREADY_RESTORED');
-      if(['complete','no-change'].includes(state.status)) {baselineUnchanged(root,row,state);if(!evidenceFresh(root,row,state))throw Error('GLOBAL_UPDATE_EVIDENCE_CHANGED');if(nativeCurrent(row.platformId).nativeVendorClientVerified){results.push(state);continue;}state.status='pending';state.pending=['NATIVE_CLIENT_VERIFICATION_REQUIRED'];saveState(root,row,state);}
-      if(state.status==='validated-awaiting-push' && evidenceFresh(root,row,state) && nativeCurrent(row.platformId).nativeVendorClientVerified){baselineUnchanged(root,row,state);results.push(state);continue;}
-      onProgress({platformId:'global-update',phase:`更新 ${row.platformId}`,completed:results.length,total:plan.payload.platforms.length});
+      if(['complete','no-change'].includes(state.status)) {baselineUnchanged(root,row,state);if(!evidenceFresh(root,row,state))throw Error('GLOBAL_UPDATE_EVIDENCE_CHANGED');if(nativeCurrent(row.platformId).nativeVendorClientVerified){results.push(state);continue;}if(nativeAuxiliary(row.platformId)){state.nativeAuxiliary=true;results.push(state);continue;}state.status='pending';state.pending=['NATIVE_CLIENT_VERIFICATION_REQUIRED'];saveState(root,row,state);}
+      if(state.status==='validated-awaiting-push' && evidenceFresh(root,row,state) && (nativeCurrent(row.platformId).nativeVendorClientVerified || nativeAuxiliary(row.platformId))){baselineUnchanged(root,row,state);results.push(state);continue;}
+      onProgress({platformId:'global-update',phase:`更新 ${row.platformId}`,completed:results.length,total:plan.payload.platforms.length,platformIds:plan.payload.platforms.map(item=>item.platformId),done:results.map(item=>item.platformId),targetPlatformId:row.platformId});
       try {
         baselineUnchanged(root,row,state);
         if(row.pending.length)throw Error(row.pending.join(','));
@@ -278,10 +287,10 @@ export async function applyGlobalUpdate(plan,{actor='local-user',auditRoot=defau
         const checked=await check({workspaceRoot:root,platformId:row.platformId,mode:'full',scope:'invocation',stopOnFloorFailure:true,registerCancel:control.registerCancel,onProgress:progress=>onProgress({...progress,platformId:'global-update',targetPlatformId:row.platformId})});
         control.assertActive();assertShared(root,plan.payload.shared);
         state.check=checked;state.checkBindings=checkBindings(root,row.platformId,checked);state.targetDigest=plan.payload.shared.digest;state.requirementsDigest=row.requirements.digest;
-        state.architectureComplete=checked.coverageComplete===true;state.capabilityPending=checked.gaps || [];
+        state.architectureComplete=readAdoptionCompletion({workspaceRoot:root,platformId:row.platformId}).complete;state.capabilityPending=checked.gaps || [];
         if(!['callable','complete'].includes(checked.stage) || !(checked.invocationCoverageComplete===true || checked.coverageComplete===true) || checked.issues?.length) {state.status='pending';state.pending=checked.issues?.length?checked.issues:['CAPABILITY_FLOOR_OR_CALL_CHECK_PENDING'];state.git=commitFiles(root,state.finalFiles.map(file=>file.path),'Save pending '+row.platformId+' integration update',options);saveState(root,row,state);results.push(state);continue;}
         let native=services.nativeStatus?services.nativeStatus(root,row.platformId):nativeClientStatus(root,row.platformId);
-        if(!services.nativeStatus && !native.nativeVendorClientVerified && native.registered && native.profile?.supportsDirectProbe) {
+        if(!services.nativeStatus && !native.nativeVendorClientVerified && !nativeAuxiliary(row.platformId) && native.registered && native.profile?.supportsDirectProbe) {
           const path=`${row.platformId}/bridge/native-client.json`,before=readFileSync(targetPath(root,path),'utf8');
           const generated=buildNativeClientPlan({workspaceRoot:root,platformId:row.platformId});
           state.status='checking-native';saveState(root,row,state);
@@ -293,7 +302,7 @@ export async function applyGlobalUpdate(plan,{actor='local-user',auditRoot=defau
           if(!native.nativeVendorClientVerified)native=await probeNativeClient({workspaceRoot:root,platformId:row.platformId},{registerCancel:control.registerCancel});
         }
         control.assertActive();assertShared(root,plan.payload.shared);state.native=native;
-        if(!native.nativeVendorClientVerified){state.status='pending';state.pending=['NATIVE_CLIENT_VERIFICATION_REQUIRED'];state.git=commitFiles(root,state.finalFiles.map(file=>file.path),'Save '+row.platformId+' update pending native validation',options);saveState(root,row,state);results.push(state);continue;}
+        if(!native.nativeVendorClientVerified && !nativeAuxiliary(row.platformId)){state.status='pending';state.pending=['NATIVE_CLIENT_VERIFICATION_REQUIRED'];state.git=commitFiles(root,state.finalFiles.map(file=>file.path),'Save '+row.platformId+' update pending native validation',options);saveState(root,row,state);results.push(state);continue;}if(!native.nativeVendorClientVerified){state.nativeAuxiliary=true;results.push(state);continue;}
         const governance=services.governance?await services.governance(root,row.platformId):buildOnboardingGovernancePlan({workspaceRoot:root,platformId:row.platformId});
         assertGovernance();
         if(governance?.payload?.files?.length) {

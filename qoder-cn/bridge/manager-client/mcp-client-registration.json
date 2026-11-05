@@ -1,0 +1,13 @@
+{
+  "mcpServers": {
+    "architecture": {
+      "command": "E:\\ai\\qoder-cn\\runtime\\manager-environments\\8ef977ae-873b-436b-b548-9b872c841750\\host\\Scripts\\python.exe",
+      "args": [
+        "-B",
+        "E:\\ai\\qoder-cn\\bridge\\manager-client\\mcp_service.py",
+        "E:\\ai\\qoder-cn\\bridge\\qoder-cn-config.json"
+      ]
+    }
+  },
+  "notes": "Import this into a compatible native client. Export is not evidence of native registration."
+}

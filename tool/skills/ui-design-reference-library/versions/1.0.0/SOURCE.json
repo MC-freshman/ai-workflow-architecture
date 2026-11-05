@@ -1,0 +1,23 @@
+{
+  "schema": "ai-resource-source/v1",
+  "id": "ui-design-reference-library",
+  "kind": "skill",
+  "reason": "Approved P1-P4: actionable guidance and consistent UI quality, bounded task-selected skills",
+  "createdAt": "2026-10-10T02:38:11.013660+00:00",
+  "previousVersion": null,
+  "upstream": [
+    {
+      "id": "impeccable",
+      "repository": "https://github.com/pbakaus/impeccable",
+      "commit": "d631a8827f99414d2b6daba4ef08b7f8701751d7",
+      "license": "Apache-2.0"
+    },
+    {
+      "id": "ui-ux-pro-max",
+      "repository": "https://github.com/nextlevelbuilder/ui-ux-pro-max-skill",
+      "commit": "50d8a7de0900119855614541f15a1a616691eb33",
+      "license": "MIT"
+    }
+  ],
+  "changes": "Workspace adaptation; added task triggers, domain boundaries, scoped delivery and evidence requirements; upstream launchers and auto-install flows excluded."
+}

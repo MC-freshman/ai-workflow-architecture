@@ -1,0 +1,29 @@
+{
+  "schema": "wf-runner-execution-backend/v1",
+  "kind": "wsl2",
+  "wslExecutable": "C:/WINDOWS/system32/wsl.exe",
+  "distro": "Ubuntu2204",
+  "interpreter": "/usr/bin/python3",
+  "pathMap": [
+    {
+      "windows": "E:/",
+      "linux": "/mnt/e/"
+    }
+  ],
+  "sharedReadOnlyBinds": [
+    {
+      "windows": "E:/ai/tool",
+      "name": "tool"
+    },
+    {
+      "windows": "E:/ai/agent",
+      "name": "agent"
+    },
+    {
+      "windows": "E:/ai/software",
+      "name": "software"
+    }
+  ],
+  "verifyTimeoutSeconds": 120,
+  "declaredBy": "zcode (D04 authorized 2026-09-17 for tool+agent; software third root added 2026-09-26 under the user instruction '将zcode完全接入新架构' — BP-1 three-repo skeleton: all three shared roots mounted into the jail read-only; the scanner write-probes every root before scanning)"
+}

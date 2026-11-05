@@ -3,7 +3,7 @@ import test from 'node:test';
 import { mkdirSync, mkdtempSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
-import { inspectInbox } from '../src/inbox.mjs';
+import { inspectInbox } from '../src/domains/intake/inbox.mjs';
 
 function makeWorkspace() {
   const root = mkdtempSync(join(tmpdir(), 'am-inbox-'));

@@ -1,0 +1,24 @@
+{
+  "platform": "qoder",
+  "contracts": "E:/ai/tool/runtime-contracts/versions/1.1.0",
+  "scannerRelease": "E:/ai/tool/repo-lint/versions/0.3.0",
+  "toolRoot": "E:/ai/tool",
+  "agentRoot": "E:/ai/agent",
+  "bridge": "E:/ai/qoder/bridge.json",
+  "runner": "E:/ai/tool/wf-runner/versions/0.7.6",
+  "executionBackend": "E:/ai/qoder/bridge/backends/wsl2-ubuntu.json",
+  "environmentManifest": "E:/ai/qoder/bridge/script-environment.json",
+  "capabilities": "E:/ai/qoder/bridge/capabilities-pilot.json",
+  "runsRoot": "E:/ai/qoder/runtime/runs",
+  "platformRoot": "E:/ai/qoder",
+  "inputRoots": [
+    "E:/ai"
+  ],
+  "scriptEnvironment": "E:/ai/qoder/runtime/wsl-py-env",
+  "peerDispatcherModule": "E:/ai/qoder/bridge/ops/peer_dispatcher.py",
+  "peerContentRoot": "E:/ai/qoder/runtime/maintenance/2.0-B/fixtures/v6content",
+  "projectWriteRoots": [
+    "E:/ai/qoder/runtime/maintenance/2.0-B/fixtures/project"
+  ],
+  "notes": "架构 2.0 候选试点配置（2026-09-18，qoder 会话，项5 收口自证）。与生产配置 qoder-config.json 的差别即三键：① executionBackend 指本平台 bridge/backends/wsl2-ubuntu.json（C2d 注入路径，无后端则脚本派发失败关闭）；② contracts 由 repo-lint 0.2.1 legacy 布局改指独立契约包 runtime-contracts/1.1.0，并按 G-B 另声明 scannerRelease = repo-lint/0.3.0 供资源扫描（0.7.6 runtime_core.Contracts 双布局：独立包走自带 SHA256SUMS 自校验，缺 scannerRelease 即 CAPABILITY_UNAVAILABLE）；③ projectWriteRoots 声明本平台写回目标（C5/ADR-4 归一化项目互斥），刻意只指向 2.0-B 内的夹具项目，不改本平台之外的任何项目目录。peerDispatcherModule / peerContentRoot 于 Q4-a..e 五锚全绿后补入（证据 runtime/maintenance/2.0-B/baseline/Q4-*.json）：验收期间由 tmp 覆盖配置承载能力位，真实 capabilities-pilot.json 在全绿后才翻转 peerDispatch。生产 qoder-config.json 仍钉 0.6.0，本文件不动任何共享 current.json。"
+}

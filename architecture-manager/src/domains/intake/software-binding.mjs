@@ -5,7 +5,7 @@ import {validateFrozenResource} from '../resources/versions.mjs';
 import {gatewayBinding,assertGatewaySelection} from '../software/gateway-binding.mjs';
 import {readJson} from '../../core/json.mjs';
 import {targetPath} from '../../core/paths.mjs';
-import {assertConfigurationReferences} from '../../onboarding-config.mjs';
+import {assertConfigurationReferences} from '../onboarding/onboarding-config.mjs';
 import {platformConfig} from '../certification/binding.mjs';
 import {plannedFiles,applyGeneratedFiles,verifyFiles} from '../../transactions/onboarding-files.mjs';
 

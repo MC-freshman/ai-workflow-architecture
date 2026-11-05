@@ -1,0 +1,39 @@
+{
+  "schema": "architecture-manager-native-client/v1",
+  "platformId": "zcode",
+  "profile": {
+    "kind": "workspace-mcp",
+    "vendor": "ZCode",
+    "label": "ZCode 原生工作区 MCP 配置",
+    "bodyPath": "E:\\ai\\zcode\\ZCode.exe",
+    "bodySha256": "a21b8d878f7b969c34aee965a31070a7ae234866a46f953c8317c8c5a86cb6b0",
+    "archive": "E:\\ai\\zcode\\resources\\app.asar",
+    "archiveSha256": "d8367e6391eba78892330bef7f04866c3cf495faecb884dca852d437706fcf4c",
+    "version": "3.14.3",
+    "project": "E:\\ai\\zcode\\workspaces\\architecture-native",
+    "configPath": "E:\\ai\\zcode\\workspaces\\architecture-native\\.zcode\\config.json",
+    "configKeys": [
+      "mcp",
+      "servers"
+    ],
+    "supportsRegistration": true,
+    "supportsDirectProbe": false,
+    "reason": "原生工作区配置可自动登记；客户端须加载该项目，真实工具回执仍须独立验证。"
+  },
+  "entry": {
+    "command": "E:\\ai\\zcode\\runtime\\manager-environments\\1247c7a9-da10-4227-a9a3-ff41b6110a6e\\host\\Scripts\\python.exe",
+    "args": [
+      "-B",
+      "E:\\ai\\zcode\\bridge\\manager-client\\mcp_service.py",
+      "E:\\ai\\zcode\\bridge\\zcode-config.json"
+    ],
+    "enabled": true
+  },
+  "registered": true,
+  "nativeConfigSha256": "b844fc8fb65c50a323d0ec5179e032266b40ebc5f2d1db3639221cd70f6f0f3b",
+  "nativeVendorClientVerified": false,
+  "status": "registered-pending-native-call",
+  "reason": "原生工作区配置可自动登记；客户端须加载该项目，真实工具回执仍须独立验证。",
+  "backupPath": "E:\\ai\\inbox\\backup\\zcode\\manager-native\\native-9e0bce4d-2144-47d1-8173-560cc01ce50a\\config.before.dpapi.json",
+  "registeredAt": "2026-10-08T03:25:42.654Z"
+}

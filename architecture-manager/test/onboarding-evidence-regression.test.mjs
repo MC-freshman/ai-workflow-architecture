@@ -6,9 +6,9 @@ import {fileURLToPath} from 'node:url';
 import {tmpdir} from 'node:os';
 import {execFileSync} from 'node:child_process';
 import {seedRuntimeReleases} from './support/resources.mjs';
-import {buildOnboardingConfigPlan,applyOnboardingConfig,readOnboardingConfig} from '../src/onboarding-config.mjs';
-import {buildOnboardingClientPlan,applyOnboardingClient,probeOnboardingClient} from '../src/onboarding-client.mjs';
-import {buildOnboardingAttestationPlan,applyOnboardingAttestation,verifyOnboardingAttestation} from '../src/onboarding-attestation.mjs';
+import {buildOnboardingConfigPlan,applyOnboardingConfig,readOnboardingConfig} from '../src/domains/onboarding/onboarding-config.mjs';
+import {buildOnboardingClientPlan,applyOnboardingClient,probeOnboardingClient} from '../src/domains/onboarding/onboarding-client.mjs';
+import {buildOnboardingAttestationPlan,applyOnboardingAttestation,verifyOnboardingAttestation} from '../src/domains/onboarding/onboarding-attestation.mjs';
 import {sha256} from '../src/core/hash.mjs';
 
 const python=process.env.ARCHITECTURE_MANAGER_TEST_PYTHON || 'python';

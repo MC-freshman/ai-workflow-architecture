@@ -1,11 +1,12 @@
 import declarations from '../app/operations.json' with { type: 'json' };
+const operationsByChannel = new Map(Object.entries(declarations.operations).map(([method, declaration]) =>
+  [declaration.channel, {method, declaration}]));
 export function operationRegistrar(ipcMain,{dispatch=null}={}) {
-  const channels = new Set(Object.values(declarations.operations).map(operation => operation.channel));
   const registered = new Set();
   return (channel, handler) => {
-    if (!channels.has(channel) || registered.has(channel)) throw new Error('IPC_OPERATION_UNDECLARED:'+channel);
+    if (!operationsByChannel.has(channel) || registered.has(channel)) throw new Error('IPC_OPERATION_UNDECLARED:'+channel);
     registered.add(channel);
-    const [method,declaration]=Object.entries(declarations.operations).find(([,operation])=>operation.channel===channel);
+    const {method, declaration} = operationsByChannel.get(channel);
     return ipcMain.handle(channel,(event,...args)=>dispatch?dispatch({method,declaration,event,args,handler}):handler(event,...args));
   };
 }

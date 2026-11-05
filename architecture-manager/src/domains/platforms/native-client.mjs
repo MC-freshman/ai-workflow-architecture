@@ -2,9 +2,10 @@ import fs from 'node:fs';
 import {dirname,join} from 'node:path';
 import {randomBytes,randomUUID} from 'node:crypto';
 import {selectNativeProfile} from './native-profile.mjs';
-import {readOnboardingConfig} from '../../onboarding-config.mjs';
-import {clientBinding} from '../../onboarding-client.mjs';
+import {readOnboardingConfig} from '../onboarding/onboarding-config.mjs';
+import {clientBinding} from '../onboarding/onboarding-client.mjs';
 import {targetPath,defaultAuditRoot} from '../../core/paths.mjs';
+import {childEnv} from '../../core/child-env.mjs';
 import {sha256File} from '../../core/hash.mjs';
 import {runtimeFile} from '../../core/runtime-path.mjs';
 import {runOwnedProcess} from '../../core/owned-process.mjs';
@@ -59,7 +60,7 @@ export async function applyNativeClient(plan,{auditRoot=defaultAuditRoot(),actor
       if(previous && !same && (!plan.payload.managed || Object.keys(previous).some(key=>!['type','command','args','enabled'].includes(key))))throw Error('NATIVE_SERVER_NAME_CONFLICT');
       // Native CLI owns the JSONC writer. No generic parser rewrites user settings.
       await helper(plan,{operation:'backup',configPath:profile.configPath,backupPath},options);
-      const result=same?{exitCode:0}:await runOwnedProcess({python:plan.payload.python,executable:process.execPath,args:[profile.cli,'mcp','add-json','architecture',JSON.stringify(entry),'--scope','project'],cwd:profile.project,timeout:60000,registerCancel,env:{...process.env,ELECTRON_RUN_AS_NODE:'1',ACC_PRODUCT_CONFIG_PATH:profile.productPath,CODEBUDDY_FORCE_LITE_WB_BUNDLE:'1',CODEBUDDY_DISABLE_COMPILE_CACHE:'1',CODEBUDDY_CONFIG_DIR:targetPath(workspaceRoot,`${platformId}/runtime/native-client-home`)}});
+      const result=same?{exitCode:0}:await runOwnedProcess({python:plan.payload.python,executable:process.execPath,args:[profile.cli,'mcp','add-json','architecture',JSON.stringify(entry),'--scope','project'],cwd:profile.project,timeout:60000,registerCancel,env:childEnv(process.env,{ELECTRON_RUN_AS_NODE:'1',ACC_PRODUCT_CONFIG_PATH:profile.productPath,CODEBUDDY_FORCE_LITE_WB_BUNDLE:'1',CODEBUDDY_DISABLE_COMPILE_CACHE:'1',CODEBUDDY_CONFIG_DIR:targetPath(workspaceRoot,`${platformId}/runtime/native-client-home`)})});
       if(result.cancelled)throw Error('ONBOARDING_CANCELLED');
       if(result.exitCode!==0 || !fs.existsSync(profile.configPath))throw Error('NATIVE_REGISTRATION_FAILED');
       const native=parseJsonc(fs.readFileSync(profile.configPath,'utf8')).mcpServers?.architecture;
@@ -123,7 +124,7 @@ async function performNativeProbe({workspaceRoot,platformId},{registerCancel=()=
   if(!record.profile.supportsDirectProbe){const current=nativeClientStatus(workspaceRoot,platformId);if(current.nativeVendorClientVerified)return {...current,writePerformed:false};}
   if(!record.registered || !record.profile.supportsDirectProbe)return {...record,nativeVendorClientVerified:false,architectureComplete:false,writePerformed:false};
   const profile=selectNativeProfile(workspaceRoot,platformId,record.profile.bodyPath);
-  if(json(profile)!==json(record.profile) || hash(profile.configPath)!==record.nativeConfigSha256)throw Error('NATIVE_CLIENT_BINDING_CHANGED');
+  assertNativeClientBinding(record,profile);
   const snapshot=readOnboardingConfig({workspaceRoot,platformId}),binding=clientBinding(workspaceRoot,platformId);
   const service=read(targetPath(workspaceRoot,`${platformId}/bridge/client-adapter.json`)).server;
   if(!service || service.executable!==record.entry.command || json(service.args)!==json(record.entry.args))throw Error('NATIVE_CLIENT_BINDING_CHANGED');
@@ -151,7 +152,7 @@ export function nativeClientStatus(workspaceRoot,platformId) {
     const attemptPath=targetPath(workspaceRoot,`${platformId}/runtime/maintenance/manager-native/last-attempt.json`),attempt=fs.existsSync(attemptPath)?read(attemptPath):null;
     if(nativeAttemptBlocksProof(attempt,latest))return {registered:record.registered,nativeVendorClientVerified:false,status:attempt.status==='pending'?'native-probe-pending':'native-probe-failed',reason:attempt.error,lastSuccessfulProofAt:latest.checkedAt,profile:record.profile};
     const binding=clientBinding(workspaceRoot,platformId),service=read(targetPath(workspaceRoot,`${platformId}/bridge/client-adapter.json`)).server;
-    const traceCurrent=latest.modelTurnStarted===false || (latest.transport==='vendor-cli-model-tool-trace' && hash(latest.tracePath)===latest.traceSha256);
+    const traceCurrent=latest.modelTurnStarted===false || (['vendor-cli-model-tool-trace','vendor-client-session-tool-trace'].includes(latest.transport) && hash(latest.tracePath)===latest.traceSha256);
     const current=record.registered && traceCurrent && latest.proofScope==='native-three-repository-frozen-release-read' && json(selectNativeProfile(workspaceRoot,platformId,record.profile.bodyPath))===json(latest.profile) && hash(record.profile.configPath)===latest.nativeConfigSha256 && hash(latest.evidencePath)===latest.evidenceSha256 && ['configSha256','versionsSha256','adapterSha256'].every(key=>binding[key]===latest[key]) && hash(service.args.find(path=>path.endsWith('mcp_service.py')))===latest.serviceSha256;
     return {registered:record.registered,nativeVendorClientVerified:Boolean(current && latest.nativeVendorClientVerified),status:current?latest.status:'native-proof-stale',profile:record.profile,proofScope:latest.proofScope,modelTurnStarted:latest.modelTurnStarted};
   }catch{
@@ -159,3 +160,10 @@ export function nativeClientStatus(workspaceRoot,platformId) {
   }
 }
 export function verifyNativeClient(plan){const state=nativeClientStatus(plan.workspaceRoot,plan.target.platformId);return {ok:state.registered || state.status==='interface-required',...state,architectureComplete:false,writePerformed:false};}
+// Single source of truth for the native binding (D-147): the fresh profile must
+// equal the registered one byte-for-byte (vendor body/cli hashes included) and
+// the registered config hash must still match the file on disk. Both the direct
+// probe and the AI probe assert through here so their criteria cannot drift.
+export function assertNativeClientBinding(record,profile){
+  if(!record?.registered || json(profile)!==json(record.profile) || hash(profile.configPath)!==record.nativeConfigSha256)throw Error('NATIVE_CLIENT_BINDING_CHANGED');
+}
