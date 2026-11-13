@@ -1,0 +1,2286 @@
+{
+  "schema": "ai-manager-module/v1",
+  "generatedAt": "2026-11-13T13:07:41.274Z",
+  "generatedFrom": {
+    "operations": "src/app/operations.json",
+    "domains": "src/domains/",
+    "panels": "src/renderer/panels/",
+    "views": "src/app/view-definitions.json"
+  },
+  "summary": {
+    "moduleCount": 78,
+    "domainCount": 12,
+    "panelCount": 25,
+    "viewCount": 12,
+    "channelCount": 118
+  },
+  "modules": [
+    {
+      "id": "defect-book-surface",
+      "kind": "external",
+      "entry": "versions/缺陷状态簿.json",
+      "replaceable": true,
+      "replacementContract": "缺陷簿 check.py 判据不变",
+      "replacementOptions": {
+        "selfWritten": "保持 JSON",
+        "softwareIntegration": "SQLite（治理判据重写）"
+      },
+      "impactScope": "治理机检",
+      "healthCheck": "test/module-registry.test.mjs",
+      "matrixRef": "M23",
+      "enabled": true,
+      "replacement": null
+    },
+    {
+      "id": "docs-site-surface",
+      "kind": "external",
+      "entry": "docs-site/",
+      "replaceable": true,
+      "replacementContract": "C1–C11 源锁门禁不变",
+      "replacementOptions": {
+        "selfWritten": "自写 SSG（不推荐）",
+        "softwareIntegration": "VitePress/Astro：高成本（门禁重写）"
+      },
+      "impactScope": "文档站双档门禁",
+      "healthCheck": "test/module-registry.test.mjs",
+      "matrixRef": "M21",
+      "enabled": true,
+      "replacement": null
+    },
+    {
+      "id": "domain-audit",
+      "kind": "domain",
+      "entry": "src/domains/audit/",
+      "files": [
+        "src/domains/audit/audit.mjs",
+        "src/domains/audit/cockpit.mjs",
+        "src/domains/audit/defects.mjs",
+        "src/domains/audit/workspace.mjs"
+      ],
+      "exports": [
+        "auditWorkspace",
+        "buildDefectBookEditPlan",
+        "readAuditEvents",
+        "readDefectBook",
+        "readGateCockpit",
+        "verifyDefectBook"
+      ],
+      "channels": [
+        "audit:events",
+        "defects:read",
+        "defects:verify",
+        "gate:cockpit"
+      ],
+      "dependsOn": [
+        "mech-core"
+      ],
+      "replaceable": true,
+      "replacementContract": "events.jsonl 封条与完整性口径不变",
+      "replacementOptions": {
+        "selfWritten": "保持自写",
+        "softwareIntegration": "SQLite/sql.js（引依赖、迁移成本）"
+      },
+      "impactScope": "审计与缺陷读面",
+      "healthCheck": "test/module-registry.test.mjs",
+      "matrixRef": "M10",
+      "enabled": true,
+      "replacement": null
+    },
+    {
+      "id": "domain-certification",
+      "kind": "domain",
+      "entry": "src/domains/certification/",
+      "files": [
+        "src/domains/certification/anchor-plans.mjs",
+        "src/domains/certification/anchor-report.mjs",
+        "src/domains/certification/anchor.mjs",
+        "src/domains/certification/binding.mjs",
+        "src/domains/certification/content-cache.mjs",
+        "src/domains/certification/declared.mjs",
+        "src/domains/certification/evidence-reuse.mjs",
+        "src/domains/certification/evidence.mjs",
+        "src/domains/certification/fingerprints.mjs",
+        "src/domains/certification/floor-policy.mjs",
+        "src/domains/certification/interrupted-check.mjs",
+        "src/domains/certification/legacy.mjs",
+        "src/domains/certification/releases.mjs",
+        "src/domains/certification/selection.mjs"
+      ],
+      "exports": [
+        "ANCHOR_RELATIVE_PATH",
+        "ANCHOR_SCHEMA",
+        "anchorAlignment",
+        "anchorContent",
+        "anchorDigest",
+        "anchorPairFacts",
+        "anchorRefusal",
+        "applyAnchorAlignment",
+        "applyAnchorMaterialisation",
+        "bindingMatches",
+        "buildAnchorAlignmentPlan",
+        "buildAnchorMaterialisationPlan",
+        "certificationHasher",
+        "certificationInventory",
+        "certificationSelection",
+        "certificationSnapshot",
+        "computeAnchor",
+        "declarationTargets",
+        "declaredDefaults",
+        "declaredVersion",
+        "environmentBinding",
+        "evidenceIntact",
+        "floorReachedForScope",
+        "invocationFloor",
+        "legacyBindingAtGit",
+        "legacyCoverage",
+        "listAnchorPlatforms",
+        "matrixSummary",
+        "mergeCertification",
+        "ownEvidence",
+        "pendingCoverage",
+        "platformConfig",
+        "platformConfigPath",
+        "privateBindingHashes",
+        "readAnchorReport",
+        "readAnchorState",
+        "readCoverage",
+        "recommendedCertificationPair",
+        "recommendedMatrixVersion",
+        "recoverInterruptedCheck",
+        "resolvedCellVersion",
+        "resourceKey",
+        "reusableEvidence",
+        "selectCertification",
+        "stableJson",
+        "verifyAnchorAlignment",
+        "verifyAnchorMaterialisation",
+        "writeCoverage"
+      ],
+      "channels": [
+        "anchor:post-align-check",
+        "anchor:report"
+      ],
+      "dependsOn": [
+        "mech-core"
+      ],
+      "replaceable": true,
+      "replacementContract": "锚定代与对齐判据不变",
+      "replacementOptions": {
+        "selfWritten": "共享 platform-conformance 判据（已接）",
+        "softwareIntegration": "同左"
+      },
+      "impactScope": "认证矩阵",
+      "healthCheck": "test/module-registry.test.mjs",
+      "matrixRef": "M08",
+      "enabled": true,
+      "replacement": null
+    },
+    {
+      "id": "domain-docs",
+      "kind": "domain",
+      "entry": "src/domains/docs/",
+      "files": [
+        "src/domains/docs/docs-ops.mjs",
+        "src/domains/docs/documents.mjs"
+      ],
+      "exports": [
+        "EXTRA_DOCUMENTS",
+        "TOP_LEVEL_REQUIREMENTS",
+        "UPDATE_LOG_PATH",
+        "buildDocsSite",
+        "buildDocumentPlan",
+        "checkDocsLinks",
+        "diffDocument",
+        "documentKind",
+        "readDocument"
+      ],
+      "channels": [
+        "docs:build",
+        "docs:conform",
+        "document:diff",
+        "document:read"
+      ],
+      "dependsOn": [
+        "mech-core"
+      ],
+      "replaceable": true,
+      "replacementContract": "文档读写与源锁联动不变",
+      "replacementOptions": {
+        "selfWritten": "可重写",
+        "softwareIntegration": "无等价"
+      },
+      "impactScope": "治理文档读写",
+      "healthCheck": "test/module-registry.test.mjs",
+      "matrixRef": "M12",
+      "enabled": true,
+      "replacement": null
+    },
+    {
+      "id": "domain-git",
+      "kind": "domain",
+      "entry": "src/domains/git/",
+      "files": [
+        "src/domains/git/backup.mjs",
+        "src/domains/git/git-executor.mjs",
+        "src/domains/git/git.mjs",
+        "src/domains/git/sensitive.mjs",
+        "src/domains/git/state.mjs"
+      ],
+      "exports": [
+        "applyGitTransaction",
+        "assertConfiguredRemote",
+        "assertSelectedIndex",
+        "buildGitPlan",
+        "createGitBackup",
+        "inspectBytes",
+        "inspectGit",
+        "parseGitStatus",
+        "scanIndex",
+        "scanOutgoing",
+        "scanPaths",
+        "scanSensitiveFiles",
+        "scanSensitivePaths",
+        "selectedPath",
+        "validateStagedPaths",
+        "verifyGitBackup",
+        "verifyGitTransaction"
+      ],
+      "channels": [
+        "git:inspect",
+        "git:sensitive-scan"
+      ],
+      "dependsOn": [
+        "mech-core"
+      ],
+      "replaceable": true,
+      "replacementContract": "git 计划/敏感扫描/事务语义不变",
+      "replacementOptions": {
+        "selfWritten": "保持自写计划层",
+        "softwareIntegration": "isomorphic-git（Windows 凭据/GPG/性能局限）或 simple-git"
+      },
+      "impactScope": "commit/push/备份计划",
+      "healthCheck": "test/module-registry.test.mjs",
+      "matrixRef": "M09",
+      "enabled": true,
+      "replacement": null
+    },
+    {
+      "id": "domain-intake",
+      "kind": "domain",
+      "entry": "src/domains/intake/",
+      "files": [
+        "src/domains/intake/automatic-software.mjs",
+        "src/domains/intake/automatic.mjs",
+        "src/domains/intake/entry-selection.mjs",
+        "src/domains/intake/inbox.mjs",
+        "src/domains/intake/interpret.mjs",
+        "src/domains/intake/journals.mjs",
+        "src/domains/intake/mcp-body.mjs",
+        "src/domains/intake/paths.mjs",
+        "src/domains/intake/platform-body.mjs",
+        "src/domains/intake/policy.mjs",
+        "src/domains/intake/publication.mjs",
+        "src/domains/intake/releases.mjs",
+        "src/domains/intake/runtime-body.mjs",
+        "src/domains/intake/shared-body.mjs",
+        "src/domains/intake/smoke.mjs",
+        "src/domains/intake/software-binding.mjs",
+        "src/domains/intake/software-body.mjs",
+        "src/domains/intake/sources.mjs",
+        "src/domains/intake/tool-body.mjs",
+        "src/domains/intake/zip.mjs"
+      ],
+      "exports": [
+        "applyAutomaticSoftware",
+        "applyExistingSoftwareBinding",
+        "applyIntakePublication",
+        "applyPlatformBody",
+        "applyRelease",
+        "applyRuntimeBody",
+        "assertBodyIdentity",
+        "assertExactBodyDependencies",
+        "assertIntakeRevertPlan",
+        "assertIntakeUnchanged",
+        "assertUniqueSourcePaths",
+        "buildAgentSkillBodyPlan",
+        "buildAutomaticSoftwarePlan",
+        "buildAutomaticTextBodyPlan",
+        "buildExistingSoftwareBindingPlan",
+        "buildIntakePublicationPlan",
+        "buildIntakeRevertPlan",
+        "buildMcpBodyPlan",
+        "buildPlatformBodyPlan",
+        "buildReleasePlan",
+        "buildRuntimeBodyPlan",
+        "buildSoftwareBodyPlacementPlan",
+        "buildSoftwareBodyPlan",
+        "buildToolBodyPlan",
+        "checkSharedBody",
+        "classifyEntry",
+        "decodeSourceText",
+        "draftTextSource",
+        "encode",
+        "entryChunks",
+        "exclusionReason",
+        "externalSourcePath",
+        "hasSensitiveLiteral",
+        "inspectInbox",
+        "interpretation",
+        "listBodyDependencies",
+        "listIntakeJournals",
+        "listResourceReferences",
+        "listRuntimeBodies",
+        "matchSoftwareRecipes",
+        "nextImportVersion",
+        "normalizeSoftwareAction",
+        "readBodyEditor",
+        "readExternalText",
+        "readIntakeJournal",
+        "readRegistryBaseline",
+        "readSoftwareBodyActions",
+        "readToolBodyEditor",
+        "revertIntakePublication",
+        "scanExternalBody",
+        "selectDeclaredEntry",
+        "sharedRegistration",
+        "sourceRelative",
+        "suggestBodyImport",
+        "verifyAutomaticSoftware",
+        "verifyExistingSoftwareBinding",
+        "verifyIntakePublication",
+        "verifyIntakeRevert",
+        "verifyPlatformBody",
+        "verifyRelease",
+        "verifyRuntimeBody",
+        "workflowTextFiles",
+        "zipDirectory"
+      ],
+      "channels": [
+        "inbox:inspect",
+        "intake:agent-skill-plan",
+        "intake:automatic-suggestions",
+        "intake:body-editor",
+        "intake:body-smoke",
+        "intake:dependencies",
+        "intake:history",
+        "intake:journal",
+        "intake:platform-body",
+        "intake:revert-plan",
+        "intake:runtime-bodies",
+        "intake:scan-source",
+        "intake:select-source",
+        "intake:software-binding",
+        "intake:software-body",
+        "intake:software-placement",
+        "intake:tool-editor",
+        "intake:tool-plan",
+        "releases:references",
+        "releases:registry-baseline"
+      ],
+      "dependsOn": [
+        "mech-core"
+      ],
+      "replaceable": true,
+      "replacementContract": "发布计划语义与只读旧版约束不变",
+      "replacementOptions": {
+        "selfWritten": "手动 CLI 发布（release_tool 路径）可作降级",
+        "softwareIntegration": "无等价"
+      },
+      "impactScope": "三仓资源导入发布",
+      "healthCheck": "test/module-registry.test.mjs",
+      "matrixRef": "M05",
+      "enabled": true,
+      "replacement": null
+    },
+    {
+      "id": "domain-onboarding",
+      "kind": "domain",
+      "entry": "src/domains/onboarding/",
+      "files": [
+        "src/domains/onboarding/onboarding-attestation.mjs",
+        "src/domains/onboarding/onboarding-auto.mjs",
+        "src/domains/onboarding/onboarding-client.mjs",
+        "src/domains/onboarding/onboarding-config.mjs",
+        "src/domains/onboarding/onboarding-entry-skills.mjs",
+        "src/domains/onboarding/onboarding-finalize.mjs",
+        "src/domains/onboarding/onboarding-governance.mjs",
+        "src/domains/onboarding/onboarding-l1.mjs",
+        "src/domains/onboarding/onboarding-providers.mjs",
+        "src/domains/onboarding/onboarding-recovery.mjs",
+        "src/domains/onboarding/onboarding-runtime.mjs",
+        "src/domains/onboarding/onboarding-seed.mjs",
+        "src/domains/onboarding/onboarding-state.mjs",
+        "src/domains/onboarding/onboarding.mjs"
+      ],
+      "exports": [
+        "VERIFY_TIMEOUT_DEFAULT",
+        "VERIFY_TIMEOUT_RANGE",
+        "applyAutomaticOnboarding",
+        "applyBindingEdits",
+        "applyOnboardingAttestation",
+        "applyOnboardingBackend",
+        "applyOnboardingClient",
+        "applyOnboardingConfig",
+        "applyOnboardingFinalize",
+        "applyOnboardingGovernance",
+        "applyOnboardingProviders",
+        "applyOnboardingRuntime",
+        "applyPlatformScaffold",
+        "applySeed",
+        "assertConfigurationReferences",
+        "assessSeed",
+        "buildAutomaticOnboardingPlan",
+        "buildOnboardingAttestationPlan",
+        "buildOnboardingBackendPlan",
+        "buildOnboardingCard",
+        "buildOnboardingClientPlan",
+        "buildOnboardingConfigPlan",
+        "buildOnboardingFinalizePlan",
+        "buildOnboardingGovernancePlan",
+        "buildOnboardingProvidersPlan",
+        "buildOnboardingRuntimePlan",
+        "buildPlatformScaffoldPlan",
+        "cancelAllOnboardingChecks",
+        "cancelOnboarding",
+        "clientBinding",
+        "collectEntrySkillFiles",
+        "detectRuntime",
+        "entrySkillSlots",
+        "environmentBinding",
+        "executeOnboardingChecks",
+        "executePostAlignmentChecks",
+        "governanceOnboardingDraft",
+        "isGovernanceTextPath",
+        "locateSeed",
+        "markOnboardingRecorded",
+        "mergeFirstMatrix",
+        "onboardingCommitPaths",
+        "onboardingGitPaths",
+        "onboardingRenameSources",
+        "pendingFirstMatrix",
+        "preflightOnboardingRecorded",
+        "prepareAutomaticOnboardingPlan",
+        "probeOnboardingCapabilities",
+        "probeOnboardingClient",
+        "readFirstCertification",
+        "readOnboardingConfig",
+        "readOnboardingState",
+        "readOnboardingThreeLayer",
+        "renderEntrySkills",
+        "resolveVerifyTimeoutSeconds",
+        "runL1DualCell",
+        "runOnboardingPipeline",
+        "runtimeRequirements",
+        "savePendingOnboarding",
+        "selectL1Cells",
+        "stagedNameStatus",
+        "validateClientReceipt",
+        "verifyAutomaticOnboarding",
+        "verifyOnboardingAttestation",
+        "verifyOnboardingBackend",
+        "verifyOnboardingClient",
+        "verifyOnboardingConfig",
+        "verifyOnboardingFinalize",
+        "verifyOnboardingGovernance",
+        "verifyOnboardingProviders",
+        "verifyOnboardingRuntime",
+        "verifyPlatformScaffold"
+      ],
+      "channels": [
+        "onboarding:cancel",
+        "onboarding:capability-probe",
+        "onboarding:card",
+        "onboarding:client-probe",
+        "onboarding:config",
+        "onboarding:draft",
+        "onboarding:native-ai-probe",
+        "onboarding:native-probe",
+        "onboarding:native-status",
+        "onboarding:pipeline",
+        "onboarding:recorded",
+        "onboarding:runtime-detect",
+        "onboarding:select-file",
+        "onboarding:state"
+      ],
+      "dependsOn": [
+        "mech-core"
+      ],
+      "replaceable": true,
+      "replacementContract": "11 步口径与 readAdoptionCompletion 语义不变",
+      "replacementOptions": {
+        "selfWritten": "契约不变、实现可重写",
+        "softwareIntegration": "无等价外部软件（厂商专有）"
+      },
+      "impactScope": "7 平台入驻流水线",
+      "healthCheck": "test/module-registry.test.mjs",
+      "matrixRef": "M03",
+      "enabled": true,
+      "replacement": null
+    },
+    {
+      "id": "domain-plans",
+      "kind": "domain",
+      "entry": "src/domains/plans/",
+      "files": [
+        "src/domains/plans/plans-center.mjs",
+        "src/domains/plans/plans.mjs"
+      ],
+      "exports": [
+        "assertPublishedVersion",
+        "buildPlatformViewPlan",
+        "buildResourcePointerPlan",
+        "createAnchorPlan",
+        "parseImplementationTables",
+        "replaceConfigPlan",
+        "validatePointerTransition"
+      ],
+      "channels": [
+        "plan:anchor-generation",
+        "plan:automatic-software",
+        "plan:automatic-text-body",
+        "plan:defect-book-edit",
+        "plan:document",
+        "plan:git",
+        "plan:integration",
+        "plan:platform-anchor-alignment",
+        "plan:platform-attestation",
+        "plan:platform-backend",
+        "plan:platform-client",
+        "plan:platform-configuration",
+        "plan:platform-finalize",
+        "plan:platform-governance",
+        "plan:platform-native-client",
+        "plan:platform-onboarding",
+        "plan:platform-providers",
+        "plan:platform-resource-default",
+        "plan:platform-runtime",
+        "plan:platform-scaffold",
+        "plan:platform-view",
+        "plan:registry",
+        "plan:release",
+        "plan:resource-pointer",
+        "plan:software",
+        "plan:software-binding-migration",
+        "plan:software-command",
+        "plan:software-import",
+        "plan:software-launch",
+        "plan:software-recipe",
+        "plan:software-revert",
+        "plan:workspace-clone",
+        "plans:parse"
+      ],
+      "dependsOn": [
+        "mech-core"
+      ],
+      "replaceable": true,
+      "replacementContract": "planKinds 路由语义不变",
+      "replacementOptions": {
+        "selfWritten": "可重写",
+        "softwareIntegration": "无等价"
+      },
+      "impactScope": "计划中心",
+      "healthCheck": "test/module-registry.test.mjs",
+      "matrixRef": "M11",
+      "enabled": true,
+      "replacement": null
+    },
+    {
+      "id": "domain-platforms",
+      "kind": "domain",
+      "entry": "src/domains/platforms/",
+      "files": [
+        "src/domains/platforms/adoption-completion.mjs",
+        "src/domains/platforms/bridge-compatibility.mjs",
+        "src/domains/platforms/capability-evidence.mjs",
+        "src/domains/platforms/default-command.mjs",
+        "src/domains/platforms/global-update.mjs",
+        "src/domains/platforms/host-manifest.mjs",
+        "src/domains/platforms/integration.mjs",
+        "src/domains/platforms/management-runtime.mjs",
+        "src/domains/platforms/native-ai-probe.mjs",
+        "src/domains/platforms/native-artifacts.mjs",
+        "src/domains/platforms/native-attempt.mjs",
+        "src/domains/platforms/native-client-session.mjs",
+        "src/domains/platforms/native-client.mjs",
+        "src/domains/platforms/native-profile.mjs",
+        "src/domains/platforms/onboarding-readback.mjs",
+        "src/domains/platforms/onboarding-resume.mjs",
+        "src/domains/platforms/platform-check.mjs",
+        "src/domains/platforms/provider-templates.mjs",
+        "src/domains/platforms/resource-defaults.mjs",
+        "src/domains/platforms/resource-environment.mjs",
+        "src/domains/platforms/resource-proof.mjs",
+        "src/domains/platforms/runtime-binding.mjs",
+        "src/domains/platforms/runtime-discovery.mjs",
+        "src/domains/platforms/version-combo.mjs"
+      ],
+      "exports": [
+        "COMPLETION_TOLERATED_STEP_STATUSES",
+        "DEFAULT_CHECK_SCOPE",
+        "ONBOARDING_STEPS",
+        "ONBOARDING_STEP_SEQUENCE",
+        "RESOURCE_DOWNLOAD_SPEC_KEYS",
+        "WORKSPACE_MCP_EDITIONS",
+        "applyGlobalUpdate",
+        "applyGlobalUpdateRestore",
+        "applyNativeClient",
+        "applyPlatformResourceDefault",
+        "archiveAutomaticJournal",
+        "assertNativeClientBinding",
+        "assertResumePreview",
+        "automaticJournalPath",
+        "bridgeCompatibility",
+        "bridgeFiles",
+        "buildGlobalUpdatePlan",
+        "buildGlobalUpdateRestorePlan",
+        "buildIntegrationPlan",
+        "buildMatrixArgs",
+        "buildNativeClientPlan",
+        "buildPlatformResourceDefaultPlan",
+        "cancelGlobalUpdate",
+        "classifyNativeAiFailure",
+        "clearProvenLegacyGaps",
+        "collectNativeModelIds",
+        "collectResourceRequirements",
+        "discoverManagementNode",
+        "discoverNativeBodies",
+        "discoverOnboardingRuntime",
+        "finalizeNativeClientSessionProof",
+        "inputInvalidations",
+        "inspectPlatformConnection",
+        "installManagementRuntime",
+        "invalidateRuntimePlan",
+        "listIntegrationTargets",
+        "managementNodeCandidates",
+        "managementRuntimePlan",
+        "nativeAttemptBlocksProof",
+        "nativeAttemptPolicy",
+        "nativeClientStatus",
+        "nativeModelPin",
+        "nativeProfile",
+        "normaliseRunner",
+        "onboardingDeferrals",
+        "onboardingReadback",
+        "onboardingResumePreview",
+        "ownNativePath",
+        "parseNativeEvents",
+        "parseVersionTargets",
+        "platformPython",
+        "prepareNativeClientSessionProof",
+        "prepareResourceEnvironment",
+        "previewPlatformCheck",
+        "previewVersionCombo",
+        "probeNativeClient",
+        "probeNativeClientWithAi",
+        "providerTemplateStatus",
+        "pythonCandidates",
+        "readAdoptionCompletion",
+        "readGlobalUpdateHistory",
+        "readIntegrationTarget",
+        "readNativeArtifact",
+        "readPlatformResourceVersions",
+        "reconcileAutomaticJournal",
+        "reconcileHostManifest",
+        "recordNativeAttempt",
+        "resourceEnvironmentMatches",
+        "resourceEnvironmentSpec",
+        "resourceProofBinding",
+        "restoreNativeClientSessionConfig",
+        "restoreSessionProbeConfig",
+        "runPlatformCheck",
+        "runVersionComboProbe",
+        "selectNativeProfile",
+        "sessionTranscriptEvents",
+        "sharedUpdateTarget",
+        "specDiffersOnlyInDownloadSource",
+        "suggestPlatformBridge",
+        "validateNativeAiEvents",
+        "validateNativeReceipt",
+        "verifyGlobalUpdate",
+        "verifyNativeClient",
+        "verifyPlatformResourceDefault",
+        "verifyResumeVersionConsistency",
+        "workspaceMcpEdition",
+        "writeSessionProbeConfig"
+      ],
+      "channels": [
+        "global-update:cancelGlobalUpdate",
+        "global-update:previewGlobalUpdate",
+        "global-update:previewGlobalUpdateRestore",
+        "global-update:readGlobalUpdateHistory",
+        "integration:read",
+        "integration:targets",
+        "native-mcp:discoverNativeMcp",
+        "native-mcp:previewMcpBody",
+        "native-mcp:previewNativeCredential",
+        "native-mcp:previewNativeCredentialProvider",
+        "native-mcp:readMcpConfiguration",
+        "platform:check",
+        "platform:check-preview",
+        "platform:connection",
+        "platform:inspect",
+        "platform:refresh",
+        "platform:resource-versions",
+        "platform:suggest-bridge"
+      ],
+      "dependsOn": [
+        "mech-core"
+      ],
+      "replaceable": true,
+      "replacementContract": "三层状态签口径不变",
+      "replacementOptions": {
+        "selfWritten": "契约不变、实现可重写",
+        "softwareIntegration": "无等价"
+      },
+      "impactScope": "平台检查、一键更新、原生回执",
+      "healthCheck": "test/module-registry.test.mjs",
+      "matrixRef": "M04",
+      "enabled": true,
+      "replacement": null
+    },
+    {
+      "id": "domain-resources",
+      "kind": "domain",
+      "entry": "src/domains/resources/",
+      "files": [
+        "src/domains/resources/catalog.mjs",
+        "src/domains/resources/contracts.mjs",
+        "src/domains/resources/integrity.mjs",
+        "src/domains/resources/inventory.mjs",
+        "src/domains/resources/registry.mjs",
+        "src/domains/resources/versions.mjs"
+      ],
+      "exports": [
+        "FORMAL_TOP_LEVEL_DIRECTORIES",
+        "PLATFORM_IDS",
+        "SHARED_REPOSITORIES",
+        "assertWithinRoot",
+        "buildRegistryPlan",
+        "dependencyEntries",
+        "inspectPlatformDirectory",
+        "inspectRegistration",
+        "parseDefinition",
+        "promptBlock",
+        "readCatalogEntry",
+        "readSkillContent",
+        "refreshPlatformInventory",
+        "releaseFiles",
+        "scanWorkspace",
+        "validateFrozenResource",
+        "validateRegistry",
+        "validateResourceContent",
+        "verifyFrozenDirectory"
+      ],
+      "channels": [
+        "catalog:read",
+        "catalog:select",
+        "skill:read"
+      ],
+      "dependsOn": [
+        "mech-core"
+      ],
+      "replaceable": true,
+      "replacementContract": "registry/contracts 读面结构不变",
+      "replacementOptions": {
+        "selfWritten": "直读三仓 registry（已如此）",
+        "softwareIntegration": "无必要"
+      },
+      "impactScope": "三仓盘点",
+      "healthCheck": "test/module-registry.test.mjs",
+      "matrixRef": "M07",
+      "enabled": true,
+      "replacement": null
+    },
+    {
+      "id": "domain-runs",
+      "kind": "domain",
+      "entry": "src/domains/runs/",
+      "files": [
+        "src/domains/runs/runs.mjs"
+      ],
+      "exports": [
+        "inspectRunDirectory",
+        "inspectRunTimeline",
+        "listPlatformRuns",
+        "listRunLedger",
+        "summarizeRunLock"
+      ],
+      "channels": [
+        "runs:detail",
+        "runs:ledger"
+      ],
+      "dependsOn": [
+        "mech-core"
+      ],
+      "replaceable": true,
+      "replacementContract": "同 fixture run 目录 → 输出逐字可比一致（P4 试点）",
+      "replacementOptions": {
+        "selfWritten": "最小自写替代实现（P4 试点）",
+        "softwareIntegration": "无外部等价（数据专有）"
+      },
+      "impactScope": "runs 视图",
+      "healthCheck": "test/module-registry.test.mjs",
+      "matrixRef": "M13",
+      "enabled": true,
+      "replacement": null
+    },
+    {
+      "id": "domain-software",
+      "kind": "domain",
+      "entry": "src/domains/software/",
+      "files": [
+        "src/domains/software/actions.mjs",
+        "src/domains/software/credentials.mjs",
+        "src/domains/software/gateway-binding.mjs",
+        "src/domains/software/gateway-migration.mjs",
+        "src/domains/software/health.mjs",
+        "src/domains/software/mcp-config.mjs",
+        "src/domains/software/mcp-discovery.mjs",
+        "src/domains/software/software-intake.mjs",
+        "src/domains/software/software-launch.mjs",
+        "src/domains/software/software-publish.mjs",
+        "src/domains/software/software-recovery.mjs",
+        "src/domains/software/software.mjs"
+      ],
+      "exports": [
+        "applyGatewayMigration",
+        "applyNativeCredential",
+        "applyNativeCredentialProvider",
+        "applySoftwareCommand",
+        "applySoftwareImport",
+        "applySoftwareLaunch",
+        "applySoftwareRecipe",
+        "assertGatewaySelection",
+        "buildGatewayMigrationPlan",
+        "buildNativeCredentialPlan",
+        "buildNativeCredentialProviderPlan",
+        "buildSoftwareCommandPlan",
+        "buildSoftwareConnectorLaunchPlan",
+        "buildSoftwareImportPlan",
+        "buildSoftwareLaunchPlan",
+        "buildSoftwareRecipePlan",
+        "buildSoftwareRevertPlan",
+        "checkMcpServer",
+        "connectorHealth",
+        "discoverNativeMcp",
+        "gatewayBinding",
+        "gatewayDifferences",
+        "healthSoftware",
+        "listSoftware",
+        "listSoftwareIntakes",
+        "listSoftwareRecoveries",
+        "mcpCredentialReferences",
+        "mcpSemanticTools",
+        "nativeCredentialBinding",
+        "readMcpConfiguration",
+        "readNativeMcpDiscovery",
+        "resolveMcpServer",
+        "resolveRecipeVersion",
+        "revertSoftwareTransaction",
+        "runnerConfig",
+        "softwareConnectorStatus",
+        "validateMcpSchemas",
+        "verifyGatewayMigration",
+        "verifyNativeCredential",
+        "verifyNativeCredentialProvider",
+        "verifySoftwareCommand",
+        "verifySoftwareImport",
+        "verifySoftwareLaunch",
+        "verifySoftwareRecipe",
+        "verifySoftwareRevert"
+      ],
+      "channels": [
+        "software:body-actions",
+        "software:health",
+        "software:intakes",
+        "software:open-location",
+        "software:recoveries",
+        "software:select-source"
+      ],
+      "dependsOn": [
+        "mech-core"
+      ],
+      "replaceable": true,
+      "replacementContract": "ai-software/v1 配方契约不变",
+      "replacementOptions": {
+        "selfWritten": "简化直读配方",
+        "softwareIntegration": "MCP 直连（09-22 登记方向，D-60 落差另案）"
+      },
+      "impactScope": "软件接入、健康、恢复",
+      "healthCheck": "test/module-registry.test.mjs",
+      "matrixRef": "M06",
+      "enabled": true,
+      "replacement": null
+    },
+    {
+      "id": "domain-workspace",
+      "kind": "domain",
+      "entry": "src/domains/workspace/",
+      "files": [
+        "src/domains/workspace/workspace-bootstrap.mjs"
+      ],
+      "exports": [
+        "applyWorkspaceClone",
+        "buildWorkspaceClonePlan"
+      ],
+      "channels": [
+        "workspace:clone",
+        "workspace:default",
+        "workspace:scan",
+        "workspace:select",
+        "workspace:select-directory"
+      ],
+      "dependsOn": [
+        "mech-core"
+      ],
+      "replaceable": true,
+      "replacementContract": "克隆校验与首扫语义不变",
+      "replacementOptions": {
+        "selfWritten": "可重写",
+        "softwareIntegration": "无等价"
+      },
+      "impactScope": "工作区引导",
+      "healthCheck": "test/module-registry.test.mjs",
+      "matrixRef": "M14",
+      "enabled": true,
+      "replacement": null
+    },
+    {
+      "id": "entry-cli",
+      "kind": "entry",
+      "entry": "src/cli.mjs",
+      "replaceable": true,
+      "replacementContract": "conform 五段与 digest 语义不变",
+      "replacementOptions": {
+        "selfWritten": "共享 architecture-ops/platform-conformance（已接）",
+        "softwareIntegration": "同左"
+      },
+      "impactScope": "门禁 digest",
+      "healthCheck": "test/module-registry.test.mjs",
+      "matrixRef": "M18",
+      "enabled": true,
+      "replacement": null
+    },
+    {
+      "id": "entry-main",
+      "kind": "entry",
+      "entry": "src/main.mjs",
+      "replaceable": true,
+      "replacementContract": "注册表驱动 + 契约测试（同 fixture 渲染一致）",
+      "replacementOptions": {
+        "selfWritten": "配置驱动注册表 + 按视图懒加载（P3）",
+        "softwareIntegration": "single-spa / 模块联邦：不可行（CSP connect-src none 禁远程加载）"
+      },
+      "impactScope": "全部 22 面板与 12 视图",
+      "healthCheck": "test/module-registry.test.mjs",
+      "matrixRef": "M01",
+      "enabled": true,
+      "replacement": null
+    },
+    {
+      "id": "entry-preload",
+      "kind": "entry",
+      "entry": "src/preload.cjs",
+      "replaceable": false,
+      "replacementContract": null,
+      "replacementOptions": {
+        "selfWritten": "注册表派生校验（P2），声明源不变",
+        "softwareIntegration": "electron-trpc：不推荐（重写 116 通道模型）"
+      },
+      "impactScope": "116 IPC 通道、preload、register",
+      "healthCheck": "test/module-registry.test.mjs",
+      "matrixRef": "M02",
+      "enabled": true,
+      "replacement": null
+    },
+    {
+      "id": "gate-audit-workspace",
+      "kind": "gate",
+      "entry": "scripts/audit-workspace.mjs",
+      "replaceable": true,
+      "replacementContract": "conform 五段与 digest 语义不变",
+      "replacementOptions": {
+        "selfWritten": "共享 architecture-ops/platform-conformance（已接）",
+        "softwareIntegration": "同左"
+      },
+      "impactScope": "门禁 digest",
+      "healthCheck": "test/module-registry.test.mjs",
+      "matrixRef": "M18",
+      "enabled": true,
+      "replacement": null
+    },
+    {
+      "id": "gate-build-management-bridge",
+      "kind": "gate",
+      "entry": "scripts/build-management-bridge.mjs",
+      "replaceable": true,
+      "replacementContract": "conform 五段与 digest 语义不变",
+      "replacementOptions": {
+        "selfWritten": "共享 architecture-ops/platform-conformance（已接）",
+        "softwareIntegration": "同左"
+      },
+      "impactScope": "门禁 digest",
+      "healthCheck": "test/module-registry.test.mjs",
+      "matrixRef": "M18",
+      "enabled": true,
+      "replacement": null
+    },
+    {
+      "id": "gate-check-governance-drift",
+      "kind": "gate",
+      "entry": "scripts/check-governance-drift.mjs",
+      "replaceable": true,
+      "replacementContract": "conform 五段与 digest 语义不变",
+      "replacementOptions": {
+        "selfWritten": "共享 architecture-ops/platform-conformance（已接）",
+        "softwareIntegration": "同左"
+      },
+      "impactScope": "门禁 digest",
+      "healthCheck": "test/module-registry.test.mjs",
+      "matrixRef": "M18",
+      "enabled": true,
+      "replacement": null
+    },
+    {
+      "id": "gate-check-mcp-binding",
+      "kind": "gate",
+      "entry": "scripts/check-mcp-binding.mjs",
+      "replaceable": true,
+      "replacementContract": "conform 五段与 digest 语义不变",
+      "replacementOptions": {
+        "selfWritten": "共享 architecture-ops/platform-conformance（已接）",
+        "softwareIntegration": "同左"
+      },
+      "impactScope": "门禁 digest",
+      "healthCheck": "test/module-registry.test.mjs",
+      "matrixRef": "M18",
+      "enabled": true,
+      "replacement": null
+    },
+    {
+      "id": "gate-check-runtime-drift",
+      "kind": "gate",
+      "entry": "scripts/check-runtime-drift.mjs",
+      "replaceable": true,
+      "replacementContract": "conform 五段与 digest 语义不变",
+      "replacementOptions": {
+        "selfWritten": "共享 architecture-ops/platform-conformance（已接）",
+        "softwareIntegration": "同左"
+      },
+      "impactScope": "门禁 digest",
+      "healthCheck": "test/module-registry.test.mjs",
+      "matrixRef": "M18",
+      "enabled": true,
+      "replacement": null
+    },
+    {
+      "id": "gate-collect-seed",
+      "kind": "gate",
+      "entry": "scripts/collect-seed.mjs",
+      "replaceable": true,
+      "replacementContract": "conform 五段与 digest 语义不变",
+      "replacementOptions": {
+        "selfWritten": "共享 architecture-ops/platform-conformance（已接）",
+        "softwareIntegration": "同左"
+      },
+      "impactScope": "门禁 digest",
+      "healthCheck": "test/module-registry.test.mjs",
+      "matrixRef": "M18",
+      "enabled": true,
+      "replacement": null
+    },
+    {
+      "id": "gate-conform",
+      "kind": "gate",
+      "entry": "scripts/conform.mjs",
+      "replaceable": true,
+      "replacementContract": "conform 五段与 digest 语义不变",
+      "replacementOptions": {
+        "selfWritten": "共享 architecture-ops/platform-conformance（已接）",
+        "softwareIntegration": "同左"
+      },
+      "impactScope": "门禁 digest",
+      "healthCheck": "test/module-registry.test.mjs",
+      "matrixRef": "M18",
+      "enabled": true,
+      "replacement": null
+    },
+    {
+      "id": "gate-conform-proof",
+      "kind": "gate",
+      "entry": "scripts/conform-proof.mjs",
+      "replaceable": true,
+      "replacementContract": "conform 五段与 digest 语义不变",
+      "replacementOptions": {
+        "selfWritten": "共享 architecture-ops/platform-conformance（已接）",
+        "softwareIntegration": "同左"
+      },
+      "impactScope": "门禁 digest",
+      "healthCheck": "test/module-registry.test.mjs",
+      "matrixRef": "M18",
+      "enabled": true,
+      "replacement": null
+    },
+    {
+      "id": "gate-export-governance-public",
+      "kind": "gate",
+      "entry": "scripts/export-governance-public.mjs",
+      "replaceable": true,
+      "replacementContract": "conform 五段与 digest 语义不变",
+      "replacementOptions": {
+        "selfWritten": "共享 architecture-ops/platform-conformance（已接）",
+        "softwareIntegration": "同左"
+      },
+      "impactScope": "门禁 digest",
+      "healthCheck": "test/module-registry.test.mjs",
+      "matrixRef": "M18",
+      "enabled": true,
+      "replacement": null
+    },
+    {
+      "id": "gate-generate-module-registry",
+      "kind": "gate",
+      "entry": "scripts/generate-module-registry.mjs",
+      "replaceable": true,
+      "replacementContract": "conform 五段与 digest 语义不变",
+      "replacementOptions": {
+        "selfWritten": "共享 architecture-ops/platform-conformance（已接）",
+        "softwareIntegration": "同左"
+      },
+      "impactScope": "门禁 digest",
+      "healthCheck": "test/module-registry.test.mjs",
+      "matrixRef": "M18",
+      "enabled": true,
+      "replacement": null
+    },
+    {
+      "id": "gate-generate-preload",
+      "kind": "gate",
+      "entry": "scripts/generate-preload.mjs",
+      "replaceable": true,
+      "replacementContract": "conform 五段与 digest 语义不变",
+      "replacementOptions": {
+        "selfWritten": "共享 architecture-ops/platform-conformance（已接）",
+        "softwareIntegration": "同左"
+      },
+      "impactScope": "门禁 digest",
+      "healthCheck": "test/module-registry.test.mjs",
+      "matrixRef": "M18",
+      "enabled": true,
+      "replacement": null
+    },
+    {
+      "id": "gate-release-gate",
+      "kind": "gate",
+      "entry": "scripts/release-gate.mjs",
+      "replaceable": true,
+      "replacementContract": "conform 五段与 digest 语义不变",
+      "replacementOptions": {
+        "selfWritten": "共享 architecture-ops/platform-conformance（已接）",
+        "softwareIntegration": "同左"
+      },
+      "impactScope": "门禁 digest",
+      "healthCheck": "test/module-registry.test.mjs",
+      "matrixRef": "M18",
+      "enabled": true,
+      "replacement": null
+    },
+    {
+      "id": "gate-release-gate-waiting",
+      "kind": "gate",
+      "entry": "scripts/release-gate-waiting.mjs",
+      "replaceable": true,
+      "replacementContract": "conform 五段与 digest 语义不变",
+      "replacementOptions": {
+        "selfWritten": "共享 architecture-ops/platform-conformance（已接）",
+        "softwareIntegration": "同左"
+      },
+      "impactScope": "门禁 digest",
+      "healthCheck": "test/module-registry.test.mjs",
+      "matrixRef": "M18",
+      "enabled": true,
+      "replacement": null
+    },
+    {
+      "id": "gate-release-proof",
+      "kind": "gate",
+      "entry": "scripts/release-proof.mjs",
+      "replaceable": true,
+      "replacementContract": "conform 五段与 digest 语义不变",
+      "replacementOptions": {
+        "selfWritten": "共享 architecture-ops/platform-conformance（已接）",
+        "softwareIntegration": "同左"
+      },
+      "impactScope": "门禁 digest",
+      "healthCheck": "test/module-registry.test.mjs",
+      "matrixRef": "M18",
+      "enabled": true,
+      "replacement": null
+    },
+    {
+      "id": "gate-verify",
+      "kind": "gate",
+      "entry": "scripts/verify.mjs",
+      "replaceable": true,
+      "replacementContract": "conform 五段与 digest 语义不变",
+      "replacementOptions": {
+        "selfWritten": "共享 architecture-ops/platform-conformance（已接）",
+        "softwareIntegration": "同左"
+      },
+      "impactScope": "门禁 digest",
+      "healthCheck": "test/module-registry.test.mjs",
+      "matrixRef": "M18",
+      "enabled": true,
+      "replacement": null
+    },
+    {
+      "id": "gate-verify-onboarding",
+      "kind": "gate",
+      "entry": "scripts/verify-onboarding.mjs",
+      "replaceable": true,
+      "replacementContract": "conform 五段与 digest 语义不变",
+      "replacementOptions": {
+        "selfWritten": "共享 architecture-ops/platform-conformance（已接）",
+        "softwareIntegration": "同左"
+      },
+      "impactScope": "门禁 digest",
+      "healthCheck": "test/module-registry.test.mjs",
+      "matrixRef": "M18",
+      "enabled": true,
+      "replacement": null
+    },
+    {
+      "id": "mcp-recipe-surface",
+      "kind": "external",
+      "entry": "software/architecture-manager-mcp/",
+      "replaceable": true,
+      "replacementContract": "MCP 工具面与确认写语义不变",
+      "replacementOptions": {
+        "selfWritten": "保持自包含 stdio（零依赖硬优点）",
+        "softwareIntegration": "@modelcontextprotocol/sdk（钉版；配方安装需 npm 依赖）"
+      },
+      "impactScope": "AI 入口",
+      "healthCheck": "test/module-registry.test.mjs",
+      "matrixRef": "M20",
+      "enabled": true,
+      "replacement": null
+    },
+    {
+      "id": "mech-app",
+      "kind": "mechanism",
+      "entry": "src/app/",
+      "channels": [
+        "task:cancel",
+        "ui:confirm",
+        "ui:version"
+      ],
+      "replaceable": true,
+      "replacementContract": "operations.json 单一声明源 + 三方一致边界测试",
+      "replacementOptions": {
+        "selfWritten": "注册表派生校验（P2），声明源不变",
+        "softwareIntegration": "electron-trpc：不推荐（重写 116 通道模型）"
+      },
+      "impactScope": "116 IPC 通道、preload、register",
+      "healthCheck": "test/module-registry.test.mjs",
+      "matrixRef": "M02",
+      "enabled": true,
+      "replacement": null
+    },
+    {
+      "id": "mech-core",
+      "kind": "mechanism",
+      "entry": "src/core/",
+      "replaceable": true,
+      "replacementContract": "哈希/路径输出逐字节一致",
+      "replacementOptions": {
+        "selfWritten": "保持 node:crypto",
+        "softwareIntegration": "外部 sha256sum（无必要）"
+      },
+      "impactScope": "全局",
+      "healthCheck": "test/module-registry.test.mjs",
+      "matrixRef": "M16",
+      "enabled": true,
+      "replacement": null
+    },
+    {
+      "id": "mech-infrastructure",
+      "kind": "mechanism",
+      "entry": "src/infrastructure/",
+      "replaceable": false,
+      "replacementContract": null,
+      "replacementOptions": {
+        "selfWritten": "不推荐替换（恢复语义是安全核心）",
+        "softwareIntegration": "无等价"
+      },
+      "impactScope": "全部写路径",
+      "healthCheck": "test/module-registry.test.mjs",
+      "matrixRef": "M15",
+      "enabled": true,
+      "replacement": null
+    },
+    {
+      "id": "mech-transactions",
+      "kind": "mechanism",
+      "entry": "src/transactions/",
+      "channels": [
+        "transaction:apply",
+        "transaction:verify"
+      ],
+      "replaceable": false,
+      "replacementContract": null,
+      "replacementOptions": {
+        "selfWritten": "不推荐替换（恢复语义是安全核心）",
+        "softwareIntegration": "无等价"
+      },
+      "impactScope": "全部写路径",
+      "healthCheck": "test/module-registry.test.mjs",
+      "matrixRef": "M15",
+      "enabled": true,
+      "replacement": null
+    },
+    {
+      "id": "packaging-config",
+      "kind": "mechanism",
+      "entry": "package.json",
+      "replaceable": false,
+      "replacementContract": null,
+      "replacementOptions": {
+        "selfWritten": "—",
+        "softwareIntegration": "Tauri：本轮不可行（整体重写）；electron-forge 收益低"
+      },
+      "impactScope": "双包发行",
+      "healthCheck": "test/module-registry.test.mjs",
+      "matrixRef": "M19",
+      "enabled": true,
+      "replacement": null
+    },
+    {
+      "id": "panel-anchor",
+      "kind": "panel",
+      "entry": "src/renderer/panels/anchor.jsx",
+      "exports": [
+        "AnchorPanel"
+      ],
+      "replaceable": true,
+      "replacementContract": "注册表驱动 + 契约测试（同 fixture 渲染一致）",
+      "replacementOptions": {
+        "selfWritten": "配置驱动注册表 + 按视图懒加载（P3）",
+        "softwareIntegration": "single-spa / 模块联邦：不可行（CSP connect-src none 禁远程加载）"
+      },
+      "impactScope": "全部 22 面板与 12 视图",
+      "healthCheck": "test/module-registry.test.mjs",
+      "matrixRef": "M01",
+      "enabled": true,
+      "replacement": null
+    },
+    {
+      "id": "panel-audit",
+      "kind": "panel",
+      "entry": "src/renderer/panels/audit.jsx",
+      "exports": [
+        "AuditPanel"
+      ],
+      "replaceable": true,
+      "replacementContract": "注册表驱动 + 契约测试（同 fixture 渲染一致）",
+      "replacementOptions": {
+        "selfWritten": "配置驱动注册表 + 按视图懒加载（P3）",
+        "softwareIntegration": "single-spa / 模块联邦：不可行（CSP connect-src none 禁远程加载）"
+      },
+      "impactScope": "全部 22 面板与 12 视图",
+      "healthCheck": "test/module-registry.test.mjs",
+      "matrixRef": "M01",
+      "enabled": true,
+      "replacement": null
+    },
+    {
+      "id": "panel-body-intake-panel",
+      "kind": "panel",
+      "entry": "src/renderer/features/intake/BodyIntakePanel.jsx",
+      "exports": [
+        "BodyIntakePanel"
+      ],
+      "replaceable": true,
+      "replacementContract": "注册表驱动 + 契约测试（同 fixture 渲染一致）",
+      "replacementOptions": {
+        "selfWritten": "配置驱动注册表 + 按视图懒加载（P3）",
+        "softwareIntegration": "single-spa / 模块联邦：不可行（CSP connect-src none 禁远程加载）"
+      },
+      "impactScope": "全部 22 面板与 12 视图",
+      "healthCheck": "test/module-registry.test.mjs",
+      "matrixRef": "M01",
+      "enabled": true,
+      "replacement": null
+    },
+    {
+      "id": "panel-catalog",
+      "kind": "panel",
+      "entry": "src/renderer/panels/catalog.jsx",
+      "exports": [
+        "CatalogPanel"
+      ],
+      "replaceable": true,
+      "replacementContract": "注册表驱动 + 契约测试（同 fixture 渲染一致）",
+      "replacementOptions": {
+        "selfWritten": "配置驱动注册表 + 按视图懒加载（P3）",
+        "softwareIntegration": "single-spa / 模块联邦：不可行（CSP connect-src none 禁远程加载）"
+      },
+      "impactScope": "全部 22 面板与 12 视图",
+      "healthCheck": "test/module-registry.test.mjs",
+      "matrixRef": "M01",
+      "enabled": true,
+      "replacement": null
+    },
+    {
+      "id": "panel-clone",
+      "kind": "panel",
+      "entry": "src/renderer/panels/clone.jsx",
+      "exports": [
+        "ClonePanel"
+      ],
+      "replaceable": true,
+      "replacementContract": "注册表驱动 + 契约测试（同 fixture 渲染一致）",
+      "replacementOptions": {
+        "selfWritten": "配置驱动注册表 + 按视图懒加载（P3）",
+        "softwareIntegration": "single-spa / 模块联邦：不可行（CSP connect-src none 禁远程加载）"
+      },
+      "impactScope": "全部 22 面板与 12 视图",
+      "healthCheck": "test/module-registry.test.mjs",
+      "matrixRef": "M01",
+      "enabled": true,
+      "replacement": null
+    },
+    {
+      "id": "panel-cockpit",
+      "kind": "panel",
+      "entry": "src/renderer/panels/cockpit.jsx",
+      "exports": [
+        "CockpitPanel"
+      ],
+      "replaceable": true,
+      "replacementContract": "注册表驱动 + 契约测试（同 fixture 渲染一致）",
+      "replacementOptions": {
+        "selfWritten": "配置驱动注册表 + 按视图懒加载（P3）",
+        "softwareIntegration": "single-spa / 模块联邦：不可行（CSP connect-src none 禁远程加载）"
+      },
+      "impactScope": "全部 22 面板与 12 视图",
+      "healthCheck": "test/module-registry.test.mjs",
+      "matrixRef": "M01",
+      "enabled": true,
+      "replacement": null
+    },
+    {
+      "id": "panel-documents",
+      "kind": "panel",
+      "entry": "src/renderer/panels/documents.jsx",
+      "exports": [
+        "DocumentPanel"
+      ],
+      "replaceable": true,
+      "replacementContract": "注册表驱动 + 契约测试（同 fixture 渲染一致）",
+      "replacementOptions": {
+        "selfWritten": "配置驱动注册表 + 按视图懒加载（P3）",
+        "softwareIntegration": "single-spa / 模块联邦：不可行（CSP connect-src none 禁远程加载）"
+      },
+      "impactScope": "全部 22 面板与 12 视图",
+      "healthCheck": "test/module-registry.test.mjs",
+      "matrixRef": "M01",
+      "enabled": true,
+      "replacement": null
+    },
+    {
+      "id": "panel-git",
+      "kind": "panel",
+      "entry": "src/renderer/panels/git.jsx",
+      "exports": [
+        "GitPanel"
+      ],
+      "replaceable": true,
+      "replacementContract": "注册表驱动 + 契约测试（同 fixture 渲染一致）",
+      "replacementOptions": {
+        "selfWritten": "配置驱动注册表 + 按视图懒加载（P3）",
+        "softwareIntegration": "single-spa / 模块联邦：不可行（CSP connect-src none 禁远程加载）"
+      },
+      "impactScope": "全部 22 面板与 12 视图",
+      "healthCheck": "test/module-registry.test.mjs",
+      "matrixRef": "M01",
+      "enabled": true,
+      "replacement": null
+    },
+    {
+      "id": "panel-global-update",
+      "kind": "panel",
+      "entry": "src/renderer/panels/global-update.jsx",
+      "exports": [
+        "GlobalUpdatePanel"
+      ],
+      "replaceable": true,
+      "replacementContract": "注册表驱动 + 契约测试（同 fixture 渲染一致）",
+      "replacementOptions": {
+        "selfWritten": "配置驱动注册表 + 按视图懒加载（P3）",
+        "softwareIntegration": "single-spa / 模块联邦：不可行（CSP connect-src none 禁远程加载）"
+      },
+      "impactScope": "全部 22 面板与 12 视图",
+      "healthCheck": "test/module-registry.test.mjs",
+      "matrixRef": "M01",
+      "enabled": true,
+      "replacement": null
+    },
+    {
+      "id": "panel-governance",
+      "kind": "panel",
+      "entry": "src/renderer/panels/governance.jsx",
+      "exports": [
+        "GovernancePanel"
+      ],
+      "replaceable": true,
+      "replacementContract": "注册表驱动 + 契约测试（同 fixture 渲染一致）",
+      "replacementOptions": {
+        "selfWritten": "配置驱动注册表 + 按视图懒加载（P3）",
+        "softwareIntegration": "single-spa / 模块联邦：不可行（CSP connect-src none 禁远程加载）"
+      },
+      "impactScope": "全部 22 面板与 12 视图",
+      "healthCheck": "test/module-registry.test.mjs",
+      "matrixRef": "M01",
+      "enabled": true,
+      "replacement": null
+    },
+    {
+      "id": "panel-inbox",
+      "kind": "panel",
+      "entry": "src/renderer/panels/inbox.jsx",
+      "exports": [
+        "InboxPanel"
+      ],
+      "replaceable": true,
+      "replacementContract": "注册表驱动 + 契约测试（同 fixture 渲染一致）",
+      "replacementOptions": {
+        "selfWritten": "配置驱动注册表 + 按视图懒加载（P3）",
+        "softwareIntegration": "single-spa / 模块联邦：不可行（CSP connect-src none 禁远程加载）"
+      },
+      "impactScope": "全部 22 面板与 12 视图",
+      "healthCheck": "test/module-registry.test.mjs",
+      "matrixRef": "M01",
+      "enabled": true,
+      "replacement": null
+    },
+    {
+      "id": "panel-integration",
+      "kind": "panel",
+      "entry": "src/renderer/panels/integration.jsx",
+      "exports": [
+        "IntegrationPanel"
+      ],
+      "replaceable": true,
+      "replacementContract": "注册表驱动 + 契约测试（同 fixture 渲染一致）",
+      "replacementOptions": {
+        "selfWritten": "配置驱动注册表 + 按视图懒加载（P3）",
+        "softwareIntegration": "single-spa / 模块联邦：不可行（CSP connect-src none 禁远程加载）"
+      },
+      "impactScope": "全部 22 面板与 12 视图",
+      "healthCheck": "test/module-registry.test.mjs",
+      "matrixRef": "M01",
+      "enabled": true,
+      "replacement": null
+    },
+    {
+      "id": "panel-onboard",
+      "kind": "panel",
+      "entry": "src/renderer/panels/onboard.jsx",
+      "exports": [
+        "OnboardPanel"
+      ],
+      "replaceable": true,
+      "replacementContract": "注册表驱动 + 契约测试（同 fixture 渲染一致）",
+      "replacementOptions": {
+        "selfWritten": "配置驱动注册表 + 按视图懒加载（P3）",
+        "softwareIntegration": "single-spa / 模块联邦：不可行（CSP connect-src none 禁远程加载）"
+      },
+      "impactScope": "全部 22 面板与 12 视图",
+      "healthCheck": "test/module-registry.test.mjs",
+      "matrixRef": "M01",
+      "enabled": true,
+      "replacement": null
+    },
+    {
+      "id": "panel-plan-preview",
+      "kind": "panel",
+      "entry": "src/renderer/panels/plan-preview.jsx",
+      "exports": [
+        "PlanPreview"
+      ],
+      "replaceable": true,
+      "replacementContract": "注册表驱动 + 契约测试（同 fixture 渲染一致）",
+      "replacementOptions": {
+        "selfWritten": "配置驱动注册表 + 按视图懒加载（P3）",
+        "softwareIntegration": "single-spa / 模块联邦：不可行（CSP connect-src none 禁远程加载）"
+      },
+      "impactScope": "全部 22 面板与 12 视图",
+      "healthCheck": "test/module-registry.test.mjs",
+      "matrixRef": "M01",
+      "enabled": true,
+      "replacement": null
+    },
+    {
+      "id": "panel-plancenter",
+      "kind": "panel",
+      "entry": "src/renderer/panels/plancenter.jsx",
+      "exports": [
+        "PlanCenterPanel"
+      ],
+      "replaceable": true,
+      "replacementContract": "注册表驱动 + 契约测试（同 fixture 渲染一致）",
+      "replacementOptions": {
+        "selfWritten": "配置驱动注册表 + 按视图懒加载（P3）",
+        "softwareIntegration": "single-spa / 模块联邦：不可行（CSP connect-src none 禁远程加载）"
+      },
+      "impactScope": "全部 22 面板与 12 视图",
+      "healthCheck": "test/module-registry.test.mjs",
+      "matrixRef": "M01",
+      "enabled": true,
+      "replacement": null
+    },
+    {
+      "id": "panel-platform",
+      "kind": "panel",
+      "entry": "src/renderer/panels/platform.jsx",
+      "exports": [
+        "PlatformPanel"
+      ],
+      "replaceable": true,
+      "replacementContract": "注册表驱动 + 契约测试（同 fixture 渲染一致）",
+      "replacementOptions": {
+        "selfWritten": "配置驱动注册表 + 按视图懒加载（P3）",
+        "softwareIntegration": "single-spa / 模块联邦：不可行（CSP connect-src none 禁远程加载）"
+      },
+      "impactScope": "全部 22 面板与 12 视图",
+      "healthCheck": "test/module-registry.test.mjs",
+      "matrixRef": "M01",
+      "enabled": true,
+      "replacement": null
+    },
+    {
+      "id": "panel-platform-resource-versions",
+      "kind": "panel",
+      "entry": "src/renderer/panels/platform-resource-versions.jsx",
+      "exports": [
+        "PlatformResourceVersions"
+      ],
+      "replaceable": true,
+      "replacementContract": "注册表驱动 + 契约测试（同 fixture 渲染一致）",
+      "replacementOptions": {
+        "selfWritten": "配置驱动注册表 + 按视图懒加载（P3）",
+        "softwareIntegration": "single-spa / 模块联邦：不可行（CSP connect-src none 禁远程加载）"
+      },
+      "impactScope": "全部 22 面板与 12 视图",
+      "healthCheck": "test/module-registry.test.mjs",
+      "matrixRef": "M01",
+      "enabled": true,
+      "replacement": null
+    },
+    {
+      "id": "panel-pulse",
+      "kind": "panel",
+      "entry": "src/renderer/panels/pulse.jsx",
+      "exports": [
+        "HomePulse"
+      ],
+      "replaceable": true,
+      "replacementContract": "注册表驱动 + 契约测试（同 fixture 渲染一致）",
+      "replacementOptions": {
+        "selfWritten": "配置驱动注册表 + 按视图懒加载（P3）",
+        "softwareIntegration": "single-spa / 模块联邦：不可行（CSP connect-src none 禁远程加载）"
+      },
+      "impactScope": "全部 22 面板与 12 视图",
+      "healthCheck": "test/module-registry.test.mjs",
+      "matrixRef": "M01",
+      "enabled": true,
+      "replacement": null
+    },
+    {
+      "id": "panel-releases",
+      "kind": "panel",
+      "entry": "src/renderer/panels/releases.jsx",
+      "exports": [
+        "ReleasePanel"
+      ],
+      "replaceable": true,
+      "replacementContract": "注册表驱动 + 契约测试（同 fixture 渲染一致）",
+      "replacementOptions": {
+        "selfWritten": "配置驱动注册表 + 按视图懒加载（P3）",
+        "softwareIntegration": "single-spa / 模块联邦：不可行（CSP connect-src none 禁远程加载）"
+      },
+      "impactScope": "全部 22 面板与 12 视图",
+      "healthCheck": "test/module-registry.test.mjs",
+      "matrixRef": "M01",
+      "enabled": true,
+      "replacement": null
+    },
+    {
+      "id": "panel-resources",
+      "kind": "panel",
+      "entry": "src/renderer/panels/resources.jsx",
+      "exports": [
+        "ResourcePanel"
+      ],
+      "replaceable": true,
+      "replacementContract": "注册表驱动 + 契约测试（同 fixture 渲染一致）",
+      "replacementOptions": {
+        "selfWritten": "配置驱动注册表 + 按视图懒加载（P3）",
+        "softwareIntegration": "single-spa / 模块联邦：不可行（CSP connect-src none 禁远程加载）"
+      },
+      "impactScope": "全部 22 面板与 12 视图",
+      "healthCheck": "test/module-registry.test.mjs",
+      "matrixRef": "M01",
+      "enabled": true,
+      "replacement": null
+    },
+    {
+      "id": "panel-run-timeline",
+      "kind": "panel",
+      "entry": "src/renderer/panels/run-timeline.jsx",
+      "exports": [
+        "RunTimelinePanel"
+      ],
+      "replaceable": true,
+      "replacementContract": "注册表驱动 + 契约测试（同 fixture 渲染一致）",
+      "replacementOptions": {
+        "selfWritten": "配置驱动注册表 + 按视图懒加载（P3）",
+        "softwareIntegration": "single-spa / 模块联邦：不可行（CSP connect-src none 禁远程加载）"
+      },
+      "impactScope": "全部 22 面板与 12 视图",
+      "healthCheck": "test/module-registry.test.mjs",
+      "matrixRef": "M01",
+      "enabled": true,
+      "replacement": null
+    },
+    {
+      "id": "panel-runs",
+      "kind": "panel",
+      "entry": "src/renderer/panels/runs.jsx",
+      "exports": [
+        "RunsPanel"
+      ],
+      "replaceable": true,
+      "replacementContract": "同 fixture run 目录 → 输出逐字可比一致（P4 试点）",
+      "replacementOptions": {
+        "selfWritten": "最小自写替代实现（P4 试点）",
+        "softwareIntegration": "无外部等价（数据专有）"
+      },
+      "impactScope": "runs 视图",
+      "healthCheck": "test/module-registry.test.mjs",
+      "matrixRef": "M13",
+      "enabled": true,
+      "replacement": null
+    },
+    {
+      "id": "panel-safety",
+      "kind": "panel",
+      "entry": "src/renderer/panels/safety.jsx",
+      "exports": [
+        "HelpPanel",
+        "SafetyPanel"
+      ],
+      "replaceable": true,
+      "replacementContract": "注册表驱动 + 契约测试（同 fixture 渲染一致）",
+      "replacementOptions": {
+        "selfWritten": "配置驱动注册表 + 按视图懒加载（P3）",
+        "softwareIntegration": "single-spa / 模块联邦：不可行（CSP connect-src none 禁远程加载）"
+      },
+      "impactScope": "全部 22 面板与 12 视图",
+      "healthCheck": "test/module-registry.test.mjs",
+      "matrixRef": "M01",
+      "enabled": true,
+      "replacement": null
+    },
+    {
+      "id": "panel-software",
+      "kind": "panel",
+      "entry": "src/renderer/panels/software.jsx",
+      "exports": [
+        "SoftwarePanel"
+      ],
+      "replaceable": true,
+      "replacementContract": "注册表驱动 + 契约测试（同 fixture 渲染一致）",
+      "replacementOptions": {
+        "selfWritten": "配置驱动注册表 + 按视图懒加载（P3）",
+        "softwareIntegration": "single-spa / 模块联邦：不可行（CSP connect-src none 禁远程加载）"
+      },
+      "impactScope": "全部 22 面板与 12 视图",
+      "healthCheck": "test/module-registry.test.mjs",
+      "matrixRef": "M01",
+      "enabled": true,
+      "replacement": null
+    },
+    {
+      "id": "panel-stats",
+      "kind": "panel",
+      "entry": "src/renderer/panels/stats.jsx",
+      "exports": [
+        "DashboardStats",
+        "Stat"
+      ],
+      "replaceable": true,
+      "replacementContract": "注册表驱动 + 契约测试（同 fixture 渲染一致）",
+      "replacementOptions": {
+        "selfWritten": "配置驱动注册表 + 按视图懒加载（P3）",
+        "softwareIntegration": "single-spa / 模块联邦：不可行（CSP connect-src none 禁远程加载）"
+      },
+      "impactScope": "全部 22 面板与 12 视图",
+      "healthCheck": "test/module-registry.test.mjs",
+      "matrixRef": "M01",
+      "enabled": true,
+      "replacement": null
+    },
+    {
+      "id": "runtime-probes",
+      "kind": "runtime",
+      "entry": "src/runtime/",
+      "files": [
+        "src/runtime/capability_probe.py",
+        "src/runtime/cli_client.py",
+        "src/runtime/credential_store.py",
+        "src/runtime/guest_controller.py",
+        "src/runtime/host_snapshot.py",
+        "src/runtime/job_controller.py",
+        "src/runtime/matrix_cleanup.py",
+        "src/runtime/matrix_driver.py",
+        "src/runtime/mcp_probe.py",
+        "src/runtime/mcp_service.py",
+        "src/runtime/native_client.py",
+        "src/runtime/native_mcp.py",
+        "src/runtime/native_workbuddy.py",
+        "src/runtime/owned_guest.py",
+        "src/runtime/peer_dispatcher.py",
+        "src/runtime/platform_provider.py",
+        "src/runtime/provision.py",
+        "src/runtime/resource_env.py",
+        "src/runtime/restore_env.py"
+      ],
+      "dependsOn": [
+        "mech-core"
+      ],
+      "replaceable": true,
+      "replacementContract": "探针回执结构不变",
+      "replacementOptions": {
+        "selfWritten": "部分探针 Node 化（逐项评估，另案）",
+        "softwareIntegration": "保持 Python（BP-1 §1.6③ 平台 runtime）"
+      },
+      "impactScope": "环境与能力探针",
+      "healthCheck": "test/module-registry.test.mjs",
+      "matrixRef": "M17",
+      "enabled": true,
+      "replacement": null
+    },
+    {
+      "id": "schema-validation-dep",
+      "kind": "mechanism",
+      "entry": "package.json",
+      "replaceable": true,
+      "replacementContract": "schema 校验结论一致",
+      "replacementOptions": {
+        "selfWritten": "自写校验器（不推荐）",
+        "softwareIntegration": "保持 ajv；fast-uri 漏洞经升级 ajv 修（另决）"
+      },
+      "impactScope": "契约校验",
+      "healthCheck": "test/module-registry.test.mjs",
+      "matrixRef": "M22",
+      "enabled": true,
+      "replacement": null
+    },
+    {
+      "id": "view-audit",
+      "kind": "view",
+      "entry": "src/app/view-definitions.json",
+      "dependsOn": [
+        "panel-audit"
+      ],
+      "replaceable": true,
+      "replacementContract": "注册表驱动 + 契约测试（同 fixture 渲染一致）",
+      "replacementOptions": {
+        "selfWritten": "配置驱动注册表 + 按视图懒加载（P3）",
+        "softwareIntegration": "single-spa / 模块联邦：不可行（CSP connect-src none 禁远程加载）"
+      },
+      "impactScope": "全部 22 面板与 12 视图",
+      "healthCheck": "test/module-registry.test.mjs",
+      "matrixRef": "M01",
+      "enabled": true,
+      "replacement": null
+    },
+    {
+      "id": "view-dashboard",
+      "kind": "view",
+      "entry": "src/app/view-definitions.json",
+      "dependsOn": [
+        "panel-stats",
+        "panel-pulse",
+        "panel-plancenter"
+      ],
+      "replaceable": true,
+      "replacementContract": "注册表驱动 + 契约测试（同 fixture 渲染一致）",
+      "replacementOptions": {
+        "selfWritten": "配置驱动注册表 + 按视图懒加载（P3）",
+        "softwareIntegration": "single-spa / 模块联邦：不可行（CSP connect-src none 禁远程加载）"
+      },
+      "impactScope": "全部 22 面板与 12 视图",
+      "healthCheck": "test/module-registry.test.mjs",
+      "matrixRef": "M01",
+      "enabled": true,
+      "replacement": null
+    },
+    {
+      "id": "view-documents",
+      "kind": "view",
+      "entry": "src/app/view-definitions.json",
+      "dependsOn": [
+        "panel-documents"
+      ],
+      "replaceable": true,
+      "replacementContract": "注册表驱动 + 契约测试（同 fixture 渲染一致）",
+      "replacementOptions": {
+        "selfWritten": "配置驱动注册表 + 按视图懒加载（P3）",
+        "softwareIntegration": "single-spa / 模块联邦：不可行（CSP connect-src none 禁远程加载）"
+      },
+      "impactScope": "全部 22 面板与 12 视图",
+      "healthCheck": "test/module-registry.test.mjs",
+      "matrixRef": "M01",
+      "enabled": true,
+      "replacement": null
+    },
+    {
+      "id": "view-git",
+      "kind": "view",
+      "entry": "src/app/view-definitions.json",
+      "dependsOn": [
+        "panel-git"
+      ],
+      "replaceable": true,
+      "replacementContract": "注册表驱动 + 契约测试（同 fixture 渲染一致）",
+      "replacementOptions": {
+        "selfWritten": "配置驱动注册表 + 按视图懒加载（P3）",
+        "softwareIntegration": "single-spa / 模块联邦：不可行（CSP connect-src none 禁远程加载）"
+      },
+      "impactScope": "全部 22 面板与 12 视图",
+      "healthCheck": "test/module-registry.test.mjs",
+      "matrixRef": "M01",
+      "enabled": true,
+      "replacement": null
+    },
+    {
+      "id": "view-governance",
+      "kind": "view",
+      "entry": "src/app/view-definitions.json",
+      "dependsOn": [
+        "panel-cockpit",
+        "panel-governance"
+      ],
+      "replaceable": true,
+      "replacementContract": "注册表驱动 + 契约测试（同 fixture 渲染一致）",
+      "replacementOptions": {
+        "selfWritten": "配置驱动注册表 + 按视图懒加载（P3）",
+        "softwareIntegration": "single-spa / 模块联邦：不可行（CSP connect-src none 禁远程加载）"
+      },
+      "impactScope": "全部 22 面板与 12 视图",
+      "healthCheck": "test/module-registry.test.mjs",
+      "matrixRef": "M01",
+      "enabled": true,
+      "replacement": null
+    },
+    {
+      "id": "view-inbox",
+      "kind": "view",
+      "entry": "src/app/view-definitions.json",
+      "dependsOn": [
+        "panel-inbox"
+      ],
+      "replaceable": true,
+      "replacementContract": "注册表驱动 + 契约测试（同 fixture 渲染一致）",
+      "replacementOptions": {
+        "selfWritten": "配置驱动注册表 + 按视图懒加载（P3）",
+        "softwareIntegration": "single-spa / 模块联邦：不可行（CSP connect-src none 禁远程加载）"
+      },
+      "impactScope": "全部 22 面板与 12 视图",
+      "healthCheck": "test/module-registry.test.mjs",
+      "matrixRef": "M01",
+      "enabled": true,
+      "replacement": null
+    },
+    {
+      "id": "view-intake",
+      "kind": "view",
+      "entry": "src/app/view-definitions.json",
+      "dependsOn": [
+        "panel-body-intake-panel"
+      ],
+      "replaceable": true,
+      "replacementContract": "注册表驱动 + 契约测试（同 fixture 渲染一致）",
+      "replacementOptions": {
+        "selfWritten": "配置驱动注册表 + 按视图懒加载（P3）",
+        "softwareIntegration": "single-spa / 模块联邦：不可行（CSP connect-src none 禁远程加载）"
+      },
+      "impactScope": "全部 22 面板与 12 视图",
+      "healthCheck": "test/module-registry.test.mjs",
+      "matrixRef": "M01",
+      "enabled": true,
+      "replacement": null
+    },
+    {
+      "id": "view-platform",
+      "kind": "view",
+      "entry": "src/app/view-definitions.json",
+      "dependsOn": [
+        "panel-clone",
+        "panel-global-update",
+        "panel-onboard",
+        "panel-anchor",
+        "panel-platform",
+        "panel-integration"
+      ],
+      "replaceable": true,
+      "replacementContract": "注册表驱动 + 契约测试（同 fixture 渲染一致）",
+      "replacementOptions": {
+        "selfWritten": "配置驱动注册表 + 按视图懒加载（P3）",
+        "softwareIntegration": "single-spa / 模块联邦：不可行（CSP connect-src none 禁远程加载）"
+      },
+      "impactScope": "全部 22 面板与 12 视图",
+      "healthCheck": "test/module-registry.test.mjs",
+      "matrixRef": "M01",
+      "enabled": true,
+      "replacement": null
+    },
+    {
+      "id": "view-resources",
+      "kind": "view",
+      "entry": "src/app/view-definitions.json",
+      "dependsOn": [
+        "panel-resources",
+        "panel-releases",
+        "panel-catalog"
+      ],
+      "replaceable": true,
+      "replacementContract": "注册表驱动 + 契约测试（同 fixture 渲染一致）",
+      "replacementOptions": {
+        "selfWritten": "配置驱动注册表 + 按视图懒加载（P3）",
+        "softwareIntegration": "single-spa / 模块联邦：不可行（CSP connect-src none 禁远程加载）"
+      },
+      "impactScope": "全部 22 面板与 12 视图",
+      "healthCheck": "test/module-registry.test.mjs",
+      "matrixRef": "M01",
+      "enabled": true,
+      "replacement": null
+    },
+    {
+      "id": "view-runs",
+      "kind": "view",
+      "entry": "src/app/view-definitions.json",
+      "dependsOn": [
+        "panel-runs",
+        "panel-run-timeline"
+      ],
+      "replaceable": true,
+      "replacementContract": "注册表驱动 + 契约测试（同 fixture 渲染一致）",
+      "replacementOptions": {
+        "selfWritten": "配置驱动注册表 + 按视图懒加载（P3）",
+        "softwareIntegration": "single-spa / 模块联邦：不可行（CSP connect-src none 禁远程加载）"
+      },
+      "impactScope": "全部 22 面板与 12 视图",
+      "healthCheck": "test/module-registry.test.mjs",
+      "matrixRef": "M01",
+      "enabled": true,
+      "replacement": null
+    },
+    {
+      "id": "view-safety",
+      "kind": "view",
+      "entry": "src/app/view-definitions.json",
+      "dependsOn": [
+        "panel-safety"
+      ],
+      "replaceable": true,
+      "replacementContract": "注册表驱动 + 契约测试（同 fixture 渲染一致）",
+      "replacementOptions": {
+        "selfWritten": "配置驱动注册表 + 按视图懒加载（P3）",
+        "softwareIntegration": "single-spa / 模块联邦：不可行（CSP connect-src none 禁远程加载）"
+      },
+      "impactScope": "全部 22 面板与 12 视图",
+      "healthCheck": "test/module-registry.test.mjs",
+      "matrixRef": "M01",
+      "enabled": true,
+      "replacement": null
+    },
+    {
+      "id": "view-software",
+      "kind": "view",
+      "entry": "src/app/view-definitions.json",
+      "dependsOn": [
+        "panel-software"
+      ],
+      "replaceable": true,
+      "replacementContract": "注册表驱动 + 契约测试（同 fixture 渲染一致）",
+      "replacementOptions": {
+        "selfWritten": "配置驱动注册表 + 按视图懒加载（P3）",
+        "softwareIntegration": "single-spa / 模块联邦：不可行（CSP connect-src none 禁远程加载）"
+      },
+      "impactScope": "全部 22 面板与 12 视图",
+      "healthCheck": "test/module-registry.test.mjs",
+      "matrixRef": "M01",
+      "enabled": true,
+      "replacement": null
+    }
+  ],
+  "views": [
+    {
+      "id": "dashboard",
+      "label": "仪表盘",
+      "group": "总览",
+      "description": "工作区总览：平台、共享仓、文档、Git 与计划进度。",
+      "panels": [
+        "panel-stats",
+        "panel-pulse",
+        "panel-plancenter"
+      ],
+      "order": 0
+    },
+    {
+      "id": "resources",
+      "label": "资源",
+      "group": "资源与软件",
+      "description": "三仓资源、版本切换、发布与目录管理。",
+      "panels": [
+        "panel-resources",
+        "panel-releases",
+        "panel-catalog"
+      ],
+      "order": 1
+    },
+    {
+      "id": "intake",
+      "label": "导入本体",
+      "group": "资源与软件",
+      "description": "把平台、专家、技能、工作流或软件本体导入并登记。",
+      "panels": [
+        "panel-body-intake-panel"
+      ],
+      "order": 2
+    },
+    {
+      "id": "platform",
+      "label": "平台与接入",
+      "group": "平台",
+      "description": "平台接入、环境、provider、能力实测与版本对齐。",
+      "panels": [
+        "panel-clone",
+        "panel-global-update",
+        "panel-onboard",
+        "panel-anchor",
+        "panel-platform",
+        "panel-integration"
+      ],
+      "order": 3,
+      "sections": [
+        {
+          "label": "接入与一键更新",
+          "panels": [
+            "panel-clone",
+            "panel-global-update",
+            "panel-onboard"
+          ]
+        },
+        {
+          "label": "版本锚定与平台",
+          "panels": [
+            "panel-anchor",
+            "panel-platform"
+          ]
+        },
+        {
+          "label": "客户端集成",
+          "panels": [
+            "panel-integration"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "runs",
+      "label": "运行",
+      "group": "运行与治理",
+      "description": "只读查看各平台 run 台账与终态。",
+      "panels": [
+        "panel-runs",
+        "panel-run-timeline"
+      ],
+      "order": 4
+    },
+    {
+      "id": "governance",
+      "label": "治理",
+      "group": "运行与治理",
+      "description": "缺陷状态簿、机检与治理登记。",
+      "panels": [
+        "panel-cockpit",
+        "panel-governance"
+      ],
+      "order": 5
+    },
+    {
+      "id": "documents",
+      "label": "文档",
+      "group": "文档与仓库",
+      "description": "更新日志、计划与说明文档的读取和编辑。",
+      "panels": [
+        "panel-documents"
+      ],
+      "order": 6
+    },
+    {
+      "id": "audit",
+      "label": "审计",
+      "group": "运行与治理",
+      "description": "本机管理台审计历史与完整性检查。",
+      "panels": [
+        "panel-audit"
+      ],
+      "order": 7
+    },
+    {
+      "id": "inbox",
+      "label": "inbox",
+      "group": "运行与治理",
+      "description": "backup / archive / trash 三区只读盘点。",
+      "panels": [
+        "panel-inbox"
+      ],
+      "order": 8
+    },
+    {
+      "id": "software",
+      "label": "软件",
+      "group": "资源与软件",
+      "description": "软件配方、连接器、健康检查与导入。",
+      "panels": [
+        "panel-software"
+      ],
+      "order": 9
+    },
+    {
+      "id": "git",
+      "label": "仓库",
+      "group": "文档与仓库",
+      "description": "提交、分支、标签、备份、快照与回滚计划。",
+      "panels": [
+        "panel-git"
+      ],
+      "order": 10
+    },
+    {
+      "id": "safety",
+      "label": "安全/帮助",
+      "group": "帮助",
+      "description": "安全边界与新手操作说明。",
+      "panels": [
+        "panel-safety"
+      ],
+      "order": 11
+    }
+  ]
+}

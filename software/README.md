@@ -38,10 +38,13 @@ software/<id>/
 
 ## 仓级索引与指针同构（2026-09-20，架构 3.0 S-P2）
 
-- `software/registry.json`（`ai-software-registry/v1`，与 `ai-tool-registry/v2`/`ai-agent-registry/v2` 同族）现在存在：六个配方逐件登记，条目字段与 `tool`/`agent` 完全同构（`{id, current, enabled, kind, invocable, transports}`）。`current` 是**指针文件的路径**，不是版本号。
+- `software/registry.json`（`ai-software-registry/v1`，与 `ai-tool-registry/v2`/`ai-agent-registry/v2` 同族）现在存在：九个配方逐件登记，条目字段与 `tool`/`agent` 完全同构（`{id, current, enabled, kind, invocable, transports}`）。`current` 是**指针文件的路径**，不是版本号。
 - 指针一律用 **`version`** 选释放版（与 `tool`/`agent` 同一键），并带 `hashManifest: "SHA256SUMS"`；`available` 只作为 `versions/` 目录枚举的**缓存**（值必须等于实际清单），`updatedAt` 已废除。逐条裁定与理由写在 `registry.json` 的 `compatibility.axes` 里（七个轴，一个轴一个结论，不留"两种形态都对"）。
 - 软件资源**不进 `/wf`+`/wfa` 调用面**：`invocable: false`、`transports: []`——配方只由引擎在 `software-call` 阶段经网关调用（C-5 / ENTRY-04 同一口径）。
 - 上面那条例外（`phpStudy_64/`）不在 registry 里，也不被任何解析器看见：它没有指针、没有 `versions/`、没有 manifest。
+
+- `vmware-workstation`（`mcp-stdio`，21 个 vmrun 工具）于 2026-11-07 按 `versions/VMware-MCP配方正式登记-P表-20261107.md` 补登为第 7 条。其 `versions/1.0.0/` 已于 11-06 由 qoder-cn 会话发布（`SOURCE.json` 标 `published`），本轮**只做共享侧登记**、未改任何已发布字节；资源目录由 `VMware/` 正名为 `vmware-workstation/` 以满足 `id == 目录名 == manifest.id` 的机器判据。平台侧 `nativeMcpServers` 派发注册仍由各平台按 intake 流程自证（BP-2；D-60：绿行不证明可派发）。
+- `architecture-manager-mcp` / `ai-novel-platform-mcp`（均 `mcp-stdio`，各 7 个只读工具）于 2026-11-07 按 `versions/两个MCP-可行性验证记录-20261107.md` 的 R1→R2 循环登记为第 8、9 条。前者暴露架构治理只读状态（registry / anchor / 缺陷簿 / 三处基线 / 七台钉版），后者桥接 AI 小说创作平台 0.3.9 的项目文件层；两者均零依赖、零真实绝对路径、零写工具，平台侧派发注册由各平台自证（BP-2 / D-60）。两个配方于 2026-11-08 切换指针到 `3.0.0`（21 个工具：core 只读 + 由盘上真实导出自动生成的只读/写白名单 + 通用确认写 `*_apply`；2.0.0 为中间版本），`1.0.0` 字节保持只读。同日 `ai-novel-platform-mcp` 再发 `3.1.0`（31 个工具）并切换指针：在上游 AI 小说创作平台 0.3.9 的规划看板之上，新增大纲一次建图、节点增删改、本地 XMind 导入（全部沿用 `*.plan` + `confirmToken` 确认写）以及进度网格只读；`3.0.0` 与更早版本字节保持只读。平台侧派发注册仍由各平台按 intake 流程自证（BP-2 / D-60）。
 
 ## 首批入库配方（2026-09-18）
 

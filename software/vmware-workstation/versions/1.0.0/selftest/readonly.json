@@ -1,0 +1,31 @@
+{
+  "schema": "ai-software-selftest/v1",
+  "mode": "readonly",
+  "checks": [
+    {
+      "id": "list-running",
+      "capability": "vmrun_list",
+      "arguments": {},
+      "expectedExitCode": 0,
+      "expectedOutputContains": "Total running VMs",
+      "timeout": 30
+    },
+    {
+      "id": "host-networks",
+      "capability": "vmrun_host_networks",
+      "arguments": {},
+      "expectedExitCode": 0,
+      "expectedOutputContains": "Total host networks",
+      "timeout": 30
+    },
+    {
+      "id": "vmrun-file-integrity",
+      "kind": "file-integrity",
+      "files": [
+        "D:\\VMwareVMware\\vmrun.exe"
+      ],
+      "notes": "Absolute path by design: the body stays outside this repository (BP-1)."
+    }
+  ],
+  "notes": "Read-only only. Power changes, cloning, guest authentication and port-forwarding writes are never part of selftest."
+}

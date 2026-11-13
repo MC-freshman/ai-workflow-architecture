@@ -1,0 +1,261 @@
+{
+  "schema": "ai-software-capability-snapshot/v1",
+  "softwareId": "architecture-manager-mcp",
+  "softwareVersion": "1.0.0",
+  "upstreamVersion": "0.9.0",
+  "generatedAt": "2026-11-07T00:00:00Z",
+  "generationMethod": "Static declaration of the seven fixed tools; definitions observed, functions not executed during discovery.",
+  "runtime": {
+    "protocolVersion": "2025-06-18",
+    "tools": [
+      {
+        "name": "arch_software_list",
+        "inputSchemaRef": "schemas/empty.input.json"
+      },
+      {
+        "name": "arch_software_read",
+        "inputSchemaRef": "schemas/id.input.json"
+      },
+      {
+        "name": "arch_versions_current",
+        "inputSchemaRef": "schemas/empty.input.json"
+      },
+      {
+        "name": "arch_defects_list",
+        "inputSchemaRef": "schemas/empty.input.json"
+      },
+      {
+        "name": "arch_conform_status",
+        "inputSchemaRef": "schemas/empty.input.json"
+      },
+      {
+        "name": "arch_governance_status",
+        "inputSchemaRef": "schemas/empty.input.json"
+      },
+      {
+        "name": "arch_platform_pins",
+        "inputSchemaRef": "schemas/empty.input.json"
+      }
+    ]
+  },
+  "capabilities": [
+    {
+      "name": "arch_software_list",
+      "nativeName": "arch.software.list",
+      "inputSchemaRef": "schemas/empty.input.json",
+      "outputSchemaRef": "schemas/result.output.json",
+      "sideEffects": "none",
+      "permissionRequests": {
+        "filesystem": "read",
+        "network": "loopback",
+        "process": "children",
+        "credentials": "none"
+      },
+      "consent": "auto",
+      "idempotent": true,
+      "safeForSelftest": true,
+      "invocation": {
+        "transport": "mcp-stdio",
+        "endpoint": "src/server.mjs",
+        "mcpMethod": "tools/call",
+        "toolNameParam": "params.name",
+        "argumentsParam": "params.arguments",
+        "frozenToolName": "arch_software_list",
+        "timeout": 30,
+        "notes": "Fixed tool mapping; no shell, no argv passthrough, no writes."
+      },
+      "frozen": true,
+      "observation": {
+        "definitionObserved": true,
+        "functionExecuted": false
+      }
+    },
+    {
+      "name": "arch_software_read",
+      "nativeName": "arch.software.read",
+      "inputSchemaRef": "schemas/id.input.json",
+      "outputSchemaRef": "schemas/result.output.json",
+      "sideEffects": "none",
+      "permissionRequests": {
+        "filesystem": "read",
+        "network": "loopback",
+        "process": "children",
+        "credentials": "none"
+      },
+      "consent": "auto",
+      "idempotent": true,
+      "safeForSelftest": true,
+      "invocation": {
+        "transport": "mcp-stdio",
+        "endpoint": "src/server.mjs",
+        "mcpMethod": "tools/call",
+        "toolNameParam": "params.name",
+        "argumentsParam": "params.arguments",
+        "frozenToolName": "arch_software_read",
+        "timeout": 30,
+        "notes": "Fixed tool mapping; no shell, no argv passthrough, no writes."
+      },
+      "frozen": true,
+      "observation": {
+        "definitionObserved": true,
+        "functionExecuted": false
+      }
+    },
+    {
+      "name": "arch_versions_current",
+      "nativeName": "arch.versions.current",
+      "inputSchemaRef": "schemas/empty.input.json",
+      "outputSchemaRef": "schemas/result.output.json",
+      "sideEffects": "none",
+      "permissionRequests": {
+        "filesystem": "read",
+        "network": "loopback",
+        "process": "children",
+        "credentials": "none"
+      },
+      "consent": "auto",
+      "idempotent": true,
+      "safeForSelftest": true,
+      "invocation": {
+        "transport": "mcp-stdio",
+        "endpoint": "src/server.mjs",
+        "mcpMethod": "tools/call",
+        "toolNameParam": "params.name",
+        "argumentsParam": "params.arguments",
+        "frozenToolName": "arch_versions_current",
+        "timeout": 30,
+        "notes": "Fixed tool mapping; no shell, no argv passthrough, no writes."
+      },
+      "frozen": true,
+      "observation": {
+        "definitionObserved": true,
+        "functionExecuted": false
+      }
+    },
+    {
+      "name": "arch_defects_list",
+      "nativeName": "arch.defects.list",
+      "inputSchemaRef": "schemas/empty.input.json",
+      "outputSchemaRef": "schemas/result.output.json",
+      "sideEffects": "none",
+      "permissionRequests": {
+        "filesystem": "read",
+        "network": "loopback",
+        "process": "children",
+        "credentials": "none"
+      },
+      "consent": "auto",
+      "idempotent": true,
+      "safeForSelftest": true,
+      "invocation": {
+        "transport": "mcp-stdio",
+        "endpoint": "src/server.mjs",
+        "mcpMethod": "tools/call",
+        "toolNameParam": "params.name",
+        "argumentsParam": "params.arguments",
+        "frozenToolName": "arch_defects_list",
+        "timeout": 30,
+        "notes": "Fixed tool mapping; no shell, no argv passthrough, no writes."
+      },
+      "frozen": true,
+      "observation": {
+        "definitionObserved": true,
+        "functionExecuted": false
+      }
+    },
+    {
+      "name": "arch_conform_status",
+      "nativeName": "arch.conform.status",
+      "inputSchemaRef": "schemas/empty.input.json",
+      "outputSchemaRef": "schemas/result.output.json",
+      "sideEffects": "none",
+      "permissionRequests": {
+        "filesystem": "read",
+        "network": "loopback",
+        "process": "children",
+        "credentials": "none"
+      },
+      "consent": "auto",
+      "idempotent": true,
+      "safeForSelftest": true,
+      "invocation": {
+        "transport": "mcp-stdio",
+        "endpoint": "src/server.mjs",
+        "mcpMethod": "tools/call",
+        "toolNameParam": "params.name",
+        "argumentsParam": "params.arguments",
+        "frozenToolName": "arch_conform_status",
+        "timeout": 30,
+        "notes": "Fixed tool mapping; no shell, no argv passthrough, no writes."
+      },
+      "frozen": true,
+      "observation": {
+        "definitionObserved": true,
+        "functionExecuted": false
+      }
+    },
+    {
+      "name": "arch_governance_status",
+      "nativeName": "arch.governance.status",
+      "inputSchemaRef": "schemas/empty.input.json",
+      "outputSchemaRef": "schemas/result.output.json",
+      "sideEffects": "none",
+      "permissionRequests": {
+        "filesystem": "read",
+        "network": "loopback",
+        "process": "children",
+        "credentials": "none"
+      },
+      "consent": "auto",
+      "idempotent": true,
+      "safeForSelftest": true,
+      "invocation": {
+        "transport": "mcp-stdio",
+        "endpoint": "src/server.mjs",
+        "mcpMethod": "tools/call",
+        "toolNameParam": "params.name",
+        "argumentsParam": "params.arguments",
+        "frozenToolName": "arch_governance_status",
+        "timeout": 30,
+        "notes": "Fixed tool mapping; no shell, no argv passthrough, no writes."
+      },
+      "frozen": true,
+      "observation": {
+        "definitionObserved": true,
+        "functionExecuted": false
+      }
+    },
+    {
+      "name": "arch_platform_pins",
+      "nativeName": "arch.platform.pins",
+      "inputSchemaRef": "schemas/empty.input.json",
+      "outputSchemaRef": "schemas/result.output.json",
+      "sideEffects": "none",
+      "permissionRequests": {
+        "filesystem": "read",
+        "network": "loopback",
+        "process": "children",
+        "credentials": "none"
+      },
+      "consent": "auto",
+      "idempotent": true,
+      "safeForSelftest": true,
+      "invocation": {
+        "transport": "mcp-stdio",
+        "endpoint": "src/server.mjs",
+        "mcpMethod": "tools/call",
+        "toolNameParam": "params.name",
+        "argumentsParam": "params.arguments",
+        "frozenToolName": "arch_platform_pins",
+        "timeout": 30,
+        "notes": "Fixed tool mapping; no shell, no argv passthrough, no writes."
+      },
+      "frozen": true,
+      "observation": {
+        "definitionObserved": true,
+        "functionExecuted": false
+      }
+    }
+  ],
+  "frozen": true
+}

@@ -1,0 +1,243 @@
+{
+  "schema": "ai-software-capability-snapshot/v1",
+  "softwareId": "vmware-workstation",
+  "softwareVersion": "1.0.0",
+  "upstreamVersion": "17.5.2",
+  "generatedAt": "2026-11-06",
+  "generationMethod": "Tool surface frozen from the server tools/list (21 tools). Live read-only probe on 2026-11-06: vmrun 1.17.0 usage (no arguments), vmrun -T ws list (1 running VM), listHostNetworks (3 networks), getGuestIPAddress (kali 192.168.1.128). Destructive and guest-auth paths were not executed; their argv builders and confirm/credential gates are covered by tests.",
+  "upstreamHelpSource": "vmrun (no arguments) usage output, vmrun 1.17.0 build-23775571",
+  "capabilities": [
+    {
+      "name": "vmrun_list",
+      "nativeName": "vmrun -T ws list",
+      "sideEffects": "none",
+      "consent": "auto",
+      "idempotent": true,
+      "safeForSelftest": true,
+      "inputSchemaRef": "schemas/empty.input.json",
+      "outputSchemaRef": "schemas/result.output.json",
+      "argvSummary": "vmrun -T ws list"
+    },
+    {
+      "name": "vmrun_inventory",
+      "nativeName": "filesystem scan of VMWARE_VMX_ROOTS + vmrun -T ws list",
+      "sideEffects": "none",
+      "consent": "auto",
+      "idempotent": true,
+      "safeForSelftest": true,
+      "inputSchemaRef": "schemas/vmrun_inventory.input.json",
+      "outputSchemaRef": "schemas/result.output.json",
+      "argvSummary": "filesystem scan of VMWARE_VMX_ROOTS + vmrun -T ws list"
+    },
+    {
+      "name": "vmrun_status",
+      "nativeName": "read .vmx + vmrun -T ws list",
+      "sideEffects": "none",
+      "consent": "auto",
+      "idempotent": true,
+      "safeForSelftest": false,
+      "inputSchemaRef": "schemas/vmPath.input.json",
+      "outputSchemaRef": "schemas/result.output.json",
+      "argvSummary": "read .vmx + vmrun -T ws list"
+    },
+    {
+      "name": "vmrun_start",
+      "nativeName": "vmrun -T ws start <vmx> [gui|nogui]",
+      "sideEffects": "external",
+      "consent": "confirm-stage",
+      "idempotent": false,
+      "safeForSelftest": false,
+      "inputSchemaRef": "schemas/vm_start.input.json",
+      "outputSchemaRef": "schemas/result.output.json",
+      "argvSummary": "vmrun -T ws start <vmx> [gui|nogui]"
+    },
+    {
+      "name": "vmrun_stop",
+      "nativeName": "vmrun -T ws stop <vmx> [soft|hard]",
+      "sideEffects": "external",
+      "consent": "confirm-stage",
+      "idempotent": false,
+      "safeForSelftest": false,
+      "inputSchemaRef": "schemas/vm_stop.input.json",
+      "outputSchemaRef": "schemas/result.output.json",
+      "argvSummary": "vmrun -T ws stop <vmx> [soft|hard]"
+    },
+    {
+      "name": "vmrun_reset",
+      "nativeName": "vmrun -T ws reset <vmx> [soft|hard]",
+      "sideEffects": "external",
+      "consent": "confirm-call",
+      "idempotent": false,
+      "safeForSelftest": false,
+      "inputSchemaRef": "schemas/vm_reset.input.json",
+      "outputSchemaRef": "schemas/result.output.json",
+      "argvSummary": "vmrun -T ws reset <vmx> [soft|hard]"
+    },
+    {
+      "name": "vmrun_suspend",
+      "nativeName": "vmrun -T ws suspend <vmx> [soft|hard]",
+      "sideEffects": "external",
+      "consent": "confirm-stage",
+      "idempotent": false,
+      "safeForSelftest": false,
+      "inputSchemaRef": "schemas/vm_suspend.input.json",
+      "outputSchemaRef": "schemas/result.output.json",
+      "argvSummary": "vmrun -T ws suspend <vmx> [soft|hard]"
+    },
+    {
+      "name": "vmrun_pause",
+      "nativeName": "vmrun -T ws pause <vmx>",
+      "sideEffects": "external",
+      "consent": "confirm-stage",
+      "idempotent": true,
+      "safeForSelftest": false,
+      "inputSchemaRef": "schemas/vmPath.input.json",
+      "outputSchemaRef": "schemas/result.output.json",
+      "argvSummary": "vmrun -T ws pause <vmx>"
+    },
+    {
+      "name": "vmrun_unpause",
+      "nativeName": "vmrun -T ws unpause <vmx>",
+      "sideEffects": "external",
+      "consent": "confirm-stage",
+      "idempotent": true,
+      "safeForSelftest": false,
+      "inputSchemaRef": "schemas/vmPath.input.json",
+      "outputSchemaRef": "schemas/result.output.json",
+      "argvSummary": "vmrun -T ws unpause <vmx>"
+    },
+    {
+      "name": "vmrun_guest_ip",
+      "nativeName": "vmrun -T ws getGuestIPAddress <vmx> [-wait]",
+      "sideEffects": "none",
+      "consent": "auto",
+      "idempotent": true,
+      "safeForSelftest": false,
+      "inputSchemaRef": "schemas/guest_ip.input.json",
+      "outputSchemaRef": "schemas/result.output.json",
+      "argvSummary": "vmrun -T ws getGuestIPAddress <vmx> [-wait]"
+    },
+    {
+      "name": "vmrun_run",
+      "nativeName": "vmrun -T ws -gu ... -gp ... runProgramInGuest <vmx> [flags] <program> [args...]",
+      "sideEffects": "external",
+      "consent": "confirm-call",
+      "idempotent": false,
+      "safeForSelftest": false,
+      "inputSchemaRef": "schemas/guest_run.input.json",
+      "outputSchemaRef": "schemas/result.output.json",
+      "argvSummary": "vmrun -T ws -gu ... -gp ... runProgramInGuest <vmx> [flags] <program> [args...]"
+    },
+    {
+      "name": "vmrun_ps",
+      "nativeName": "vmrun -T ws -gu ... -gp ... listProcessesInGuest <vmx>",
+      "sideEffects": "none",
+      "consent": "auto",
+      "idempotent": true,
+      "safeForSelftest": false,
+      "inputSchemaRef": "schemas/vmPath.input.json",
+      "outputSchemaRef": "schemas/result.output.json",
+      "argvSummary": "vmrun -T ws -gu ... -gp ... listProcessesInGuest <vmx>"
+    },
+    {
+      "name": "vmrun_kill",
+      "nativeName": "vmrun -T ws -gu ... -gp ... killProcessInGuest <vmx> <pid>",
+      "sideEffects": "external",
+      "consent": "confirm-call",
+      "idempotent": false,
+      "safeForSelftest": false,
+      "inputSchemaRef": "schemas/guest_kill.input.json",
+      "outputSchemaRef": "schemas/result.output.json",
+      "argvSummary": "vmrun -T ws -gu ... -gp ... killProcessInGuest <vmx> <pid>"
+    },
+    {
+      "name": "vmrun_file_exists",
+      "nativeName": "vmrun -T ws -gu ... -gp ... fileExistsInGuest <vmx> <guest path>",
+      "sideEffects": "none",
+      "consent": "auto",
+      "idempotent": true,
+      "safeForSelftest": false,
+      "inputSchemaRef": "schemas/guest_file_exists.input.json",
+      "outputSchemaRef": "schemas/result.output.json",
+      "argvSummary": "vmrun -T ws -gu ... -gp ... fileExistsInGuest <vmx> <guest path>"
+    },
+    {
+      "name": "vmrun_copy_to",
+      "nativeName": "vmrun -T ws -gu ... -gp ... CopyFileFromHostToGuest <vmx> <host path> <guest path>",
+      "sideEffects": "external",
+      "consent": "confirm-call",
+      "idempotent": false,
+      "safeForSelftest": false,
+      "inputSchemaRef": "schemas/guest_copy.input.json",
+      "outputSchemaRef": "schemas/result.output.json",
+      "argvSummary": "vmrun -T ws -gu ... -gp ... CopyFileFromHostToGuest <vmx> <host path> <guest path>"
+    },
+    {
+      "name": "vmrun_copy_from",
+      "nativeName": "vmrun -T ws -gu ... -gp ... CopyFileFromGuestToHost <vmx> <guest path> <host path>",
+      "sideEffects": "local-write",
+      "consent": "confirm-call",
+      "idempotent": false,
+      "safeForSelftest": false,
+      "inputSchemaRef": "schemas/guest_copy.input.json",
+      "outputSchemaRef": "schemas/result.output.json",
+      "argvSummary": "vmrun -T ws -gu ... -gp ... CopyFileFromGuestToHost <vmx> <guest path> <host path>"
+    },
+    {
+      "name": "vmrun_clone",
+      "nativeName": "vmrun -T ws clone <vmx> <dest vmx> full|linked [-snapshot=<name>]",
+      "sideEffects": "local-write",
+      "consent": "confirm-call",
+      "idempotent": false,
+      "safeForSelftest": false,
+      "inputSchemaRef": "schemas/vm_clone.input.json",
+      "outputSchemaRef": "schemas/result.output.json",
+      "argvSummary": "vmrun -T ws clone <vmx> <dest vmx> full|linked [-snapshot=<name>]"
+    },
+    {
+      "name": "vmrun_host_networks",
+      "nativeName": "vmrun -T ws listHostNetworks",
+      "sideEffects": "none",
+      "consent": "auto",
+      "idempotent": true,
+      "safeForSelftest": true,
+      "inputSchemaRef": "schemas/empty.input.json",
+      "outputSchemaRef": "schemas/result.output.json",
+      "argvSummary": "vmrun -T ws listHostNetworks"
+    },
+    {
+      "name": "vmrun_portforward_list",
+      "nativeName": "vmrun -T ws listPortForwardings <network>",
+      "sideEffects": "none",
+      "consent": "auto",
+      "idempotent": true,
+      "safeForSelftest": false,
+      "inputSchemaRef": "schemas/portforward_list.input.json",
+      "outputSchemaRef": "schemas/result.output.json",
+      "argvSummary": "vmrun -T ws listPortForwardings <network>"
+    },
+    {
+      "name": "vmrun_portforward_set",
+      "nativeName": "vmrun -T ws setPortForwarding <network> <protocol> <hostPort> <guestIp> <guestPort> [description]",
+      "sideEffects": "external",
+      "consent": "confirm-call",
+      "idempotent": false,
+      "safeForSelftest": false,
+      "inputSchemaRef": "schemas/portforward_set.input.json",
+      "outputSchemaRef": "schemas/result.output.json",
+      "argvSummary": "vmrun -T ws setPortForwarding <network> <protocol> <hostPort> <guestIp> <guestPort> [description]"
+    },
+    {
+      "name": "vmrun_portforward_delete",
+      "nativeName": "vmrun -T ws deletePortForwarding <network> <protocol> <hostPort>",
+      "sideEffects": "external",
+      "consent": "confirm-call",
+      "idempotent": false,
+      "safeForSelftest": false,
+      "inputSchemaRef": "schemas/portforward_delete.input.json",
+      "outputSchemaRef": "schemas/result.output.json",
+      "argvSummary": "vmrun -T ws deletePortForwarding <network> <protocol> <hostPort>"
+    }
+  ],
+  "frozen": true
+}

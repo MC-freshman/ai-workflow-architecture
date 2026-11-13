@@ -535,3 +535,49 @@ fieldset.git-action-form legend { color: var(--muted); font-weight: 600; font-si
   .view-heading { flex-direction: column; }
   .command-overlay { padding-top: 8vh; }
 }
+
+/* ── 注册表驱动的视图组合（P3，20261111 模块化更新轮）─────────────
+   状态色语义（与三层状态签一致）：good=达成 / warn=辅助或待定 / bad=失败。
+   拆卸模块显示统一空态；替换实现须过契约测试后经注册表 replacement 启用。 */
+.panel-section { margin-top: var(--sp-4); }
+.panel-section-title {
+  font-size: 13px;
+  font-weight: 650;
+  color: var(--accent);
+  letter-spacing: .04em;
+  margin: 0 0 10px;
+  padding-left: 10px;
+  border-left: 3px solid var(--accent);
+}
+.panel-loading {
+  padding: 24px;
+  color: var(--muted);
+  font-size: 13px;
+  border: 1px dashed var(--line);
+  border-radius: var(--r-sm);
+  background: var(--panel);
+}
+.module-empty-state {
+  padding: 22px 20px;
+  border: 1px dashed var(--line);
+  border-radius: var(--r-sm);
+  background: var(--panel);
+  margin-top: var(--sp-3);
+}
+.module-empty-state-title { font-weight: 650; color: var(--warn); font-size: 14px; }
+.module-empty-state-detail { color: var(--muted); font-size: 12.5px; margin-top: 6px; word-break: break-all; }
+
+/* ── run 时间线（P5，20261111）────────────────────────────────── */
+.timeline-stages { display: flex; flex-direction: column; gap: 6px; margin: 8px 0 4px; }
+.timeline-stage {
+  display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+  padding: 8px 12px; border: 1px solid var(--line); border-radius: var(--r-sm);
+  background: var(--panel-raised); font-size: 13px;
+}
+.timeline-stage code { font-weight: 650; }
+.timeline-events { display: flex; flex-direction: column; gap: 4px; margin: 8px 0 4px; max-height: 320px; overflow-y: auto; }
+.timeline-event {
+  display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+  padding: 5px 12px; border-bottom: 1px dashed var(--line); font-size: 12.5px;
+}
+.timeline-event .muted, .timeline-stage .muted { color: var(--muted); }

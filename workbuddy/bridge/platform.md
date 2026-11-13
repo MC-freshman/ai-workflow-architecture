@@ -274,3 +274,60 @@
 
 本段的回读读数是本轮统一扫描产出，**不等同于本平台自己发起的复验**；本平台自己的结论必须由本平台用自己的 config 独立跑出，结论不互抄。未验证的平台一律如实记「未验证」，不写成「支持」。
 
+
+## 架构 3.7.0 更新接入（2026-11-11）
+
+> 判据载体：`workbuddy/runtime/maintenance/3.7.0-adopt/P-TABLE.md`（P1–P7，用户 2026-11-11 批准）；只读盘点见同目录 `项目概况与接入现状-20261111.md`，证据在 `probe/` 与 `findings/`。
+> 写入面仅 `workbuddy/bridge/capabilities.json` 与本文件；`runtime/` 证据按 BP-4 归平台、不入库。共享三仓、共享 `current.json`、其他六平台目录零写入。
+
+### 结论（不谎报）
+
+- **本轮 P1–P7 判据跑完，但本平台未达成 11/11 完全接入**。`readAdoptionCompletion()` 仍为 `complete=false / configured-pending / pre-criteria / missingSteps=[l1-dual-cell] / native=pending`。按 11-05 P 表 v1.2 的 W2 口径，矩阵与地板未全绿 ⇒ 不补 `l1-dual-cell`、不改写 `automatic.json`、不标 `complete`。
+- **配置面已在 3.7.0 现行代**：`runner 0.13.1` / `contracts 1.6.0` / `scannerRelease 0.7.0` / 平台默认 `repo-lint 0.7.0`（与扫描器一致）/ `runtimeComponentVersion 0.9.0`；`runtime-drift ok=true / drifted=[]`、`governance-drift ok=true / failed=[]`。**本轮是出证轮，不是切代轮**，无指针切换。
+- 能力地板 `floorReached=False`，但 `declaredAbsent=0`、`remediationMissing=0`、4 条 `unverified` 每条带 `{path, costMinutes}` 出口 —— 按判读口径属**诚实读数**，不是把缺口写成 pass。
+
+### 代际对照
+
+| 面 | 2026-11-05（3.7.0 出证框架） | 2026-11-11（本轮） |
+|---|---|---|
+| 全矩阵 | `PASS 6 / FAIL 86`，根因记为缺 `jsonschema` | `PASS 91 / NEEDS-INPUT 1 / FAIL 4`（分母 96） |
+| 解释器 | 系统 Python 3.13（无 `jsonschema`） | 平台 venv 3.12.4 + `jsonschema 4.25.1` |
+| 能力并集 | 32 项，`floorReached=True`，`unionSha=8e1b7dbb…` | 36 项，`floorReached=False`，`unionSha=d91c8c6d6711f…` |
+| `remediationMissing` | 0 | 1 → **0**（本轮补 `software:xmind-mcp` 出口） |
+| L1 双格 | 未跑 | 真跑 `PASS 2 / FAIL 0`，两格均 prepare→next→stop |
+| journal | `configured-pending` 10 步 | **未改写**，仍 `configured-pending` 10 步 |
+
+**11-05 的 `FAIL 86` 已定位为解释器选错，不是能力缺口**：`invocation_matrix.py:239,265` 用 `sys.executable` 派生 runner CLI，整条命令当时由系统 Python 启动。改用 `workbuddy-config.json: interpreters['.py']` 后 86 格全转 PASS。
+
+### 实证面
+
+- 五件发布物封条逐文件复算：wf-runner 32 / contracts 21 / repo-lint 45 / architecture-ops 10 / platform-conformance 16 文件，mismatched·unlisted·missing·pyc **全 0**；harness digest `215fa81fc486…`。
+- 全矩阵（平台 venv，单条命令，5m05s）：`PASS 91 / NEEDS-INPUT 1 / EXPECTED 0 / FAIL 4`，证据 `probe/matrix-full.json`。
+- `conform --strict`：`items=36 / pass=32 / declaredAbsent=0 / unverified=4 / remediationMissing=0 / floorReached=False`；`unionSha256` 与 `union-p4.json` 落盘字节 sha256 **逐字一致**（第三方可复算）。
+- L1 双格：`selectL1Cells()` 选中 `workflow:automation-engineer-pipeline` + `agent:automation-engineer`，真跑 `PASS 2 / FAIL 0`，证据 `runtime/manager-check/l1-3.7.0-adopt/dual-cell-20261111.json`（sha256 `0b721181…`）。
+- 字段级自证取自真 run 的 `run-lock.json`：`ai-run-lock/v1.2`、`platform=workbuddy`、`execution.rigor=balanced / frozen=false / gated=true / execPath=kernel-sandbox`、两格 `expandedGraphSha256` 同值 `fcdd063a…`、`resources[].resolvedFrom` 带 path+sha256。逐项见 `findings/p5-field-attestation.md`。
+- 声明面复核：`descriptor.actions` 含 prompt/script/peer/software-call 且**不含** `schema: ai-platform-descriptor/v2`；`declaredAbsent` 与 `gapPlan` 均为并集项 id 形；`environment.json.packages` 用 PEP 503 归一名。
+
+### 非绿格逐条（不凑 `FAIL 0`）
+
+| 格 | 读数 | 归属与出口 |
+|---|---|---|
+| `workflow:repo-lint` | `NEEDS-INPUT`（`toolRoot` schema 恒为 `/shared/tool`） | 目标 input schema 拒合成参数，**不是平台缺口**；不判 FAIL、不登记例外 |
+| `software:vmware-workstation@1.0.0` | `FAIL / BODY_NOT_VERIFIED` | 平台侧 mcp-body 与 `nativeMcpServers` 未注册；`gapPlan` 90 min |
+| `software:architecture-manager-mcp@3.0.0` | `FAIL / BODY_NOT_VERIFIED` | 同上；`gapPlan` 60 min |
+| `software:ai-novel-platform-mcp@3.1.0` | `FAIL / BODY_NOT_VERIFIED` | 同上，另需注入 `NOVEL_PROJECT_ROOT`；`gapPlan` 60 min |
+| `software:xmind-mcp@1.0.0` | `FAIL / SNAPSHOT_NOT_FROZEN` | **共享侧**快照未冻结（C-4 无基线对照）；本轮新增 `gapPlan` 90 min |
+
+四格均为 `kind=software / taskAction=gateway-inventory / prepare=true`，失败发生在「本体验证 / 快照冻结」，与 runner、契约、解释器无关。逐条根因见 `findings/p3-nongreen.md`。
+
+### 共享侧缺陷（本轮只登记，不代修）
+
+11-07/11-08 共享 `software/registry.json` 新增 4 个 `mcp-stdio` 配方，并集由 32 扩到 36 项，平台声明面与网关注册未同步。按 BP-2 并集集中算一次，该漂移对七台逐字相同，**不是本轮操作造成的回归**。`xmind-mcp` 的 capability 快照冻结须共享侧另立 P 表；平台轮红线禁止改写 `software/` 字节（D-60：登记 ≠ 可派发）。
+
+### 边界与未做
+
+- 未做：4 个 MCP 本体派发注册、`native` 置 `passed`（D-123/127/152 只允许如实标 `auxiliary`）、改写 `automatic.json` / `state.json`、`switch_defaults` 切默认、共享仓任何写入。
+- 例外清单 `invocation-exceptions.json` 本轮**零改动**（无 note 改写、无条目退役），故无需迁 `x-history-notes`。
+- 旧待办闭合：W3「整版单条命令矩阵不可行」已于 2026-09-23 闭合，本轮再次以 96 格单条命令跑完（5m05s）复证；W1/W2（脚本隔离环境、协议守卫逐项实测）仍维持原状，不在本轮范围。
+- 权威管理台 `npm run conform` digest 须用户终端补跑（本会话 node v22.22.2 < 要求的 v24）；本轮平台侧判据已按本平台自己的 config 独立跑出，**结论不互抄**。
+- 既有 4 项未提交改动（`qoder/bridge/client-adapter.json`、`software/registry.json`、`software/PacketTracer 8.0/`、`software/xmind-mcp/`）原样保留，未纳入本轮提交。

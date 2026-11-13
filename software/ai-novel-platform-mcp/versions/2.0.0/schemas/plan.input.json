@@ -1,0 +1,16 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "tool": {
+      "type": "string"
+    },
+    "arguments": {
+      "type": "object"
+    }
+  },
+  "required": [
+    "tool",
+    "arguments"
+  ]
+}

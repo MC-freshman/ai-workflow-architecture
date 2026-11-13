@@ -55,6 +55,8 @@ contextBridge.exposeInMainWorld('architectureManager', Object.freeze({
   suggestPlatformBridge: (...args) => ipcRenderer.invoke("platform:suggest-bridge", ...args),
   previewIntegrationPlan: (...args) => ipcRenderer.invoke("plan:integration", ...args),
   listRunLedger: (...args) => ipcRenderer.invoke("runs:ledger", ...args),
+  getRunDetail: (...args) => ipcRenderer.invoke("runs:detail", ...args),
+  getGateCockpit: (...args) => ipcRenderer.invoke("gate:cockpit", ...args),
   readDefectBook: (...args) => ipcRenderer.invoke("defects:read", ...args),
   verifyDefectBook: (...args) => ipcRenderer.invoke("defects:verify", ...args),
   inspectInbox: (...args) => ipcRenderer.invoke("inbox:inspect", ...args),

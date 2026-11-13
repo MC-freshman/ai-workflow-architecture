@@ -1,0 +1,5 @@
+{
+  "schema": "ai-manager-module-overrides/v1",
+  "note": "Declarative detach/replace switches (P4). The module registry derives enabled/replacement from this file; never hand-edit module-registry.json. Replacement targets must be registered in panel-loaders.mjs replacementLoaders and pass contract tests before activation. Default: no overrides.",
+  "overrides": {}
+}

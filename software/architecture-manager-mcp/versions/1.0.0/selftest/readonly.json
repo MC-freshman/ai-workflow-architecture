@@ -1,0 +1,14 @@
+{
+  "schema": "ai-software-selftest/v1",
+  "mode": "readonly",
+  "checks": [
+    {
+      "id": "readonly-tool",
+      "capability": "arch_software_list",
+      "arguments": {},
+      "expectedExitCode": 0,
+      "expectedOutputContains": "ai-software-registry"
+    }
+  ],
+  "notes": "Read-only only. Write tools are not part of this release."
+}

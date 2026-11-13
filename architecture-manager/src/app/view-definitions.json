@@ -1,0 +1,26 @@
+{
+  "schema": "ai-manager-views/v1",
+  "note": "Single declaration source for navigation/views (P3, approved P-table 20261111). The module registry derives its views[] from this file; the renderer reads the registry. Panel ids reference module-registry modules. Do not hand-edit module-registry.json.",
+  "views": [
+    { "id": "dashboard", "label": "仪表盘", "group": "总览", "description": "工作区总览：平台、共享仓、文档、Git 与计划进度。", "panels": ["panel-stats", "panel-pulse", "panel-plancenter"] },
+    { "id": "resources", "label": "资源", "group": "资源与软件", "description": "三仓资源、版本切换、发布与目录管理。", "panels": ["panel-resources", "panel-releases", "panel-catalog"] },
+    { "id": "intake", "label": "导入本体", "group": "资源与软件", "description": "把平台、专家、技能、工作流或软件本体导入并登记。", "panels": ["panel-body-intake-panel"] },
+    {
+      "id": "platform", "label": "平台与接入", "group": "平台", "description": "平台接入、环境、provider、能力实测与版本对齐。",
+      "panels": ["panel-clone", "panel-global-update", "panel-onboard", "panel-anchor", "panel-platform", "panel-integration"],
+      "sections": [
+        { "label": "接入与一键更新", "panels": ["panel-clone", "panel-global-update", "panel-onboard"] },
+        { "label": "版本锚定与平台", "panels": ["panel-anchor", "panel-platform"] },
+        { "label": "客户端集成", "panels": ["panel-integration"] }
+      ]
+    },
+    { "id": "runs", "label": "运行", "group": "运行与治理", "description": "只读查看各平台 run 台账与终态。", "panels": ["panel-runs", "panel-run-timeline"] },
+    { "id": "governance", "label": "治理", "group": "运行与治理", "description": "缺陷状态簿、机检与治理登记。", "panels": ["panel-cockpit", "panel-governance"] },
+    { "id": "documents", "label": "文档", "group": "文档与仓库", "description": "更新日志、计划与说明文档的读取和编辑。", "panels": ["panel-documents"] },
+    { "id": "audit", "label": "审计", "group": "运行与治理", "description": "本机管理台审计历史与完整性检查。", "panels": ["panel-audit"] },
+    { "id": "inbox", "label": "inbox", "group": "运行与治理", "description": "backup / archive / trash 三区只读盘点。", "panels": ["panel-inbox"] },
+    { "id": "software", "label": "软件", "group": "资源与软件", "description": "软件配方、连接器、健康检查与导入。", "panels": ["panel-software"] },
+    { "id": "git", "label": "仓库", "group": "文档与仓库", "description": "提交、分支、标签、备份、快照与回滚计划。", "panels": ["panel-git"] },
+    { "id": "safety", "label": "安全/帮助", "group": "帮助", "description": "安全边界与新手操作说明。", "panels": ["panel-safety"] }
+  ]
+}

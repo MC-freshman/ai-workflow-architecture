@@ -100,6 +100,22 @@
     "software:burp-suite": {
       "path": "在软件中心绑定正确版本本体并完成配方快照，回到向导重试",
       "costMinutes": 20
+    },
+    "software:vmware-workstation": {
+      "path": "本平台尚未完成该 MCP 配方的派发注册：按管理台 intake 流程完成 native MCP discovery → mcp-body 生成冻结配方 → 平台网关 nativeMcpServers / softwareProfiles 注册 → 单格冒烟。共享侧 registry 登记已于 2026-11-07 完成（versions/VMware-MCP配方正式登记-P表-20261107.md）；登记不等于可派发（D-60）。",
+      "costMinutes": 90
+    },
+    "software:architecture-manager-mcp": {
+      "path": "本平台尚未完成该 MCP 配方的派发注册：按管理台 intake 流程完成 native MCP discovery → mcp-body → 网关 nativeMcpServers / softwareProfiles 注册 → 单格冒烟。共享侧 registry 登记已于 2026-11-07 完成；登记不等于可派发（D-60）。 当前指针 3.0.0（21 工具，自动白名单覆盖 290/292 只读与 60/119 写函数，注入层需平台提供源码根）。",
+      "costMinutes": 60
+    },
+    "software:ai-novel-platform-mcp": {
+      "path": "同上；另需平台侧注入 NOVEL_PROJECT_ROOT（指向含 novel.config.json 的小说项目目录），未注入时 server 结构化拒绝 NOVEL_PROJECT_ROOT_REQUIRED。 当前指针 3.1.0（31 工具，新增大纲建图、节点增删改、XMind 导入与进度网格只读；注入层需平台提供源码根）。",
+      "costMinutes": 60
+    },
+    "software:xmind-mcp": {
+      "path": "共享侧 software/xmind-mcp@1.0.0 的 capability 快照尚未冻结（SNAPSHOT_NOT_FROZEN，C-4：无任何基线对照），须由共享侧另立 P 表完成快照冻结并发新版本；随后本平台按管理台 intake 流程完成 native MCP discovery → mcp-body 生成冻结配方 → 平台网关 nativeMcpServers / softwareProfiles 注册 → 单格冒烟。本平台轮不得改写共享仓字节，登记不等于可派发（D-60）。",
+      "costMinutes": 90
     }
   },
   "unverified": {

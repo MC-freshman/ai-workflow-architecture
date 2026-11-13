@@ -1,4 +1,4 @@
-# 架构管理台 0.9.0 使用手册
+# 架构管理台 0.9.1 使用手册
 
 Architecture Manager 是 Windows 本地工作区管理工具。它读取使用者的 tool、agent、software 三仓，先盘点和生成可核对的计划，再执行获准更新、接入、发布、备份和 Git 收口。0.8.7 起，安装包自带三仓当前版本的种子（seed），新空工作区在接入时自动铺放；模型账号、厂商客户端和第三方软件由使用者准备；EXE 启动成功不等于平台完整接入。
 
@@ -105,4 +105,23 @@ Node.js 24+：`npm ci`，`npm start`；`npm run conform -- --out <自己的平�
 
 2026-11-05 架构 3.7.0 轮（**源码已进、发行未跟**，源码版本 0.9.0，双包已打包补签并发布（v0.9.0 Latest））：`src/cli.mjs` 新增 `relayout` 写入子命令（`node src/cli.mjs relayout [--dry-run] [--root <workspace-root>]`，旧 `npm run scan -- <root>` 不变）；`scripts/check-governance-drift.mjs` 挂入 `npm run conform` 的 steps（lint → preload → runtime-drift → governance-drift → tests）；`npm run release-gate` 为手动触发的收口读数命令，不自动跑 conform、不提交、不推送、不做 pre-push hook（`docs/发布门禁.md:14-32` 的既有决策不变）。新判据与 CLI 各 4 例单测会话内全绿。**P5d 已于 2026-11-05 用户终端补跑完成**：`npm run conform` 五段全绿（`464 / 462 pass / 0 fail / 2 skip / valid=true`），现行权威 digest `f6b228ee80581a60269f106b7101e794c24e89248e164f8c181c6e1637bd01ff`；已回填更新日志、两份 README、`versions/架构3.7.0.md` 与 `versions/架构3.7.0-收口记录-20261105.md`。
 
-2026-11-05（0.9.0 发布轮）：源码版本 `0.9.0`，10 个平台 `bridge.json` 的 `runtimeComponentVersion` 同步；新增 `scripts/release-gate-waiting.mjs`（`computeWaiting()`，5/5 单测）使 `npm run release-gate` 的 `waiting` 由机器状态派生。**0.9.0 双包已发布（v0.9.0 Latest），四资产哈希见 `versions/管理台0.9.0发布记录-20261105.md`**；`collect-seed` / `vite build` / electron-builder / signtool / `gh release create` 的精确命令与判据见 `versions/管理台0.9.0发布记录-20261105.md`。P2/P3 改了 conform `sourceSnapshot`，权威 digest 须终端重跑回填。
+2026-11-05（0.9.0 发布轮）：源码版本 `0.9.0`，10 个平台 `bridge.json` 的 `runtimeComponentVersion` 同步；新增 `scripts/release-gate-waiting.mjs`（`computeWaiting()`，5/5 单测）使 `npm run release-gate` 的 `waiting` 由机器状态派生。**0.9.0 双包已发布（v0.9.0 Latest），四资产哈希见 `versions/管理台0.9.0发布记录-20261105.md`**；`collect-seed` / `vite build` / electron-builder / signtool / `gh release create` 的精确命令与判据见 `versions/管理台0.9.0发布记录-20261105.md`。P7 权威 digest 已回填 `f6151a48fc066e1bd77c007dca66b17c0fc7f9ea947432d124046dd12e8e6d70`（2026-11-05 17:27 用户终端，469 / 467 pass / 0 fail / 2 skip）。
+
+## 2026-11-11 模块化更新轮（P1–P8，源码已进、发行未跟）
+
+判据载体 `versions/架构与管理台模块化更新P表-20261111.md`（用户批准执行）；收口读数见 `versions/架构与管理台模块化更新-收口记录-20261111.md`。**不 bump 版本、不发包**；0.9.0 安装包不含本轮源码。
+
+- **P2 模块注册表**：`src/app/module-registry.json`（`ai-manager-module/v1`，75→76 模块）为机器派生视图（`scripts/generate-module-registry.mjs`，`--check` 新鲜度机检），覆盖 M01–M23 替换矩阵；每模块带自写替换/软件接入选项与影响范围声明。
+- **P3 UI 配置驱动**：导航/视图/分节改由 `src/app/view-definitions.json` 声明；`ViewRenderer` 按视图 `React.lazy` 本地分包（主 chunk 358.7KB + 25 按需 chunk）；platform 视图三分节；统一拆卸空态与状态色语义；真机 16 截图复核（明/暗 × 12 视图 + 命令面板）。
+- **P4 拆卸/替换/重组**：`src/app/module-overrides.json` 声明开关；runs 模块三态真机演示（拆卸空态 / 自写替代面板 357 行同数据 / 还原）；契约测试 `test/module-replacement-pilot.test.mjs`；规程 `docs/module-replacement.md`。
+- **P5 run 时间线**：新增只读 query 通道 `runs:detail`（116→117）；阶段条 + 哈希链事件 + 管理台审计经 transactionId/planId 关联；真机截图复核。
+- **P6 漂移门禁**：`scripts/check-mcp-binding.mjs` + 基线（379 导出面）使 MCP 注入层签名漂移机判化；`release-gate` 的 `staleEvidence` 增源快照比对（修复只判步骤名局限）。
+- **P7 供应链门禁**：`release-gate --with-sbom --with-audit` 手动可选步（SBOM CycloneDX 1.5 / 347 组件；audit 1 moderate=fast-uri 登记 D-178，high/critical 才阻断，离线如实 skip）；常驻审计三件 `scripts/audit/{integrity,orphans,content}.mjs`（R6 误报修正；完整性 10,554/10,555 匹配、唯一 missing 为已知 _connector 缓存残留基线；0 冻结孤儿 / 0 二进制）。
+- 门禁：新判据全部挂既有 test 段，不新增 conform 段、不做 hook；**权威 digest 已回填 `c63b33ab452eb2bc3ff22a8d31f03c40fd83b4b554b2b7ed43bcc8896d6837ad`**（2026-11-13 20:30 +08 用户终端，495 / 493 pass / 0 fail / 2 skip，五段全绿；`f6151a48…` 自本轮源码变化起失效）。
+
+## 2026-11-13 0.9.1 发布轮（U-2）
+
+- **0.9.1 双包已生成、补签、上传，v0.9.1 为治理仓 Latest**；四资产哈希见 `release/SHA256SUMS-0.9.1.txt` 与 `versions/架构与管理台第二轮更新收口记录-20261113.md`。setup 131,971,776 B / portable 131,741,752 B；主签名 + DigiCert RFC3161 时间戳复验在（自签根 UnknownError 属预期）。
+- 版本面同批：package.json 0.9.1、10 个 bridge.json `runtimeComponentVersion=0.9.1`、docs-site README 与 site-intro 现行声明、根 README 下载链、export-readme 模板。
+- 内容 = 0.9.0 + 第一轮模块化更新（P1–P8）+ 第二轮更新（N1–N6）；公开仓同步经用户 2026-11-13 明示授权。
+- 发布后权威 conform 读数待用户终端回填（见收口记录）；`release-gate` 双包存在性判据已版本派生（N6）。

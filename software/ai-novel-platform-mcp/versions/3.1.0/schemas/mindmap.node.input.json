@@ -1,0 +1,47 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "type": "string"
+    },
+    "title": {
+      "type": "string"
+    },
+    "nodeId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "text": {
+      "type": "string"
+    },
+    "note": {
+      "type": "string"
+    },
+    "color": {
+      "type": "string"
+    },
+    "side": {
+      "enum": [
+        "left",
+        "right"
+      ]
+    },
+    "collapsed": {
+      "type": "boolean"
+    },
+    "planId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "confirmToken": {
+      "type": "string",
+      "minLength": 1
+    }
+  },
+  "required": [
+    "nodeId",
+    "planId",
+    "confirmToken"
+  ]
+}

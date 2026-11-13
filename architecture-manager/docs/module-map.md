@@ -8,11 +8,11 @@
 
 ## 域（`src/domains/`）
 
-- **onboarding/**（15）：平台入驻流水线。`onboarding.mjs` 主编排；`onboarding-config`（配置与版本）、`onboarding-runtime`（运行环境，`verifyTimeoutSeconds` 预算在此解析）、`onboarding-client`（客户端入口）、`onboarding-providers`（provider 面）、`onboarding-l1`（L1 双格判据）、`onboarding-entry-skills`（wf/wfa 入口技能与插件包导出）、`onboarding-governance`（治理文本集合与重命名源）、`onboarding-finalize`（收口提交）、`onboarding-state`（入驻记录）、`onboarding-recovery`（续跑）、`onboarding-auto`（自动接入）、`onboarding-attestation`（能力探针出证）、`onboarding-seed`（安装包种子铺放）。
+- **onboarding/**（14）：平台入驻流水线。`onboarding.mjs` 主编排；`onboarding-config`（配置与版本）、`onboarding-runtime`（运行环境，`verifyTimeoutSeconds` 预算在此解析）、`onboarding-client`（客户端入口）、`onboarding-providers`（provider 面）、`onboarding-l1`（L1 双格判据）、`onboarding-entry-skills`（wf/wfa 入口技能与插件包导出）、`onboarding-governance`（治理文本集合与重命名源）、`onboarding-finalize`（收口提交）、`onboarding-state`（入驻记录）、`onboarding-recovery`（续跑）、`onboarding-auto`（自动接入）、`onboarding-attestation`（能力探针出证）、`onboarding-seed`（安装包种子铺放）。
 - **platforms/**（24）：平台盘点与接入检查。`platform-check`（平台检查）、`integration`（客户端集成目标）、`version-combo`（显式版本组合探针）、`global-update`（一键更新）、`native-client` / `native-*`（原生回执）、`onboarding-readback`、`runtime-discovery` 等。
 - **intake/**（20）：资源导入与发布。`releases`（发布计划）、`inbox`（收件区只读盘点）、`publication`、`automatic-software`、`shared-body`、`tool-body`、`software-body` 等。
 - **software/**（12）：软件接入。`software`（软件仓读面）、`software-intake` / `software-launch` / `software-publish` / `software-recovery`、`gateway-migration`、`health` 等。
-- **resources/**（7）：三仓资源注册表与契约。`registry`、`contracts`（+ `contracts/` schema）、`catalog`、`inventory`。
+- **resources/**（6）：三仓资源注册表与契约。`registry`、`contracts`（+ `contracts/` schema）、`catalog`、`inventory`。
 - **certification/**（14）：完整认证的锚定与对齐（`anchor*`、证据、进度）。
 - **git/**（5）：Git 计划与事务执行。`git`（`buildGitPlan`）、`git-executor`、`state`（暂存校验）、`sensitive`（敏感扫描）。
 - **audit/**（3）：审计事件与缺陷簿只读面（`audit`、`defects`）。
@@ -30,3 +30,14 @@
 - `runtime/`：Python 宿主驱动脚本（探针、环境、派发）与**生成产物** `platform_defaults.mjs`（由 `scripts/build-management-bridge.mjs` bundle 生成，勿手改）。
 
 边界规则（由 `test/module-boundaries.test.mjs` 钉住）：`core/` 与 `transactions/kernel` 不得依赖 Electron、不得引用 `renderer/`；`app/operations.json` 声明的每个通道必须同时被 `register-operations.mjs` 注册且出现在 `preload.cjs`；Electron handler 引用的绑定必须显式导入（打包成 asar 后延迟失败变启动失败）。
+
+## 模块注册表（2026-11-11 模块化更新轮 P2 新增）
+
+`src/app/module-registry.json` 是**机器生成的派生视图**（`ai-manager-module/v1`，schema 在 `src/app/module-registry.schema.json`），不是第三声明源：由 `scripts/generate-module-registry.mjs` 从 `app/operations.json`（通道）、`src/domains/`（导出）、渲染层面板/视图声明派生，**禁手改**。重生成：`node scripts/generate-module-registry.mjs`；新鲜度自检：`--check`（漂移抛 `MODULE_REGISTRY_DRIFT`，未映射通道抛 `MODULE_REGISTRY_CHANNEL_UNMAPPED`）。
+
+- 覆盖 75 个模块：12 域 / 23 面板（22 个 `panels/` + 1 个 feature 级 `BodyIntakePanel`）/ 12 视图 / 19 个 Python 探针（聚合）/ 15 个门禁脚本 / 3 入口 / 4 跨域机制 / 2 配置面（打包、ajv）/ 3 外部面（MCP 配方、docs-site、缺陷簿，workspace 相对路径，kind=external）。
+- 每个模块带替换矩阵引用 `matrixRef`（M01–M23，见 `versions/架构与管理台模块化更新P表-20261111.md` §4）：`replaceable` / `replacementContract` / `replacementOptions`（自写 / 软件接入）/ `impactScope` / `enabled` / `replacement`。替换选项是**声明**，不是实施授权；实际替换走契约测试 + 开关（P4 试点规程见 `docs/module-replacement.md`）。
+- 判据：`test/module-registry.test.mjs`（schema 有效、新鲜度、通道集合逐字一致、视图映射、M01–M23 全覆盖、初始态全启用无替换、负例）挂既有 test 段，不新增 conform 段。
+- `mech-transactions` 与 `entry-preload`（生成物）标记不可独立替换；视图段（`views[]`）自 P3 起为导航唯一声明源。
+- **MCP 绑定漂移门禁（P6）**：`scripts/check-mcp-binding.mjs` 静态枚举域导出面（排除 stdout 污染模块 `platforms/default-command.mjs`），与 `scripts/baselines/mcp-exports.json` 比对；漂移 exit 1 并指引「重跑 MCP 探针 + 复核红线黑名单」。小说平台半需 `NOVEL_APP_ROOT`，缺失如实 skip。基线更新（`--write-baseline`）必须与探针重跑同批登记。判据 `test/mcp-binding.test.mjs` 挂 test 段。
+- **release-gate 源快照判据（P6b）**：`staleEvidence` 除步骤名外比对证据 `sources` 与当前 `sourceSnapshot`（`conform-proof.mjs`）；`--evidence <file>` 仅供测试注入合成证据，不触碰真实证据。判据 `test/release-gate-stale.test.mjs`。

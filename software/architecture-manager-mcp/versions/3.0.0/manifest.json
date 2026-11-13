@@ -1,0 +1,585 @@
+{
+  "schema": "ai-software/v1",
+  "id": "architecture-manager-mcp",
+  "version": "3.0.0",
+  "displayName": "Architecture Manager MCP (v3 full coverage)",
+  "upstreamVersion": "0.9.0",
+  "kind": "mcp-stdio",
+  "transport": {
+    "protocol": "mcp-stdio",
+    "command": "node",
+    "args": [
+      "src/server.mjs"
+    ],
+    "cwd": ".",
+    "protocolVersion": "2025-06-18",
+    "capabilityAttestation": "server-tools-list",
+    "runtime": "node>=20",
+    "notes": "v3 full coverage. Injected capabilities require runtime-provided roots; stdout is isolated during preload."
+  },
+  "capabilities": [
+    {
+      "name": "arch_software_list",
+      "nativeName": "arch.software.list",
+      "inputSchemaRef": "schemas/empty.input.json",
+      "outputSchemaRef": "schemas/result.output.json",
+      "sideEffects": "none",
+      "permissionRequests": {
+        "filesystem": "read",
+        "network": "loopback",
+        "process": "children",
+        "credentials": "none"
+      },
+      "consent": "auto",
+      "idempotent": true,
+      "safeForSelftest": true,
+      "invocation": {
+        "transport": "mcp-stdio",
+        "endpoint": "src/server.mjs",
+        "mcpMethod": "tools/call",
+        "toolNameParam": "params.name",
+        "argumentsParam": "params.arguments",
+        "frozenToolName": "arch_software_list",
+        "timeout": 30,
+        "notes": "Explicit whitelist only; no shell and no arbitrary function passthrough."
+      }
+    },
+    {
+      "name": "arch_software_read",
+      "nativeName": "arch.software.read",
+      "inputSchemaRef": "schemas/id.input.json",
+      "outputSchemaRef": "schemas/result.output.json",
+      "sideEffects": "none",
+      "permissionRequests": {
+        "filesystem": "read",
+        "network": "loopback",
+        "process": "children",
+        "credentials": "none"
+      },
+      "consent": "auto",
+      "idempotent": true,
+      "safeForSelftest": true,
+      "invocation": {
+        "transport": "mcp-stdio",
+        "endpoint": "src/server.mjs",
+        "mcpMethod": "tools/call",
+        "toolNameParam": "params.name",
+        "argumentsParam": "params.arguments",
+        "frozenToolName": "arch_software_read",
+        "timeout": 30,
+        "notes": "Explicit whitelist only; no shell and no arbitrary function passthrough."
+      }
+    },
+    {
+      "name": "arch_versions_current",
+      "nativeName": "arch.versions.current",
+      "inputSchemaRef": "schemas/empty.input.json",
+      "outputSchemaRef": "schemas/result.output.json",
+      "sideEffects": "none",
+      "permissionRequests": {
+        "filesystem": "read",
+        "network": "loopback",
+        "process": "children",
+        "credentials": "none"
+      },
+      "consent": "auto",
+      "idempotent": true,
+      "safeForSelftest": true,
+      "invocation": {
+        "transport": "mcp-stdio",
+        "endpoint": "src/server.mjs",
+        "mcpMethod": "tools/call",
+        "toolNameParam": "params.name",
+        "argumentsParam": "params.arguments",
+        "frozenToolName": "arch_versions_current",
+        "timeout": 30,
+        "notes": "Explicit whitelist only; no shell and no arbitrary function passthrough."
+      }
+    },
+    {
+      "name": "arch_defects_list",
+      "nativeName": "arch.defects.list",
+      "inputSchemaRef": "schemas/empty.input.json",
+      "outputSchemaRef": "schemas/result.output.json",
+      "sideEffects": "none",
+      "permissionRequests": {
+        "filesystem": "read",
+        "network": "loopback",
+        "process": "children",
+        "credentials": "none"
+      },
+      "consent": "auto",
+      "idempotent": true,
+      "safeForSelftest": true,
+      "invocation": {
+        "transport": "mcp-stdio",
+        "endpoint": "src/server.mjs",
+        "mcpMethod": "tools/call",
+        "toolNameParam": "params.name",
+        "argumentsParam": "params.arguments",
+        "frozenToolName": "arch_defects_list",
+        "timeout": 30,
+        "notes": "Explicit whitelist only; no shell and no arbitrary function passthrough."
+      }
+    },
+    {
+      "name": "arch_conform_status",
+      "nativeName": "arch.conform.status",
+      "inputSchemaRef": "schemas/empty.input.json",
+      "outputSchemaRef": "schemas/result.output.json",
+      "sideEffects": "none",
+      "permissionRequests": {
+        "filesystem": "read",
+        "network": "loopback",
+        "process": "children",
+        "credentials": "none"
+      },
+      "consent": "auto",
+      "idempotent": true,
+      "safeForSelftest": true,
+      "invocation": {
+        "transport": "mcp-stdio",
+        "endpoint": "src/server.mjs",
+        "mcpMethod": "tools/call",
+        "toolNameParam": "params.name",
+        "argumentsParam": "params.arguments",
+        "frozenToolName": "arch_conform_status",
+        "timeout": 30,
+        "notes": "Explicit whitelist only; no shell and no arbitrary function passthrough."
+      }
+    },
+    {
+      "name": "arch_governance_status",
+      "nativeName": "arch.governance.status",
+      "inputSchemaRef": "schemas/empty.input.json",
+      "outputSchemaRef": "schemas/result.output.json",
+      "sideEffects": "none",
+      "permissionRequests": {
+        "filesystem": "read",
+        "network": "loopback",
+        "process": "children",
+        "credentials": "none"
+      },
+      "consent": "auto",
+      "idempotent": true,
+      "safeForSelftest": true,
+      "invocation": {
+        "transport": "mcp-stdio",
+        "endpoint": "src/server.mjs",
+        "mcpMethod": "tools/call",
+        "toolNameParam": "params.name",
+        "argumentsParam": "params.arguments",
+        "frozenToolName": "arch_governance_status",
+        "timeout": 30,
+        "notes": "Explicit whitelist only; no shell and no arbitrary function passthrough."
+      }
+    },
+    {
+      "name": "arch_platform_pins",
+      "nativeName": "arch.platform.pins",
+      "inputSchemaRef": "schemas/empty.input.json",
+      "outputSchemaRef": "schemas/result.output.json",
+      "sideEffects": "none",
+      "permissionRequests": {
+        "filesystem": "read",
+        "network": "loopback",
+        "process": "children",
+        "credentials": "none"
+      },
+      "consent": "auto",
+      "idempotent": true,
+      "safeForSelftest": true,
+      "invocation": {
+        "transport": "mcp-stdio",
+        "endpoint": "src/server.mjs",
+        "mcpMethod": "tools/call",
+        "toolNameParam": "params.name",
+        "argumentsParam": "params.arguments",
+        "frozenToolName": "arch_platform_pins",
+        "timeout": 30,
+        "notes": "Explicit whitelist only; no shell and no arbitrary function passthrough."
+      }
+    },
+    {
+      "name": "arch_baseline_read",
+      "nativeName": "arch.baseline.read",
+      "inputSchemaRef": "schemas/empty.input.json",
+      "outputSchemaRef": "schemas/result.output.json",
+      "sideEffects": "none",
+      "permissionRequests": {
+        "filesystem": "read",
+        "network": "loopback",
+        "process": "children",
+        "credentials": "none"
+      },
+      "consent": "auto",
+      "idempotent": true,
+      "safeForSelftest": true,
+      "invocation": {
+        "transport": "mcp-stdio",
+        "endpoint": "src/server.mjs",
+        "mcpMethod": "tools/call",
+        "toolNameParam": "params.name",
+        "argumentsParam": "params.arguments",
+        "frozenToolName": "arch_baseline_read",
+        "timeout": 30,
+        "notes": "Explicit whitelist only; no shell and no arbitrary function passthrough."
+      }
+    },
+    {
+      "name": "arch_updates_read",
+      "nativeName": "arch.updates.read",
+      "inputSchemaRef": "schemas/empty.input.json",
+      "outputSchemaRef": "schemas/result.output.json",
+      "sideEffects": "none",
+      "permissionRequests": {
+        "filesystem": "read",
+        "network": "loopback",
+        "process": "children",
+        "credentials": "none"
+      },
+      "consent": "auto",
+      "idempotent": true,
+      "safeForSelftest": true,
+      "invocation": {
+        "transport": "mcp-stdio",
+        "endpoint": "src/server.mjs",
+        "mcpMethod": "tools/call",
+        "toolNameParam": "params.name",
+        "argumentsParam": "params.arguments",
+        "frozenToolName": "arch_updates_read",
+        "timeout": 30,
+        "notes": "Explicit whitelist only; no shell and no arbitrary function passthrough."
+      }
+    },
+    {
+      "name": "arch_registry_all",
+      "nativeName": "arch.registry.all",
+      "inputSchemaRef": "schemas/empty.input.json",
+      "outputSchemaRef": "schemas/result.output.json",
+      "sideEffects": "none",
+      "permissionRequests": {
+        "filesystem": "read",
+        "network": "loopback",
+        "process": "children",
+        "credentials": "none"
+      },
+      "consent": "auto",
+      "idempotent": true,
+      "safeForSelftest": true,
+      "invocation": {
+        "transport": "mcp-stdio",
+        "endpoint": "src/server.mjs",
+        "mcpMethod": "tools/call",
+        "toolNameParam": "params.name",
+        "argumentsParam": "params.arguments",
+        "frozenToolName": "arch_registry_all",
+        "timeout": 30,
+        "notes": "Explicit whitelist only; no shell and no arbitrary function passthrough."
+      }
+    },
+    {
+      "name": "arch_capabilities",
+      "nativeName": "arch.capabilities",
+      "inputSchemaRef": "schemas/empty.input.json",
+      "outputSchemaRef": "schemas/result.output.json",
+      "sideEffects": "none",
+      "permissionRequests": {
+        "filesystem": "read",
+        "network": "loopback",
+        "process": "children",
+        "credentials": "none"
+      },
+      "consent": "auto",
+      "idempotent": true,
+      "safeForSelftest": true,
+      "invocation": {
+        "transport": "mcp-stdio",
+        "endpoint": "src/server.mjs",
+        "mcpMethod": "tools/call",
+        "toolNameParam": "params.name",
+        "argumentsParam": "params.arguments",
+        "frozenToolName": "arch_capabilities",
+        "timeout": 30,
+        "notes": "Explicit whitelist only; no shell and no arbitrary function passthrough."
+      }
+    },
+    {
+      "name": "arch_call",
+      "nativeName": "arch.call",
+      "inputSchemaRef": "schemas/call.input.json",
+      "outputSchemaRef": "schemas/result.output.json",
+      "sideEffects": "none",
+      "permissionRequests": {
+        "filesystem": "read",
+        "network": "loopback",
+        "process": "children",
+        "credentials": "none"
+      },
+      "consent": "auto",
+      "idempotent": true,
+      "safeForSelftest": true,
+      "invocation": {
+        "transport": "mcp-stdio",
+        "endpoint": "src/server.mjs",
+        "mcpMethod": "tools/call",
+        "toolNameParam": "params.name",
+        "argumentsParam": "params.arguments",
+        "frozenToolName": "arch_call",
+        "timeout": 30,
+        "notes": "Explicit whitelist only; no shell and no arbitrary function passthrough."
+      }
+    },
+    {
+      "name": "arch_inventory",
+      "nativeName": "arch.inventory",
+      "inputSchemaRef": "schemas/empty.input.json",
+      "outputSchemaRef": "schemas/result.output.json",
+      "sideEffects": "none",
+      "permissionRequests": {
+        "filesystem": "read",
+        "network": "loopback",
+        "process": "children",
+        "credentials": "none"
+      },
+      "consent": "auto",
+      "idempotent": true,
+      "safeForSelftest": true,
+      "invocation": {
+        "transport": "mcp-stdio",
+        "endpoint": "src/server.mjs",
+        "mcpMethod": "tools/call",
+        "toolNameParam": "params.name",
+        "argumentsParam": "params.arguments",
+        "frozenToolName": "arch_inventory",
+        "timeout": 30,
+        "notes": "Explicit whitelist only; no shell and no arbitrary function passthrough."
+      }
+    },
+    {
+      "name": "arch_adoption_read",
+      "nativeName": "arch.adoption.read",
+      "inputSchemaRef": "schemas/empty.input.json",
+      "outputSchemaRef": "schemas/result.output.json",
+      "sideEffects": "none",
+      "permissionRequests": {
+        "filesystem": "read",
+        "network": "loopback",
+        "process": "children",
+        "credentials": "none"
+      },
+      "consent": "auto",
+      "idempotent": true,
+      "safeForSelftest": true,
+      "invocation": {
+        "transport": "mcp-stdio",
+        "endpoint": "src/server.mjs",
+        "mcpMethod": "tools/call",
+        "toolNameParam": "params.name",
+        "argumentsParam": "params.arguments",
+        "frozenToolName": "arch_adoption_read",
+        "timeout": 30,
+        "notes": "Explicit whitelist only; no shell and no arbitrary function passthrough."
+      }
+    },
+    {
+      "name": "arch_three_layer",
+      "nativeName": "arch.three.layer",
+      "inputSchemaRef": "schemas/empty.input.json",
+      "outputSchemaRef": "schemas/result.output.json",
+      "sideEffects": "none",
+      "permissionRequests": {
+        "filesystem": "read",
+        "network": "loopback",
+        "process": "children",
+        "credentials": "none"
+      },
+      "consent": "auto",
+      "idempotent": true,
+      "safeForSelftest": true,
+      "invocation": {
+        "transport": "mcp-stdio",
+        "endpoint": "src/server.mjs",
+        "mcpMethod": "tools/call",
+        "toolNameParam": "params.name",
+        "argumentsParam": "params.arguments",
+        "frozenToolName": "arch_three_layer",
+        "timeout": 30,
+        "notes": "Explicit whitelist only; no shell and no arbitrary function passthrough."
+      }
+    },
+    {
+      "name": "arch_anchor_state",
+      "nativeName": "arch.anchor.state",
+      "inputSchemaRef": "schemas/empty.input.json",
+      "outputSchemaRef": "schemas/result.output.json",
+      "sideEffects": "none",
+      "permissionRequests": {
+        "filesystem": "read",
+        "network": "loopback",
+        "process": "children",
+        "credentials": "none"
+      },
+      "consent": "auto",
+      "idempotent": true,
+      "safeForSelftest": true,
+      "invocation": {
+        "transport": "mcp-stdio",
+        "endpoint": "src/server.mjs",
+        "mcpMethod": "tools/call",
+        "toolNameParam": "params.name",
+        "argumentsParam": "params.arguments",
+        "frozenToolName": "arch_anchor_state",
+        "timeout": 30,
+        "notes": "Explicit whitelist only; no shell and no arbitrary function passthrough."
+      }
+    },
+    {
+      "name": "arch_plan",
+      "nativeName": "arch.plan",
+      "inputSchemaRef": "schemas/plan.input.json",
+      "outputSchemaRef": "schemas/result.output.json",
+      "sideEffects": "none",
+      "permissionRequests": {
+        "filesystem": "read",
+        "network": "loopback",
+        "process": "children",
+        "credentials": "none"
+      },
+      "consent": "auto",
+      "idempotent": true,
+      "safeForSelftest": true,
+      "invocation": {
+        "transport": "mcp-stdio",
+        "endpoint": "src/server.mjs",
+        "mcpMethod": "tools/call",
+        "toolNameParam": "params.name",
+        "argumentsParam": "params.arguments",
+        "frozenToolName": "arch_plan",
+        "timeout": 30,
+        "notes": "Explicit whitelist only; no shell and no arbitrary function passthrough."
+      }
+    },
+    {
+      "name": "arch_relayout_apply",
+      "nativeName": "arch.relayout.apply",
+      "inputSchemaRef": "schemas/confirm.input.json",
+      "outputSchemaRef": "schemas/result.output.json",
+      "sideEffects": "local-write",
+      "permissionRequests": {
+        "filesystem": "read",
+        "network": "loopback",
+        "process": "children",
+        "credentials": "none"
+      },
+      "consent": "confirm-call",
+      "idempotent": false,
+      "safeForSelftest": false,
+      "invocation": {
+        "transport": "mcp-stdio",
+        "endpoint": "src/server.mjs",
+        "mcpMethod": "tools/call",
+        "toolNameParam": "params.name",
+        "argumentsParam": "params.arguments",
+        "frozenToolName": "arch_relayout_apply",
+        "timeout": 30,
+        "notes": "Explicit whitelist only; no shell and no arbitrary function passthrough."
+      }
+    },
+    {
+      "name": "arch_release_gate_draft",
+      "nativeName": "arch.release.gate.draft",
+      "inputSchemaRef": "schemas/confirm.input.json",
+      "outputSchemaRef": "schemas/result.output.json",
+      "sideEffects": "none",
+      "permissionRequests": {
+        "filesystem": "read",
+        "network": "loopback",
+        "process": "children",
+        "credentials": "none"
+      },
+      "consent": "auto",
+      "idempotent": true,
+      "safeForSelftest": true,
+      "invocation": {
+        "transport": "mcp-stdio",
+        "endpoint": "src/server.mjs",
+        "mcpMethod": "tools/call",
+        "toolNameParam": "params.name",
+        "argumentsParam": "params.arguments",
+        "frozenToolName": "arch_release_gate_draft",
+        "timeout": 30,
+        "notes": "Explicit whitelist only; no shell and no arbitrary function passthrough."
+      }
+    },
+    {
+      "name": "arch_defects_status_plan",
+      "nativeName": "arch.defects.status.plan",
+      "inputSchemaRef": "schemas/confirm.input.json",
+      "outputSchemaRef": "schemas/result.output.json",
+      "sideEffects": "none",
+      "permissionRequests": {
+        "filesystem": "read",
+        "network": "loopback",
+        "process": "children",
+        "credentials": "none"
+      },
+      "consent": "auto",
+      "idempotent": true,
+      "safeForSelftest": true,
+      "invocation": {
+        "transport": "mcp-stdio",
+        "endpoint": "src/server.mjs",
+        "mcpMethod": "tools/call",
+        "toolNameParam": "params.name",
+        "argumentsParam": "params.arguments",
+        "frozenToolName": "arch_defects_status_plan",
+        "timeout": 30,
+        "notes": "Explicit whitelist only; no shell and no arbitrary function passthrough."
+      }
+    },
+    {
+      "name": "arch_apply",
+      "nativeName": "arch.apply",
+      "inputSchemaRef": "schemas/apply.input.json",
+      "outputSchemaRef": "schemas/result.output.json",
+      "sideEffects": "local-write",
+      "permissionRequests": {
+        "filesystem": "read",
+        "network": "loopback",
+        "process": "children",
+        "credentials": "none"
+      },
+      "consent": "confirm-call",
+      "idempotent": false,
+      "safeForSelftest": false,
+      "invocation": {
+        "transport": "mcp-stdio",
+        "endpoint": "src/server.mjs",
+        "mcpMethod": "tools/call",
+        "toolNameParam": "params.name",
+        "argumentsParam": "params.arguments",
+        "frozenToolName": "arch_apply",
+        "timeout": 30,
+        "notes": "Explicit whitelist only; no shell and no arbitrary function passthrough."
+      }
+    }
+  ],
+  "concurrency": {
+    "instanceMode": "per-run",
+    "poolSize": null,
+    "exclusiveResources": [],
+    "whenBusy": "reject-retryable"
+  },
+  "platformSupport": {
+    "windows": "supported",
+    "linux": "untested",
+    "macos": "untested"
+  },
+  "requiredProfiles": [],
+  "snapshot": "capabilities.snapshot.json",
+  "integrity": {
+    "sha256Manifest": "SHA256SUMS"
+  },
+  "docs": "README.md"
+}

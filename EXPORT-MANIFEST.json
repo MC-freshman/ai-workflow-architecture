@@ -1,8 +1,8 @@
 {
   "schema": "ai-public-export-manifest/v2",
-  "generatedAt": "2026-11-05T08:40:13.885Z",
-  "sourceHead": "da79ebe935b80fae3d7ba1729807cd2cdcddfcc2",
-  "previousPublicHead": "ea11a675d550c2e8d51ac9d70f433653640d1185",
+  "generatedAt": "2026-11-13T13:45:12.103Z",
+  "sourceHead": "8b8f7b2d1221fde66760bdc4320f6387dd01a476",
+  "previousPublicHead": "8a55d0df149d9e94e377ef3c463d05d8377a50e7",
   "privateHistoryImported": false,
   "removedPrefixes": [
     "inbox/**",
@@ -33,7 +33,9 @@
     "qoder/bridge/software-gateway-config.json",
     "qoder/bridge/software-gateway.json",
     "software/README.md",
+    "versions/ai-novel-platform-MCP方案与P表-20261107.md",
     "versions/三仓对齐与接入全链路测试-P表-20261028.md",
+    "versions/三仓投毒与注入审计报告-20261106.md",
     "versions/平台接入清单.md",
     "versions/更新日志.md",
     "versions/架构3.7.0-恢复演练报告-20261105.md",
@@ -54,6 +56,6 @@
     "zcode/bridge/software-gateway.json"
   ],
   "retainedFrozenPathReferences": [],
-  "preservedPublicReleaseDirectories": 2267,
+  "preservedPublicReleaseDirectories": 2295,
   "nonCanonicalHistoricalPublicReleases": 11
 }

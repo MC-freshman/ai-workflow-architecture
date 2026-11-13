@@ -62,6 +62,7 @@ import {
   inspectGit,
   inspectPlatformDirectory,
   inspectPlatformConnection,
+  inspectRunTimeline,
   previewPlatformCheck,
   inspectRegistration,
   listIntegrationTargets,
@@ -70,6 +71,7 @@ import {
   listSoftwareIntakes,
   listSoftwareRecoveries,
   readAuditEvents,
+  readGateCockpit,
   readCatalogEntry,
   readDefectBook,
   readDocument,
@@ -201,10 +203,12 @@ export function registerOperations(options) {
   handleOperation('platform:suggest-bridge', (_event, input) => suggestPlatformBridge(input));
   handleOperation('plan:integration', (_event, input) => buildIntegrationPlan(input));
   handleOperation('runs:ledger', (_event, root) => listRunLedger(root));
+  handleOperation('runs:detail', (_event, input) => inspectRunTimeline(input));
   handleOperation('defects:read', (_event, root) => readDefectBook(root));
   handleOperation('defects:verify', (_event, root) => verifyDefectBook(root));
   handleOperation('inbox:inspect', (_event, root) => inspectInbox(root));
   handleOperation('audit:events', (_event, input) => readAuditEvents({ limit: input?.limit }));
+  handleOperation('gate:cockpit', (_event, input) => readGateCockpit(input || {}));
   handleOperation('plan:defect-book-edit', (_event, input) => buildDefectBookEditPlan(input));
   handleOperation('plan:release', (_event, input) => buildReleasePlan(input));
   handleOperation('releases:references', (_event, input) => listResourceReferences(input.workspaceRoot, input.repository, input.resourceId));

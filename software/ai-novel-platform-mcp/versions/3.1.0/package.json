@@ -1,0 +1,9 @@
+{
+  "name": "ai-novel-platform-mcp",
+  "version": "3.1.0",
+  "private": true,
+  "type": "module",
+  "engines": {
+    "node": ">=20"
+  }
+}

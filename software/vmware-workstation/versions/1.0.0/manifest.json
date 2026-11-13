@@ -1,0 +1,588 @@
+{
+  "schema": "ai-software/v1",
+  "id": "vmware-workstation",
+  "version": "1.0.0",
+  "displayName": "VMware Workstation Pro (vmrun MCP)",
+  "upstreamVersion": "17.5.2",
+  "kind": "mcp-stdio",
+  "transport": {
+    "protocol": "mcp-stdio",
+    "command": "node",
+    "args": [
+      "src/server.mjs"
+    ],
+    "cwd": ".",
+    "protocolVersion": "2025-06-18",
+    "capabilityAttestation": "server-tools-list",
+    "runtime": "node>=20",
+    "notes": "Zero-dependency stdio JSON-RPC. The release directory is the working directory; VMWARE_VMX_ROOTS and VMWARE_VMRUN are supplied by the platform config, never hardcoded in this manifest."
+  },
+  "capabilities": [
+    {
+      "name": "vmrun_list",
+      "nativeName": "vmrun -T ws list",
+      "inputSchemaRef": "schemas/empty.input.json",
+      "outputSchemaRef": "schemas/result.output.json",
+      "sideEffects": "none",
+      "permissionRequests": {
+        "filesystem": "read",
+        "network": "loopback",
+        "process": "children",
+        "credentials": "none"
+      },
+      "consent": "auto",
+      "idempotent": true,
+      "safeForSelftest": true,
+      "invocation": {
+        "transport": "mcp-stdio",
+        "endpoint": "src/server.mjs",
+        "mcpMethod": "tools/call",
+        "toolNameParam": "params.name",
+        "argumentsParam": "params.arguments",
+        "frozenToolName": "vmrun_list",
+        "timeout": 30,
+        "notes": "The MCP server maps this capability to a fixed vmrun argv; no passthrough or shell is used."
+      }
+    },
+    {
+      "name": "vmrun_inventory",
+      "nativeName": "filesystem scan of VMWARE_VMX_ROOTS + vmrun -T ws list",
+      "inputSchemaRef": "schemas/vmrun_inventory.input.json",
+      "outputSchemaRef": "schemas/result.output.json",
+      "sideEffects": "none",
+      "permissionRequests": {
+        "filesystem": "read",
+        "network": "loopback",
+        "process": "children",
+        "credentials": "none"
+      },
+      "consent": "auto",
+      "idempotent": true,
+      "safeForSelftest": true,
+      "invocation": {
+        "transport": "mcp-stdio",
+        "endpoint": "src/server.mjs",
+        "mcpMethod": "tools/call",
+        "toolNameParam": "params.name",
+        "argumentsParam": "params.arguments",
+        "frozenToolName": "vmrun_inventory",
+        "timeout": 60,
+        "notes": "The MCP server maps this capability to a fixed vmrun argv; no passthrough or shell is used."
+      }
+    },
+    {
+      "name": "vmrun_status",
+      "nativeName": "read .vmx + vmrun -T ws list",
+      "inputSchemaRef": "schemas/vmPath.input.json",
+      "outputSchemaRef": "schemas/result.output.json",
+      "sideEffects": "none",
+      "permissionRequests": {
+        "filesystem": "read",
+        "network": "loopback",
+        "process": "children",
+        "credentials": "none"
+      },
+      "consent": "auto",
+      "idempotent": true,
+      "safeForSelftest": false,
+      "invocation": {
+        "transport": "mcp-stdio",
+        "endpoint": "src/server.mjs",
+        "mcpMethod": "tools/call",
+        "toolNameParam": "params.name",
+        "argumentsParam": "params.arguments",
+        "frozenToolName": "vmrun_status",
+        "timeout": 30,
+        "notes": "The MCP server maps this capability to a fixed vmrun argv; no passthrough or shell is used."
+      }
+    },
+    {
+      "name": "vmrun_start",
+      "nativeName": "vmrun -T ws start <vmx> [gui|nogui]",
+      "inputSchemaRef": "schemas/vm_start.input.json",
+      "outputSchemaRef": "schemas/result.output.json",
+      "sideEffects": "external",
+      "permissionRequests": {
+        "filesystem": "none",
+        "network": "loopback",
+        "process": "children",
+        "credentials": "none"
+      },
+      "consent": "confirm-stage",
+      "idempotent": false,
+      "safeForSelftest": false,
+      "invocation": {
+        "transport": "mcp-stdio",
+        "endpoint": "src/server.mjs",
+        "mcpMethod": "tools/call",
+        "toolNameParam": "params.name",
+        "argumentsParam": "params.arguments",
+        "frozenToolName": "vmrun_start",
+        "timeout": 120,
+        "notes": "The MCP server maps this capability to a fixed vmrun argv; no passthrough or shell is used."
+      }
+    },
+    {
+      "name": "vmrun_stop",
+      "nativeName": "vmrun -T ws stop <vmx> [soft|hard]",
+      "inputSchemaRef": "schemas/vm_stop.input.json",
+      "outputSchemaRef": "schemas/result.output.json",
+      "sideEffects": "external",
+      "permissionRequests": {
+        "filesystem": "none",
+        "network": "loopback",
+        "process": "children",
+        "credentials": "none"
+      },
+      "consent": "confirm-stage",
+      "idempotent": false,
+      "safeForSelftest": false,
+      "invocation": {
+        "transport": "mcp-stdio",
+        "endpoint": "src/server.mjs",
+        "mcpMethod": "tools/call",
+        "toolNameParam": "params.name",
+        "argumentsParam": "params.arguments",
+        "frozenToolName": "vmrun_stop",
+        "timeout": 120,
+        "notes": "The MCP server maps this capability to a fixed vmrun argv; no passthrough or shell is used."
+      }
+    },
+    {
+      "name": "vmrun_reset",
+      "nativeName": "vmrun -T ws reset <vmx> [soft|hard]",
+      "inputSchemaRef": "schemas/vm_reset.input.json",
+      "outputSchemaRef": "schemas/result.output.json",
+      "sideEffects": "external",
+      "permissionRequests": {
+        "filesystem": "none",
+        "network": "loopback",
+        "process": "children",
+        "credentials": "none"
+      },
+      "consent": "confirm-call",
+      "idempotent": false,
+      "safeForSelftest": false,
+      "invocation": {
+        "transport": "mcp-stdio",
+        "endpoint": "src/server.mjs",
+        "mcpMethod": "tools/call",
+        "toolNameParam": "params.name",
+        "argumentsParam": "params.arguments",
+        "frozenToolName": "vmrun_reset",
+        "timeout": 120,
+        "notes": "The MCP server maps this capability to a fixed vmrun argv; no passthrough or shell is used."
+      }
+    },
+    {
+      "name": "vmrun_suspend",
+      "nativeName": "vmrun -T ws suspend <vmx> [soft|hard]",
+      "inputSchemaRef": "schemas/vm_suspend.input.json",
+      "outputSchemaRef": "schemas/result.output.json",
+      "sideEffects": "external",
+      "permissionRequests": {
+        "filesystem": "none",
+        "network": "loopback",
+        "process": "children",
+        "credentials": "none"
+      },
+      "consent": "confirm-stage",
+      "idempotent": false,
+      "safeForSelftest": false,
+      "invocation": {
+        "transport": "mcp-stdio",
+        "endpoint": "src/server.mjs",
+        "mcpMethod": "tools/call",
+        "toolNameParam": "params.name",
+        "argumentsParam": "params.arguments",
+        "frozenToolName": "vmrun_suspend",
+        "timeout": 120,
+        "notes": "The MCP server maps this capability to a fixed vmrun argv; no passthrough or shell is used."
+      }
+    },
+    {
+      "name": "vmrun_pause",
+      "nativeName": "vmrun -T ws pause <vmx>",
+      "inputSchemaRef": "schemas/vmPath.input.json",
+      "outputSchemaRef": "schemas/result.output.json",
+      "sideEffects": "external",
+      "permissionRequests": {
+        "filesystem": "none",
+        "network": "loopback",
+        "process": "children",
+        "credentials": "none"
+      },
+      "consent": "confirm-stage",
+      "idempotent": true,
+      "safeForSelftest": false,
+      "invocation": {
+        "transport": "mcp-stdio",
+        "endpoint": "src/server.mjs",
+        "mcpMethod": "tools/call",
+        "toolNameParam": "params.name",
+        "argumentsParam": "params.arguments",
+        "frozenToolName": "vmrun_pause",
+        "timeout": 60,
+        "notes": "The MCP server maps this capability to a fixed vmrun argv; no passthrough or shell is used."
+      }
+    },
+    {
+      "name": "vmrun_unpause",
+      "nativeName": "vmrun -T ws unpause <vmx>",
+      "inputSchemaRef": "schemas/vmPath.input.json",
+      "outputSchemaRef": "schemas/result.output.json",
+      "sideEffects": "external",
+      "permissionRequests": {
+        "filesystem": "none",
+        "network": "loopback",
+        "process": "children",
+        "credentials": "none"
+      },
+      "consent": "confirm-stage",
+      "idempotent": true,
+      "safeForSelftest": false,
+      "invocation": {
+        "transport": "mcp-stdio",
+        "endpoint": "src/server.mjs",
+        "mcpMethod": "tools/call",
+        "toolNameParam": "params.name",
+        "argumentsParam": "params.arguments",
+        "frozenToolName": "vmrun_unpause",
+        "timeout": 60,
+        "notes": "The MCP server maps this capability to a fixed vmrun argv; no passthrough or shell is used."
+      }
+    },
+    {
+      "name": "vmrun_guest_ip",
+      "nativeName": "vmrun -T ws getGuestIPAddress <vmx> [-wait]",
+      "inputSchemaRef": "schemas/guest_ip.input.json",
+      "outputSchemaRef": "schemas/result.output.json",
+      "sideEffects": "none",
+      "permissionRequests": {
+        "filesystem": "none",
+        "network": "loopback",
+        "process": "children",
+        "credentials": "none"
+      },
+      "consent": "auto",
+      "idempotent": true,
+      "safeForSelftest": false,
+      "invocation": {
+        "transport": "mcp-stdio",
+        "endpoint": "src/server.mjs",
+        "mcpMethod": "tools/call",
+        "toolNameParam": "params.name",
+        "argumentsParam": "params.arguments",
+        "frozenToolName": "vmrun_guest_ip",
+        "timeout": 60,
+        "notes": "The MCP server maps this capability to a fixed vmrun argv; no passthrough or shell is used."
+      }
+    },
+    {
+      "name": "vmrun_run",
+      "nativeName": "vmrun -T ws -gu ... -gp ... runProgramInGuest <vmx> [flags] <program> [args...]",
+      "inputSchemaRef": "schemas/guest_run.input.json",
+      "outputSchemaRef": "schemas/result.output.json",
+      "sideEffects": "external",
+      "permissionRequests": {
+        "filesystem": "none",
+        "network": "loopback",
+        "process": "children",
+        "credentials": "reference:vmware-guest"
+      },
+      "consent": "confirm-call",
+      "idempotent": false,
+      "safeForSelftest": false,
+      "invocation": {
+        "transport": "mcp-stdio",
+        "endpoint": "src/server.mjs",
+        "mcpMethod": "tools/call",
+        "toolNameParam": "params.name",
+        "argumentsParam": "params.arguments",
+        "frozenToolName": "vmrun_run",
+        "timeout": 300,
+        "notes": "The MCP server maps this capability to a fixed vmrun argv; no passthrough or shell is used."
+      }
+    },
+    {
+      "name": "vmrun_ps",
+      "nativeName": "vmrun -T ws -gu ... -gp ... listProcessesInGuest <vmx>",
+      "inputSchemaRef": "schemas/vmPath.input.json",
+      "outputSchemaRef": "schemas/result.output.json",
+      "sideEffects": "none",
+      "permissionRequests": {
+        "filesystem": "none",
+        "network": "loopback",
+        "process": "children",
+        "credentials": "reference:vmware-guest"
+      },
+      "consent": "auto",
+      "idempotent": true,
+      "safeForSelftest": false,
+      "invocation": {
+        "transport": "mcp-stdio",
+        "endpoint": "src/server.mjs",
+        "mcpMethod": "tools/call",
+        "toolNameParam": "params.name",
+        "argumentsParam": "params.arguments",
+        "frozenToolName": "vmrun_ps",
+        "timeout": 60,
+        "notes": "The MCP server maps this capability to a fixed vmrun argv; no passthrough or shell is used."
+      }
+    },
+    {
+      "name": "vmrun_kill",
+      "nativeName": "vmrun -T ws -gu ... -gp ... killProcessInGuest <vmx> <pid>",
+      "inputSchemaRef": "schemas/guest_kill.input.json",
+      "outputSchemaRef": "schemas/result.output.json",
+      "sideEffects": "external",
+      "permissionRequests": {
+        "filesystem": "none",
+        "network": "loopback",
+        "process": "children",
+        "credentials": "reference:vmware-guest"
+      },
+      "consent": "confirm-call",
+      "idempotent": false,
+      "safeForSelftest": false,
+      "invocation": {
+        "transport": "mcp-stdio",
+        "endpoint": "src/server.mjs",
+        "mcpMethod": "tools/call",
+        "toolNameParam": "params.name",
+        "argumentsParam": "params.arguments",
+        "frozenToolName": "vmrun_kill",
+        "timeout": 60,
+        "notes": "The MCP server maps this capability to a fixed vmrun argv; no passthrough or shell is used."
+      }
+    },
+    {
+      "name": "vmrun_file_exists",
+      "nativeName": "vmrun -T ws -gu ... -gp ... fileExistsInGuest <vmx> <guest path>",
+      "inputSchemaRef": "schemas/guest_file_exists.input.json",
+      "outputSchemaRef": "schemas/result.output.json",
+      "sideEffects": "none",
+      "permissionRequests": {
+        "filesystem": "none",
+        "network": "loopback",
+        "process": "children",
+        "credentials": "reference:vmware-guest"
+      },
+      "consent": "auto",
+      "idempotent": true,
+      "safeForSelftest": false,
+      "invocation": {
+        "transport": "mcp-stdio",
+        "endpoint": "src/server.mjs",
+        "mcpMethod": "tools/call",
+        "toolNameParam": "params.name",
+        "argumentsParam": "params.arguments",
+        "frozenToolName": "vmrun_file_exists",
+        "timeout": 60,
+        "notes": "The MCP server maps this capability to a fixed vmrun argv; no passthrough or shell is used."
+      }
+    },
+    {
+      "name": "vmrun_copy_to",
+      "nativeName": "vmrun -T ws -gu ... -gp ... CopyFileFromHostToGuest <vmx> <host path> <guest path>",
+      "inputSchemaRef": "schemas/guest_copy.input.json",
+      "outputSchemaRef": "schemas/result.output.json",
+      "sideEffects": "external",
+      "permissionRequests": {
+        "filesystem": "workspace",
+        "network": "loopback",
+        "process": "children",
+        "credentials": "reference:vmware-guest"
+      },
+      "consent": "confirm-call",
+      "idempotent": false,
+      "safeForSelftest": false,
+      "invocation": {
+        "transport": "mcp-stdio",
+        "endpoint": "src/server.mjs",
+        "mcpMethod": "tools/call",
+        "toolNameParam": "params.name",
+        "argumentsParam": "params.arguments",
+        "frozenToolName": "vmrun_copy_to",
+        "timeout": 300,
+        "notes": "The MCP server maps this capability to a fixed vmrun argv; no passthrough or shell is used."
+      }
+    },
+    {
+      "name": "vmrun_copy_from",
+      "nativeName": "vmrun -T ws -gu ... -gp ... CopyFileFromGuestToHost <vmx> <guest path> <host path>",
+      "inputSchemaRef": "schemas/guest_copy.input.json",
+      "outputSchemaRef": "schemas/result.output.json",
+      "sideEffects": "local-write",
+      "permissionRequests": {
+        "filesystem": "workspace",
+        "network": "loopback",
+        "process": "children",
+        "credentials": "reference:vmware-guest"
+      },
+      "consent": "confirm-call",
+      "idempotent": false,
+      "safeForSelftest": false,
+      "invocation": {
+        "transport": "mcp-stdio",
+        "endpoint": "src/server.mjs",
+        "mcpMethod": "tools/call",
+        "toolNameParam": "params.name",
+        "argumentsParam": "params.arguments",
+        "frozenToolName": "vmrun_copy_from",
+        "timeout": 300,
+        "notes": "The MCP server maps this capability to a fixed vmrun argv; no passthrough or shell is used."
+      }
+    },
+    {
+      "name": "vmrun_clone",
+      "nativeName": "vmrun -T ws clone <vmx> <dest vmx> full|linked [-snapshot=<name>]",
+      "inputSchemaRef": "schemas/vm_clone.input.json",
+      "outputSchemaRef": "schemas/result.output.json",
+      "sideEffects": "local-write",
+      "permissionRequests": {
+        "filesystem": "none",
+        "network": "loopback",
+        "process": "children",
+        "credentials": "none"
+      },
+      "consent": "confirm-call",
+      "idempotent": false,
+      "safeForSelftest": false,
+      "invocation": {
+        "transport": "mcp-stdio",
+        "endpoint": "src/server.mjs",
+        "mcpMethod": "tools/call",
+        "toolNameParam": "params.name",
+        "argumentsParam": "params.arguments",
+        "frozenToolName": "vmrun_clone",
+        "timeout": 600,
+        "notes": "The MCP server maps this capability to a fixed vmrun argv; no passthrough or shell is used."
+      }
+    },
+    {
+      "name": "vmrun_host_networks",
+      "nativeName": "vmrun -T ws listHostNetworks",
+      "inputSchemaRef": "schemas/empty.input.json",
+      "outputSchemaRef": "schemas/result.output.json",
+      "sideEffects": "none",
+      "permissionRequests": {
+        "filesystem": "read",
+        "network": "loopback",
+        "process": "children",
+        "credentials": "none"
+      },
+      "consent": "auto",
+      "idempotent": true,
+      "safeForSelftest": true,
+      "invocation": {
+        "transport": "mcp-stdio",
+        "endpoint": "src/server.mjs",
+        "mcpMethod": "tools/call",
+        "toolNameParam": "params.name",
+        "argumentsParam": "params.arguments",
+        "frozenToolName": "vmrun_host_networks",
+        "timeout": 30,
+        "notes": "The MCP server maps this capability to a fixed vmrun argv; no passthrough or shell is used."
+      }
+    },
+    {
+      "name": "vmrun_portforward_list",
+      "nativeName": "vmrun -T ws listPortForwardings <network>",
+      "inputSchemaRef": "schemas/portforward_list.input.json",
+      "outputSchemaRef": "schemas/result.output.json",
+      "sideEffects": "none",
+      "permissionRequests": {
+        "filesystem": "read",
+        "network": "loopback",
+        "process": "children",
+        "credentials": "none"
+      },
+      "consent": "auto",
+      "idempotent": true,
+      "safeForSelftest": false,
+      "invocation": {
+        "transport": "mcp-stdio",
+        "endpoint": "src/server.mjs",
+        "mcpMethod": "tools/call",
+        "toolNameParam": "params.name",
+        "argumentsParam": "params.arguments",
+        "frozenToolName": "vmrun_portforward_list",
+        "timeout": 30,
+        "notes": "The MCP server maps this capability to a fixed vmrun argv; no passthrough or shell is used."
+      }
+    },
+    {
+      "name": "vmrun_portforward_set",
+      "nativeName": "vmrun -T ws setPortForwarding <network> <protocol> <hostPort> <guestIp> <guestPort> [description]",
+      "inputSchemaRef": "schemas/portforward_set.input.json",
+      "outputSchemaRef": "schemas/result.output.json",
+      "sideEffects": "external",
+      "permissionRequests": {
+        "filesystem": "system",
+        "network": "loopback",
+        "process": "children",
+        "credentials": "none"
+      },
+      "consent": "confirm-call",
+      "idempotent": false,
+      "safeForSelftest": false,
+      "invocation": {
+        "transport": "mcp-stdio",
+        "endpoint": "src/server.mjs",
+        "mcpMethod": "tools/call",
+        "toolNameParam": "params.name",
+        "argumentsParam": "params.arguments",
+        "frozenToolName": "vmrun_portforward_set",
+        "timeout": 60,
+        "notes": "The MCP server maps this capability to a fixed vmrun argv; no passthrough or shell is used."
+      }
+    },
+    {
+      "name": "vmrun_portforward_delete",
+      "nativeName": "vmrun -T ws deletePortForwarding <network> <protocol> <hostPort>",
+      "inputSchemaRef": "schemas/portforward_delete.input.json",
+      "outputSchemaRef": "schemas/result.output.json",
+      "sideEffects": "external",
+      "permissionRequests": {
+        "filesystem": "system",
+        "network": "loopback",
+        "process": "children",
+        "credentials": "none"
+      },
+      "consent": "confirm-call",
+      "idempotent": false,
+      "safeForSelftest": false,
+      "invocation": {
+        "transport": "mcp-stdio",
+        "endpoint": "src/server.mjs",
+        "mcpMethod": "tools/call",
+        "toolNameParam": "params.name",
+        "argumentsParam": "params.arguments",
+        "frozenToolName": "vmrun_portforward_delete",
+        "timeout": 60,
+        "notes": "The MCP server maps this capability to a fixed vmrun argv; no passthrough or shell is used."
+      }
+    }
+  ],
+  "concurrency": {
+    "instanceMode": "singleton",
+    "poolSize": null,
+    "exclusiveResources": [
+      "vmware-workstation-host"
+    ],
+    "whenBusy": "reject-retryable",
+    "notes": "vmrun talks to one Workstation host. The gateway keeps one slot per host; direct MCP clients that start two servers are outside this lock and are not claimed to be arbitrated."
+  },
+  "platformSupport": {
+    "windows": "supported",
+    "linux": "untested",
+    "macos": "untested"
+  },
+  "requiredProfiles": [],
+  "snapshot": "capabilities.snapshot.json",
+  "integrity": {
+    "sha256Manifest": "SHA256SUMS"
+  },
+  "docs": "README.md"
+}

@@ -1816,10 +1816,20 @@
    "costMinutes": 90,
    "source": "architecture-manager/src/cli.mjs",
    "evidence": "防复发 P 表 P3 需先定重铺路径；D-174 的 P4 钉版判据依赖先完成重铺。"
+  },
+  {
+   "id": "D-178",
+   "title": "生产依赖 fast-uri moderate 漏洞（GHSA-w74x-v6f9-j3xg，经 ajv 依赖链）；修复=升级 ajv，另决不在本轮",
+   "location": "architecture-manager/package.json（ajv 8.20.0 依赖链）",
+   "status": "open",
+   "owner": "管理台供应链",
+   "costMinutes": 30,
+   "source": "versions/架构与管理台模块化更新P表-20261111.md",
+   "evidence": "2026-11-11 npm audit --omit=dev 实测 1 moderate / 0 high / 0 critical；证据 qoder-cn/runtime/maintenance/20261111-update-plan/audit.json；P7 门禁阈值 high/critical 红、moderate 警告登记，不 bump 钉版依赖。"
   }
  ],
- "updatedAt": "2026-10-30T12:00:00.000Z",
- "lastUpdatedAt": "2026-10-30T20:00:00+08:00",
+ "updatedAt": "2026-11-13T11:44:42.006Z",
+ "lastUpdatedAt": "2026-11-13T11:44:42.006Z",
  "activeRepairPlan": null,
  "completedRepairPlan": "versions/缺陷簿修复与全量验收转绿-实施P表-20261010.md",
  "notes_20261010": "缺陷簿修复轮收口：closed +18（AUD-D-001..012/014/015/017/019 + D-144 + 新增 D-145），ruled +4（AUD-D-013/016/018 + D-112），open 剩 D-123/D-124/D-127（A 簇：五家平台原生回执待补，用户 2026-10-10 指令明确除外）。checker 已扩展 AUD-D 号段（连续性校验同 D 段）。",

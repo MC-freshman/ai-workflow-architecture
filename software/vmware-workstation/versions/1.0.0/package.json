@@ -1,0 +1,17 @@
+{
+  "name": "vmware-workstation-mcp",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Zero-dependency stdio MCP server for VMware Workstation (vmrun).",
+  "engines": {
+    "node": ">=20"
+  },
+  "scripts": {
+    "test": "node --test tests/policy.test.mjs tests/protocol.test.mjs",
+    "test:live": "node --test tests/live.test.mjs",
+    "schemas": "node scripts/export-release.mjs",
+    "sums": "node scripts/make-sums.mjs",
+    "selfcheck": "node scripts/selfcheck.mjs"
+  }
+}

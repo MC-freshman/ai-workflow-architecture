@@ -1,0 +1,16 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "planId": {
+      "type": "string"
+    },
+    "confirmToken": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "planId",
+    "confirmToken"
+  ]
+}

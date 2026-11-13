@@ -1,0 +1,19 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "module": {
+      "type": "string"
+    },
+    "fn": {
+      "type": "string"
+    },
+    "args": {
+      "type": "array"
+    }
+  },
+  "required": [
+    "module",
+    "fn"
+  ]
+}

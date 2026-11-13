@@ -1,0 +1,261 @@
+{
+  "schema": "ai-software-capability-snapshot/v1",
+  "softwareId": "ai-novel-platform-mcp",
+  "softwareVersion": "1.0.0",
+  "upstreamVersion": "0.3.9",
+  "generatedAt": "2026-11-07T00:00:00Z",
+  "generationMethod": "Static declaration of the seven fixed tools; definitions observed, functions not executed during discovery.",
+  "runtime": {
+    "protocolVersion": "2025-06-18",
+    "tools": [
+      {
+        "name": "novel_project_info",
+        "inputSchemaRef": "schemas/empty.input.json"
+      },
+      {
+        "name": "novel_chapter_list",
+        "inputSchemaRef": "schemas/empty.input.json"
+      },
+      {
+        "name": "novel_chapter_read",
+        "inputSchemaRef": "schemas/fileName.input.json"
+      },
+      {
+        "name": "novel_character_list",
+        "inputSchemaRef": "schemas/empty.input.json"
+      },
+      {
+        "name": "novel_world_list",
+        "inputSchemaRef": "schemas/empty.input.json"
+      },
+      {
+        "name": "novel_knowledge_status",
+        "inputSchemaRef": "schemas/empty.input.json"
+      },
+      {
+        "name": "novel_analysis_state",
+        "inputSchemaRef": "schemas/empty.input.json"
+      }
+    ]
+  },
+  "capabilities": [
+    {
+      "name": "novel_project_info",
+      "nativeName": "novel.project.info",
+      "inputSchemaRef": "schemas/empty.input.json",
+      "outputSchemaRef": "schemas/result.output.json",
+      "sideEffects": "none",
+      "permissionRequests": {
+        "filesystem": "read",
+        "network": "loopback",
+        "process": "children",
+        "credentials": "none"
+      },
+      "consent": "auto",
+      "idempotent": true,
+      "safeForSelftest": true,
+      "invocation": {
+        "transport": "mcp-stdio",
+        "endpoint": "src/server.mjs",
+        "mcpMethod": "tools/call",
+        "toolNameParam": "params.name",
+        "argumentsParam": "params.arguments",
+        "frozenToolName": "novel_project_info",
+        "timeout": 30,
+        "notes": "Fixed tool mapping; no shell, no argv passthrough, no writes."
+      },
+      "frozen": true,
+      "observation": {
+        "definitionObserved": true,
+        "functionExecuted": false
+      }
+    },
+    {
+      "name": "novel_chapter_list",
+      "nativeName": "novel.chapter.list",
+      "inputSchemaRef": "schemas/empty.input.json",
+      "outputSchemaRef": "schemas/result.output.json",
+      "sideEffects": "none",
+      "permissionRequests": {
+        "filesystem": "read",
+        "network": "loopback",
+        "process": "children",
+        "credentials": "none"
+      },
+      "consent": "auto",
+      "idempotent": true,
+      "safeForSelftest": true,
+      "invocation": {
+        "transport": "mcp-stdio",
+        "endpoint": "src/server.mjs",
+        "mcpMethod": "tools/call",
+        "toolNameParam": "params.name",
+        "argumentsParam": "params.arguments",
+        "frozenToolName": "novel_chapter_list",
+        "timeout": 30,
+        "notes": "Fixed tool mapping; no shell, no argv passthrough, no writes."
+      },
+      "frozen": true,
+      "observation": {
+        "definitionObserved": true,
+        "functionExecuted": false
+      }
+    },
+    {
+      "name": "novel_chapter_read",
+      "nativeName": "novel.chapter.read",
+      "inputSchemaRef": "schemas/fileName.input.json",
+      "outputSchemaRef": "schemas/result.output.json",
+      "sideEffects": "none",
+      "permissionRequests": {
+        "filesystem": "read",
+        "network": "loopback",
+        "process": "children",
+        "credentials": "none"
+      },
+      "consent": "auto",
+      "idempotent": true,
+      "safeForSelftest": true,
+      "invocation": {
+        "transport": "mcp-stdio",
+        "endpoint": "src/server.mjs",
+        "mcpMethod": "tools/call",
+        "toolNameParam": "params.name",
+        "argumentsParam": "params.arguments",
+        "frozenToolName": "novel_chapter_read",
+        "timeout": 30,
+        "notes": "Fixed tool mapping; no shell, no argv passthrough, no writes."
+      },
+      "frozen": true,
+      "observation": {
+        "definitionObserved": true,
+        "functionExecuted": false
+      }
+    },
+    {
+      "name": "novel_character_list",
+      "nativeName": "novel.character.list",
+      "inputSchemaRef": "schemas/empty.input.json",
+      "outputSchemaRef": "schemas/result.output.json",
+      "sideEffects": "none",
+      "permissionRequests": {
+        "filesystem": "read",
+        "network": "loopback",
+        "process": "children",
+        "credentials": "none"
+      },
+      "consent": "auto",
+      "idempotent": true,
+      "safeForSelftest": true,
+      "invocation": {
+        "transport": "mcp-stdio",
+        "endpoint": "src/server.mjs",
+        "mcpMethod": "tools/call",
+        "toolNameParam": "params.name",
+        "argumentsParam": "params.arguments",
+        "frozenToolName": "novel_character_list",
+        "timeout": 30,
+        "notes": "Fixed tool mapping; no shell, no argv passthrough, no writes."
+      },
+      "frozen": true,
+      "observation": {
+        "definitionObserved": true,
+        "functionExecuted": false
+      }
+    },
+    {
+      "name": "novel_world_list",
+      "nativeName": "novel.world.list",
+      "inputSchemaRef": "schemas/empty.input.json",
+      "outputSchemaRef": "schemas/result.output.json",
+      "sideEffects": "none",
+      "permissionRequests": {
+        "filesystem": "read",
+        "network": "loopback",
+        "process": "children",
+        "credentials": "none"
+      },
+      "consent": "auto",
+      "idempotent": true,
+      "safeForSelftest": true,
+      "invocation": {
+        "transport": "mcp-stdio",
+        "endpoint": "src/server.mjs",
+        "mcpMethod": "tools/call",
+        "toolNameParam": "params.name",
+        "argumentsParam": "params.arguments",
+        "frozenToolName": "novel_world_list",
+        "timeout": 30,
+        "notes": "Fixed tool mapping; no shell, no argv passthrough, no writes."
+      },
+      "frozen": true,
+      "observation": {
+        "definitionObserved": true,
+        "functionExecuted": false
+      }
+    },
+    {
+      "name": "novel_knowledge_status",
+      "nativeName": "novel.knowledge.status",
+      "inputSchemaRef": "schemas/empty.input.json",
+      "outputSchemaRef": "schemas/result.output.json",
+      "sideEffects": "none",
+      "permissionRequests": {
+        "filesystem": "read",
+        "network": "loopback",
+        "process": "children",
+        "credentials": "none"
+      },
+      "consent": "auto",
+      "idempotent": true,
+      "safeForSelftest": true,
+      "invocation": {
+        "transport": "mcp-stdio",
+        "endpoint": "src/server.mjs",
+        "mcpMethod": "tools/call",
+        "toolNameParam": "params.name",
+        "argumentsParam": "params.arguments",
+        "frozenToolName": "novel_knowledge_status",
+        "timeout": 30,
+        "notes": "Fixed tool mapping; no shell, no argv passthrough, no writes."
+      },
+      "frozen": true,
+      "observation": {
+        "definitionObserved": true,
+        "functionExecuted": false
+      }
+    },
+    {
+      "name": "novel_analysis_state",
+      "nativeName": "novel.analysis.state",
+      "inputSchemaRef": "schemas/empty.input.json",
+      "outputSchemaRef": "schemas/result.output.json",
+      "sideEffects": "none",
+      "permissionRequests": {
+        "filesystem": "read",
+        "network": "loopback",
+        "process": "children",
+        "credentials": "none"
+      },
+      "consent": "auto",
+      "idempotent": true,
+      "safeForSelftest": true,
+      "invocation": {
+        "transport": "mcp-stdio",
+        "endpoint": "src/server.mjs",
+        "mcpMethod": "tools/call",
+        "toolNameParam": "params.name",
+        "argumentsParam": "params.arguments",
+        "frozenToolName": "novel_analysis_state",
+        "timeout": 30,
+        "notes": "Fixed tool mapping; no shell, no argv passthrough, no writes."
+      },
+      "frozen": true,
+      "observation": {
+        "definitionObserved": true,
+        "functionExecuted": false
+      }
+    }
+  ],
+  "frozen": true
+}

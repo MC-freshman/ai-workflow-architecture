@@ -1,5 +1,6 @@
 import { friendlyError, PLAN_WRITE_KINDS } from '../../presenter.mjs';
 import {useEffect,useMemo,useState,useRef} from 'react';
+import registry from '../../../app/module-registry.json';
 import {useDomainCommands} from '../../shared/useDomainCommands.mjs';
 import {useWorkspaceState} from './useWorkspaceState.mjs';
 import {usePlanState} from '../../shared/usePlanState.mjs';
@@ -41,20 +42,8 @@ export function useManagerController() {
   }, [dark]);
   const [view, setView] = useState(() => localStorage.getItem('am-view') || 'dashboard');
   useEffect(() => { localStorage.setItem('am-view', view); }, [view]);
-  const VIEWS = [
-    { id: 'dashboard', label: '仪表盘' },
-    { id: 'resources', label: '资源' },
-    { id: 'intake', label: '导入本体' },
-    { id: 'platform', label: '平台与接入' },
-    { id: 'runs', label: '运行' },
-    { id: 'governance', label: '治理' },
-    { id: 'documents', label: '文档' },
-    { id: 'audit', label: '审计' },
-    { id: 'inbox', label: 'inbox' },
-    { id: 'software', label: '软件' },
-    { id: 'git', label: '仓库' },
-    { id: 'safety', label: '安全/帮助' }
-  ];
+  // Navigation is registry-driven (P3): views[] derives from app/view-definitions.json.
+  const VIEWS = registry.views.map((entry) => ({ id: entry.id, label: entry.label }));
   const activeView = workspace ? view : 'platform';
 
   useEffect(() => {

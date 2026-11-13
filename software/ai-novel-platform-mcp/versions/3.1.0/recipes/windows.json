@@ -1,0 +1,38 @@
+{
+  "schema": "ai-software-recipe/v1",
+  "platform": "windows",
+  "softwareId": "ai-novel-platform-mcp",
+  "softwareVersion": "3.1.0",
+  "acquire": {
+    "kind": "local-install",
+    "source": "Shared recipe; no external body is redistributed.",
+    "version": "3.1.0",
+    "license": "internal",
+    "redistributable": false,
+    "notes": "BP-1: only frozen text lives here. Optional injected capabilities come from runtime roots."
+  },
+  "install": {
+    "location": "${platformRuntime}/software/ai-novel-platform-mcp",
+    "notes": "Platform substitutes platformRuntime; no absolute path in the shared recipe."
+  },
+  "launch": {
+    "kind": "mcp-stdio",
+    "entrypoint": "src/server.mjs",
+    "interpreter": "node",
+    "environment": {
+      "NOVEL_PROJECT_ROOT": "${novelProjectRoot}",
+      "NOVEL_APP_ROOT": "${novelAppRoot}"
+    },
+    "pathDependencies": [],
+    "notes": "Roots are injected by the platform. Optional NOVEL_XMIND_IMPORT_ROOT restricts which local .xmind files may be imported. Missing roots produce CAPABILITY_UNAVAILABLE with a remediation path."
+  },
+  "verify": {
+    "versionCall": [
+      "node",
+      "--version"
+    ],
+    "expectedVersionOutput": "v",
+    "selftestRef": "../selftest/readonly.json",
+    "files": []
+  }
+}

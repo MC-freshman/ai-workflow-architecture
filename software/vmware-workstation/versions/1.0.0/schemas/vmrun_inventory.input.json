@@ -1,0 +1,14 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Inventory options",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "includeRunning": {
+      "type": "boolean",
+      "default": true,
+      "description": "Ask vmrun for running VMs so each entry can carry a running flag"
+    }
+  },
+  "required": []
+}

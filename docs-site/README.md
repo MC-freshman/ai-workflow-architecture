@@ -98,4 +98,4 @@ data/{source-lock,inventory,generated-report,redact-report,conform-report,build-
 - 原文：[操作手册](../versions/架构管理台操作手册-20261008.md)、[报错排查手册](../versions/架构管理台报错排查手册-20261008.md)。
 - 站内：`/docs/quick-start/manager-operations`、`/docs/quick-start/manager-errors`。
 - 日常修改原文后运行 `npm run build`，紧接 `npm run conform`；可分享档用 `npm run build:shareable`，紧接 `npm run conform -- --profile shareable`。最后构建 internal，保留本机当前来源锁与输入。
-- 普通管理台使用者打开 EXE 即可；本站维护命令不属于平台接入步骤。0.7.0 是历史阶段发行；现行管理台为 0.9.0（源码版本；0.9.0 双包已发布，v0.9.0 为 Latest），七平台目录的接入状态以平台接入清单 §8.33 为准。
+- 普通管理台使用者打开 EXE 即可；本站维护命令不属于平台接入步骤。0.7.0 是历史阶段发行；现行管理台为 0.9.1（源码版本；0.9.1 双包已发布，v0.9.1 为 Latest），七平台目录的接入状态以平台接入清单 §8.33 为准。

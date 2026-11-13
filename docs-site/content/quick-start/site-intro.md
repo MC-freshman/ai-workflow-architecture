@@ -78,6 +78,6 @@ node scripts/docs-conform.mjs       # C1…C11 一条命令出 PASS/FAIL 与摘�
 
 ## 七、管理台使用者从哪里开始
 
-先打开 [管理台操作手册（0.7.0 历史版）](/docs/quick-start/manager-operations)；管理台现行版本为 **0.9.0**（双包已发布，v0.9.0 Latest），0.8.x 说明以根仓 README 与更新日志为准，按实际按钮完成选工作区、导入、暂缓/续接、软件会话和平台独立选版。遇到错误打开 [报错排查与恢复](/docs/quick-start/manager-errors)，可搜索错误码及187个界面解释。两页同时收录在 internal 与 shareable。
+先打开 [管理台操作手册（0.7.0 历史版）](/docs/quick-start/manager-operations)；管理台现行版本为 **0.9.1**（双包已发布，v0.9.1 Latest），0.8.x 说明以根仓 README 与更新日志为准，按实际按钮完成选工作区、导入、暂缓/续接、软件会话和平台独立选版。遇到错误打开 [报错排查与恢复](/docs/quick-start/manager-errors)，可搜索错误码及187个界面解释。两页同时收录在 internal 与 shareable。
 
 0.5.0 手册同样保留为历史版。0.8.14 的平台接入状态以 [平台接入清单 §8.33](/docs/architecture/platform-checklist) 为准；厂商原生注册仍按平台逐项验证。配置存在、标准服务回环或网页登录成功都不能代替真实工具回执。站点只同步原文，不替平台执行接入。

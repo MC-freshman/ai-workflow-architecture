@@ -1,0 +1,27 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "title": {
+      "type": "string",
+      "minLength": 1
+    },
+    "root": {
+      "type": "string"
+    },
+    "outline": {},
+    "planId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "confirmToken": {
+      "type": "string",
+      "minLength": 1
+    }
+  },
+  "required": [
+    "title",
+    "planId",
+    "confirmToken"
+  ]
+}

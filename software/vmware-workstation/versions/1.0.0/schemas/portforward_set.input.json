@@ -1,0 +1,48 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Port forward set",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "network": {
+      "type": "string",
+      "minLength": 1
+    },
+    "protocol": {
+      "type": "string",
+      "enum": [
+        "tcp",
+        "udp"
+      ]
+    },
+    "hostPort": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 65535
+    },
+    "guestIp": {
+      "type": "string",
+      "minLength": 1
+    },
+    "guestPort": {
+      "type": "integer",
+      "minimum": 1,
+      "maximum": 65535
+    },
+    "description": {
+      "type": "string"
+    },
+    "confirm": {
+      "type": "boolean",
+      "description": "Must be true; the server refuses the call before spawning vmrun when it is missing"
+    }
+  },
+  "required": [
+    "network",
+    "protocol",
+    "hostPort",
+    "guestIp",
+    "guestPort",
+    "confirm"
+  ]
+}

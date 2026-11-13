@@ -1,0 +1,14 @@
+{
+  "schema": "ai-software-selftest/v1",
+  "mode": "readonly",
+  "checks": [
+    {
+      "id": "readonly-tool",
+      "capability": "novel_project_info",
+      "arguments": {},
+      "expectedExitCode": 0,
+      "expectedOutputContains": "novel-project-info/v3"
+    }
+  ],
+  "notes": "Read-only only. Write tools require *.plan + confirmToken and are excluded from selftest."
+}

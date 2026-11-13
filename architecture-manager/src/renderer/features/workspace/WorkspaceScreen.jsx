@@ -1,56 +1,20 @@
-import {GlobalUpdatePanel} from '../../panels/global-update.jsx';
 import {TaskProgress} from '../../shared/TaskProgress.jsx';
-import {BodyIntakePanel} from '../../features/intake/BodyIntakePanel.jsx';
 import React, { useEffect, useState } from 'react';
-import {
-  AnchorPanel,
-  AuditPanel,
-  CatalogPanel,
-  ClonePanel,
-  DashboardStats,
-  DocumentPanel,
-  GitPanel,
-  GovernancePanel,
-  HelpPanel,
-  HomePulse,
-  InboxPanel,
-  IntegrationPanel,
-  OnboardPanel,
-  PlanCenterPanel,
-  PlanPreview,
-  PlatformPanel,
-  ReleasePanel,
-  ResourcePanel,
-  RunsPanel,
-  SafetyPanel,
-  SoftwarePanel
-} from '../../components.jsx';
+import { PlanPreview } from '../../panels/plan-preview.jsx';
 import { friendlyError, PLAN_WRITE_KINDS } from '../../presenter.mjs';
+import registry from '../../../app/module-registry.json';
+import { ViewRenderer } from './ViewRenderer.jsx';
 
 
-const NAV_GROUPS = [
-  { label: '总览', ids: ['dashboard'] },
-  { label: '资源与软件', ids: ['resources', 'intake', 'software'] },
-  { label: '平台', ids: ['platform'] },
-  { label: '运行与治理', ids: ['runs', 'governance', 'audit', 'inbox'] },
-  { label: '文档与仓库', ids: ['documents', 'git'] },
-  { label: '帮助', ids: ['safety'] },
-];
+// Navigation groups and view metadata are registry-driven (P3, approved P-table 20261111).
+const NAV_GROUPS = registry.views.reduce((groups, view) => {
+  let group = groups.find((entry) => entry.label === view.group);
+  if (!group) { group = { label: view.group, ids: [] }; groups.push(group); }
+  group.ids.push(view.id);
+  return groups;
+}, []);
 
-const VIEW_META = {
-  dashboard: '工作区总览：平台、共享仓、文档、Git 与计划进度。',
-  resources: '三仓资源、版本切换、发布与目录管理。',
-  intake: '把平台、专家、技能、工作流或软件本体导入并登记。',
-  platform: '平台接入、环境、provider、能力实测与版本对齐。',
-  runs: '只读查看各平台 run 台账与终态。',
-  governance: '缺陷状态簿、机检与治理登记。',
-  documents: '更新日志、计划与说明文档的读取和编辑。',
-  audit: '本机管理台审计历史与完整性检查。',
-  inbox: 'backup / archive / trash 三区只读盘点。',
-  software: '软件配方、连接器、健康检查与导入。',
-  git: '提交、分支、标签、备份、快照与回滚计划。',
-  safety: '安全边界与新手操作说明。',
-};
+const VIEW_META = Object.fromEntries(registry.views.map((view) => [view.id, view.description]));
 
 export function WorkspaceScreen(model) {
   const {workspace,setWorkspace,workspaceSession,inventory,setInventory,busy,setBusy,message,setMessage,recordProgress,api,planPreview,setPlanPreview,planPayload,setPlanPayload,appVersion,setAppVersion,transactionProgress,setTransactionProgress,showExcluded,setShowExcluded,selectedDocument,setSelectedDocument,documentDraft,setDocumentDraft,sensitiveConfirmed,setSensitiveConfirmed,softwareResults,setSoftwareResults,gitDetails,setGitDetails,sensitiveScan,setSensitiveScan,catalogDetail,setCatalogDetail,catalogFilter,setCatalogFilter,documentFilter,setDocumentFilter,skillDetail,setSkillDetail,skillFilter,setSkillFilter,resourceFilter,setResourceFilter,targetVersions,setTargetVersions,integrationKind,setIntegrationKind,integrationTargetId,setIntegrationTargetId,integrationMode,setIntegrationMode,integrationPaths,setIntegrationPaths,integrationPath,setIntegrationPath,integrationTarget,setIntegrationTarget,integrationText,setIntegrationText,integrationTargetVersion,setIntegrationTargetVersion,platformSuggestion,setPlatformSuggestion,dark,setDark,view,setView,VIEWS,activeView,scan,refreshGit,gitState,resources,documentSummaries,visibleDocuments,software,agents,skills,integrationOptions,reloadIntegrationTarget,previewIntegration,previewPlatform,checkPlatform,addPlatformDirectory,openCatalog,previewRegistryAction,previewResource,openDocument,previewDocument,checkSoftware,previewSoftware,previewSoftwareImport,previewSoftwareRecipe,previewSoftwareLocation,previewSoftwareConnectorLaunch,previewSoftwareRevert,previewGit,executePlan,inspectAnchor,previewAnchor,previewAnchorAlignment,anchorReport,friendlyError,PLAN_WRITE_KINDS}=model;
@@ -103,38 +67,9 @@ export function WorkspaceScreen(model) {
   };
   const activeMeta = VIEWS.find((item) => item.id === activeView) || VIEWS[0];
 
-const renderView = (active) => {
-    switch (active) {
-      case 'dashboard': return <>
-        <DashboardStats inventory={inventory} gitState={gitState} />
-        <HomePulse api={api} workspace={workspace} />
-        <PlanCenterPanel api={api} workspace={workspace} onOpenDocument={path=>{setView('documents');openDocument(path);}} />
-      </>;
-      case 'resources': return <>
-        <ResourcePanel api={api} workspace={workspace} inventory={inventory} resources={resources} resourceFilter={resourceFilter} setResourceFilter={setResourceFilter} targetVersions={targetVersions} setTargetVersions={setTargetVersions} previewResource={previewResource} setPlanPreview={setPlanPreview} setPlanPayload={setPlanPayload} setMessage={setMessage} />
-        <ReleasePanel api={api} workspace={workspace} inventory={inventory} resources={resources} setPlanPreview={setPlanPreview} setPlanPayload={setPlanPayload} setMessage={setMessage} friendlyError={friendlyError} />
-        <CatalogPanel api={api} workspace={workspace} inventory={inventory} catalogFilter={catalogFilter} setCatalogFilter={setCatalogFilter} agents={agents} skills={skills} skillFilter={skillFilter} setSkillFilter={setSkillFilter} catalogDetail={catalogDetail} setCatalogDetail={setCatalogDetail} skillDetail={skillDetail} setSkillDetail={setSkillDetail} openCatalog={openCatalog} previewRegistryAction={previewRegistryAction} friendlyError={friendlyError} setMessage={setMessage} setPlanPreview={setPlanPreview} setPlanPayload={setPlanPayload} />
-      </>;
-      case 'intake': return <BodyIntakePanel key={workspaceSession} api={api} workspace={workspace} inventory={inventory} setMessage={setMessage} setPlanPreview={setPlanPreview} setPlanPayload={setPlanPayload} />;
-      case 'platform': return <>
-        {!workspace && <ClonePanel api={api} onCloned={(root) => scan(root)} setMessage={setMessage} friendlyError={friendlyError} />}
-        <GlobalUpdatePanel api={api} workspace={workspace} inventory={inventory} busy={busy} setPlanPreview={setPlanPreview} setPlanPayload={setPlanPayload} setMessage={setMessage} />
-        <OnboardPanel api={api} workspace={workspace} inventory={inventory} busy={busy} setPlanPreview={setPlanPreview} setPlanPayload={setPlanPayload} setMessage={setMessage} friendlyError={friendlyError} />
-        <AnchorPanel api={api} workspace={workspace} report={anchorReport} inspectAnchor={inspectAnchor} previewAnchor={previewAnchor} previewAnchorAlignment={previewAnchorAlignment} busy={busy} />
-        <PlatformPanel inventory={inventory} showExcluded={showExcluded} setShowExcluded={setShowExcluded} addPlatformDirectory={addPlatformDirectory} previewPlatform={previewPlatform} checkPlatform={checkPlatform} busy={busy} />
-        <IntegrationPanel api={api} workspace={workspace} resources={resources} integrationKind={integrationKind} setIntegrationKind={setIntegrationKind} integrationOptions={integrationOptions} integrationTargetId={integrationTargetId} setIntegrationTargetId={setIntegrationTargetId} integrationMode={integrationMode} setIntegrationMode={setIntegrationMode} integrationPaths={integrationPaths} integrationPath={integrationPath} setIntegrationPath={setIntegrationPath} integrationTarget={integrationTarget} setIntegrationTarget={setIntegrationTarget} integrationText={integrationText} setIntegrationText={setIntegrationText} integrationTargetVersion={integrationTargetVersion} setIntegrationTargetVersion={setIntegrationTargetVersion} platformSuggestion={platformSuggestion} reloadIntegrationTarget={reloadIntegrationTarget} previewIntegration={previewIntegration} friendlyError={friendlyError} setMessage={setMessage} />
-      </>;
-      case 'runs': return <RunsPanel api={api} workspace={workspace} />;
-      case 'governance': return <GovernancePanel api={api} workspace={workspace} setPlanPreview={setPlanPreview} setPlanPayload={setPlanPayload} setMessage={setMessage} friendlyError={friendlyError} />;
-      case 'documents': return <DocumentPanel api={api} workspace={workspace} documentSummaries={documentSummaries} visibleDocuments={visibleDocuments} documentFilter={documentFilter} setDocumentFilter={setDocumentFilter} selectedDocument={selectedDocument} documentDraft={documentDraft} setDocumentDraft={setDocumentDraft} sensitiveConfirmed={sensitiveConfirmed} setSensitiveConfirmed={setSensitiveConfirmed} openDocument={openDocument} previewDocument={previewDocument} setMessage={setMessage} friendlyError={friendlyError} />;
-      case 'audit': return <AuditPanel api={api} workspace={workspace} />;
-      case 'inbox': return <InboxPanel api={api} workspace={workspace} />;
-      case 'software': return <SoftwarePanel api={api} workspace={workspace} inventory={inventory} software={software} softwareResults={softwareResults} checkSoftware={checkSoftware} previewSoftwareLocation={previewSoftwareLocation} previewSoftware={previewSoftware} previewSoftwareImport={previewSoftwareImport} previewSoftwareRecipe={previewSoftwareRecipe} previewSoftwareRevert={previewSoftwareRevert} previewSoftwareConnectorLaunch={previewSoftwareConnectorLaunch} setMessage={setMessage} setPlanPreview={setPlanPreview} setPlanPayload={setPlanPayload} />;
-      case 'git': return <GitPanel gitDetails={gitDetails} workspace={workspace} refreshGit={refreshGit} previewGit={previewGit} sensitiveScan={sensitiveScan} platforms={inventory?.platforms} />;
-      case 'safety': return <><SafetyPanel /><HelpPanel /></>;
-      default: return null;
-    }
-  };
+// View composition is registry-driven (P3): panels, sections, enabled/replacement state
+// come from module-registry.json; lazy loaders live in panel-loaders.mjs.
+const renderView = (active) => <ViewRenderer viewId={active} model={model} />;
 return (
     <main className="app-shell">
       <header className="topbar">

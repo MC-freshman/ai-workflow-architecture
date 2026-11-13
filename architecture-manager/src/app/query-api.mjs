@@ -17,10 +17,11 @@ export { inspectPlatformConnection,previewPlatformCheck } from '../domains/platf
 export { verifySoftwareImport } from '../domains/software/software-intake.mjs';
 export { listSoftwareIntakes, verifySoftwareRecipe } from '../domains/software/software-publish.mjs';
 export { listSoftwareRecoveries } from '../domains/software/software-recovery.mjs';
-export { inspectRunDirectory, listPlatformRuns, listRunLedger } from '../domains/runs/runs.mjs';
+export { inspectRunDirectory, listPlatformRuns, listRunLedger, inspectRunTimeline } from '../domains/runs/runs.mjs';
 export { readDefectBook, verifyDefectBook } from '../domains/audit/defects.mjs';
 export { inspectInbox } from '../domains/intake/inbox.mjs';
 export { readAuditEvents } from '../domains/audit/audit.mjs';
+export { readGateCockpit } from '../domains/audit/cockpit.mjs';
 export { listResourceReferences, readRegistryBaseline } from '../domains/intake/releases.mjs';
 export { parseImplementationTables } from '../domains/plans/plans-center.mjs';
 export { diffDocument } from '../domains/docs/docs-ops.mjs';

@@ -1,0 +1,47 @@
+{
+  "schema": "ai-software-recipe/v1",
+  "platform": "windows",
+  "softwareId": "vmware-workstation",
+  "softwareVersion": "1.0.0",
+  "acquire": {
+    "kind": "local-install",
+    "source": "Local installation at D:\\VMwareVMware (VMware Workstation 17.5.2, build 23775571)",
+    "version": "17.5.2",
+    "license": "Commercial (Broadcom VMware Workstation Pro)",
+    "redistributable": false,
+    "packageManager": null,
+    "notes": "The Workstation body is not redistributed and never enters this repository (BP-1). This recipe locates and verifies the existing install."
+  },
+  "install": {
+    "location": "${platformRuntime}/software/vmware-workstation",
+    "detectedPath": "D:\\VMwareVMware",
+    "stepsRef": null,
+    "notes": "No install step is performed for this release: the body is already present at detectedPath. The platform runtime location is reserved for a future self-contained copy."
+  },
+  "launch": {
+    "kind": "mcp-stdio",
+    "entrypoint": "src/server.mjs",
+    "interpreter": "node",
+    "environment": {
+      "VMRUN_PATH": "${detectedPath}\\vmrun.exe",
+      "VMWARE_VMX_ROOTS": "${detectedPath}",
+      "VMWARE_WORKSPACE_ROOT": "${platformRuntime}/workspaces"
+    },
+    "pathDependencies": [],
+    "notes": "Node 24 zero-dependency stdio server. The platform substitutes detectedPath/platformRuntime; shared code carries no absolute install path."
+  },
+  "verify": {
+    "versionCall": [
+      "D:\\VMwareVMware\\vmrun.exe"
+    ],
+    "expectedVersionOutput": "vmrun version 1.17.0",
+    "selftestRef": "../selftest/readonly.json",
+    "files": [
+      {
+        "path": "D:\\VMwareVMware\\vmrun.exe",
+        "role": "vmrun command-line controller",
+        "sha256": "2b1ee3c5210105e876122970bd8555ada2481bc0ece237a180009ba04d4b8bf4"
+      }
+    ]
+  }
+}

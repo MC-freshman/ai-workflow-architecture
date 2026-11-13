@@ -1,0 +1,37 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Clone VM",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "vmPath": {
+      "type": "string",
+      "description": "Absolute path to a .vmx file inside VMWARE_VMX_ROOTS"
+    },
+    "destVmx": {
+      "type": "string",
+      "description": "New .vmx path inside VMWARE_VMX_ROOTS"
+    },
+    "type": {
+      "type": "string",
+      "enum": [
+        "full",
+        "linked"
+      ],
+      "default": "full"
+    },
+    "snapshotName": {
+      "type": "string",
+      "description": "Snapshot to clone from; required for linked clones"
+    },
+    "confirm": {
+      "type": "boolean",
+      "description": "Must be true; the server refuses the call before spawning vmrun when it is missing"
+    }
+  },
+  "required": [
+    "vmPath",
+    "destVmx",
+    "confirm"
+  ]
+}

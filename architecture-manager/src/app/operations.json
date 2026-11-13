@@ -316,6 +316,14 @@
       "channel": "runs:ledger",
       "phase": "query"
     },
+    "getRunDetail": {
+      "channel": "runs:detail",
+      "phase": "query"
+    },
+    "getGateCockpit": {
+      "channel": "gate:cockpit",
+      "phase": "query"
+    },
     "readDefectBook": {
       "channel": "defects:read",
       "phase": "query",

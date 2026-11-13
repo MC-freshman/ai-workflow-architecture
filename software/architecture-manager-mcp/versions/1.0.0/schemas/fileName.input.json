@@ -1,0 +1,13 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "fileName": {
+      "type": "string",
+      "minLength": 1
+    }
+  },
+  "required": [
+    "fileName"
+  ]
+}

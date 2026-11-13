@@ -1,0 +1,26 @@
+{
+  "schema": "ai-software-source/v1",
+  "authorSession": "workbuddy",
+  "derivedFrom": "v3.0.0. Extends 1.0.0 (unchanged); injected layer uses runtime-provided ARCH_MANAGER_ROOT, never bundled source.",
+  "supersedes": "3.0.0",
+  "releaseScope": "Full headless takeover of architecture governance state: 10 core reads, explicit-whitelist injected domain calls, and confirmed write tools.",
+  "changes": [
+    "v2.0.0: 20 tools (core reads + explicit-whitelist injected calls + confirmed writes)",
+    "src/server.mjs + lib/{redact,confirm,guard,handlers}.mjs",
+    "stdout isolation during injected-module preload (default-command.mjs excluded from whitelist)",
+    "manifest + frozen snapshot + 7 schemas + recipe + selftest"
+  ],
+  "unchanged": [
+    "1.0.0 release bytes are untouched",
+    "No third-party source or binary is bundled into this repository"
+  ],
+  "openDeferred": [
+    "Platform-side nativeMcpServers registration stays a per-platform decision (BP-2, D-60)",
+    "GUI automation, cloud model calls, git push and release publishing are out of scope by red line"
+  ],
+  "releaseStatus": "published",
+  "publishedAt": "2026-11-08",
+  "publishedBy": "workbuddy session (user-approved P table)",
+  "pointerPolicy": "architecture-manager-mcp/current.json switches to 2.0.0; available lists 1.0.0 and 2.0.0",
+  "version": "3.0.0"
+}

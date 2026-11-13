@@ -1,0 +1,23 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Start VM",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "vmPath": {
+      "type": "string",
+      "description": "Absolute path to a .vmx file inside VMWARE_VMX_ROOTS"
+    },
+    "mode": {
+      "type": "string",
+      "enum": [
+        "gui",
+        "nogui"
+      ],
+      "default": "nogui"
+    }
+  },
+  "required": [
+    "vmPath"
+  ]
+}

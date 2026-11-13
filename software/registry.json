@@ -49,6 +49,30 @@
    "kind": "cli-wrapper",
    "invocable": false,
    "transports": []
+  },
+  {
+   "id": "vmware-workstation",
+   "current": "vmware-workstation/current.json",
+   "enabled": true,
+   "kind": "mcp-stdio",
+   "invocable": false,
+   "transports": []
+  },
+  {
+   "id": "architecture-manager-mcp",
+   "current": "architecture-manager-mcp/current.json",
+   "enabled": true,
+   "kind": "mcp-stdio",
+   "invocable": false,
+   "transports": []
+  },
+  {
+   "id": "ai-novel-platform-mcp",
+   "current": "ai-novel-platform-mcp/current.json",
+   "enabled": true,
+   "kind": "mcp-stdio",
+   "invocable": false,
+   "transports": []
   }
  ],
  "compatibility": {
@@ -65,7 +89,10 @@
      "software/mysql-cli/current.json",
      "software/nmap/current.json",
      "software/veracrypt/current.json",
-     "software/wireshark-cli/current.json"
+     "software/wireshark-cli/current.json",
+     "software/vmware-workstation/current.json",
+     "software/architecture-manager-mcp/current.json",
+     "software/ai-novel-platform-mcp/current.json"
     ]
    },
    "registryCarriesVersion": {

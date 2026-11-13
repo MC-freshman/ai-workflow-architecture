@@ -1,0 +1,27 @@
+{
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "filePath": {
+      "type": "string",
+      "minLength": 1
+    },
+    "sheetIndex": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "planId": {
+      "type": "string",
+      "minLength": 1
+    },
+    "confirmToken": {
+      "type": "string",
+      "minLength": 1
+    }
+  },
+  "required": [
+    "filePath",
+    "planId",
+    "confirmToken"
+  ]
+}

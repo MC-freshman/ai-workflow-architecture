@@ -1,0 +1,11 @@
+{
+ "schema": "ai-software-pointer/v1",
+ "id": "architecture-manager-mcp",
+ "version": "3.0.0",
+ "available": [
+  "1.0.0",
+  "2.0.0",
+  "3.0.0"
+ ],
+ "hashManifest": "SHA256SUMS"
+}

@@ -1,0 +1,716 @@
+{
+  "schema": "ai-software-capability-snapshot/v1",
+  "softwareId": "ai-novel-platform-mcp",
+  "softwareVersion": "2.0.0",
+  "upstreamVersion": "0.3.9",
+  "generatedAt": "2026-11-08T00:00:00Z",
+  "generationMethod": "Static declaration of 20 fixed tools; injected functions are preloaded from an explicit whitelist at runtime.",
+  "runtime": {
+    "protocolVersion": "2025-06-18",
+    "tools": [
+      {
+        "name": "novel_project_info",
+        "inputSchemaRef": "schemas/empty.input.json"
+      },
+      {
+        "name": "novel_chapter_list",
+        "inputSchemaRef": "schemas/empty.input.json"
+      },
+      {
+        "name": "novel_chapter_read",
+        "inputSchemaRef": "schemas/fileName.input.json"
+      },
+      {
+        "name": "novel_character_list",
+        "inputSchemaRef": "schemas/empty.input.json"
+      },
+      {
+        "name": "novel_world_list",
+        "inputSchemaRef": "schemas/empty.input.json"
+      },
+      {
+        "name": "novel_knowledge_status",
+        "inputSchemaRef": "schemas/empty.input.json"
+      },
+      {
+        "name": "novel_analysis_state",
+        "inputSchemaRef": "schemas/empty.input.json"
+      },
+      {
+        "name": "novel_project_tree",
+        "inputSchemaRef": "schemas/empty.input.json"
+      },
+      {
+        "name": "novel_config_keys",
+        "inputSchemaRef": "schemas/empty.input.json"
+      },
+      {
+        "name": "novel_capabilities",
+        "inputSchemaRef": "schemas/empty.input.json"
+      },
+      {
+        "name": "novel_call",
+        "inputSchemaRef": "schemas/call.input.json"
+      },
+      {
+        "name": "novel_state",
+        "inputSchemaRef": "schemas/empty.input.json"
+      },
+      {
+        "name": "novel_knowledge_search",
+        "inputSchemaRef": "schemas/empty.input.json"
+      },
+      {
+        "name": "novel_analysis_timeline",
+        "inputSchemaRef": "schemas/empty.input.json"
+      },
+      {
+        "name": "novel_analysis_consistency",
+        "inputSchemaRef": "schemas/empty.input.json"
+      },
+      {
+        "name": "novel_story_overview",
+        "inputSchemaRef": "schemas/empty.input.json"
+      },
+      {
+        "name": "novel_plan",
+        "inputSchemaRef": "schemas/plan.input.json"
+      },
+      {
+        "name": "novel_chapter_write",
+        "inputSchemaRef": "schemas/confirm.input.json"
+      },
+      {
+        "name": "novel_backup_create",
+        "inputSchemaRef": "schemas/confirm.input.json"
+      },
+      {
+        "name": "novel_knowledge_rebuild",
+        "inputSchemaRef": "schemas/confirm.input.json"
+      }
+    ]
+  },
+  "capabilities": [
+    {
+      "name": "novel_project_info",
+      "nativeName": "novel.project.info",
+      "inputSchemaRef": "schemas/empty.input.json",
+      "outputSchemaRef": "schemas/result.output.json",
+      "sideEffects": "none",
+      "permissionRequests": {
+        "filesystem": "read",
+        "network": "loopback",
+        "process": "children",
+        "credentials": "none"
+      },
+      "consent": "auto",
+      "idempotent": true,
+      "safeForSelftest": true,
+      "invocation": {
+        "transport": "mcp-stdio",
+        "endpoint": "src/server.mjs",
+        "mcpMethod": "tools/call",
+        "toolNameParam": "params.name",
+        "argumentsParam": "params.arguments",
+        "frozenToolName": "novel_project_info",
+        "timeout": 30,
+        "notes": "Explicit whitelist only; no shell and no arbitrary function passthrough."
+      },
+      "frozen": true,
+      "observation": {
+        "definitionObserved": true,
+        "functionExecuted": false
+      }
+    },
+    {
+      "name": "novel_chapter_list",
+      "nativeName": "novel.chapter.list",
+      "inputSchemaRef": "schemas/empty.input.json",
+      "outputSchemaRef": "schemas/result.output.json",
+      "sideEffects": "none",
+      "permissionRequests": {
+        "filesystem": "read",
+        "network": "loopback",
+        "process": "children",
+        "credentials": "none"
+      },
+      "consent": "auto",
+      "idempotent": true,
+      "safeForSelftest": true,
+      "invocation": {
+        "transport": "mcp-stdio",
+        "endpoint": "src/server.mjs",
+        "mcpMethod": "tools/call",
+        "toolNameParam": "params.name",
+        "argumentsParam": "params.arguments",
+        "frozenToolName": "novel_chapter_list",
+        "timeout": 30,
+        "notes": "Explicit whitelist only; no shell and no arbitrary function passthrough."
+      },
+      "frozen": true,
+      "observation": {
+        "definitionObserved": true,
+        "functionExecuted": false
+      }
+    },
+    {
+      "name": "novel_chapter_read",
+      "nativeName": "novel.chapter.read",
+      "inputSchemaRef": "schemas/fileName.input.json",
+      "outputSchemaRef": "schemas/result.output.json",
+      "sideEffects": "none",
+      "permissionRequests": {
+        "filesystem": "read",
+        "network": "loopback",
+        "process": "children",
+        "credentials": "none"
+      },
+      "consent": "auto",
+      "idempotent": true,
+      "safeForSelftest": true,
+      "invocation": {
+        "transport": "mcp-stdio",
+        "endpoint": "src/server.mjs",
+        "mcpMethod": "tools/call",
+        "toolNameParam": "params.name",
+        "argumentsParam": "params.arguments",
+        "frozenToolName": "novel_chapter_read",
+        "timeout": 30,
+        "notes": "Explicit whitelist only; no shell and no arbitrary function passthrough."
+      },
+      "frozen": true,
+      "observation": {
+        "definitionObserved": true,
+        "functionExecuted": false
+      }
+    },
+    {
+      "name": "novel_character_list",
+      "nativeName": "novel.character.list",
+      "inputSchemaRef": "schemas/empty.input.json",
+      "outputSchemaRef": "schemas/result.output.json",
+      "sideEffects": "none",
+      "permissionRequests": {
+        "filesystem": "read",
+        "network": "loopback",
+        "process": "children",
+        "credentials": "none"
+      },
+      "consent": "auto",
+      "idempotent": true,
+      "safeForSelftest": true,
+      "invocation": {
+        "transport": "mcp-stdio",
+        "endpoint": "src/server.mjs",
+        "mcpMethod": "tools/call",
+        "toolNameParam": "params.name",
+        "argumentsParam": "params.arguments",
+        "frozenToolName": "novel_character_list",
+        "timeout": 30,
+        "notes": "Explicit whitelist only; no shell and no arbitrary function passthrough."
+      },
+      "frozen": true,
+      "observation": {
+        "definitionObserved": true,
+        "functionExecuted": false
+      }
+    },
+    {
+      "name": "novel_world_list",
+      "nativeName": "novel.world.list",
+      "inputSchemaRef": "schemas/empty.input.json",
+      "outputSchemaRef": "schemas/result.output.json",
+      "sideEffects": "none",
+      "permissionRequests": {
+        "filesystem": "read",
+        "network": "loopback",
+        "process": "children",
+        "credentials": "none"
+      },
+      "consent": "auto",
+      "idempotent": true,
+      "safeForSelftest": true,
+      "invocation": {
+        "transport": "mcp-stdio",
+        "endpoint": "src/server.mjs",
+        "mcpMethod": "tools/call",
+        "toolNameParam": "params.name",
+        "argumentsParam": "params.arguments",
+        "frozenToolName": "novel_world_list",
+        "timeout": 30,
+        "notes": "Explicit whitelist only; no shell and no arbitrary function passthrough."
+      },
+      "frozen": true,
+      "observation": {
+        "definitionObserved": true,
+        "functionExecuted": false
+      }
+    },
+    {
+      "name": "novel_knowledge_status",
+      "nativeName": "novel.knowledge.status",
+      "inputSchemaRef": "schemas/empty.input.json",
+      "outputSchemaRef": "schemas/result.output.json",
+      "sideEffects": "none",
+      "permissionRequests": {
+        "filesystem": "read",
+        "network": "loopback",
+        "process": "children",
+        "credentials": "none"
+      },
+      "consent": "auto",
+      "idempotent": true,
+      "safeForSelftest": true,
+      "invocation": {
+        "transport": "mcp-stdio",
+        "endpoint": "src/server.mjs",
+        "mcpMethod": "tools/call",
+        "toolNameParam": "params.name",
+        "argumentsParam": "params.arguments",
+        "frozenToolName": "novel_knowledge_status",
+        "timeout": 30,
+        "notes": "Explicit whitelist only; no shell and no arbitrary function passthrough."
+      },
+      "frozen": true,
+      "observation": {
+        "definitionObserved": true,
+        "functionExecuted": false
+      }
+    },
+    {
+      "name": "novel_analysis_state",
+      "nativeName": "novel.analysis.state",
+      "inputSchemaRef": "schemas/empty.input.json",
+      "outputSchemaRef": "schemas/result.output.json",
+      "sideEffects": "none",
+      "permissionRequests": {
+        "filesystem": "read",
+        "network": "loopback",
+        "process": "children",
+        "credentials": "none"
+      },
+      "consent": "auto",
+      "idempotent": true,
+      "safeForSelftest": true,
+      "invocation": {
+        "transport": "mcp-stdio",
+        "endpoint": "src/server.mjs",
+        "mcpMethod": "tools/call",
+        "toolNameParam": "params.name",
+        "argumentsParam": "params.arguments",
+        "frozenToolName": "novel_analysis_state",
+        "timeout": 30,
+        "notes": "Explicit whitelist only; no shell and no arbitrary function passthrough."
+      },
+      "frozen": true,
+      "observation": {
+        "definitionObserved": true,
+        "functionExecuted": false
+      }
+    },
+    {
+      "name": "novel_project_tree",
+      "nativeName": "novel.project.tree",
+      "inputSchemaRef": "schemas/empty.input.json",
+      "outputSchemaRef": "schemas/result.output.json",
+      "sideEffects": "none",
+      "permissionRequests": {
+        "filesystem": "read",
+        "network": "loopback",
+        "process": "children",
+        "credentials": "none"
+      },
+      "consent": "auto",
+      "idempotent": true,
+      "safeForSelftest": true,
+      "invocation": {
+        "transport": "mcp-stdio",
+        "endpoint": "src/server.mjs",
+        "mcpMethod": "tools/call",
+        "toolNameParam": "params.name",
+        "argumentsParam": "params.arguments",
+        "frozenToolName": "novel_project_tree",
+        "timeout": 30,
+        "notes": "Explicit whitelist only; no shell and no arbitrary function passthrough."
+      },
+      "frozen": true,
+      "observation": {
+        "definitionObserved": true,
+        "functionExecuted": false
+      }
+    },
+    {
+      "name": "novel_config_keys",
+      "nativeName": "novel.config.keys",
+      "inputSchemaRef": "schemas/empty.input.json",
+      "outputSchemaRef": "schemas/result.output.json",
+      "sideEffects": "none",
+      "permissionRequests": {
+        "filesystem": "read",
+        "network": "loopback",
+        "process": "children",
+        "credentials": "none"
+      },
+      "consent": "auto",
+      "idempotent": true,
+      "safeForSelftest": true,
+      "invocation": {
+        "transport": "mcp-stdio",
+        "endpoint": "src/server.mjs",
+        "mcpMethod": "tools/call",
+        "toolNameParam": "params.name",
+        "argumentsParam": "params.arguments",
+        "frozenToolName": "novel_config_keys",
+        "timeout": 30,
+        "notes": "Explicit whitelist only; no shell and no arbitrary function passthrough."
+      },
+      "frozen": true,
+      "observation": {
+        "definitionObserved": true,
+        "functionExecuted": false
+      }
+    },
+    {
+      "name": "novel_capabilities",
+      "nativeName": "novel.capabilities",
+      "inputSchemaRef": "schemas/empty.input.json",
+      "outputSchemaRef": "schemas/result.output.json",
+      "sideEffects": "none",
+      "permissionRequests": {
+        "filesystem": "read",
+        "network": "loopback",
+        "process": "children",
+        "credentials": "none"
+      },
+      "consent": "auto",
+      "idempotent": true,
+      "safeForSelftest": true,
+      "invocation": {
+        "transport": "mcp-stdio",
+        "endpoint": "src/server.mjs",
+        "mcpMethod": "tools/call",
+        "toolNameParam": "params.name",
+        "argumentsParam": "params.arguments",
+        "frozenToolName": "novel_capabilities",
+        "timeout": 30,
+        "notes": "Explicit whitelist only; no shell and no arbitrary function passthrough."
+      },
+      "frozen": true,
+      "observation": {
+        "definitionObserved": true,
+        "functionExecuted": false
+      }
+    },
+    {
+      "name": "novel_call",
+      "nativeName": "novel.call",
+      "inputSchemaRef": "schemas/call.input.json",
+      "outputSchemaRef": "schemas/result.output.json",
+      "sideEffects": "none",
+      "permissionRequests": {
+        "filesystem": "read",
+        "network": "loopback",
+        "process": "children",
+        "credentials": "none"
+      },
+      "consent": "auto",
+      "idempotent": true,
+      "safeForSelftest": true,
+      "invocation": {
+        "transport": "mcp-stdio",
+        "endpoint": "src/server.mjs",
+        "mcpMethod": "tools/call",
+        "toolNameParam": "params.name",
+        "argumentsParam": "params.arguments",
+        "frozenToolName": "novel_call",
+        "timeout": 30,
+        "notes": "Explicit whitelist only; no shell and no arbitrary function passthrough."
+      },
+      "frozen": true,
+      "observation": {
+        "definitionObserved": true,
+        "functionExecuted": false
+      }
+    },
+    {
+      "name": "novel_state",
+      "nativeName": "novel.state",
+      "inputSchemaRef": "schemas/empty.input.json",
+      "outputSchemaRef": "schemas/result.output.json",
+      "sideEffects": "none",
+      "permissionRequests": {
+        "filesystem": "read",
+        "network": "loopback",
+        "process": "children",
+        "credentials": "none"
+      },
+      "consent": "auto",
+      "idempotent": true,
+      "safeForSelftest": true,
+      "invocation": {
+        "transport": "mcp-stdio",
+        "endpoint": "src/server.mjs",
+        "mcpMethod": "tools/call",
+        "toolNameParam": "params.name",
+        "argumentsParam": "params.arguments",
+        "frozenToolName": "novel_state",
+        "timeout": 30,
+        "notes": "Explicit whitelist only; no shell and no arbitrary function passthrough."
+      },
+      "frozen": true,
+      "observation": {
+        "definitionObserved": true,
+        "functionExecuted": false
+      }
+    },
+    {
+      "name": "novel_knowledge_search",
+      "nativeName": "novel.knowledge.search",
+      "inputSchemaRef": "schemas/empty.input.json",
+      "outputSchemaRef": "schemas/result.output.json",
+      "sideEffects": "none",
+      "permissionRequests": {
+        "filesystem": "read",
+        "network": "loopback",
+        "process": "children",
+        "credentials": "none"
+      },
+      "consent": "auto",
+      "idempotent": true,
+      "safeForSelftest": true,
+      "invocation": {
+        "transport": "mcp-stdio",
+        "endpoint": "src/server.mjs",
+        "mcpMethod": "tools/call",
+        "toolNameParam": "params.name",
+        "argumentsParam": "params.arguments",
+        "frozenToolName": "novel_knowledge_search",
+        "timeout": 30,
+        "notes": "Explicit whitelist only; no shell and no arbitrary function passthrough."
+      },
+      "frozen": true,
+      "observation": {
+        "definitionObserved": true,
+        "functionExecuted": false
+      }
+    },
+    {
+      "name": "novel_analysis_timeline",
+      "nativeName": "novel.analysis.timeline",
+      "inputSchemaRef": "schemas/empty.input.json",
+      "outputSchemaRef": "schemas/result.output.json",
+      "sideEffects": "none",
+      "permissionRequests": {
+        "filesystem": "read",
+        "network": "loopback",
+        "process": "children",
+        "credentials": "none"
+      },
+      "consent": "auto",
+      "idempotent": true,
+      "safeForSelftest": true,
+      "invocation": {
+        "transport": "mcp-stdio",
+        "endpoint": "src/server.mjs",
+        "mcpMethod": "tools/call",
+        "toolNameParam": "params.name",
+        "argumentsParam": "params.arguments",
+        "frozenToolName": "novel_analysis_timeline",
+        "timeout": 30,
+        "notes": "Explicit whitelist only; no shell and no arbitrary function passthrough."
+      },
+      "frozen": true,
+      "observation": {
+        "definitionObserved": true,
+        "functionExecuted": false
+      }
+    },
+    {
+      "name": "novel_analysis_consistency",
+      "nativeName": "novel.analysis.consistency",
+      "inputSchemaRef": "schemas/empty.input.json",
+      "outputSchemaRef": "schemas/result.output.json",
+      "sideEffects": "none",
+      "permissionRequests": {
+        "filesystem": "read",
+        "network": "loopback",
+        "process": "children",
+        "credentials": "none"
+      },
+      "consent": "auto",
+      "idempotent": true,
+      "safeForSelftest": true,
+      "invocation": {
+        "transport": "mcp-stdio",
+        "endpoint": "src/server.mjs",
+        "mcpMethod": "tools/call",
+        "toolNameParam": "params.name",
+        "argumentsParam": "params.arguments",
+        "frozenToolName": "novel_analysis_consistency",
+        "timeout": 30,
+        "notes": "Explicit whitelist only; no shell and no arbitrary function passthrough."
+      },
+      "frozen": true,
+      "observation": {
+        "definitionObserved": true,
+        "functionExecuted": false
+      }
+    },
+    {
+      "name": "novel_story_overview",
+      "nativeName": "novel.story.overview",
+      "inputSchemaRef": "schemas/empty.input.json",
+      "outputSchemaRef": "schemas/result.output.json",
+      "sideEffects": "none",
+      "permissionRequests": {
+        "filesystem": "read",
+        "network": "loopback",
+        "process": "children",
+        "credentials": "none"
+      },
+      "consent": "auto",
+      "idempotent": true,
+      "safeForSelftest": true,
+      "invocation": {
+        "transport": "mcp-stdio",
+        "endpoint": "src/server.mjs",
+        "mcpMethod": "tools/call",
+        "toolNameParam": "params.name",
+        "argumentsParam": "params.arguments",
+        "frozenToolName": "novel_story_overview",
+        "timeout": 30,
+        "notes": "Explicit whitelist only; no shell and no arbitrary function passthrough."
+      },
+      "frozen": true,
+      "observation": {
+        "definitionObserved": true,
+        "functionExecuted": false
+      }
+    },
+    {
+      "name": "novel_plan",
+      "nativeName": "novel.plan",
+      "inputSchemaRef": "schemas/plan.input.json",
+      "outputSchemaRef": "schemas/result.output.json",
+      "sideEffects": "none",
+      "permissionRequests": {
+        "filesystem": "read",
+        "network": "loopback",
+        "process": "children",
+        "credentials": "none"
+      },
+      "consent": "auto",
+      "idempotent": true,
+      "safeForSelftest": true,
+      "invocation": {
+        "transport": "mcp-stdio",
+        "endpoint": "src/server.mjs",
+        "mcpMethod": "tools/call",
+        "toolNameParam": "params.name",
+        "argumentsParam": "params.arguments",
+        "frozenToolName": "novel_plan",
+        "timeout": 30,
+        "notes": "Explicit whitelist only; no shell and no arbitrary function passthrough."
+      },
+      "frozen": true,
+      "observation": {
+        "definitionObserved": true,
+        "functionExecuted": false
+      }
+    },
+    {
+      "name": "novel_chapter_write",
+      "nativeName": "novel.chapter.write",
+      "inputSchemaRef": "schemas/confirm.input.json",
+      "outputSchemaRef": "schemas/result.output.json",
+      "sideEffects": "local-write",
+      "permissionRequests": {
+        "filesystem": "read",
+        "network": "loopback",
+        "process": "children",
+        "credentials": "none"
+      },
+      "consent": "confirm-call",
+      "idempotent": false,
+      "safeForSelftest": false,
+      "invocation": {
+        "transport": "mcp-stdio",
+        "endpoint": "src/server.mjs",
+        "mcpMethod": "tools/call",
+        "toolNameParam": "params.name",
+        "argumentsParam": "params.arguments",
+        "frozenToolName": "novel_chapter_write",
+        "timeout": 30,
+        "notes": "Explicit whitelist only; no shell and no arbitrary function passthrough."
+      },
+      "frozen": true,
+      "observation": {
+        "definitionObserved": true,
+        "functionExecuted": false
+      }
+    },
+    {
+      "name": "novel_backup_create",
+      "nativeName": "novel.backup.create",
+      "inputSchemaRef": "schemas/confirm.input.json",
+      "outputSchemaRef": "schemas/result.output.json",
+      "sideEffects": "local-write",
+      "permissionRequests": {
+        "filesystem": "read",
+        "network": "loopback",
+        "process": "children",
+        "credentials": "none"
+      },
+      "consent": "confirm-call",
+      "idempotent": false,
+      "safeForSelftest": false,
+      "invocation": {
+        "transport": "mcp-stdio",
+        "endpoint": "src/server.mjs",
+        "mcpMethod": "tools/call",
+        "toolNameParam": "params.name",
+        "argumentsParam": "params.arguments",
+        "frozenToolName": "novel_backup_create",
+        "timeout": 30,
+        "notes": "Explicit whitelist only; no shell and no arbitrary function passthrough."
+      },
+      "frozen": true,
+      "observation": {
+        "definitionObserved": true,
+        "functionExecuted": false
+      }
+    },
+    {
+      "name": "novel_knowledge_rebuild",
+      "nativeName": "novel.knowledge.rebuild",
+      "inputSchemaRef": "schemas/confirm.input.json",
+      "outputSchemaRef": "schemas/result.output.json",
+      "sideEffects": "local-write",
+      "permissionRequests": {
+        "filesystem": "read",
+        "network": "loopback",
+        "process": "children",
+        "credentials": "none"
+      },
+      "consent": "confirm-call",
+      "idempotent": false,
+      "safeForSelftest": false,
+      "invocation": {
+        "transport": "mcp-stdio",
+        "endpoint": "src/server.mjs",
+        "mcpMethod": "tools/call",
+        "toolNameParam": "params.name",
+        "argumentsParam": "params.arguments",
+        "frozenToolName": "novel_knowledge_rebuild",
+        "timeout": 30,
+        "notes": "Explicit whitelist only; no shell and no arbitrary function passthrough."
+      },
+      "frozen": true,
+      "observation": {
+        "definitionObserved": true,
+        "functionExecuted": false
+      }
+    }
+  ],
+  "frozen": true
+}

@@ -1,0 +1,14 @@
+{
+  "schema": "ai-software-selftest/v1",
+  "mode": "readonly",
+  "checks": [
+    {
+      "id": "readonly-tool",
+      "capability": "novel_project_info",
+      "arguments": {},
+      "expectedExitCode": 0,
+      "expectedOutputContains": "novel-project-info/v3"
+    }
+  ],
+  "notes": "Read-only only. Write tools require *.plan + confirmToken. Injected mindmap/grid reads need NOVEL_APP_ROOT and are therefore excluded from the dependency-free selftest."
+}

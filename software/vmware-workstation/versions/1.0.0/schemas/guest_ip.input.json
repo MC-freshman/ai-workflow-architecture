@@ -1,0 +1,26 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Guest IP",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "vmPath": {
+      "type": "string",
+      "description": "Absolute path to a .vmx file inside VMWARE_VMX_ROOTS"
+    },
+    "wait": {
+      "type": "boolean",
+      "default": false,
+      "description": "Pass -wait and block until VMware Tools reports an address"
+    },
+    "timeoutMs": {
+      "type": "integer",
+      "minimum": 1000,
+      "maximum": 300000,
+      "default": 30000
+    }
+  },
+  "required": [
+    "vmPath"
+  ]
+}

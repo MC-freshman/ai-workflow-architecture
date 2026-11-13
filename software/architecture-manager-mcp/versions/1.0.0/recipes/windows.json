@@ -1,0 +1,37 @@
+{
+  "schema": "ai-software-recipe/v1",
+  "platform": "windows",
+  "softwareId": "architecture-manager-mcp",
+  "softwareVersion": "1.0.0",
+  "acquire": {
+    "kind": "local-install",
+    "source": "Shared recipe; no external body is redistributed.",
+    "version": "1.0.0",
+    "license": "internal",
+    "redistributable": false,
+    "notes": "The MCP server is the recipe itself; no third-party binary enters this repository (BP-1)."
+  },
+  "install": {
+    "location": "${platformRuntime}/software/architecture-manager-mcp",
+    "notes": "Platform substitutes platformRuntime; the shared recipe carries no absolute install path."
+  },
+  "launch": {
+    "kind": "mcp-stdio",
+    "entrypoint": "src/server.mjs",
+    "interpreter": "node",
+    "environment": {
+      "ARCH_WORKSPACE_ROOT": "${workspaceRoot}"
+    },
+    "pathDependencies": [],
+    "notes": "Roots are injected by the platform. Missing roots produce a structured refusal."
+  },
+  "verify": {
+    "versionCall": [
+      "node",
+      "--version"
+    ],
+    "expectedVersionOutput": "v",
+    "selftestRef": "../selftest/readonly.json",
+    "files": []
+  }
+}

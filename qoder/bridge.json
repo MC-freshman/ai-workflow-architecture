@@ -29,5 +29,5 @@
   ],
   "x-note-3-0-q": "3.0-Q Q-P2: the platform default for repo-lint moves to 0.4.0 in the same batch as config.scannerRelease, because the engine refuses a request whose selected repo-lint differs from the declared scanner release.",
   "displayName": "qoder",
-  "runtimeComponentVersion": "0.9.0"
+  "runtimeComponentVersion": "0.9.1"
 }

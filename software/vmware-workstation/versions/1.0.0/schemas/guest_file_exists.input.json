@@ -1,0 +1,20 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Guest file check",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "vmPath": {
+      "type": "string",
+      "description": "Absolute path to a .vmx file inside VMWARE_VMX_ROOTS"
+    },
+    "guestPath": {
+      "type": "string",
+      "description": "Path inside the guest"
+    }
+  },
+  "required": [
+    "vmPath",
+    "guestPath"
+  ]
+}

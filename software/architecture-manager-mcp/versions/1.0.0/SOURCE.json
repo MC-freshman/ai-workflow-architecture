@@ -1,0 +1,23 @@
+{
+  "schema": "ai-software-source/v1",
+  "authorSession": "workbuddy",
+  "derivedFrom": "New release. Tool surface derived from architecture-manager read-only domain data; no manager source is imported.",
+  "supersedes": null,
+  "releaseScope": "A zero-dependency stdio MCP server exposing read-only architecture governance state from the shared workspace.",
+  "changes": [
+    "src/server.mjs: newline-delimited JSON-RPC over stdio (initialize, ping, tools/list, tools/call)",
+    "src/lib/tools.mjs: seven fixed read-only tools with root containment and structured refusals",
+    "manifest.json + capabilities.snapshot.json + four schemas + recipes/windows.json + selftest/readonly.json"
+  ],
+  "unchanged": [
+    "No published release was modified; this is the first release of architecture-manager-mcp"
+  ],
+  "openDeferred": [
+    "Platform-side nativeMcpServers registration is a separate per-platform decision (BP-2, D-60)"
+  ],
+  "releaseStatus": "published",
+  "publishedAt": "2026-11-07",
+  "publishedBy": "workbuddy session (user-approved P table, feasibility-validated)",
+  "pointerPolicy": "architecture-manager-mcp/current.json created at 1.0.0; available lists only 1.0.0",
+  "version": "1.0.0"
+}

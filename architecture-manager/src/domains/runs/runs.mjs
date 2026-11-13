@@ -7,6 +7,7 @@ import {parseJson as parseJsonText} from '../../core/json.mjs';
 import { readdirSync, readFileSync } from 'node:fs';
 import { join } from 'node:path';
 import { allPlatformIds, PLATFORM_IDS } from '../../core/platforms.mjs';
+import { readAuditEvents } from '../audit/audit.mjs';
 
 const LOCK_SCHEMA_PATTERN = /^ai-run-lock\/v(\d+)\.\d+$/;
 const KNOWN_LOCK_MAJOR = 1;
@@ -107,5 +108,69 @@ export function listRunLedger(workspaceRoot) {
     platforms,
     totals,
     totalRuns: platforms.reduce((sum, platform) => sum + platform.total, 0)
+  };
+}
+
+// P5 (approved P-table 20261111): read-only run timeline.
+// Stage states come from state.json completed/activeAttempt; the event chain is checked
+// structurally (previousEventSha256 linkage), never claimed as cryptographic verification.
+// Manager audit events are linked only via transactionId/planId present in the run events.
+export function inspectRunTimeline(input = {}) {
+  const { workspaceRoot, platformId, runId, planId, auditRoot } = input || {};
+  if (!workspaceRoot || !platformId || !runId) return { error: 'RUN_TIMELINE_INPUT_REQUIRED' };
+  if (typeof runId !== 'string' || /[\\/]/.test(runId) || runId.includes('..')) return { error: 'RUN_TIMELINE_PATH_ESCAPE' };
+  const runRoot = join(workspaceRoot, platformId, 'runtime', 'runs', runId);
+  const run = inspectRunDirectory(runRoot);
+  const lock = readJsonFile(join(runRoot, 'run-lock.json'));
+  const stageDefs = lock.status === 'ok' && Array.isArray(lock.value?.execution?.stages) ? lock.value.execution.stages : [];
+  const state = readJsonFile(join(runRoot, 'state.json'));
+  const completed = state.status === 'ok' && Array.isArray(state.value?.completed) ? state.value.completed : [];
+  const active = state.status === 'ok' ? state.value?.activeAttempt : null;
+  const stages = stageDefs.map((stage) => {
+    const rows = completed.filter((entry) => entry.stageId === stage.id);
+    return {
+      id: stage.id,
+      action: typeof stage.action === 'string' ? stage.action : null,
+      dependsOn: Array.isArray(stage.dependsOn) ? stage.dependsOn : [],
+      status: rows.length > 0 ? 'completed' : (active && active.stageId === stage.id ? 'active' : 'pending'),
+      attempts: rows.length,
+      gates: rows.flatMap((entry) => (Array.isArray(entry.gates) ? entry.gates : []).map((gate) => ({ gateId: gate.gateId, status: typeof gate.status === 'string' ? gate.status : 'recorded' })))
+    };
+  });
+  const events = [];
+  let eventChain = 'ok';
+  let corruptLines = 0;
+  let previousSha = null;
+  let raw = '';
+  try { raw = readFileSync(join(runRoot, 'events.jsonl'), 'utf8'); } catch { raw = ''; }
+  for (const line of raw.split('\n').filter((l) => l.trim())) {
+    let value;
+    try { value = JSON.parse(line); } catch { corruptLines++; continue; }
+    if (!value || typeof value !== 'object') { corruptLines++; continue; }
+    if (value.previousEventSha256 !== previousSha) eventChain = 'broken';
+    previousSha = typeof value.eventSha256 === 'string' ? value.eventSha256 : previousSha;
+    events.push({
+      sequence: typeof value.sequence === 'number' ? value.sequence : null,
+      type: typeof value.type === 'string' ? value.type : null,
+      status: typeof value.status === 'string' ? value.status : null,
+      at: typeof value.at === 'string' ? value.at : null,
+      transactionId: typeof value.transactionId === 'string' ? value.transactionId : null,
+      sealed: typeof value.eventSha256 === 'string'
+    });
+  }
+  const transactionIds = new Set(events.map((event) => event.transactionId).filter(Boolean));
+  const audit = readAuditEvents({ workspaceRoot, limit: 500, ...(auditRoot ? { auditRoot } : {}) });
+  const linked = (audit.events || []).filter((event) =>
+    (event.transactionId && transactionIds.has(event.transactionId)) ||
+    (planId && (event.planId === planId || event.operationId === planId)));
+  return {
+    runRoot,
+    run,
+    stages,
+    events,
+    eventChain,
+    corruptLines,
+    planId: planId || null,
+    audit: { totalEvents: audit.totalEvents, linked: linked.slice(-100), integrity: audit.integrity }
   };
 }

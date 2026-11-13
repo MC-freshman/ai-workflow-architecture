@@ -1,0 +1,32 @@
+{
+  "schema": "ai-software-source/v1",
+  "authorSession": "qoder-cn",
+  "derivedFrom": "New release. Tool-surface reference: https://github.com/ZacharyZcR/vmware-mcp (21 of its 54 vmrun-named tools; no code copied, and that repository carries no LICENSE file).",
+  "supersedes": null,
+  "releaseScope": "A zero-dependency Node 24 stdio MCP server that controls VMware Workstation through vmrun: power/status, guest operations, clone and host-network port forwarding. The recipe follows the software repository's ai-software/v1 shape; vmrest, vmcli and snapshot tools are out of scope.",
+  "changes": [
+    "src/server.mjs: newline-delimited JSON-RPC over stdio (initialize, ping, tools/list, tools/call)",
+    "src/lib/tools.mjs: 21 fixed vmrun tools; no shell and no arbitrary argv passthrough",
+    "src/lib/policy.mjs: VMWARE_VMX_ROOTS containment, VMWARE_WORKSPACE_ROOT containment, confirm gates, read-only switch",
+    "src/lib/vmrun.mjs: execFile argv execution, timeouts, guest credential redaction",
+    "manifest.json + capabilities.snapshot.json + 17 schemas + recipes/windows.json + selftest/readonly.json",
+    "tests: protocol, policy/argv rendering, live read-only smoke and safety gates"
+  ],
+  "unchanged": [
+    "No published release was modified; this is the first release of software/VMware",
+    "software/registry.json was not edited (shared-side change; proposed entry is documented in README.md)"
+  ],
+  "openDeferred": [
+    "software/registry.json entry: intentionally not applied without a separate shared-side approval",
+    "Guest-auth live calls (vmrun_run/ps/kill/file_exists/copy) were gate-tested but not executed: no guest credentials were supplied",
+    "Real clone and port-forwarding writes were argv/confirm tested but not executed: no disposable target was supplied",
+    "vmrest (20 REST tools) and vmcli (43 tools) are not implemented; vmcli.exe is absent from Workstation 17.5.2 on this host",
+    "Snapshot tools are not in this release (user scope excluded them)",
+    "Guest passwords are passed to vmrun with -gp and therefore appear in the local process list; this is a vmrun limitation documented in README.md"
+  ],
+  "releaseStatus": "published",
+  "publishedAt": "2026-11-06",
+  "publishedBy": "qoder-cn session (user-approved P1-P5)",
+  "pointerPolicy": "VMware/current.json created at 1.0.0; available lists only 1.0.0",
+  "version": "1.0.0"
+}

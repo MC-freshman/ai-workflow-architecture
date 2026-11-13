@@ -1,0 +1,77 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "vmrun tool result",
+  "type": "object",
+  "required": [
+    "ok"
+  ],
+  "properties": {
+    "ok": {
+      "type": "boolean"
+    },
+    "action": {
+      "type": "string"
+    },
+    "vmPath": {
+      "type": "string"
+    },
+    "mode": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "total": {
+      "type": [
+        "integer",
+        "null"
+      ]
+    },
+    "vms": {
+      "type": "array"
+    },
+    "count": {
+      "type": "integer"
+    },
+    "running": {
+      "type": [
+        "boolean",
+        "null"
+      ]
+    },
+    "runningKnown": {
+      "type": "boolean"
+    },
+    "ip": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "exists": {
+      "type": "boolean"
+    },
+    "stdout": {
+      "type": "string"
+    },
+    "stderr": {
+      "type": "string"
+    },
+    "raw": {
+      "type": "string"
+    },
+    "argv": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "exitCode": {
+      "type": [
+        "integer",
+        "null"
+      ]
+    }
+  },
+  "additionalProperties": true
+}

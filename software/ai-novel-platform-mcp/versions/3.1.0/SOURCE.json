@@ -1,0 +1,29 @@
+{
+  "schema": "ai-software-source/v1",
+  "authorSession": "workbuddy",
+  "derivedFrom": "v3.0.0 (new version directory; 3.0.0 bytes untouched). Upstream AI Novel Writing Platform 0.3.9 planning boards.",
+  "supersedes": "3.0.0",
+  "releaseScope": "Headless takeover of AI Novel Writing Platform project data plus first-class mind map building: outline-driven creation, node edits, XMind import and progress-grid reads.",
+  "changes": [
+    "v3.1.0: 31 tools (21 from v3.0.0 + 4 read-only mindmap/grid tools + 6 confirmed mindmap write tools)",
+    "lib/handlers.mjs: outline parser (nested array or indented text), tree readback, XMind import and atomic writes via creative-workspace.cjs#upsertItem/deleteItem",
+    "INJECT_SPEC read whitelist adds mind-map-import.cjs#readXMindFile (upstream 0.3.9 planning-board service)",
+    "manifest + frozen snapshot + 7 new input schemas + README + recipe + SOURCE + SHA256SUMS",
+    "src/server.mjs VERSION bumped; all writes still require *.plan then planId + confirmToken"
+  ],
+  "unchanged": [
+    "1.0.0 / 2.0.0 / 3.0.0 release bytes are untouched",
+    "No third-party source or binary is bundled into this repository",
+    "Red lines: no GUI automation, no cloud model calls, no git push, no release publishing"
+  ],
+  "openDeferred": [
+    "Platform-side nativeMcpServers registration stays a per-platform decision (BP-2, D-60)",
+    "A running desktop app keeps its own in-memory draft; use the in-app refresh control after an external MCP write",
+    "XMind relationship/boundary/marker decorations are not converted by the upstream parser"
+  ],
+  "releaseStatus": "published",
+  "publishedAt": "2026-11-08",
+  "publishedBy": "workbuddy session (user-requested MCP sync)",
+  "pointerPolicy": "ai-novel-platform-mcp/current.json switches to 3.1.0; available lists all four version directories",
+  "version": "3.1.0"
+}

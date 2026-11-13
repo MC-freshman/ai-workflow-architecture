@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import { computeWaiting } from '../scripts/release-gate-waiting.mjs';
 
 const base = {
+  version: '0.9.1',
   staleManagerEvidence: false,
   remoteConsistent: true,
   docsSiteOk: true,
@@ -25,7 +26,14 @@ test('an unpushed remote is reported', () => {
 
 test('red docs-site gate and pending terminal release are both reported in order', () => {
   const result = computeWaiting({ ...base, docsSiteOk: false, pendingTerminalRelease: true });
-  assert.deepEqual(result, ['文档站 docs-conform 判据', '0.9.0 发布轮终端执行（P5/P6）与权威 conform（P7）']);
+  assert.deepEqual(result, ['文档站 docs-conform 判据', '0.9.1 发布轮终端执行（P5/P6）与权威 conform（P7）']);
+});
+
+test('N6: waiting text derives from state.version, never hardcoded', () => {
+  const result = computeWaiting({ ...base, version: '0.9.2', pendingTerminalRelease: true });
+  assert.deepEqual(result, ['0.9.2 发布轮终端执行（P5/P6）与权威 conform（P7）']);
+  const fallback = computeWaiting({ staleManagerEvidence: false, remoteConsistent: true, docsSiteOk: true, pendingTerminalRelease: true });
+  assert.deepEqual(fallback, ['0.0.0 发布轮终端执行（P5/P6）与权威 conform（P7）']);
 });
 
 test('all four gaps are reported without duplication', () => {

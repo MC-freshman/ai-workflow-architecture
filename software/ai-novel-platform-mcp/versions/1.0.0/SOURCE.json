@@ -1,0 +1,23 @@
+{
+  "schema": "ai-software-source/v1",
+  "authorSession": "workbuddy",
+  "derivedFrom": "New release. Tool surface follows the project file layout published by ai-novel-writing-platform 0.3.9; no application code is bundled or imported.",
+  "supersedes": null,
+  "releaseScope": "A zero-dependency stdio MCP server exposing read-only access to an AI Novel Writing Platform project directory.",
+  "changes": [
+    "src/server.mjs: newline-delimited JSON-RPC over stdio (initialize, ping, tools/list, tools/call)",
+    "src/lib/tools.mjs: seven fixed read-only tools with root containment and structured refusals",
+    "manifest.json + capabilities.snapshot.json + four schemas + recipes/windows.json + selftest/readonly.json"
+  ],
+  "unchanged": [
+    "No published release was modified; this is the first release of ai-novel-platform-mcp"
+  ],
+  "openDeferred": [
+    "Platform-side nativeMcpServers registration is a separate per-platform decision (BP-2, D-60)"
+  ],
+  "releaseStatus": "published",
+  "publishedAt": "2026-11-07",
+  "publishedBy": "workbuddy session (user-approved P table, feasibility-validated)",
+  "pointerPolicy": "ai-novel-platform-mcp/current.json created at 1.0.0; available lists only 1.0.0",
+  "version": "1.0.0"
+}

@@ -1,0 +1,42 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Run guest program",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "vmPath": {
+      "type": "string",
+      "description": "Absolute path to a .vmx file inside VMWARE_VMX_ROOTS"
+    },
+    "program": {
+      "type": "string",
+      "description": "Complete path to the program inside the guest"
+    },
+    "args": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Program arguments, passed as separate argv entries"
+    },
+    "mode": {
+      "type": "string",
+      "enum": [
+        "default",
+        "noWait",
+        "activeWindow",
+        "interactive"
+      ],
+      "default": "default"
+    },
+    "confirm": {
+      "type": "boolean",
+      "description": "Must be true; the server refuses the call before spawning vmrun when it is missing"
+    }
+  },
+  "required": [
+    "vmPath",
+    "program",
+    "confirm"
+  ]
+}

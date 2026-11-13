@@ -1,17 +1,19 @@
 import React, {useEffect,useRef,useState} from 'react';
+import {createRefreshController} from '../shared/refresh-controller.mjs';
 
 const STATUS={started:'开始执行',completed:'执行返回',applied:'已应用','already-applied':'重复确认，未重复执行',blocked:'被拒绝',failed:'执行失败',cancelled:'已取消'};
 export function AuditPanel({api,workspace}) {
-  const [audit,setAudit]=useState(null),[error,setError]=useState(null),[status,setStatus]=useState(''),[planId,setPlanId]=useState(''),[workspaceOnly,setWorkspaceOnly]=useState(true);
+  const [audit,setAudit]=useState(null),[error,setError]=useState(null),[status,setStatus]=useState(''),[planId,setPlanId]=useState(''),[workspaceOnly,setWorkspaceOnly]=useState(true),[auto,setAuto]=useState(false);
   const request=useRef(0);
   const load=()=>{
     const version=++request.current;setError(null);
     api.readAuditEvents({limit:100,workspaceRoot:workspaceOnly?workspace:null,status:status || null,planId:planId || null,verifyCheckpoints:true}).then(data=>{if(version===request.current)setAudit(data);}).catch(e=>{if(version===request.current)setError(String(e?.message ?? e));});
   };
   useEffect(()=>{setAudit(null);load();return()=>{request.current++;};},[workspace,status,workspaceOnly]);
+  useEffect(()=>{if(!auto)return undefined;const controller=createRefreshController({load});controller.setEnabled(true);return()=>controller.stop();},[auto,workspace,status,workspaceOnly,planId]);
   return <section className="panel"><div className="panel-title"><span>审计历史与完整性检查</span><button className="small-button" onClick={load}>刷新并核对</button></div>
     <p>记录确认执行的开始、结果、失败和重试关联；不会重跑操作。未知写入结果会明确标记，旧记录不补造时间或封条。</p>
-    <div className="wizard-grid"><label>状态<select value={status} onChange={event=>setStatus(event.target.value)}><option value="">全部状态</option>{Object.entries(STATUS).map(([key,label])=><option key={key} value={key}>{label}</option>)}</select></label><label>计划或操作 ID<input value={planId} onChange={event=>setPlanId(event.target.value)} placeholder="输入后点击刷新并核对" /></label><label><input type="checkbox" checked={workspaceOnly} onChange={event=>setWorkspaceOnly(event.target.checked)} />仅当前工作区</label></div>
+    <div className="wizard-grid"><label>状态<select value={status} onChange={event=>setStatus(event.target.value)}><option value="">全部状态</option>{Object.entries(STATUS).map(([key,label])=><option key={key} value={key}>{label}</option>)}</select></label><label>计划或操作 ID<input value={planId} onChange={event=>setPlanId(event.target.value)} placeholder="输入后点击刷新并核对" /></label><label><input type="checkbox" checked={workspaceOnly} onChange={event=>setWorkspaceOnly(event.target.checked)} />仅当前工作区</label><label><input type="checkbox" checked={auto} onChange={event=>setAuto(event.target.checked)} />自动刷新（30s，默认关）</label></div>
     {error && <div className="scan-result warning" role="alert">读取失败：{error}</div>}
     {!audit && !error && <div className="empty">正在读取审计事件……</div>}
     {audit && !audit.present && <div className="empty">尚无本机审计记录。</div>}

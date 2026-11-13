@@ -30,5 +30,5 @@
   "notes_history_20260919": "Original 2026-09-19 note: Platform-scoped default repo-lint=0.3.0 (zcode-side adoption of closing-wave decision item 5c-②; shared current stays 0.2.1 untouched; explicit requests for 0.2.1 are rejected pre-write with VERSION_CONFLICT by 0.7.7 — the version-alignment exception, not a capability gap). Staged 2026-09-19.",
   "notes_20260927": "2026-09-27 R-P6: platform default repo-lint raised to 0.6.1 in the same batch as config.scannerRelease=repo-lint/0.6.1 (engine pairing rule); shared current is the same 0.6.1 generation after the R-P6 raise batch.",
   "displayName": "zcode",
-  "runtimeComponentVersion": "0.9.0"
+  "runtimeComponentVersion": "0.9.1"
 }

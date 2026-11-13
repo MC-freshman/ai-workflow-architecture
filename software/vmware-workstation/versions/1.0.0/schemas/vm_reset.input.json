@@ -1,0 +1,28 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Reset VM",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "vmPath": {
+      "type": "string",
+      "description": "Absolute path to a .vmx file inside VMWARE_VMX_ROOTS"
+    },
+    "mode": {
+      "type": "string",
+      "enum": [
+        "soft",
+        "hard"
+      ],
+      "default": "soft"
+    },
+    "confirm": {
+      "type": "boolean",
+      "description": "Must be true; the server refuses the call before spawning vmrun when it is missing"
+    }
+  },
+  "required": [
+    "vmPath",
+    "confirm"
+  ]
+}
