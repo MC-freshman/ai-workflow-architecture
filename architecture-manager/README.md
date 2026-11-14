@@ -124,4 +124,4 @@ Node.js 24+：`npm ci`，`npm start`；`npm run conform -- --out <自己的平�
 - **0.9.1 双包已生成、补签、上传，v0.9.1 为治理仓 Latest**；四资产哈希见 `release/SHA256SUMS-0.9.1.txt` 与 `versions/架构与管理台第二轮更新收口记录-20261113.md`。setup 131,971,776 B / portable 131,741,752 B；主签名 + DigiCert RFC3161 时间戳复验在（自签根 UnknownError 属预期）。
 - 版本面同批：package.json 0.9.1、10 个 bridge.json `runtimeComponentVersion=0.9.1`、docs-site README 与 site-intro 现行声明、根 README 下载链、export-readme 模板。
 - 内容 = 0.9.0 + 第一轮模块化更新（P1–P8）+ 第二轮更新（N1–N6）；公开仓同步经用户 2026-11-13 明示授权。
-- 发布后权威 conform 读数待用户终端回填（见收口记录）；`release-gate` 双包存在性判据已版本派生（N6）。
+- 发布后权威 conform 已回填：**digest `0544ddaaff6e96cdd86e717b381c7c0a10123f33d0aac6b515b9aa20a9a37868`**（2026-11-13 用户终端，Node v24.22.1，513 / 510 pass / 0 fail / 3 skip，五段全绿）；`release-gate` 双包存在性判据已版本派生（N6）。

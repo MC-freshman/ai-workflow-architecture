@@ -1,6 +1,6 @@
 # Publication boundary
 
-This is a file export from private governance HEAD `8b8f7b2d1221fde66760bdc4320f6387dd01a476`. Private Git ancestors are not imported.
+This is a file export from private governance HEAD `1645b01512c021e5981e34135481626294165f64`. Private Git ancestors are not imported.
 
 Included: governance text, tool/agent/software registries and immutable resources, reviewed platform bridge text, docs-site sources, architecture-manager source and the historical Apache-2.0 reference snapshot.
 

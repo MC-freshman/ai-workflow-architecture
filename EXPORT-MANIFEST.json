@@ -1,8 +1,8 @@
 {
   "schema": "ai-public-export-manifest/v2",
-  "generatedAt": "2026-11-13T13:45:12.103Z",
-  "sourceHead": "8b8f7b2d1221fde66760bdc4320f6387dd01a476",
-  "previousPublicHead": "8a55d0df149d9e94e377ef3c463d05d8377a50e7",
+  "generatedAt": "2026-11-14T04:01:20.359Z",
+  "sourceHead": "1645b01512c021e5981e34135481626294165f64",
+  "previousPublicHead": "fbf3e341cba357014c9ff89b7e0f85600582fbd9",
   "privateHistoryImported": false,
   "removedPrefixes": [
     "inbox/**",
@@ -56,6 +56,6 @@
     "zcode/bridge/software-gateway.json"
   ],
   "retainedFrozenPathReferences": [],
-  "preservedPublicReleaseDirectories": 2295,
+  "preservedPublicReleaseDirectories": 2303,
   "nonCanonicalHistoricalPublicReleases": 11
 }
